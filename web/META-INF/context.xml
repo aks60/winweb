@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/winweb"/>
-<!-- <Context antiJARLocking="true" path="/rono4">
+<Context antiJARLocking="true" path="/winweb">
     <Resource
-        name="jdbc/rono4"
+        name="jdbc/winweb"
         description="Основная БД"
         auth="Container"
         type="javax.sql.DataSource"
@@ -10,7 +9,7 @@
         driverClassName="org.firebirdsql.jdbc.FBDriver"
         username="sysdba"
         password ="masterkey"
-        url="jdbc:firebirdsql:localhost/3050:C:/Avers/ДИРЕКТОР/DataBase/SVODSURGUT.GDB"
+        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.GDB"
         maxActive="200"
         maxIdle="10"
         minIdle="5"
@@ -27,6 +26,6 @@
         logAbandoned="true"
         minEvictableIdleTimeMillis="30000" 
         jmxEnabled="true"
-    />  -->
+    />
 </Context>
 
