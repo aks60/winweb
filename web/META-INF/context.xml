@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/winweb"/>
+<!-- <Context antiJARLocking="true" path="/rono4">
+    <Resource
+        name="jdbc/rono4"
+        description="Основная БД"
+        auth="Container"
+        type="javax.sql.DataSource"
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+        driverClassName="org.firebirdsql.jdbc.FBDriver"
+        username="sysdba"
+        password ="masterkey"
+        url="jdbc:firebirdsql:localhost/3050:C:/Avers/ДИРЕКТОР/DataBase/SVODSURGUT.GDB"
+        maxActive="200"
+        maxIdle="10"
+        minIdle="5"
+        initialSize="1"
+        maxWait="10000" 
+        testOnBorrow="true"
+        testWhileIdle="true"
+        testOnReturn="false"
+        validationQuery="SELECT 'NOW' from RDB$DATABASE"
+        validationInterval="30000"
+        timeBetweenEvictionRunsMillis="30000"
+        removeAbandonedTimeout="6000"
+        removeAbandoned="true"
+        logAbandoned="true"
+        minEvictableIdleTimeMillis="30000" 
+        jmxEnabled="true"
+    />  -->
+</Context>
+
