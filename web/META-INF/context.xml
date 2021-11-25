@@ -9,7 +9,7 @@
         driverClassName="org.firebirdsql.jdbc.FBDriver"
         username="sysdba"
         password ="masterkey"
-        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.GDB"
+        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.FDB"
         maxActive="200"
         maxIdle="10"
         minIdle="5"
