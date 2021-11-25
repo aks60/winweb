@@ -6,14 +6,15 @@
         <!--<welcome-file>/view/queue/main.jsp</welcome-file>-->
     </welcome-file-list>
 
-    <!--  <servlet>
+    <servlet>
         <servlet-name>admin2</servlet-name>
-        <servlet-class>controller.AdmCont</servlet-class>
+        <servlet-class>controller.AdminCont</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>admin2</servlet-name>
         <url-pattern>/admin</url-pattern>
-    </servlet-mapping> -->
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>16</session-timeout>
     </session-config>
