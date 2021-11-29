@@ -9,14 +9,14 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6/ui.jqgrid.css">  
         
         <script type="text/javascript" src="js/jquery-4.6/jquery-4.6.min.js"></script>        
-  <!--      <script type="text/javascript" src="js/i18n/jquery.ui.datepicker-ru.min.js"></script>
+        <script type="text/javascript" src="js/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>
         
         <script type="text/javascript"src="js/jqgrid-4.6/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="js/jqgrid-4.6/jquery.jqGrid.js"></script>-->
+        <script type="text/javascript"src="js/jqgrid-4.6/jquery.jqGrid.js"></script>
         
     </head>
     <body>
-        <h1>Hello AKS MAIN.JSP!</h1>
+        <h1>Hello asd MAIN.JSP!</h1>
     </body>
 </html>
