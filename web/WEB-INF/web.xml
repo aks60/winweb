@@ -9,11 +9,20 @@
         <servlet-name>admin2</servlet-name>
         <servlet-class>controller.AdminCont</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>dict2</servlet-name>
+        <servlet-class>controller.DictCont</servlet-class>
+    </servlet>
+        
     <servlet-mapping>
         <servlet-name>admin2</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>dict2</servlet-name>
+        <url-pattern>/dict</url-pattern>
+    </servlet-mapping>    
+      
     <session-config>
         <session-timeout>16</session-timeout>
     </session-config>
