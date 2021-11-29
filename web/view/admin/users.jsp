@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Пользователи</title>
-
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">        
         <script src="js/token-ru/base64.js" type="text/javascript"></script>        
         <script src="js/token-ru/sha256.js" type="text/javascript"></script>        
         <script src="js/token-ru/utf8.js" type="text/javascript"></script>        
-        <script src="js/token-ru/users.js" type="text/javascript"></script>    
+        <script src="js/token-ru/users.js" type="text/javascript"></script>  
+        <title>Пользователи</title>
 
         <script type="text/javascript">
             var regionList = [];

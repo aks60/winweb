@@ -76,11 +76,11 @@ function user_connect() {
                 
                 $('#mainmenu').show();
                 //если есть права то покажем менеджер пользователей
-                if (data.role == 'YO_HO1_RW' || data.role == 'YO_HO2_RW') {
-                    $('.manager').show();
+                if (data.role == 'RDB$ADMIN') {
+                    //$('.manager').show();
                 }
                 //loadBody('index.jsp');
-                loadBody('view/uch/uchselect.jsp')
+                //loadBody('view/uch/uchselect.jsp')
             } else {
                 alert(data.result);
             }

@@ -3,12 +3,8 @@
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Аутентификация</title>
-
-        <!--        <script src="js/token-ru/base64.js" type="text/javascript"></script>        
-                <script src="js/token-ru/sha256.js" type="text/javascript"></script>        
-                <script src="js/token-ru/utf8.js" type="text/javascript"></script>        -->
-        <script src="js/token-ru/login.js" type="text/javascript"></script>  
+         <script src="js/token-ru/login.js" type="text/javascript"></script> 
+        <title>Аутентификация</title> 
 
         <script type="text/javascript">
 
@@ -16,8 +12,8 @@
             $(document).ready(function () {
                 $("#btn2").focus();
                 upBody();
-                
-                //autoconnect();
+
+                autoconnect();
 
             });
             function upBody() {
@@ -25,7 +21,7 @@
                     var height = window.innerHeight - 80;
                     $(".content").css("height", height);
                 }).trigger('resize');
-            }            
+            }
             function onPage(val) {
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
