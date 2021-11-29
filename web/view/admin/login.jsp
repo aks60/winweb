@@ -60,7 +60,7 @@
     </head>
     <body>
         <div style="height: 34px">    
-            <p style="padding-left: 34%; margin-top: 8px; font-size: 22px; color: dodgerblue">ИАС "Управление образованием"</p>
+            <p style="padding-left: 34%; margin-top: 8px; font-size: 22px; color: dodgerblue">Расчёт конструкций</p>
         </div>
         <div id="layout" class="yui3-g">
             <div id="nav" class="yui3-u">
@@ -118,14 +118,13 @@
             <div class="yui3-u" id="extra">
                 <div class="content" style="padding-left: 20px">
                     <p> E-mail:
-                    <p style="color: dodgerblue"> h-line@iicavers.ru
+                    <p style="color: dodgerblue"> x-xxx@xxxx.ru
 
                     <p> Телефон:
-                    <p style="color: dodgerblue">+7 (495) 909-03-60<br>+7 (903) 250-61-59
+                    <p style="color: dodgerblue">+7 (XXX) XXX-XX-XX<br>+7 (XXX) XXX-XX-XX
 
                     <p class="copyright"><img src="images/tool/logotype3.png" height="30px" width="30px" style="padding-left: 34%;">
-                        <br> <br>
-                        © Группа компаний «АВЕРС» <br> 2013-2014                    
+                        <br> <br> © ИП Аксёнов С. А. <br> 2021                    
                 </div>
             </div>
         </div>

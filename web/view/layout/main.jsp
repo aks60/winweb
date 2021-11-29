@@ -28,7 +28,6 @@
             $.ajax({
                 url: 'dict?action=property',
                 success: function (data) {
-                    alert("ASD AKS");
                     dataProp = data;
 //                    dataProp['dateNow'] = formatDate2(new Date());
                 }
@@ -36,11 +35,11 @@
         </script>
     </head>
     <body>
-        <h1>Hello AKS MAIN.JSP!</h1>
+        <!--<h1>Hello AKS MAIN.JSP!</h1>-->
         <div id="outbody"></div>
-<!--        <script type="text/javascript">
+        <script type="text/javascript">
             //$("#outbody").load('view/patt/simpl2.jsp');
             $("#outbody").load('view/admin/login.jsp');
-        </script>         -->
+        </script>         
     </body>
 </html>
