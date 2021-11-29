@@ -35,7 +35,7 @@
         </script>
     </head>
     <body>
-        <!--<h1>Hello AKS MAIN.JSP!</h1>-->
+        <!--<h1>Hello AKS77 MAIN.JSP!</h1>-->
         <div id="outbody"></div>
         <script type="text/javascript">
             //$("#outbody").load('view/patt/simpl2.jsp');
