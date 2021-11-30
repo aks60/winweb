@@ -74,10 +74,11 @@ function user_connect() {
         success: function (data) {
             if (data.result == 'true') {
                 
-                $('#mainmenu').show();
+                //$('#mainmenu').show();
                 //если есть права то покажем менеджер пользователей
                 if (data.role == 'RDB$ADMIN') {
                     //$('.manager').show();
+                    //$("#outbody").load('view/admin/users.jsp');
                 }
                 //loadBody('index.jsp');
                 //loadBody('view/uch/uchselect.jsp')

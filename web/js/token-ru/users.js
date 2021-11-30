@@ -88,8 +88,8 @@ function chk_login() {
 //создание учётной записи логин-пароль пользователя на сервере
 function new_login() {
     
-    var att = [$('#adm_name2').val(), $('#adm_password2').val(), $('#user_name2').val(), $('#user_password2').val()];
-    var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
+    var att = [$('#adm_name1').val(), $('#adm_password1').val(), $('#user_name1').val(), $('#user_password1').val(), $('#desc1').val()];
+    var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
     console.log(att);
     for (var i = 0; i < 4; i++) {
         if (att[i] == '') {
@@ -109,24 +109,23 @@ function new_login() {
         alert('Логин и пароль должен быть не меньше 3-х и не больше 16 символов');
         return false;
     }
-    var role = null;
-    var uch = null;
-    var element = document.getElementById('combo2').value;
-    for (var index = 0; index < regionList.length; ++index) {
-        var record = regionList[index].name
-        if (element.trim() == record.trim()) {
-
-            uch = regionList[index].id
-            if (regionList[index].id == 599999) {
-                role = 'YO_HO1_RO';
-            } else {
-                role = 'YO_HO2_RO';
-            }
-        }
-    }
+//    var uch = null;
+//    var element = document.getElementById('combo2').value;
+//    for (var index = 0; index < regionList.length; ++index) {
+//        var record = regionList[index].name
+//        if (element.trim() == record.trim()) {
+//
+//            uch = regionList[index].id
+//            if (regionList[index].id == 599999) {
+//                role = 'DIALER_RW';
+//            } else {
+//                role = 'DIALER_RW';
+//            }
+//        }
+//    }
     $.ajax({
         url: 'admin?action=newLogin',
-        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'role': role, 'uch': uch},
+        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'desc':att[4], 'role': 'DIALER_RW'},
         success: function (data) {
             alert(data.mes);
         },
@@ -161,9 +160,9 @@ function new_openkey(login) {
 
                 uch = regionList[index].uch
                 if (regionList[index].id == 599999) {
-                    role = 'YO_HO1_RO';
+                    role = 'DIALER_RW';
                 } else {
-                    role = 'YO_HO2_RO';
+                    role = 'DIALER_RW';
                 }
             }
         }

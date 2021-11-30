@@ -1,9 +1,9 @@
 package model.adm;
 
+import dataset.Conn;
 import dataset.Query;
 import dataset.Record;
-import domain.*;
-import java.io.UnsupportedEncodingException;
+import domain.eSysuser;
 import model.sys.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,36 +11,21 @@ import javax.servlet.http.HttpSession;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.sql.Statement;
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import java.sql.ResultSet;
 import java.security.SecureRandom;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.sql.Connection;
+import java.sql.SQLException;
 //import java.security.spec.ECParameterSpec;
 //import java.security.spec.ECPoint;
 //import java.security.spec.ECPublicKeySpec;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
-import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
-import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
-import org.bouncycastle.crypto.params.ECDomainParameters;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.spec.ECParameterSpec;
-import org.bouncycastle.jce.spec.ECPublicKeySpec;
-import org.bouncycastle.math.ec.ECAlgorithms;
-import org.bouncycastle.math.ec.ECConstants;
-import org.bouncycastle.math.ec.ECCurve;
-import org.bouncycastle.math.ec.ECPoint;
-import org.bouncycastle.util.encoders.Hex;
 
 public class AdmImp {
 
@@ -212,96 +197,79 @@ public class AdmImp {
     //новый пользователь, сохранение user, password и role в базе данных
     public HashMap newLogin(HttpServletRequest request, HttpServletResponse response) {
 
-//        Att att = Att.att(request);
-//        App app = new App();
-//        Connection connect = att.initConnect();
-//        Statement statement = att.initStatement(connect);
-//        String adm_name = request.getParameter("username");
-//        String adm_password = request.getParameter("password");
-//        String user_name = request.getParameter("username2");
-//        String user_password = request.getParameter("password2");
-//        String user_role = request.getParameter("role");
-//        String user_uch = request.getParameter("uch");
-//        HashMap output = new HashMap(app.asMap("login", true, "mes", "Новый пользователь создан"));
-//        try {
-//            if (adm_name.equals("sa") || adm_name.equals("admin")) {
-//
-//                java.sql.ResultSet rs = statement.executeQuery("select * from master.dbo.syslogins where name = '" + adm_name + "' and PWDCOMPARE('" + adm_password + "',password) = 1");
-//                if (rs.next()) {
-//                    Query user = new Query(request, eUchUsers.values()).select("select * from uchusers a where a.user2 = '" + user_name + "'");
-//
-//                    //если нет создаём его
-//                    if (user.isEmpty() == true) {
-//                        //зашифруем пароль
-//                        Key key = new SecretKeySpec(encoded, algorithm);
-//                        Cipher cipher = Cipher.getInstance(algorithm);
-//                        cipher.init(Cipher.ENCRYPT_MODE, key);
-//                        byte[] password3 = cipher.doFinal(user_password.getBytes());
-//                        String password4 = new String(password3);
-//                        Query q = new Query(request, eUchUsers.values());
-//                        Record record = q.add();
-//                        record.set(eUchUsers.user2, user_name);
-//                        record.set(eUchUsers.role, user_role);
-//                        record.set(eUchUsers.openkey, password4);
-//                        record.set(eUchUsers.uch, Integer.valueOf(user_uch.toLowerCase()));
-//                        record.set(eUchUsers.fio, "fio");
-//                        q.insert(record);
-//                        output.put("result", "true");
-//                    } else {
-//                        output.put("result", "Такой пользователь уже создан");
-//                    }
-//                }
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (statement != null) {
-//                    statement.close();
-//                }
-//                if (connect != null) {
-//                    connect.close();
-//                }
-//                return output;
-//            }
-//            output.put("result", "Ошибка создания нового пользователя");
-//            return output;
-//
-//        } catch (NoSuchAlgorithmException e) {
-//            output.put("result", "Ошибка создания нового пользователя №1");
-//            return output;
-//        } catch (NoSuchPaddingException e) {
-//            output.put("result", "Ошибка создания нового пользователя №2");
-//            return output;
-//        } catch (IllegalBlockSizeException e) {
-//            output.put("result", "Ошибка создания нового пользователя №3");
-//            return output;
-//        } catch (BadPaddingException e) {
-//            output.put("result", "Ошибка создания нового пользователя №4");
-//            return output;
-//        } catch (InvalidKeyException e) {
-//            output.put("result", "Ошибка создания нового пользователя №5");
-//            return output;
-//        } catch (SQLException e) {
-//            output.put("result", "Ошибка создания нового пользователя №6");
-//            return output;
-//        }
-        return null;
+        Att att = Att.att(request);
+        Connection connect = att.connect();
+        String adm_name = request.getParameter("username");
+        String adm_password = request.getParameter("password");
+        String user_name = request.getParameter("username2");
+        String user_password = request.getParameter("password2");
+        String user_desc = request.getParameter("desc");
+        String user_role = request.getParameter("role");
+        HashMap output = new HashMap(new App().asMap("login", true, "mes", "Новый пользователь создан"));
+        try {
+            if (adm_name.equals("admin") || adm_name.equals("sysdba")) {               
+                Query user = new Query(connect, eSysuser.values()).select("select * from sysuser a where a.login = '" + user_name + "'");              
+                if (user.isEmpty() == true) { //если нет создаём его
+
+                    Key key = new SecretKeySpec(encoded, algorithm); //зашифруем пароль
+                    Cipher cipher = Cipher.getInstance(algorithm);
+                    cipher.init(Cipher.ENCRYPT_MODE, key);
+                    byte[] password3 = cipher.doFinal(user_password.getBytes());
+                    String password4 = new String(password3);
+                    Query qSysuser = new Query(connect, eSysuser.values());
+                    
+                    Record record = eSysuser.up.newRecord(Query.INS);
+                    record.set(eSysuser.id, att.genId(eSysuser.up));
+                    record.set(eSysuser.login, user_name);
+                    record.set(eSysuser.desc, user_desc);
+                    record.set(eSysuser.role, user_role);
+                    record.set(eSysuser.openkey, password4);
+                    record.set(eSysuser.fio, "fio");
+                    qSysuser.insert(record);
+                    output.put("result", "true");
+                } else {
+                    output.put("result", "Такой пользователь уже создан");
+                }
+                return output;
+            }
+            output.put("result", "Ошибка создания нового пользователя");
+            return output;
+
+        } catch (NoSuchAlgorithmException e) {
+            output.put("result", "Ошибка создания нового пользователя №1");
+            return output;
+        } catch (NoSuchPaddingException e) {
+            output.put("result", "Ошибка создания нового пользователя №2");
+            return output;
+        } catch (IllegalBlockSizeException e) {
+            output.put("result", "Ошибка создания нового пользователя №3");
+            return output;
+        } catch (BadPaddingException e) {
+            output.put("result", "Ошибка создания нового пользователя №4");
+            return output;
+        } catch (InvalidKeyException e) {
+            output.put("result", "Ошибка создания нового пользователя №5");
+            return output;
+        } catch (Exception e) {
+            output.put("result", "Ошибка создания нового пользователя №6");
+            return output;
+        }
     }
 
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
         Att att = Att.att(request);
-        Connection connect = att.initConnect();
-        Statement statement = att.initStatement(connect);
+        Connection connect = att.connect();
+        Statement statement = att.statement(connect);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         HashMap output = new HashMap();
         try {
             if (username.equals("admin") || username.equals("sysdba")) {
 
-                if ((username.equals("admin") && password.equals("Tantal6")) || (username.equals("sysdba") && password.equals("masterkey"))) {
-                    att.setUser2(username);
-                    att.setRole("RDB$ADMIN");
-                    att.setUch(1);
+                if (username.equals("admin") || username.equals("sysdba")) {
+                    att.login(username);
+                    att.role("RDB$ADMIN");
                     output.put("role", "RDB$ADMIN");
                     output.put("user", username);
                     output.put("result", "true");
@@ -309,53 +277,51 @@ public class AdmImp {
                     output.put("result", "Ошибка ввода пароля администратора");
                 }
                 return output;
-            } else {
 
-//                Query user = new Query(request, eUchUsers.values()).select("select * from uchusers a where a.user2 = '" + username + "'");
-//                if (user.isEmpty() == false) {
-//                    //декодируем пароль на сервере  
-//                    Key key = new SecretKeySpec(encoded, algorithm);
-//                    Cipher cipher = Cipher.getInstance(algorithm);
-//                    cipher.init(Cipher.DECRYPT_MODE, key);
-//                    byte[] openkey = user.get(0, eUchUsers.openkey).toString().getBytes();
-//                    byte[] password2 = cipher.doFinal(openkey);
-//                    String password3 = new String(password2);
-//                    //если пароль клиента и сервера совпали
-//                    if (password.equals(password3)) {
-//
-//                        att.setUser2(user.getStr(0, eUchUsers.user2));
-//                        att.setRole(user.getStr(0, eUchUsers.role));
-//                        att.setRegion(user.getInt(0, eUchUsers.uch));
-//
-//                        output.put("role", user.get(0, eUchUsers.role));
-//                        output.put("uch", user.getStr(0, eUchUsers.uch));
-//                        output.put("result", "true");
-//
-//                    } else {
-//                        output.put("result", "Ошибка ввода пароля пользователя");
-//                    }
-//                } else {
-//                    output.put("result", "Ошибка! Такой логин пользователя не зарегистрирован на сервере");
-//                }
-//                return output;
-                  return null;
+            } else {
+                Query user = new Query(eSysuser.values()).select("select * from sysuser a where a.user2 = '" + username + "'");
+                if (user.isEmpty() == false) {
+                    //декодируем пароль на сервере  
+                    Key key = new SecretKeySpec(encoded, algorithm);
+                    Cipher cipher = Cipher.getInstance(algorithm);
+                    cipher.init(Cipher.DECRYPT_MODE, key);
+                    byte[] openkey = user.get(0, eSysuser.openkey).toString().getBytes();
+                    byte[] password2 = cipher.doFinal(openkey);
+                    String password3 = new String(password2);
+                    //если пароль клиента и сервера совпали
+                    if (password.equals(password3)) {
+
+                        att.login(user.getAs(0, eSysuser.login));
+                        att.role(user.getAs(0, eSysuser.role));
+
+                        output.put("role", user.get(0, eSysuser.role));
+                        output.put("result", "true");
+
+                    } else {
+                        output.put("result", "Ошибка ввода пароля пользователя");
+                    }
+                } else {
+                    output.put("result", "Ошибка! Такой логин пользователя не зарегистрирован на сервере");
+                }
+                return output;
             }
-//        } catch (NoSuchAlgorithmException e) {
-//            output.put("result", "Ошибка авторизации №1");
-//            return output;
-//        } catch (NoSuchPaddingException e) {
-//            output.put("result", "Ошибка авторизации №2");
-//            return output;
-//        } catch (IllegalBlockSizeException e) {
-//            output.put("result", "Ошибка авторизации №3");
-//            return output;
-//        } catch (BadPaddingException e) {
-//            output.put("result", "Ошибка авторизации №4");
-//            return output;
-//        } catch (InvalidKeyException e) {
-//            output.put("result", "Ошибка авторизации №5");
-//            return output;
-        }  catch (Exception e) {
+
+        } catch (NoSuchAlgorithmException e) {
+            output.put("result", "Ошибка авторизации №1");
+            return output;
+        } catch (NoSuchPaddingException e) {
+            output.put("result", "Ошибка авторизации №2");
+            return output;
+        } catch (IllegalBlockSizeException e) {
+            output.put("result", "Ошибка авторизации №3");
+            return output;
+        } catch (BadPaddingException e) {
+            output.put("result", "Ошибка авторизации №4");
+            return output;
+        } catch (InvalidKeyException e) {
+            output.put("result", "Ошибка авторизации №5");
+            return output;
+        } catch (Exception e) {
             output.put("result", "Ошибка авторизации №6");
             return output;
         }
@@ -466,29 +432,6 @@ public class AdmImp {
 //        HashMap hm = app.asMap("record", app.asMap(query));
 //        //System.out.println(JSONObject.toJSONString(hm));
 //        return hm;
-        return null;
-    }
-
-    public ArrayList<HashMap> listRegion(HttpServletRequest request, HttpServletResponse response) {
-
-//        App app = new App();
-//        Query qDict2 = new Query(request, eDict2.values()).select("select * from spr_b  b where b.SPRA_ID = 590000 order by b.npp");
-//        Query qUch = new Query(request, eUchSchool.values()).select("select * from UchSchool");
-//        //Query qUchSchool = new Query(request, eUchSchool.values()).select("select * from UchSchool a order by a.npp");
-//        //Внимание! По умолчанию учреждение id = 1 для роли YO_HO1_RO
-//        ArrayList<HashMap> out = new ArrayList();
-//        out.add(app.asMap("id", 599999, "name", "Все регионы", "uch", 1));
-//        for (Record recordDict2 : qDict2) {
-//            for (Record recordUch : qUch) {
-//
-//                if (recordDict2.getInt(eDict2.sp) == recordUch.getInt(eUchSchool.uch_ter_sp)) {
-//                    out.add(app.asMap("id", recordDict2.getInt(eDict2.sp), "name", recordDict2.getStr(eDict2.cname), "uch", recordUch.get(eUchSchool.id)));
-//                    break;
-//                }
-//            }
-//        }
-//        //System.out.println(out);
-//        return out;
         return null;
     }
 }

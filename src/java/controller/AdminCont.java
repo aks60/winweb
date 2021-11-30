@@ -64,9 +64,9 @@ public class AdminCont extends HttpServlet {
 //            response.getWriter().write(JSONValue.toJSONString(output));
 
         } else if (action.equalsIgnoreCase("newLogin")) {
-//            AdmImp adm = new AdmImp();
-//            HashMap output = adm.newLogin(request, response);
-//            response.getWriter().write(JSONValue.toJSONString(output));
+            AdmImp adm = new AdmImp();
+            HashMap output = adm.newLogin(request, response);
+            response.getWriter().write(JSONValue.toJSONString(output));
 
         }
     }

@@ -32,6 +32,12 @@
 //                    dataProp['dateNow'] = formatDate2(new Date());
                 }
             });
+            function loadBody(url) {
+                $('#outbody').load(url, function () {
+                    //upBody();
+                    //$("button").button();
+                });
+            }            
         </script>
     </head>
     <body>

@@ -13,20 +13,6 @@
             var regionList = [];
             $(document).ready(function () {
                 upBody();
-                var rec = {'id': 599999, 'name': 'Все регионы', 'uch': 1};
-                regionList.push(rec);
-                $("#combo").append('<option>' + rec.name + '</option>');
-                $("#combo2").append('<option>' + rec.name + '</option>');
-
-                for (var index = 590000; index < 590100; index++) {
-
-                    if (mapDic[index] != undefined) {
-                        var record = {'id': index, 'name': mapDic[index], 'uch': index};
-                        regionList.push(record);
-                        $("#combo").append('<option>' + record.name + '</option>');
-                        $("#combo2").append('<option>' + record.name + '</option>');
-                    }
-                }
             });
             function upBody() {
                 $(window).bind('resize', function () {
@@ -78,24 +64,24 @@
                         <table height="150" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
-                                <td><input id="adm_name2" placeholder='Введите логин' value='' type='text' size='16'></td>
+                                <td><input id="adm_name1" placeholder='Введите логин' value='admin' type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль администратора:</td>
-                                <td><input name="login" id="adm_password2" placeholder='Введите пароль' value='' type='password' size='16'></td>
-                            </tr>
-                            <tr>
-                                <td>Регион пользователя:</td>
-                                <td> <select id="combo2" style="width: 264px;" onchange="editUser(1)"></select> </td>
+                                <td><input id="adm_password1" placeholder='Введите пароль' value='Tantal6' type='password' size='17'></td>
                             </tr>                            
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input id="user_name2" placeholder='Введите логин' value='' type="text" size='16' style="width: 160px;"/></td>
+                                <td><input id="user_name1" placeholder='Введите логин' value='asd' type="text" size='16' style="width: 160px;"/></td>
                             </tr>
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input name="login" id="user_password2" placeholder='Введите пароль' value='' type="password" style="width: 160px;"/></td>
+                                <td><input id="user_password1" placeholder='Введите пароль' value='qwerty' type="password" style="width: 160px;"/></td>
                             </tr>
+                            <tr>
+                                <td>Описание:</td>
+                                <td><input id="desc1" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                            </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="new_login();" style="width: 164px;">Зарегистрироваться</button></td>
                             </tr>
@@ -109,20 +95,20 @@
                         <table height="120" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
-                                <td><input id="adm_name" placeholder='Введите логин' value='' type='text' size='16'></td>
+                                <td><input id="adm_name2" placeholder='Введите логин' value='' type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль администратора:</td>
-                                <td><input id="adm_password" placeholder='Введите пароль' value='' type='password' size='16'></td>
-                            </tr>
-                            <tr>
-                                <td>Регион пользователя:</td>
-                                <td> <select id="combo" style="width: 264px;" onchange="editUser(2)"></select> </td>
-                            </tr>                              
+                                <td><input id="adm_password2" placeholder='Введите пароль' value='' type='password' size='17'></td>
+                            </tr>                            
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input name="login" id="user_login" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
-                            </tr>                          
+                                <td><input id="user_login2" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
+                            </tr> 
+                            <tr>
+                                <td>Описание:</td>
+                                <td><input id="desc2" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                            </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрироваться</button></td>
                             </tr>

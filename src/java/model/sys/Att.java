@@ -1,5 +1,6 @@
 package model.sys;
 
+import dataset.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,21 +15,11 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 public class Att {
-
-    private int region = 599999;
-    private int uchone = 0;
-    private String uchsel;
-    private String user2 = "empty";
-    private String password = "Platina6";
-    private String role = "YO_HO1_RW";
-
-    public ArrayList<Boolean> optionsPersFind = null;
-    public ArrayList<Boolean> optionsPupsFind = null;
-
-    public ArrayList paramsPersFind = null;
-    public ArrayList paramsPupsFind = null;
-
-    public Integer[] rangeStag = {3, 25};
+    
+    private String login = "empty";
+    private String password = "";
+    private String role = "";
+    private String desc = "";    
 
     public static Att att(HttpServletRequest request) {
 
@@ -41,7 +32,7 @@ public class Att {
         return (Att) session.getAttribute("att");
     }
 
-    public Connection initConnect() {
+    public Connection connect() {
         try {
             Context initContext = new InitialContext();
             DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/winweb");
@@ -61,7 +52,7 @@ public class Att {
         }
     }
 
-    public Statement initStatement(Connection connection) {
+    public Statement statement(Connection connection) {
         try {
             return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
@@ -70,51 +61,55 @@ public class Att {
         }
     }
 
-    public int getRegion() {
-        return region;
+    public void login(String login) {
+        this.login = login;
     }
 
-    public void setRegion(int region) {
-        this.region = region;
+    public String login() {
+        return login;
     }
 
-    public void setUch(int uch) {
-        this.uchone = uch;
-    }
-
-    public int getUch() {
-        return uchone;
-    }
-
-    public String getUchList() {
-        return uchsel;
-    }
-
-    public void setUchList(String uchSel) {
-        this.uchsel = uchSel;
-    }
-
-    public void setUser2(String user2) {
-        this.user2 = user2;
-    }
-
-    public String getUser2() {
-        return user2;
-    }
-
-    public void setPassword(String password) {
+    public void password(String password) {
         this.password = password;
     }
 
-    public String getPassword() {
+    public String password() {
         return password;
     }
 
-    public void setRole(String role) {
+    public void role(String role) {
         this.role = role;
     }
 
-    public String getRole() {
+    public String role() {
         return role;
     }
+ 
+    public String desc() {
+        return desc;
+    }
+
+    public void desc(String desc) {
+        this.desc = desc;
+    }
+    
+    //Генератор ключа ID
+    public int genId(Field field) {
+        try {
+            int next_id = 0;
+            Statement statement = connect().createStatement();
+            String sql = "SELECT GEN_ID(gen_" + field.tname() + ", 1) FROM RDB$DATABASE";
+            ResultSet rs = statement.executeQuery(sql);
+            /*String mySeqv = table_name + "_id_seq";
+            ResultSet rs = statement.executeQuery("SELECT nextval('" + mySeqv + "')");*/
+            if (rs.next()) {
+                next_id = rs.getInt("GEN_ID");
+            }
+            rs.close();
+            return next_id;
+        } catch (SQLException e) {
+            System.err.println("Ошибка генерации ключа " + e);
+            return 0;
+        }
+    }    
 }

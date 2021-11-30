@@ -120,7 +120,7 @@
                     <p style="color: dodgerblue">+7 (XXX) XXX-XX-XX<br>+7 (XXX) XXX-XX-XX
 
                     <p class="copyright"><img src="images/tool/logotype3.png" height="30px" width="30px" style="padding-left: 34%;">
-                        <br> <br> © ИП Аксёнов С. А. <br> 2021                    
+                        <br> <br> © ИП Аксёнов С. А. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021                    
                 </div>
             </div>
         </div>
