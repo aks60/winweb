@@ -13,7 +13,7 @@
                 $("#btn2").focus();
                 upBody();
 
-                //autoconnect();
+                autoconnect();
 
             });
             function upBody() {

@@ -74,7 +74,7 @@ function user_connect() {
         success: function (data) {
             debugger;
             if (data.result == 'true') {
-                
+                debugger;
                 //$('#mainmenu').show();
                 //если есть права то покажем менеджер пользователей
                 if (data.role == 'RDB$ADMIN') {
