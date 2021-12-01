@@ -59,7 +59,7 @@ function chk_login() {
 
 //авторизация через логин-пароль
 function user_connect() {
-
+  //debugger;
     var att = [$('#user_name').val(), $('#user_password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     for (var i = 0; i < 2; i++) {
@@ -72,6 +72,7 @@ function user_connect() {
         url: 'admin?action=userConnect',
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
+            debugger;
             if (data.result == 'true') {
                 
                 //$('#mainmenu').show();
@@ -79,6 +80,9 @@ function user_connect() {
                 if (data.role == 'RDB$ADMIN') {
                     //$('.manager').show();
                     //$("#outbody").load('view/admin/users.jsp');
+                    $("#outbody").load('view/dealer/dealer.jsp');
+                } else {
+                   $("#outbody").load('view/dealer/dealer.jsp'); 
                 }
                 //loadBody('index.jsp');
                 //loadBody('view/uch/uchselect.jsp')
