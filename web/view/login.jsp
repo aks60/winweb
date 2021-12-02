@@ -27,8 +27,8 @@
                 $("#pan" + val).show();
             }
             function autoconnect() {
-                $('#user_name').val('sysdba');
-                $('#user_password').val('masterkey');
+                $('#pan1 .login').val('dealer');
+                $('#pan1 .password').val('masterkey');
                 user_connect();
             }
         </script>
@@ -73,11 +73,11 @@
                         <table height="80" width="340">
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input id="user_name" placeholder='Введите логин' value=''  type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value='asd777'  type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input id="user_password" placeholder='Введите пароль' value='' type='password' size='16'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='' type='password' size='16'></td>
                             </tr>
                             <td></td>
                             <td>

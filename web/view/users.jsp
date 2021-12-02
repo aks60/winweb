@@ -64,23 +64,23 @@
                         <table height="150" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
-                                <td><input id="adm_name1" placeholder='Введите логин' value='admin' type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value='admin' type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль администратора:</td>
-                                <td><input id="adm_password1" placeholder='Введите пароль' value='Tantal6' type='password' size='17'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='Tantal6' type='password' size='17'></td>
                             </tr>                            
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input id="user_name1" placeholder='Введите логин' value='asd' type="text" size='16' style="width: 160px;"/></td>
+                                <td><input class="login" placeholder='Введите логин' value='asd' type="text" size='16' style="width: 160px;"/></td>
                             </tr>
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input id="user_password1" placeholder='Введите пароль' value='qwerty' type="password" style="width: 160px;"/></td>
+                                <td><input class="password" placeholder='Введите пароль' value='qwerty' type="password" style="width: 160px;"/></td>
                             </tr>
                             <tr>
                                 <td>Описание:</td>
-                                <td><input id="desc1" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="new_login();" style="width: 164px;">Зарегистрироваться</button></td>
@@ -95,19 +95,19 @@
                         <table height="120" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
-                                <td><input id="adm_name2" placeholder='Введите логин' value='' type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value='' type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль администратора:</td>
-                                <td><input id="adm_password2" placeholder='Введите пароль' value='' type='password' size='17'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='' type='password' size='17'></td>
                             </tr>                            
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input id="user_login2" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
+                                <td><input class="login" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
                             </tr> 
                             <tr>
                                 <td>Описание:</td>
-                                <td><input id="desc2" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрироваться</button></td>

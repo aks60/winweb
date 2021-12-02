@@ -25,8 +25,9 @@ err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 //проверка корректности ввода учётной записи
 function chk_login() {
 
-    var att = [$('#adm_name').val(), $('#adm_password').val(), $('#user_login').val()];
+    var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('pan2 .login.last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
+    console.log(att);
     for (var i = 0; i < 3; i++) {
         if (att[i] == '') {
             alert(mes[i]);
@@ -59,9 +60,10 @@ function chk_login() {
 
 //авторизация через логин-пароль
 function user_connect() {
-  //debugger;
-    var att = [$('#user_name').val(), $('#user_password').val()];
+
+    var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
+    //console.log(att);
     for (var i = 0; i < 2; i++) {
         if (att[i] == '') {
             alert(mes[i]);
@@ -74,18 +76,11 @@ function user_connect() {
         success: function (data) {
             debugger;
             if (data.result == 'true') {
-                debugger;
-                //$('#mainmenu').show();
-                //если есть права то покажем менеджер пользователей
                 if (data.role == 'RDB$ADMIN') {
-                    //$('.manager').show();
-                    //$("#outbody").load('viewusers.jsp');
-                    $("#outbody").load('view/dealer.jsp');
+                    $("#outbody").load('view/users.jsp');
                 } else {
-                   $("#outbody").load('view/dealer.jsp'); 
+                    $("#outbody").load('view/dealer.jsp');
                 }
-                //loadBody('index.jsp');
-                //loadBody('view/uchselect.jsp')
             } else {
                 alert(data.result);
             }

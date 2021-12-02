@@ -41,11 +41,15 @@
         </script>
     </head>
     <body>
-        <!--<h1>Hello AKS77 MAIN.JSP!</h1>-->
+<!--        <div id='pan9'>
+            <input class="login" placeholder='Введите логин' value='asd777' type="text" size='16' style="width: 160px;"/>
+        </div>-->
+
         <div id="outbody"></div>
         <script type="text/javascript">
-            //$("#outbody").load('view/patt/simpl2.jsp');
+//            $("#outbody").load('view/patt/simpl2.jsp');
             $("#outbody").load('view/login.jsp');
+//            alert($('#pan9 > .login').val());
         </script>         
     </body>
 </html>
