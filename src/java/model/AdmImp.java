@@ -1,4 +1,4 @@
-package model.adm;
+package model;
 
 import dataset.Conn;
 import dataset.Query;

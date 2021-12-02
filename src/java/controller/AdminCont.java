@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.adm.AdmImp;
+import model.AdmImp;
 import model.sys.Sys;
 import org.json.simple.JSONValue;
 
@@ -21,7 +21,7 @@ public class AdminCont extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/layout/main.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/main.jsp");
             dispatcher.forward(request, response);
 
         } else if (action.equalsIgnoreCase("rtwEmptyLogin")) {

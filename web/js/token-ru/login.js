@@ -79,13 +79,13 @@ function user_connect() {
                 //если есть права то покажем менеджер пользователей
                 if (data.role == 'RDB$ADMIN') {
                     //$('.manager').show();
-                    //$("#outbody").load('view/admin/users.jsp');
-                    $("#outbody").load('view/dealer/dealer.jsp');
+                    //$("#outbody").load('viewusers.jsp');
+                    $("#outbody").load('view/dealer.jsp');
                 } else {
-                   $("#outbody").load('view/dealer/dealer.jsp'); 
+                   $("#outbody").load('view/dealer.jsp'); 
                 }
                 //loadBody('index.jsp');
-                //loadBody('view/uch/uchselect.jsp')
+                //loadBody('view/uchselect.jsp')
             } else {
                 alert(data.result);
             }

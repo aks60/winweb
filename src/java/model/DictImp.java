@@ -1,4 +1,4 @@
-package model.dict;
+package model;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;

@@ -45,7 +45,7 @@
         <div id="outbody"></div>
         <script type="text/javascript">
             //$("#outbody").load('view/patt/simpl2.jsp');
-            $("#outbody").load('view/admin/login.jsp');
+            $("#outbody").load('view/login.jsp');
         </script>         
     </body>
 </html>
