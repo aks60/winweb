@@ -14,7 +14,6 @@
         </script>
     </head>
     <body>
-        <p align='center' style="margin: 0;">Заказ конструкций</p>
         <div id="tabs">
             <ul>
                 <li><a href="#tab1">Заказы</a>

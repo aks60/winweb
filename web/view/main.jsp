@@ -7,7 +7,6 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/yui-yahoo-3.14.1/cssgrids.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-themes-1.13/themes/redmond/jquery-ui.min.css">       
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui.html/ui.html.css"> 
 
         <script type="text/javascript" src="js/jquery-3.6/jquery-3.6.0.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
