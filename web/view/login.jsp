@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-         <script src="js/token-ru/login.js" type="text/javascript"></script> 
+        <script src="js/token-ru/login.js" type="text/javascript"></script> 
         <title>Аутентификация</title> 
 
         <script type="text/javascript">
@@ -33,22 +33,6 @@
             }
         </script>
         <style>
-            .pan {
-                padding-top: 40px;
-                padding-left: 40px;
-            }
-            #layout {
-                padding-left:200px; 
-                padding-right:200px;
-            }
-            #nav {
-                margin-left:-200px; 
-                width:200px;
-            }
-            #extra {
-                width:200px;
-                margin-right:-200px; 
-            }
             .content {
                 font-size: 12px;
             }
@@ -58,16 +42,16 @@
         <div style="height: 34px">    
             <p style="padding-left: 34%; margin-top: 8px; font-size: 22px; color: dodgerblue">Расчёт конструкций</p>
         </div>
-        <div id="layout" class="yui3-g">
-            <div id="nav" class="yui3-u">
+        <div id="layout">
+            <div id="nav">
                 <div class="content">                 
                     <button id = "btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px; margin-top: 112px;">Авторизация пользователя(токен)</button>
                     <button id = "btn2" type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>           
                 </div>
             </div>
-            <div id="main" class="yui3-u">
+            <div id="main">
                 <div class="content" style="padding-left: 8px">
-                    <div id="pan1" class="yui3-u-1">                   
+                    <div id="pan1">                   
                         <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
                         <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br>                          
                         <table height="80" width="340">
@@ -85,7 +69,7 @@
                             </td>                            
                         </table>
                     </div>                      
-                    <div id="pan2" class="yui3-u-1" style="display: none;"> 
+                    <div id="pan2"> 
                         <p class="tabletitle"><p class="tabletitle"><font size=3>Авторизация через USB токен</font></p> 
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для аутентификации выберите логин в выпадающем 
@@ -111,7 +95,7 @@
                     </div>                   
                 </div>
             </div>
-            <div class="yui3-u" id="extra">
+            <div id="extra">
                 <div class="content" style="padding-left: 20px">
                     <p> E-mail:
                     <p style="color: dodgerblue"> x-xxx@xxxx.ru
