@@ -1,24 +1,22 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <welcome-file-list>
         <welcome-file>/view/main.jsp</welcome-file>
         <!--<welcome-file>/index.html</welcome-file>-->
         <!--<welcome-file>/view/simpl4.jsp</welcome-file>-->
     </welcome-file-list>
-
     <servlet>
         <servlet-name>admin2</servlet-name>
-        <servlet-class>controller.AdminCont</servlet-class>
+        <servlet-class>cont5r.AdminCont</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>dict2</servlet-name>
-        <servlet-class>controller.DictCont</servlet-class>
+        <servlet-class>cont5r.DictCont</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>dealer2</servlet-name>
-        <servlet-class>controller.DealerCont</servlet-class>
+        <servlet-class>cont5r.DealerCont</servlet-class>
     </servlet>
-        
     <servlet-mapping>
         <servlet-name>admin2</servlet-name>
         <url-pattern>/admin</url-pattern>
@@ -26,12 +24,11 @@
     <servlet-mapping>
         <servlet-name>dict2</servlet-name>
         <url-pattern>/dict</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dealer2</servlet-name>
         <url-pattern>/dealer</url-pattern>
-    </servlet-mapping>    
-      
+    </servlet-mapping>
     <session-config>
         <session-timeout>16</session-timeout>
     </session-config>
