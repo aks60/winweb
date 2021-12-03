@@ -5,9 +5,9 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>YUI 3.x: CSS Grids Fixed carcass</title>
-<!--        <link rel="stylesheet" href="css/yui-yahoo-3.14.1/cssreset.css" type="text/css">
-        <link rel="stylesheet" href="css/yui-yahoo-3.14.1/cssfonts.css" type="text/css">
-        <link rel="stylesheet" href="css/yui-yahoo-3.14.1/cssgrids.css" type="text/css">-->
+        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssreset.css" type="text/css">
+        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssfonts.css" type="text/css">
+        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssgrids.css" type="text/css">
 
 
         <style>

@@ -1,0 +1,152 @@
+html {
+    /*    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c4c5ff), color-stop(1, #ffffff));
+        height: 100%; */
+    color:#000;background:#FFF;
+    background-color: #eeeff1;
+    background-image: -moz-linear-gradient(center top, #c4c5ff, #ffffff);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c4c5ff), color-stop(1, #ffffff));
+    background-image: linear-gradient(top, #c4c5ff, #ffffff);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#c4c5ff', EndColorStr = '#ffffff');
+    background-repeat: no-repeat;
+    height: 100%;
+    /*change the box model to exclude the padding from the calculation of 100% height (IE8+)*/ 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;  
+} 
+/*#myProgress {
+    position: relative;
+    width: 200px;
+    height: 18px;
+    background-color: #ddd;
+}
+
+#myBar {
+    position: absolute;
+    width: 1%;
+    height: 100%;
+    background-color: #4CAF50;
+}*/
+#nav .content, #main .content, #extra .content {
+    border: 2px solid #ccc;
+}
+#hd {
+    background-repeat:repeat-x;       
+    background-image:url('../../images/menu/shadow2.jpg');        
+    /*border: 2px solid #ccc;*/
+    height: 24px;
+    /*color: #000;*/
+    background-color: #dfeffc;
+    font-size:16px;
+    /*font-weight: bold;*/  
+    /*font-style: normal;*/
+}
+#ft {
+    border: 2px solid #ccc;
+    background-image:url('../../images/menu/shadow2.jpg'); 
+    height: 18px;
+}
+#doc {
+    width:100%;
+}
+#main {
+    width:100%;
+}
+.pan {
+    border: 0px;
+    margin-left: 8px;
+}
+.sub-pan {
+    border-bottom-color: #ffffff;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-top: 8px;
+    padding-bottom: 12px;
+}
+.ui-button-text-only .ui-button-text {
+    padding: .5em .5em;
+}
+.ui-widget,
+.ui-widget .ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button,
+.ui-jqgrid,.ui-jqgrid .ui-jqgrid-view,
+.ui-jqgrid .ui-jqgrid-pager,
+.ui-jqgrid .ui-pg-input { 
+    font-size: 12px; 
+}
+.ui-jqgrid tr.jqgrow td, .ui-widget select{ 
+    height: 18px; 
+}
+
+.tool-field {
+    margin-left: 20px;
+}
+
+.tool-report {
+    float:right;
+    padding-right: 20px;
+}
+
+.tool-field:hover, .tool-report:hover {
+    background-color: #a9d4ff;
+}
+.tool-field.ui-selected { 
+    background-color: #cdcbcb !important; 
+    color: #0000ff;
+} 
+#hd button {
+    margin: 1px 4px 0 4px;
+    height: 22px;
+}    
+p.pantitle {    
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+p.tabletitle {    
+    margin-top: 12px;
+    margin-bottom: 2px;
+}
+p.partitle {    
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+p.pantitle, p.tabletitle, p.partitle {
+    margin-left: 12px;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+}
+p.field2, input.field2, textarea.field2 {
+    border: transparent;     
+    border: 1px groove #ccc;   
+    height: 14px;  
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    margin-top: 6px;
+    margin-left: 2px;
+    margin-bottom: 0px;
+    vertical-align: top; 
+    display: inline-block;
+}
+p.field2 {
+    background-color: #dfeffc;
+    padding-top: 1px;
+}
+.currentRow {
+    background-color: #fbec88 !important;
+}
+.handsontable th { 
+    background-color:#dfeffc;  
+    font-weight: bold;
+    color: #2e6e9e;           
+}
+.handsontable td, .handsontable th  {
+    font-size: small;
+    height: 20px;
+    line-height: 20px;
+} 
+
