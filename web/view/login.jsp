@@ -88,8 +88,8 @@
                 </div>            
             </div>
             <div id="westID">
-                <button id = "btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>
-                <button id = "btn2" type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>  
+                <button id="btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>
+                <button id="btn2" type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>  
             </div>
             <div id="eastID">
                 <p> E-mail:
