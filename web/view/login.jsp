@@ -35,22 +35,24 @@
         <style>
             .content {
                 font-size: 12px;
+                /*display: block;*/
+            }
+            .middle {
+                display: inline;
             }
         </style>
     </head>
     <body>
-        <div style="height: 34px">    
-            <p style="padding-left: 34%; margin-top: 8px; font-size: 22px; color: dodgerblue">Расчёт конструкций</p>
-        </div>
-        <div id="layout">
-            <div id="nav">
-                <div class="content">                 
-                    <button id = "btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px; margin-top: 112px;">Авторизация пользователя(токен)</button>
+        <div class="content">
+            <div class="north" style="height: 34px">    
+                <p style="padding-left: 34%; margin-top: 8px; font-size: 22px; color: dodgerblue">Расчёт конструкций</p>
+            </div>  
+            <div class="middle">
+                <div class="west">                
+                    <button id = "btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>
                     <button id = "btn2" type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>           
                 </div>
-            </div>
-            <div id="main">
-                <div class="content" style="padding-left: 8px">
+                <div class="center">
                     <div id="pan1">                   
                         <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
                         <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br>                          
@@ -69,7 +71,7 @@
                             </td>                            
                         </table>
                     </div>                      
-                    <div id="pan2"> 
+                    <div id="pan2" style="display: none;"> 
                         <p class="tabletitle"><p class="tabletitle"><font size=3>Авторизация через USB токен</font></p> 
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для аутентификации выберите логин в выпадающем 
@@ -91,12 +93,10 @@
                                     <button tabindex="2" type="button" onclick="token_connect()"style="width: 76px;">Войти</button>
                                 </td>
                             </tr>
-                        </table>
-                    </div>                   
+                        </table>                
+                    </div>
                 </div>
-            </div>
-            <div id="extra">
-                <div class="content" style="padding-left: 20px">
+                <div class="east">
                     <p> E-mail:
                     <p style="color: dodgerblue"> x-xxx@xxxx.ru
 
