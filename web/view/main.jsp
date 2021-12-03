@@ -16,10 +16,10 @@
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>
 
         <script type="text/javascript">
-            
+
             //глобальные данные
             var dataProp = [];
-            
+
             //глобальные настройки и параметры
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
@@ -36,19 +36,13 @@
                     //upBody();
                     //$("button").button();
                 });
-            }            
-        </script>
+            }
+        </script>        
     </head>
     <body>
-<!--        <div id='pan9'>
-            <input class="login" placeholder='Введите логин' value='asd777' type="text" size='16' style="width: 160px;"/>
-        </div>-->
-
         <div id="outbody"></div>
         <script type="text/javascript">
-//            $("#outbody").load('view/patt/simpl2.jsp');
             $("#outbody").load('view/login.jsp');
-//            alert($('#pan9 > .login').val());
         </script>         
     </body>
 </html>
