@@ -1,6 +1,6 @@
-html {
-    /*    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c4c5ff), color-stop(1, #ffffff));
-        height: 100%; */
+/*html {
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c4c5ff), color-stop(1, #ffffff));
+        height: 100%; 
     color:#000;background:#FFF;
     background-color: #eeeff1;
     background-image: -moz-linear-gradient(center top, #c4c5ff, #ffffff);
@@ -9,11 +9,11 @@ html {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#c4c5ff', EndColorStr = '#ffffff');
     background-repeat: no-repeat;
     height: 100%;
-    /*change the box model to exclude the padding from the calculation of 100% height (IE8+)*/ 
+    change the box model to exclude the padding from the calculation of 100% height (IE8+) 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;  
-} 
+} */
 /*#myProgress {
     position: relative;
     width: 200px;
@@ -139,7 +139,7 @@ p.field2 {
 .currentRow {
     background-color: #fbec88 !important;
 }
-.handsontable th { 
+/*.handsontable th { 
     background-color:#dfeffc;  
     font-weight: bold;
     color: #2e6e9e;           
@@ -148,5 +148,5 @@ p.field2 {
     font-size: small;
     height: 20px;
     line-height: 20px;
-} 
+} */
 

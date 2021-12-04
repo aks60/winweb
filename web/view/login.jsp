@@ -32,14 +32,14 @@
                 user_connect();
             }
         </script>        
-        <style>
+        <style>            
             #gridID { 
                 display: grid;
                 grid-template-areas: 
                     "north north north"
                     "west cent east"
                     "south south south";
-                grid-template-rows: 60px 1fr 60px;
+                grid-template-rows: 60px .94fr 30px;
                 grid-template-columns: 280px 1fr 15%;
                 grid-gap: 10px;
                 height: 100vh;
@@ -86,7 +86,7 @@
                         </tr>
                         <td></td>
                         <td>
-                            <button tabindex="2" type="button" onclick="user_connect()"style="width: 70px;">Войти</button>
+                            <button tabindex="2" type="button" onclick="user_connect()"style="width: 120px;">Войти</button>
                         </td>                            
                     </table>
                 </div>                      
@@ -109,15 +109,16 @@
                             <td></td>
                             <td>
                                 <button class='refresh' tabindex="3" type="button" onclick="token_refresh()"style="width: 80px;">Обновить</button>
-                                <button tabindex="2" type="button" onclick="token_connect()"style="width: 76px;">Войти</button>
+                                <button tabindex="2" type="button" onclick="token_connect()"style="width: 120px;">Войти</button>
                             </td>
                         </tr>
                     </table>                
                 </div>            
             </div>
             <div id="westID">
-                <button id="btn1" type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>
-                <button id="btn2" type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>  
+                <button id="btn1" type="button" onClick="onPage('2');" style="width: 220px; margin: 12px;">Авторизация пользователя(токен)</button>
+                <button id="btn2" type="button" onClick="onPage('1');" style="width: 220px; margin: 12px;">Авторизация пользователя(пароль)</button>  
+                <input type="button" value="Авторизация пользователя(токен)"/>
             </div>
             <div id="eastID">
                 <p> E-mail:
