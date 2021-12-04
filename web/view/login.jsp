@@ -4,6 +4,34 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/token-ru/login.js"></script>
+        <script type="text/javascript">
+
+            $("button").button();
+            $(document).ready(function () {
+                $("#btn2").focus();
+                upBody();
+
+                //autoconnect();
+
+            });
+            function upBody() {
+                $(window).bind('resize', function () {
+                    var height = window.innerHeight - 80;
+                    $(".content").css("height", height);
+                }).trigger('resize');
+            }
+            function onPage(val) {
+                $("#pan1, #pan2").hide();
+                $("#pan" + val).show();
+            }
+            function autoconnect() {
+                $('#pan1 .login').val('dealer');
+                $('#pan1 .password').val('masterkey');
+                debugger;
+                user_connect();
+            }
+        </script>        
         <style>
             #gridID { 
                 display: grid;
@@ -12,7 +40,7 @@
                     "west cent east"
                     "south south south";
                 grid-template-rows: 60px 1fr 60px;
-                grid-template-columns: 240px 1fr 15%;
+                grid-template-columns: 280px 1fr 15%;
                 grid-gap: 10px;
                 height: 100vh;
                 margin: 0;
@@ -36,7 +64,7 @@
             #eastID { 
                 grid-area: east; 
             }
-        </style>        
+        </style>   
     </head>
     <body>
         <div id="gridID">

@@ -60,7 +60,7 @@ function chk_login() {
 
 //авторизация через логин-пароль
 function user_connect() {
-
+debugger;
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     //console.log(att);
