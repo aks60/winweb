@@ -1,54 +1,50 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>YUI 3.x: CSS Grids Fixed carcass</title>
-        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssreset.css" type="text/css">
-        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssfonts.css" type="text/css">
-        <link rel="stylesheet" href="css/yui-yahoo-3.18.1/cssgrids.css" type="text/css">
-
-
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            #doc {
-                margin:auto;
-                /*//height: 600px;*/ 
-                width: 970px;
+            body { 
+                display: grid;
+                grid-template-areas: 
+                    "north north north"
+                    "west cent east"
+                    "south south south";
+                grid-template-rows: 60px 1fr 60px;
+                grid-template-columns: 20% 1fr 15%;
+                grid-gap: 10px;
+                height: 100vh;
+                margin: 0;
             }
-            #hd, .yui3-g .content, #ft {
-                border: 2px solid #ccc;
-                height: 484px; 
-                /*//margin-right: 10px;*/
+            #northID, #southID, #centID, #westID, #eastID {
+                padding: 20px;
+                background: #ddd;
             }
-            #hd, #ft {
-                height: 20px;
+            #northID {
+                grid-area: north;
             }
-        </style>
-
+            #southID {
+                grid-area: south;
+            }
+            #centID { 
+                grid-area: cent;      
+            }
+            #westID { 
+                grid-area: west; 
+            }
+            #eastID { 
+                grid-area: east; 
+            }
+        </style>        
     </head>
     <body>
-        <div id="doc">
-            <div id="hd">
-                <h1></h1>
-            </div>
-
-            <div class="yui3-g">
-                <div class="yui3-u-1-5">
-                    <div class="content"></div>
-                </div>
-
-                <div class="yui3-u-2-5">
-                    <div class="content"></div>
-                </div>
-
-                <div class="yui3-u-2-5">
-                    <div class="content"></div>
-                </div>
-            </div>
-
-            <div id="ft"></div>
-        </div>
+        <div id="northID">Header2</div>
+        <div id="centID">Article2</div>
+        <div id="westID">Nav2</div>
+        <div id="eastID">Ads2</div>
+        <div id="southID">Footer2</div>
     </body>
 </html>
 
