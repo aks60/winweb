@@ -32,7 +32,8 @@
                 user_connect();
             }
         </script>        
-        <style>            
+        <style>   
+       
             #gridID { 
                 display: grid;
                 grid-template-areas: 
@@ -116,9 +117,8 @@
                 </div>            
             </div>
             <div id="westID">
-                <button id="btn1" type="button" onClick="onPage('2');" style="width: 220px; margin: 12px;">Авторизация пользователя(токен)</button>
-                <button id="btn2" type="button" onClick="onPage('1');" style="width: 220px; margin: 12px;">Авторизация пользователя(пароль)</button>  
-                <input type="button" value="Авторизация пользователя(токен)"/>
+                <button id="btn1"  type="button" onClick="onPage('2');" style="width: 220px; margin: 12px;">Авторизация пользователя(токен)</button>
+                <button id="btn2"  type="button" onClick="onPage('1');" style="width: 220px; margin: 12px;">Авторизация пользователя(пароль)</button>  
             </div>
             <div id="eastID">
                 <p> E-mail:
