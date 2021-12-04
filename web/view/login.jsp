@@ -12,7 +12,7 @@
                     "west cent east"
                     "south south south";
                 grid-template-rows: 60px 1fr 60px;
-                grid-template-columns: 20% 1fr 15%;
+                grid-template-columns: 240px 1fr 15%;
                 grid-gap: 10px;
                 height: 100vh;
                 margin: 0;
