@@ -28,7 +28,6 @@
             function autoconnect() {
                 $('#pan1 .login').val('dealer');
                 $('#pan1 .password').val('masterkey');
-                debugger;
                 user_connect();
             }
         </script>        
