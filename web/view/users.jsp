@@ -8,15 +8,36 @@
         <script src="js/token-ru/utf8.js" type="text/javascript"></script>        
         <script src="js/token-ru/users.js" type="text/javascript"></script>  
         <title>Пользователи</title>
-
+        <style>
+            #layout {
+                padding-left:200px; 
+                padding-right:150px; 
+            }
+            #nav {
+                margin-left:-200px; 
+                width:200px;          
+            }
+            #extra {
+                width:150px;
+                margin-right:-150px; 
+            }
+            #main {
+                width:100%;
+            }
+            #hd, #nav .content, #main .content, #extra .content, #ft {
+                border: 2px solid #ccc;
+                height: 100%; 
+            }
+        </style>
         <script type="text/javascript">
             var regionList = [];
+            $("button").button();
             $(document).ready(function () {
                 upBody();
             });
             function upBody() {
                 $(window).bind('resize', function () {
-                    var height = window.innerHeight - 120;
+                    var height = window.innerHeight - 60;
                     $(".content").css("height", height);
                 }).trigger('resize');
             }
@@ -25,39 +46,24 @@
                 $("#pan" + val).show();
             }
         </script>
-        <style>
-            #layout {
-                padding-left:200px; 
-                padding-right:150px;
-            }
-            #nav {
-                margin-left:-200px; 
-                width:200px;
-            }
-            #extra {
-                width:150px;
-                margin-right:-150px; 
-            }
-            .content {
-                font-size: 12px;
-            }            
-        </style>
     </head>
-    <body>
-        <div style="height: 32px">    
-            <p style="padding-left: 260px; margin-top: 8px; font-size: 20px;">Регистрация нового пользователя</p>
-        </div>        
-        <div id="layout" class="yui3-g">
-            <div id="nav" class="yui3-u">
+        <body>
+        <div id="hd" style="height: 32px">
+            <h6 style="padding-left: 32%; margin-top: 8px; font-size: 16px;">Регистрация нового пользователя</h6>
+        </div>
+
+        <div class="yui3-g" id="layout">
+            <div class="yui3-u" id="nav">
                 <div class="content">
                     <button type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Создание пользователя(пароль)</button>                    
                     <button type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Создание пользователя(токен)</button>
-                    <button type="button" onClick="onPage('3');" style="width: 164px; margin: 12px;">Удаление пользователя(токен)</button>                   
+                    <button type="button" onClick="onPage('3');" style="width: 164px; margin: 12px;">Удаление пользователя(токен)</button>                                       
                 </div>
             </div>
-            <div id="main" class="yui3-u">
-                <div class="content" style="padding-left: 8px">                    
-                    <div id="pan1" class="yui3-u-1">                    
+
+            <div class="yui3-u" id="main">
+                <div class="content" id="mc">
+                    <div id="pan1">                     
                         <p class="pantitle"><font size=3>Регистрация нового пользователя для входа через логин и пароль</font></p> 
                         <p>Для регистрации введите логин и пароль администратора, введите логин и пароль пользователя, 
                             нажмите кнопку «Зарегистрироваться». </p><br><br>    
@@ -136,17 +142,22 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>                      
+                    </div>                     
                 </div>
             </div>
+
             <div class="yui3-u" id="extra">
                 <div class="content">
                 </div>
             </div>
         </div>
+
+        <!--<div id="ft" style="height: 20px"></div>-->
+        
         <object id="cryptoPlugin" type="application/x-rutoken" width="0" height="0">
             <param name="onload" value="pluginit" />
-        </object>        
+        </object>          
     </body>
+
 </html>
 

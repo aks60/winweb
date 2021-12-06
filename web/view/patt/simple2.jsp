@@ -8,6 +8,7 @@
 <!--        <link rel="stylesheet" href="css/yui3-3.18.1/cssreset.css" type="text/css">
         <link rel="stylesheet" href="css/yui3-3.18.1/cssfonts.css" type="text/css">
         <link rel="stylesheet" href="css/yui3-3.18.1/cssgrids.css" type="text/css">    -->
+
         <style>
             #layout {
                 padding-left:300px; 
