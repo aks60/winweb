@@ -62,7 +62,7 @@
             </div>
 
             <div class="yui3-u" id="main">
-                <div class="content" id="mc">
+                <div class="content" id="mc" style="padding-left: 8px">
                     <div id="pan1">                     
                         <p class="pantitle"><font size=3>Регистрация нового пользователя для входа через логин и пароль</font></p> 
                         <p>Для регистрации введите логин и пароль администратора, введите логин и пароль пользователя, 
