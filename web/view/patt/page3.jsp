@@ -5,8 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <style>
-            #north, #midl, #west, #west2, #centr, #centr2, #soth {
-                border: 2px solid #ccc;
+            div {
+                border: 1px solid black;
             }
         </style>
         <script type="text/javascript">
@@ -22,24 +22,16 @@
         </script>          
     </head>
     <body>
-        <div id="nord" style=" height: 40px">
-            <h1>NORD</h1>
-        </div>
-        <div id="midl">
-            <div id="west" style="display: inline-block; height: 100%; width: 300px">
-                WEST
+        <div style="width: 50%; height:400px; position:relative; background:green;">
+            <div style="width: 200px; height:200px; position:absolute; left:0px; background:red;">
+                Левый блок
             </div>
-            <div id="centr" style="display: inline-flex;">
-                <div id="west2" style="height: 100%; width: 200px">
-                    WEST2
-                </div>
-                <div id="centr2" style="width: 100px">
-                    CENTR2
-                </div>                
-            </div>                    
-        </div>
-        <div id="south" style="height: 20px">
-            <h1>SOUTH</h1>
-        </div>        
+            <div style="width: 400px; height:200px; position:absolute; left:200px; background:blue;">
+                Основной блок
+            </div>
+            <div style="width: 50%; height:200px; position:absolute; left:600px; background:red;">
+                Правый блок
+            </div>
+        </div>       
     </body>
 </html>
