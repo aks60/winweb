@@ -11,6 +11,25 @@
         <style>
             #layout {
                 padding-left:200px; 
+                padding-right:250px; 
+            }
+            #nav {
+                margin-left:-200px; 
+                width:200px;          
+            }
+            #extra {
+                width:250px;
+                margin-right:-250px; 
+            }
+            #main {
+                width:100%;
+            }
+            #hd, #nav .content, #main .content, #extra .content, #ft {
+                border: 2px solid #ccc;
+                height: 100%; 
+            }
+/*            #layout {
+                padding-left:200px; 
                 padding-right:150px; 
             }
             #nav {
@@ -27,7 +46,7 @@
             #hd, #nav .content, #main .content, #extra .content, #ft {
                 border: 2px solid #ccc;
                 height: 100%; 
-            }
+            }*/
         </style>
         <script type="text/javascript">
             var regionList = [];

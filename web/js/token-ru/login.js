@@ -74,7 +74,7 @@ debugger;
         url: 'admin?action=userConnect',
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
-            debugger;
+            //debugger;
             if (data.result == 'true') {
                 if (data.role == 'RDB$ADMIN') {
                     $("#outbody").load('view/users.jsp');
