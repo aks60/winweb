@@ -14,16 +14,19 @@
         </style>        
     </head>
     <body>
-<div class="yui3-g">
-    <div class="yui3-u-5-24">
-        <div class="content">xx</div>
-    </div>
-    <div class="yui3-u-7-24">
-        <div class="content">xx</div>
-    </div>
-    <div class="yui3-u-1-2">
-        <div class="content">xx</div>
-    </div>
-</div>
+        <div id="hd" style="height: 32px">
+            <h6 style="padding-left: 32%; margin-top: 12px; font-size: 16px;">Регистрация нового пользователя</h6>
+        </div>          
+        <div class="yui3-g">  
+            <div class="yui3-u-5-24" style="width: 200px">
+                <div class="content">xx</div>
+            </div>
+            <div class="yui3-u-7-24">
+                <div class="content">xx</div>
+            </div>
+            <div class="yui3-u-1-2">
+                <div class="content">xx</div>
+            </div>
+        </div>
     </body>
 </html>
