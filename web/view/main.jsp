@@ -19,7 +19,7 @@
 
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>
-
+         
         <script type="text/javascript">
 
             //глобальные данные

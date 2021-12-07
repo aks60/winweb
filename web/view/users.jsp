@@ -9,7 +9,7 @@
         <script src="js/token-ru/users.js" type="text/javascript"></script>  
         <title>Пользователи</title>
         <style>
-            #layout {
+/*            #layout {
                 padding-left:200px; 
                 padding-right:250px; 
             }
@@ -20,25 +20,6 @@
             #extra {
                 width:250px;
                 margin-right:-250px; 
-            }
-            #main {
-                width:100%;
-            }
-            #hd, #nav .content, #main .content, #extra .content, #ft {
-                border: 2px solid #ccc;
-                height: 100%; 
-            }
-/*            #layout {
-                padding-left:200px; 
-                padding-right:150px; 
-            }
-            #nav {
-                margin-left:-200px; 
-                width:200px;          
-            }
-            #extra {
-                width:150px;
-                margin-right:-150px; 
             }
             #main {
                 width:100%;
