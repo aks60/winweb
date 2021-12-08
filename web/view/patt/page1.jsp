@@ -22,7 +22,7 @@
         <div id="north" style=" height: 20px;">
             <h1>NORD</h1>
         </div>
-        <div id="midl" style="position: relative; margin-left: 500px;">
+        <div id="midl" style="position: relative; margin: 0 2px 0 500px;">
             <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                 <div id="west2" style="height: 200px">
                     <h1>WEST-2</h1>
@@ -31,7 +31,7 @@
                     <h1>WEST-3</h1>
                 </div>
             </div>                 
-            <div id="centr" style="position: absolute; height: 100%; width: 99.6%;">
+            <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                 <div>
                     CENTR ============ ============== ================= ============== ========
                 </div>

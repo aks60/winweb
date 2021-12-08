@@ -10,6 +10,7 @@
             }
         </style>
         <script type="text/javascript">
+            $("button").button();
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     var height = window.innerHeight - 68;
@@ -22,7 +23,7 @@
         <div id="north" style=" height: 20px;">
             <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Регистрация нового пользователя</h6>
         </div>
-        <div id="midl" style="position: relative; margin-left: 500px;">
+        <div id="midl" style="position: relative; margin: 0 2px 0 500px;">
             <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                 <div id="west2" style="height: 96px">
                     <button type="button" onClick="onPage('1');" style="width: 150px; margin-left: 8px; margin-top: 28px;">Создание пользователя(пароль)</button>                    
@@ -112,7 +113,7 @@
                     </div> 
                 </div>
             </div>                 
-            <div id="centr" style="position: absolute; height: 100%; width: 99.2%;">
+            <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                 <div>
                     CENTR ======== ========== ========== ========= ======== ========== ============    
                 </div>
