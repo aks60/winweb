@@ -20,7 +20,7 @@
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            <h1>NORTH</h1>
+            <h1>NORT</h1>
         </div>
         <div id="midl" style="position: relative; margin: 0 200px 0 300px;">
             <div id="west" style="position: absolute; height: 100%; width: 300px; margin-left: -300px;">
