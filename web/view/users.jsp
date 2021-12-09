@@ -29,7 +29,7 @@
         </div>
         <div id="midl" style="position: relative; margin: 0 2px 0 500px;">
             <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
-                <div id="west2" style="height: 100px">
+                <div id="west2" style="height: 108px">
                     <button type="button" onClick="onPage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
                     <button type="button" onClick="onPage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
                     <button type="button" onClick="onPage('3');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
@@ -39,7 +39,7 @@
                     <div id="pan1">                     
                         <p class="pantitle"><font size=3>Регистрация нового пользователя для входа через логин и пароль</font></p> 
                         <p>Для регистрации введите логин и пароль администратора, введите логин и пароль пользователя, 
-                            нажмите кнопку «Зарегистрироваться». </p><br><br>    
+                            нажмите кнопку «Зарегистрировать». </p><br><br>    
                         <table height="150" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
@@ -89,7 +89,7 @@
                                 <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
-                                <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрироваться</button></td>
+                                <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрировать</button></td>
                             </tr>
                         </table>                      
                     </div> 
