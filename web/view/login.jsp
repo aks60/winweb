@@ -22,7 +22,7 @@
                     }).trigger('resize');
                 });
 
-                //autoconnect();
+                autoconnect();
 
             });
             function onPage(val) {
@@ -30,7 +30,7 @@
                 $("#pan" + val).show();
             }
             function autoconnect() {
-                $('#pan1 .login').val('dealer');
+                $('#pan1 .login').val('admin');
                 $('#pan1 .password').val('masterkey');
                 user_connect();
             }
@@ -48,7 +48,8 @@
             <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                 <div id="pan1" style="margin-left: 8px;">                   
                     <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
-                    <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br>                          
+                    <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br> 
+                    
                     <table height="80" width="340">
                         <tr>
                             <td>Логин пользователя:</td>
@@ -63,6 +64,7 @@
                             <button tabindex="2" type="button" onclick="user_connect()"style="width: 120px;">Войти</button>
                         </td>                            
                     </table>
+                    
                 </div>                      
                 <div id="pan2" style="margin-left: 8px; display: none;"> 
                     <p class="tabletitle"><p class="tabletitle"><font size=3>Авторизация через USB токен</font></p> 

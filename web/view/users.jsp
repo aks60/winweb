@@ -17,6 +17,10 @@
                     $("#midl").css("height", height);
                 }).trigger('resize');
             });
+            function onPage(val) {
+                $("#pan1, #pan2, #pan3, #pan4").hide();
+                $("#pan" + val).show();
+            }            
         </script>          
     </head>
     <body>
@@ -25,10 +29,11 @@
         </div>
         <div id="midl" style="position: relative; margin: 0 2px 0 500px;">
             <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
-                <div id="west2" style="height: 96px">
-                    <button type="button" onClick="onPage('1');" style="width: 150px; margin-left: 8px; margin-top: 28px;">Создание пользователя(пароль)</button>                    
-                    <button type="button" onClick="onPage('2');" style="width: 150px; margin-left: 8px; margin-top: 28px;">Создание пользователя(токен)</button>
-                    <button type="button" onClick="onPage('3');" style="width: 150px; margin-left: 8px; margin-top: 28px;">Удаление пользователя(токен)</button>                                       
+                <div id="west2" style="height: 100px">
+                    <button type="button" onClick="onPage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
+                    <button type="button" onClick="onPage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
+                    <button type="button" onClick="onPage('3');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
+                    <button type="button" onClick="onPage('4');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
                 </div>
                 <div id="west3" style="height: 200px">
                     <div id="pan1">                     
@@ -89,6 +94,29 @@
                         </table>                      
                     </div> 
                     <div id="pan3" style="display: none;"> 
+                        <p class="pantitle"><font size=3>Удаление логина USB-токена</font></p> 
+                        <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
+                            сохраненных на USB-токене. Для удаления выберите логин в выпадающем 
+                            списке и нажмите кнопку «Удалить». Далее потребуется ввести правильный PIN-код.</p><br><br>                          
+                        <table height="50">
+                            <tr>
+                                <td><label>Логин пользователя:</label></td>
+                                <td>
+                                    <select tabindex="1" name="list_log" id="token_login" style="width: 160px;">
+                                        <option selected="selected" value="none"> — </option>
+                                    </select>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class='refresh' tabindex="3" type="button" onclick="token_refresh()" style="width: 80px;">Обновить</button>
+                                    <button tabindex="2" type="button" onclick="delete_openkey()"style="width: 76px;">Удалить</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+                    <div id="pan4" style="display: none;"> 
                         <p class="pantitle"><font size=3>Удаление логина USB-токена</font></p> 
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для удаления выберите логин в выпадающем 
