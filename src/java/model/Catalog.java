@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
-public class DictImp {
+public class Catalog {
 
     //общий справочник tree view
     public JSONObject dictSpr(HttpServletRequest request, HttpServletResponse response) {

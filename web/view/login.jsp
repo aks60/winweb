@@ -22,7 +22,7 @@
                     }).trigger('resize');
                 });
 
-                //autoconnect();
+                autoconnect();
 
             });
             function onPage(val) {

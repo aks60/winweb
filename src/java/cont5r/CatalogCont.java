@@ -5,20 +5,22 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-public class DictCont extends HttpServlet {
+@WebServlet(name = "CatalogCont", urlPatterns = {"/dict"})
+public class CatalogCont extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(DictCont.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CatalogCont.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -27,7 +29,7 @@ public class DictCont extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(DictCont.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CatalogCont.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

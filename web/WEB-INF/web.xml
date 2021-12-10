@@ -6,13 +6,17 @@
         <!--<welcome-file>/index.html</welcome-file>-->
         <!--<welcome-file>/view/patt/simpl1.html</welcome-file>-->
     </welcome-file-list>
-    <servlet>
+<!--    <servlet>
         <servlet-name>admin2</servlet-name>
         <servlet-class>cont5r.AdminCont</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>users2</servlet-name>
+        <servlet-class>cont5r.UsersCont</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>dict2</servlet-name>
-        <servlet-class>cont5r.DictCont</servlet-class>
+        <servlet-class>cont5r.CatalogCont</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>dealer2</servlet-name>
@@ -23,13 +27,18 @@
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>users2</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>dict2</servlet-name>
         <url-pattern>/dict</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dealer2</servlet-name>
         <url-pattern>/dealer</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
+    
     <session-config>
         <session-timeout>16</session-timeout>
     </session-config>

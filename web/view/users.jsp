@@ -15,12 +15,48 @@
                 $(window).bind('resize', function () {
                     var height = window.innerHeight - 68;
                     $("#midl").css("height", height);
+                    $("#table1").setGridWidth($("#centr").width());
                 }).trigger('resize');
+
+                $.ajax({
+                    url: 'users?action=userList',
+                    beforeSend: function () {},
+                    success: function (data) {
+                        debugger;
+                        userList = data.userList;
+                        var tr = userList[0];
+                        for (i = 1; i < userList.length; i++) {
+                            $("#table1").addRowData(i + 1, {
+                                idrow: userList[i][tr[0]],
+                                fio: userList[i][tr[1]],
+                                desc: userList[i][tr[2]],
+                                login: userList[i][tr[3]],
+                                role: userList[i][tr[4]]
+                            });
+                        }
+                        //upBody();
+                    }
+                });
             });
+
+
             function onPage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
-            }            
+            }
+
+            function selectPan(row) {
+                /*var ids = $('#table1').jqGrid('getGridParam', 'selarrrow');
+                 if (ids.length > 0) {
+                 var idList = [];
+                 for (var i = 0, il = ids.length; i < il; i++) {
+                 var id = $('#table1').jqGrid('getCell', ids[i], 'idrow');
+                 idList.push(id);
+                 }
+                 //теперь отправим выбранные учреждения на сервер
+                 sendSelectUch(idList);
+                 }*/
+            }
         </script>          
     </head>
     <body>
@@ -143,7 +179,28 @@
             </div>                 
             <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                 <div>
-                    CENTR ======== ========== ========== ========= ======== ========== ============    
+                    <table id="table1"  class="ui-jqgrid-btable"></table> 
+                    <script type="text/javascript">
+                        $(function () {
+                            $("#table1").jqGrid({
+                                datatype: "local",
+                                autowidth: true,
+                                height: 'auto',
+                                colNames: ['idrow', 'ФИО', 'Описание', 'Пользователь', 'Роль'],
+                                colModel: [
+                                    {name: 'idrow', hidden: true},
+                                    {name: 'fio', width: 98, sorttype: "text"},
+                                    {name: 'desc', width: 200, sorttype: "text"},
+                                    {name: 'login', width: 40, sorttype: "text"},
+                                    {name: 'role', width: 40, sorttype: "text"},
+                                ],
+                                onSelectRow: function (rowid) {
+                                    alert(rowid);
+                                    //selectPan(rowid);
+                                },
+                            });
+                        });
+                    </script>    
                 </div>
             </div>                 
         </div>

@@ -8,11 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.AdmImp;
+import model.Admin;
 import model.sys.Sys;
 import org.json.simple.JSONValue;
 
-@WebServlet(name = "AdminCont", urlPatterns = {"/AdminCont"})
+@WebServlet(name = "AdminCont", urlPatterns = {"/admin"})
 public class AdminCont extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +50,7 @@ public class AdminCont extends HttpServlet {
 
         } else if (action.equalsIgnoreCase("userConnect")) {
 
-            AdmImp adm = new AdmImp();
+            Admin adm = new Admin();
             menuDisplay(request, response);
             Sys.initDatePass(request);
 
@@ -64,7 +64,7 @@ public class AdminCont extends HttpServlet {
 //            response.getWriter().write(JSONValue.toJSONString(output));
 
         } else if (action.equalsIgnoreCase("newLogin")) {
-            AdmImp adm = new AdmImp();
+            Admin adm = new Admin();
             HashMap output = adm.newLogin(request, response);
             response.getWriter().write(JSONValue.toJSONString(output));
 

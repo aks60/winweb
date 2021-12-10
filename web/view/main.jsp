@@ -24,6 +24,7 @@
 
             //глобальные данные
             var dataProp = [];
+            var userList = [];
 
             //глобальные настройки и параметры
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
