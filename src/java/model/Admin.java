@@ -217,8 +217,8 @@ public class Admin {
         String user_role = request.getParameter("role");
         HashMap output = new HashMap(new App().asMap("login", true, "mes", "Новый пользователь создан"));
         try {
-            if (adm_name.equals("admin") || adm_name.equals("sysdba")) {               
-                Query user = new Query(connect, eSysuser.values()).select("select * from sysuser a where a.login = '" + user_name + "'");              
+            if (adm_name.equals("admin") || adm_name.equals("sysdba")) {
+                Query user = new Query(connect, eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
                 if (user.isEmpty() == true) { //если нет создаём его
 
                     Key key = new SecretKeySpec(encoded, algorithm); //зашифруем пароль
@@ -227,7 +227,7 @@ public class Admin {
                     byte[] password3 = cipher.doFinal(user_password.getBytes());
                     String password4 = new String(password3);
                     Query qSysuser = new Query(connect, eSysuser.values());
-                    
+
                     Record record = eSysuser.up.newRecord(Query.INS);
                     record.set(eSysuser.id, att.genId(eSysuser.up));
                     record.set(eSysuser.login, user_name);
@@ -262,6 +262,23 @@ public class Admin {
             return output;
         } catch (Exception e) {
             output.put("result", "Ошибка создания нового пользователя №6");
+            return output;
+        }
+    }
+
+    public HashMap deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
+        HashMap output = new HashMap(new App().asMap("result", "Ошибка удаления пользователя"));
+        try {
+            Query qUser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
+            if(qUser.isEmpty() == false) {
+                qUser.delete(qUser.get(0));
+                output.put("result", true);
+                output.put("mes", "Пользователь успешно удалён");
+            } 
+            return output;
+
+        } catch (Exception e) {
+            System.err.println("model.Admin.deleteUser()");
             return output;
         }
     }

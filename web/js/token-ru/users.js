@@ -21,35 +21,6 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
-function editUser(pan) {
-
-    var element;
-    if (pan == 1) {
-        element = document.getElementById('combo2').value;
-    } else {
-        element = document.getElementById('combo').value;
-    }
-    for (var index = 0; index < regionList.length; ++index) {
-        var record = regionList[index].name;
-        
-        if (record.trim() == element.trim()) {
-
-            var id = regionList[index].id - 590000;
-            if (id == 9999) {
-                id = 0;
-            }
-            if (id < 10) {
-                id = '0' + id;
-            }
-            if (pan == 1) {
-                $('#pan1 .login').val('rono' + id);
-            } else {
-                $('#pan2 .login').val('rono' + id);
-            }
-        }
-    }
-}
-
 //проверка корректности ввода учётной записи
 function chk_login() {
 
@@ -111,12 +82,32 @@ function new_login() {
     }
     $.ajax({
         url: 'admin?action=newLogin',
-        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio':att[4], 'desc':att[5], 'role': 'DIALER_RW'},
+        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DIALER_RW'},
         success: function (data) {
             load_users();
         },
         error: function () {
             alert('Ошибка создания нового пользователя');
+        }
+    });
+}
+
+//удаление учётной записи логин-пароль пользователя на сервере
+function delete_login() {
+    var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
+    var id = $('#table1').jqGrid('getCell', rowId, 'id');
+    $.ajax({
+        url: 'admin?action=deleteLogin',
+        data: {'userID': id},
+        success: function (data) {
+            if (data.result == 'false') {
+                alert(data.mes);
+            } else {
+                new_openkey(login);
+            }
+        },
+        error: function () {
+            alert('Ошибка удаления пользователя');
         }
     });
 }

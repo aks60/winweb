@@ -16,7 +16,7 @@ import static model.sys.Sys.dateFormat2;
 public class App {
 
     //Накопление результата
-    public void inc(Map hm, Integer val, Object... keys) {
+    public static void inc(Map hm, Integer val, Object... keys) {
         try {
             hm = map(hm, Arrays.copyOf(keys, keys.length - 1));
 
@@ -31,7 +31,7 @@ public class App {
     }
 
     //Накопление результата
-    public void inc(Map hm, Double val, Object... keys) {
+    public static void inc(Map hm, Double val, Object... keys) {
         try {
             hm = map(hm, Arrays.copyOf(keys, keys.length - 1));
 
@@ -46,7 +46,7 @@ public class App {
     }
 
     //Накопление массива
-    public <E> void add(Map hm, E val, Object... keys) {
+    public static <E> void add(Map hm, E val, Object... keys) {
         try {
             hm = map(hm, Arrays.copyOf(keys, keys.length - 1));
 
@@ -64,7 +64,7 @@ public class App {
     }
 
     //Присвоение значения
-    public <E> void put(Map hm, E val, Object... keys) {
+    public static <E> void put(Map hm, E val, Object... keys) {
         try {
             hm = map(hm, Arrays.copyOf(keys, keys.length - 1));
             hm.put(keys[keys.length - 1], (E) val);
@@ -75,7 +75,7 @@ public class App {
     }
 
     //Получить значение HashMap
-    public <E> E val(Map hm, E def, Object... keys) {
+    public static <E> E val(Map hm, E def, Object... keys) {
         try {
             hm = map(hm, Arrays.copyOf(keys, keys.length - 1));
             return (hm.get(keys[keys.length - 1]) == null) ? def : (E) hm.get(keys[keys.length - 1]);
@@ -87,7 +87,7 @@ public class App {
     }
 
     //Получить вложенный HashMap
-    public <E> E map(Map hm, Object... keys) {
+    public static <E> E map(Map hm, Object... keys) {
         try {
             for (int level = 0; level < keys.length; ++level) {
                 Object key = keys[level];
@@ -109,7 +109,7 @@ public class App {
     }
 
     //Получить ArrayList из HashMap
-    public <E> ArrayList<E> getArr(HashMap<Object, E> hm) {
+    public static <E> ArrayList<E> getArr(HashMap<Object, E> hm) {
         try {
             ArrayList<E> arr = new ArrayList();
             for (Map.Entry<Object, E> entry : hm.entrySet()) {
@@ -125,7 +125,7 @@ public class App {
     }
 
     //Получить вложенный ArrayList
-    public <E> ArrayList<E> getArr(HashMap hm, Object... keys) {
+    public static <E> ArrayList<E> getArr(HashMap hm, Object... keys) {
         try {
             for (int level = 0; level < keys.length - 1; ++level) {
                 Object key = keys[level];
@@ -149,7 +149,7 @@ public class App {
         }
     }
 
-    public <E> ArrayList<E> asArr(E... objs) {
+    public static <E> ArrayList<E> asArr(E... objs) {
         ArrayList<E> arr = new ArrayList();
         for (E obj : objs) {
             arr.add(obj);
@@ -157,11 +157,11 @@ public class App {
         return arr;
     }
 
-    public <E> E[] asMas(E... objs) {
+    public static <E> E[] asMas(E... objs) {
         return objs;
     }
 
-    public TreeMap asTree(Object... arr) {
+    public static TreeMap asTree(Object... arr) {
         try {
             TreeMap tm = new TreeMap();
             for (int i = 0; i < arr.length; i += 2) {
@@ -174,7 +174,7 @@ public class App {
         }
     }
 
-    public HashMap asMap(Object... arr) {
+    public static HashMap asMap(Object... arr) {
         try {
             HashMap hm = new HashMap();
             for (int i = 0; i < arr.length; i += 2) {
@@ -187,7 +187,7 @@ public class App {
         }
     }
 
-    public ArrayList<HashMap> asMap(Table... tables) {
+    public static ArrayList<HashMap> asMap(Table... tables) {
 
 //        if (tables[0] == null) {
 //            return null;
@@ -232,7 +232,7 @@ public class App {
           return null;
     }
 
-    public HashMap<Object, Record> asMap(Table table, Field id) {
+    public static HashMap<Object, Record> asMap(Table table, Field id) {
 
         HashMap output = new HashMap();
         for (Record it : table) {
@@ -241,7 +241,7 @@ public class App {
         return output;
     }
 
-    public HashMap asMap(Table table, Field id, Field val) {
+    public static HashMap asMap(Table table, Field id, Field val) {
 
         HashMap output = new HashMap();
         for (Record it : table) {
@@ -250,7 +250,7 @@ public class App {
         return output;
     }
 
-    public HashMap asMap(Record record, Field... field) {
+    public static HashMap asMap(Record record, Field... field) {
         HashMap hm = new HashMap();
         for (int i = 0; i < field.length; ++i) {
             Object value = record.get(field[i]);

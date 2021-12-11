@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Admin;
+import model.sys.App;
 import model.sys.Sys;
 import org.json.simple.JSONValue;
 
@@ -66,6 +67,12 @@ public class AdminCont extends HttpServlet {
         } else if (action.equalsIgnoreCase("newLogin")) {
             Admin adm = new Admin();
             HashMap output = adm.newLogin(request, response);
+            response.getWriter().write(JSONValue.toJSONString(output));
+
+        } else if (action.equalsIgnoreCase("deleteLogin")) {
+            Admin adm = new Admin();
+            String id = request.getParameter("userID");
+            HashMap output = adm.deleteUser(request, response, id);
             response.getWriter().write(JSONValue.toJSONString(output));
 
         }

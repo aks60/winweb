@@ -39,7 +39,7 @@
                         var tr = userList[0];
                         for (i = 1; i < userList.length; i++) {
                             $("#table1").addRowData(i + 1, {
-                                idrow: userList[i][tr[0]],
+                                id: userList[i][tr[0]],
                                 fio: userList[i][tr[1]],
                                 desc: userList[i][tr[2]],
                                 login: userList[i][tr[3]],
@@ -74,15 +74,15 @@
                 <div id="west2" style="height: 108px">
                     <button type="button" onClick="onPage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
                     <button type="button" onClick="onPage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
-                    <button type="button" onClick="onPage('3');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
-                    <button type="button" onClick="onPage('4');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
+                    <button type="button" onClick="onPage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
+                    <button type="button" onClick="onPage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
                 </div>
                 <div id="west3" style="height: 200px">
                     <div id="pan1">                     
                         <p class="pantitle"><font size=3>Регистрация нового пользователя для входа через логин и пароль</font></p> 
                         <p>Для регистрации введите логин и пароль администратора, введите логин и пароль пользователя, 
                             нажмите кнопку «Зарегистрировать». </p><br><br>    
-                        <table height="150" width="440">
+                        <table height="180" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
                                 <td><input class="login" placeholder='Введите логин' value='admin' type='text' size='16'></td>
@@ -117,7 +117,7 @@
                         <p>Для регистрации введите логин и пароль администратора, введите логин пользователя и нажмите кнопку «Зарегистрировать».
                             Внимание! Логин пользователя должен состоять из цифр и букв латинского алфавита 
                             (любого регистра), а также иметь длину не менее трех и не более шестнадцати символов.</p><br><br>                 
-                        <table height="120" width="440">
+                        <table height="140" width="440">
                             <tr>
                                 <td>Логин администратора:</td>
                                 <td><input class="login" placeholder='Введите логин' value='' type='text' size='16'></td>
@@ -144,7 +144,7 @@
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для удаления выберите логин в выпадающем 
                             списке и нажмите кнопку «Удалить». Далее потребуется ввести правильный PIN-код.</p><br><br>                          
-                        <table height="50">
+                        <table height="60">
                             <tr>
                                 <td><label>Логин пользователя:</label></td>
                                 <td>
@@ -163,24 +163,21 @@
                         </table>
                     </div> 
                     <div id="pan4" style="display: none;"> 
-                        <p class="pantitle"><font size=3>Удаление логина USB-токена</font></p> 
-                        <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
-                            сохраненных на USB-токене. Для удаления выберите логин в выпадающем 
-                            списке и нажмите кнопку «Удалить». Далее потребуется ввести правильный PIN-код.</p><br><br>                          
-                        <table height="50">
+                        <p class="pantitle"><font size=3>Удаление логина пользователя</font></p> 
+                        <p>Для удаления выберите логин в списке пользователей и нажмите кнопку «Удалить».</p><br><br>                          
+                        <table height="80">
                             <tr>
-                                <td><label>Логин пользователя:</label></td>
-                                <td>
-                                    <select tabindex="1" name="list_log" id="token_login" style="width: 160px;">
-                                        <option selected="selected" value="none"> — </option>
-                                    </select>                                    
-                                </td>
+                                <td>ФИО пользователя:</td>
+                                <td><input class="fio" value='' type="text" size='64' style="width: 260px;"/></td>
+                            </tr>
+                            <tr>
+                                <td>Логин пользователя:</td>
+                                <td><input class="login" value='' type="text" size='16' style="width: 160px;"/></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class='refresh' tabindex="3" type="button" onclick="token_refresh()" style="width: 80px;">Обновить</button>
-                                    <button tabindex="2" type="button" onclick="delete_openkey()"style="width: 76px;">Удалить</button>
+                                    <button tabindex="2" type="button" onclick="delete_login();" style="width: 76px;">Удалить</button>
                                 </td>
                             </tr>
                         </table>
@@ -196,18 +193,21 @@
                                 datatype: "local",
                                 autowidth: true,
                                 height: 'auto',
-                                colNames: ['idrow', 'ФИО', 'Описание', 'Пользователь', 'Роль'],
+                                colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
                                 colModel: [
-                                    {name: 'idrow', hidden: true},
+                                    {name: 'id', hidden: true},
                                     {name: 'fio', width: 98, sorttype: "text"},
                                     {name: 'desc', width: 200, sorttype: "text"},
                                     {name: 'login', width: 40, sorttype: "text"},
                                     {name: 'role', width: 40, sorttype: "text"},
                                 ],
                                 onSelectRow: function (rowid) {
-                                    alert(rowid);
-                                    //selectPan(rowid);
+                                    $('#pan4 .fio').val($(this).jqGrid('getRowData', rowid).fio);
+                                    $('#pan4 .login').val($(this).jqGrid('getRowData', rowid).login);
                                 },
+//                                onSelectRow: function (record) {
+//                                    window.dialog_select = record
+//                                }
                             });
                         });
                     </script>    
