@@ -212,6 +212,7 @@ public class Admin {
         String adm_password = request.getParameter("password");
         String user_name = request.getParameter("username2");
         String user_password = request.getParameter("password2");
+        String user_fio = request.getParameter("fio");
         String user_desc = request.getParameter("desc");
         String user_role = request.getParameter("role");
         HashMap output = new HashMap(new App().asMap("login", true, "mes", "Новый пользователь создан"));
@@ -230,10 +231,10 @@ public class Admin {
                     Record record = eSysuser.up.newRecord(Query.INS);
                     record.set(eSysuser.id, att.genId(eSysuser.up));
                     record.set(eSysuser.login, user_name);
+                    record.set(eSysuser.fio, user_fio);
                     record.set(eSysuser.desc, user_desc);
                     record.set(eSysuser.role, user_role);
                     record.set(eSysuser.openkey, password4);
-                    record.set(eSysuser.fio, "fio");
                     qSysuser.insert(record);
                     output.put("result", "true");
                 } else {

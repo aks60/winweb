@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/token-ru/users.js"></script>        
         <title>JSP Page</title>
         <style>
             #north, #west, #west2, #midl, #south, #centr {
@@ -18,6 +19,17 @@
                     $("#table1").setGridWidth($("#centr").width());
                 }).trigger('resize');
 
+                load_users();
+            });
+
+
+            function onPage(val) {
+                $("#pan1, #pan2, #pan3, #pan4").hide();
+                $("#pan" + val).show();
+            }
+
+            function load_users() {
+                $('#table1').jqGrid("clearGridData", true);
                 $.ajax({
                     url: 'users?action=userList',
                     beforeSend: function () {},
@@ -37,12 +49,6 @@
                         //upBody();
                     }
                 });
-            });
-
-
-            function onPage(val) {
-                $("#pan1, #pan2, #pan3, #pan4").hide();
-                $("#pan" + val).show();
             }
 
             function selectPan(row) {
@@ -93,6 +99,10 @@
                                 <td>Пароль пользователя:</td>
                                 <td><input class="password" placeholder='Введите пароль' value='qwerty' type="password" style="width: 160px;"/></td>
                             </tr>
+                            <tr>
+                                <td>ФИО:</td>
+                                <td><input class="fio" placeholder='Введите ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                            </tr>                            
                             <tr>
                                 <td>Описание:</td>
                                 <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
