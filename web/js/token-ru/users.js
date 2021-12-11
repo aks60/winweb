@@ -88,7 +88,7 @@ function chk_login() {
 //создание учётной записи логин-пароль пользователя на сервере
 function new_login() {
 
-    var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .desc').val(), $('#pan1 .fio').val()];
+    var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
     //console.log(att);
     for (var i = 0; i < 4; i++) {
@@ -111,7 +111,7 @@ function new_login() {
     }
     $.ajax({
         url: 'admin?action=newLogin',
-        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio':att[4], 'desc':att[4], 'role': 'DIALER_RW'},
+        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio':att[4], 'desc':att[5], 'role': 'DIALER_RW'},
         success: function (data) {
             load_users();
         },
