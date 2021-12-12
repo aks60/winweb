@@ -4,7 +4,7 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script type="text/javascript" src="js/token-ru/login.js"></script>
+        <script type="text/javascript" src="js/login.js"></script>
         <style>
             #north, #west, #midl, #south, #centr, #east {
                 border: 2px solid #ccc;
@@ -22,7 +22,7 @@
                     }).trigger('resize');
                 });
 
-                autoconnect();
+                //autoconnect();
 
             });
             function onPage(val) {

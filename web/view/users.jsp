@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="js/token-ru/users.js"></script>        
+        <script type="text/javascript" src="js/users.js"></script>        
         <title>JSP Page</title>
         <style>
             #north, #west, #west2, #midl, #south, #centr {
