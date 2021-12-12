@@ -63,7 +63,6 @@ function user_connect() {
 
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
-    //console.log(att);
     for (var i = 0; i < 2; i++) {
         if (att[i] == '') {
             alert(mes[i]);
@@ -79,7 +78,8 @@ function user_connect() {
                 if (data.role == 'RDB$ADMIN') {
                     $("#outbody").load('view/users.jsp');
                 } else {
-                    $("#outbody").load('view/dealer.jsp');
+                    $("#tabs").show();
+                    $("#outbody").load('view/order.jsp');
                 }
             } else {
                 alert(data.result);

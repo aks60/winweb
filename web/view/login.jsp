@@ -91,7 +91,7 @@
                     </table>                
                 </div> 
             </div>  
-            <div id="EAST" style="position: absolute; height: 100%; width: 198px; right: -200px;">
+            <div id="east" style="position: absolute; height: 100%; width: 198px; right: -200px;">
                 <div style="margin-left: 20px">
                     <p> E-mail:
                     <p style="color: dodgerblue"> x-xxx@xxxx.ru
