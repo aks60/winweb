@@ -44,7 +44,7 @@ function chk_login() {
     }
     //login = login + '-rono';
     $.ajax({
-        url: 'admin?action=rtwEmptyLogin',
+        url: 'login?action=rtwEmptyLogin',
         data: {'admname': att[0], 'password': att[1], 'login': login},
         success: function (data) {
             if (data.login == 'false') {
@@ -81,7 +81,7 @@ function new_login() {
         return false;
     }
     $.ajax({
-        url: 'admin?action=newLogin',
+        url: 'login?action=newLogin',
         data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DIALER_RW'},
         success: function (data) {
             $('#pan1 .login:first').val('');
@@ -105,7 +105,7 @@ function delete_login() {
     let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
     if (isDelete == true) {
         $.ajax({
-            url: 'admin?action=deleteLogin',
+            url: 'login?action=deleteLogin',
             data: {'userID': id},
             success: function (data) {
                 if (data.result == 'false') {
@@ -153,7 +153,7 @@ function new_openkey(login) {
             }
         }
         $.ajax({
-            url: 'admin?action=newToken',
+            url: 'login?action=newToken',
             data: {'login': login, 'openkey': result, 'role': role, 'uch': uch},
             success: function (data) {
                 alert('Логин пользователя создан!');
@@ -172,7 +172,7 @@ function token_random() {
         alert("Выберите учетную запись на USB-токене.");
     } else {
         $.ajax({
-            url: 'admin?action=rtwRandom',
+            url: 'login?action=rtwRandom',
             data: {'login': login},
             error: function () {
                 alert("Ошибка на сервере");
@@ -199,7 +199,7 @@ function token_sign(random) {
             alert(err[sign]);
         } else {
             $.ajax({
-                url: 'admin?action=rtwConnect',
+                url: 'login?action=rtwConnect',
                 data: {'sign': sign},
                 error: function () {
                     alert("Ошибка на сервере");

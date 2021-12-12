@@ -42,7 +42,7 @@ import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.util.encoders.Hex;
 
 //@WebServlet(name = "AdminCont", urlPatterns = {"/admin"})
-public class Admin {
+public class Login {
 
     private static String algorithm = "DESede";
     private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};

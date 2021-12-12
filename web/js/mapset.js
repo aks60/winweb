@@ -391,7 +391,7 @@ var focusObj = {
 //генератор ключей
 function genId(name) {
     $.ajax({
-        url: 'admin?action=genId',
+        url: 'login?action=genId',
         data: {param: name},
         success: function (data) {
             alert(data.id);

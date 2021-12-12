@@ -46,7 +46,7 @@ function chk_login() {
     }
     login = login + '-rono';
     $.ajax({
-        url: 'admin?action=rtwLogin',
+        url: 'login?action=rtwLogin',
         data: {'admname': att[0], 'password': att[1], 'login': login},
         success: function (data) {
             if (data.login == 'false') {
@@ -71,7 +71,7 @@ function user_connect() {
         }
     }
     $.ajax({
-        url: 'admin?action=userConnect',
+        url: 'login?action=userConnect',
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
             //debugger;
@@ -98,7 +98,7 @@ function token_connect() {
         alert("Выберите учетную запись на USB-токене.");
     } else {
         $.ajax({
-            url: 'admin?action=rtwRandom',
+            url: 'login?action=rtwRandom',
             data: {'login': login},
             error: function () {
                 alert("Ошибка на сервере");
@@ -125,7 +125,7 @@ function token_sign(random) {
             alert(err[sign]);
         } else {
             $.ajax({
-                url: 'admin?action=rtwConnect',
+                url: 'login?action=rtwConnect',
                 data: {'sign': sign},
                 error: function () {
                     alert("Ошибка авторизации токена");

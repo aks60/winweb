@@ -8,13 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Admin;
+import model.Login;
 import model.sys.App;
 import model.sys.Sys;
 import org.json.simple.JSONValue;
 
-@WebServlet(name = "AdminCont", urlPatterns = {"/admin"})
-public class AdminCont extends HttpServlet {
+@WebServlet(name = "LoginCont", urlPatterns = {"/login"})
+public class LoginCont extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,7 +51,7 @@ public class AdminCont extends HttpServlet {
 
         } else if (action.equalsIgnoreCase("userConnect")) {
 
-            Admin adm = new Admin();
+            Login adm = new Login();
             menuDisplay(request, response);
             Sys.initDatePass(request);
 
@@ -65,12 +65,12 @@ public class AdminCont extends HttpServlet {
 //            response.getWriter().write(JSONValue.toJSONString(output));
 
         } else if (action.equalsIgnoreCase("newLogin")) {
-            Admin adm = new Admin();
+            Login adm = new Login();
             HashMap output = adm.newLogin(request, response);
             response.getWriter().write(JSONValue.toJSONString(output));
 
         } else if (action.equalsIgnoreCase("deleteLogin")) {
-            Admin adm = new Admin();
+            Login adm = new Login();
             String id = request.getParameter("userID");
             HashMap output = adm.deleteUser(request, response, id);
             response.getWriter().write(JSONValue.toJSONString(output));
