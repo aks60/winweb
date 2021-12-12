@@ -34,7 +34,7 @@
                     url: 'users?action=userList',
                     beforeSend: function () {},
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         userList = data.userList;
                         var tr = userList[0];
                         for (i = 1; i < userList.length; i++) {
@@ -105,7 +105,7 @@
                             </tr>                            
                             <tr>
                                 <td>Описание:</td>
-                                <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="new_login();" style="width: 164px;">Зарегистрировать</button></td>
@@ -131,8 +131,12 @@
                                 <td><input class="login" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
                             </tr> 
                             <tr>
+                                <td>ФИО:</td>
+                                <td><input class="fio" placeholder='Введите ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                            </tr>                              
+                            <tr>
                                 <td>Описание:</td>
-                                <td><input class="desc" placeholder='Описание' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
                                 <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрировать</button></td>

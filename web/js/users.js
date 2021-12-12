@@ -58,7 +58,7 @@ function chk_login() {
 
 //создание учётной записи логин-пароль пользователя на сервере
 function new_login() {
-
+    //debugger;
     var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
     //console.log(att);
@@ -84,6 +84,12 @@ function new_login() {
         url: 'admin?action=newLogin',
         data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DIALER_RW'},
         success: function (data) {
+            $('#pan1 .login:first').val('');
+            $('#pan1 .password:first').val('');
+            $('#pan1 .login:last').val('');
+            $('#pan1 .password:last').val('');
+            $('#pan1 .fio').val('');
+            $('#pan1 .desc').val('');
             load_users();
         },
         error: function () {
@@ -96,20 +102,23 @@ function new_login() {
 function delete_login() {
     var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
     var id = $('#table1').jqGrid('getCell', rowId, 'id');
-    $.ajax({
-        url: 'admin?action=deleteLogin',
-        data: {'userID': id},
-        success: function (data) {
-            if (data.result == 'false') {
-                alert(data.mes);
-            } else {
-                new_openkey(login);
+    let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
+    if (isDelete == true) {
+        $.ajax({
+            url: 'admin?action=deleteLogin',
+            data: {'userID': id},
+            success: function (data) {
+                if (data.result == 'false') {
+                    alert(data.mes);
+                } else {
+                    load_users();
+                }
+            },
+            error: function () {
+                alert('Ошибка удаления пользователя');
             }
-        },
-        error: function () {
-            alert('Ошибка удаления пользователя');
-        }
-    });
+        });
+    }
 }
 
 //создание учётной записи пользователя на сервере
