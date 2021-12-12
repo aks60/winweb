@@ -21,8 +21,6 @@ public class Users {
         ((List) output.get("userList")).add(Arrays.asList(eSysuser.id.ordinal(), eSysuser.fio.ordinal(), eSysuser.desc.ordinal(), eSysuser.login.ordinal(), eSysuser.role.ordinal()));
         for (Record record : qSysuser) {
             ((List) output.get("userList")).add(record);
-//            ((List) output.get("userList")).add(Arrays.asList(rec.getStr(eSysuser.id),
-//                    rec.getStr(eSysuser.fio), rec.getStr(eSysuser.desc), rec.getStr(eSysuser.login), rec.getStr(eSysuser.role)));
         }
         return output;
     }

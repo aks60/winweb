@@ -23,6 +23,10 @@
         <script type="text/javascript">
 
             //глобальные данные
+            var login = {};
+            var users = {};
+            var order = {};
+            
             var dataProp = [];
             var userList = [];
 

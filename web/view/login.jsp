@@ -22,17 +22,12 @@
                     }).trigger('resize');
                 });
 
-                //autoconnect();
-
+                //login.user_connect();
             });
+            
             function onPage(val) {
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
-            }
-            function autoconnect() {
-                $('#pan1 .login').val('admin');
-                $('#pan1 .password').val('masterkey');
-                user_connect();
             }
         </script>         
     </head>
@@ -61,7 +56,7 @@
                         </tr>
                         <td></td>
                         <td>
-                            <button tabindex="2" type="button" onclick="user_connect()"style="width: 120px;">Войти</button>
+                            <button tabindex="2" type="button" onclick="login.user_connect();"style="width: 120px;">Войти</button>
                         </td>                            
                     </table>
                     

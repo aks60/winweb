@@ -39,14 +39,11 @@
                         var tr = userList[0];
                         for (i = 1; i < userList.length; i++) {
                             $("#table1").addRowData(i + 1, {
-                                id: userList[i][tr[0]],
-                                fio: userList[i][tr[1]],
-                                desc: userList[i][tr[2]],
-                                login: userList[i][tr[3]],
+                                id: userList[i][tr[0]], fio: userList[i][tr[1]],
+                                desc: userList[i][tr[2]], login: userList[i][tr[3]],
                                 role: userList[i][tr[4]]
                             });
                         }
-                        //upBody();
                     }
                 });
             }
@@ -108,7 +105,7 @@
                                 <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
-                                <td></td><td><button type="button" onClick="new_login();" style="width: 164px;">Зарегистрировать</button></td>
+                                <td></td><td><button type="button" onClick="users.logim_create();" style="width: 164px;">*Зарегистрировать</button></td>
                             </tr>
                         </table>                       
                     </div>                    
@@ -139,7 +136,7 @@
                                 <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
-                                <td></td><td><button type="button" onClick="chk_login();" style="width: 164px;">Зарегистрировать</button></td>
+                                <td></td><td><button type="button" onClick="users.token_check();" style="width: 164px;">Зарегистрировать</button></td>
                             </tr>
                         </table>                      
                     </div> 
@@ -181,7 +178,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button tabindex="2" type="button" onclick="delete_login();" style="width: 76px;">Удалить</button>
+                                    <button tabindex="2" type="button" onclick="users.login_delete();" style="width: 76px;">Удалить</button>
                                 </td>
                             </tr>
                         </table>

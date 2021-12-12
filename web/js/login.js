@@ -1,6 +1,3 @@
-
-var plugin;
-var http = create_object();
 var err = [];
 err[-1] = 'USB-токен не найден';
 err[-2] = 'USB-токен не залогинен пользователем';
@@ -22,8 +19,40 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
+//авторизация через логин-пароль
+login.user_connect = function () {
+    var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
+    var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
+    for (var i = 0; i < 2; i++) {
+        if (att[i] == '') {
+            alert(mes[i]);
+            return;
+        }
+    }
+    $.ajax({
+        url: 'login?action=userConnect',
+        data: {'username': att[0], 'password': att[1]},
+        success: function (data) {
+            //debugger;
+            if (data.result == 'true') {
+                if (data.role == 'RDB$ADMIN') {
+                    $("#outbody").load('view/users.jsp');
+                } else {
+                    $("#tabs").show();
+                    $("#outbody").load('view/order.jsp');
+                }
+            } else {
+                alert(data.result);
+            }
+        },
+        error: function () {
+            alert('Ошибка авторизации пользователя');
+        }
+    });    
+}
+
 //проверка корректности ввода учётной записи
-function chk_login() {
+login.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('pan2 .login.last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
@@ -58,41 +87,8 @@ function chk_login() {
     });
 }
 
-//авторизация через логин-пароль
-function user_connect() {
-
-    var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
-    var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
-    for (var i = 0; i < 2; i++) {
-        if (att[i] == '') {
-            alert(mes[i]);
-            return;
-        }
-    }
-    $.ajax({
-        url: 'login?action=userConnect',
-        data: {'username': att[0], 'password': att[1]},
-        success: function (data) {
-            //debugger;
-            if (data.result == 'true') {
-                if (data.role == 'RDB$ADMIN') {
-                    $("#outbody").load('view/users.jsp');
-                } else {
-                    $("#tabs").show();
-                    $("#outbody").load('view/order.jsp');
-                }
-            } else {
-                alert(data.result);
-            }
-        },
-        error: function () {
-            alert('Ошибка авторизации пользователя');
-        }
-    });
-}
-
 //отправим учётку, получим случайное сообщение
-function token_connect() {
+login.token_connect = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
         alert("Выберите учетную запись на USB-токене.");
@@ -111,7 +107,7 @@ function token_connect() {
 }
 
 //подписание сообщения сервера закрытым ключём токена
-function token_sign(random) {
+login.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
         alert('Не установлен плагин для работы с USB-токеном');
@@ -147,7 +143,7 @@ function token_sign(random) {
 }
 
 //получение списка учёных записей токена
-function token_refresh() {
+login.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");
     for (var i = log_list.options.length - 1; i >= 0; i--) {
@@ -170,7 +166,7 @@ function token_refresh() {
     }
 }
 
-function add_item(oListbox, text, value, isDefaultSelected, isSelected) {
+login.add_item = function (oListbox, text, value, isDefaultSelected, isSelected) {
     var oOption = document.createElement("option");
     oOption.appendChild(document.createTextNode(text));
     oOption.setAttribute("value", value);
@@ -179,15 +175,4 @@ function add_item(oListbox, text, value, isDefaultSelected, isSelected) {
     else if (isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
-}
-
-function create_object() {
-    var request_type;
-    var browser = navigator.appName;
-    if (browser == "Microsoft Internet Explorer") {
-        request_type = new ActiveXObject("Microsoft.XMLHTTP");
-    } else {
-        request_type = new XMLHttpRequest();
-    }
-    return request_type;
 }

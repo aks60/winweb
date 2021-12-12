@@ -1,5 +1,4 @@
-var plugin;
-var http = create_object();
+
 var err = [];
 err[-1] = 'USB-токен не найден';
 err[-2] = 'USB-токен не залогинен пользователем';
@@ -22,7 +21,7 @@ err[-52] = 'Библиотека не поддерживает расширен�
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
 //проверка корректности ввода учётной записи
-function chk_login() {
+users.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('#pan2 .login:last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
@@ -57,7 +56,7 @@ function chk_login() {
 }
 
 //создание учётной записи логин-пароль пользователя на сервере
-function new_login() {
+users.logim_create = function () {
     //debugger;
     var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
@@ -99,7 +98,7 @@ function new_login() {
 }
 
 //удаление учётной записи логин-пароль пользователя на сервере
-function delete_login() {
+users.login_delete = function () {
     var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
     var id = $('#table1').jqGrid('getCell', rowId, 'id');
     let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
@@ -122,7 +121,7 @@ function delete_login() {
 }
 
 //создание учётной записи пользователя на сервере
-function new_openkey(login) {
+users.token_create = function (login) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
         alert('Не установлен плагин для работы с USB-токеном');
@@ -166,7 +165,7 @@ function new_openkey(login) {
 }
 
 //отправим учётку, получим случайное сообщение
-function token_random() {
+users.token_random = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
         alert("Выберите учетную запись на USB-токене.");
@@ -185,7 +184,7 @@ function token_random() {
 }
 
 //подписание сообщения сервера закрытым ключём токена
-function token_sign(random) {
+users.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
         alert('Не установлен плагин для работы с USB-токеном');
@@ -214,7 +213,7 @@ function token_sign(random) {
 }
 
 //удаление логина из токена
-function delete_openkey() {
+users.token_delete = function () {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
         alert('Не установлен плагин для работы с USB-токеном');
@@ -233,7 +232,7 @@ function delete_openkey() {
 }
 
 //подучение списка учёных записей токена
-function token_refresh() {
+users.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");
     for (var i = log_list.options.length - 1; i >= 0; i--) {
@@ -255,7 +254,7 @@ function token_refresh() {
     }
 }
 
-function add_item(oListbox, text, value, isDefaultSelected, isSelected) {
+users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected) {
     var oOption = document.createElement("option");
     oOption.appendChild(document.createTextNode(text));
     oOption.setAttribute("value", value);
@@ -264,15 +263,4 @@ function add_item(oListbox, text, value, isDefaultSelected, isSelected) {
     else if (isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
-}
-
-function create_object() {
-    var request_type;
-    var browser = navigator.appName;
-    if (browser == "Microsoft Internet Explorer") {
-        request_type = new ActiveXObject("Microsoft.XMLHTTP");
-    } else {
-        request_type = new XMLHttpRequest();
-    }
-    return request_type;
 }

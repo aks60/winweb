@@ -13,20 +13,39 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    var height = window.innerHeight - 168;
+                    var height = window.innerHeight - 108;
                     $("#midl").css("height", height);
                     $("#table1").setGridWidth($("#centr").width());
                 }).trigger('resize');
 
-                load_users();
+                //load_orders();
             });
+            
+            function load_orders() {
+                $('#table1').jqGrid("clearGridData", true);
+                $.ajax({
+                    url: 'users?action=orderList',
+                    beforeSend: function () {},
+                    success: function (data) {
+                        //debugger;
+                        userList = data.userList;
+                        var tr = userList[0];
+                        for (i = 1; i < userList.length; i++) {
+                            $("#table1").addRowData(i + 1, {
+                                id: userList[i][tr[0]], fio: userList[i][tr[1]],
+                                desc: userList[i][tr[2]], login: userList[i][tr[3]],
+                                role: userList[i][tr[4]]
+                            });
+                        }
+                    }
+                });
+            }            
         </script>
     </head>
     <body>
-        <div id="midl" style="margin-right: 200px;">
-            <div id="centr" style="position: absolute; height: 100%; width: 100%;">
-                CENTR
-<!--                <table id="table1"  class="ui-jqgrid-btable"></table> 
+        <div id="midl" style="position: relative; margin-right: 400px;">
+            <div id="centr" style="height: 100%; width: 100%;">
+                <table id="table1"  class="ui-jqgrid-btable"></table> 
                 <script type="text/javascript">
                     $(function () {
                         $("#table1").jqGrid({
@@ -45,9 +64,9 @@
                             ]
                         });
                     });
-                </script> -->
+                </script> 
             </div>
-            <div id="east" style="position: absolute; height: 100%; width: 198px; right: -200px;">
+            <div id="east" style="position: absolute; height: 100%; width: 396px; top: 0; right: -400px;">
                 EAST
             </div>
         </div>
