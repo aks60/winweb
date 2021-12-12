@@ -53,11 +53,11 @@
                     <table height="80" width="340">
                         <tr>
                             <td>Логин пользователя:</td>
-                            <td><input class="login" placeholder='Введите логин' value='asd1'  type='text' size='16'></td>
+                            <td><input class="login" placeholder='Введите логин' value='asd'  type='text' size='16'></td>
                         </tr> 
                         <tr>
                             <td>Пароль пользователя:</td>
-                            <td><input class="password" placeholder='Введите пароль' value='qwerty1' type='password' size='16'></td>
+                            <td><input class="password" placeholder='Введите пароль' value='qwerty' type='password' size='16'></td>
                         </tr>
                         <td></td>
                         <td>
