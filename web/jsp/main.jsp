@@ -4,12 +4,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Main</title>
-        <link rel="stylesheet" type="text/css" href="css/yui3-3.18.1/cssreset.css">
-        <link rel="stylesheet" type="text/css" href="css/yui3-3.18.1/cssfonts.css">
-        <link rel="stylesheet" type="text/css" href="css/yui3-3.18.1/cssgrids.css">            
 
-        <link rel="stylesheet" type="text/css" media="screen" href="css/yui3-3.18.1/cssgrids.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.min.css">          
+        <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
         <!--<link rel="stylesheet" type="text/css" media="screen" href="css/ui.html/ui.html.css">--> 
 
