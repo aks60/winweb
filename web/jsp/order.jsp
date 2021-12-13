@@ -6,9 +6,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/order.js"></script> 
         <style>
-            #north, #west, #midl, #south, #centr, #east {
+            #north, #west, #midl, #south, #centr, #east, #east2 {
                 border: 2px solid #ccc;
             }
+            /*.ui-tabs .ui-tabs-nav li a {font-size:7pt !important;}*/
         </style> 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -34,7 +35,7 @@
                         $("#table1").jqGrid({
                             datatype: "local",
                             rownumbers: true,
-                            colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
+                            colNames: ['id', 'Номер заказа=', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
                             colModel: [
                                 {name: 'id', hidden: true},
                                 {name: 'num_ord', width: 120, sorttype: "text"},
@@ -50,7 +51,12 @@
                 </script> 
             </div>
             <div id="east" style="position: absolute; height: 100%; width: 396px; top: 0; right: -400px;">
-                EAST
+                <div id="east2" style="height: 300px">
+                    EAST2
+                </div>
+                <div id="east3">
+                    EAST3
+                </div>                
             </div>
         </div>
         <div id="south" style="height: 20px">
