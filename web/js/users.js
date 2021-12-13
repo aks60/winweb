@@ -264,3 +264,24 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
 }
+
+users.load = function (table) {
+    table.jqGrid("clearGridData", true);
+    $.ajax({
+        url: 'users?action=userList',
+        beforeSend: function () {},
+        success: function (data) {
+            userList = data.userList;
+            let tr = userList[0];
+            for (i = 1; i < userList.length; i++) {
+                table.addRowData(i + 1, {
+                    id: userList[i][tr[0]],
+                    fio: userList[i][tr[1]],
+                    desc: userList[i][tr[2]],
+                    login: userList[i][tr[3]],
+                    role: userList[i][tr[4]]
+                });
+            }
+        }
+    });
+}

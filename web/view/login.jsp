@@ -21,8 +21,6 @@
                         $("#midl").css("height", height);
                     }).trigger('resize');
                 });
-
-                //login.user_connect();
             });
             
             function onPage(val) {

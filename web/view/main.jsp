@@ -29,6 +29,7 @@
             
             var dataProp = [];
             var userList = [];
+            var orderList = [];
 
             //глобальные настройки и параметры           
             $(function () {
@@ -43,7 +44,7 @@
                 url: 'dict?action=property',
                 success: function (data) {
                     dataProp = data;
-                    dataProp['dateNow'] = formatDate2(new Date());
+//                    dataProp['dateNow'] = formatDate2(new Date());
                 }
             });
         </script> 

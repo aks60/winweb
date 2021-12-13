@@ -18,47 +18,12 @@
                     $("#midl").css("height", height);
                     $("#table1").setGridWidth($("#centr").width());
                 }).trigger('resize');
-
-                load_users();
             });
 
 
             function onPage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
-            }
-
-            function load_users() {
-                $('#table1').jqGrid("clearGridData", true);
-                $.ajax({
-                    url: 'users?action=userList',
-                    beforeSend: function () {},
-                    success: function (data) {
-                        //debugger;
-                        userList = data.userList;
-                        var tr = userList[0];
-                        for (i = 1; i < userList.length; i++) {
-                            $("#table1").addRowData(i + 1, {
-                                id: userList[i][tr[0]], fio: userList[i][tr[1]],
-                                desc: userList[i][tr[2]], login: userList[i][tr[3]],
-                                role: userList[i][tr[4]]
-                            });
-                        }
-                    }
-                });
-            }
-
-            function selectPan(row) {
-                /*var ids = $('#table1').jqGrid('getGridParam', 'selarrrow');
-                 if (ids.length > 0) {
-                 var idList = [];
-                 for (var i = 0, il = ids.length; i < il; i++) {
-                 var id = $('#table1').jqGrid('getCell', ids[i], 'idrow');
-                 idList.push(id);
-                 }
-                 //теперь отправим выбранные учреждения на сервер
-                 sendSelectUch(idList);
-                 }*/
             }
         </script>          
     </head>
@@ -211,6 +176,7 @@
 //                                }
                             });
                         });
+                        users.load($("#table1"));
                     </script>    
                 </div>
             </div>                 

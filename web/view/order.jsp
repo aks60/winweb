@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Order</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/order.js"></script> 
-        <title>Order</title>
         <style>
             #north, #west, #midl, #south, #centr, #east {
                 border: 2px solid #ccc;
@@ -13,33 +13,16 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    var height = window.innerHeight - 108;
-                    $("#midl").css("height", height);
-                    $("#table1").setGridWidth($("#centr").width());
+                    page_resize();
                 }).trigger('resize');
-
-                //load_orders();
             });
-            
-            function load_orders() {
-                $('#table1').jqGrid("clearGridData", true);
-                $.ajax({
-                    url: 'users?action=orderList',
-                    beforeSend: function () {},
-                    success: function (data) {
-                        //debugger;
-                        userList = data.userList;
-                        var tr = userList[0];
-                        for (i = 1; i < userList.length; i++) {
-                            $("#table1").addRowData(i + 1, {
-                                id: userList[i][tr[0]], fio: userList[i][tr[1]],
-                                desc: userList[i][tr[2]], login: userList[i][tr[3]],
-                                role: userList[i][tr[4]]
-                            });
-                        }
-                    }
-                });
-            }            
+
+            function page_resize() {
+                var height = window.innerHeight - 108;
+                $("#midl").css("height", height);
+                $("#table1").jqGrid('setGridWidth', $("#centr").width());
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
+            }
         </script>
     </head>
     <body>
@@ -50,20 +33,20 @@
                     $(function () {
                         $("#table1").jqGrid({
                             datatype: "local",
-                            autowidth: true,
-                            height: 'auto',
-                            colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Диллер', 'User'],
+                            rownumbers: true,
+                            colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
                             colModel: [
                                 {name: 'id', hidden: true},
-                                {name: 'name', width: 120, sorttype: "text"},
-                                {name: 'name', width: 120, sorttype: "text"},
-                                {name: 'name', width: 120, sorttype: "text"},
-                                {name: 'name', width: 120, sorttype: "text"},
-                                {name: 'name', width: 120, sorttype: "text"},
-                                {name: 'name', width: 120, sorttype: "text"}
+                                {name: 'num_ord', width: 120, sorttype: "text"},
+                                {name: 'num_acc', width: 120, sorttype: "text"},
+                                {name: 'date4', width: 120, sorttype: "text"},
+                                {name: 'date6', width: 120, sorttype: "text"},
+                                {name: 'propart_id', width: 120, sorttype: "text"},
+                                {name: 'manager', width: 120, sorttype: "text"}
                             ]
                         });
                     });
+                    order.load($("#table1"));
                 </script> 
             </div>
             <div id="east" style="position: absolute; height: 100%; width: 396px; top: 0; right: -400px;">
