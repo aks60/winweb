@@ -6,22 +6,24 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/order.js"></script> 
         <style>
-            #north, #west, #midl, #south, #centr, #east, #east2 {
+            #north, #west, #midl, #south, #centr, #east, #east2, #east3 {
                 border: 2px solid #ccc;
             }
         </style> 
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    order_resize();
+                    order.resize();
                 }).trigger('resize');
             });
 
-            function order_resize() {
+            order.resize = function () {
                 var height = window.innerHeight - 108;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
+                $("#table2").jqGrid('setGridWidth', $("#east3").width());
+                $("#table2").jqGrid('setGridHeight', $("#east3").height());
             }
         </script>
     </head>
@@ -30,31 +32,20 @@
             <div id="centr" style="height: 100%; width: 100%;">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
                 <script type="text/javascript">
-                    $(function () {
-                        $("#table1").jqGrid({
-                            datatype: "local",
-                            rownumbers: true,
-                            colNames: ['id', 'Номер заказа=', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
-                            colModel: [
-                                {name: 'id', hidden: true},
-                                {name: 'num_ord', width: 120, sorttype: "text"},
-                                {name: 'num_acc', width: 120, sorttype: "text"},
-                                {name: 'date4', width: 120, sorttype: "text"},
-                                {name: 'date6', width: 120, sorttype: "text"},
-                                {name: 'propart_id', width: 120, sorttype: "text"},
-                                {name: 'manager', width: 120, sorttype: "text"}
-                            ]
-                        });
-                    });
-                    order.load($("#table1"));
+                    order.init_table1($("#table1"));
+                    order.load_table1($("#table1"));
                 </script> 
             </div>
-            <div id="east" style="position: absolute; height: 100%; width: 396px; top: 0; right: -400px;">
-                <div id="east2" style="height: 300px">
+            <div id="east" style="position: absolute; margin-top: 300px;  width: 396px; top: 0; right: -400px; bottom: 0">
+                <div id="east2" style="margin-top: -300px; height: 300px">
                     EAST2
                 </div>
-                <div id="east3">
-                    EAST3
+                <div id="east3" style="height: 100%; width: 100%;">
+                    <table id="table2"  class="ui-jqgrid-btable"></table> 
+                    <script type="text/javascript">
+                        order.init_table2($("#table2"));
+                        order.load_table2($("#table2"));
+                    </script> 
                 </div>                
             </div>
         </div>

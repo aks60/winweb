@@ -28,6 +28,5 @@ public class Order {
                     record.get(eProject.manager)));
         }
         return output;
-    }
-
+    }    
 }

@@ -12,20 +12,20 @@
         </style>
         <script type="text/javascript">
             $("button").button();
-            
+
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                   users_resize();
+                    users.resize();
                 }).trigger('resize');
             });
 
-            function users_resize() {
+            users.resize = function () {
                 var height = window.innerHeight - 68;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);                
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
-            
+
             function onPage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
@@ -75,7 +75,7 @@
                                 <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                             </tr>                            
                             <tr>
-                                <td></td><td><button type="button" onClick="users.logim_create();" style="width: 164px;">*Зарегистрировать</button></td>
+                                <td></td><td><button type="button" onClick="users.logim_create();" style="width: 164px;">Зарегистрировать</button></td>
                             </tr>
                         </table>                       
                     </div>                    
@@ -159,28 +159,8 @@
                 <div>
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                     <script type="text/javascript">
-                        $(function () {
-                            $("#table1").jqGrid({
-                                datatype: "local",
-                                rownumbers: true,
-                                colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
-                                colModel: [
-                                    {name: 'id', hidden: true},
-                                    {name: 'fio', width: 98, sorttype: "text"},
-                                    {name: 'desc', width: 200, sorttype: "text"},
-                                    {name: 'login', width: 40, sorttype: "text"},
-                                    {name: 'role', width: 40, sorttype: "text"},
-                                ],
-                                onSelectRow: function (rowid) {
-                                    $('#pan4 .fio').val($(this).jqGrid('getRowData', rowid).fio);
-                                    $('#pan4 .login').val($(this).jqGrid('getRowData', rowid).login);
-                                },
-//                                onSelectRow: function (record) {
-//                                    window.dialog_select = record
-//                                }
-                            });
-                        });
-                        users.load($("#table1"));
+                        users.init_table1($("#table1"));
+                        users.load_table1($("#table1"));
                     </script>    
                 </div>
             </div>                 

@@ -7,8 +7,7 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
-        <!--<link rel="stylesheet" type="text/css" media="screen" href="css/ui.html/ui.html.css">--> 
-
+        
         <script type="text/javascript" src="js/jquery-3.6/jquery-3.6.0.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
@@ -22,10 +21,7 @@
             var login = {};
             var users = {};
             var order = {};
-            
-            var dataProp = [];
-            var userList = [];
-            var orderList = [];
+            var prop = [];
 
             //глобальные настройки и параметры           
             $(function () {
@@ -39,8 +35,8 @@
             $.ajax({
                 url: 'dict?action=property',
                 success: function (data) {
-                    dataProp = data;
-//                    dataProp['dateNow'] = formatDate2(new Date());
+                    prop = data;
+//                    prop['dateNow'] = formatDate2(new Date());
                 }
             });
         </script> 

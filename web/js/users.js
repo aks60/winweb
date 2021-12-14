@@ -265,24 +265,48 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
     oListbox.appendChild(oOption);
 }
 
-users.load = function (table) {
+users.init_table1 = function (table) {
+    $(function () {
+        table.jqGrid({
+            datatype: "local",
+            rownumbers: true,
+            colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
+            colModel: [
+                {name: 'id', hidden: true},
+                {name: 'fio', width: 98, sorttype: "text"},
+                {name: 'desc', width: 200, sorttype: "text"},
+                {name: 'login', width: 40, sorttype: "text"},
+                {name: 'role', width: 40, sorttype: "text"},
+            ],
+            onSelectRow: function (rowid) {
+                $('#pan4 .fio').val($(this).jqGrid('getRowData', rowid).fio);
+                $('#pan4 .login').val($(this).jqGrid('getRowData', rowid).login);
+            },
+//                                onSelectRow: function (record) {
+//                                    window.dialog_select = record
+//                                }
+        });
+    });
+}
+
+users.load_table1 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
         url: 'users?action=userList',
         beforeSend: function () {},
         success: function (data) {
-            userList = data.userList;
-            let tr = userList[0];
-            for (i = 1; i < userList.length; i++) {
+            users.userList = data.userList;
+            let tr = users.userList[0];
+            for (i = 1; i < users.userList.length; i++) {
                 table.addRowData(i + 1, {
-                    id: userList[i][tr[0]],
-                    fio: userList[i][tr[1]],
-                    desc: userList[i][tr[2]],
-                    login: userList[i][tr[3]],
-                    role: userList[i][tr[4]]
+                    id: users.userList[i][tr[0]],
+                    fio: users.userList[i][tr[1]],
+                    desc: users.userList[i][tr[2]],
+                    login: users.userList[i][tr[3]],
+                    role: users.userList[i][tr[4]]
                 });
             }
-            users_resize();
+            users.resize();
         }
     });
 }

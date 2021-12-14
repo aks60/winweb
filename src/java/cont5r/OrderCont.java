@@ -21,15 +21,10 @@ public class OrderCont extends HttpServlet {
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
-            if (action == null) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/main.jsp");
-                dispatcher.forward(request, response);
-
-            } else if (action.equalsIgnoreCase("orderList")) {
+            if (action.equalsIgnoreCase("orderList")) {
                 Order order = new Order();
                 HashMap output = order.orderList(request, response);
                 response.getWriter().write(JSONValue.toJSONString(output));
-
             }
         }
     }
