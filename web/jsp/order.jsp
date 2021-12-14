@@ -13,11 +13,11 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    page_resize3();
+                    order_resize();
                 }).trigger('resize');
             });
 
-            function page_resize3() {
+            function order_resize() {
                 var height = window.innerHeight - 108;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());

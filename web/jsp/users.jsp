@@ -15,11 +15,11 @@
             
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                   page_resize2();
+                   users_resize();
                 }).trigger('resize');
             });
 
-            function page_resize2() {
+            function users_resize() {
                 var height = window.innerHeight - 68;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());

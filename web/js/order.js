@@ -16,7 +16,7 @@ order.load = function (table) {
                     manager: orderList[i][6]
                 });
             }
-            page_resize3();
+            order_resize();
         }
     });
 }
