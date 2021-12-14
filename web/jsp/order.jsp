@@ -9,16 +9,15 @@
             #north, #west, #midl, #south, #centr, #east, #east2 {
                 border: 2px solid #ccc;
             }
-            /*.ui-tabs .ui-tabs-nav li a {font-size:7pt !important;}*/
         </style> 
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    page_resize();
+                    page_resize3();
                 }).trigger('resize');
             });
 
-            function page_resize() {
+            function page_resize3() {
                 var height = window.innerHeight - 108;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());
@@ -61,6 +60,6 @@
         </div>
         <div id="south" style="height: 20px">
             SOUTH
-        </div>
+        </div> 
     </body>
 </html>

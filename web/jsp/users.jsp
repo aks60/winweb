@@ -12,15 +12,20 @@
         </style>
         <script type="text/javascript">
             $("button").button();
+            
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    var height = window.innerHeight - 68;
-                    $("#midl").css("height", height);
-                    $("#table1").setGridWidth($("#centr").width());
+                   page_resize2();
                 }).trigger('resize');
             });
 
-
+            function page_resize2() {
+                var height = window.innerHeight - 68;
+                $("#midl").css("height", height);
+                $("#table1").jqGrid('setGridWidth', $("#centr").width());
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);                
+            }
+            
             function onPage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
@@ -157,8 +162,7 @@
                         $(function () {
                             $("#table1").jqGrid({
                                 datatype: "local",
-                                autowidth: true,
-                                height: 'auto',
+                                rownumbers: true,
                                 colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
                                 colModel: [
                                     {name: 'id', hidden: true},
@@ -182,7 +186,7 @@
             </div>                 
         </div>
         <div id="south" style="height: 20px">
-            <h1>SOUTH</h1>
+            SOUTH
         </div>  
         <object id="cryptoPlugin" type="application/x-rutoken" width="0" height="0">
             <param name="onload" value="pluginit" />

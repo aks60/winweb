@@ -265,6 +265,13 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
     oListbox.appendChild(oOption);
 }
 
+//users.page_resize = function (midl, table) {
+//    var height = window.innerHeight - 68;
+//    midl.css("height", height);
+//    table.jqGrid('setGridWidth', $("#centr").width());
+//    table.jqGrid('setGridHeight', $("#centr").height() - 28);
+//}
+
 users.load = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
@@ -282,6 +289,7 @@ users.load = function (table) {
                     role: userList[i][tr[4]]
                 });
             }
+            page_resize2();
         }
     });
 }
