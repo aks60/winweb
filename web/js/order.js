@@ -40,6 +40,23 @@ order.load_table1 = function (table) {
     });
 }
 
+order.init_table2 = function (table) {
+    $(function () {
+        table.jqGrid({
+            datatype: "local",
+            rownumbers: true,
+            colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
+            colModel: [
+                {name: 'id', hidden: true},
+                {name: 'name', width: 120, sorttype: "text"},
+                {name: 'scripl', width: 120, sorttype: "text"},
+                {name: 'project_id', hidden: true},
+                {name: 'systree_id', hidden: true}
+            ]
+        });
+    });
+}
+
 order.load_table2 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
@@ -58,23 +75,6 @@ order.load_table2 = function (table) {
             }
             order.resize();
         }
-    });
-}
-
-order.init_table2 = function (table) {
-    $(function () {
-        table.jqGrid({
-            datatype: "local",
-            rownumbers: true,
-            colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
-            colModel: [
-                {name: 'id', hidden: true},
-                {name: 'name', width: 120, sorttype: "text"},
-                {name: 'scripl', width: 120, sorttype: "text"},
-                {name: 'project_id', hidden: true},
-                {name: 'systree_id', hidden: true}
-            ]
-        });
     });
 }
 
