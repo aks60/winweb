@@ -15,21 +15,6 @@ import org.json.simple.JSONValue;
 @WebServlet(name = "ProdCont", urlPatterns = {"/prod"})
 public class ProdCont extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        try (PrintWriter out = response.getWriter()) {
-
-            if (action.equalsIgnoreCase("prodList")) {
-                String prodID = request.getParameter("prodID");
-                Product product = new Product();
-                HashMap output = product.prodList(request, response, prodID);
-                response.getWriter().write(JSONValue.toJSONString(output));
-            }
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,5 +32,19 @@ public class ProdCont extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
+        try (PrintWriter out = response.getWriter()) {
 
+            if (action.equalsIgnoreCase("prodList")) {
+                String prodID = request.getParameter("prodID");
+                Product product = new Product();
+                HashMap output = product.prodList(request, response, prodID);
+                response.getWriter().write(JSONValue.toJSONString(output));
+            }
+        }
+    }
 }

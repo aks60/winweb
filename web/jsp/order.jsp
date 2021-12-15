@@ -36,8 +36,8 @@
                     order.load_table1($("#table1"));
                 </script> 
             </div>
-            <div id="east" style="position: absolute; margin-top: 300px;  width: 396px; top: 0; right: -400px; bottom: 0">
-                <div id="east2" style="margin-top: -300px; height: 300px">
+            <div id="east" style="position: absolute; margin-top: 300px; width: 396px; top: 0; right: -400px; bottom: 0">
+                <div id="east2" style="margin-top: -304px; height: 300px;">
                     EAST2
                 </div>
                 <div id="east3" style="height: 100%; width: 100%;">

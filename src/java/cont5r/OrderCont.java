@@ -15,21 +15,7 @@ import org.json.simple.JSONValue;
 @WebServlet(name = "OrderCont", urlPatterns = {"/order"})
 public class OrderCont extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        try (PrintWriter out = response.getWriter()) {
-
-            if (action.equalsIgnoreCase("orderList")) {
-                Order order = new Order();
-                HashMap output = order.orderList(request, response);
-                response.getWriter().write(JSONValue.toJSONString(output));
-            }
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,6 +31,20 @@ public class OrderCont extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
+// </editor-fold>
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
+        try (PrintWriter out = response.getWriter()) {
 
+            if (action.equalsIgnoreCase("orderList")) {
+                Order order = new Order();
+                HashMap output = order.orderList(request, response);
+                response.getWriter().write(JSONValue.toJSONString(output));
+            }
+        }
+    }
 }

@@ -24,7 +24,9 @@
 
 //                $('#pan1 .login').val('admin');
 //                $('#pan1 .password').val('masterkey');
-//                login.user_connect();
+                $('#pan1 .login').val('asd');
+                $('#pan1 .password').val('qwerty');
+                login.user_connect();
             });
 
             function onPage(val) {
@@ -50,15 +52,15 @@
                     <table height="80" width="340">
                         <tr>
                             <td>Логин пользователя:</td>
-                            <td><input class="login" placeholder='Введите логин' value='asd'  type='text' size='16'></td>
+                            <td><input class="login" placeholder='Введите логин' value=''  type='text' size='16'></td>
                         </tr> 
                         <tr>
                             <td>Пароль пользователя:</td>
-                            <td><input class="password" placeholder='Введите пароль' value='qwerty' type='password' size='16'></td>
+                            <td><input class="password" placeholder='Введите пароль' value='' type='password' size='16'></td>
                         </tr>
                         <td></td>
                         <td>
-                            <button tabindex="2" type="button" onclick="login.user_connect();"style="width: 146px;">Войти</button>
+                            <button tabindex="2" type="button" onclick="login.user_connect();"style="width: 106px;">Войти</button>
                         </td>                            
                     </table>
 
