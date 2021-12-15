@@ -77,7 +77,7 @@
         <div id="pan-dialogTree" style="display: none;"><table id="dialogTree" class="ui-jqgrid-btable"></table></div>
         
         <script type="text/javascript">
-            $("#outbody").load('jsp/login.jsp');
+            $("#outbody").load('jsp/systree.jsp');
         </script> 
     </body>
 </html>
