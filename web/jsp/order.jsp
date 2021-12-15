@@ -5,11 +5,7 @@
         <title>Order</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/order.js"></script> 
-        <style>
-            #north, #west, #midl, #south, #centr, #east, #east2, #east3 {
-                border: 2px solid #ccc;
-            }
-        </style> 
+        
         <script type="text/javascript">
             $(document).ready(function () {
                 $(window).bind('resize', function () {

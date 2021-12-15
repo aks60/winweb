@@ -6,11 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<script type="text/javascript" src="js/dialog.js"></script>-->
         <script type="text/javascript" src="js/login.js"></script>
-        <style>
-            #north, #west, #midl, #south, #centr, #east {
-                border: 2px solid #ccc;
-            }
-        </style>         
+
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -26,7 +22,7 @@
 //                $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-            login.user_connect();
+            //login.user_connect();
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();

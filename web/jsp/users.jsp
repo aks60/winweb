@@ -5,11 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/users.js"></script>        
         <title>JSP Page</title>
-        <style>
-            #north, #west, #west2, #midl, #south, #centr {
-                border: 2px solid #ccc;
-            }
-        </style>
+
         <script type="text/javascript">
             $("button").button();
 
@@ -26,7 +22,7 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
-            function onPage(val) {
+            function onpage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
             }
@@ -39,10 +35,10 @@
         <div id="midl" style="position: relative; margin: 0 2px 0 500px;">
             <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                 <div id="west2" style="height: 108px">
-                    <button type="button" onClick="onPage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
-                    <button type="button" onClick="onPage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
-                    <button type="button" onClick="onPage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
-                    <button type="button" onClick="onPage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
+                    <button type="button" onClick="onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
+                    <button type="button" onClick="onpage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
+                    <button type="button" onClick="onpage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
+                    <button type="button" onClick="onpage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
                 </div>
                 <div id="west3" style="height: 200px">
                     <div id="pan1">                     

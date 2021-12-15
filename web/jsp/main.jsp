@@ -15,9 +15,12 @@
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>  
 
-        <style>
-
+        <style type="text/css">
+            #north, #west, #west2, #midl, #centr, #east, #east2, #east3, #south {
+                border: 2px solid #ccc;
+            }
         </style>
+
         <script type="text/javascript">
 
             //глобальные данные
@@ -29,13 +32,13 @@
             var property = [];
 
             //глобальные настройки и параметры           
-             $(document).ready(function () {
-                 
+            $(document).ready(function () {
+
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('#tabs').tabs();
                 $('button').button();
-                
+
                 dialog.init_dict();
                 dialog.init_tree();
             });
@@ -52,7 +55,7 @@
         <script type="text/javascript" src="js/dialog.js"></script>
     </head>
     <body>
-        <div id="tabs" style="display: none; height: 54px;">
+        <div id="tabs" style="display: none; height: 64px;">
             <ul>
                 <li><a href="#tab1" style="padding: 4px 24px" onclick="">Заказы</a>
                 <li><a href="#tab2" style="padding: 4px 24px" onclick="">Изделия</a>
@@ -75,7 +78,7 @@
         <div id="dialog-message" title="Сообщеие"></div>
         <div id="pan-dialogDic" style="display: none;"><table id="dialogDic" class="ui-jqgrid-btable"></table></div> 
         <div id="pan-dialogTree" style="display: none;"><table id="dialogTree" class="ui-jqgrid-btable"></table></div>
-        
+
         <script type="text/javascript">
             $("#outbody").load('jsp/systree.jsp');
         </script> 
