@@ -13,8 +13,7 @@
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>
-        <script type="text/javascript" src="js/dialog.js"></script>
+        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>  
 
         <style>
 
@@ -26,45 +25,50 @@
             var users = {};
             var order = {};
             var dialog = {};
-            var prop = [];
+            var systree = {};
+            var property = [];
 
             //глобальные настройки и параметры           
-            $(function () {
+             $(document).ready(function () {
+                 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('#tabs').tabs();
                 $('button').button();
-                //dialog.init_dict();
+                
+                dialog.init_dict();
+                dialog.init_tree();
             });
 
             //системные свойства
 //            $.ajax({
 //                url: 'dict?action=property',
 //                success: function (data) {
-//                    prop = data;
-//                    prop['dateNow'] = formatDate2(new Date());
+//                    property = data;
+//                    property['dateNow'] = formatDate2(new Date());
 //                }
 //            });
         </script> 
+        <script type="text/javascript" src="js/dialog.js"></script>
     </head>
     <body>
-        <div id="tabs" style="display: none; height: 50px;">
+        <div id="tabs" style="display: none; height: 54px;">
             <ul>
                 <li><a href="#tab1" style="padding: 4px 24px" onclick="">Заказы</a>
                 <li><a href="#tab2" style="padding: 4px 24px" onclick="">Изделия</a>
                 <li><a href="#tab3" style="padding: 4px 24px" onclick="">Комплектация</a>            
             </ul>
-            <div id="tab1" style="padding: 2px">
-                <button tabindex="1" type="button" onclick="dialog.open_tree();" style="width: 100px;">Test</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test</button>
+            <div id="tab1" style="padding: 4px">
+                <button tabindex="1" type="button" onclick="dialog.open_tree();" style="width: 100px;">Test11</button>
+                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test12</button>
             </div>
             <div id="tab2" style="padding: 2px">
-                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test</button>
+                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test21</button>
+                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test22</button>
             </div>
             <div id="tab3" style="padding: 2px">
-                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test</button>
+                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test31</button>
+                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test32</button>
             </div>         
         </div>               
         <div id="outbody"></div>       

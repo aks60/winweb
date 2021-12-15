@@ -1,19 +1,39 @@
 
 //Инициализация таблицы
-//dialog.init_dict = function () {
-//    $(function () {
-//        $("#dialogDic").jqGrid({
-//            datatype: "local",
-//            multiselect: false,
-//            colNames: ['id', '№пп', 'Наименование'],
-//            colModel: [{name: 'id', hidden: true, key: true}, {name: 'npp', width: 10}, {name: 'cname'}],
-//            ondblClickRow: function (rowId) {
-//                dialogDic.reload();
-//            }
-//        });
-//        $("#dialogDic").jqGrid('bindKeys', {scrollingRows: true});
-//    });
-//}
+dialog.init_dict = function () {
+    $(function () {
+        $("#dialogDic").jqGrid({
+            datatype: "local",
+            multiselect: false,
+            colNames: ['id', '№пп', 'Наименование'],
+            colModel: [{name: 'id', hidden: true, key: true}, {name: 'npp', width: 10}, {name: 'cname'}],
+            ondblClickRow: function (rowId) {
+                dialogDic.reload();
+            }
+        });
+        $("#dialogDic").jqGrid('bindKeys', {scrollingRows: true});
+    });
+}
+
+dialog.init_tree = function () {
+    $("#dialogTree").jqGrid({
+        datatype: "local",
+        colNames: ['id', 'Наименование'],
+        colModel: [
+            {name: 'id', key: true, width: 1, hidden: true, key: true},
+            {name: 'name', width: 180}
+        ],
+        gridview: true,
+        sortname: 'id',
+        treeGrid: true,
+        treeGridModel: 'adjacency',
+        ExpandColumn: 'name',
+        ExpandColClick: true,
+        onSelectRow: function (rowid) {
+//            loadTable(rowid);
+        }
+    });
+}
 
 //Диалог окна даты
 dialog.open_date = function (src) {
@@ -69,7 +89,7 @@ dialog.open_dict = function (sender, domain) {
 
 //Диалоговое окно справочников 
 dialog.open_tree = function () {
-  alert(111);
+    alert("111");
 }
 
 //Диалог контекстного меню

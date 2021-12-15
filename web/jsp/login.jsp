@@ -4,6 +4,7 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<script type="text/javascript" src="js/dialog.js"></script>-->
         <script type="text/javascript" src="js/login.js"></script>
         <style>
             #north, #west, #midl, #south, #centr, #east {
@@ -11,23 +12,21 @@
             }
         </style>         
         <script type="text/javascript">
-            $("button").button();
 
             $(document).ready(function () {
+                $("button").button();
                 $("#btn2").focus();
-                $(document).ready(function () {
-                    $(window).bind('resize', function () {
-                        var height = window.innerHeight - 68;
-                        $("#midl").css("height", height);
-                    }).trigger('resize');
-                });
+                $(window).bind('resize', function () {
+                    var height = window.innerHeight - 68;
+                    $("#midl").css("height", height);
+                }).trigger('resize');
+            });
 
 //                $('#pan1 .login').val('admin');
 //                $('#pan1 .password').val('masterkey');
-                $('#pan1 .login').val('asd');
-                $('#pan1 .password').val('qwerty');
-                login.user_connect();
-            });
+            $('#pan1 .login').val('asd');
+            $('#pan1 .password').val('qwerty');
+            login.user_connect();
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();
