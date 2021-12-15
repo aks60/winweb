@@ -2,7 +2,7 @@
 systree.init_dialog = function (tabtree) {
     $(function () {
         tabtree.dialog({
-            autoOpen: false, // Открывать ли окно сразу 
+            autoOpen: true, // Открывать ли окно сразу 
             width: 600,
             height: 500,
             modal: false,

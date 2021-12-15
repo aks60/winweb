@@ -50,7 +50,7 @@
             
         </div> 
     </div> 
-    <input type="button" value="Открыть окно" id="btnl" onclick="$('#dialog').dialog('open');" > 
+    <!--<input type="button" value="Открыть окно" id="btnl" onclick="$('#dialog').dialog('open');" >--> 
 </body> 
 </html> 
 

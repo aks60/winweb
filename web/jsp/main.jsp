@@ -62,7 +62,7 @@
                 <li><a href="#tab3" style="padding: 4px 24px" onclick="">Комплектация</a>            
             </ul>
             <div id="tab1" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="dialog.open_tree();" style="width: 100px;">Test11</button>
+                <button tabindex="1" type="button" onclick="$('#dialog-tree').load('jsp/systree.jsp');" style="width: 100px;">Test11</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test12</button>
             </div>
             <div id="tab2" style="padding: 2px">
@@ -77,10 +77,10 @@
         <div id="outbody"></div>       
         <div id="dialog-message" title="Сообщеие"></div>
         <div id="pan-dialogDic" style="display: none;"><table id="dialogDic" class="ui-jqgrid-btable"></table></div> 
-        <div id="pan-dialogTree" style="display: none;"><table id="dialogTree" class="ui-jqgrid-btable"></table></div>
+        <div id="dialog-tree"></div>
 
         <script type="text/javascript">
-            $("#outbody").load('jsp/systree.jsp');
+            $("#outbody").load('jsp/login.jsp');
         </script> 
     </body>
 </html>
