@@ -39,8 +39,9 @@
                 $('#tabs').tabs();
                 $('button').button();
 
-                dialog.init_dict();
-                dialog.init_tree();
+                //dialog.init_tree();
+                //dialog.init_dict();
+
             });
 
             //системные свойства
@@ -52,7 +53,7 @@
 //                }
 //            });
         </script> 
-        <script type="text/javascript" src="js/dialog.js"></script>
+        <!--<script type="text/javascript" src="js/dialog.js"></script>-->
     </head>
     <body>
         <div id="tabs" style="display: none; height: 64px;">
@@ -74,10 +75,10 @@
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test32</button>
             </div>         
         </div>               
-        <div id="outbody"></div>       
-        <div id="dialog-message" title="Сообщеие"></div>
-        <div id="pan-dialogDic" style="display: none;"><table id="dialogDic" class="ui-jqgrid-btable"></table></div> 
-        <div id="dialog-tree"></div>
+        <div id="outbody"></div>  
+        <div id="dialog-tree" title="Системы профилей"></div>
+        <div id="dialog-mes" title="Сообщеие"></div>        
+        <div id="dialog-dic" style="display: none;"><table id="dialogDic" class="ui-jqgrid-btable"></table></div> 
 
         <script type="text/javascript">
             $("#outbody").load('jsp/login.jsp');

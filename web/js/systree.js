@@ -18,7 +18,7 @@ systree.init_dialog = function (tabtree) {
     });
 }
 
-systree.init_tree = function (tabtree) {
+systree.init_tabtree = function (tabtree) {
     tabtree.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
@@ -36,15 +36,7 @@ systree.init_tree = function (tabtree) {
     });
 }
 
-systree.init_grid = function (tabgrid) {
-    tabgrid.jqGrid({
-        datatype: "local",
-        colNames: ['№пп', 'Наименование'],
-        colModel: [{name: 'npp', width: 40}, {name: 'name', width: 80}]
-    });
-}
-
-systree.load_tree = function (tabtree) {
+systree.load_tabtree = function (tabtree) {
 //    $.ajax({
 //        url: 'dict?action=dictTree',
 //        success: function (data) {
@@ -59,8 +51,12 @@ systree.load_tree = function (tabtree) {
 //    });
 }
 
-systree.load_grid = function (tabgrid) {
-
+systree.init_tabgrid = function (tabgrid) {
+//    tabgrid.jqGrid({
+//        datatype: "local",
+//        colNames: ['№пп', 'Наименование'],
+//        colModel: [{name: 'npp', width: 40}, {name: 'name', width: 80}]
+//    });
 }
 
 
