@@ -5,6 +5,7 @@ import dataset.Record;
 import domain.eSysprod;
 import domain.eSystree;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -62,13 +63,13 @@ public class Catalog {
     //Модели продукций систем профилей
     public JSONObject sysProd(HttpServletRequest request, HttpServletResponse response) {
 
-        ArrayList<HashMap> dict = new ArrayList();
-        dict.add(App.asMap("id", eSysprod.id.ordinal(), "name", eSysprod.name.ordinal(), "script", eSysprod.script.ordinal(), "parent", eSysprod.systree_id.ordinal()));
-        Query qDict = new Query(Att.att(request).connect(), eSysprod.values()).select(eSysprod.up, "order by name");
-        for (Record rec : qDict) {
-            dict.add(App.asMap("id", rec.get(eSysprod.id), "name", rec.get(eSysprod.name), "script", rec.get(eSysprod.script), "parent", rec.get(eSysprod.systree_id)));
+        List<List> prod = new ArrayList();
+        Query qSysprod = new Query(Att.att(request).connect(), eSysprod.values()).select(eSysprod.up, "order by name");
+        for (Record rec : qSysprod) {
+            prod.add(Arrays.asList(rec.get(eSysprod.id), rec.get(eSysprod.name), 
+                    rec.get(eSysprod.script), rec.get(eSysprod.systree_id)));
         }
-        JSONObject output = new JSONObject(App.asMap("sysProd", dict));
+        JSONObject output = new JSONObject(App.asMap("sysProd", prod));
         return output;
     }
 

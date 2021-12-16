@@ -296,14 +296,14 @@ users.load_table1 = function (table) {
         beforeSend: function () {},
         success: function (data) {
             users.userList = data.userList;
-            let tr = users.userList[0];
             for (i = 1; i < users.userList.length; i++) {
+                let tr = users.userList[i];
                 table.addRowData(i + 1, {
-                    id: users.userList[i][tr[0]],
-                    fio: users.userList[i][tr[1]],
-                    desc: users.userList[i][tr[2]],
-                    login: users.userList[i][tr[3]],
-                    role: users.userList[i][tr[4]]
+                    id: tr[0], 
+                    fio: tr[1], 
+                    desc: tr[2], 
+                    login: tr[3], 
+                    role: tr[4]
                 });
             }
             users.resize();

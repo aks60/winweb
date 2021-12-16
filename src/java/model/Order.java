@@ -17,16 +17,16 @@ public class Order {
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
     public HashMap orderList(HttpServletRequest request, HttpServletResponse response) {
-        HashMap<String, List<List>> output = new HashMap();
-        ArrayList<List> list = new ArrayList();
-        output.put("orderList", list);
+        ArrayList<List> list = new ArrayList();        
         Query qProject = new Query(Att.att(request).connect(), eProject.id, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date6, 
                 eProject.propart_id, eProject.manager).select(eProject.up, "where id > 17400", "order by", eProject.date4, ",", eProject.date6);
-        for (Record record : qProject) {
-            list.add(Arrays.asList(record.get(eProject.id), record.get(eProject.num_ord), record.get(eProject.num_acc),
-                    fd.format(record.get(eProject.date4)), fd.format(record.get(eProject.date6)), record.get(eProject.propart_id), 
-                    record.get(eProject.manager)));
+        for (Record rec : qProject) {
+            list.add(Arrays.asList(rec.get(eProject.id), rec.get(eProject.num_ord), rec.get(eProject.num_acc),
+                    fd.format(rec.get(eProject.date4)), fd.format(rec.get(eProject.date6)), rec.get(eProject.propart_id), 
+                    rec.get(eProject.manager)));
         }
+        HashMap<String, List<List>> output = new HashMap();
+        output.put("orderList", list);
         return output;
     }    
 }

@@ -18,9 +18,9 @@ public class Users {
         HashMap<String, List<List>> output = new HashMap();
         output.put("userList", new ArrayList());
         Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        ((List) output.get("userList")).add(Arrays.asList(eSysuser.id.ordinal(), eSysuser.fio.ordinal(), eSysuser.desc.ordinal(), eSysuser.login.ordinal(), eSysuser.role.ordinal()));
-        for (Record record : qSysuser) {
-            ((List) output.get("userList")).add(record);
+        for (Record rec : qSysuser) {
+            ((List) output.get("userList")).add(Arrays.asList(rec.get(eSysuser.id), rec.get(eSysuser.fio), 
+                    rec.get(eSysuser.desc), rec.get(eSysuser.login), rec.get(eSysuser.role)));
         }
         return output;
     }

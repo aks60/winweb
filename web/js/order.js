@@ -25,14 +25,15 @@ order.load_table1 = function (table) {
         success: function (data) {
             order.orderList = data.orderList;
             for (i = 0; i < order.orderList.length; i++) {
+                let tr = order.orderList[i];
                 table.addRowData(i + 1, {
-                    id: order.orderList[i][0],
-                    num_ord: order.orderList[i][1],
-                    num_acc: order.orderList[i][2],
-                    date4: order.orderList[i][3],
-                    date6: order.orderList[i][4],
-                    propart_id: order.orderList[i][5],
-                    manager: order.orderList[i][6]
+                    id: tr[0],
+                    num_ord: tr[1],
+                    num_acc: tr[2],
+                    date4: tr[3],
+                    date6: tr[4],
+                    propart_id: tr[5],
+                    manager: tr[6]
                 });
             }
             order.resize();
@@ -65,12 +66,13 @@ order.load_table2 = function (table) {
         success: function (data) {
             order.prodList = data.prodList;
             for (i = 0; i < order.prodList.length; i++) {
+                let tr = order.prodList[i];
                 table.addRowData(i + 1, {
-                    id: order.prodList[i][0],
-                    name: order.prodList[i][1],
-                    script: order.prodList[i][2],
-                    project_id: order.prodList[i][3],
-                    systree_id: order.prodList[i][4]
+                    id: tr[0],
+                    name: tr[1],
+                    script: tr[2],
+                    project_id: tr[3],
+                    systree_id: tr[4]
                 });
             }
             order.resize();

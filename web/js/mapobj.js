@@ -1,6 +1,6 @@
 
 //создание объекта маппинга 
-function mapObj(selector_table) {
+function mapobj(selector_table) {
 
     Object.defineProperties(this, {
         //данные дата сервер
@@ -250,7 +250,7 @@ function mapObj(selector_table) {
         //console.log('event -> afterDelete()');
     }
     //статическая функция сохранение на сервере data сервер
-    mapObj.saveServer = function (objList, url_path) {
+    mapobj.saveServer = function (objList, url_path) {
         var data = {};
         objList.forEach(function (objItem) {
             var name_table = objItem.name_table.substr(5);
@@ -300,7 +300,7 @@ function mapObj(selector_table) {
         }
     }
     //статическая функция удаление выделенной записи
-    mapObj.deleteRecord = function (objList, url_path) {
+    mapobj.deleteRecord = function (objList, url_path) {
 //TODO парамети objList теперь не нужен
         //перед удалением записи
         if (focusObj.mapobj.beforeDelete() != undefined) {

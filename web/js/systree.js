@@ -69,14 +69,15 @@ systree.load_tabgrid = function (table) {
     $.ajax({
         url: 'catalog?action=sysProd',
         success: function (data) {
+            debugger;
             systree.sysProd = data.sysProd;
-            let tr = systree.sysProd[0];
-            for (i = 1; i < systree.sysProd.length; i++) {
+            for (i = 0; i < systree.sysProd.length; i++) {
+                let tr = systree.sysProd[i];
                 table.addRowData(i + 1, {
-                    id: systree.sysProd[i][tr[0]],
-                    name: systree.sysProd[i][tr[1]],
-                    script: systree.sysProd[i][tr[2]],
-                    parent: systree.sysProd[i][tr[3]],
+                    id: tr[0],
+                    name: tr[1],
+                    script: tr[2],
+                    parent: tr[3]
                 });
             }
             systree.resize();
