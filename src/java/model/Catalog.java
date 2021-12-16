@@ -56,7 +56,7 @@ public class Catalog {
                 }
             }
         }
-        JSONObject output = new JSONObject(App.asMap("systree", dict));
+        JSONObject output = new JSONObject(App.asMap("sysTree", dict));
         return output;
     }
     

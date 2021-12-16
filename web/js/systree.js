@@ -20,8 +20,10 @@ systree.init_tabtree = function (tabtree) {
     tabtree.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
-        colModel: [{name: 'id', index: 'id', width: 1, hidden: true, key: true},
-            {name: 'name', index: 'cname', width: 180}],
+        colModel: [
+            {name: 'id', index: 'id', width: 1, hidden: true, key: true},
+            {name: 'name', index: 'cname', width: 180}
+        ],
         gridview: true,
         sortname: 'id',
         treeGrid: true,
@@ -39,29 +41,36 @@ systree.init_tabgrid = function (tabgrid) {
         datatype: "local",
         colNames: ['id', 'Наименование', 'Рисунок', 'parent'],
         colModel: [
-            {name: 'id', hidden: true}, 
-            {name: 'name', width: 80}, 
+            {name: 'id', hidden: true},
+            {name: 'name', width: 80},
             {name: 'script', width: 80},
             {name: 'parent', hidden: true}]
     });
 }
 
 systree.load_tabtree = function (table) {
-//    table.jqGrid("clearGridData", true);
-//    $.ajax({
-//        url: 'catflog?action=sysTree',
-//        success: function (data) {
-//            systree.sysTree = data;
-//            let tr = users.userList[0];
-//            for (i = 1; i < users.userList.length; i++) {
+    table.jqGrid("clearGridData", true);
+    $.ajax({
+        url: 'catalog?action=sysTree',
+        success: function (data) {
+            systree.sysTree = data.sysTree;
+            table[0].addJSONData({
+                total: 1, page: 1,
+                records: systree.sysTree.length,
+                rows: systree.sysTree
+            });
+//            debugger;
+//            systree.sysTree = data.sysTree;
+//            for (i = 0; i < systree.sysTree.length; i++) {
+//                let tr = systree.sysTree[i];
 //                table.addRowData(i + 1, {
-//                    id: users.userList[i][tr[0]],
-//                    name: users.userList[i][tr[1]]
+//                    id: tr.id,
+//                    name: tr.name
 //                });
 //            }
-//            systree.resize();
-//        }
-//    });
+            systree.resize();
+        }
+    });
 }
 
 systree.load_tabgrid = function (table) {
