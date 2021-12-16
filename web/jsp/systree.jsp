@@ -6,10 +6,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/systree.js"></script> 
     </head>
-    <style type="text/css">
-        #midl {
-            border: 0 !important;
-        }
     </style>    
     <script type="text/javascript">
         $(document).ready(function () {

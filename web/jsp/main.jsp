@@ -16,9 +16,10 @@
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>  
 
         <style type="text/css">
-            #north, #west, #west2, #midl, #centr, #east, #east2, #east3, #south {
+            #north, #west, #west2, #centr, #east, #east2, #east3, #south {
                 border: 2px solid #ccc;
             }
+            #midl { border: 0 !important; }           
         </style>
 
         <script type="text/javascript">
