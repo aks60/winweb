@@ -21,6 +21,7 @@ err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
 //авторизация через логин-пароль
 login.user_connect = function () {
+    debugger;
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     for (var i = 0; i < 2; i++) {

@@ -67,9 +67,9 @@ systree.load_tabtree = function (table) {
 systree.load_tabgrid = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
-        url: 'catflog?action=sysProd',
+        url: 'catalog?action=sysProd',
         success: function (data) {
-            systree.sysProd = data;
+            systree.sysProd = data.sysProd;
             let tr = systree.sysProd[0];
             for (i = 1; i < systree.sysProd.length; i++) {
                 table.addRowData(i + 1, {

@@ -1,12 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login</title>
+    <head>        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--<script type="text/javascript" src="js/dialog.js"></script>-->
         <script type="text/javascript" src="js/login.js"></script>
-
+        <title>Login</title>
+        
         <script type="text/javascript">
 
             $(document).ready(function () {

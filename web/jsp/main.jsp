@@ -13,23 +13,22 @@
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>  
+        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script> 
+                
+<!--        <script type="text/javascript" src="js/login.js"></script>-->
+<!--        <script type="text/javascript" src="js/users.js"></script>-->
+<!--        <script type="text/javascript" src="js/systree.js"></script>-->
+<!--        <script type="text/javascript" src="js/order.js"></script>-->
 
         <style type="text/css">
-            #north, #west, #west2, #centr, #east, #east2, #east3, #south {
-                border: 2px solid #ccc;
-            }
+            #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
             #midl { border: 0 !important; }           
         </style>
 
         <script type="text/javascript">
 
             //глобальные данные
-            var login = {};
-            var users = {};
-            var order = {};
-            var dialog = {};
-            var systree = {};
+            var login = {}, users = {}, order = {}, dialog = {}, systree = {};
             var property = [];
 
             //глобальные настройки и параметры           
@@ -39,10 +38,6 @@
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('#tabs').tabs();
                 $('button').button();
-
-                //dialog.init_tree();
-                //dialog.init_dict();
-
             });
 
             //системные свойства
@@ -54,7 +49,6 @@
 //                }
 //            });
         </script> 
-        <!--<script type="text/javascript" src="js/dialog.js"></script>-->
     </head>
     <body>
         <div id="tabs" style="display: none; height: 64px;">

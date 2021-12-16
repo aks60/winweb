@@ -68,7 +68,7 @@ public class Catalog {
         for (Record rec : qDict) {
             dict.add(App.asMap("id", rec.get(eSysprod.id), "name", rec.get(eSysprod.name), "script", rec.get(eSysprod.script), "parent", rec.get(eSysprod.systree_id)));
         }
-        JSONObject output = new JSONObject(App.asMap("sysprod", dict));
+        JSONObject output = new JSONObject(App.asMap("sysProd", dict));
         return output;
     }
 
