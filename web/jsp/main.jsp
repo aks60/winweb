@@ -7,13 +7,13 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
-            
-        <script type="text/javascript" src="js/jquery-3.6/jquery-3.6.0.min.js"></script>             
+                       
+        <script type="text/javascript" src="js/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script>         
+        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
 
         <style type="text/css">
             #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }

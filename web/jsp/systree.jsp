@@ -9,6 +9,13 @@
     </head>
     </style>    
     <script type="text/javascript">
+        systree.resize = function () {
+            $("#table-tree").jqGrid('setGridWidth', $("#dialog-tree #midl #centr").width());
+            $("#table-tree").jqGrid('setGridHeight', $("#dialog-tree #midl #centr").height() - 26);
+            $("#table-grid").jqGrid('setGridWidth', $("#dialog-tree #midl #east").width());
+            $("#table-grid").jqGrid('setGridHeight', $("#dialog-tree #midl #east").height() - 26);
+        }
+        
         $(document).ready(function () {
             $(window).bind('resize', function () {
                 systree.resize();
@@ -16,13 +23,6 @@
 
             systree.init_dialog($("#dialog-tree"));
         });
-
-        systree.resize = function () {
-            $("#table-tree").jqGrid('setGridWidth', $("#dialog-tree #midl #centr").width());
-            $("#table-tree").jqGrid('setGridHeight', $("#dialog-tree #midl #centr").height() - 26);
-            $("#table-grid").jqGrid('setGridWidth', $("#dialog-tree #midl #east").width());
-            $("#table-grid").jqGrid('setGridHeight', $("#dialog-tree #midl #east").height() - 26);
-        }
     </script> 
 </head> 
 <body> 

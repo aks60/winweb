@@ -7,14 +7,6 @@
         <title>JSP Page</title>
 
         <script type="text/javascript">
-            $("button").button();
-
-            $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    users.resize();
-                }).trigger('resize');
-            });
-
             users.resize = function () {
                 var height = window.innerHeight - 68;
                 $("#midl").css("height", height);
@@ -25,7 +17,15 @@
             function onpage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
-            }
+            }  
+            
+            $("button").button();
+
+            $(document).ready(function () {
+                $(window).bind('resize', function () {
+                    users.resize();
+                }).trigger('resize');
+            });
         </script>          
     </head>
     <body>

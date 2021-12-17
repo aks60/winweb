@@ -16,26 +16,18 @@ product.init_table1 = function (table) {
 }
 
 product.load_table1 = function (table) {
-//    //debugger;
-//    let recno = 0;   
-//    var j = 1;
-//    table.jqGrid("clearGridData", true);
-//    for (i = 0; i < order.prodList.length; i++) {
-//        let tr = order.prodList[i];
-//                        table.addRowData(++j, {
-//                            //npp: spr.npp,
-//                            //name: spr.name
-//                        });          
-////        console.log(tr);        
-////        table.addRowData(++recno, {
-////            id: tr[0],
-////            name: tr[1],
-////            script: tr[2],
-////            project_id: tr[3],
-////            systree_id: tr[4]
-////        });
-//    }
-//    product.resize();
+    for (i = 0; i < order.prodList.length; i++) {
+        let tr = order.prodList[i];
+        table.jqGrid('addRowData', i + 1, {
+            id: tr[0],
+            name: tr[1],
+            script: tr[2],
+            project_id: tr[3],
+            systree_id: tr[4]
+        });
+    }
+    product.resize();
+
 }
 
 

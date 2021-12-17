@@ -6,26 +6,16 @@
         <script type="text/javascript" src="js/login.js"></script>
         <script type="text/javascript"src="js/utils.js"></script> 
         <title>Login</title>
-        
-        <script type="text/javascript">
 
-            $(document).ready(function () {
-                $("button").button();
-                $("#btn2").focus();
-                $(window).bind('resize', function () {
-                    var height = window.innerHeight - 68;
-                    $("#midl").css("height", height);
-                }).trigger('resize');
+        <script type="text/javascript">
+            //системные свойства               
+            $.ajax({
+                url: 'catalog?action=property',
+                success: function (data) {
+                    utils.param = data.param;
+                    utils.dateNow = utils.format_date2(new Date());
+                }
             });
-            
-                //системные свойства               
-                $.ajax({
-                    url: 'catalog?action=property',
-                    success: function (data) {
-                        utils.param = data.param;
-                        utils.dateNow = utils.format_date2(new Date());
-                    }
-                });           
 
 //                $('#pan1 .login').val('admin');
 //                $('#pan1 .password').val('masterkey');
@@ -37,6 +27,14 @@
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
+            $(document).ready(function () {
+                $("button").button();
+                $("#btn2").focus();
+                $(window).bind('resize', function () {
+                    var height = window.innerHeight - 68;
+                    $("#midl").css("height", height);
+                }).trigger('resize');
+            });
         </script>         
     </head>
     <body>

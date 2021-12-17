@@ -7,12 +7,6 @@
         <title>Order</title>
         
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    order.resize();
-                }).trigger('resize');
-            });
-
             order.resize = function () {
                 var height = window.innerHeight - 108;
                 $("#midl").css("height", height);
@@ -20,7 +14,13 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
                 $("#table2").jqGrid('setGridWidth', $("#east3").width());
                 $("#table2").jqGrid('setGridHeight', $("#east3").height() - 28);
-            }
+            }  
+            
+            $(document).ready(function () {
+                $(window).bind('resize', function () {
+                    order.resize();
+                }).trigger('resize');
+            });
         </script>
     </head>
     <body>
