@@ -14,12 +14,7 @@
 
         <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script> 
-                
-<!--        <script type="text/javascript" src="js/login.js"></script>-->
-<!--        <script type="text/javascript" src="js/users.js"></script>-->
-<!--        <script type="text/javascript" src="js/systree.js"></script>-->
-<!--        <script type="text/javascript" src="js/order.js"></script>-->
-
+        
         <style type="text/css">
             #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
             #midl { border: 0 !important; }           
