@@ -36,19 +36,19 @@
     <body>
         <div id="tabs" style="display: none; height: 64px;">
             <ul>
-                <li><a href="#tab1" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/order.jsp');">Заказы</a>
-                <li><a href="#tab2" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/product.jsp');">Изделия</a>
+                <li><a href="#tab1" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/order.jsp');">Заказы</a>
+                <li><a href="#tab2" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/product.jsp');">Изделия</a>
                 <li><a href="#tab3" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/kits.jsp');">Комплектация</a>            
             </ul>
             <div id="tab1" style="padding: 4px">
                 <button tabindex="1" type="button" onclick="$('#dialog-tree').load('jsp/systree.jsp');" style="width: 100px;">Test11</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test12</button>
             </div>
-            <div id="tab2" style="padding: 2px">
+            <div id="tab2" style="padding: 4px">
                 <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test21</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test22</button>
             </div>
-            <div id="tab3" style="padding: 2px">
+            <div id="tab3" style="padding: 4px">
                 <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test31</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test32</button>
             </div>         
