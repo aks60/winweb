@@ -41,7 +41,10 @@ public class CatalogCont extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
 
-        if (action.equalsIgnoreCase("sysTree")) {
+        if (action.equalsIgnoreCase("property")) {
+            response.getWriter().write("{\"param\":\"999\"}");
+            
+        } else if (action.equalsIgnoreCase("sysTree")) {
             Catalog dic = new Catalog();
             HashMap output = dic.sysTree(request, response);
             response.getWriter().write(JSONValue.toJSONString(output));

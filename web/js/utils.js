@@ -1,6 +1,5 @@
-
 //создание объекта маппинга 
-function mapobj(selector_table) {
+utils.init_obj = function (selector_table) {
 
     Object.defineProperties(this, {
         //данные дата сервер
@@ -351,7 +350,7 @@ function mapobj(selector_table) {
 }
 
 //маппинг карточки ввода
-var focusObj = {
+utils.focus_obj = {
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
     click: function (event) {
         //запишем объект карточки ввода
@@ -389,7 +388,7 @@ var focusObj = {
 }
 
 //генератор ключей
-function genId(name) {
+utils.genId = function (name) {
     $.ajax({
         url: 'login?action=genId',
         data: {param: name},
@@ -399,7 +398,7 @@ function genId(name) {
     });
 }
 
-function formatDate2(d) {
+utils.format_date2 = function (d) {
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
     if (dd < 10) {

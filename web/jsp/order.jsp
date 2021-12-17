@@ -24,7 +24,7 @@
         </script>
     </head>
     <body>
-        <div id="midl" style="position: relative; margin-right: 400px;">
+        <div id="midl" style="position: relative; margin-right: 480px;">
             <div id="centr" style="height: 100%; width: 100%;">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
                 <script type="text/javascript">
@@ -32,7 +32,7 @@
                     order.load_table1($("#table1"));
                 </script> 
             </div>
-            <div id="east" style="position: absolute; margin-top: 300px; width: 396px; top: 0; right: -400px; bottom: 0">
+            <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                 <div id="east2" style="margin-top: -304px; height: 300px;">
                     EAST2
                 </div>

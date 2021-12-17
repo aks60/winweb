@@ -4,6 +4,7 @@
     <head>        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript"src="js/utils.js"></script> 
         <title>Login</title>
         
         <script type="text/javascript">
@@ -16,6 +17,15 @@
                     $("#midl").css("height", height);
                 }).trigger('resize');
             });
+            
+                //системные свойства               
+                $.ajax({
+                    url: 'catalog?action=property',
+                    success: function (data) {
+                        utils.param = data.param;
+                        utils.dateNow = utils.format_date2(new Date());
+                    }
+                });           
 
 //                $('#pan1 .login').val('admin');
 //                $('#pan1 .password').val('masterkey');

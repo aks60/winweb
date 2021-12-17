@@ -80,19 +80,4 @@ order.load_table2 = function (table) {
     });
 }
 
-order.load_table3 = function () {
-    alert(777);
-//    table.jqGrid("clearGridData", true);
-//    $.ajax({
-//        url: 'prod?action=sysTree',
-//        success: function (data) {
-//            order.sysTree = data.sysTree;
-//            for (i = 0; i < order.sysTree.length; i++) {
-//
-//            }
-//            order.resize();
-//        }
-//    });
-}
-
 
