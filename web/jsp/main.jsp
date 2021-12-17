@@ -22,7 +22,7 @@
 
         <script type="text/javascript">
             //глобальные данные
-            var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {}, systree = {};
+            var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {}, systree = {}, kits = {};
 
             //глобальные настройки и параметры           
             $(document).ready(function () {
