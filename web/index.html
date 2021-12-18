@@ -1,12 +1,44 @@
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/kits.js"></script> 
+        <title>JSP Page</title>
+        <style type="text/css">
+            #cont, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
+            #midl { border: 0 !important; }  
+            #midl, body, html {
+                height: 100%;
+            }
+        </style>
+        <!--        <script type="text/javascript">
+                    function resiz2() {
+                        var height = window.innerHeight - 160;
+                        $("#midl").css("height", height);
+        //                $("#table1").jqGrid('setGridWidth', $("#centr").width());
+        //                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 40);
+                    }
+        
+                    $(document).ready(function () {
+                        $(window).bind('resize', function () {
+                            //resiz2();
+                        }).trigger('resize');
+                    });
+                </script>         -->
     </head>
     <body>
-        <div>TODO write content</div>
+                <div id="north" style=" height: 20px; width: 100%;">
+                    NORTH
+                </div>
+                <div id="midl">                
+                    <div id="centr" style="height: 80%; width: 100%;">
+                        CENTR 
+                    </div>          
+                </div>
+                <div id="south" style="height: 20px; width: 100%;">
+                    SOUTH
+                </div>
     </body>
 </html>
 
