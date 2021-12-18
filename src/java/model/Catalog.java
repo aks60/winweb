@@ -66,8 +66,11 @@ public class Catalog {
         List<List> prod = new ArrayList();
         Query qSysprod = new Query(Att.att(request).connect(), eSysprod.values()).select(eSysprod.up, "order by name");
         for (Record rec : qSysprod) {
-            prod.add(Arrays.asList(rec.get(eSysprod.id), rec.get(eSysprod.name),
-                    rec.get(eSysprod.script), rec.get(eSysprod.systree_id)));
+            prod.add(Arrays.asList(
+                    rec.get(eSysprod.id), 
+                    rec.get(eSysprod.name),
+                    rec.get(eSysprod.script), 
+                    rec.get(eSysprod.systree_id)));
         }
         JSONObject output = new JSONObject(App.asMap("sysProd", prod));
         return output;

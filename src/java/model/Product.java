@@ -19,9 +19,13 @@ public class Product {
 
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
                 eProprod.project_id, eProprod.systree_id).select(eProprod.up, "where id > 0", "order by", eProprod.name);
-        for (Record record : qProprod) {
-            list.add(Arrays.asList(record.get(eProject.id), record.get(eProprod.name), record.get(eProprod.script),
-                    record.get(eProprod.project_id), record.get(eProprod.systree_id)));
+        for (Record rec : qProprod) {
+            list.add(Arrays.asList(
+                    rec.get(eProject.id), 
+                    rec.get(eProprod.name), 
+                    rec.get(eProprod.script),
+                    rec.get(eProprod.project_id), 
+                    rec.get(eProprod.systree_id)));
         }
         HashMap<String, List<List>> output = new HashMap();
         output.put("prodList", list);

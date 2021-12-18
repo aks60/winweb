@@ -2,13 +2,16 @@ package cont5r;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Kits;
+import org.json.simple.JSONValue;
 
-@WebServlet(name = "KitsCont", urlPatterns = {"/KitsCont"})
+@WebServlet(name = "KitsCont", urlPatterns = {"/kits"})
 public class KitsCont extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -34,17 +37,14 @@ public class KitsCont extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet KitsCont</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet KitsCont at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+            if (action.equalsIgnoreCase("kitsList")) {
+                Kits kits = new Kits();
+                HashMap output = kits.kitsList(request, response);               
+                response.getWriter().write(JSONValue.toJSONString(output));
+            }
         }
     }
 }

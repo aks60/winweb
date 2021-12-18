@@ -19,8 +19,12 @@ public class Users {
         output.put("userList", new ArrayList());
         Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
         for (Record rec : qSysuser) {
-            ((List) output.get("userList")).add(Arrays.asList(rec.get(eSysuser.id), rec.get(eSysuser.fio), 
-                    rec.get(eSysuser.desc), rec.get(eSysuser.login), rec.get(eSysuser.role)));
+            ((List) output.get("userList")).add(Arrays.asList(
+                    rec.get(eSysuser.id), 
+                    rec.get(eSysuser.fio), 
+                    rec.get(eSysuser.desc), 
+                    rec.get(eSysuser.login), 
+                    rec.get(eSysuser.role)));
         }
         return output;
     }
