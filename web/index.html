@@ -6,10 +6,15 @@
         <script type="text/javascript" src="js/kits.js"></script> 
         <title>JSP Page</title>
         <style type="text/css">
-            #cont, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #midl { border: 0 !important; }  
-            #midl, body, html {
+            #midl, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
+            /*#midl { border: 0 !important; }*/  
+            html {
                 height: 100%;
+                border: 2px solid #0000ff;
+            }
+            body {
+                height: 100%;
+                border: 2px solid #cd0a0a;
             }
         </style>
         <!--        <script type="text/javascript">
@@ -28,17 +33,15 @@
                 </script>         -->
     </head>
     <body>
-                <div id="north" style=" height: 20px; width: 100%;">
-                    NORTH
-                </div>
-                <div id="midl">                
-                    <div id="centr" style="height: 80%; width: 100%;">
-                        CENTR 
-                    </div>          
-                </div>
-                <div id="south" style="height: 20px; width: 100%;">
-                    SOUTH
-                </div>
+<!--        <div id="north" style="height: 20px; width: 99%;">
+            NORTH
+        </div>-->
+<!--        <div id="midl" style="height: 100%;">                
+            MIDL          
+        </div>-->
+<!--        <div id="south" style="position: relative; top: -20px; height: 20px; width: 100%;">
+            SOUTH
+        </div>-->
     </body>
 </html>
 
