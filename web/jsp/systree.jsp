@@ -6,8 +6,7 @@
         <script type="text/javascript" src="js/systree.js"></script>
         <title>SYSTREE</title>
         
-    </head>
-    </style>    
+    </head>  
     <script type="text/javascript">
         systree.resize = function () {
             $("#table-tree").jqGrid('setGridWidth', $("#dialog-tree #midl #centr").width());
@@ -43,7 +42,6 @@
                 systree.load_tabgrid($("#table-grid"));
             </script>  
         </div>
-
     </div>  
 </body> 
 </html> 

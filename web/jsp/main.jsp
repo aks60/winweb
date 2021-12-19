@@ -7,7 +7,7 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
-                       
+
         <script type="text/javascript" src="js/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
@@ -16,13 +16,15 @@
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
 
         <style type="text/css">
+            html, #outbody { height:100%; }
             #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #midl { border: 0 !important; }           
+            #midl { border: 0 !important; } 
         </style>
 
         <script type="text/javascript">
             //глобальные данные
-            var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {}, systree = {}, kits = {};
+            var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
+                    systree = {}, kits = {}, color = {};
 
             //глобальные настройки и параметры           
             $(document).ready(function () {
@@ -33,7 +35,7 @@
             });
         </script> 
     </head>
-    <body>
+    <body  style="height: calc(100% - 8px);">
         <div id="tabs" style="display: none; height: 64px;">
             <ul>
                 <li><a href="#tab1" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/order.jsp');">Заказы</a>
