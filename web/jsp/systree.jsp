@@ -5,22 +5,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/systree.js"></script>
         <title>SYSTREE</title>
-        
+
     </head>  
     <script type="text/javascript">
         systree.resize = function () {
-            $("#table-tree").jqGrid('setGridWidth', $("#dialog-tree #midl #centr").width());
-            $("#table-tree").jqGrid('setGridHeight', $("#dialog-tree #midl #centr").height() - 26);
-            $("#table-grid").jqGrid('setGridWidth', $("#dialog-tree #midl #east").width());
-            $("#table-grid").jqGrid('setGridHeight', $("#dialog-tree #midl #east").height() - 26);
+            $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #midl #centr").width());
+            $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #midl #centr").height() - 26);
+            $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #midl #east").width());
+            $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #midl #east").height() - 26);
         }
-        
+
         $(document).ready(function () {
             $(window).bind('resize', function () {
                 systree.resize();
             }).trigger('resize');
 
-            systree.init_dialog($("#dialog-tree"));
+            systree.init_dialog($("#dialog-dic"));
+            systree.init_table1($("#tab1-dic"));
+            systree.load_table1($("#tab1-dic"));
+            systree.init_table2($("#tab2-dic"));
+            systree.load_table2($("#tab2-dic"));
         });
     </script> 
 </head> 
@@ -28,19 +32,11 @@
     <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
         <div id="centr" style="height: 99.6%; width: 99%;">
-            <table id="table-tree"  class="ui-jqgrid-btable"></table> 
-            <script type="text/javascript">
-                systree.init_tabtree($("#table-tree"))
-                systree.load_tabtree($("#table-tree"))
-            </script>
+            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
         </div>
 
         <div id="east" style="position: absolute; height: 99.6%; width: 290px; top: 0; right: -300px;">
-            <table id="table-grid"  class="ui-jqgrid-btable"></table>
-            <script type="text/javascript">
-                systree.init_tabgrid($("#table-grid"));
-                systree.load_tabgrid($("#table-grid"));
-            </script>  
+            <table id="tab2-dic"  class="ui-jqgrid-btable"></table> 
         </div>
     </div>  
 </body> 

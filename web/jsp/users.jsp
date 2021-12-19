@@ -14,17 +14,20 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
+            $("button").button();
             function onpage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();
-            }  
-            
-            $("button").button();
+            }
+
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     users.resize();
                 }).trigger('resize');
+
+                users.init_table1($("#table1"));
+                users.load_table1($("#table1"));
             });
         </script>          
     </head>
@@ -154,10 +157,6 @@
             <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                 <div>
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
-                    <script type="text/javascript">
-                        users.init_table1($("#table1"));
-                        users.load_table1($("#table1"));
-                    </script>    
                 </div>
             </div>                 
         </div>

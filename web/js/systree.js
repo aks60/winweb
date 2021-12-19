@@ -16,7 +16,7 @@ systree.init_dialog = function (tabtree) {
     });
 }
 
-systree.init_tabtree = function (tabtree) {
+systree.init_table1 = function (tabtree) {
     tabtree.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
@@ -36,7 +36,7 @@ systree.init_tabtree = function (tabtree) {
     });
 }
 
-systree.init_tabgrid = function (tabgrid) {
+systree.init_table2 = function (tabgrid) {
     tabgrid.jqGrid({
         datatype: "local",
         colNames: ['id', 'Наименование', 'Рисунок', 'parent'],
@@ -48,7 +48,7 @@ systree.init_tabgrid = function (tabgrid) {
     });
 }
 
-systree.load_tabtree = function (table) {
+systree.load_table1 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
         url: 'catalog?action=sysTree',
@@ -73,7 +73,7 @@ systree.load_tabtree = function (table) {
     });
 }
 
-systree.load_tabgrid = function (table) {
+systree.load_table2 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
         url: 'catalog?action=sysProd',

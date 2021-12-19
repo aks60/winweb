@@ -27,7 +27,7 @@
         </div>
         <!--<div id="midl" style="position: relative;">-->                
             <div id="centr" style="width: 100%;">
-                <table id="table1"  class="ui-jqgrid-btable"></table> 
+                <table id="tab1-color"  class="ui-jqgrid-btable"></table> 
                 <script type="text/javascript">
                     kits.init_table1($("#table1"));
                     kits.load_table1($("#table1"));

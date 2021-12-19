@@ -7,34 +7,31 @@
         <title>COLOR</title>
         <script type="text/javascript">
             color.resize = function () {
-//                var height = window.innerHeight - 68;
-//                $("#midl").css("height", height);
+                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #north").width());
+                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #north").height());
+                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #south").width());
+                $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #south").height());
             }
-
-            $("button").button();
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     color.resize();
                 }).trigger('resize');
+
+                color.init_dialog($("#dialog-dic"));
+                color.init_table1($("#tab1-dic"))
+                color.load_table1($("#tab1-dic"))
+                color.init_table2($("#tab2-dic"));
+                color.load_table2($("#tab2-dic"));
             });
         </script>         
     </head>
     <body>
-        <div id="north" style="height: calc(40% - 16px); width: calc(100% - 4px);">
-            <table id="table1"  class="ui-jqgrid-btable"></table> 
-            <script type="text/javascript">
-                color.init_table1($("#table1"))
-                color.load_table1($("#table1"))
-            </script>
+        <div id="north" style="height: calc(40% - 8px); width: calc(100% - 4px);">
+            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
         </div>
-
-        <div id="east" style="height: 60%; width: calc(100% - 4px)">
-            <table id="table2"  class="ui-jqgrid-btable"></table>
-            <script type="text/javascript">
-                color.init_table2($("#table2"));
-                color.load_table2($("#table2"));
-            </script>  
+        <div id="south" style="height: 60%; width: calc(100% - 4px)">
+            <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
         </div>
     </body>
 </html>

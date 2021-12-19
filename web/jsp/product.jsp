@@ -39,7 +39,7 @@
                     EAST2
                 </div>
                 <div id="east3" style="height: 100%; width: 100%;">
-                    <table id="table1"  class="ui-jqgrid-btable"></table> 
+                    <table id="tab1-color"  class="ui-jqgrid-btable"></table> 
                     <script type="text/javascript">
                         product.init_table1($("#table1"));
                         product.load_table1($("#table1"));

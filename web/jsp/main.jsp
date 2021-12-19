@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Main</title>
+        <title>SA-OKNA</title>
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
@@ -43,8 +43,8 @@
                 <li><a href="#tab3" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/kits.jsp');">Комплектация</a>            
             </ul>
             <div id="tab1" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="$('#dialog-tree').load('jsp/systree.jsp');" style="width: 100px;">Test11</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test12</button>
+                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/systree.jsp');" style="width: 100px;">Test11</button>
+                <button tabindex="2" type="button" onclick="$('#dialog-dic').load('jsp/color.jsp');" style="width: 100px;">Test12</button>
             </div>
             <div id="tab2" style="padding: 4px">
                 <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test21</button>
@@ -54,11 +54,11 @@
                 <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test31</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test32</button>
             </div>         
-        </div>               
+        </div>  
+        
         <div id="outbody"></div>  
-        <div id="dialog-tree" title="Системы профилей"></div>
+        <div id="dialog-dic" title="Словарь"</div> 
         <div id="dialog-mes" title="Сообщеие"></div>        
-        <div id="dialog-dic" style="display: none;"><table id="dialogDic" class="ui-jqgrid-btable"></table></div> 
 
         <script type="text/javascript">
             $("#outbody").load('jsp/login.jsp');
