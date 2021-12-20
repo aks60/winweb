@@ -2,7 +2,6 @@
 color.init_dialog = function (table) {
     table.dialog({
         title: "Справочник текстур",
-        autoOpen: true, // Открывать ли окно сразу 
         width: 400,
         height: 500,
         modal: false,

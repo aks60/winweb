@@ -2,7 +2,6 @@
 systree.init_dialog = function (tabtree) {
     tabtree.dialog({
         title: "Конструкции систем профилей",
-        autoOpen: true, // Открывать ли окно сразу 
         width: 600,
         height: 500,
         modal: false,
