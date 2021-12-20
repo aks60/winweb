@@ -15,4 +15,13 @@ sysprof.init_dialog = function (table) {
     });
 }
 
+sysprof.init_table1 = function(table) {
+    
+}
+
+sysprof.load_table1 = function(table) {
+    
+}
+
+
 
