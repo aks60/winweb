@@ -16,9 +16,9 @@
         <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
 
         <style type="text/css">
-            html, #outbody { height:100%; }
-            #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #midl { border: 0 !important; } 
+            #context, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
+            #context {  border: 2px solid #0000ff; }
+            /*#midl { border: 0 !important; }*/ 
         </style>
 
         <script type="text/javascript">
@@ -35,7 +35,7 @@
             });
         </script> 
     </head>
-    <body  style="height: calc(100% - 8px);">
+    <body>
         <div id="tabs" style="display: none; height: 64px;">
             <ul>
                 <li><a href="#tab1" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/order.jsp');">Заказы</a>

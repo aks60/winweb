@@ -8,10 +8,10 @@
 
         <script type="text/javascript">
             kits.resize = function () {
-                var height = window.innerHeight - 146;
-                $("#centr").css("height", height);
-                $("#table1").jqGrid('setGridWidth', $("#centr").width());
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 26);
+                var height = window.innerHeight;
+                $("#context").css("height", height - 102);
+                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
+                $("#table1").jqGrid('setGridHeight', $("#centr").height());
             }
 
             $(document).ready(function () {
@@ -25,14 +25,16 @@
         </script>         
     </head>
     <body>
-        <div id="north" style=" height: 20px; width: 100%;">
-            NORTH
-        </div>               
-        <div id="centr" style="width: 100%;">
-            <table id="table1"  class="ui-jqgrid-btable"></table> 
-        </div>          
-        <div id="south" style="height: 20px; width: 100%;">
-            SOUTH
+        <div id = "context">
+            <div id="north" style=" height: 20px; width: 100%;">
+                NORTH
+            </div>               
+            <div id="centr" style="width: 100%; height: calc(100% - 72px)">
+                <table id="table1"  class="ui-jqgrid-btable"></table> 
+            </div>          
+            <div id="south" style="height: 20px; width: 100%;">
+                SOUTH
+            </div>
         </div>
     </body>
 </html>
