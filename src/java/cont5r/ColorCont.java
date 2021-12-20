@@ -44,6 +44,11 @@ public class ColorCont extends HttpServlet {
                 HashMap output = dic.colorGroup(request, response);
                 out.write(JSONValue.toJSONString(output));
 
+            } else if (action.equalsIgnoreCase("colorList")) {
+                Color dic = new Color();
+                HashMap output = dic.colorList(request, response);
+                out.write(JSONValue.toJSONString(output));
+
             }
         }
     }

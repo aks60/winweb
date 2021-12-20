@@ -1,5 +1,4 @@
 product.init_table1 = function (table) {
-    $(function () {
         table.jqGrid({
             datatype: "local",
             //rownumbers: true,
@@ -12,7 +11,6 @@ product.init_table1 = function (table) {
                 {name: 'systree_id', hidden: true}
             ]
         });
-    });
 }
 
 product.load_table1 = function (table) {

@@ -1,8 +1,9 @@
 
 color.init_dialog = function (table) {
     table.dialog({
+        title: "Справочник текстур",
         autoOpen: true, // Открывать ли окно сразу 
-        width: 600,
+        width: 400,
         height: 500,
         modal: false,
         buttons: {
@@ -19,6 +20,7 @@ color.init_dialog = function (table) {
 color.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
+        rownumbers: true,
         colNames: ['id', 'Группы текстур'],
         colModel: [
             {name: 'id', hidden: true},
@@ -27,23 +29,10 @@ color.init_table1 = function (table) {
     });
 };
 
-color.init_table1x = function (table) {
-    $(function () {
-        table.jqGrid({
-            datatype: "local",
-            //rownumbers: true,
-            colNames: ['id', 'Наименование'],
-            colModel: [
-                {name: 'id', hidden: true},
-                {name: 'name', width: 120, sorttype: "text"}
-            ]
-        });
-    });
-};
-
 color.init_table2 = function (table) {
     table.jqGrid({
         datatype: "local",
+        rownumbers: true,
         colNames: ['Код', 'Описание текстур'],
         colModel: [
             {name: 'id', width: 80},
@@ -57,28 +46,17 @@ color.load_table1 = function (table) {
     $.ajax({
         url: 'color?action=colorGroup',
         success: function (data) {
-            //debugger;
             color.colorGroup = data.colorGroup;
             for (i = 0; i < color.colorGroup.length; i++) {
                 let tr = color.colorGroup[i];
                 table.addRowData(i + 1, {
                     id: tr[0],
-                    code: 'tr[1]'
+                    name: tr[1]
                 });
             }
             color.resize();
         }
     });
-};
-color.load_table1x = function (table) {
-
-    for (i = 0; i < 3; i++) {
-        table.addRowData(i + 1, {
-            id: 1,
-            code: 'xxxxxxxxxxx'
-        });
-    }
-    color.resize();
 };
 
 color.load_table2 = function (table) {

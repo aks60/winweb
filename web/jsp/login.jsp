@@ -21,7 +21,7 @@
 //                $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-            login.user_connect();
+//            login.user_connect();
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();

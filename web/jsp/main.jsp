@@ -24,7 +24,7 @@
         <script type="text/javascript">
             //глобальные данные
             var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
-                    systree = {}, kits = {}, color = {};
+                    systree = {}, kits = {}, color = {}, sysprof = {};
 
             //глобальные настройки и параметры           
             $(document).ready(function () {
@@ -43,11 +43,11 @@
                 <li><a href="#tab3" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/kits.jsp');">Комплектация</a>            
             </ul>
             <div id="tab1" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/systree.jsp');" style="width: 100px;">Test11</button>
-                <button tabindex="2" type="button" onclick="$('#dialog-dic').load('jsp/color.jsp');" style="width: 100px;">Test12</button>
+                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/systree.jsp');" style="width: 100px;">Test11</button>
+                <button tabindex="2" type="button" onclick="$('#dialog-dic').load('jsp/dialog/color.jsp');" style="width: 100px;">Test12</button>
             </div>
             <div id="tab2" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test21</button>
+                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/sysprof.html');" style="width: 100px;">Test21</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test22</button>
             </div>
             <div id="tab3" style="padding: 4px">
@@ -61,6 +61,7 @@
         <div id="dialog-mes" title="Сообщеие"></div>        
 
         <script type="text/javascript">
+//            $("#outbody").load('jsp/dialog/sysprof.html');
             $("#outbody").load('jsp/login.jsp');
         </script> 
     </body>

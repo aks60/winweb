@@ -1,6 +1,5 @@
 
 order.init_table1 = function (table) {
-    $(function () {
         table.jqGrid({
             datatype: "local",
             rownumbers: true,
@@ -15,11 +14,9 @@ order.init_table1 = function (table) {
                 {name: 'manager', width: 120, sorttype: "text"}
             ]
         });
-    });
 }
 
 order.init_table2 = function (table) {
-    $(function () {
         table.jqGrid({
             datatype: "local",
             rownumbers: true,
@@ -32,7 +29,6 @@ order.init_table2 = function (table) {
                 {name: 'systree_id', hidden: true}
             ]
         });
-    });
 }
 
 order.load_table1 = function (table) {

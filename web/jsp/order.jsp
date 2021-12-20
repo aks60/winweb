@@ -11,7 +11,7 @@
                 var height = window.innerHeight - 108;
                 $("#midl").css("height", height);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 26);
                 $("#table2").jqGrid('setGridWidth', $("#east3").width() - 4);
                 $("#table2").jqGrid('setGridHeight', $("#east3").height() - 28);
             }
@@ -29,7 +29,7 @@
         </script>
     </head>
     <body>
-        <div id="midl" style="position: relative; margin-right: 480px;">
+        <div id="midl" style="position: relative; margin-right: 480px; height: calc(100% - 40px)">
             <div id="centr" style="height: 100%; width: 100%;">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>
