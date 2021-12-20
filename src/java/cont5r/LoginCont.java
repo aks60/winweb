@@ -1,6 +1,7 @@
 package cont5r;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,69 +36,72 @@ public class LoginCont extends HttpServlet {
     }
 // </editor-fold>
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
+        try (PrintWriter out = response.getWriter()) {
+            if (action == null) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/main.jsp");
+                dispatcher.forward(request, response);
 
-        if (action == null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/main.jsp");
-            dispatcher.forward(request, response);
+            } else if (action.equalsIgnoreCase("property")) {
+                response.getWriter().write("{\"param\":\"999\"}");
 
-        } else if (action.equalsIgnoreCase("rtwEmptyLogin")) {
+            } else if (action.equalsIgnoreCase("rtwEmptyLogin")) {
 //            AdmImp adm = new AdmImp();
 //            HashMap output = adm.rtwEmptyLogin(request, response);
-//            response.getWriter().write(JSONValue.toJSONString(output));
+//            out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("listRegion")) {
+            } else if (action.equalsIgnoreCase("listRegion")) {
 //            AdmImp adm = new AdmImp();
 //            ArrayList<HashMap> output = adm.listRegion(request, response);
-//            response.getWriter().write(JSONValue.toJSONString(output));
+//            out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("rtwRandom")) {
+            } else if (action.equalsIgnoreCase("rtwRandom")) {
 //            AdmImp adm = new AdmImp();
 //            HashMap output = adm.rtwRandom(request, response);
 //            response.getWriter().write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("rtwConnect")) {
+            } else if (action.equalsIgnoreCase("rtwConnect")) {
 //            AdmImp adm = new AdmImp();
 //            menuDisplay(request, response);
 //            Sys.initDatePass(request);
 //
 //            HashMap output = adm.rtwConnect(request, response);
 //            menuDisplay(request, response);
-//            response.getWriter().write(JSONValue.toJSONString(output));
+//            out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("userConnect")) {
+            } else if (action.equalsIgnoreCase("userConnect")) {
 
-            Login adm = new Login();
-            menuDisplay(request, response);
-            Sys.initDatePass(request);
+                Login adm = new Login();
+                menuDisplay(request, response);
+                Sys.initDatePass(request);
 
-            HashMap output = adm.userConnect(request, response);
-            //Entity.msserver(Att.att(request).getConnect(), "marks"); //Генерация Entity            
-            response.getWriter().write(JSONValue.toJSONString(output));
+                HashMap output = adm.userConnect(request, response);
+                //Entity.msserver(Att.att(request).getConnect(), "marks"); //Генерация Entity            
+                out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("newToken")) {
+            } else if (action.equalsIgnoreCase("newToken")) {
 //            AdmImp adm = new AdmImp();
 //            HashMap output = adm.newToken(request, response);
-//            response.getWriter().write(JSONValue.toJSONString(output));
+//            out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("newLogin")) {
-            Login adm = new Login();
-            HashMap output = adm.newLogin(request, response);
-            response.getWriter().write(JSONValue.toJSONString(output));
+            } else if (action.equalsIgnoreCase("newLogin")) {
+                Login adm = new Login();
+                HashMap output = adm.newLogin(request, response);
+                out.write(JSONValue.toJSONString(output));
 
-        } else if (action.equalsIgnoreCase("deleteLogin")) {
-            Login adm = new Login();
-            String id = request.getParameter("userID");
-            HashMap output = adm.deleteUser(request, response, id);
-            response.getWriter().write(JSONValue.toJSONString(output));
+            } else if (action.equalsIgnoreCase("deleteLogin")) {
+                Login adm = new Login();
+                String id = request.getParameter("userID");
+                HashMap output = adm.deleteUser(request, response, id);
+                out.write(JSONValue.toJSONString(output));
 
+            }
         }
     }
-
 
     private void menuDisplay(HttpServletRequest request, HttpServletResponse response) {
 

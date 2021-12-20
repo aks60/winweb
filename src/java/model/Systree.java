@@ -14,7 +14,7 @@ import model.sys.App;
 import model.sys.Att;
 import org.json.simple.JSONObject;
 
-public class Catalog {
+public class Systree {
 
     //Дерево системы профилей
     public JSONObject sysTree(HttpServletRequest request, HttpServletResponse response) {

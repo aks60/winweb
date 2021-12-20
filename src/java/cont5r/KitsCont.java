@@ -36,6 +36,7 @@ public class KitsCont extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
@@ -43,7 +44,7 @@ public class KitsCont extends HttpServlet {
             if (action.equalsIgnoreCase("kitsList")) {
                 Kits kits = new Kits();
                 HashMap output = kits.kitsList(request, response);               
-                response.getWriter().write(JSONValue.toJSONString(output));
+                out.write(JSONValue.toJSONString(output));
             }
         }
     }

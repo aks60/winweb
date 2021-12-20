@@ -35,6 +35,7 @@ public class ProdCont extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
@@ -43,7 +44,7 @@ public class ProdCont extends HttpServlet {
                 String prodID = request.getParameter("prodID");
                 Product product = new Product();
                 HashMap output = product.prodList(request, response, prodID);
-                response.getWriter().write(JSONValue.toJSONString(output));
+                out.write(JSONValue.toJSONString(output));
             }
         }
     }

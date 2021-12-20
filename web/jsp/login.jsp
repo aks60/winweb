@@ -10,7 +10,7 @@
         <script type="text/javascript">
             //системные свойства               
             $.ajax({
-                url: 'catalog?action=property',
+                url: 'login?action=property',
                 success: function (data) {
                     utils.param = data.param;
                     utils.dateNow = utils.format_date2(new Date());
@@ -21,7 +21,7 @@
 //                $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-            //login.user_connect();
+            login.user_connect();
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();

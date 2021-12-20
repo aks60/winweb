@@ -51,7 +51,7 @@ systree.init_table2 = function (tabgrid) {
 systree.load_table1 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
-        url: 'catalog?action=sysTree',
+        url: 'systree?action=sysTree',
         success: function (data) {
             systree.sysTree = data.sysTree;
             table[0].addJSONData({
@@ -76,7 +76,7 @@ systree.load_table1 = function (table) {
 systree.load_table2 = function (table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
-        url: 'catalog?action=sysProd',
+        url: 'systree?action=sysProd',
         success: function (data) {
             debugger;
             systree.sysProd = data.sysProd;
