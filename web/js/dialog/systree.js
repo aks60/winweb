@@ -60,7 +60,6 @@ systree.load_table1 = function (table) {
                 records: systree.sysTree.length,
                 rows: systree.sysTree
             });
-//            debugger;
 //            systree.sysTree = data.sysTree;
 //            for (i = 0; i < systree.sysTree.length; i++) {
 //                let tr = systree.sysTree[i];
@@ -79,7 +78,6 @@ systree.load_table2 = function (table) {
     $.ajax({
         url: 'systree?action=sysProd',
         success: function (data) {
-            debugger;
             systree.sysProd = data.sysProd;
             for (i = 0; i < systree.sysProd.length; i++) {
                 let tr = systree.sysProd[i];

@@ -47,7 +47,7 @@
                 <button tabindex="2" type="button" onclick="$('#dialog-dic').load('jsp/dialog/color.jsp');" style="width: 100px;">Test12</button>
             </div>
             <div id="tab2" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/sysprof.html');" style="width: 100px;">Test21</button>
+                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');" style="width: 100px;">Test21</button>
                 <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test22</button>
             </div>
             <div id="tab3" style="padding: 4px">
