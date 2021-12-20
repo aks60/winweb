@@ -57,8 +57,8 @@
         </div>  
         
         <div id="outbody"></div>  
-        <div id="dialog-dic" title="Словарь"</div> 
-        <div id="dialog-mes" title="Сообщеие"></div>        
+        <div id="dialog-dic"</div> 
+        <div id="dialog-mes"></div>        
 
         <script type="text/javascript">
 //            $("#outbody").load('jsp/dialog/sysprof.html');
