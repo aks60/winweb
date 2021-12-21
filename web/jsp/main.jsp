@@ -33,7 +33,7 @@
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('button').button();
-                $("#mainmenu").load('jsp/menu.jsp', function () {  onMenu(); });
+
             });
         </script> 
     </head>
@@ -44,7 +44,9 @@
         <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
-           // $("#mainmenu").load('jsp/menu.jsp', function () {  onMenu(); });
+            $("#mainmenu").load('jsp/menu.jsp', function () {
+                init_menu();
+            });
             $("#outbody").load('jsp/login.jsp');
         </script> 
     </body>

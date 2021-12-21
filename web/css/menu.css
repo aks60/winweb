@@ -3,9 +3,8 @@
     background-repeat:repeat-x;
     background-image: url('../img/menu/menu_strip_bg.jpg');
     text-align:left;
-    width: 99%;
+    width: calc(100% - 1px);
     height: 28px;
-    padding-left: 16px;
 }
 
 .menu > span {
@@ -30,8 +29,7 @@
     display:block;
     font-size:16px;
     font-weight: bold;
-    padding:1px 10px 6px;
-    margin-top: -6px;
+    padding: 4px 10px;
     position:relative;
     text-decoration:none;
 }
