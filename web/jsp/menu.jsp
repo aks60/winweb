@@ -4,8 +4,6 @@
     <head>
         <title>Выпадающее меню на CSS3</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
-
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -114,49 +112,35 @@
                             </div>
                         </div>  
                     </li> 
-                    <li><a href="#">Справка</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a href="#" onClick="loadBody('');">Справка по программе</a></li>
-                                            <li><a href="#" onClick="loadBody('');">Часто задаваемые вопросы</a></li>
-                                            <li><a href="#" onClick="loadBody('view/patt/simpl4.jsp');">О программе</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>  
+                    <li><a onClick="alert(777)">Справка</a>
                     </li> 
                 </ul>
             </span>
         </div>
 
         <script type="text/javascript">
-        function onMenu() {
-            alert('click5');
-            $("#nav2 > li > a").click(function (e) { // binding onclick
-                if ($(this).parent().hasClass('selected')) {
-                    $("#nav2 .selected div div").slideUp(100); // hiding popups
-                    $("#nav2 .selected").removeClass("selected");
-                } else {
-                    $("#nav2 .selected div div").slideUp(100); // hiding popups
-                    $("#nav2 .selected").removeClass("selected");
+            function onMenu() {
+                $("#nav2 > li > a").click(function (e) { // binding onclick
+                    if ($(this).parent().hasClass('selected')) {
+                        $("#nav2 .selected div div").slideUp(100); // hiding popups
+                        $("#nav2 .selected").removeClass("selected");
+                    } else {
+                        $("#nav2 .selected div div").slideUp(100); // hiding popups
+                        $("#nav2 .selected").removeClass("selected");
 
-                    if ($(this).next(".subs").length) {
-                        $(this).parent().addClass("selected"); // display popup
-                        $(this).next(".subs").children().slideDown(200);
+                        if ($(this).next(".subs").length) {
+                            $(this).parent().addClass("selected"); // display popup
+                            $(this).next(".subs").children().slideDown(200);
+                        }
                     }
-                }
-                e.stopPropagation();
-            });
+                    e.stopPropagation();
+                });
 
-            $("body").click(function () { // binding onclick to body
-                $("#nav2 .selected div div").slideUp(100); // hiding popups
-                $("#nav2 .selected").removeClass("selected");
-            });
-        }
+                $("body").click(function () { // binding onclick to body
+                    $("#nav2 .selected div div").slideUp(100); // hiding popups
+                    $("#nav2 .selected").removeClass("selected");
+                });
+            }
         </script> 
-</body>
+    </body>
 </html>

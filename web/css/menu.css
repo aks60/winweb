@@ -1,14 +1,13 @@
-
 .menu {
-    /*//background-color:#d0e6f5;*/
     z-index:100000;
     background-repeat:repeat-x;
-    background-image: url('../../img/menu/menu_strip_bg.jpg');
+    background-image: url('../img/menu/menu_strip_bg.jpg');
     text-align:left;
-    width: 98.5%;
+    width: 99%;
     height: 28px;
     padding-left: 16px;
 }
+
 .menu > span {
     display:inline-block;
     margin:auto;
@@ -32,7 +31,7 @@
     font-size:16px;
     font-weight: bold;
     padding:1px 10px 6px;
-    margin-top: -4px;
+    margin-top: -6px;
     position:relative;
     text-decoration:none;
 }
