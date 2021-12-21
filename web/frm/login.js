@@ -37,10 +37,10 @@ login.user_connect = function () {
             //debugger;
             if (data.result == 'true') {
                 if (data.role == 'RDB$ADMIN') {
-                    $("#outbody").load('jsp/users.jsp');
+                    $("#outbody").load('frm/users.jsp');
                 } else {
                     $("#mainmenu").show();
-                    $("#outbody").load('jsp/order.jsp');
+                    $("#outbody").load('frm/order.jsp');
                 }
             } else {
                 alert(data.result);
@@ -133,7 +133,7 @@ login.token_sign = function (random) {
                         if (data.role == 'YO_HO1_RW' || data.role == 'YO_HO2_RW') {
                             $('.manager').show();
                         }
-                        loadBody('jsp/patt/simpl3.jsp')
+                        loadBody('frm/patt/simpl3.jsp')
                     } else {
                         alert(data.result);
                     }

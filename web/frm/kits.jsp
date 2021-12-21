@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="js/kits.js"></script> 
+        <script type="text/javascript" src="frm/kits.js"></script> 
         <title>KITS</title>
 
         <script type="text/javascript">

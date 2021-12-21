@@ -3,7 +3,7 @@
 <html>
     <head style="margin: 0; padding: 0;">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="js/dialog/color.js"></script>
+        <script type="text/javascript" src="frm/dialog/color.js"></script>
         <title>COLOR</title>
         
         <script type="text/javascript">

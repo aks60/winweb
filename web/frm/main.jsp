@@ -10,12 +10,12 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
-        <script type="text/javascript" src="js/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
-        <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.13/jquery-ui.min.js"></script>        
+        <script type="text/javascript" src="jss/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
+        <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
+        <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
-        <script type="text/javascript"src="js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="js/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
+        <script type="text/javascript"src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
+        <script type="text/javascript"src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
 
         <style type="text/css">
             #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
@@ -44,10 +44,10 @@
         <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
-            $("#mainmenu").load('jsp/menu.jsp', function () {
+            $("#mainmenu").load('frm/menu.jsp', function () {
                 init_menu();
             });
-            $("#outbody").load('jsp/login.jsp');
+            $("#outbody").load('frm/login.jsp');
         </script> 
     </body>
 </html>

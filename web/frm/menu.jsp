@@ -15,18 +15,18 @@
             <img src='img/logotype3.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">
-                    <li><a onClick="$('#outbody').load('jsp/order.jsp');">Заказы</a></li>
-                    <li><a onClick="$('#outbody').load('jsp/product.jsp');">Изделия</a></li>
-                    <li><a onClick="$('#outbody').load('jsp/kits.jsp');">Комплекты</a></li>
+                    <li><a onClick="$('#outbody').load('frm/order.jsp');">Заказы</a></li>
+                    <li><a onClick="$('#outbody').load('frm/product.jsp');">Изделия</a></li>
+                    <li><a onClick="$('#outbody').load('frm/kits.jsp');">Комплекты</a></li>
                     <li><a>Отчеты</a>
                         <div class="subs">
                             <div>
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/systree.jsp');">Спецификация</a></li>
-                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/color.jsp');">Смета</a></li>
-                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');">Счёт-фактура</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Спецификация</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Смета</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/sysprof.jsp');">Счёт-фактура</a></li>
                                         </ul>
                                     </li>
                                 </ul>
