@@ -3,9 +3,9 @@
     /*//background-color:#d0e6f5;*/
     z-index:100000;
     background-repeat:repeat-x;
-    background-image:url('../../img/menu/menu_strip_bg.jpg');
+    background-image: url('../../img/menu/menu_strip_bg.jpg');
     text-align:left;
-    width:98.5%;
+    width: 98.5%;
     height: 28px;
     padding-left: 16px;
 }

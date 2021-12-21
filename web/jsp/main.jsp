@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
 
         <script type="text/javascript" src="js/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
@@ -17,21 +18,7 @@
 
         <style type="text/css">
             #context, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            /*#context {  border: 2px solid #0000ff; }*/
-            #nav {
-                background-repeat:repeat-x;
-                background-image:url('img/tool/strip_bg.jpg');
-                height: 30px;
-                paddingt: 0 16px;
-            }
-            #nav button { 
-                height: 24px; 
-                width: 120px; 
-                margin: 2px 8px; 
-                font-size: 12px; 
-                font-weight: bold;
-                color: #000;
-            }
+            #context {  border: 2px solid #0000ff; }
             /*#midl { border: 0 !important; }*/ 
         </style>
 
@@ -46,26 +33,18 @@
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('button').button();
+                $("#mainmenu").load('jsp/menu.jsp', function () {  onMenu(); });
             });
         </script> 
     </head>
     <body>
-        <div id="nav" style="display: none;">
-            <img src="img/tool/logotype3.png" height="20px" width="20px" style="margin: 4px; float: left">
-            <button onClick="$('#outbody').load('jsp/order.jsp');">Заказы</button> 
-            <button onClick="$('#outbody').load('jsp/product.jsp');">Изделия</button> 
-            <button onClick="$('#outbody').load('jsp/kits.jsp');">Комплектация</button> 
-            <button onClick="$('#dialog-dic').load('jsp/dialog/systree.jsp');">TEST1</button> 
-            <button onClick="$('#dialog-dic').load('jsp/dialog/color.jsp');">TEST2</button> 
-            <button onClick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');">TEST3</button> 
-            <button onClick="" style="float:right">Отчёт</button>
-        </div>
+        <div id="mainmenu" style="display: none;"></div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
         <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
-//            $("#outbody").load('jsp/dialog/sysprof.html');
+           // $("#mainmenu").load('jsp/menu.jsp', function () {  onMenu(); });
             $("#outbody").load('jsp/login.jsp');
         </script> 
     </body>
