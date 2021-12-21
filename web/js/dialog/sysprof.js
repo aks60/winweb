@@ -1,6 +1,6 @@
-sysprof.init_dialog = function (table) {
+win.sysprof.init_dialog = function (table) {
     table.dialog({
-        title: "Справочник текстур",
+        title: "Профили системы",
         width: 400,
         height: 500,
         modal: false,
@@ -15,7 +15,7 @@ sysprof.init_dialog = function (table) {
     });
 }
 
-sysprof.init_table1 = function(table) {
+win.sysprof.init_table1 = function(table) {
     table.jqGrid({
         datatype: "local",
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
@@ -28,7 +28,7 @@ sysprof.init_table1 = function(table) {
     });   
 }
 
-sysprof.load_table1 = function(table) {
+win.sysprof.load_table1 = function(table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
         url: 'sysprof?action=sysprofList',
@@ -40,10 +40,10 @@ sysprof.load_table1 = function(table) {
                     id: tr[0], 
                     artikl_id: tr[1], 
                     artikl_id: tr[2], 
-                    color1_id: tr[3]
+                    color1_id: tr[2]
                 });
             }
-            sysprof.resize();
+            win.sysprof.resize();
         }
     });   
 }

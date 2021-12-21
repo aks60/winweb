@@ -7,22 +7,22 @@
         <title>SYSPROF</title>
         
         <script type="text/javascript">
-            sysprof.resize = function () {
+            win.sysprof.resize = function () {
                 $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
                 $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height());
             }
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    sysprof.resize();
+                    win.sysprof.resize();
                 }).trigger('resize');
 
-                sysprof.init_dialog($("#dialog-dic"));
-                sysprof.init_table1($("#tab1-dic"))
-                sysprof.load_table1($("#tab1-dic"))
+                win.sysprof.init_dialog($("#dialog-dic"));
+                win.sysprof.init_table1($("#tab1-dic"))
+                win.sysprof.load_table1($("#tab1-dic"))
             });
 
-            sysprof.init_dialog($("#tab1-dic"));
+            win.sysprof.init_dialog($("#tab1-dic"));
 
         </script>        
     </head>

@@ -17,13 +17,27 @@
 
         <style type="text/css">
             #context, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #context {  border: 2px solid #0000ff; }
-            #nav button { width: 100px; margin: 4px 12px; };
+            /*#context {  border: 2px solid #0000ff; }*/
+            #nav {
+                background-repeat:repeat-x;
+                background-image:url('img/tool/strip_bg.jpg');
+                height: 30px;
+                paddingt: 0 16px;
+            }
+            #nav button { 
+                height: 24px; 
+                width: 120px; 
+                margin: 2px 8px; 
+                font-size: 12px; 
+                font-weight: bold;
+                color: #000;
+            }
             /*#midl { border: 0 !important; }*/ 
         </style>
 
         <script type="text/javascript">
             //глобальные данные
+            var win = {};
             var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
                     systree = {}, kits = {}, color = {}, sysprof = {};
 
@@ -31,13 +45,13 @@
             $(document).ready(function () {
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
-//                $('#tabs').tabs();
                 $('button').button();
             });
         </script> 
     </head>
     <body>
-        <div id="nav" style="display: none; height: 30px; background: #a9d4ff">
+        <div id="nav" style="display: none;">
+            <img src="img/tool/logotype3.png" height="20px" width="20px" style="margin: 4px; float: left">
             <button onClick="$('#outbody').load('jsp/order.jsp');">Заказы</button> 
             <button onClick="$('#outbody').load('jsp/product.jsp');">Изделия</button> 
             <button onClick="$('#outbody').load('jsp/kits.jsp');">Комплектация</button> 
@@ -48,7 +62,7 @@
         </div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
-        <div id="dialog-mes"></div>        
+        <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
 //            $("#outbody").load('jsp/dialog/sysprof.html');
