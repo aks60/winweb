@@ -135,11 +135,9 @@
 
         <script type="text/javascript">
         function onMenu() {
-            //alert('click1');
+            alert('click5');
             $("#nav2 > li > a").click(function (e) { // binding onclick
-                //alert('click2');
                 if ($(this).parent().hasClass('selected')) {
-                    //alert('click3');
                     $("#nav2 .selected div div").slideUp(100); // hiding popups
                     $("#nav2 .selected").removeClass("selected");
                 } else {
@@ -147,7 +145,6 @@
                     $("#nav2 .selected").removeClass("selected");
 
                     if ($(this).next(".subs").length) {
-                        //alert('click4');
                         $(this).parent().addClass("selected"); // display popup
                         $(this).next(".subs").children().slideDown(200);
                     }
@@ -156,7 +153,6 @@
             });
 
             $("body").click(function () { // binding onclick to body
-                //alert('click5');
                 $("#nav2 .selected div div").slideUp(100); // hiding popups
                 $("#nav2 .selected").removeClass("selected");
             });
