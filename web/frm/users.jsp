@@ -9,7 +9,7 @@
         <script type="text/javascript">
             users.resize = function () {
                 var height = window.innerHeight;
-                $("#context").css("height", height - 30);
+                $("#context").css("height", height - 28);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width());
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
