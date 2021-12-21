@@ -9,7 +9,7 @@
         <script type="text/javascript">
             order.resize = function () {
                 var height = window.innerHeight;
-                $("#context").css("height", height - 102);
+                $("#context").css("height", height - 60);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 26);
                 $("#table2").jqGrid('setGridWidth', $("#east3").width() - 4);

@@ -10,7 +10,7 @@
         <script type="text/javascript">
             product.resize = function () {
                 var height = window.innerHeight;
-                $("#context").css("height", height - 102);
+                $("#context").css("height", height - 60);
                 $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east3").height() - 28);
             }

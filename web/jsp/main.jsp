@@ -18,6 +18,7 @@
         <style type="text/css">
             #context, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
             #context {  border: 2px solid #0000ff; }
+            #nav button { width: 100px; margin: 4px 12px; };
             /*#midl { border: 0 !important; }*/ 
         </style>
 
@@ -30,32 +31,21 @@
             $(document).ready(function () {
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
-                $('#tabs').tabs();
+//                $('#tabs').tabs();
                 $('button').button();
             });
         </script> 
     </head>
     <body>
-        <div id="tabs" style="display: none; height: 64px;">
-            <ul>
-                <li><a href="#tab1" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/order.jsp');">Заказы</a>
-                <li><a href="#tab2" style="padding: 4px 32px" onclick="$('#outbody').load('jsp/product.jsp');">Изделия</a>
-                <li><a href="#tab3" style="padding: 4px 24px" onclick="$('#outbody').load('jsp/kits.jsp');">Комплектация</a>            
-            </ul>
-            <div id="tab1" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/systree.jsp');" style="width: 100px;">Test11</button>
-                <button tabindex="2" type="button" onclick="$('#dialog-dic').load('jsp/dialog/color.jsp');" style="width: 100px;">Test12</button>
-            </div>
-            <div id="tab2" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');" style="width: 100px;">Test21</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test22</button>
-            </div>
-            <div id="tab3" style="padding: 4px">
-                <button tabindex="1" type="button" onclick="alert('1');" style="width: 100px;">Test31</button>
-                <button tabindex="2" type="button" onclick="alert('2');" style="width: 100px;">Test32</button>
-            </div>         
-        </div>  
-        
+        <div id="nav" style="display: none; height: 30px; background: #a9d4ff">
+            <button onClick="$('#outbody').load('jsp/order.jsp');">Заказы</button> 
+            <button onClick="$('#outbody').load('jsp/product.jsp');">Изделия</button> 
+            <button onClick="$('#outbody').load('jsp/kits.jsp');">Комплектация</button> 
+            <button onClick="$('#dialog-dic').load('jsp/dialog/systree.jsp');">TEST1</button> 
+            <button onClick="$('#dialog-dic').load('jsp/dialog/color.jsp');">TEST2</button> 
+            <button onClick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');">TEST3</button> 
+            <button onClick="" style="float:right">Отчёт</button>
+        </div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
         <div id="dialog-mes"></div>        

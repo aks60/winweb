@@ -39,7 +39,7 @@ login.user_connect = function () {
                 if (data.role == 'RDB$ADMIN') {
                     $("#outbody").load('jsp/users.jsp');
                 } else {
-                    $("#tabs").show();
+                    $("#nav").show();
                     $("#outbody").load('jsp/order.jsp');
                 }
             } else {
