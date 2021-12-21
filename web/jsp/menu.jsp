@@ -17,16 +17,16 @@
                 <ul id="nav2">
                     <li><a onClick="$('#outbody').load('jsp/order.jsp');">Заказы</a></li>
                     <li><a onClick="$('#outbody').load('jsp/product.jsp');">Изделия</a></li>
-                    <li><a onClick="$('#outbody').load('jsp/kits.jsp');">Комплектация</a></li>
+                    <li><a onClick="$('#outbody').load('jsp/kits.jsp');">Комплекты</a></li>
                     <li><a>Отчеты</a>
                         <div class="subs">
                             <div>
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="">Спецификация</a></li>
-                                            <li><a onClick="">Смета</a></li>
-                                            <li><a onClick="">Счёт-фактура</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/systree.jsp');">Спецификация</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/color.jsp');">Смета</a></li>
+                                            <li><a onClick="$('#dialog-dic').load('jsp/dialog/sysprof.jsp');">Счёт-фактура</a></li>
                                         </ul>
                                     </li>
                                 </ul>

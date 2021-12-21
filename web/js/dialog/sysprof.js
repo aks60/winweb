@@ -1,8 +1,8 @@
-win.sysprof.init_dialog = function (table) {
+sysprof.init_dialog = function (table) {
     table.dialog({
         title: "Профили системы",
         width: 400,
-        height: 500,
+        height: 400,
         modal: false,
         buttons: {
             "Выбрать": function () {
@@ -15,20 +15,20 @@ win.sysprof.init_dialog = function (table) {
     });
 }
 
-win.sysprof.init_table1 = function(table) {
+sysprof.init_table1 = function(table) {
     table.jqGrid({
         datatype: "local",
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true},
-            {name: 'use_side', width: 80, sorttype: "text"},
-            {name: 'artikl_id', width: 200, sorttype: "text"},
-            {name: 'artikl_id', width: 80, sorttype: "text"}
+            {name: 'use_side', width: 60, sorttype: "text"},
+            {name: 'artikl_id', width: 80, sorttype: "text"},
+            {name: 'artikl_id', width: 200, sorttype: "text"}
         ]
     });   
 }
 
-win.sysprof.load_table1 = function(table) {
+sysprof.load_table1 = function(table) {
     table.jqGrid("clearGridData", true);
     $.ajax({
         url: 'sysprof?action=sysprofList',
@@ -38,12 +38,12 @@ win.sysprof.load_table1 = function(table) {
                 let tr = sysprof.sysprofList[i];
                 table.addRowData(i + 1, {
                     id: tr[0], 
-                    artikl_id: tr[1], 
+                    use_side: tr[1], 
                     artikl_id: tr[2], 
-                    color1_id: tr[2]
+                    artikl_id: tr[2]
                 });
             }
-            win.sysprof.resize();
+            sysprof.resize();
         }
     });   
 }

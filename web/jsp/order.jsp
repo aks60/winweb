@@ -38,7 +38,7 @@
                     <div id="east2" style="margin-top: -302px; height: 300px;">
                         EAST2
                     </div>
-                    <div id="east3" style="height: 100%; width: 100%;">
+                    <div id="east3" style="height: 100%; width: 98.6%;">
                         <table id="table2"  class="ui-jqgrid-btable"></table> 
                     </div>                
                 </div>
