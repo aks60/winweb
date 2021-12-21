@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="menu">
-            <img src='img/tool/logotype3.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
+            <img src='img/logotype3.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">
                     <li><a onClick="$('#outbody').load('jsp/order.jsp');">Заказы</a></li>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
         <script type="text/javascript" src="js/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
         <script type="text/javascript" src="js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
@@ -18,7 +19,7 @@
 
         <style type="text/css">
             #context, #north, #west, #west2, #centr, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #context {  border: 2px solid #0000ff; }
+            /*#context {  border: 2px solid #0000ff; }*/
             /*#midl { border: 0 !important; }*/ 
         </style>
 

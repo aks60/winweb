@@ -1,3 +1,9 @@
+#north, #south { 
+    background-repeat:repeat-x;
+    background-image:url('../img/shadow2.jpg'); 
+}
+
+
 /*html {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c4c5ff), color-stop(1, #ffffff));
     height: 100%; 
@@ -13,8 +19,8 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;  
-} */
-/*#myProgress {
+} 
+#myProgress {
     position: relative;
     width: 200px;
     height: 18px;
@@ -26,20 +32,20 @@
     width: 1%;
     height: 100%;
     background-color: #4CAF50;
-}*/
+}
 #nav .content, #main .content, #extra .content {
     border: 2px solid #ccc;
 }
 #hd {
     background-repeat:repeat-x;       
     background-image:url('../../images/menu/shadow2.jpg');        
-    /*border: 2px solid #ccc;*/
+    border: 2px solid #ccc;
     height: 24px;
-    /*color: #000;*/
+    color: #000;
     background-color: #dfeffc;
     font-size:16px;
-    /*font-weight: bold;*/  
-    /*font-style: normal;*/
+    font-weight: bold;  
+    font-style: normal;
 }
 #ft {
     border: 2px solid #ccc;
@@ -139,7 +145,7 @@ p.field2 {
 .currentRow {
     background-color: #fbec88 !important;
 }
-/*.handsontable th { 
+.handsontable th { 
     background-color:#dfeffc;  
     font-weight: bold;
     color: #2e6e9e;           
@@ -148,5 +154,5 @@ p.field2 {
     font-size: small;
     height: 20px;
     line-height: 20px;
-} */
+}*/
 

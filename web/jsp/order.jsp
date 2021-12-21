@@ -11,7 +11,7 @@
                 var height = window.innerHeight;
                 $("#context").css("height", height - 60);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 26);
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
                 $("#table2").jqGrid('setGridWidth', $("#east3").width() - 4);
                 $("#table2").jqGrid('setGridHeight', $("#east3").height() - 28);
             }

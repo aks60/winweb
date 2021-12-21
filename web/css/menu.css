@@ -1,7 +1,7 @@
 .menu {
     z-index:100000;
     background-repeat:repeat-x;
-    background-image: url('../img/menu/menu_strip_bg.jpg');
+    background-image: url('../img/shadow1.jpg');
     text-align:left;
     width: calc(100% - 1px);
     height: 28px;
