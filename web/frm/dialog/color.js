@@ -19,6 +19,7 @@ color.init_dialog = function (table) {
 color.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
+        gridview: true,
         rownumbers: true,
         colNames: ['id', 'Группы текстур'],
         colModel: [
@@ -31,6 +32,7 @@ color.init_table1 = function (table) {
 color.init_table2 = function (table) {
     table.jqGrid({
         datatype: "local",
+        gridview: true,
         rownumbers: true,
         colNames: ['Код', 'Описание текстур'],
         colModel: [

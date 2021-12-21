@@ -5,6 +5,7 @@ systree.init_dialog = function (tabtree) {
         width: 600,
         height: 500,
         modal: false,
+//        treeIcons: xxxx,
         buttons: {
             "Выбрать": function () {
                 systree.resize();
@@ -24,7 +25,7 @@ systree.init_table1 = function (tabtree) {
             {name: 'id', index: 'id', width: 1, hidden: true, key: true},
             {name: 'name', index: 'cname', width: 180}
         ],
-        gridview: true,
+        treeIcons: {plus:'ui-icon-folder-collapsed', minus:'ui-icon-folder-open', leaf:'ui-icon-document'},
         sortname: 'id',
         treeGrid: true,
         treeGridModel: 'adjacency',
@@ -36,9 +37,11 @@ systree.init_table1 = function (tabtree) {
     });
 }
 
+
 systree.init_table2 = function (tabgrid) {
     tabgrid.jqGrid({
         datatype: "local",
+        gridview: true,
         colNames: ['id', 'Наименование', 'Рисунок', 'parent'],
         colModel: [
             {name: 'id', hidden: true},

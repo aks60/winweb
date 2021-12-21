@@ -1,6 +1,7 @@
 kits.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
+        gridview: true,
         rownumbers: true,
         colNames: ['id', 'Артикул', 'Название', 'Основная',
             'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во', 'Угол1', 'Угол2'],

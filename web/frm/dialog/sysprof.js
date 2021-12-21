@@ -18,6 +18,7 @@ sysprof.init_dialog = function (table) {
 sysprof.init_table1 = function(table) {
     table.jqGrid({
         datatype: "local",
+        gridview: true,
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true},

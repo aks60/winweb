@@ -2,7 +2,9 @@
 order.init_table1 = function (table) {
         table.jqGrid({
             datatype: "local",
+            gridview: true,
             rownumbers: true,
+            gridview: true,
             colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
             colModel: [
                 {name: 'id', hidden: true},
@@ -19,6 +21,7 @@ order.init_table1 = function (table) {
 order.init_table2 = function (table) {
         table.jqGrid({
             datatype: "local",
+            gridview: true,
             rownumbers: true,
             colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
             colModel: [

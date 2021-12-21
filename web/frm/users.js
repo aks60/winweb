@@ -268,6 +268,7 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
 users.init_table1 = function (table) {
         table.jqGrid({
             datatype: "local",
+            gridview: true,
             rownumbers: true,
             colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
             colModel: [
