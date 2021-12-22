@@ -19,6 +19,8 @@ sysprof.init_table1 = function(table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
+        autowidth: true,
+        height: "auto",         
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true},

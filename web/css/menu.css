@@ -3,7 +3,7 @@
     background-repeat:repeat-x;
     background-image: url('../img/shadow1.jpg');
     text-align:left;
-    width: calc(100% - 1px);
+    width: 100%;
     height: 28px;
 }
 

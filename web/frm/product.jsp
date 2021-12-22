@@ -10,28 +10,27 @@
         <script type="text/javascript">
             product.resize = function () {
                 var height = window.innerHeight;
-                $("#context").css("height", height - 44);
+                $("#context").css("height", height - 80);
                 $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east3").height() - 24);
-            }
-
-            function loadTable(id) {
-                for (i = 0; i < 3; i++) {
-                    $("#table1").jqGrid('addRowData', i + 1, {
-                    });
-                }
             }
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     product.resize();
                 }).trigger('resize');
+
+                product.init_table1($("#table1"));
+                product.load_table1($("#table1"));
             });
         </script>
     </head>
     <body>
+        <div id="north" style=" height: 20px;">
+            NORTH
+        </div> 
         <div id = "context">
-            <div id="midl" style="position: relative; margin-right: 480px; height: calc(100% - 24px)">
+            <div id="midl" style="position: relative; margin-right: 480px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%;">
                     CENTER
                 </div>
@@ -41,16 +40,12 @@
                     </div>
                     <div id="east3" style="height: 100%; width: 100%;">
                         <table id="table1"  class="ui-jqgrid-btable"></table> 
-                        <script type="text/javascript">
-                            product.init_table1($("#table1"));
-                            product.load_table1($("#table1"));
-                        </script> 
                     </div>                
                 </div>
             </div>
-            <div id="south" style="height: 20px">
-                SOUTH
-            </div> 
+        </div> 
+        <div id="south" style="height: 20px">
+            SOUTH
         </div> 
     </body>
 </html>

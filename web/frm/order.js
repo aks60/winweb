@@ -4,7 +4,8 @@ order.init_table1 = function (table) {
             datatype: "local",
             gridview: true,
             rownumbers: true,
-            gridview: true,
+            autowidth: true,
+            height: "auto",
             colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
             colModel: [
                 {name: 'id', hidden: true},

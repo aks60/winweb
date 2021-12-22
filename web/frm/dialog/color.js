@@ -20,7 +20,8 @@ color.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
-        rownumbers: true,
+        autowidth: true,
+        height: "auto",        
         colNames: ['id', 'Группы текстур'],
         colModel: [
             {name: 'id', hidden: true},
@@ -33,7 +34,8 @@ color.init_table2 = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
-        rownumbers: true,
+        autowidth: true,
+        height: "auto",        
         colNames: ['Код', 'Описание текстур'],
         colModel: [
             {name: 'id', width: 80},

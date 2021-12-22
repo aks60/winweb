@@ -17,12 +17,6 @@
         <script type="text/javascript"src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript"src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
 
-        <style type="text/css">
-            #north, #west, #west2, #centr, #centr2, #east, #east2, #east3, #south {  border: 2px solid #ccc; }
-            #midl { border: 0 !important; }
-            /*#context {  border: 2px solid #0000ff; }*/
-        </style>
-
         <script type="text/javascript">
             //глобальные данные
             var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},

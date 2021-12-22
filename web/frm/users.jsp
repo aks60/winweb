@@ -4,13 +4,13 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                       
         <script type="text/javascript" src="frm/users.js"></script>
-        <title>JSP Page</title>
+        <title>USERS</title>
 
         <script type="text/javascript">
             users.resize = function () {
                 var height = window.innerHeight;
-                $("#context").css("height", height - 28);
-                $("#table1").jqGrid('setGridWidth', $("#centr").width());
+                $("#context").css("height", height - 54);
+                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
@@ -31,11 +31,11 @@
         </script>          
     </head>
     <body>
+        <div id="north" style=" height: 20px;">
+            <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Регистрация нового пользователя</h6>
+        </div>        
         <div id = "context">
-            <div id="north" style=" height: 20px;">
-                <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Регистрация нового пользователя</h6>
-            </div>
-            <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: calc(100% - 48px);">
+            <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                     <div id="west2" style="height: 108px">
                         <button type="button" onClick="onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
@@ -160,12 +160,11 @@
                     </div>
                 </div>                 
             </div>
-            <div id="south" style="height: 20px">
-                SOUTH
-            </div>  
+        </div>   
+        <div id="south" style="height: 20px">
             <object id="cryptoPlugin" type="application/x-rutoken" width="0" height="0">
                 <param name="onload" value="pluginit" />
-            </object>
-        </div>             
+            </object> 
+        </div>        
     </body>
 </html>

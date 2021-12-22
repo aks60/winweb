@@ -20,6 +20,47 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
+
+users.init_table1 = function (table) {
+    table.jqGrid({
+        datatype: "local",
+        gridview: true,
+        rownumbers: true,
+        autowidth: true,
+        height: "auto",
+        colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
+        colModel: [
+            {name: 'id', hidden: true},
+            {name: 'fio', width: 98, sorttype: "text"},
+            {name: 'desc', width: 200, sorttype: "text"},
+            {name: 'login', width: 40, sorttype: "text"},
+            {name: 'role', width: 40, sorttype: "text"},
+        ]
+    });
+}
+
+users.load_table1 = function (table) {
+    table.jqGrid("clearGridData", true);
+    $.ajax({
+        url: 'users?action=userList',
+        beforeSend: function () {},
+        success: function (data) {
+            users.userList = data.userList;
+            for (i = 1; i < users.userList.length; i++) {
+                let tr = users.userList[i];
+                table.addRowData(i + 1, {
+                    id: tr[0],
+                    fio: tr[1],
+                    desc: tr[2],
+                    login: tr[3],
+                    role: tr[4]
+                });
+            }
+            users.resize();
+        }
+    });
+}
+
 //проверка корректности ввода учётной записи
 users.token_check = function () {
 
@@ -263,42 +304,4 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
     else if (isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
-}
-
-users.init_table1 = function (table) {
-        table.jqGrid({
-            datatype: "local",
-            gridview: true,
-            rownumbers: true,
-            colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
-            colModel: [
-                {name: 'id', hidden: true},
-                {name: 'fio', width: 98, sorttype: "text"},
-                {name: 'desc', width: 200, sorttype: "text"},
-                {name: 'login', width: 40, sorttype: "text"},
-                {name: 'role', width: 40, sorttype: "text"},
-            ]
-        });
-}
-
-users.load_table1 = function (table) {
-    table.jqGrid("clearGridData", true);
-    $.ajax({
-        url: 'users?action=userList',
-        beforeSend: function () {},
-        success: function (data) {
-            users.userList = data.userList;
-            for (i = 1; i < users.userList.length; i++) {
-                let tr = users.userList[i];
-                table.addRowData(i + 1, {
-                    id: tr[0], 
-                    fio: tr[1], 
-                    desc: tr[2], 
-                    login: tr[3], 
-                    role: tr[4]
-                });
-            }
-            users.resize();
-        }
-    });
 }

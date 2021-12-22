@@ -3,6 +3,8 @@ kits.init_table1 = function (table) {
         datatype: "local",
         gridview: true,
         rownumbers: true,
+        autowidth: true,
+        height: "auto",
         colNames: ['id', 'Артикул', 'Название', 'Основная',
             'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во', 'Угол1', 'Угол2'],
         colModel: [
@@ -30,10 +32,10 @@ kits.load_table1 = function (table) {
             for (i = 0; i < kits.kitsList.length; i++) {
                 let tr = kits.kitsList[i];
                 table.addRowData(i + 1, {
-                    id: tr[0], 
-                    artikl_id: tr[1], 
-                    artikl_id: tr[2], 
-                    color1_id: tr[3], 
+                    id: tr[0],
+                    artikl_id: tr[1],
+                    artikl_id: tr[2],
+                    color1_id: tr[3],
                     color2_id: tr[4],
                     color3_id: tr[5],
                     width: tr[6],

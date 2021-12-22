@@ -1,4 +1,4 @@
- <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>        
@@ -17,11 +17,10 @@
                 }
             });
 
-//            $('#pan1 .login').val('admin');
-//            $('#pan1 .password').val('masterkey');
-            $('#pan1 .login').val('asd');
-            $('#pan1 .password').val('qwerty');
-//            login.user_connect();
+            login.resize = function () {
+                var height = window.innerHeight;
+                $("#context").css("height", height - 54);
+            }
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();
@@ -32,24 +31,30 @@
                 $("#btn2").focus();
 
                 $(window).bind('resize', function () {
-                    var height = window.innerHeight;
-                    $("#context").css("height", height - 28);
+                    login.resize();
                 }).trigger('resize');
             });
+
+
+//            $('#pan1 .login').val('admin');
+//            $('#pan1 .password').val('masterkey');
+            $('#pan1 .login').val('asd');
+            $('#pan1 .password').val('qwerty');
+//            login.user_connect();            
         </script>         
     </head>
     <body>
+        <div id="north" style=" height: 20px;">
+            <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций*</h6> 
+        </div>
         <div id = "context">
-            <div id="north" style=" height: 20px;">
-                <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций*</h6> 
-            </div>
-            <div id="midl" style="position: relative; margin: 0 200px 0 200px; height: calc(100% - 48px);">
-                <div id="west" style="position: absolute; height: 100%; width: 200px; margin-left: -200px;">
+            <div id="midl" style="position: relative; margin: 0 200px 0 200px; height: 100%;">
+                <div id="west" style="position: absolute; height: 100%; width: 200px; margin-left: -202px;">
                     <button id="btn1"  type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>
                     <button id="btn2"  type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>  
                 </div>                 
                 <div id="centr" style="position: absolute; height: 100%; width: 100%;">
-                    <div id="pan1" style="margin-left: 8px;">                   
+                    <div id="pan1">                   
                         <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
                         <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br> 
 
@@ -69,7 +74,7 @@
                         </table>
 
                     </div>                      
-                    <div id="pan2" style="margin-left: 8px; display: none;"> 
+                    <div id="pan2" style="margin-left: 0px; display: none;"> 
                         <p class="tabletitle"><p class="tabletitle"><font size=3>Авторизация через USB токен</font></p> 
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для аутентификации выберите логин в выпадающем 
@@ -94,7 +99,7 @@
                         </table>                
                     </div> 
                 </div>  
-                <div id="east" style="position: absolute; height: 100%; width: 198px; right: -200px;">
+                <div id="east" style="position: absolute; height: 100%; width: 194px; right: -200px;">
                     <div style="margin-left: 20px">
                         <p> E-mail:
                         <p style="color: dodgerblue"> x-xxx@xxxx.ru
@@ -105,12 +110,11 @@
                     </div>
                 </div>            
             </div>
-            <div id="south" style="height: 20px">
-                SOUTH
-            </div>
+        </div>    
+        <div id="south" style="height: 20px">
             <object id="cryptoPlugin" type="application/x-rutoken" width="0" height="0">
                 <param name="onload" value="pluginit" />
-            </object>  
-        </context>        
-</body>
+            </object> 
+        </div>    
+    </body>
 </html>

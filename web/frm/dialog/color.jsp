@@ -8,10 +8,10 @@
         
         <script type="text/javascript">
             color.resize = function () {
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #north").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #north").height() - 20);
-                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #south").width());
-                $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #south").height() - 20);
+                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 20);
+                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #centr2").width());
+                $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #centr2").height() - 20);
             }
 
             $(document).ready(function () {
@@ -28,10 +28,10 @@
         </script>         
     </head>
     <body>
-        <div id="north" style="height: calc(40% - 8px); width: calc(100% - 4px);">
+        <div id="centr" style="height: calc(40% - 8px); width: calc(100% - 4px);">
             <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
         </div>
-        <div id="south" style="height: 60%; width: calc(100% - 4px)">
+        <div id="centr2" style="height: 60%; width: calc(100% - 4px)">
             <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
         </div>
     </body>

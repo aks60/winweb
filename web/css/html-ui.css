@@ -1,10 +1,29 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+#context {
+    /*border: 2px solid #0000ff;*/
+    width: calc(100% - 2px);
+}
 #north { 
     background-repeat:repeat-x;
-    background-image:url('../img/shadow2.jpg'); 
+    background-image:url('../img/shadow2.jpg');
+    width: calc(100% - 4px);
 }
 #south { 
     background-repeat:repeat-x;
     background-image:url('../img/shadow3.jpg'); 
+    width: calc(100% - 4px);
+}
+#north, #west, #west2, #centr, #centr2, #east, #east2, #east3, #south {  
+    border: 2px solid #ccc; 
+}
+#midl { 
+    border: 0 !important; 
+}
+#context #pan1, #context #pan2, #context #pan3, #context #pan4 {
+    padding-left: 4px;
 }
 
 

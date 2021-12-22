@@ -3,6 +3,8 @@ product.init_table1 = function (table) {
             datatype: "local",
             gridview: true,
             //rownumbers: true,
+            autowidth: true,
+            height: "auto",            
             colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
             colModel: [
                 {name: 'id', hidden: true},
