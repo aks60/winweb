@@ -1,7 +1,7 @@
 sysprof.init_dialog = function (table) {
     table.dialog({
         title: "Профили системы",
-        width: 400,
+        width: 500,
         height: 400,
         modal: false,
         buttons: {
