@@ -1,6 +1,10 @@
-#north, #south { 
+#north { 
     background-repeat:repeat-x;
     background-image:url('../img/shadow2.jpg'); 
+}
+#south { 
+    background-repeat:repeat-x;
+    background-image:url('../img/shadow3.jpg'); 
 }
 
 
