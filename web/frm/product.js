@@ -28,7 +28,6 @@ product.load_table1 = function (table) {
         });
     }
     product.resize();
-
 }
 
 

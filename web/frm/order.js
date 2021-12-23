@@ -24,7 +24,7 @@ order.init_table1 = function (table) {
             {name: 'date6', width: 120, sorttype: "text"},
             {name: 'propart_id', width: 120, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"}
-        ]      
+        ]
     });
 }
 
@@ -68,13 +68,11 @@ order.load_table1 = function (table) {
 }
 
 order.load_table2 = function (table) {
-    //table.jqGrid("clearGridData", true);
     table.jqGrid('clearGridData');
     if (order.sel_table1 != undefined) {
         for (i = 0; i < order.prodList.length; i++) {
             let tr = order.prodList[i];
-            if (tr.project_id = order.sel_table1.id) {
-                
+            if (tr[3] == order.sel_table1.id) {
                 table.addRowData(i + 1, {
                     id: tr[0],
                     name: tr[1],
@@ -85,6 +83,15 @@ order.load_table2 = function (table) {
             }
         }
     }
+}
+
+order.script = function () {
+//debugger;
+    let script = order.prodList[0][2];
+    let obj = {win: 'aks'};
+    obj.win = JSON.parse(script);
+    console.log(obj.win);
+//    console.log(script);
 }
 
 

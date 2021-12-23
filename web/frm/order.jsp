@@ -37,7 +37,8 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            NORTH
+            <!--NORTH-->
+            <button onClick="order.script();">Кнопка</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

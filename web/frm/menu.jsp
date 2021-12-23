@@ -40,7 +40,7 @@
                                     <li>
                                         <ul>
                                             <li><a onClick="">Сайт разработчика</a></li>
-                                            <li><a onClick="">О программе</a></li>
+                                            <li><a onClick="wincalc.test();">О программе</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -52,7 +52,7 @@
         </div>
 
         <script type="text/javascript">
-            function init_menu() {
+            utils.init_menu = function () {
                 $("#nav2 > li > a").click(function (e) { // binding onclick
                     if ($(this).parent().hasClass('selected')) {
                         $("#nav2 .selected div div").slideUp(100); // hiding popups
@@ -74,6 +74,7 @@
                     $("#nav2 .selected").removeClass("selected");
                 });
             }
+            utils.init_menu();
         </script> 
     </body>
 </html>

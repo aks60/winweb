@@ -14,11 +14,14 @@
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
-        <script type="text/javascript"src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript"src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>         
+        <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
+        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>          
+        <script type="module" src="frm/builder/wincalc.js"></script>               
+       
 
         <script type="text/javascript">
             //глобальные данные
+            var wincalc = {};
             var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
                     systree = {}, kits = {}, color = {}, sysprof = {};
 
@@ -38,9 +41,7 @@
         <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
-            $("#mainmenu").load('frm/menu.jsp', function () {
-                init_menu();
-            });
+            $("#mainmenu").load('frm/menu.jsp');
             $("#outbody").load('frm/login.jsp');
         </script> 
     </body>
