@@ -32,13 +32,13 @@
                         order.load_table2($("#table2"));                        
                     }
                 });
+                order.resize();
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <!--NORTH-->
-            <button onClick="order.script();">Кнопка</button>
+            NORTH
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

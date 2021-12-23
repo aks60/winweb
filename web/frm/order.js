@@ -62,7 +62,7 @@ order.load_table1 = function (table) {
                     manager: tr[6]
                 });
             }
-            order.resize();
+//            order.resize();
         }
     });
 }
