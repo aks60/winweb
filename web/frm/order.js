@@ -24,7 +24,7 @@ order.init_table1 = function (table) {
             {name: 'date6', width: 120, sorttype: "text"},
             {name: 'propart_id', width: 120, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"}
-        ]
+        ]      
     });
 }
 
@@ -40,11 +40,7 @@ order.init_table2 = function (table) {
             {name: 'scripl', width: 120, sorttype: "text"},
             {name: 'project_id', hidden: true},
             {name: 'systree_id', hidden: true}
-        ],
-        onSelectRow: function (rowid) {
-            order.sel_table2 = table.getRowData(rowid);
-            order.load_table2(table2);
-        },
+        ]
     });
 }
 
@@ -72,13 +68,12 @@ order.load_table1 = function (table) {
 }
 
 order.load_table2 = function (table) {
-
+    //table.jqGrid("clearGridData", true);
+    table.jqGrid('clearGridData');
     if (order.sel_table1 != undefined) {
-        table.jqGrid("clearGridData", true);
-        
         for (i = 0; i < order.prodList.length; i++) {
             let tr = order.prodList[i];
-            if (tr.id == order.sel_table1.id) {
+            if (tr.project_id = order.sel_table1.id) {
                 
                 table.addRowData(i + 1, {
                     id: tr[0],

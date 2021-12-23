@@ -26,10 +26,12 @@
                 order.init_table1($("#table1"));
                 order.load_table1($("#table1"));
                 order.init_table2($("#table2"));
-                $("#table1").jqGrid({onSelectRow: function (rowid) {
-                        order.sel_table1 = table.getRowData(rowid);
-                        order.load_table2("#table2");
-                    }});
+                $("#table1").jqGrid("setGridParam", {
+                    onSelectRow: function (rowid, status) {
+                        order.sel_table1 = $("#table1").getRowData(rowid);
+                        order.load_table2($("#table2"));                        
+                    }
+                });
             });
         </script>
     </head>
