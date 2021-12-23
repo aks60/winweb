@@ -41,9 +41,8 @@ public class ProdCont extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             if (action.equalsIgnoreCase("prodList")) {
-                String prodID = request.getParameter("prodID");
                 Product product = new Product();
-                HashMap output = product.prodList(request, response, prodID);
+                HashMap output = product.prodList(request, response);
                 out.write(JSONValue.toJSONString(output));
             }
         }

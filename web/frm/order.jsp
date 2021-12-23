@@ -16,15 +16,20 @@
                 $("#table2").jqGrid('setGridHeight', $("#east3").height() - 28);
             }
 
+
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     order.resize();
                 }).trigger('resize');
 
+                order.load_product();
                 order.init_table1($("#table1"));
                 order.load_table1($("#table1"));
                 order.init_table2($("#table2"));
-                order.load_table2($("#table2"));
+                $("#table1").jqGrid({onSelectRow: function (rowid) {
+                        order.sel_table1 = table.getRowData(rowid);
+                        order.load_table2("#table2");
+                    }});
             });
         </script>
     </head>
