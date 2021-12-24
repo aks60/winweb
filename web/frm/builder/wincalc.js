@@ -4,16 +4,28 @@ import {AreaRectangl, AreaDoor, AreaTrapeze, AreaTriangl, AreaStvorka,
 
 
 wincalc.parse = function () {
-    debugger;
+    //debugger;
     try {
         if (order.sel_table2 != undefined) {
 
             let script = order.sel_table2.script;
             let win = JSON.parse(script);
-            let rootGson = new GsonRoot(win.org, win.ord, iwin.nuni, iwin, iwin.name, 
-                 iwin.layout, iwin.type, iwin.width, iwin.height, iwin.heightAdd, iwin.color1, iwin.color2,iwin.color3)
-            //console.log(win);
-            console.dir(win);
+
+            if (win.type = "RECTANGL") {
+                wincalc.rectangl(win);
+
+            } else if (win.type = "DOOR") {
+                wincalc.rectangl();
+
+            } else if (win.type = "TRAPEZE") {
+                wincalc.rectangl();
+
+            } else if (win.type = "TRIANGL") {
+                wincalc.rectangl();
+
+            } else if (win.type = "ARCH") {
+                wincalc.rectangl();
+            }
         }
     } catch (e) {
         console.log(e);
@@ -21,6 +33,33 @@ wincalc.parse = function () {
 
 }
 
-wincalc.rectangl = function  () {
-    
+wincalc.rectangl = function (windows) {
+    debugger;
+    let korobka = windows.childs;
+    for (let frame in korobka) {
+        if (frame.layout == "BOTT") {
+
+        } else if (frame.layout == "RIGHT") {
+
+        } else if (frame.layout == "TOP") {
+
+        } else if (frame.layout == "LEFT") {
+
+        }
+    }
+}
+
+wincalc.door = function (windows) {
+    let korobka = windows.childs;
+    for (let frame in korobka) {
+        if (frame.layout == "BOTT") {
+
+        } else if (frame.layout == "RIGHT") {
+
+        } else if (frame.layout == "TOP") {
+
+        } else if (frame.layout == "LEFT") {
+
+        }
+    }
 }
