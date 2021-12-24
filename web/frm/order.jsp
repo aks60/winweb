@@ -29,12 +29,12 @@
                 $("#table1").jqGrid("setGridParam", {
                     onSelectRow: function (rowid, status) {
                         order.sel_table1 = $("#table1").getRowData(rowid);
-                        order.load_table2($("#table2"));                        
+                        order.load_table2($("#table2"));
                     }
                 });
                 $("#table2").jqGrid("setGridParam", {
                     onSelectRow: function (rowid, status) {
-                        order.sel_table2 = $("#table2").getRowData(rowid);                       
+                        order.sel_table2 = $("#table2").getRowData(rowid);
                     }
                 });
                 order.resize();
@@ -43,7 +43,7 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-           <button onClick="wincalc.script();">Кнопка</button>
+            <button onClick="wincalc.parse();">Кнопка</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
@@ -52,7 +52,7 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
-                        EAST2
+                        <canvas id="win1" style="border:2px solid black;" width="380" height="280"></canvas>
                     </div>
                     <div id="east3" style="height: 100%;">
                         <table id="table2"  class="ui-jqgrid-btable"></table>    

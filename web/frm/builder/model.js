@@ -2,7 +2,6 @@
 export function test() {
     alert("module");
 }
-
 //------------------------------------------------------------------------------
 export class GsonElem {
 
@@ -23,6 +22,8 @@ export class GsonElem {
     }
 }
 //------------------------------------------------------------------------------
+//let rootGson = new GsonRoot(win.org, win.ord, iwin.nuni, iwin, iwin.name, 
+//                 iwin.layout, iwin.type, iwin.width, iwin.height, iwin.heightAdd, iwin.color1, iwin.color2,iwin.color3)
 export class GsonRoot extends GsonElem {
 
     name = "Конструкция";
