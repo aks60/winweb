@@ -32,13 +32,18 @@
                         order.load_table2($("#table2"));                        
                     }
                 });
+                $("#table2").jqGrid("setGridParam", {
+                    onSelectRow: function (rowid, status) {
+                        order.sel_table2 = $("#table2").getRowData(rowid);                       
+                    }
+                });
                 order.resize();
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            NORTH
+           <button onClick="wincalc.script();">Кнопка</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

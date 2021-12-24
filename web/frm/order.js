@@ -37,7 +37,7 @@ order.init_table2 = function (table) {
         colModel: [
             {name: 'id', hidden: true},
             {name: 'name', width: 120, sorttype: "text"},
-            {name: 'scripl', width: 120, sorttype: "text"},
+            {name: 'script', width: 220, sorttype: "text"},
             {name: 'project_id', hidden: true},
             {name: 'systree_id', hidden: true}
         ]
@@ -72,6 +72,8 @@ order.load_table2 = function (table) {
     if (order.sel_table1 != undefined) {
         for (i = 0; i < order.prodList.length; i++) {
             let tr = order.prodList[i];
+            let script = tr[2];
+            //debugger;
             if (tr[3] == order.sel_table1.id) {
                 table.addRowData(i + 1, {
                     id: tr[0],

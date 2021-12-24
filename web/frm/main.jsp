@@ -16,7 +16,7 @@
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>          
-        <script type="module" src="frm/builder/wincalc.js"></script>               
+        <script type="module" src="frm/builder/wincalc.js"></script>                            
        
 
         <script type="text/javascript">
