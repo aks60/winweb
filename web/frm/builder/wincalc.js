@@ -1,65 +1,75 @@
-import {test as test3} from "./drawing.js";
+import {test as test3, draw_frame} from "./drawing.js";
 import {AreaRectangl, AreaDoor, AreaTrapeze, AreaTriangl, AreaStvorka,
         ElemCross, ElemFrame, ElemGlass, test as test2} from './model.js';
 
 
-wincalc.parse = function () {
-    //debugger;
+winc.parse = function () {
     try {
         if (order.sel_table2 != undefined) {
 
             let script = order.sel_table2.script;
-            let win = JSON.parse(script);
+            winc.rootArea = JSON.parse(script);
+            winc.koefX = winc.canvas.width / winc.rootArea.width;
+            winc.koefY = winc.canvas.height / winc.rootArea.height;
 
-            if (win.type = "RECTANGL") {
-                wincalc.rectangl(win);
+            if (winc.rootAre.type = "RECTANGL") {
+                winc.rectangl(winc.rootAre);
 
-            } else if (win.type = "DOOR") {
-                wincalc.rectangl();
+            } else if (winc.rootAre.type = "DOOR") {
+                winc.rectangl();
 
-            } else if (win.type = "TRAPEZE") {
-                wincalc.rectangl();
+            } else if (winc.rootAre.type = "TRAPEZE") {
+                winc.rectangl();
 
-            } else if (win.type = "TRIANGL") {
-                wincalc.rectangl();
+            } else if (winc.rootAre.type = "TRIANGL") {
+                winc.rectangl();
 
-            } else if (win.type = "ARCH") {
-                wincalc.rectangl();
+            } else if (winc.rootAre.type = "ARCH") {
+                winc.rectangl();
             }
         }
     } catch (e) {
-        console.log(e);
+        //console.error('Ошибка: ', e.message);
     }
 
 }
 
-wincalc.rectangl = function (windows) {
+winc.rectangl = function (w) {
     debugger;
-    let korobka = windows.childs;
-    for (let frame in korobka) {
-        if (frame.layout == "BOTT") {
+    try {
+        let korobka = w.childs;
+        for (let frame in korobka) {
+            if (korobka[frame].layout == "BOTT") {
+                //draw_frame(winc.dh_frame, w.height - winc.dh_frame, w.width, w.height);
 
-        } else if (frame.layout == "RIGHT") {
+            } else if (korobka[frame].layout == "RIGHT") {
 
-        } else if (frame.layout == "TOP") {
+            } else if (korobka[frame].layout == "TOP") {
 
-        } else if (frame.layout == "LEFT") {
+            } else if (korobka[frame].layout == "LEFT") {
 
+            }
         }
+    } catch (e) {
+        console.error('Ошибка: ', e.message);
     }
 }
 
-wincalc.door = function (windows) {
-    let korobka = windows.childs;
-    for (let frame in korobka) {
-        if (frame.layout == "BOTT") {
+winc.door = function (windows) {
+    try {
+        let korobka = windows.childs;
+        for (let frame in korobka) {
+            if (frame.layout == "BOTT") {
 
-        } else if (frame.layout == "RIGHT") {
+            } else if (frame.layout == "RIGHT") {
 
-        } else if (frame.layout == "TOP") {
+            } else if (frame.layout == "TOP") {
 
-        } else if (frame.layout == "LEFT") {
+            } else if (frame.layout == "LEFT") {
 
+            }
         }
+    } catch (e) {
+        console.error('Ошибка: ', e.message);
     }
 }
