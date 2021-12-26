@@ -62,9 +62,10 @@ order.load_table1 = function (table) {
                     manager: tr[6]
                 });
             }
+            table.jqGrid("setSelection", 8);
 //            order.resize();
         }
-    });
+    });    
 }
 
 order.load_table2 = function (table) {
@@ -84,16 +85,8 @@ order.load_table2 = function (table) {
                 });
             }
         }
+        table.jqGrid("setSelection", 1);
     }
-}
-
-order.script = function () {
-//debugger;
-    let script = order.prodList[0][2];
-    let obj = {win: 'aks'};
-    obj.win = JSON.parse(script);
-    console.log(obj.win);
-//    console.log(script);
 }
 
 

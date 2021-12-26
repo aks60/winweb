@@ -44,7 +44,8 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <button onClick="winc.parse();">Кнопка</button>
+            <button onClick="winc.parse();">Кнопка1</button>
+            <button onClick="winc.context.fillRect(0, 0, 200, 40);">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

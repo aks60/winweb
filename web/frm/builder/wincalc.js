@@ -6,25 +6,25 @@ import {AreaRectangl, AreaDoor, AreaTrapeze, AreaTriangl, AreaStvorka,
 winc.parse = function () {
     try {
         if (order.sel_table2 != undefined) {
-
             let script = order.sel_table2.script;
             winc.rootArea = JSON.parse(script);
-            winc.koefX = winc.canvas.width / winc.rootArea.width;
-            winc.koefY = winc.canvas.height / winc.rootArea.height;
+            winc.scale = (winc.canvas.width / winc.rootArea.width > winc.canvas.height / winc.rootArea.height)
+                    ? winc.canvas.width / winc.rootArea.width : winc.canvas.height / winc.rootArea.height;
+            winc.context.scale(winc.scale, winc.scale);
 
-            if (winc.rootAre.type = "RECTANGL") {
-                winc.rectangl(winc.rootAre);
-
-            } else if (winc.rootAre.type = "DOOR") {
+            if (winc.rootArea.type = "RECTANGL") {
                 winc.rectangl();
 
-            } else if (winc.rootAre.type = "TRAPEZE") {
+            } else if (winc.rootArea.type = "DOOR") {
                 winc.rectangl();
 
-            } else if (winc.rootAre.type = "TRIANGL") {
+            } else if (winc.rootArea.type = "TRAPEZE") {
                 winc.rectangl();
 
-            } else if (winc.rootAre.type = "ARCH") {
+            } else if (winc.rootArea.type = "TRIANGL") {
+                winc.rectangl();
+
+            } else if (winc.rootArea.type = "ARCH") {
                 winc.rectangl();
             }
         }
@@ -34,13 +34,13 @@ winc.parse = function () {
 
 }
 
-winc.rectangl = function (w) {
+winc.rectangl = function () {
     debugger;
     try {
-        let korobka = w.childs;
+        let korobka = winc.rootArea.childs;
         for (let frame in korobka) {
             if (korobka[frame].layout == "BOTT") {
-                //draw_frame(winc.dh_frame, w.height - winc.dh_frame, w.width, w.height);
+                draw_frame(0, winc.rootArea.height, winc.rootArea.width, winc.dh_frame);
 
             } else if (korobka[frame].layout == "RIGHT") {
 

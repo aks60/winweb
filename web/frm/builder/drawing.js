@@ -10,11 +10,20 @@ export function test() {
     alert('pain');
 }
 
-export function draw_frame(x1, y1, x2, y2) {
+export function draw_frame(x, y, w, h) {
+    //winc.context.scale(winc.scale, winc.scale);
+    winc.context.fillStyle = "rgb(0,0,0)";
+    winc.context.lineWidth = 6;
+    winc.context.beginPath();
+    winc.context.moveTo(8, 1300);
+    winc.context.lineTo(300, 1300);
+    winc.context.closePath();
+    //winc.context.fill();
 
-    debugger;  
-    winc.context.fillRect(x1 * winc.koefX, y1 * winc.koefY, x2 * winc.koefX, y2 * winc.koefY);
+//    winc.context.fillStyle = "rgb(150,165,165)";
+//    winc.context.fillRect(x, y, w, h);
 }
+
 
 /*
  {
