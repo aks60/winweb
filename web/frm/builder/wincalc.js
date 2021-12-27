@@ -14,7 +14,7 @@ winc.parse = function () {
                     ? winc.canvas.width / (winc.rootArea.width + 80) : winc.canvas.height / (winc.rootArea.height + 80);
             winc.context.scale(winc.scale, winc.scale);
             winc.context.translate(80, 0);
-            winc.context.lineWidth = 8;
+            winc.context.lineWidth = 5;
             winc.context.strokeStyle = "rgb(0,0,0)";
             winc.context.fillStyle = "rgb(120,150,10)";
 
