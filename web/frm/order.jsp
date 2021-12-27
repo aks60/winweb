@@ -39,13 +39,27 @@
                     }
                 });
                 order.resize();
+
+                order.test = function () {
+                    debugger;
+                    //winc.canvas = document.getElementById("cnv");
+                    //winc.context = winc.canvas.getContext('2d');
+                    winc.context.scale(0.2307692307692308, 0.2307692307692308);
+                    winc.context.fillStyle = "rgb(0,0,0)";
+                    winc.context.lineWidth = 2;
+                    winc.context.beginPath();
+                    winc.context.moveTo(8, 200);
+                    winc.context.lineTo(130, 200);
+                    winc.context.closePath();
+                    winc.context.stroke();                    
+                }
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.parse();">Кнопка1</button>
-            <button onClick="winc.context.fillRect(0, 0, 200, 40);">Кнопка2</button>
+            <button onClick="order.test();">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
@@ -54,7 +68,9 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
-                        <canvas id="cnv" style="border:2px solid black;" width="380" height="280"></canvas>
+                        
+                        <canvas id="cnv" style="border:2px solid black;" width="400" height="290"></canvas>
+                        
                     </div>
                     <div id="east3" style="height: 100%;">
                         <table id="table2"  class="ui-jqgrid-btable"></table>    
