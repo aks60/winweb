@@ -10,51 +10,51 @@ export function test() {
     alert('pain');
 }
 
-export function draw_frame_bott(w, h) {
+export function draw_frame_bott(x, y, w, h) {
 
     winc.context.beginPath();
-    winc.context.moveTo(0, h);
+    winc.context.moveTo(x, y);
     winc.context.lineTo(w, h);
     winc.context.lineTo(w - winc.dh_frame, h - winc.dh_frame);
     winc.context.lineTo(winc.dh_frame, h - winc.dh_frame);
     winc.context.closePath();
-    winc.context.stroke();
     winc.context.fill();
+    winc.context.stroke();
 }
 
-export function draw_frame_right(w, h) {
+export function draw_frame_right(x, y, w, h) {
 
     winc.context.beginPath();
-    winc.context.moveTo(w, h);
+    winc.context.moveTo(x, y);
     winc.context.lineTo(w, 0);
     winc.context.lineTo(w - winc.dh_frame, winc.dh_frame);
     winc.context.lineTo(w - winc.dh_frame, h - winc.dh_frame);
     winc.context.closePath();
-    winc.context.stroke();
     winc.context.fill();
+    winc.context.stroke();
 }
-export function draw_frame_top(w, h) {
+export function draw_frame_top(x, y, w, h) {
 
     winc.context.beginPath();
-    winc.context.moveTo(w, 0);
+    winc.context.moveTo(x, y);
     winc.context.lineTo(0, 0);
     winc.context.lineTo(winc.dh_frame, winc.dh_frame);
     winc.context.lineTo(w - winc.dh_frame, winc.dh_frame);
     winc.context.closePath();
-    winc.context.stroke();
     winc.context.fill();
+    winc.context.stroke();
 }
 
-export function draw_frame_left(w, h) {
+export function draw_frame_left(x, y, w, h) {
 
     winc.context.beginPath();
-    winc.context.moveTo(0, 0);
+    winc.context.moveTo(x, y);
     winc.context.lineTo(0, h);
     winc.context.lineTo(winc.dh_frame, h - winc.dh_frame);
     winc.context.lineTo(winc.dh_frame, winc.dh_frame);
     winc.context.closePath();
-    winc.context.stroke();
     winc.context.fill();
+    winc.context.stroke();
 }
 
 

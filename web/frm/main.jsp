@@ -21,7 +21,7 @@
 
         <script type="text/javascript">
             //глобальные данные
-            var winc = {dh_frame: 60, dh_cross: 70};
+            var winc = {dh_frame: 60, dh_cross: 70, naxl: 8};
             var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
                     systree = {}, kits = {}, color = {}, sysprof = {};
 
