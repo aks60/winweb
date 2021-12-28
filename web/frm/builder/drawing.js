@@ -1,4 +1,4 @@
-import {JsonRoot, JsonElem, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
+import {JsonRoot, JsonArea, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
     
 export let canvas;
 

@@ -1,6 +1,6 @@
 import {draw_frame_bott, draw_frame_right, draw_frame_top, draw_frame_left} from './drawing.js';
 //------------------------------------------------------------------------------
-export class JsonElem {
+export class JsonArea {
 
     id = -1; //идентификатор
     owner = null; //владелец     
@@ -18,7 +18,7 @@ export class JsonElem {
     }
 }
 //------------------------------------------------------------------------------
-export class JsonRoot extends JsonElem {
+export class JsonRoot extends JsonArea {
 
     name = "Конструкция";
     prj = 1; //PNUMB - номер тестируемого проекта, поле пока нужно только для тестов 

@@ -1,5 +1,5 @@
 import {draw_frame_bott, draw_frame_right, draw_frame_top, draw_frame_left} from "./drawing.js";
-import {JsonRoot, JsonElem, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
+import {JsonRoot, JsonArea, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
 
 
 winc.build = function (canvasTag) {
