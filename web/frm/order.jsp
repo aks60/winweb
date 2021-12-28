@@ -22,7 +22,6 @@
                     order.resize();
                 }).trigger('resize');
 
-                winc.init_gc2d(document.getElementById("cnv"));
                 order.load_product();
                 order.init_table1($("#table1"));
                 order.load_table1($("#table1"));
@@ -58,8 +57,8 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <button onClick="winc.parse();">Кнопка1</button>
-            <button onClick="order.test();">Кнопка2</button>
+            <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
+            <button onClick="">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

@@ -1,60 +1,52 @@
-import {AreaRectangl, AreaDoor, AreaTrapeze, AreaTriangl,
-        AreaStvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
+import {JsonRoot, JsonElem, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
+    
+export let canvas;
 
-winc.init_gc2d = function (cnv) {
-    winc.canvas = cnv;
-    winc.context = cnv.getContext('2d');
+export function draw_frame_bott(ctx, x, y, w, h) {
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(w, h);
+    ctx.lineTo(w - winc.dh_frame, h - winc.dh_frame);
+    ctx.lineTo(winc.dh_frame, h - winc.dh_frame);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
 }
 
-export function test() {
-    alert('pain');
+export function draw_frame_right(ctx, x, y, w, h) {
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(w, 0);
+    ctx.lineTo(w - winc.dh_frame, winc.dh_frame);
+    ctx.lineTo(w - winc.dh_frame, h - winc.dh_frame);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+export function draw_frame_top(ctx, x, y, w, h) {
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(winc.dh_frame, winc.dh_frame);
+    ctx.lineTo(w - winc.dh_frame, winc.dh_frame);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
 }
 
-export function draw_frame_bott(x, y, w, h) {
+export function draw_frame_left(ctx, x, y, w, h) {
 
-    winc.context.beginPath();
-    winc.context.moveTo(x, y);
-    winc.context.lineTo(w, h);
-    winc.context.lineTo(w - winc.dh_frame, h - winc.dh_frame);
-    winc.context.lineTo(winc.dh_frame, h - winc.dh_frame);
-    winc.context.closePath();
-    winc.context.fill();
-    winc.context.stroke();
-}
-
-export function draw_frame_right(x, y, w, h) {
-
-    winc.context.beginPath();
-    winc.context.moveTo(x, y);
-    winc.context.lineTo(w, 0);
-    winc.context.lineTo(w - winc.dh_frame, winc.dh_frame);
-    winc.context.lineTo(w - winc.dh_frame, h - winc.dh_frame);
-    winc.context.closePath();
-    winc.context.fill();
-    winc.context.stroke();
-}
-export function draw_frame_top(x, y, w, h) {
-
-    winc.context.beginPath();
-    winc.context.moveTo(x, y);
-    winc.context.lineTo(0, 0);
-    winc.context.lineTo(winc.dh_frame, winc.dh_frame);
-    winc.context.lineTo(w - winc.dh_frame, winc.dh_frame);
-    winc.context.closePath();
-    winc.context.fill();
-    winc.context.stroke();
-}
-
-export function draw_frame_left(x, y, w, h) {
-
-    winc.context.beginPath();
-    winc.context.moveTo(x, y);
-    winc.context.lineTo(0, h);
-    winc.context.lineTo(winc.dh_frame, h - winc.dh_frame);
-    winc.context.lineTo(winc.dh_frame, winc.dh_frame);
-    winc.context.closePath();
-    winc.context.fill();
-    winc.context.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(0, h);
+    ctx.lineTo(winc.dh_frame, h - winc.dh_frame);
+    ctx.lineTo(winc.dh_frame, winc.dh_frame);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
 }
 
 

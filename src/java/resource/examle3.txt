@@ -1,0 +1,117 @@
+{
+	"name": "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
+	"prj": 604008,
+	"ord": 1,
+	"nuni": 8,
+	"width": 1300.0,
+	"height": 1500.0,
+	"heightAdd": 1200.0,
+	"form": 3,
+	"color1": 1009,
+	"color2": 10009,
+	"color3": 1009,
+	"id": 0.0,
+	"childs": [
+		{
+			"id": 1.0,
+			"childs": [],
+			"layout": "LEFT",
+			"type": "FRAME_SIDE"
+		},
+		{
+			"id": 2.0,
+			"childs": [],
+			"layout": "RIGHT",
+			"type": "FRAME_SIDE"
+		},
+		{
+			"id": 3.0,
+			"childs": [],
+			"layout": "TOP",
+			"type": "FRAME_SIDE"
+		},
+		{
+			"id": 4.0,
+			"childs": [],
+			"layout": "BOTT",
+			"type": "FRAME_SIDE"
+		},
+		{
+			"id": 5.0,
+			"childs": [
+				{
+					"id": 6.0,
+					"childs": [],
+					"type": "GLASS"
+				}
+			],
+			"layout": "HORIZ",
+			"type": "AREA",
+			"length": 300.0
+		},
+		{
+			"id": 7.0,
+			"childs": [],
+			"type": "IMPOST"
+		},
+		{
+			"id": 8.0,
+			"childs": [
+				{
+					"id": 9.0,
+					"childs": [
+						{
+							"id": 10.0,
+							"childs": [
+								{
+									"id": 11.0,
+									"childs": [],
+									"type": "GLASS"
+								}
+							],
+							"layout": "VERT",
+							"type": "STVORKA",
+							"param": "{'typeOpen':3, 'sysfurnID':-1}",
+							"length": 650.0
+						}
+					],
+					"layout": "VERT",
+					"type": "AREA",
+					"length": 650.0
+				},
+				{
+					"id": 12.0,
+					"childs": [],
+					"type": "IMPOST"
+				},
+				{
+					"id": 13.0,
+					"childs": [
+						{
+							"id": 14.0,
+							"childs": [
+								{
+									"id": 15.0,
+									"childs": [],
+									"type": "GLASS"
+								}
+							],
+							"layout": "VERT",
+							"type": "STVORKA",
+							"param": "{'typeOpen':3, 'sysfurnID':-1}",
+							"length": 650.0
+						}
+					],
+					"layout": "VERT",
+					"type": "AREA",
+					"length": 650.0
+				}
+			],
+			"layout": "HORIZ",
+			"type": "AREA",
+			"length": 1200.0
+		}
+	],
+	"layout": "VERT",
+	"type": "ARCH"
+}
