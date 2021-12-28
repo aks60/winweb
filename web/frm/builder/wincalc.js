@@ -1,44 +1,50 @@
-import {draw_frame_bott, draw_frame_right, draw_frame_top, draw_frame_left} from "./drawing.js";
-import {JsonRoot, JsonArea, Stvorka, ElemCross, ElemFrame, ElemGlass} from './model.js';
+
+import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
 
 
 winc.build = function (canvasTag) {
-    new Builder(canvasTag).init();
+    new Wincalc(canvasTag).parse();
 }
 
-class Builder {
+class Wincalc {
 
     constructor(canvasTag) {
         this.ctx = canvasTag.getContext('2d');
     }
 
-    init() {
+    parse() {
         try {
             if (order.sel_table2 != undefined) {
                 let script = order.sel_table2.script;
-                let rootObj = JSON.parse(script);
-                this.ctx.save();
+                let obj = JSON.parse(script);
 
-                let scale = (cnv.width / rootObj.width < cnv.height / rootObj.height)
-                        ? cnv.width / (rootObj.width + 80) : cnv.height / (rootObj.height + 80);
+                this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
+                this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
+                this.nuni = obj.nuni;            //nuni профиля   
+                this.form = obj.form;            //форма конструкции
+                this.width = obj.width;          //ширина окна, мм
+                this.height = obj.height;        //высота окна, мм 
+                this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.
+                //Главное окно
+                this.root = new Root(obj.id, null, this, obj.layout, obj.type,
+                        obj.color1, obj.color2, obj.color3, obj.width, obj.height);
+
+                this.ctx.save();
+                let scale = (cnv.width / obj.width < cnv.height / obj.height)
+                        ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
                 this.ctx.scale(scale, scale);
                 this.ctx.translate(80, 0);
                 this.ctx.lineWidth = 5;
                 this.ctx.strokeStyle = "rgb(0,0,0)";
                 this.ctx.fillStyle = "rgb(120,150,10)";
 
-                //Главное окно
-                let rootArea = new JsonRoot(rootObj.id, rootObj.prj, rootObj.ord, rootObj.nuni, rootObj.name, rootObj.layout,
-                        rootObj.type, rootObj.width, rootObj.height, rootObj.heightAdd, rootObj.color1, rootObj.color2, rootObj.color3, rootObj.paramJson);
-
-                let arr = new Array();
-                this.recursion(rootObj, 'FRAME_SIDE', arr);
-
                 //Добавим рамы
+                let arr = new Array();
+                this.recursion(obj, 'FRAME_SIDE', arr);
                 for (let v of arr) {
-                    rootArea.mapFrame.set(v.layout, new ElemFrame(rootArea, v.id, v.layout, v.param));
+                    this.root.mapFrame.set(v.layout, new Frame(this.root, v.id, v.layout, v.param));
                 }
-                ElemFrame.draw(this.ctx, rootArea);
+                Frame.draw(this.ctx, this.root);
 
 
                 this.ctx.restore();
@@ -56,7 +62,6 @@ class Builder {
                     arr.push(el);
                     //console.log(key + ": " + val);
                 }
-
             } else {
                 this.recursion(val, type, arr);
             }
