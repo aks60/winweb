@@ -1,6 +1,6 @@
 
 export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgd) {
-
+    
     let ctx = iwin.ctx;
     ctx.fillStyle = iwin.RGB;
     ctx.beginPath();
@@ -12,8 +12,9 @@ export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgd) 
     ctx.fill();
     ctx.stroke();
 }
-export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgd) {
 
+export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgd) {
+    
     let ctx = iwin.ctx;
     ctx.fillStyle = 'blue';
     ctx.beginPath();
