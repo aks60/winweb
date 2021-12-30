@@ -35,10 +35,6 @@ export class Com5t {
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
-
-    static naxl() {
-        return (2 * winc.dh_frame + 2 * winc.naxl);
-    }
 }
 //------------------------------------------------------------------------------
 export class Area extends Com5t {
@@ -94,21 +90,22 @@ export class Root extends Area {
 export class Stvorka extends Area {
 
     constructor(id, owner, iwin, layout, type, param) {
-        super(id, owner, iwin, layout, type, owner.width - Com5t.naxl(), owner.height - Com5t.naxl());
+        super(id, owner, iwin, layout, type, owner.width(), owner.height());
 
         this.frames = new Map(); //рамы конструкции 
-
-        this.frames.set("BOTT", new Frame(id + '.1', owner, iwin, "BOTT", "STVORKA_SIDE", param));
-        this.frames.set("RIGHT", new Frame(id + '.2', owner, iwin, "RIGHT", "STVORKA_SIDE", param));
-        this.frames.set("TOP", new Frame(id + '.3', owner, iwin, "TOP", "STVORKA_SIDE", param));
-        this.frames.set("LEFT", new Frame(id + '.4', owner, iwin, "LEFT", "STVORKA_SIDE", param));
+        
+        this.frames.set("BOTT", new Frame(id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", param));
+        this.frames.set("RIGHT", new Frame(id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", param));
+        this.frames.set("TOP", new Frame(id + '.3', this, iwin, "TOP", "STVORKA_SIDE", param));
+        this.frames.set("LEFT", new Frame(id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", param));
     }
 
     paint() {
-        this.frames.get("TOP").paint();
+                        debugger;
         this.frames.get("BOTT").paint();
-        this.frames.get("LEFT").paint();
         this.frames.get("RIGHT").paint();
+        this.frames.get("TOP").paint();
+        this.frames.get("LEFT").paint();
     }
 }
 //------------------------------------------------------------------------------
@@ -128,22 +125,27 @@ export class Frame extends Com5t {
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
 
-        if (owner.type == "RECTANGL") {
-            if ("BOTT" == layout) {
-                this.dimension(owner.x1, owner.y2 - winc.dh_frame, owner.x2, owner.y2);
+        let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
+        let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
+        let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
+        let y2 = (owner.type != "STVORKA") ? owner.y2 : (owner.y2 - winc.dh_frame) + winc.naxl;
+        
+        if (iwin.root.type == "RECTANGL") {
+            if ("BOTT" == layout) {                
+                this.dimension(x1, y2 - winc.dh_frame, x2, y2);
             } else if ("RIGHT" == layout) {
-                this.dimension(owner.x2 - winc.dh_frame, owner.y1, owner.x2, owner.y2);
+                this.dimension(x2 - winc.dh_frame, y1, x2, y2);
             } else if ("TOP" == layout) {
-                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frame);
+                this.dimension(x1, y1, x2, y1 + winc.dh_frame);
             } else if ("LEFT" == layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frame, owner.y2);
+                this.dimension(x1, y1, x1 + winc.dh_frame, y2);
             }
         }
     }
 
     paint() {
         let dh = winc.dh_frame;
-        if (this.owner.type == "RECTANGL") {
+        if (this.iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb1);
             } else if ("RIGHT" == this.layout) {

@@ -49,8 +49,9 @@ class Wincalc {
                 v.paint();
             }
             for (let v of arr) {
-                if (v.type == "STVORKA")
+                if (v.type == "STVORKA") {
                     v.paint();
+                }
             }
 
             this.ctx.restore();
