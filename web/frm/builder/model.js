@@ -1,5 +1,5 @@
 
-import {draw_stroke_polygon} from './drawing.js';
+import {draw_stroke_polygon, draw_full_polygon} from './drawing.js';
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -93,7 +93,7 @@ export class Stvorka extends Area {
         super(id, owner, iwin, layout, type, owner.width(), owner.height());
 
         this.frames = new Map(); //рамы конструкции 
-        
+
         this.frames.set("BOTT", new Frame(id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", param));
         this.frames.set("RIGHT", new Frame(id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", param));
         this.frames.set("TOP", new Frame(id + '.3', this, iwin, "TOP", "STVORKA_SIDE", param));
@@ -101,7 +101,6 @@ export class Stvorka extends Area {
     }
 
     paint() {
-                        debugger;
         this.frames.get("BOTT").paint();
         this.frames.get("RIGHT").paint();
         this.frames.get("TOP").paint();
@@ -129,9 +128,9 @@ export class Frame extends Com5t {
         let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
         let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
         let y2 = (owner.type != "STVORKA") ? owner.y2 : (owner.y2 - winc.dh_frame) + winc.naxl;
-        
+
         if (iwin.root.type == "RECTANGL") {
-            if ("BOTT" == layout) {                
+            if ("BOTT" == layout) {
                 this.dimension(x1, y2 - winc.dh_frame, x2, y2);
             } else if ("RIGHT" == layout) {
                 this.dimension(x2 - winc.dh_frame, y1, x2, y2);
@@ -163,11 +162,14 @@ export class Glass extends Com5t {
 
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
-        color(16776432, 16776432, 16776432);
+        this.color(16776432, 16776432, 16776432);
     }
 
-    static draw(ctx, owner) {
-
+    paint() {
+        if (this.iwin.root.type == "RECTANGL") {
+            draw_full_polygon(this.iwin, this.owner.x1, this.owner.x2, this.owner.x2,
+                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb1);
+        }
     }
 }
 //------------------------------------------------------------------------------

@@ -1,5 +1,7 @@
 
+import {draw_elements} from './drawing.js';
 import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
+
 winc.build = function (canvasTag) {
     new Wincalc(canvasTag).parse();
 }
@@ -32,64 +34,50 @@ class Wincalc {
             this.ctx.translate(80, 0);
             this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = "rgb(0,0,0)";
-            this.ctx.fillStyle = "rgb(120,150,10)";
-
-            //Добавим рамы  
-            for (let v of obj.childs) {
-                if (v.type == 'FRAME_SIDE')
-                    this.root.frames.set(v.layout, new Frame(v.id, this.root, this, v.layout, v.type, v.param));
-            }
-            let arr = new Array();
-
-            //Всё остальное
-            this.recursion(this.root, obj, arr);
-
-            //Рисуем
-            for (let v of this.root.frames.values()) {
-                v.paint();
-            }
-            for (let v of arr) {
-                if (v.type == "STVORKA") {
-                    v.paint();
-                }
-            }
-
+            this.RGB = "rgb(120,150,10)";
+            let arr = new Array(); //массив элементов конструкции
+            
+            this.elements(this.root, obj, arr); //создадим элементы конструкции
+            arr.sort((a, b) => a.id - b.id);
+            draw_elements(this, arr); //рисуем конструкцию
             this.ctx.restore();
         }
         //} catch (e) { console.error('Ошибка: ' + e.message); }
     }
 
-    recursion(owner, obj, arr) {
+    elements(owner, obj, arr) {
         //try {
         let hm = new Map();
-        for (let el of obj.childs) {
+        for (let ob2 of obj.childs) {
 
-            if (el.type == "STVORKA") {
-                let stv = new Stvorka(el.id, owner, this, el.layout, el.type, el.param);
+            if (ob2.type == "FRAME_SIDE") {
+                owner.frames.set(ob2.layout, new Frame(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param));
+            } else if (ob2.type == "STVORKA") {
+                let stv = new Stvorka(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(stv);
-                hm.set(stv, el);
+                hm.set(stv, ob2);
                 arr.push(stv);
 
-            } else if (el.type == "AREA") {
-                let area = new Area(el.id, owner, this, el.layout, el.type, el.width, el.height);
+            } else if (ob2.type == "AREA") {
+                let area = new Area(ob2.id, owner, this, ob2.layout, ob2.type, ob2.width, ob2.height);
                 owner.childs.push(area);
-                hm.set(area, el);
+                hm.set(area, ob2);
 
-            } else if (el.type == "IMPOST" || el.type == "SHTULP" || el.type == "STOIKA") {
-                let cross = new Cross(el.id, owner, this, el.layout, el.type, el.param);
+            } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
+                let cross = new Cross(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(cross);
                 arr.push(cross);
 
-            } else if (el.type == "GLASS") {
-                let glass = new Glass(el.id, owner, this, el.layout, el.type, el.param);
+            } else if (ob2.type == "GLASS") {
+                let glass = new Glass(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(glass);
                 arr.push(glass);
             }
         }
 
         //Теперь вложенные элементы
-        for (let k in hm) {
-            recursion(k, hm[k], arr);
+        for (let k of hm.keys()) {
+            this.elements(k, hm.get(k), arr);
         }
         //} catch (e) {  console.error('Ошибка: ' + e.message);  }
     }
