@@ -57,6 +57,10 @@ color.load_table1 = function (table) {
                     name: tr[1]
                 });
             }
+        //var selectRowid = table.getGridParam('selrow');
+        //var selectRecord = table.getRowData(selectRowid);
+        //selectRecord.id
+        
             color.resize();
         }
     });

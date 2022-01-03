@@ -21,6 +21,8 @@
                 $(window).bind('resize', function () {
                     order.resize();
                 }).trigger('resize');
+                
+                dataset.load_color();
 
                 order.load_product();
                 order.init_table1($("#table1"));

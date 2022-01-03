@@ -30,7 +30,7 @@ public class Color {
     public HashMap colorList(HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, List<List>> output = new HashMap();
         output.put("colorList", new ArrayList());
-        Query qColor = new Query(Att.att(request).connect(), eColor.values()).select(eColor.up, "where", eColor.id, "< 100", "order by", eColor.name);
+        Query qColor = new Query(Att.att(request).connect(), eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
         for (Record rec : qColor) {
             ((List) output.get("colorList")).add(Arrays.asList(
                     rec.get(eColor.id),

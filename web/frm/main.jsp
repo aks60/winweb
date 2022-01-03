@@ -15,15 +15,15 @@
         <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>          
+        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>                                
         <script type="module" src="frm/builder/wincalc.js"></script>                            
        
 
         <script type="text/javascript">
             //глобальные данные
             var winc = {dh_frame: 64, dh_cross: 80, naxl: 12};
-            var utils = {}, login = {}, users = {}, order = {}, product = {}, dialog = {},
-                    systree = {}, kits = {}, color = {}, sysprof = {};
+            var utils = {}, dataset = {}, login = {}, users = {}, order = {}, 
+                    product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
 
             //глобальные настройки и параметры           
             $(document).ready(function () {
