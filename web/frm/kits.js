@@ -24,7 +24,7 @@ kits.init_table1 = function (table) {
 }
 
 kits.load_table1 = function (table) {
-    table.jqGrid("clearGridData", true);
+    table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'kits?action=kitsList',
         success: function (data) {

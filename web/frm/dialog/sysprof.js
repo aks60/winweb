@@ -32,7 +32,7 @@ sysprof.init_table1 = function(table) {
 }
 
 sysprof.load_table1 = function(table) {
-    table.jqGrid("clearGridData", true);
+    table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'sysprof?action=sysprofList',
         success: function (data) {

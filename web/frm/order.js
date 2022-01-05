@@ -45,7 +45,7 @@ order.init_table2 = function (table) {
 }
 
 order.load_table1 = function (table) {
-    table.jqGrid("clearGridData", true);
+    table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'order?action=orderList',
         success: function (data) {

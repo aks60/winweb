@@ -40,7 +40,7 @@ users.init_table1 = function (table) {
 }
 
 users.load_table1 = function (table) {
-    table.jqGrid("clearGridData", true);
+    table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'users?action=userList',
         beforeSend: function () {},

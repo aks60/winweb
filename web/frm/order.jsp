@@ -60,7 +60,7 @@
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
-            <button onClick="">Кнопка2</button>
+            <button onClick="$('#table2').jqGrid('clearGridData', true);">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
