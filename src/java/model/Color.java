@@ -34,7 +34,8 @@ public class Color {
         for (Record rec : qColor) {
             ((List) output.get("colorList")).add(Arrays.asList(
                     rec.get(eColor.id),
-                    rec.get(eColor.name)));
+                    rec.get(eColor.name),
+                    rec.get(eColor.colgrp_id)));
         }
         return output;
     }

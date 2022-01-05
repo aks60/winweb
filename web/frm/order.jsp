@@ -22,7 +22,7 @@
                     order.resize();
                 }).trigger('resize');
                 
-                dataset.load_color();
+                dataset.load_colorList();
 
                 order.load_product();
                 order.init_table1($("#table1"));

@@ -20,10 +20,8 @@
                 }).trigger('resize');
 
                 color.init_dialog($("#dialog-dic"));
-                color.init_table1($("#tab1-dic"))
-                color.load_table1($("#tab1-dic"))
-                color.init_table2($("#tab2-dic"));
-                color.load_table2($("#tab2-dic"));
+                color.init_table($("#tab1-dic"), $("#tab2-dic"));
+                color.load_table($("#tab1-dic"), $("#tab2-dic"))                
             });
         </script>         
     </head>
