@@ -3,7 +3,9 @@ dataset.load_colorList = function () {
     $.ajax({
         url: 'color?action=colorList',
         success: function (data) {
+            
             dataset.colorList = data.colorList;
+            debugger;
         }
     });
 };
@@ -27,10 +29,13 @@ dataset.find_colorList = function (colgrp_id) {
 }
 //------------------------------------------------------------------------------
 dataset.load_productList = function () {
+    
     $.ajax({
         url: 'prod?action=prodList',
         success: function (data) {
+            
             dataset.productList = data.prodList;
+            debugger;
         }
     });
 }

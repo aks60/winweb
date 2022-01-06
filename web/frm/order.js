@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
-order.init_table1 = function (table) {
-    table.jqGrid({
+order.init_table = function (table1, table2) {
+    table1.jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -15,12 +15,30 @@ order.init_table1 = function (table) {
             {name: 'date6', width: 120, sorttype: "text"},
             {name: 'propart_id', width: 120, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"}
-        ]
+        ],
+        onSelectRow: function (rowid) {
+//            debugger;
+//            table2.jqGrid('clearGridData', true);
+//            let systreeRec = table1.jqGrid('getRowData', rowid);            
+//            if (systreeRec != undefined) {
+//                for (i = 0; i < dataset.productList.length; i++) {
+//                    let productRec = dataset.productList[i];
+//                    let script = productRec[2];
+//                    if (productRec[4] == systreeRec.id) {
+//                        table2.jqGrid('addRowData', i + 1, {
+//                            id: productRec[0],
+//                            name: productRec[1],
+//                            script: productRec[2],
+//                            project_id: productRec[3],
+//                            systree_id: productRec[4]
+//                        });
+//                    }
+//                }
+//                table2.jqGrid("setSelection", 1);
+//            }
+        }
     });
-}
-
-order.init_table2 = function (table) {
-    table.jqGrid({
+    table2.jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -34,16 +52,16 @@ order.init_table2 = function (table) {
         ]
     });
 }
-
-order.load_table1 = function (table) {
-    table.jqGrid('clearGridData', true);
+//------------------------------------------------------------------------------
+order.load_table = function (table1, table2) {
+    table1.jqGrid('clearGridData', true);
     $.ajax({
         url: 'order?action=orderList',
         success: function (data) {
             order.orderList = data.orderList;
             for (i = 0; i < order.orderList.length; i++) {
                 let tr = order.orderList[i];
-                table.jqGrid('addRowData', i + 1, {
+                table1.jqGrid('addRowData', i + 1, {
                     id: tr[0],
                     num_ord: tr[1],
                     num_acc: tr[2],
@@ -53,31 +71,9 @@ order.load_table1 = function (table) {
                     manager: tr[6]
                 });
             }
-            table.jqGrid("setSelection", 8);
-//            order.resize();
+            table1.jqGrid("setSelection", 8);
         }
-    });    
+    });
 }
-
-order.load_table2 = function (table) {
-    table.jqGrid('clearGridData', true);
-    if (order.sel_table1 != undefined) {
-        for (i = 0; i < dataset.productList.length; i++) {
-            let productRec = dataset.productList[i];
-            let script = productRec[2];
-            //debugger;
-            if (productRec[3] == order.sel_table1.id) {
-                table.jqGrid('addRowData', i + 1, {
-                    id: productRec[0],
-                    name: productRec[1],
-                    script: productRec[2],
-                    project_id: productRec[3],
-                    systree_id: productRec[4]
-                });
-            }
-        }
-        table.jqGrid("setSelection", 1);
-    }
-}
-
+//------------------------------------------------------------------------------
 

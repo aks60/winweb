@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Color;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "ColorCont", urlPatterns = {"/color"})
@@ -41,13 +42,13 @@ public class ColorCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("colorGroup")) {
                 Color dic = new Color();
-                HashMap output = dic.colorGroup(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = dic.colorGroup(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("colorList")) {
                 Color dic = new Color();
-                HashMap output = dic.colorList(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = dic.colorList(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             }
         }

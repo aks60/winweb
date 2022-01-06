@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Product;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "ProdCont", urlPatterns = {"/prod"})
@@ -42,8 +43,8 @@ public class ProdCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("prodList")) {
                 Product product = new Product();
-                HashMap output = product.prodList(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = product.prodList(request, response);
+                out.write(JSONObject.toJSONString(output));
             }
         }
     }

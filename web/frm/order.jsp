@@ -22,34 +22,24 @@
                     order.resize();
                 }).trigger('resize');
 
-                order.init_table1($("#table1"));
-                order.load_table1($("#table1"));
-                order.init_table2($("#table2"));
-                $("#table1").jqGrid("setGridParam", {
-                    onSelectRow: function (rowid, status) {
-                        order.sel_table1 = $("#table1").getRowData(rowid);
-                        order.load_table2($("#table2"));
-                    }
-                });
-                $("#table2").jqGrid("setGridParam", {
-                    onSelectRow: function (rowid, status) {
-                        order.sel_table2 = $("#table2").getRowData(rowid);
-                    }
-                });
-                order.resize();
+                order.init_table($("#table1"), $("#table2"));
+                order.load_table($("#table1"), $("#table2"));
+                
+//                order.init_table2($("#table2"));
+//                $("#table1").jqGrid("setGridParam", {
+//                    onSelectRow: function (rowid, status) {
+//                        order.sel_table1 = $("#table1").getRowData(rowid);
+//                        order.load_table2($("#table2"));
+//                    }
+//                });
+//                $("#table2").jqGrid("setGridParam", {
+//                    onSelectRow: function (rowid, status) {
+//                        order.sel_table2 = $("#table2").getRowData(rowid);
+//                    }
+//                });
+//                order.resize();
 
-                order.test = function () {
-                    debugger;
-                    //winc.canvas = document.getElementById("cnv");
-                    //winc.context = winc.canvas.getContext('2d');
-                    winc.context.scale(0.2307692307692308, 0.2307692307692308);
-                    winc.context.fillStyle = "rgb(0,0,0)";
-                    winc.context.lineWidth = 2;
-                    winc.context.beginPath();
-                    winc.context.moveTo(8, 200);
-                    winc.context.lineTo(130, 200);
-                    winc.context.closePath();
-                    winc.context.stroke();                    
+                order.test = function () {                   
                 }
             });
         </script>

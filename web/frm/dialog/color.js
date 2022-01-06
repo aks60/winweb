@@ -90,7 +90,7 @@ color.load_table = function (table1, table2) {
                     name: tr[1]
                 });
             }
-            table1.setSelection(1);
+            table1.jqGrid("setSelection", 1);
         }
     });
 };

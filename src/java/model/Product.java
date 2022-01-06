@@ -11,10 +11,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.Att;
+import org.json.simple.JSONObject;
 
 public class Product {
  
-    public HashMap prodList(HttpServletRequest request, HttpServletResponse response) {
+    public JSONObject prodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
 
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
@@ -26,9 +27,9 @@ public class Product {
                     rec.get(eProprod.script),
                     rec.get(eProprod.project_id), 
                     rec.get(eProprod.systree_id)));
-        }
-        HashMap<String, List<List>> output = new HashMap();
+        }       
+        JSONObject output = new JSONObject();
         output.put("prodList", list);
-        return output;
+        return output;        
     }
 }

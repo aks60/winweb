@@ -32,8 +32,8 @@
             });
 
             window.onload = function () {
+                dataset.load_productList();
                 dataset.load_colorList();
-                dataset.load_prodList();
             };
         </script> 
         <script type="module" src="frm/builder/wincalc.js"></script>         
@@ -42,13 +42,12 @@
 
     </head>
     <body>
-        <div id="mainmenu" style="display: none;"></div>
+        <div id="mainmenu"></div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
         <div id="dialog-mes"></div> 
 
         <script type="text/javascript">
-            $("#mainmenu").load('frm/menu.jsp');
             $("#outbody").load('frm/login.jsp');
         </script> 
     </body>
