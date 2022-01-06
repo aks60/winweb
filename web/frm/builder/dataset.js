@@ -34,7 +34,8 @@ dataset.load_productList = function () {
         success: function (data) {
             
             dataset.productList = data.prodList;
-            debugger;
+            //debugger;
         }
     });
 }
+//------------------------------------------------------------------------------
