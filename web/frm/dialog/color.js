@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 color.init_dialog = function (dialogTag) {
-    
+
     dialogTag.dialog({
         title: "Справочник текстур*",
         width: 400,
@@ -8,7 +8,7 @@ color.init_dialog = function (dialogTag) {
         modal: false,
         buttons: {
             "Выбрать": function () {
-                //color.resize();
+                color.resize();
                 //$('#tab2-dic').jqGrid('clearGridData', true);
             },
             "Закрыть": function () {
@@ -19,12 +19,10 @@ color.init_dialog = function (dialogTag) {
 }
 //------------------------------------------------------------------------------
 color.init_table = function (table1, table2) {
-    
+
     table1.jqGrid({
         datatype: "local",
-        gridview: true,
-        autowidth: true,
-        height: "auto",
+        //gridview: true,
         colNames: ['id', 'Группы текстур'],
         colModel: [
             {name: 'id', hidden: true},
@@ -48,9 +46,7 @@ color.init_table = function (table1, table2) {
 
     table2.jqGrid({
         datatype: "local",
-        gridview: true,
-        autowidth: true,
-        height: "auto",
+        //gridview: true,        
         colNames: ['Код', 'Описание текстур'],
         colModel: [
             {name: 'id', width: 80},
@@ -63,7 +59,7 @@ color.init_table = function (table1, table2) {
 };
 //------------------------------------------------------------------------------
 color.load_table = function (table1, table2) {
-    
+
     table1.jqGrid('clearGridData', true);
     $.ajax({
         url: 'color?action=colorGroup',
@@ -76,7 +72,6 @@ color.load_table = function (table1, table2) {
                     name: tr[1]
                 });
             }
-            color.resize();
             table1.setSelection(1);
         }
     });
