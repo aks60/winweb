@@ -26,6 +26,10 @@
             systree.init_table2($("#tab2-dic"));
             systree.load_table2($("#tab2-dic"));
         });
+
+        window.onload = function () {
+            alert('Страница загружена');
+        };
     </script> 
 </head> 
 <body> 

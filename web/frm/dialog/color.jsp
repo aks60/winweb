@@ -23,6 +23,11 @@
                 color.init_table($("#tab1-dic"), $("#tab2-dic"));
                 color.load_table($("#tab1-dic"), $("#tab2-dic"))                
             });
+            
+            window.onload = function () {
+                alert('Страница загружена');
+                //color.resize();
+            };            
         </script>         
     </head>
     <body>

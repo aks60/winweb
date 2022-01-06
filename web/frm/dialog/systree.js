@@ -1,4 +1,4 @@
-
+//-----------------------------------------------------------------------------
 systree.init_dialog = function (tabtree) {
     tabtree.dialog({
         title: "Конструкции систем профилей",
@@ -15,9 +15,9 @@ systree.init_dialog = function (tabtree) {
         }
     });
 }
-
-systree.init_table1 = function (tabtree) {
-    tabtree.jqGrid({
+//-----------------------------------------------------------------------------
+systree.init_table = function (table1, table2) {
+    table1.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
         colModel: [
@@ -36,11 +36,8 @@ systree.init_table1 = function (tabtree) {
             loadTable(rowid);
         }
     });
-}
 
-
-systree.init_table2 = function (tabgrid) {
-    tabgrid.jqGrid({
+    table2.jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -54,8 +51,8 @@ systree.init_table2 = function (tabgrid) {
             {name: 'parent', hidden: true}]
     });
 }
-
-systree.load_table1 = function (table) {
+//-----------------------------------------------------------------------------
+systree.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'systree?action=sysTree',
