@@ -52,7 +52,7 @@ order.load_table1 = function (table) {
             order.orderList = data.orderList;
             for (i = 0; i < order.orderList.length; i++) {
                 let tr = order.orderList[i];
-                table.addRowData(i + 1, {
+                table.jqGrid('addRowData', i + 1, {
                     id: tr[0],
                     num_ord: tr[1],
                     num_acc: tr[2],
@@ -76,7 +76,7 @@ order.load_table2 = function (table) {
             let script = tr[2];
             //debugger;
             if (tr[3] == order.sel_table1.id) {
-                table.addRowData(i + 1, {
+                table.jqGrid('addRowData', i + 1, {
                     id: tr[0],
                     name: tr[1],
                     script: tr[2],

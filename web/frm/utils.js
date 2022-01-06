@@ -168,7 +168,7 @@ utils.init_obj = function (selector_table) {
                         obj[key] = dict[this.table[indexData][key]];
                     }
                 }
-                $(this.name_table).addRowData(indexTable, obj);
+                $(this.name_table).jqGrid('addRowData', indexTable, obj);
             }, enumerable: false, configurable: true
         },
         //локальное сохранение строки html таблицы и html тегов полей в data сервер

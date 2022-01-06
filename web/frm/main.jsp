@@ -10,7 +10,8 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
-        <script type="text/javascript" src="jss/jquery-2.2.4/jquery-2.2.4.min.js"></script>             
+        <script type="text/javascript" src="jss/jquery-3.6.0/jquery-3.6.0.min.js"></script>             
+        <!--<script type="text/javascript" src="jss/jquery-2.2.4/jquery-2.2.4.min.js"></script>-->             
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 

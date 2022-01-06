@@ -69,7 +69,7 @@ systree.load_table1 = function (table) {
 //            systree.sysTree = data.sysTree;
 //            for (i = 0; i < systree.sysTree.length; i++) {
 //                let tr = systree.sysTree[i];
-//                table.addRowData(i + 1, {
+//                table.jqGrid('addRowData', i + 1, {
 //                    id: tr.id,
 //                    name: tr.name
 //                });
@@ -87,7 +87,7 @@ systree.load_table2 = function (table) {
             systree.sysProd = data.sysProd;
             for (i = 0; i < systree.sysProd.length; i++) {
                 let tr = systree.sysProd[i];
-                table.addRowData(i + 1, {
+                table.jqGrid('addRowData', i + 1, {
                     id: tr[0],
                     name: tr[1],
                     script: tr[2],

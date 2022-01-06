@@ -39,7 +39,7 @@ sysprof.load_table1 = function(table) {
             sysprof.sysprofList = data.sysprofList;
             for (i = 0; i < sysprof.sysprofList.length; i++) {
                 let tr = sysprof.sysprofList[i];
-                table.addRowData(i + 1, {
+                table.jqGrid('addRowData', i + 1, {
                     id: tr[0], 
                     use_side: tr[1], 
                     artikl_id: tr[2], 
