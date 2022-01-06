@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.sys.App;
 import model.sys.Att;
 import org.json.simple.JSONObject;
 
@@ -25,8 +26,7 @@ public class Color {
                     rec.get(eGroups.id),
                     rec.get(eGroups.name)));
         }
-        JSONObject output = new JSONObject();
-        output.put("colorGroup", list);
+        JSONObject output = new JSONObject(App.asMap("colorGroup", list));
         return output;
     }
 
@@ -40,8 +40,7 @@ public class Color {
                     rec.get(eColor.name),
                     rec.get(eColor.colgrp_id)));
         }
-        JSONObject output = new JSONObject();
-        output.put("colorList", list);
+        JSONObject output = new JSONObject(App.asMap("colorList", list));
         return output;
     }
 }

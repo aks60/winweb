@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Color;
 import model.Systree;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "SystreeCont", urlPatterns = {"/systree"})
@@ -46,13 +47,13 @@ public class SystreeCont extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if (action.equalsIgnoreCase("sysTree")) {
                 Systree dic = new Systree();
-                HashMap output = dic.sysTree(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = dic.sysTree(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("sysProd")) {
                 Systree dic = new Systree();
-                HashMap output = dic.sysProd(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = dic.sysProd(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             }
         }

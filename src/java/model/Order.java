@@ -11,13 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.sys.App;
 import model.sys.Att;
+import org.json.simple.JSONObject;
 
 public class Order {
 
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
-    public HashMap orderList(HttpServletRequest request, HttpServletResponse response) {
+    public JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qProject = new Query(Att.att(request).connect(), eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
         for (Record rec : qProject) {
@@ -30,8 +32,7 @@ public class Order {
                     rec.get(eProject.propart_id),
                     rec.get(eProject.manager)));
         }
-        HashMap<String, List<List>> output = new HashMap();
-        output.put("orderList", list);
+        JSONObject output = new JSONObject(App.asMap("orderList", list));
         return output;
     }
     

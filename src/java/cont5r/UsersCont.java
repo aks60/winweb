@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Users;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "UsersCont", urlPatterns = {"/users"})
@@ -36,8 +37,8 @@ public class UsersCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("userList")) {
                 Users users = new Users();
-                HashMap output = users.userList(request, response);               
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = users.userList(request, response);               
+                out.write(JSONObject.toJSONString(output));
             }
         }
     }

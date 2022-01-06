@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Sysprof;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "SysprofCont", urlPatterns = {"/sysprof"})
@@ -42,8 +43,8 @@ public class SysprofCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("sysprofList")) {
                 Sysprof order = new Sysprof();
-                HashMap output = order.sysprofList(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = order.sysprofList(request, response);
+                out.write(JSONObject.toJSONString(output));
             }
         }
     }

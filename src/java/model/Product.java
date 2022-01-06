@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.sys.App;
 import model.sys.Att;
 import org.json.simple.JSONObject;
 
@@ -28,8 +29,7 @@ public class Product {
                     rec.get(eProprod.project_id), 
                     rec.get(eProprod.systree_id)));
         }       
-        JSONObject output = new JSONObject();
-        output.put("prodList", list);
+        JSONObject output = new JSONObject(App.asMap("prodList", list));
         return output;        
     }
 }

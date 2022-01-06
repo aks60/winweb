@@ -5,7 +5,6 @@ dataset.load_colorList = function () {
         success: function (data) {
             
             dataset.colorList = data.colorList;
-            debugger;
         }
     });
 };

@@ -40,6 +40,7 @@ import org.bouncycastle.math.ec.ECConstants;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.util.encoders.Hex;
+import org.json.simple.JSONObject;
 
 //@WebServlet(name = "AdminCont", urlPatterns = {"/admin"})
 public class Login {
@@ -204,7 +205,7 @@ public class Login {
     }
 
     //новый пользователь, сохранение user, password и role в базе данных
-    public HashMap newLogin(HttpServletRequest request, HttpServletResponse response) {
+    public JSONObject newLogin(HttpServletRequest request, HttpServletResponse response) {
 
         Att att = Att.att(request);
         Connection connect = att.connect();
@@ -215,7 +216,7 @@ public class Login {
         String user_fio = request.getParameter("fio");
         String user_desc = request.getParameter("desc");
         String user_role = request.getParameter("role");
-        HashMap output = new HashMap(new App().asMap("login", true, "mes", "Новый пользователь создан"));
+        JSONObject output = new JSONObject(App.asMap("login", true, "mes", "Новый пользователь создан"));
         try {
             if (adm_name.equals("admin") || adm_name.equals("sysdba")) {
                 Query user = new Query(connect, eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
@@ -266,8 +267,8 @@ public class Login {
         }
     }
 
-    public HashMap deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
-        HashMap output = new HashMap(new App().asMap("result", "Ошибка удаления пользователя"));
+    public JSONObject deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
+        JSONObject output = new JSONObject(App.asMap("result", "Ошибка удаления пользователя"));
         try {
             Query qUser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
             if(qUser.isEmpty() == false) {
@@ -290,7 +291,7 @@ public class Login {
         Statement statement = att.statement(connect);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        HashMap output = new HashMap();
+        JSONObject output = new JSONObject();
         try {
             if (username.equals("admin") || username.equals("sysdba")) {
 

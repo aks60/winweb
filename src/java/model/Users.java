@@ -11,21 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
 import model.sys.Att;
+import org.json.simple.JSONObject;
 
 public class Users {
 
-    public HashMap userList(HttpServletRequest request, HttpServletResponse response) {
-        HashMap<String, List<List>> output = new HashMap();
-        output.put("userList", new ArrayList());
+    public JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        
         Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
         for (Record rec : qSysuser) {
-            ((List) output.get("userList")).add(Arrays.asList(
+            list.add(Arrays.asList(
                     rec.get(eSysuser.id), 
                     rec.get(eSysuser.fio), 
                     rec.get(eSysuser.desc), 
                     rec.get(eSysuser.login), 
                     rec.get(eSysuser.role)));
         }
-        return output;
+        JSONObject output = new JSONObject(App.asMap("userList", list));
+        return output; 
     }
 }

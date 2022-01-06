@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Kits;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "KitsCont", urlPatterns = {"/kits"})
@@ -43,8 +44,8 @@ public class KitsCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("kitsList")) {
                 Kits kits = new Kits();
-                HashMap output = kits.kitsList(request, response);               
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = kits.kitsList(request, response);               
+                out.write(JSONObject.toJSONString(output));
             }
         }
     }

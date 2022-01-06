@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Order;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "OrderCont", urlPatterns = {"/order"})
@@ -43,8 +44,8 @@ public class OrderCont extends HttpServlet {
 
             if (action.equalsIgnoreCase("orderList")) {
                 Order order = new Order();
-                HashMap output = order.orderList(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = order.orderList(request, response);
+                out.write(JSONObject.toJSONString(output));
             }
         }
     }

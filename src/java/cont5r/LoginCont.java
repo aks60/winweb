@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Login;
 import model.sys.App;
 import model.sys.Sys;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 @WebServlet(name = "LoginCont", urlPatterns = {"/login"})
@@ -90,14 +91,14 @@ public class LoginCont extends HttpServlet {
 
             } else if (action.equalsIgnoreCase("newLogin")) {
                 Login adm = new Login();
-                HashMap output = adm.newLogin(request, response);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = adm.newLogin(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("deleteLogin")) {
                 Login adm = new Login();
                 String id = request.getParameter("userID");
-                HashMap output = adm.deleteUser(request, response, id);
-                out.write(JSONValue.toJSONString(output));
+                JSONObject output = adm.deleteUser(request, response, id);
+                out.write(JSONObject.toJSONString(output));
 
             }
         }
