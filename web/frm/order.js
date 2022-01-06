@@ -1,13 +1,4 @@
-
-order.load_product = function () {
-    $.ajax({
-        url: 'prod?action=prodList',
-        success: function (data) {
-            order.prodList = data.prodList;
-        }
-    });
-}
-
+//------------------------------------------------------------------------------
 order.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
@@ -69,19 +60,19 @@ order.load_table1 = function (table) {
 }
 
 order.load_table2 = function (table) {
-    table.jqGrid('clearGridData');
+    table.jqGrid('clearGridData', true);
     if (order.sel_table1 != undefined) {
-        for (i = 0; i < order.prodList.length; i++) {
-            let tr = order.prodList[i];
-            let script = tr[2];
+        for (i = 0; i < dataset.productList.length; i++) {
+            let productRec = dataset.productList[i];
+            let script = productRec[2];
             //debugger;
-            if (tr[3] == order.sel_table1.id) {
+            if (productRec[3] == order.sel_table1.id) {
                 table.jqGrid('addRowData', i + 1, {
-                    id: tr[0],
-                    name: tr[1],
-                    script: tr[2],
-                    project_id: tr[3],
-                    systree_id: tr[4]
+                    id: productRec[0],
+                    name: productRec[1],
+                    script: productRec[2],
+                    project_id: productRec[3],
+                    systree_id: productRec[4]
                 });
             }
         }

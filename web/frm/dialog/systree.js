@@ -1,5 +1,6 @@
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 systree.init_dialog = function (tabtree) {
+    
     tabtree.dialog({
         title: "Конструкции систем профилей",
         width: 600,
@@ -15,8 +16,9 @@ systree.init_dialog = function (tabtree) {
         }
     });
 }
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 systree.init_table = function (table1, table2) {
+    
     table1.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
@@ -24,25 +26,38 @@ systree.init_table = function (table1, table2) {
             {name: 'id', index: 'id', width: 1, hidden: true, key: true},
             {name: 'name', index: 'cname', width: 180}
         ],
-        treeIcons: {plus:'ui-icon-folder-collapsed', minus:'ui-icon-folder-open', leaf:'ui-icon-document'},
+        treeIcons: {plus: 'ui-icon-folder-collapsed', minus: 'ui-icon-folder-open', leaf: 'ui-icon-document'},
         autowidth: true,
-        height: "auto",         
+        height: "auto",
         sortname: 'id',
         treeGrid: true,
         treeGridModel: 'adjacency',
         ExpandColumn: 'name',
         ExpandColClick: true,
         onSelectRow: function (rowid) {
-            loadTable(rowid);
+            
+            table2.jqGrid("clearGridData", true);
+            let systreeRec = table1.getRowData(rowid);
+            for (i = 0; i < dataset.productList.length; i++) {
+                let productRec = dataset.productList[i];
+                if (systreeRec.id == productRec[2]) {
+                    table2.jqGrid('addRowData', i + 1, {
+                        id: productRec[0],
+                        name: productRec[1],
+                        script: productRec[2],
+                        parent: productRec[3]
+                    });
+                }
+            }
+            systree.resize();
         }
     });
-
     table2.jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
         autowidth: true,
-        height: "auto",         
+        height: "auto",
         colNames: ['id', 'Наименование', 'Рисунок', 'parent'],
         colModel: [
             {name: 'id', hidden: true},
@@ -51,8 +66,9 @@ systree.init_table = function (table1, table2) {
             {name: 'parent', hidden: true}]
     });
 }
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 systree.load_table = function (table) {
+    
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'systree?action=sysTree',
@@ -63,37 +79,11 @@ systree.load_table = function (table) {
                 records: systree.sysTree.length,
                 rows: systree.sysTree
             });
-//            systree.sysTree = data.sysTree;
-//            for (i = 0; i < systree.sysTree.length; i++) {
-//                let tr = systree.sysTree[i];
-//                table.jqGrid('addRowData', i + 1, {
-//                    id: tr.id,
-//                    name: tr.name
-//                });
-//            }
-            systree.resize();
+            
+            table.setSelection(1);
         }
     });
 }
-
-systree.load_table2 = function (table) {
-    table.jqGrid('clearGridData', true);
-    $.ajax({
-        url: 'systree?action=sysProd',
-        success: function (data) {
-            systree.sysProd = data.sysProd;
-            for (i = 0; i < systree.sysProd.length; i++) {
-                let tr = systree.sysProd[i];
-                table.jqGrid('addRowData', i + 1, {
-                    id: tr[0],
-                    name: tr[1],
-                    script: tr[2],
-                    parent: tr[3]
-                });
-            }
-            systree.resize();
-        }
-    });
-}
+//------------------------------------------------------------------------------
 
 

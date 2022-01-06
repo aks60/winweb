@@ -51,11 +51,11 @@ color.init_table = function (table1, table2) {
             table2.jqGrid("clearGridData", true);
             let colgrpRec = table1.getRowData(rowid);
             for (i = 0; i < dataset.colorList.length; i++) {
-                let tr = dataset.colorList[i];
-                if (colgrpRec.id == tr[2]) {
+                let colorRec = dataset.colorList[i];
+                if (colgrpRec.id == colorRec[2]) {
                     table2.jqGrid('addRowData', i + 1, {
-                        id: tr[0],
-                        name: tr[1]
+                        id: colorRec[0],
+                        name: colorRec[1]
                     });
                 }
             }
@@ -94,4 +94,4 @@ color.load_table = function (table1, table2) {
         }
     });
 };
-
+//------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-
+//------------------------------------------------------------------------------
 dataset.load_colorList = function () {
     $.ajax({
         url: 'color?action=colorList',
@@ -24,4 +24,13 @@ dataset.find_colorList = function (colgrp_id) {
         }
     }
     return list;
+}
+//------------------------------------------------------------------------------
+dataset.load_productList = function () {
+    $.ajax({
+        url: 'prod?action=prodList',
+        success: function (data) {
+            dataset.productList = data.prodList;
+        }
+    });
 }

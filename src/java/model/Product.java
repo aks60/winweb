@@ -20,7 +20,8 @@ public class Product {
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
                 eProprod.project_id, eProprod.systree_id).select(eProprod.up, "order by", eProprod.name);
         for (Record rec : qProprod) {
-            list.add(Arrays.asList(rec.get(eProject.id), 
+            list.add(Arrays.asList(
+                    rec.get(eProject.id), 
                     rec.get(eProprod.name), 
                     rec.get(eProprod.script),
                     rec.get(eProprod.project_id), 

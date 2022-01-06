@@ -21,15 +21,9 @@
             }).trigger('resize');
 
             systree.init_dialog($("#dialog-dic"));
-            systree.init_table1($("#tab1-dic"));
-            systree.load_table1($("#tab1-dic"));
-            systree.init_table2($("#tab2-dic"));
-            systree.load_table2($("#tab2-dic"));
+            systree.init_table($("#tab1-dic"), $("#tab2-dic");
+            systree.load_table($("#tab1-dic"), $("#tab2-dic");
         });
-
-        window.onload = function () {
-            alert('Страница загружена');
-        };
     </script> 
 </head> 
 <body> 
