@@ -15,17 +15,14 @@
         <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>                                
-        <script type="module" src="frm/builder/wincalc.js"></script>                            
-       
+        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>                                                                   
 
         <script type="text/javascript">
-            //глобальные данные
+            //Глобальные данные
             var winc = {dh_frame: 64, dh_cross: 80, naxl: 12};
-            var utils = {}, dataset = {}, login = {}, users = {}, order = {}, 
+            var utils = {}, dataset = {}, login = {}, users = {}, order = {},
                     product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
-
-            //глобальные настройки и параметры           
+            //Глобальные настройки и параметры           
             $(document).ready(function () {
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
@@ -33,6 +30,10 @@
 
             });
         </script> 
+        <script type="module" src="frm/builder/wincalc.js"></script>         
+        <script type="text/javascript" src="frm/builder/dataset.js"></script>
+        <script type="text/javascript"src="frm/utils.js"></script> 
+        
     </head>
     <body>
         <div id="mainmenu" style="display: none;"></div>
