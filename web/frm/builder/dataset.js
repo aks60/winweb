@@ -3,7 +3,7 @@ dataset.load_colorList = function () {
     $.ajax({
         url: 'color?action=colorList',
         success: function (data) {
-            
+            //let data2 = JSON.parse(data.colorList);
             dataset.colorList = data.colorList;
         }
     });
@@ -32,9 +32,10 @@ dataset.load_productList = function () {
     $.ajax({
         url: 'prod?action=prodList',
         success: function (data) {
+//            debugger;
+//            let data2 = JSON.parse(data.prodList);
+//            dataset.productList = data2;
             
-            dataset.productList = data.prodList;
-            //debugger;
         }
     });
 }
