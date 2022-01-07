@@ -18,7 +18,7 @@ order.init_table = function (table1, table2) {
         ],
         onSelectRow: function (rowid) {
             table2.jqGrid('clearGridData', true);
-            let systreeRec = table1.jqGrid('getRowData', rowid);            
+            let systreeRec = table1.jqGrid('getRowData', rowid);
             if (systreeRec != undefined) {
                 for (i = 0; i < dbset.productList.length; i++) {
                     let productRec = dbset.productList[i];
@@ -48,7 +48,10 @@ order.init_table = function (table1, table2) {
             {name: 'script', width: 220, sorttype: "text"},
             {name: 'project_id', hidden: true},
             {name: 'systree_id', hidden: true}
-        ]
+        ],
+        onSelectRow: function (rowid) {
+            order.sel_table2 = table2.getRowData(rowid);
+        }
     });
 }
 //------------------------------------------------------------------------------
