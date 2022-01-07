@@ -32,6 +32,10 @@
                 $(window).bind('resize', function () {
                     login.resize();
                 }).trigger('resize');
+
+                //Загрузка базы данных
+                dbset.load_colorList();
+                dbset.load_productList();
             });
 
 

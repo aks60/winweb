@@ -15,7 +15,6 @@ import model.sys.Att;
 import org.json.simple.JSONObject;
 
 public class Product {
- 
     public JSONObject prodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
 
@@ -31,5 +30,23 @@ public class Product {
         }       
         JSONObject output = new JSONObject(App.asMap("prodList", list));
         return output;        
+    }
+    
+    public JSONObject prodList2(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<JSONObject> list = new ArrayList();
+
+        Query qProprod = new Query(Att.att(request).connect(), eProprod.values()).select(eProprod.up);
+        for (Record rec : qProprod) {
+            JSONObject rec2 = new JSONObject(App.asMap(
+                    "id", rec.get(eProject.id),
+                    "name", rec.get(eProprod.name),
+                    "script", rec.get(eProprod.script),
+                    "project_id", rec.get(eProprod.project_id),
+                    "systree_id", rec.get(eProprod.systree_id)
+            ));
+            list.add(rec2);
+        }
+        JSONObject output = new JSONObject(App.asMap("prodList", list));
+        return output;
     }
 }

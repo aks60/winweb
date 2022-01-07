@@ -32,8 +32,6 @@
             });
 
             window.onload = function () {
-                dbset.load_productList();
-                dbset.load_colorList();
             };
         </script> 
         <script type="module" src="frm/builder/wincalc.js"></script>         

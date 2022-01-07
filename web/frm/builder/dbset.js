@@ -31,7 +31,6 @@ dbset.load_productList = function () {
         url: 'prod?action=prodList',
         success: function (data) {
             dbset.productList = data.prodList;  
-            debugger;
         }
     });
 }

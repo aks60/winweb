@@ -24,30 +24,13 @@
 
                 order.init_table($("#table1"), $("#table2"));
                 order.load_table($("#table1"), $("#table2"));
-                
-//                order.init_table2($("#table2"));
-//                $("#table1").jqGrid("setGridParam", {
-//                    onSelectRow: function (rowid, status) {
-//                        order.sel_table1 = $("#table1").getRowData(rowid);
-//                        order.load_table2($("#table2"));
-//                    }
-//                });
-//                $("#table2").jqGrid("setGridParam", {
-//                    onSelectRow: function (rowid, status) {
-//                        order.sel_table2 = $("#table2").getRowData(rowid);
-//                    }
-//                });
-//                order.resize();
-
-                order.test = function () {                   
-                }
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
-            <button onClick="">Кнопка2</button>
+            <button onClick="order.resize();">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
@@ -56,9 +39,9 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
-                        
+
                         <canvas id="cnv" style="border:2px solid black;" width="400" height="290"></canvas>
-                        
+
                     </div>
                     <div id="east3" style="height: 100%;">
                         <table id="table2"  class="ui-jqgrid-btable"></table>    
