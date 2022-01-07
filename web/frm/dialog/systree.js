@@ -38,8 +38,8 @@ systree.init_table = function (table1, table2) {
             
             table2.jqGrid("clearGridData", true);
             let systreeRec = table1.getRowData(rowid);
-            for (i = 0; i < dataset.productList.length; i++) {
-                let productRec = dataset.productList[i];
+            for (i = 0; i < dbset.productList.length; i++) {
+                let productRec = dbset.productList[i];
                 if (systreeRec.id == productRec[2]) {
                     table2.jqGrid('addRowData', i + 1, {
                         id: productRec[0],

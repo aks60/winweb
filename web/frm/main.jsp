@@ -21,7 +21,7 @@
             
             //Глобальные данные
             var winc = {dh_frame: 64, dh_cross: 80, naxl: 12};
-            var utils = {}, dataset = {}, login = {}, users = {}, order = {},
+            var utils = {}, dbset = {}, login = {}, users = {}, order = {},
                     product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
                       
             $(document).ready(function () {
@@ -32,12 +32,12 @@
             });
 
             window.onload = function () {
-                dataset.load_productList();
-                dataset.load_colorList();
+                dbset.load_productList();
+                dbset.load_colorList();
             };
         </script> 
         <script type="module" src="frm/builder/wincalc.js"></script>         
-        <script type="text/javascript" src="frm/builder/dataset.js"></script>
+        <script type="text/javascript" src="frm/builder/dbset.js"></script>
         <script type="text/javascript"src="frm/utils.js"></script> 
 
     </head>

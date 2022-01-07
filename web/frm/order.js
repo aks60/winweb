@@ -17,25 +17,25 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
-//            debugger;
-//            table2.jqGrid('clearGridData', true);
-//            let systreeRec = table1.jqGrid('getRowData', rowid);            
-//            if (systreeRec != undefined) {
-//                for (i = 0; i < dataset.productList.length; i++) {
-//                    let productRec = dataset.productList[i];
-//                    let script = productRec[2];
-//                    if (productRec[4] == systreeRec.id) {
-//                        table2.jqGrid('addRowData', i + 1, {
-//                            id: productRec[0],
-//                            name: productRec[1],
-//                            script: productRec[2],
-//                            project_id: productRec[3],
-//                            systree_id: productRec[4]
-//                        });
-//                    }
-//                }
-//                table2.jqGrid("setSelection", 1);
-//            }
+            debugger;
+            table2.jqGrid('clearGridData', true);
+            let systreeRec = table1.jqGrid('getRowData', rowid);            
+            if (systreeRec != undefined) {
+                for (i = 0; i < dbset.productList.length; i++) {
+                    let productRec = dbset.productList[i];
+                    let script = productRec[2];
+                    if (productRec[4] == systreeRec.id) {
+                        table2.jqGrid('addRowData', i + 1, {
+                            id: productRec[0],
+                            name: productRec[1],
+                            script: productRec[2],
+                            project_id: productRec[3],
+                            systree_id: productRec[4]
+                        });
+                    }
+                }
+                table2.jqGrid("setSelection", 1);
+            }
         }
     });
     table2.jqGrid({

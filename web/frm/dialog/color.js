@@ -50,8 +50,8 @@ color.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             table2.jqGrid("clearGridData", true);
             let colgrpRec = table1.getRowData(rowid);
-            for (i = 0; i < dataset.colorList.length; i++) {
-                let colorRec = dataset.colorList[i];
+            for (i = 0; i < dbset.colorList.length; i++) {
+                let colorRec = dbset.colorList[i];
                 if (colgrpRec.id == colorRec[2]) {
                     table2.jqGrid('addRowData', i + 1, {
                         id: colorRec[0],
