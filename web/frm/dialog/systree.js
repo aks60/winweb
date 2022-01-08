@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
-systree.init_dialog = function (tabtree) {
+systree.init_dialog = function (table1) {
     
-    tabtree.dialog({
+    table1.dialog({
         title: "Конструкции систем профилей",
         width: 600,
         height: 500,
@@ -37,10 +37,10 @@ systree.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             
             table2.jqGrid("clearGridData", true);
-            let systreeRec = table1.getRowData(rowid);
+            let systreeRec = table1.jqGrid("getRowData", rowid);
             for (i = 0; i < dbset.productList.length; i++) {
                 let productRec = dbset.productList[i];
-                if (systreeRec.id == productRec[2]) {
+                if (systreeRec.id == productRec[3]) {
                     table2.jqGrid('addRowData', i + 1, {
                         id: productRec[0],
                         name: productRec[1],
@@ -67,20 +67,20 @@ systree.init_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
-systree.load_table = function (table) {
+systree.load_table = function (table1, table2) {
     
-    table.jqGrid('clearGridData', true);
+    table1.jqGrid('clearGridData', true);
     $.ajax({
         url: 'systree?action=sysTree',
         success: function (data) {
             systree.sysTree = data.sysTree;
-            table[0].addJSONData({
+            table1[0].addJSONData({
                 total: 1, page: 1,
                 records: systree.sysTree.length,
                 rows: systree.sysTree
             });
             
-            table.setSelection(1);
+            table1.jqGrid("setSelection", 1);
         }
     });
 }

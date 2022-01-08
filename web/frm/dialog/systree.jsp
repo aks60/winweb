@@ -21,8 +21,8 @@
             }).trigger('resize');
 
             systree.init_dialog($("#dialog-dic"));
-            systree.init_table($("#tab1-dic"), $("#tab2-dic");
-            systree.load_table($("#tab1-dic"), $("#tab2-dic");
+            systree.init_table($("#tab1-dic"), $("#tab2-dic"));
+            systree.load_table($("#tab1-dic"), $("#tab2-dic"));
         });
     </script> 
 </head> 
