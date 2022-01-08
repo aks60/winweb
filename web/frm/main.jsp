@@ -15,15 +15,16 @@
         <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script>                                                                   
+        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
+        <script type="module" src="frm/builder/wincalc.js"></script> 
 
         <script type="text/javascript">
-            
+
             //Глобальные данные
             var winc = {dh_frame: 64, dh_cross: 80, naxl: 12};
             var utils = {}, dbset = {}, login = {}, users = {}, order = {},
                     product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
-                      
+
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
@@ -33,11 +34,8 @@
 
             window.onload = function () {
             };
-        </script> 
-        <script type="module" src="frm/builder/wincalc.js"></script>         
-        <script type="text/javascript" src="frm/builder/dbset.js"></script>
-        <script type="text/javascript"src="frm/utils.js"></script> 
-
+        </script>         
+        <script type="text/javascript"src="frm/utils.js"></script>
     </head>
     <body>
         <div id="mainmenu"></div>
@@ -45,8 +43,17 @@
         <div id="dialog-dic"</div> 
         <div id="dialog-mes"></div> 
 
-        <script type="text/javascript">
-            $("#outbody").load('frm/login.jsp');
+        <script type="module">
+            import {load_colorList, load_productList} from './frm/builder/dbset.js';
+            
+            $("#outbody").load('frm/login.jsp', function () { 
+                ++login.que_requests;
+                Promise.all([load_colorList(), load_productList()]).then(() => { //загрузка базы данных 
+                    login.init_login();
+                }).catch(() => {
+                    alert('Ошибка загрузки данных из бд');
+                })
+            });
         </script> 
     </body>
 </html>

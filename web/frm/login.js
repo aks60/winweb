@@ -19,6 +19,24 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
+login.que_requests = 0;
+
+login.init_login = function () {
+    --login.que_requests;
+    if (login.que_requests == 0 && login.data != undefined) {
+        if (login.data.result == 'true') {
+            if (login.data.role == 'RDB$ADMIN') {
+                $("#outbody").load('frm/users.jsp');
+            } else {
+                $("#mainmenu").load('frm/menu.jsp');
+                $("#outbody").load('frm/order.jsp');
+            }
+        } else {
+            alert(login.data.result);
+        }
+    }
+}
+
 //авторизация через логин-пароль
 login.user_connect = function () {
     //debugger;
@@ -30,26 +48,18 @@ login.user_connect = function () {
             return;
         }
     }
+    ++login.que_requests;
     $.ajax({
         url: 'login?action=userConnect',
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
-            //debugger;
-            if (data.result == 'true') {
-                if (data.role == 'RDB$ADMIN') {
-                    $("#outbody").load('frm/users.jsp');
-                } else {
-                    $("#mainmenu").load('frm/menu.jsp');
-                    $("#outbody").load('frm/order.jsp');
-                }
-            } else {
-                alert(data.result);
-            }
+            login.data = data;
+            login.init_login();
         },
         error: function () {
             alert('Ошибка авторизации пользователя');
         }
-    });    
+    });
 }
 
 //проверка корректности ввода учётной записи
