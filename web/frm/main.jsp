@@ -46,10 +46,12 @@
         <script type="module">
             import {load_colorList, load_productList} from './frm/builder/dbset.js';
             
-            $("#outbody").load('frm/login.jsp', function () { 
+            $("#outbody").load('frm/login.jsp', function () {
+                
                 ++login.que_requests;
                 Promise.all([load_colorList(), load_productList()]).then(() => { //загрузка базы данных 
                     login.init_login();
+                    
                 }).catch(() => {
                     alert('Ошибка загрузки данных из бд');
                 })
