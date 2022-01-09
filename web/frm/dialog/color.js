@@ -52,7 +52,7 @@ color.init_table = function (table1, table2) {
             let colgrpRec = table1.getRowData(rowid);
             for (i = 0; i < dbset.colorList.length; i++) {
                 let colorRec = dbset.colorList[i];
-                if (colgrpRec.id == colorRec[2]) {
+                if (colgrpRec.id == colorRec[3]) {
                     table2.jqGrid('addRowData', i + 1, {
                         id: colorRec[0],
                         name: colorRec[1]
@@ -80,7 +80,7 @@ color.load_table = function (table1, table2) {
 
     table1.jqGrid('clearGridData', true);
     $.ajax({
-        url: 'color?action=colorGroup',
+        url: 'dbset?action=colorGroup',
         success: function (data) {
             color.colorGroup = data.colorGroup;
             for (i = 0; i < color.colorGroup.length; i++) {

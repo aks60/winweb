@@ -3,7 +3,6 @@ package cont5r;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -11,10 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Color;
 import model.Systree;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 @WebServlet(name = "SystreeCont", urlPatterns = {"/systree"})
 public class SystreeCont extends HttpServlet {
@@ -45,6 +42,7 @@ public class SystreeCont extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
+            
             if (action.equalsIgnoreCase("sysTree")) {
                 Systree dic = new Systree();
                 JSONObject output = dic.sysTree(request, response);

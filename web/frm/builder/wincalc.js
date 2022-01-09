@@ -35,7 +35,8 @@ class Wincalc {
             this.ctx.translate(80, 0);
             this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = "rgb(0,0,0)";
-            this.RGB = "rgb(120,150,10)";
+            //this.RGB = "rgb(120,150,10)";
+            this.RGB = dbset.find_colorRec(1009)[2];
             let arr = new Array(); //массив элементов конструкции
             
             this.elements(this.root, obj, arr); //создадим элементы конструкции

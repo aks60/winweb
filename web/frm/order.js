@@ -33,7 +33,7 @@ order.init_table = function (table1, table2) {
                         });
                     }
                 }
-                table2.jqGrid("setSelection", 1);
+                table2.jqGrid("setSelection", 3);
             }
         }
     });
@@ -50,7 +50,7 @@ order.init_table = function (table1, table2) {
             {name: 'systree_id', hidden: true}
         ],
         onSelectRow: function (rowid) {
-            order.sel_table2 = table2.getRowData(rowid);
+            order.sel_table2 = table2.jqGrid('getRowData', rowid);
         }
     });
 }

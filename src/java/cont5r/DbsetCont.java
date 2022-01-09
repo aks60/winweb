@@ -7,12 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Color;
-import model.Product;
+import model.Dbset;
 import org.json.simple.JSONObject;
 
-@WebServlet(name = "ColorCont", urlPatterns = {"/color"})
-public class ColorCont extends HttpServlet {
+@WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
+public class DbsetCont extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
@@ -34,21 +33,28 @@ public class ColorCont extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
             if (action.equalsIgnoreCase("colorGroup")) {
-                Color dic = new Color();
-                JSONObject output = dic.colorGroup(request, response);
+                JSONObject output = Dbset.colorGroup(request, response);
                 out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("colorList")) {
-                Color dic = new Color();
-                JSONObject output = dic.colorList(request, response);
+                JSONObject output = Dbset.colorList(request, response);
                 out.write(JSONObject.toJSONString(output));
-            } 
+
+            } else if (action.equalsIgnoreCase("artdetList")) {
+                JSONObject output = Dbset.artdetList(request, response);
+                out.write(JSONObject.toJSONString(output));
+
+            } else if (action.equalsIgnoreCase("prodList")) {
+                JSONObject output = Dbset.prodList(request, response);
+                out.write(JSONObject.toJSONString(output));
+
+            }
         }
     }
 }

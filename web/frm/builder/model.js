@@ -10,15 +10,11 @@ export class Com5t {
         this.layout = layout;//напрвление расположения
         this.type = type;//тип элемента
 
-        this.rgb1 = 16767411;//основная текстура
-        this.rgb2 = 16767411;//внутренняя текстура
-        this.rgb3 = 16767411;//внешняя текстура  
+        this.rgb = iwin.RGB;//основная текстура 
     }
 
-    color(rgb1, rgb2, rgb3) {
-        this.rgb1 = rgb1;
-        this.rgb2 = rgb2;
-        this.rgb3 = rgb3;
+    color(rgb) {
+        this.rgb = rgb;
     }
 
     dimension(x1, y1, x2, y2) {
@@ -162,7 +158,7 @@ export class Glass extends Com5t {
 
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
-        this.color(16776432, 16776432, 16776432);
+        this.color(16776432);
     }
 
     paint() {
