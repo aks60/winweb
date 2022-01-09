@@ -25,7 +25,8 @@ class Wincalc {
             this.form = obj.form;            //форма конструкции
             this.width = obj.width;          //ширина окна, мм
             this.height = obj.height;        //высота окна, мм 
-            this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.                
+            this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
+            
             this.root = new Root(obj.id, null, this, obj.layout, obj.type, obj.width, obj.height); //главное окно
 
             this.ctx.save();

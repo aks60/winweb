@@ -114,7 +114,7 @@ export class Cross extends Com5t {
         super(id, owner, iwin, layout, type);
     }
 
-    static draw(ctx, owner) {
+    paint() {
 
     }
 }
