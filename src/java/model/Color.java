@@ -4,10 +4,11 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import domain.eGroups;
+import domain.eProject;
+import domain.eProprod;
 import enums.TypeGroups;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,5 +43,5 @@ public class Color {
         }
         JSONObject output = new JSONObject(App.asMap("colorList", list));
         return output;
-    }
+    }   
 }

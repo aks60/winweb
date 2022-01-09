@@ -2,15 +2,14 @@ package cont5r;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Color;
+import model.Product;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 @WebServlet(name = "ColorCont", urlPatterns = {"/color"})
 public class ColorCont extends HttpServlet {
@@ -49,8 +48,7 @@ public class ColorCont extends HttpServlet {
                 Color dic = new Color();
                 JSONObject output = dic.colorList(request, response);
                 out.write(JSONObject.toJSONString(output));
-
-            }
+            } 
         }
     }
 }

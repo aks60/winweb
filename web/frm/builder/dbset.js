@@ -4,6 +4,7 @@ export function load_colorList() {
         url: 'color?action=colorList',
         success: function (data) {
             dbset.colorList = data.colorList;
+            //debugger;
         }
     });
 }
@@ -13,6 +14,8 @@ export function load_productList() {
         url: 'prod?action=prodList',
         success: function (data) {
             dbset.productList = data.prodList;
+            //debugger;
         }
     });
 }
+//------------------------------------------------------------------------------

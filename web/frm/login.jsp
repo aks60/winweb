@@ -3,6 +3,7 @@
 <html>
     <head>        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript"src="frm/utils.js"></script>
         <script type="text/javascript" src="frm/login.js"></script>
         <title>Login</title>
 
@@ -39,7 +40,7 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-//            login.user_connect();            
+            login.user_connect();            
         </script>         
     </head>
     <body>

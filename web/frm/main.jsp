@@ -16,7 +16,7 @@
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
-        <script type="module" src="frm/builder/wincalc.js"></script> 
+        <script type="module" src="frm/builder/wincalc.js"></script>         
 
         <script type="text/javascript">
 
@@ -32,10 +32,8 @@
                 $('button').button();
             });
 
-            window.onload = function () {
-            };
+            window.onload = function () { };
         </script>         
-        <script type="text/javascript"src="frm/utils.js"></script>
     </head>
     <body>
         <div id="mainmenu"></div>
@@ -45,16 +43,15 @@
 
         <script type="module">
             import {load_colorList, load_productList} from './frm/builder/dbset.js';
-            
-            $("#outbody").load('frm/login.jsp', function () {
-                
+
+            $("#outbody").load('frm/login.jsp', function () {                
                 ++login.que_requests;
                 Promise.all([load_colorList(), load_productList()]).then(() => { //загрузка базы данных 
-                    login.init_login();
-                    
-                }).catch(() => {
+                  login.init_login();
+
+               }).catch(() => {
                     alert('Ошибка загрузки данных из бд');
-                })
+               })
             });
         </script> 
     </body>

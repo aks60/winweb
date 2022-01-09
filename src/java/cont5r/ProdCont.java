@@ -2,8 +2,6 @@ package cont5r;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Product;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 @WebServlet(name = "ProdCont", urlPatterns = {"/prod"})
 public class ProdCont extends HttpServlet {
@@ -37,11 +34,12 @@ public class ProdCont extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
             if (action.equalsIgnoreCase("prodList")) {
+       
                 Product product = new Product();
                 JSONObject output = product.prodList(request, response);
                 out.write(JSONObject.toJSONString(output));
