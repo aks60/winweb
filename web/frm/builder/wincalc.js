@@ -84,25 +84,3 @@ class Wincalc {
         //} catch (e) {  alert('Ошибка: ' + e.message);  }
     }
 }
-
-
-/*
- //Возможно пригодится!!!
- recursion(el, type, arr) {
- try {
- for (let key in el) {
- let val = el[key];
- if ((val instanceof Object) == false) {
- if (val == type) {
- arr.push(el);
- //console.log(key + ": " + val);
- }
- } else {
- this.recursion(val, type, arr);
- }
- }
- } catch (e) {
- console.error('Ошибка: ' + e.message);
- }
- }
- */
