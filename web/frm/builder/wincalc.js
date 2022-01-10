@@ -1,6 +1,7 @@
 
 import {draw_elements} from './drawing.js';
 import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
+import {SYS, CGR, COL, ART, ADET, PROD} from './dbset.js';
 
 winc.build = function (canvasTag) {
     new Wincalc(canvasTag).parse();
@@ -35,8 +36,7 @@ class Wincalc {
             this.ctx.translate(80, 0);
             this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = "rgb(0,0,0)";
-            //this.RGB = "rgb(120,150,10)";
-            this.RGB = dbset.find_rec(1009, dbset.colorList)[2];
+            this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COL.rgb].toString(16);
             let arr = new Array(); //массив элементов конструкции
             
             this.elements(this.root, obj, arr); //создадим элементы конструкции
@@ -44,7 +44,7 @@ class Wincalc {
             draw_elements(this, arr); //рисуем конструкцию
             this.ctx.restore();
         }
-        //} catch (e) { console.error('Ошибка: ' + e.message); }
+        //} catch (e) { alert('Ошибка: ' + e.message); }
     }
 
     elements(owner, obj, arr) {
@@ -81,7 +81,7 @@ class Wincalc {
         for (let k of hm.keys()) {
             this.elements(k, hm.get(k), arr);
         }
-        //} catch (e) {  console.error('Ошибка: ' + e.message);  }
+        //} catch (e) {  alert('Ошибка: ' + e.message);  }
     }
 }
 

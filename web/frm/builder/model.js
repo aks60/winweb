@@ -11,7 +11,7 @@ export class Com5t {
         this.layout = layout;//напрвление расположения
         this.type = type;//тип элемента
 
-        this.rgb = iwin.RGB;//основная текстура 
+        this.rgb = iwin.RGB;
     }
 
     dimension(x1, y1, x2, y2) {
@@ -139,13 +139,13 @@ export class Frame extends Com5t {
         let dh = winc.dh_frame;
         if (this.iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
-                draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb1);
+                draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
             } else if ("RIGHT" == this.layout) {
-                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1 + dh, this.y1, this.y2, this.y2 - dh, this.rgb1);
+                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1 + dh, this.y1, this.y2, this.y2 - dh, this.rgb);
             } else if ("TOP" == this.layout) {
-                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.rgb1);
+                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.rgb);
             } else if ("LEFT" == this.layout) {
-                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh, this.y2 - dh, this.y2, this.rgb1);
+                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh, this.y2 - dh, this.y2, this.rgb);
             }
         }
     }
@@ -156,23 +156,22 @@ export class Glass extends Com5t {
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
         let artdetRec = null;
-  //debugger;
+
         if (param != undefined && param.artglasID != undefined) {
             artdetRec = find2_rec(ADET.artikl_id, param.artglasID, dbset.artdetList);
         } else {
             let treeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
             for (let i = 0; i < dbset.artiklList.length; i++) {
                 if (treeRec[SYS.glas] == dbset.artiklList[i][ART.code]) {
-                    artiklRec = dbset.artiklList[i];
-                    artdetRec = find2_rec(ADET.artikl_id, artiklRec[ART.id], dbset.artdetList);
+                    let artiklRec = dbset.artiklList[i];
+                    artdetRec = dbset.find2_rec(ADET.artikl_id, artiklRec[ART.id], dbset.artdetList);
                     break;
                 }
             }
         }
         let color_fk = artdetRec[ADET.color_fk];
         let colorRec = dbset.find_rec(color_fk, dbset.colorList);
-        this.rgb = colorRec[COL.rgb]; 
-        let hexString = this.rgb.toString(16);
+        this.rgb = '#' + colorRec[COL.rgb].toString(16);           
     }
 
     paint() {
