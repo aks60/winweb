@@ -161,14 +161,19 @@ export class Glass extends Com5t {
 
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
+        let artiklRec = null;
         if(param != undefined && param.artglasID != undefined) {
-            let artdetRec = find_rec(param.artglasID, dbset.artdetList);
-            let color_fk = artiklRec[1];
-            let colorRec = dbset.find_rec(color_fk, dbset.colorList);
-            this.rgb = colorRec[1];
+            artdetRec = find_rec(param.artglasID, dbset.artdetList);
         } else {
-            
-        }    
+            let sysreeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
+            for (let i = 0; i < dbset.artdetList.length; i++) {
+                
+            }
+        }
+            //let color_fk = artiklRec[1];
+            //let colorRec = dbset.find_rec(color_fk, dbset.colorList);
+            //this.rgb = colorRec[1];        
+        
     }
 
     paint() {

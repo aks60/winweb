@@ -38,7 +38,7 @@ public class DbsetCont extends HttpServlet {
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
-            if (action.equalsIgnoreCase("treeMap")) {
+            if (action.equalsIgnoreCase("treeList")) {
                 JSONObject output = Dbset.treeList(request, response);
                 out.write(JSONObject.toJSONString(output));
 

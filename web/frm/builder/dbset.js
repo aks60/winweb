@@ -1,3 +1,10 @@
+//------------------------------ENUM--------------------------------------------
+export const SYS = {id:0, glas:1, parent_id:2};
+export const CGR = {id:0, name:1};
+export const COL = {id:0, name:1, rgb:2, colgrp_id:3};
+export const ART = {id:0, name:1, code:2, height:3};
+export const ADET = {id:0, color_fk:1, artikl_id:2};
+export const PROD = {id:0, name:1, script:2, project_id:3, systree_id:4};
 //------------------------------------------------------------------------------
 dbset.find_rec = function (id, ds) {
     for (i = 0; i < ds.length; i++) {
@@ -11,17 +18,10 @@ export function load_treeList() {
     $.ajax({
         url: 'dbset?action=treeList',
         success: function (data) {
-            dbset.treeList = data.treeList;
+            dbset.treeList = data.treeList;          
         }
     });
 }
-//dbset.find_treeRec = function (id) {
-//    for (i = 0; i < dbset.treeList.length; i++) {
-//        if (id == dbset.treeList[i][0]) {
-//            return dbset.treeList[i];
-//        }
-//    }
-//}
 //------------------------------------------------------------------------------
 export function load_colorList() {
     $.ajax({
@@ -31,13 +31,6 @@ export function load_colorList() {
         }
     });
 }
-//dbset.find_colorRec = function (id) {
-//    for (i = 0; i < dbset.colorList.length; i++) {
-//        if (id == dbset.colorList[i][0]) {
-//            return dbset.colorList[i];
-//        }
-//    }
-//}
 dbset.find_colorList = function (colgrp_id) {
     let list = new Array();
     for (i = 0; i < dbset.colorList.length; i++) {
@@ -56,29 +49,15 @@ export function load_artiklList() {
         }
     });
 }
-//dbset.find_artiklRec = function (id) {
-//    for (i = 0; i < dbset.artiklList.length; i++) {
-//        if (id == dbset.artiklList[i][0]) {
-//            return dbset.artiklList[i];
-//        }
-//    }
-//}
 //------------------------------------------------------------------------------
 export function load_artdetList() {
     $.ajax({
-        url: 'dbset?action=artdetlList',
+        url: 'dbset?action=artdetList',
         success: function (data) {
-            dbset.artdetList = data.artdetList;
+            dbset.artdetList = data.artdetList; 
         }
     });
 }
-//dbset.find_artdetRec = function (id) {
-//    for (i = 0; i < dbset.artdetList.length; i++) {
-//        if (id == dbset.artdetList[i][0]) {
-//            return dbset.artdetList[i];
-//        }
-//    }
-//}
 //------------------------------------------------------------------------------
 export function load_productList() {
     $.ajax({

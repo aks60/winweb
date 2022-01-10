@@ -46,8 +46,7 @@
 
             $("#outbody").load('frm/login.jsp', function () {                
                 ++login.que_requests;
-                Promise.all([load_treeList, load_colorList(), load_artiklList(), load_artdetList(), 
-                    load_productList()]).then(() => { //загрузка базы данных 
+                Promise.all([load_treeList(), load_colorList(), load_artiklList(), load_artdetList(), load_productList()]).then(() => { //загрузка базы данных 
                   login.init_login();
 
                }).catch(() => {
