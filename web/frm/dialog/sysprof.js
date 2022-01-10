@@ -23,7 +23,7 @@ sysprof.init_table1 = function(table) {
         height: "auto",         
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
         colModel: [
-            {name: 'id', hidden: true},
+            {name: 'id', hidden: true, key: true},
             {name: 'use_side', width: 60, sorttype: "text"},
             {name: 'artikl_id', width: 80, sorttype: "text"},
             {name: 'artikl_id', width: 200, sorttype: "text"}

@@ -60,7 +60,7 @@ systree.init_table = function (table1, table2) {
         height: "auto",
         colNames: ['id', 'Наименование', 'Рисунок', 'parent'],
         colModel: [
-            {name: 'id', hidden: true},
+            {name: 'id', hidden: true, key: true},
             {name: 'name', width: 80},
             {name: 'script', width: 80},
             {name: 'parent', hidden: true}]

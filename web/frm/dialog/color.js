@@ -44,7 +44,7 @@ color.init_table = function (table1, table2) {
         datatype: "local",
         colNames: ['id', 'Группы текстур'],
         colModel: [
-            {name: 'id', hidden: true},
+            {name: 'id', hidden: true, key: true},
             {name: 'name', width: 180}
         ],
         onSelectRow: function (rowid) {
@@ -67,7 +67,7 @@ color.init_table = function (table1, table2) {
         datatype: "local",    
         colNames: ['Код', 'Описание текстур'],
         colModel: [
-            {name: 'id', width: 80},
+            {name: 'id', width: 80, key: true},
             {name: 'name', width: 180}
         ],
         ondblClickRow: function (rowId) {

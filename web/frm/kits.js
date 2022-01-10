@@ -8,7 +8,7 @@ kits.init_table1 = function (table) {
         colNames: ['id', 'Артикул', 'Название', 'Основная',
             'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во', 'Угол1', 'Угол2'],
         colModel: [
-            {name: 'id', hidden: true},
+            {name: 'id', hidden: true, key: true},
             {name: 'artikl_id', width: 80, sorttype: "text"},
             {name: 'artikl_id', width: 200, sorttype: "text"},
             {name: 'color1_id', width: 80, sorttype: "text"},

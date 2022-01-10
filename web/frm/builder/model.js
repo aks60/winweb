@@ -156,7 +156,7 @@ export class Glass extends Com5t {
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
         let artdetRec = null;
-  debugger;
+  //debugger;
         if (param != undefined && param.artglasID != undefined) {
             artdetRec = find2_rec(ADET.artikl_id, param.artglasID, dbset.artdetList);
         } else {

@@ -7,7 +7,7 @@ product.init_table1 = function (table) {
             height: "auto",            
             colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
             colModel: [
-                {name: 'id', hidden: true},
+                {name: 'id', hidden: true, key: true},
                 {name: 'name', width: 120, sorttype: "text"},
                 {name: 'scripl', width: 120, sorttype: "text"},
                 {name: 'project_id', hidden: true},

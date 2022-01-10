@@ -30,7 +30,7 @@ users.init_table1 = function (table) {
         height: "auto",
         colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
         colModel: [
-            {name: 'id', hidden: true},
+            {name: 'id', hidden: true, key: true},
             {name: 'fio', width: 98, sorttype: "text"},
             {name: 'desc', width: 200, sorttype: "text"},
             {name: 'login', width: 40, sorttype: "text"},
