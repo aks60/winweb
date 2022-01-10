@@ -13,6 +13,22 @@ dbset.find_rec = function (id, ds) {
         }
     }
 }
+dbset.find2_rec = function (key, val, ds) {
+    for (i = 0; i < ds.length; i++) {
+        if (val == ds[i][key]) {
+            return ds[i];
+        }
+    }
+}
+dbset.find_list = function (id, ds, fk) {
+    let list = new Array();
+    for (i = 0; i < ds.length; i++) {
+        if (id == ds[i][fk]) {
+            list.push(ds[i]);
+        }
+    }
+    return list;
+}
 //------------------------------------------------------------------------------
 export function load_treeList() {
     $.ajax({
@@ -30,15 +46,6 @@ export function load_colorList() {
             dbset.colorList = data.colorList;
         }
     });
-}
-dbset.find_colorList = function (colgrp_id) {
-    let list = new Array();
-    for (i = 0; i < dbset.colorList.length; i++) {
-        if (colgrp_id == dbset.colorList[i][3]) {
-            list.push(dbset.colorList[i]);
-        }
-    }
-    return list;
 }
 //------------------------------------------------------------------------------
 export function load_artiklList() {

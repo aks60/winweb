@@ -1,12 +1,6 @@
 
 import {draw_stroke_polygon, draw_full_polygon} from './drawing.js';
-//------------------------------ENUM--------------------------------------------
-// eSystree.id, eSystree.glas, eSystree.parent_id
-// eGroups.id eGroups.name
-// eColor.id eColor.name eColor.rgb eColor.colgrp_id
-// eArtikl.id eArtikl.name eArtikl.code eArtikl.height
-// eArtdet.id eArtdet.color_fk eArtdet.artikl_id
-// eProject.id eProprod.name eProprod.script eProprod.project_id eProprod.systree_id
+import {SYS, CGR, COL, ART, ADET, PROD} from './dbset.js';
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -161,25 +155,30 @@ export class Glass extends Com5t {
 
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
-        let artiklRec = null;
-        if(param != undefined && param.artglasID != undefined) {
-            artdetRec = find_rec(param.artglasID, dbset.artdetList);
+        let artdetRec = null;
+  debugger;
+        if (param != undefined && param.artglasID != undefined) {
+            artdetRec = find2_rec(ADET.artikl_id, param.artglasID, dbset.artdetList);
         } else {
-            let sysreeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
-            for (let i = 0; i < dbset.artdetList.length; i++) {
-                
+            let treeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
+            for (let i = 0; i < dbset.artiklList.length; i++) {
+                if (treeRec[SYS.glas] == dbset.artiklList[i][ART.code]) {
+                    artiklRec = dbset.artiklList[i];
+                    artdetRec = find2_rec(ADET.artikl_id, artiklRec[ART.id], dbset.artdetList);
+                    break;
+                }
             }
         }
-            //let color_fk = artiklRec[1];
-            //let colorRec = dbset.find_rec(color_fk, dbset.colorList);
-            //this.rgb = colorRec[1];        
-        
+        let color_fk = artdetRec[ADET.color_fk];
+        let colorRec = dbset.find_rec(color_fk, dbset.colorList);
+        this.rgb = colorRec[COL.rgb]; 
+        let hexString = this.rgb.toString(16);
     }
 
     paint() {
         if (this.iwin.root.type == "RECTANGL") {
             draw_full_polygon(this.iwin, this.owner.x1, this.owner.x2, this.owner.x2,
-                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb1);
+                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb);
         }
     }
 }

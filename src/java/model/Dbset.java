@@ -24,12 +24,12 @@ public class Dbset {
     
     public static JSONObject treeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id)
-                .select(eSystree.up, "where", eSystree.id, "=", eSystree.parent_id);
+        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
             list.add(Arrays.asList(
                     rec.get(eSystree.id),
-                    rec.get(eSystree.name)));
+                    rec.get(eSystree.glas),
+                    rec.get(eSystree.parent_id)));
         }
         JSONObject output = new JSONObject(App.asMap("treeList", list));
         return output;
