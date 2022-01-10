@@ -8,9 +8,11 @@ import domain.eColor;
 import domain.eGroups;
 import domain.eProject;
 import domain.eProprod;
+import domain.eSystree;
 import enums.TypeGroups;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,19 @@ import model.sys.Att;
 import org.json.simple.JSONObject;
 
 public class Dbset {
+    
+    public static JSONObject treeList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id)
+                .select(eSystree.up, "where", eSystree.id, "=", eSystree.parent_id);
+        for (Record rec : qSystree) {
+            list.add(Arrays.asList(
+                    rec.get(eSystree.id),
+                    rec.get(eSystree.name)));
+        }
+        JSONObject output = new JSONObject(App.asMap("treeList", list));
+        return output;
+    }
 
     public static JSONObject colorGroup(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();

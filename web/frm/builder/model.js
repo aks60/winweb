@@ -1,5 +1,12 @@
 
 import {draw_stroke_polygon, draw_full_polygon} from './drawing.js';
+//------------------------------ENUM--------------------------------------------
+// eSystree.id, eSystree.glas, eSystree.parent_id
+// eGroups.id eGroups.name
+// eColor.id eColor.name eColor.rgb eColor.colgrp_id
+// eArtikl.id eArtikl.name eArtikl.code eArtikl.height
+// eArtdet.id eArtdet.color_fk eArtdet.artikl_id
+// eProject.id eProprod.name eProprod.script eProprod.project_id eProprod.systree_id
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -11,10 +18,6 @@ export class Com5t {
         this.type = type;//тип элемента
 
         this.rgb = iwin.RGB;//основная текстура 
-    }
-
-    color(rgb) {
-        this.rgb = rgb;
     }
 
     dimension(x1, y1, x2, y2) {
@@ -158,7 +161,14 @@ export class Glass extends Com5t {
 
     constructor(id, owner, iwin, layout, type, param) {
         super(id, owner, iwin, layout, type);
-        this.color(16776432);
+        if(param != undefined && param.artglasID != undefined) {
+            let artdetRec = find_rec(param.artglasID, dbset.artdetList);
+            let color_fk = artiklRec[1];
+            let colorRec = dbset.find_rec(color_fk, dbset.colorList);
+            this.rgb = colorRec[1];
+        } else {
+            
+        }    
     }
 
     paint() {

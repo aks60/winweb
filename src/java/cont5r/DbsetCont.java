@@ -38,7 +38,11 @@ public class DbsetCont extends HttpServlet {
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
-            if (action.equalsIgnoreCase("colorGroup")) {
+            if (action.equalsIgnoreCase("treeMap")) {
+                JSONObject output = Dbset.treeList(request, response);
+                out.write(JSONObject.toJSONString(output));
+
+            } else if (action.equalsIgnoreCase("colorGroup")) {
                 JSONObject output = Dbset.colorGroup(request, response);
                 out.write(JSONObject.toJSONString(output));
 

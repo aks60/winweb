@@ -42,11 +42,11 @@
         <div id="dialog-mes"></div> 
 
         <script type="module">
-            import {load_colorList, load_artiklList, load_artdetList, load_productList} from './frm/builder/dbset.js';
+            import {load_treeList, load_colorList, load_artiklList, load_artdetList, load_productList} from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
                 ++login.que_requests;
-                Promise.all([load_colorList(), load_artiklList(), load_artdetList(), 
+                Promise.all([load_treeList, load_colorList(), load_artiklList(), load_artdetList(), 
                     load_productList()]).then(() => { //загрузка базы данных 
                   login.init_login();
 
