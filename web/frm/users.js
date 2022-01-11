@@ -45,6 +45,7 @@ users.load_table1 = function (table) {
         url: 'users?action=userList',
         beforeSend: function () {},
         success: function (data) {
+            debugger;
             users.userList = data.userList;
             for (i = 1; i < users.userList.length; i++) {
                 let tr = users.userList[i];

@@ -1,6 +1,18 @@
 
+export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
+
+    let ctx = iwin.ctx;
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+
 export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
-    
+
     let ctx = iwin.ctx;
     ctx.fillStyle = rgb;
     ctx.beginPath();
@@ -14,7 +26,7 @@ export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
 }
 
 export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
-    
+
     let ctx = iwin.ctx;
     ctx.fillStyle = rgb;
     ctx.beginPath();
@@ -28,14 +40,24 @@ export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
 //Рисуем конструкцию
 export function draw_elements(iwin, arr) {
-    try {
+    //try {
+        iwin.ctx.save();
+        
+        let obj = iwin.obj, cnv = iwin.cnv, ctx = iwin.ctx;        
+        ctx.fillStyle = '#ffffff';
+        ctx.clearRect(0, 0, cnv.width, cnv.height);
+
+        //Настроим контекст
+        let scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
+        ctx.scale(scale, scale);
+        ctx.translate(80, 0);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "rgb(0,0,0)";
+
         //Прорисовка стеклопакетов
         let glass = arr.filter((v, i, arr) => v.type == "GLASS");
         glass.forEach((v, k, map) => v.paint());
-
-//        LinkedList < ElemGlass > elemGlassList = UCom.listSortObj(iwin.listSortEl, Type.GLASS);
-//        elemGlassList.stream().forEach(el - > el.paint());
-//        
+        
 //        //Прорисовка импостов
 //        LinkedList < ElemCross > elemImpostList = UCom.listSortObj(iwin.listSortEl, Type.IMPOST);
 //        elemImpostList.stream().forEach(el - > el.paint());
@@ -55,7 +77,8 @@ export function draw_elements(iwin, arr) {
         let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
         stv.forEach((v, k, map) => v.paint());
 
-    } catch (e) {
-        console.error('Ошибка: ' + e.message);
-    }
+        ctx.restore();
+//    } catch (e) {
+//        console.error('Ошибка: ' + e.message);
+//    }
 }

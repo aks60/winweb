@@ -1,6 +1,6 @@
 
-import {draw_stroke_polygon, draw_full_polygon} from './drawing.js';
-import {SYS, CGR, COL, ART, ADET, PROD} from './dbset.js';
+import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
+import {SYS, CGR, COL, ART, ADET, PROD, SFUR} from './dbset.js';
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -91,6 +91,20 @@ export class Stvorka extends Area {
         this.frames.set("RIGHT", new Frame(id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", param));
         this.frames.set("TOP", new Frame(id + '.3', this, iwin, "TOP", "STVORKA_SIDE", param));
         this.frames.set("LEFT", new Frame(id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", param));
+
+let mmm = param.sysfurnID;
+        //Фурнитура створки, ручка, подвес
+        if (param != undefined && param.sysfurnID != undefined) {
+            this.sysfurn = dbset.find_rec(param.sysfurnID, dbset.sysfurnList);
+        } else {
+            this.sysfurn = dbset.find2_rec(SFUR.systree_id, iwin.nuni, dbset.sysfurnList);
+        }
+        //Сторона открывания
+        if (param != undefined && param.typeOpen != undefined) {
+            this.typeOpen = param.typeOpen;
+        } else {
+            this.typeOpen = (this.sysfurn[SFUR.side_open] == 1) ? 1 : 2;
+        }
     }
 
     paint() {
@@ -98,6 +112,15 @@ export class Stvorka extends Area {
         this.frames.get("RIGHT").paint();
         this.frames.get("TOP").paint();
         this.frames.get("LEFT").paint();
+
+        if (this.typeOpen == 1 || this.typeOpen == 3) {
+            draw_line(this.iwin, this.x1, this.y1, this.x2, this.y1 + (this.y2 - this.y1) / 2);
+            draw_line(this.iwin, this.x1, this.y2, this.x2, this.y1 + (this.y2 - this.y1) / 2);
+
+        } else if (this.typeOpen == 2 || this.typeOpen == 4) {
+            draw_line(this.iwin, this.x2, this.y1, this.x1, this.y1 + (this.y2 - this.y1) / 2);
+            draw_line(this.iwin, this.x2, this.y2, this.x1, this.y1 + (this.y2 - this.y1) / 2);
+        }
     }
 }
 //------------------------------------------------------------------------------
@@ -171,7 +194,7 @@ export class Glass extends Com5t {
         }
         let color_fk = artdetRec[ADET.color_fk];
         let colorRec = dbset.find_rec(color_fk, dbset.colorList);
-        this.rgb = '#' + colorRec[COL.rgb].toString(16);           
+        this.rgb = '#' + colorRec[COL.rgb].toString(16);
     }
 
     paint() {

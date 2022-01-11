@@ -11,35 +11,29 @@
 	"color2": 10009,
 	"color3": 1009,
 	"id": 0.0,
-	"childs": [
-		{
+	"childs": [{
 			"id": 1.0,
 			"childs": [],
 			"layout": "LEFT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 2.0,
 			"childs": [],
 			"layout": "RIGHT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 3.0,
 			"childs": [],
 			"layout": "TOP",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 4.0,
 			"childs": [],
 			"layout": "BOTT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 5.0,
-			"childs": [
-				{
+			"childs": [{
 					"id": 6.0,
 					"childs": [],
 					"type": "GLASS"
@@ -47,7 +41,7 @@
 			],
 			"layout": "VERT",
 			"type": "STVORKA",
-			"param": "{'typeOpen':1, 'sysfurnID':1634}"
+			"param": "{typeOpen:1, sysfurnID:1634}"
 		}
 	],
 	"layout": "VERT",

@@ -8,11 +8,11 @@ import domain.eColor;
 import domain.eGroups;
 import domain.eProject;
 import domain.eProprod;
+import domain.eSysfurn;
 import domain.eSystree;
 import enums.TypeGroups;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ import model.sys.Att;
 import org.json.simple.JSONObject;
 
 public class Dbset {
-    
+
     public static JSONObject treeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id).select(eSystree.up);
@@ -50,7 +50,7 @@ public class Dbset {
 
     public static JSONObject colorList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qColor = new Query(Att.att(request).connect(), 
+        Query qColor = new Query(Att.att(request).connect(),
                 eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
         for (Record rec : qColor) {
             list.add(Arrays.asList(
@@ -65,7 +65,7 @@ public class Dbset {
 
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id, 
+        Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id,
                 eArtikl.name, eArtikl.code, eArtikl.height).select(eArtikl.up);
         for (Record rec : qArtikl) {
             list.add(Arrays.asList(
@@ -81,7 +81,7 @@ public class Dbset {
     public static JSONObject artdetList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qArtdet = new Query(Att.att(request).connect(), eArtdet.id,
-                 eArtdet.color_fk, eArtdet.artikl_id).select(eArtdet.up);
+                eArtdet.color_fk, eArtdet.artikl_id).select(eArtdet.up);
         for (Record rec : qArtdet) {
             list.add(Arrays.asList(
                     rec.get(eArtdet.id),
@@ -108,4 +108,17 @@ public class Dbset {
         return output;
     }
 
+    public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.systree_id)
+                .select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
+        for (Record rec : qSysfurn) {
+            list.add(Arrays.asList(
+                    rec.get(eSysfurn.id),
+                    rec.get(eSysfurn.side_open),
+                    rec.get(eSysfurn.systree_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
+        return output;
+    }
 }

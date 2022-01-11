@@ -10,6 +10,7 @@ winc.build = function (canvasTag) {
 class Wincalc {
 
     constructor(canvasTag) {
+        this.cnv = canvasTag;
         this.ctx = canvasTag.getContext('2d');
     }
 
@@ -27,22 +28,14 @@ class Wincalc {
             this.width = obj.width;          //ширина окна, мм
             this.height = obj.height;        //высота окна, мм 
             this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
+            this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COL.rgb].toString(16);
             
             this.root = new Root(obj.id, null, this, obj.layout, obj.type, obj.width, obj.height); //главное окно
 
-            this.ctx.save();
-            let scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
-            this.ctx.scale(scale, scale);
-            this.ctx.translate(80, 0);
-            this.ctx.lineWidth = 5;
-            this.ctx.strokeStyle = "rgb(0,0,0)";
-            this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COL.rgb].toString(16);
-            let arr = new Array(); //массив элементов конструкции
-            
+            let arr = new Array(); //массив элементов конструкции            
             this.elements(this.root, obj, arr); //создадим элементы конструкции
             arr.sort((a, b) => a.id - b.id);
-            draw_elements(this, arr); //рисуем конструкцию
-            this.ctx.restore();
+            draw_elements(this, arr); //рисуем конструкцию            
         }
         //} catch (e) { alert('Ошибка: ' + e.message); }
     }

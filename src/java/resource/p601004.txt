@@ -11,35 +11,29 @@
 	"color2": 1009,
 	"color3": 1009,
 	"id": 0.0,
-	"childs": [
-		{
+	"childs": [{
 			"id": 1.0,
 			"childs": [],
 			"layout": "LEFT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 2.0,
 			"childs": [],
 			"layout": "RIGHT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 3.0,
 			"childs": [],
 			"layout": "TOP",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 4.0,
 			"childs": [],
 			"layout": "BOTT",
 			"type": "FRAME_SIDE"
-		},
-		{
+		}, {
 			"id": 5.0,
-			"childs": [
-				{
+			"childs": [{
 					"id": 6.0,
 					"childs": [],
 					"type": "GLASS"
@@ -48,22 +42,17 @@
 			"layout": "HORIZ",
 			"type": "AREA",
 			"length": 400.0
-		},
-		{
+		}, {
 			"id": 7.0,
 			"childs": [],
 			"type": "IMPOST"
-		},
-		{
+		}, {
 			"id": 8.0,
-			"childs": [
-				{
+			"childs": [{
 					"id": 9.0,
-					"childs": [
-						{
+					"childs": [{
 							"id": 10.0,
-							"childs": [
-								{
+							"childs": [{
 									"id": 11.0,
 									"childs": [],
 									"type": "GLASS"
@@ -71,26 +60,22 @@
 							],
 							"layout": "VERT",
 							"type": "STVORKA",
-							"param": "{'typeOpen':1, 'sysfurnID':1634}",
+							"param": "{typeOpen:1, sysfurnID:1634}",
 							"length": 720.0
 						}
 					],
 					"layout": "VERT",
 					"type": "AREA",
 					"length": 720.0
-				},
-				{
+				}, {
 					"id": 12.0,
 					"childs": [],
 					"type": "IMPOST"
-				},
-				{
+				}, {
 					"id": 13.0,
-					"childs": [
-						{
+					"childs": [{
 							"id": 14.0,
-							"childs": [
-								{
+							"childs": [{
 									"id": 15.0,
 									"childs": [],
 									"type": "GLASS"
@@ -98,7 +83,7 @@
 							],
 							"layout": "VERT",
 							"type": "STVORKA",
-							"param": "{'typeOpen':4, 'sysfurnID':1633}",
+							"param": "{typeOpen:4, sysfurnID:1633}",
 							"length": 720.0
 						}
 					],
