@@ -16,6 +16,17 @@
                 $("#table2").jqGrid('setGridHeight', $("#east3").height() - 28);
             }
 
+            function test() {
+                $.ajax({
+                    url: 'dbset?action=testList',
+                    success: function (data) {
+                        debugger;
+                        let obj1 = data.param;
+                        let obj2 = obj1.typeOpen;
+                        let obj3 = obj1.sysfurnID;
+                    }
+                });
+            }
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
@@ -30,7 +41,7 @@
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
-            <button onClick="dbset.load_test();">Кнопка2</button>
+            <button onClick="test();">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

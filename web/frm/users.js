@@ -43,11 +43,9 @@ users.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'users?action=userList',
-        beforeSend: function () {},
         success: function (data) {
-            debugger;
             users.userList = data.userList;
-            for (i = 1; i < users.userList.length; i++) {
+            for (i = 0; i < users.userList.length; i++) {
                 let tr = users.userList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[0],

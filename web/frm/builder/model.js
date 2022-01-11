@@ -1,4 +1,4 @@
-
+//------------------------------------------------------------------------------
 import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
 import {SYS, CGR, COL, ART, ADET, PROD, SFUR} from './dbset.js';
 //------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(id + '.3', this, iwin, "TOP", "STVORKA_SIDE", param));
         this.frames.set("LEFT", new Frame(id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", param));
 
-let mmm = param.sysfurnID;
+        param = JSON.parse(param);
         //Фурнитура створки, ручка, подвес
         if (param != undefined && param.sysfurnID != undefined) {
             this.sysfurn = dbset.find_rec(param.sysfurnID, dbset.sysfurnList);
@@ -108,18 +108,35 @@ let mmm = param.sysfurnID;
     }
 
     paint() {
-        this.frames.get("BOTT").paint();
-        this.frames.get("RIGHT").paint();
-        this.frames.get("TOP").paint();
-        this.frames.get("LEFT").paint();
+        let DX = 20, DY = 60, X1 = 0, Y1 = 0;
+        let elemB = this.frames.get("BOTT");
+        let elemR = this.frames.get("RIGHT");
+        let elemT = this.frames.get("TOP");
+        let elemL = this.frames.get("LEFT");
+        elemB.paint();
+        elemR.paint();
+        elemT.paint();
+        elemL.paint();
 
         if (this.typeOpen == 1 || this.typeOpen == 3) {
-            draw_line(this.iwin, this.x1, this.y1, this.x2, this.y1 + (this.y2 - this.y1) / 2);
-            draw_line(this.iwin, this.x1, this.y2, this.x2, this.y1 + (this.y2 - this.y1) / 2);
+            X1 = elemR.x1 + (elemR.x2 - elemR.x1) / 2;
+            Y1 = elemR.y1 + (elemR.y2 - elemR.y1) / 2;
+            draw_line(this.iwin, elemL.x1, elemL.y1, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
+            draw_line(this.iwin, elemL.x1, elemL.y2, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
 
         } else if (this.typeOpen == 2 || this.typeOpen == 4) {
-            draw_line(this.iwin, this.x2, this.y1, this.x1, this.y1 + (this.y2 - this.y1) / 2);
-            draw_line(this.iwin, this.x2, this.y2, this.x1, this.y1 + (this.y2 - this.y1) / 2);
+            X1 = elemL.x1 + (elemL.x2 - elemL.x1) / 2;
+            Y1 = elemL.y1 + (elemL.y2 - elemL.y1) / 2;
+            draw_line(this.iwin, elemR.x2, elemR.y1, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
+            draw_line(this.iwin, elemR.x2, elemR.y2, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
+        }
+
+        if (this.iwin.root.type == "DOOR") {
+
+        } else {
+            draw_stroke_polygon(this.iwin, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, "#FFFFFFFF");
+            DX = DX - 12;
+            Y1 = Y1 + 20;
         }
     }
 }

@@ -37,7 +37,7 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
-                    <div id="west2" style="height: 108px">
+                    <div id="west2" style="height: 112px">
                         <button type="button" onClick="onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
                         <button type="button" onClick="onpage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
                         <button type="button" onClick="onpage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
