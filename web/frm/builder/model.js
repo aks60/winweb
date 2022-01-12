@@ -92,7 +92,6 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(id + '.3', this, iwin, "TOP", "STVORKA_SIDE", param));
         this.frames.set("LEFT", new Frame(id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", param));
 
-        param = JSON.parse(param);
         //Фурнитура створки, ручка, подвес
         if (param != undefined && param.sysfurnID != undefined) {
             this.sysfurn = dbset.find_rec(param.sysfurnID, dbset.sysfurnList);
