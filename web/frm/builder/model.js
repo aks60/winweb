@@ -12,8 +12,16 @@ export class Com5t {
         this.iwin = iwin;//главный класс калькуляции   
         this.layout = obj.layout;//напрвление расположения
         this.type = obj.type;//тип элемента
-
         this.rgb = iwin.RGB;
+
+        if (obj.type == "STVORKA_SIDE" && "BOTT" == obj.layout)
+            this.id = obj.id + ".1";
+        else if (obj.type == "STVORKA_SIDE" && "RIGHT" == obj.layout)
+            this.id = obj.id + ".2";
+        else if (obj.type == "STVORKA_SIDE" && "TOP" == obj.layout)
+            this.id = obj.id + ".3";
+        else if (obj.type == "STVORKA_SIDE" && "BOTT" == obj.layout)
+            this.id = obj.id + ".4";
     }
 
     dimension(x1, y1, x2, y2) {
@@ -96,10 +104,15 @@ export class Stvorka extends Area {
 
         this.frames = new Map(); //рамы конструкции 
 
-        this.frames.set("BOTT", new Frame(this.id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", obj.param));
-        this.frames.set("RIGHT", new Frame(this.id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", obj.param));
-        this.frames.set("TOP", new Frame(this.id + '.3', this, iwin, "TOP", "STVORKA_SIDE", obj.param));
-        this.frames.set("LEFT", new Frame(this.id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", obj.param));
+        this.frames.set("BOTT", new Frame(obj, this, iwin));
+        this.frames.set("RIGHT", new Frame(obj, this, iwin));
+        this.frames.set("TOP", new Frame(obj, this, iwin));
+        this.frames.set("LEFT", new Frame(obj, this, iwin));
+        
+//        this.frames.set("BOTT", new Frame(this.id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", obj.param));
+//        this.frames.set("RIGHT", new Frame(this.id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", obj.param));
+//        this.frames.set("TOP", new Frame(this.id + '.3', this, iwin, "TOP", "STVORKA_SIDE", obj.param));
+//        this.frames.set("LEFT", new Frame(this.id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", obj.param));
 
         //Фурнитура створки, ручка, подвес
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
