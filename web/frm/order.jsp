@@ -17,15 +17,16 @@
             }
 
             function test() {
-                $.ajax({
-                    url: 'dbset?action=testList',
-                    success: function (data) {
-                        debugger;
-                        let obj1 = data.param;
-                        let obj2 = obj1.typeOpen;
-                        let obj3 = obj1.sysfurnID;
-                    }
-                });
+                $("#table2").jqGrid("setSelection", 1);
+//                $.ajax({
+//                    url: 'dbset?action=testList',
+//                    success: function (data) {
+//                        debugger;
+//                        let obj1 = data.param;
+//                        let obj2 = obj1.typeOpen;
+//                        let obj3 = obj1.sysfurnID;
+//                    }
+//                });
             }
 
             $(document).ready(function () {

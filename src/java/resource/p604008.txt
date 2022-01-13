@@ -60,7 +60,10 @@
 							],
 							"layout": "VERT",
 							"type": "STVORKA",
-							"param": "{typeOpen:3, sysfurnID:-1}",
+							"param": {
+								"typeOpen": 3,
+								"sysfurnID": -1
+							},
 							"length": 650.0
 						}
 					],
@@ -83,7 +86,10 @@
 							],
 							"layout": "VERT",
 							"type": "STVORKA",
-							"param": "{typeOpen:3, sysfurnID:-1}",
+							"param": {
+								"typeOpen": 3,
+								"sysfurnID": -1
+							},
 							"length": 650.0
 						}
 					],

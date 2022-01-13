@@ -41,7 +41,10 @@
 			],
 			"layout": "VERT",
 			"type": "STVORKA",
-			"param": "{typeOpen:1, sysfurnID:1634}"
+			"param": {
+				"typeOpen": 1,
+				"sysfurnID": 1634
+			}
 		}
 	],
 	"layout": "VERT",
