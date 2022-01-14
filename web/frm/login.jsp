@@ -45,7 +45,7 @@
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций*</h6> 
+            <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций</h6> 
         </div>
         <div id = "context">
             <div id="midl" style="position: relative; margin: 0 200px 0 200px; height: 100%;">

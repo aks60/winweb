@@ -108,7 +108,7 @@ export class Stvorka extends Area {
         this.frames.set("RIGHT", new Frame(obj, this, iwin));
         this.frames.set("TOP", new Frame(obj, this, iwin));
         this.frames.set("LEFT", new Frame(obj, this, iwin));
-        
+
 //        this.frames.set("BOTT", new Frame(this.id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", obj.param));
 //        this.frames.set("RIGHT", new Frame(this.id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", obj.param));
 //        this.frames.set("TOP", new Frame(this.id + '.3', this, iwin, "TOP", "STVORKA_SIDE", obj.param));
@@ -218,6 +218,9 @@ export class Frame extends Com5t {
         super(obj, owner, iwin);
 //        super(id, owner, iwin, layout, type);
 
+        if (owner.type == "STVORKA") {
+            let mmm = 10;
+        }
         let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
         let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
         let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
@@ -237,7 +240,7 @@ export class Frame extends Com5t {
     }
 
     paint() {
-        debugger;
+        //debugger;
         let dh = winc.dh_frame;
         if (this.iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
