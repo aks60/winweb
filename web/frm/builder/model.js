@@ -5,7 +5,6 @@ import {SYS, CGR, COL, ART, ADET, PROD, SFUR} from './dbset.js';
 export class Com5t {
 
     constructor(obj, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type) {
         this.obj = obj;
         this.id = obj.id;//идентификатор 
         this.owner = owner;//владелец
@@ -13,15 +12,6 @@ export class Com5t {
         this.layout = obj.layout;//напрвление расположения
         this.type = obj.type;//тип элемента
         this.rgb = iwin.RGB;
-
-        if (obj.type == "STVORKA_SIDE" && "BOTT" == obj.layout)
-            this.id = obj.id + ".1";
-        else if (obj.type == "STVORKA_SIDE" && "RIGHT" == obj.layout)
-            this.id = obj.id + ".2";
-        else if (obj.type == "STVORKA_SIDE" && "TOP" == obj.layout)
-            this.id = obj.id + ".3";
-        else if (obj.type == "STVORKA_SIDE" && "BOTT" == obj.layout)
-            this.id = obj.id + ".4";
     }
 
     dimension(x1, y1, x2, y2) {
@@ -42,17 +32,14 @@ export class Com5t {
 export class Area extends Com5t {
 
     constructor(obj, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type, width, height) {
         super(obj, owner, iwin);
-//        super(id, owner, iwin, layout, type);
-        //debugger;
 
         this.childs = new Array(0); //список детей 
-        if (owner == null) {
+        if (owner == null || owner == iwin.root) {
             this.dimension(0, 0, iwin.width, iwin.height);
         } else {
             let height = (obj.layout == "VERT") ? obj.length : owner.height();
-            let width = (obj.layout == "HORIZ") ? obj.length : owner.width();
+            let width  = (obj.layout == "HORIZ") ? obj.length : owner.width();
 
             if (this.childs.length == 0) {
                 if (owner.layout == "VERT") { //сверху вниз
@@ -87,9 +74,7 @@ export class Area extends Com5t {
 export class Root extends Area {
 
     constructor(obj, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type, width, height) {
         super(obj, owner, iwin);
-//        super(id, owner, iwin, layout, type, width, height);
 
         this.frames = new Map(); //рамы конструкции 
     }
@@ -98,21 +83,14 @@ export class Root extends Area {
 export class Stvorka extends Area {
 
     constructor(obj, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type, param) {
         super(obj, owner, iwin);
-//        super(id, owner, iwin, layout, type, owner.width(), owner.height());
 
         this.frames = new Map(); //рамы конструкции 
 
-        this.frames.set("BOTT", new Frame(obj, this, iwin));
-        this.frames.set("RIGHT", new Frame(obj, this, iwin));
-        this.frames.set("TOP", new Frame(obj, this, iwin));
-        this.frames.set("LEFT", new Frame(obj, this, iwin));
-
-//        this.frames.set("BOTT", new Frame(this.id + '.1', this, iwin, "BOTT", "STVORKA_SIDE", obj.param));
-//        this.frames.set("RIGHT", new Frame(this.id + '.2', this, iwin, "RIGHT", "STVORKA_SIDE", obj.param));
-//        this.frames.set("TOP", new Frame(this.id + '.3', this, iwin, "TOP", "STVORKA_SIDE", obj.param));
-//        this.frames.set("LEFT", new Frame(this.id + '.4', this, iwin, "LEFT", "STVORKA_SIDE", obj.param));
+        this.frames.set("BOTT", new Frame(obj, this, iwin, this.id + '.1', "BOTT", "STVORKA_SIDE"));
+        this.frames.set("RIGHT", new Frame(obj, this, iwin, this.id + '.2', "RIGHT", "STVORKA_SIDE"));
+        this.frames.set("TOP", new Frame(obj, this, iwin, this.id + '.3', "TOP", "STVORKA_SIDE"));
+        this.frames.set("LEFT", new Frame(obj, this, iwin, this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
         //Фурнитура створки, ручка, подвес
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
@@ -165,22 +143,12 @@ export class Stvorka extends Area {
 export class Cross extends Com5t {
 
     constructor(id, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type, param) {
         super(obj, owner, iwin);
-//        super(id, owner, iwin, layout, type);
-        //debugger; 
+
         if ("ARCH" == owner.type && owner.childs.length == 1) {
-            //AreaSimple prevArea = (AreaSimple) owner.childs.get(0);
-            //prevArea.setDimension(prevArea.x1, prevArea.y1, prevArea.x2, prevArea.y2 + artiklRec.getFloat(eArtikl.height) / 2);
 
         } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
-            //AreaSimple prevArea = (AreaSimple) owner.childs.get(0);
-            //float dy = 0;
-            //if(iwin.form == Form.NUM2) {
-            //   float angl = root.frames.get(Layout.RIGHT).anglCut[1];
-            //   dy = (float) (root.frames.get(Layout.RIGHT).artiklRec.getDbl(eArtikl.height) * Math.tan(Math.toRadians((double) (90 - angl))));
-            //}
-            //prevArea.setDimension(prevArea.x1, prevArea.y1, prevArea.x2, prevArea.y2 + artiklRec.getFloat(eArtikl.size_centr) + dy);
+
         }
         for (let index = owner.childs.length - 1; index >= 0; --index) {
             if (owner.childs[index] instanceof Area) {
@@ -201,7 +169,6 @@ export class Cross extends Com5t {
     }
 
     paint() {
-        //let rgb = eColor.find(colorID2).getInt(eColor.rgb);
         if (Layout.VERT == owner.layout) {
             draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
 
@@ -213,13 +180,13 @@ export class Cross extends Com5t {
 //-----------------------------------FRAME--------------------------------------
 export class Frame extends Com5t {
 
-    constructor(obj, owner, iwin) {
-//    constructor(id, owner, iwin, layout, type, param) {
+    constructor(obj, owner, iwin, id, layout, type) {
         super(obj, owner, iwin);
-//        super(id, owner, iwin, layout, type);
 
-        if (owner.type == "STVORKA") {
-            let mmm = 10;
+        if (id != undefined) {
+            this.id = id;
+            this.layout = layout;
+            this.type = type;
         }
         let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
         let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
@@ -240,7 +207,6 @@ export class Frame extends Com5t {
     }
 
     paint() {
-        //debugger;
         let dh = winc.dh_frame;
         if (this.iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
@@ -258,12 +224,12 @@ export class Frame extends Com5t {
 //------------------------------GLASS-------------------------------------------
 export class Glass extends Com5t {
 
-    constructor(id, owner, iwin, layout, type, param) {
-        super(id, owner, iwin, layout, type);
+    constructor(obj, owner, iwin) {
+        super(obj, owner, iwin);
+        
         let artdetRec = null;
-
-        if (param != undefined && param.artglasID != undefined) {
-            artdetRec = find2_rec(ADET.artikl_id, param.artglasID, dbset.artdetList);
+        if (obj.param != undefined && obj.param.artglasID != undefined) {
+            artdetRec = find2_rec(ADET.artikl_id, obj.param.artglasID, dbset.artdetList);
         } else {
             let treeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
             for (let i = 0; i < dbset.artiklList.length; i++) {

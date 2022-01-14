@@ -48,29 +48,25 @@ class Wincalc {
 
             if (ob2.type == "FRAME_SIDE") {
                 owner.frames.set(ob2.layout, new Frame(ob2, owner, this));
-//                owner.frames.set(ob2.layout, new Frame(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param));
+                
             } else if (ob2.type == "STVORKA") {
                 let stv = new Stvorka(ob2, owner, this);
-//                let stv = new Stvorka(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(stv);
                 hm.set(stv, ob2);
                 arr.push(stv);
 
             } else if (ob2.type == "AREA") {
                 let area = new Area(ob2, owner, this);
-//                let area = new Area(ob2.id, owner, this, ob2.layout, ob2.type, ob2.width, ob2.height);
                 owner.childs.push(area);
                 hm.set(area, ob2);
 
             } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
                 let cross = new Cross(ob2, owner, this);
-//                let cross = new Cross(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(cross);
                 arr.push(cross);
 
             } else if (ob2.type == "GLASS") {
                 let glass = new Glass(ob2, owner, this);
-//                let glass = new Glass(ob2.id, owner, this, ob2.layout, ob2.type, ob2.param);
                 owner.childs.push(glass);
                 arr.push(glass);
             }
