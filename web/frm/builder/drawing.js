@@ -58,10 +58,10 @@ export function draw_elements(iwin, arr) {
         let glass = arr.filter((v, i, arr) => v.type == "GLASS");
         glass.forEach((v, k, map) => v.paint());
         
-//        //Прорисовка импостов
-//        LinkedList < ElemCross > elemImpostList = UCom.listSortObj(iwin.listSortEl, Type.IMPOST);
-//        elemImpostList.stream().forEach(el - > el.paint());
-//        
+        //Прорисовка импостов
+        let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
+        cross.forEach((v, k, map) => v.paint());
+        
 //        //Прорисовка штульпов
 //        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(iwin.listSortEl, Type.SHTULP);
 //        elemShtulpList.stream().forEach(el - > el.paint());

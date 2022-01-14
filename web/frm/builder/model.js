@@ -33,15 +33,16 @@ export class Area extends Com5t {
 
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
-
         this.childs = new Array(0); //список детей 
-        if (owner == null || owner == iwin.root) {
+        
+        if (obj.length == undefined && (owner == null || owner == iwin.root))  {
             this.dimension(0, 0, iwin.width, iwin.height);
+            
         } else {
-            let height = (obj.layout == "VERT") ? obj.length : owner.height();
-            let width  = (obj.layout == "HORIZ") ? obj.length : owner.width();
+            let height = (owner.layout == "VERT") ? obj.length : owner.height();
+            let width  = (owner.layout == "HORIZ") ? obj.length : owner.width();
 
-            if (this.childs.length == 0) {
+            if (owner.childs.length == 0) {
                 if (owner.layout == "VERT") { //сверху вниз
                     let Y2 = (owner.y1 + height > owner.y2) ? owner.y2 : owner.y1 + height;
                     this.dimension(owner.x1, owner.y1, owner.x2, Y2);
@@ -52,12 +53,12 @@ export class Area extends Com5t {
                 }
             } else {
                 for (let index = owner.childs.length - 1; index >= 0; --index) { //т.к. this area ёщё не создана начнём с конца
-                    if (owner.childs[ndex] instanceof Area) {
+                    if (owner.childs[index] instanceof Area) {
                         let prevArea = owner.childs[index];
 
                         if (owner.layout == "VERT") { //сверху вниз                            
                             let Y2 = (prevArea.y2 + height > owner.y2) ? owner.y2 : prevArea.y2 + height;
-                            this.dimension(owner.x1, prevArea.y2, owner.x2, Y2);
+                            this.dimension(owner.x1, prevArea.y2 + winc.dh_cross / 2, owner.x2, Y2);
 
                         } else if (owner.layout == "HORIZ") { //слева направо
                             let X2 = (prevArea.x2 + width > owner.x2) ? owner.x2 : prevArea.x2 + width;
@@ -85,6 +86,7 @@ export class Stvorka extends Area {
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
 
+        this.dimension(owner.x1 + 40, owner.y1 + 40, owner.x2 - 40, owner.y2 - 40);
         this.frames = new Map(); //рамы конструкции 
 
         this.frames.set("BOTT", new Frame(obj, this, iwin, this.id + '.1', "BOTT", "STVORKA_SIDE"));
@@ -142,7 +144,7 @@ export class Stvorka extends Area {
 //------------------------------CROSS-------------------------------------------
 export class Cross extends Com5t {
 
-    constructor(id, owner, iwin) {
+    constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
 
         if ("ARCH" == owner.type && owner.childs.length == 1) {
@@ -153,7 +155,7 @@ export class Cross extends Com5t {
         for (let index = owner.childs.length - 1; index >= 0; --index) {
             if (owner.childs[index] instanceof Area) {
                 let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
-                let db = winc.dh_cross;
+                let db = winc.dh_cross / 2;
 
                 if ("VERT" == owner.layout) { //сверху вниз
                     this.dimension(prevArea.x1, prevArea.y2 - db, prevArea.x2, prevArea.y2 + db);
@@ -169,10 +171,10 @@ export class Cross extends Com5t {
     }
 
     paint() {
-        if (Layout.VERT == owner.layout) {
+        if ("VERT" == this.owner.layout) {
             draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
 
-        } else if (Layout.HORIZ == owner.layout) {
+        } else if ("HORIZ" == this.owner.layout) {
             draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
         }
     }
@@ -188,20 +190,20 @@ export class Frame extends Com5t {
             this.layout = layout;
             this.type = type;
         }
-        let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
-        let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
-        let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
-        let y2 = (owner.type != "STVORKA") ? owner.y2 : (owner.y2 - winc.dh_frame) + winc.naxl;
+//        let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
+//        let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
+//        let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
+//        let y2 = (owner.type != "STVORKA") ? owner.y2 : (owner.y2 - winc.dh_frame) + winc.naxl;
 
         if (iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
-                this.dimension(x1, y2 - winc.dh_frame, x2, y2);
+                this.dimension(owner.x1, owner.y2 - winc.dh_frame, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
-                this.dimension(x2 - winc.dh_frame, y1, x2, y2);
+                this.dimension(owner.x2 - winc.dh_frame, owner.y1, owner.x2, owner.y2);
             } else if ("TOP" == this.layout) {
-                this.dimension(x1, y1, x2, y1 + winc.dh_frame);
+                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frame);
             } else if ("LEFT" == this.layout) {
-                this.dimension(x1, y1, x1 + winc.dh_frame, y2);
+                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frame, owner.y2);
             }
         }
     }
