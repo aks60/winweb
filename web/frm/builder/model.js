@@ -135,44 +135,6 @@ export class Stvorka extends Area {
             return (this.x1 - win.root.x1 > 200) ? winc.dh_cross : winc.dh_frame;
     }
 
-    joinFlat(layoutSide) {
-        let begin = false;
-        try {
-            let ar2 = arr.filter(el => (el.type == "IMPOST" || el.type == "SHTULP" || el.type == "STOIKA"));
-            for (let index = ar2.length - 1; index >= 0; --index) {
-                let el = ar2.get(index);
-                if (begin == true) {
-                    if ("BOTT" == layoutSide && el.layout != "VERT") {
-                        let Y2 = (this.y2 > this.y1) ? this.y2 : this.y1;
-                        if (el.inside(this.x1 + (this.x2 - this.x1) / 2, Y2) == true) {
-                            return el;
-                        }
-                    } else if ("LEFT" == layoutSide && el.layout != "HORIZ") {
-                        if (el.inside(this.x1, this.y1 + (this.y2 - this.y1) / 2) == true) {
-                            return el;
-                        }
-                    } else if ("TOP" == layoutSide && el.layout != "VERT") {
-                        let Y1 = (this.y2 > this.y1) ? this.y1 : this.y2;
-                        if (el.inside(this.x1 + (this.x2 - this.x1) / 2, Y1) == true && (el.owner.type == Type.ARCH && el.layout == Layout.TOP) == false) {
-                            return el;
-                        }
-                    } else if ("RIGHT" == layoutSide && el.layout != "HORIZ") {
-                        if (el.inside(this.x2, this.y1 + (this.y2 - this.y1) / 2)) {
-                            return el;
-                        }
-                    }
-                }
-                if (this == el) {
-                    begin = true;
-                }
-            }
-            return null;
-
-        } catch (e) {
-            alert('Ошибка: ' + e.message);
-        }
-    }
-
     paint() {
         let DX = 20, DY = 60, X1 = 0, Y1 = 0;
         let elemB = this.frames.get("BOTT");

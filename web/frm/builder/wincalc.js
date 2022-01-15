@@ -31,7 +31,6 @@ class Wincalc {
             this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COL.rgb].toString(16);
           
             this.root = new Root(obj, null, this); //главное окно
-//            this.root = new Root(obj.id, null, this, obj.layout, obj.type, obj.width, obj.height); //главное окно
 
             let arr = new Array(); //массив элементов конструкции            
             this.elements(this.root, obj, arr); //создадим элементы конструкции
