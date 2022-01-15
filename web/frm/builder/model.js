@@ -24,8 +24,20 @@ export class Com5t {
     width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
+
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
+    }
+
+    //Точка попадает в контур элемента
+    inside(X, Y) {
+        if ((this.x2 | this.y2) < 0) {
+            return false;
+        }
+        if (X < this.x1 || Y < this.y1) {
+            return false;
+        }
+        return ((this.x2 >= X) && (this.y2 >= Y));
     }
 }
 //-------------------------AREA-------------------------------------------------
@@ -34,13 +46,13 @@ export class Area extends Com5t {
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
         this.childs = new Array(0); //список детей 
-        
-        if (obj.length == undefined && (owner == null || owner == iwin.root))  {
+
+        if (obj.length == undefined && (owner == null || owner == iwin.root)) {
             this.dimension(0, 0, iwin.width, iwin.height);
-            
+
         } else {
             let height = (owner.layout == "VERT") ? obj.length : owner.height();
-            let width  = (owner.layout == "HORIZ") ? obj.length : owner.width();
+            let width = (owner.layout == "HORIZ") ? obj.length : owner.width();
 
             if (owner.childs.length == 0) {
                 if (owner.layout == "VERT") { //сверху вниз
@@ -85,9 +97,12 @@ export class Stvorka extends Area {
 
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
+        this.frames = new Map(); //рамы конструкции 
+
+        let joinLef = this.joinFlat("LEFT"), joinTop = this.joinFlat("TOP"),
+                joinBot = this.joinFlat("BOTT"), joinRig = this.joinFlat("RIGHT");
 
         this.dimension(owner.x1 + 40, owner.y1 + 40, owner.x2 - 40, owner.y2 - 40);
-        this.frames = new Map(); //рамы конструкции 
 
         this.frames.set("BOTT", new Frame(obj, this, iwin, this.id + '.1', "BOTT", "STVORKA_SIDE"));
         this.frames.set("RIGHT", new Frame(obj, this, iwin, this.id + '.2', "RIGHT", "STVORKA_SIDE"));
@@ -105,6 +120,56 @@ export class Stvorka extends Area {
             this.typeOpen = obj.param.typeOpen;
         } else {
             this.typeOpen = (this.sysfurn[SFUR.side_open] == 1) ? 1 : 2;
+        }
+    }
+
+    //Нахлёст
+    mrgin(side) {
+        if ("BOTT" == side)
+            return (iwin.root.y2 - this.y2 > 200) ? winc.dh_cross : winc.dh_frame;
+        else if ("RIGHT" == side)
+            return (iwin.root.x2 - this.x2 > 200) ? winc.dh_cross : winc.dh_frame;
+        else if ("TOP" == side)
+            return (this.y1 - iwin.root.y1 > 200) ? winc.dh_cross : winc.dh_frame;
+        else if ("LEFT" == side)
+            return (this.x1 - win.root.x1 > 200) ? winc.dh_cross : winc.dh_frame;
+    }
+
+    joinFlat(layoutSide) {
+        let begin = false;
+        try {
+            let ar2 = arr.filter(el => (el.type == "IMPOST" || el.type == "SHTULP" || el.type == "STOIKA"));
+            for (let index = ar2.length - 1; index >= 0; --index) {
+                let el = ar2.get(index);
+                if (begin == true) {
+                    if ("BOTT" == layoutSide && el.layout != "VERT") {
+                        let Y2 = (this.y2 > this.y1) ? this.y2 : this.y1;
+                        if (el.inside(this.x1 + (this.x2 - this.x1) / 2, Y2) == true) {
+                            return el;
+                        }
+                    } else if ("LEFT" == layoutSide && el.layout != "HORIZ") {
+                        if (el.inside(this.x1, this.y1 + (this.y2 - this.y1) / 2) == true) {
+                            return el;
+                        }
+                    } else if ("TOP" == layoutSide && el.layout != "VERT") {
+                        let Y1 = (this.y2 > this.y1) ? this.y1 : this.y2;
+                        if (el.inside(this.x1 + (this.x2 - this.x1) / 2, Y1) == true && (el.owner.type == Type.ARCH && el.layout == Layout.TOP) == false) {
+                            return el;
+                        }
+                    } else if ("RIGHT" == layoutSide && el.layout != "HORIZ") {
+                        if (el.inside(this.x2, this.y1 + (this.y2 - this.y1) / 2)) {
+                            return el;
+                        }
+                    }
+                }
+                if (this == el) {
+                    begin = true;
+                }
+            }
+            return null;
+
+        } catch (e) {
+            alert('Ошибка: ' + e.message);
         }
     }
 
@@ -228,7 +293,7 @@ export class Glass extends Com5t {
 
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
-        
+
         let artdetRec = null;
         if (obj.param != undefined && obj.param.artglasID != undefined) {
             artdetRec = find2_rec(ADET.artikl_id, obj.param.artglasID, dbset.artdetList);
