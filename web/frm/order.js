@@ -33,7 +33,7 @@ order.init_table = function (table1, table2) {
                         });
                     }
                 }
-                table2.jqGrid("setSelection", 2);
+                table2.jqGrid("setSelection", 3);
             }
         }
     });

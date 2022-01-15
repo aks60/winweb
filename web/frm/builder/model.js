@@ -213,7 +213,18 @@ export class Frame extends Com5t {
             this.type = type;
         }
 
-        if (iwin.root.type == "RECTANGL") {
+        if (owner.type == "ARCH") {
+            if ("TOP" == this.layout) {
+                //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frm);            
+            } else if ("BOTT" == this.layout) {
+                this.dimension(owner.x1, owner.y2 - winc.dh_frm, owner.x2, owner.y2);
+            } else if ("RIGHT" == this.layout) {
+                this.dimension(owner.x2 - winc.dh_frm, owner.y1, owner.x2, owner.y2);
+            } else if ("LEFT" == this.layout) {
+                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frm, owner.y2);
+            }
+
+        } else {
             if ("BOTT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - winc.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
@@ -228,7 +239,18 @@ export class Frame extends Com5t {
 
     paint() {
         let dh = winc.dh_frm;
-        if (this.iwin.root.type == "RECTANGL") {
+        if (this.owner.type == "ARCH") {
+            let Y1 = this.iwin.height - this.iwin.heightAdd;
+            if ("TOP" == this.layout) {
+                //draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.rgb);
+            } else if ("BOTT" == this.layout) {
+                draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
+            } else if ("RIGHT" == this.layout) {
+                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2, this.y2 - dh, this.rgb);
+            } else if ("LEFT" == this.layout) {
+                draw_stroke_polygon(this.iwin, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2 - dh, this.y2, this.rgb);
+            }
+        } else {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
             } else if ("RIGHT" == this.layout) {
@@ -267,7 +289,9 @@ export class Glass extends Com5t {
     }
 
     paint() {
-        if (this.iwin.root.type == "RECTANGL") {
+        if (this.owner.type == "ARCH") {
+
+        } else {
             draw_full_polygon(this.iwin, this.owner.x1, this.owner.x2, this.owner.x2,
                     this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb);
         }
