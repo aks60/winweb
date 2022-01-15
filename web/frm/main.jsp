@@ -20,12 +20,12 @@
 
         <script type="text/javascript">
 
-            //Глобальные данные
-            var winc = {dh_frame: 64, dh_cross: 80, naxl: 12};
-            var utils = {}, dbset = {}, login = {}, users = {}, order = {},
-                    product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
+            //Глобальные объекты
+            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {}, 
+                    users = {}, order = {}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
 
             $(document).ready(function () {
+                
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});

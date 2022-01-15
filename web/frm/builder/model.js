@@ -1,7 +1,7 @@
-//------------------------------------------------------------------------------
+//==============================================================================
 import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
 import {SYS, CGR, COL, ART, ADET, PROD, SFUR} from './dbset.js';
-//------------------------BASE--------------------------------------------------
+//============================  BASE  ==========================================
 export class Com5t {
 
     constructor(obj, owner, iwin) {
@@ -40,7 +40,7 @@ export class Com5t {
         return ((this.x2 >= X) && (this.y2 >= Y));
     }
 }
-//-------------------------AREA-------------------------------------------------
+//=================================  AREA  =====================================
 export class Area extends Com5t {
 
     constructor(obj, owner, iwin) {
@@ -70,7 +70,7 @@ export class Area extends Com5t {
 
                         if (owner.layout == "VERT") { //сверху вниз                            
                             let Y2 = (prevArea.y2 + height > owner.y2) ? owner.y2 : prevArea.y2 + height;
-                            this.dimension(owner.x1, prevArea.y2 + winc.dh_cross / 2, owner.x2, Y2);
+                            this.dimension(owner.x1, prevArea.y2, owner.x2, Y2);
 
                         } else if (owner.layout == "HORIZ") { //слева направо
                             let X2 = (prevArea.x2 + width > owner.x2) ? owner.x2 : prevArea.x2 + width;
@@ -83,7 +83,7 @@ export class Area extends Com5t {
         }
     }
 }
-//---------------------------ROOT-----------------------------------------------
+//==============================  ROOT  ========================================
 export class Root extends Area {
 
     constructor(obj, owner, iwin) {
@@ -92,17 +92,16 @@ export class Root extends Area {
         this.frames = new Map(); //рамы конструкции 
     }
 }
-//---------------------------STVORKA--------------------------------------------
+//==============================  STVORKA  =====================================
 export class Stvorka extends Area {
 
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
         this.frames = new Map(); //рамы конструкции 
 
-        let joinLef = this.joinFlat("LEFT"), joinTop = this.joinFlat("TOP"),
-                joinBot = this.joinFlat("BOTT"), joinRig = this.joinFlat("RIGHT");
-
-        this.dimension(owner.x1 + 40, owner.y1 + 40, owner.x2 - 40, owner.y2 - 40);
+        //Коррекция area створки с учётом ширины рамы и нахлёста
+        this.dimension(owner.x1 + (this.margin("LEFT") - winc.naxl), owner.y1 + (this.margin("TOP") - winc.naxl),
+                owner.x2 - (this.margin("RIGHT") - winc.naxl), owner.y2 - (this.margin("TOP") - winc.naxl));
 
         this.frames.set("BOTT", new Frame(obj, this, iwin, this.id + '.1', "BOTT", "STVORKA_SIDE"));
         this.frames.set("RIGHT", new Frame(obj, this, iwin, this.id + '.2', "RIGHT", "STVORKA_SIDE"));
@@ -123,16 +122,16 @@ export class Stvorka extends Area {
         }
     }
 
-    //Нахлёст
-    mrgin(side) {
+    //Отступ створки
+    margin(side) {
         if ("BOTT" == side)
-            return (iwin.root.y2 - this.y2 > 200) ? winc.dh_cross : winc.dh_frame;
+            return (this.iwin.root.y2 - this.y2 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
         else if ("RIGHT" == side)
-            return (iwin.root.x2 - this.x2 > 200) ? winc.dh_cross : winc.dh_frame;
+            return (this.iwin.root.x2 - this.x2 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
         else if ("TOP" == side)
-            return (this.y1 - iwin.root.y1 > 200) ? winc.dh_cross : winc.dh_frame;
+            return (this.y1 - this.iwin.root.y1 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
         else if ("LEFT" == side)
-            return (this.x1 - win.root.x1 > 200) ? winc.dh_cross : winc.dh_frame;
+            return (this.x1 - this.iwin.root.x1 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
     }
 
     paint() {
@@ -168,7 +167,7 @@ export class Stvorka extends Area {
         }
     }
 }
-//------------------------------CROSS-------------------------------------------
+//==================================  CROSS  ===================================
 export class Cross extends Com5t {
 
     constructor(obj, owner, iwin) {
@@ -182,15 +181,12 @@ export class Cross extends Com5t {
         for (let index = owner.childs.length - 1; index >= 0; --index) {
             if (owner.childs[index] instanceof Area) {
                 let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
-                let db = winc.dh_cross / 2;
 
                 if ("VERT" == owner.layout) { //сверху вниз
-                    this.dimension(prevArea.x1, prevArea.y2 - db, prevArea.x2, prevArea.y2 + db);
-                    this.anglHoriz = 0;
+                    this.dimension(prevArea.x1, prevArea.y2 - winc.dh_crss / 2, prevArea.x2, prevArea.y2 + winc.dh_crss / 2);
 
                 } else if ("HORIZ" == owner.layout) { //слева направо
-                    this.dimension(prevArea.x2 - db, prevArea.y1, prevArea.x2 + db, prevArea.y2);
-                    this.anglHoriz = 90;
+                    this.dimension(prevArea.x2 - winc.dh_crss / 2, prevArea.y1, prevArea.x2 + winc.dh_crss / 2, prevArea.y2);
                 }
                 break;
             }
@@ -206,37 +202,32 @@ export class Cross extends Com5t {
         }
     }
 }
-//-----------------------------------FRAME--------------------------------------
+//================================  FRAME  =====================================
 export class Frame extends Com5t {
 
     constructor(obj, owner, iwin, id, layout, type) {
         super(obj, owner, iwin);
-
         if (id != undefined) {
             this.id = id;
             this.layout = layout;
             this.type = type;
         }
-//        let x1 = (owner.type != "STVORKA") ? owner.x1 : (owner.x1 + winc.dh_frame) - winc.naxl;
-//        let y1 = (owner.type != "STVORKA") ? owner.y1 : (owner.y1 + winc.dh_frame) - winc.naxl;
-//        let x2 = (owner.type != "STVORKA") ? owner.x2 : (owner.x2 - winc.dh_frame) + winc.naxl;
-//        let y2 = (owner.type != "STVORKA") ? owner.y2 : (owner.y2 - winc.dh_frame) + winc.naxl;
 
         if (iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - winc.dh_frame, owner.x2, owner.y2);
+                this.dimension(owner.x1, owner.y2 - winc.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - winc.dh_frame, owner.y1, owner.x2, owner.y2);
+                this.dimension(owner.x2 - winc.dh_frm, owner.y1, owner.x2, owner.y2);
             } else if ("TOP" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frame);
+                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frm);
             } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frame, owner.y2);
+                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frm, owner.y2);
             }
         }
     }
 
     paint() {
-        let dh = winc.dh_frame;
+        let dh = winc.dh_frm;
         if (this.iwin.root.type == "RECTANGL") {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.iwin, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb);
@@ -250,11 +241,12 @@ export class Frame extends Com5t {
         }
     }
 }
-//------------------------------GLASS-------------------------------------------
+//================================  GLASS  =====================================
 export class Glass extends Com5t {
 
     constructor(obj, owner, iwin) {
         super(obj, owner, iwin);
+        this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
         let artdetRec = null;
         if (obj.param != undefined && obj.param.artglasID != undefined) {
@@ -281,5 +273,5 @@ export class Glass extends Com5t {
         }
     }
 }
-//------------------------------------------------------------------------------
+//==============================================================================
 
