@@ -9,6 +9,7 @@ import domain.eGroups;
 import domain.eProject;
 import domain.eProprod;
 import domain.eSysfurn;
+import domain.eSysprod;
 import domain.eSystree;
 import enums.TypeGroups;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import org.json.simple.JSONObject;
 
 public class Dbset {
 
-    public static JSONObject treeList(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
@@ -31,7 +32,21 @@ public class Dbset {
                     rec.get(eSystree.glas),
                     rec.get(eSystree.parent_id)));
         }
-        JSONObject output = new JSONObject(App.asMap("treeList", list));
+        JSONObject output = new JSONObject(App.asMap("systreeList", list));
+        return output;
+    }
+    
+    public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSysprod = new Query(Att.att(request).connect(), eSysprod.id, eSysprod.name, eSysprod.script, eSysprod.systree_id).select(eSysprod.up);
+        for (Record rec : qSysprod) {
+            list.add(Arrays.asList(
+                    rec.get(eSysprod.id),
+                    rec.get(eSysprod.name),
+                    rec.get(eSysprod.script),
+                    rec.get(eSysprod.systree_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("sysprodList", list));
         return output;
     }
 
@@ -92,7 +107,7 @@ public class Dbset {
         return output;
     }
 
-    public static JSONObject prodList(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
                 eProprod.project_id, eProprod.systree_id).select(eProprod.up);
@@ -104,7 +119,7 @@ public class Dbset {
                     rec.get(eProprod.project_id),
                     rec.get(eProprod.systree_id)));
         }
-        JSONObject output = new JSONObject(App.asMap("prodList", list));
+        JSONObject output = new JSONObject(App.asMap("proprodList", list));
         return output;
     }
 

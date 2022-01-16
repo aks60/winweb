@@ -1,6 +1,5 @@
 //==============================================================================
 import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
-import {SYS, CGR, COL, ART, ADET, PROD, SFUR} from './dbset.js';
 //============================  BASE  ==========================================
 export class Com5t {
 
@@ -112,13 +111,13 @@ export class Stvorka extends Area {
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
             this.sysfurn = dbset.find_rec(obj.param.sysfurnID, dbset.sysfurnList);
         } else {
-            this.sysfurn = dbset.find2_rec(SFUR.systree_id, iwin.nuni, dbset.sysfurnList);
+            this.sysfurn = dbset.find2_rec(SYSFUR.systree_id, iwin.nuni, dbset.sysfurnList);
         }
         //Сторона открывания
         if (obj.param != undefined && obj.param.typeOpen != undefined) {
             this.typeOpen = obj.param.typeOpen;
         } else {
-            this.typeOpen = (this.sysfurn[SFUR.side_open] == 1) ? 1 : 2;
+            this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
         }
     }
 
@@ -272,20 +271,20 @@ export class Glass extends Com5t {
 
         let artdetRec = null;
         if (obj.param != undefined && obj.param.artglasID != undefined) {
-            artdetRec = find2_rec(ADET.artikl_id, obj.param.artglasID, dbset.artdetList);
+            artdetRec = find2_rec(ARTDET.artikl_id, obj.param.artglasID, dbset.artdetList);
         } else {
-            let treeRec = dbset.find_rec(iwin.nuni, dbset.treeList); //по умолчанию стеклопакет
+            let treeRec = dbset.find_rec(iwin.nuni, dbset.systreeList); //по умолчанию стеклопакет
             for (let i = 0; i < dbset.artiklList.length; i++) {
-                if (treeRec[SYS.glas] == dbset.artiklList[i][ART.code]) {
+                if (treeRec[SYSTREE.glas] == dbset.artiklList[i][ARTIKL.code]) {
                     let artiklRec = dbset.artiklList[i];
-                    artdetRec = dbset.find2_rec(ADET.artikl_id, artiklRec[ART.id], dbset.artdetList);
+                    artdetRec = dbset.find2_rec(ARTDET.artikl_id, artiklRec[ARTIKL.id], dbset.artdetList);
                     break;
                 }
             }
         }
-        let color_fk = artdetRec[ADET.color_fk];
+        let color_fk = artdetRec[ARTDET.color_fk];
         let colorRec = dbset.find_rec(color_fk, dbset.colorList);
-        this.rgb = '#' + colorRec[COL.rgb].toString(16);
+        this.rgb = '#' + colorRec[COLOR.rgb].toString(16);
     }
 
     paint() {

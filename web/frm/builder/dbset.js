@@ -1,11 +1,3 @@
-//------------------------------ENUMS-------------------------------------------
-export const SYS = {id:0, glas:1, parent_id:2}; //SYSTREE
-export const CGR = {id:0, name:1}; //GROUPS
-export const COL = {id:0, name:1, rgb:2, colgrp_id:3}; //COLOR
-export const ART = {id:0, name:1, code:2, height:3}; //ARTIKL
-export const ADET = {id:0, color_fk:1, artikl_id:2}; //ARTDET
-export const PROD = {id:0, name:1, script:2, project_id:3, systree_id:4}; //PROPROD
-export const SFUR = {id:0, side_open:1, systree_id:2}; //SYSFURN
 //------------------------------------------------------------------------------
 dbset.find_rec = function (id, ds) {
     for (i = 0; i < ds.length; i++) {
@@ -30,16 +22,25 @@ dbset.find_list = function (id, ds, fk) {
     }
     return list;
 }
-//------------------------------------------------------------------------------
-export function load_treeList() {
+//------------------------  SYSTREE  -------------------------------------------
+export function load_systreeList() {
     $.ajax({
-        url: 'dbset?action=treeList',
+        url: 'dbset?action=systreeList',
         success: function (data) {
-            dbset.treeList = data.treeList;          
+            dbset.systreeList = data.systreeList;          
         }
     });
 }
-//------------------------------------------------------------------------------
+//------------------------  SYSPROD  -------------------------------------------
+export function load_sysprodList() {
+    $.ajax({
+        url: 'dbset?action=sysprodList',
+        success: function (data) {
+            dbset.sysprodList = data.sysprodList;            
+        }
+    });
+}
+//-------------------------  COLOR  --------------------------------------------
 export function load_colorList() {
     $.ajax({
         url: 'dbset?action=colorList',
@@ -48,7 +49,7 @@ export function load_colorList() {
         }
     });
 }
-//------------------------------------------------------------------------------
+//--------------------------  ARTIKL  ------------------------------------------
 export function load_artiklList() {
     $.ajax({
         url: 'dbset?action=artiklList',
@@ -57,7 +58,7 @@ export function load_artiklList() {
         }
     });
 }
-//------------------------------------------------------------------------------
+//---------------------------  ARTDET  -----------------------------------------
 export function load_artdetList() {
     $.ajax({
         url: 'dbset?action=artdetList',
@@ -66,16 +67,16 @@ export function load_artdetList() {
         }
     });
 }
-//------------------------------------------------------------------------------
-export function load_productList() {
+//---------------------------  PROPROD  ----------------------------------------
+export function load_proprodList() {
     $.ajax({
-        url: 'dbset?action=prodList',
+        url: 'dbset?action=proprodList',
         success: function (data) {
-            dbset.productList = data.prodList;
+            dbset.proprodList = data.proprodList;
         }
     });
 }
-//------------------------------------------------------------------------------
+//----------------------------  SYSFURN  ---------------------------------------
 export function load_sysfurnList() {
     $.ajax({
         url: 'dbset?action=sysfurnList',

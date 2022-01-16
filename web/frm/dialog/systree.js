@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 systree.init_dialog = function (table1) {
-    
+
     table1.dialog({
         title: "Конструкции систем профилей",
         width: 600,
@@ -18,7 +18,7 @@ systree.init_dialog = function (table1) {
 }
 //------------------------------------------------------------------------------
 systree.init_table = function (table1, table2) {
-    
+
     table1.jqGrid({
         datatype: "local",
         colNames: ['id', 'Категория'],
@@ -35,19 +35,27 @@ systree.init_table = function (table1, table2) {
         ExpandColumn: 'name',
         ExpandColClick: true,
         onSelectRow: function (rowid) {
-            
-            table2.jqGrid("clearGridData", true);
-            let systreeRec = table1.jqGrid("getRowData", rowid);
-            for (i = 0; i < dbset.productList.length; i++) {
-                let productRec = dbset.productList[i];
-                if (systreeRec.id == productRec[3]) {
-                    table2.jqGrid('addRowData', i + 1, {
-                        id: productRec[0],
-                        name: productRec[1],
-                        script: productRec[2],
-                        parent: productRec[3]
-                    });
+            table2.jqGrid('clearGridData', true);
+            let systreeRec = table1.jqGrid('getRowData', rowid);             
+            if (systreeRec.isLeaf == 'true') {
+                alert(systreeRec.isLeaf);
+                for (i = 0; i < dbset.sysprodList.length; i++) {
+                    let sysprodRec = dbset.sysprodList[i];
+                    if (sysprodRec != undefined) {
+                        
+                        let script = sysprodRec[SYSPROD.script];
+                        if (sysprodRec[SYSPROD.systree_id] == systreeRec.id) {
+                            
+                            table2.jqGrid('addRowData', i + 1, {                               
+                                id: sysprodRec[SYSPROD.id],
+                                name: sysprodRec[SYSPROD.name],
+                                script: sysprodRec[SYSPROD.script],
+                                systree_id: sysprodRec[SYSPROD.systree_id]
+                            });
+                        }
+                    }
                 }
+                //table2.jqGrid("setSelection", 3);
             }
             systree.resize();
         }
@@ -67,23 +75,46 @@ systree.init_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
+order.create_table = function (table_area, table) {
+    //let tablearea = document.getElementById('tablearea');
+    //let table = document.createElement('table');
+    let tr = [];
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let text1 = document.createTextNode('Text1');
+    let text2 = document.createTextNode('Text2');
+
+    for (let i = 1; i < 4; i++) {
+        tr[i] = document.createElement('tr');
+        for (let j = 1; j < 4; j++) {
+            td1.appendChild(text1);
+            td2.appendChild(text2);
+            tr[i].appendChild(td1);
+            tr[i].appendChild(td2);
+        }
+        table.appendChild(tr[i]);
+    }
+
+    table_area.appendChild(table);
+}//
+//------------------------------------------------------------------------------
 systree.load_table = function (table1, table2) {
-    
+
     table1.jqGrid('clearGridData', true);
     $.ajax({
         url: 'systree?action=sysTree',
         success: function (data) {
             systree.sysTree = data.sysTree;
             table1[0].addJSONData({
-                total: 1, page: 1,
+                total: 1, 
+                page: 1,
                 records: systree.sysTree.length,
                 rows: systree.sysTree
             });
-            
+
             table1.jqGrid("setSelection", 1);
         }
     });
 }
 //------------------------------------------------------------------------------
-
 

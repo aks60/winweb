@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+//============================  BASE  ==========================================
 order.init_table = function (table1, table2) {
     table1.jqGrid({
         datatype: "local",
@@ -18,23 +18,23 @@ order.init_table = function (table1, table2) {
         ],
         onSelectRow: function (rowid) {
             table2.jqGrid('clearGridData', true);
-            let systreeRec = table1.jqGrid('getRowData', rowid);
-            if (systreeRec != undefined) {
-                for (i = 0; i < dbset.productList.length; i++) {
-                    let productRec = dbset.productList[i];
-                    let script = productRec[2];
-                    if (productRec[3] == systreeRec.id) {
-                        table2.jqGrid('addRowData', i + 1, {
-                            id: productRec[0],
-                            name: productRec[1],
-                            script: productRec[2],
-                            project_id: productRec[3],
-                            systree_id: productRec[4]
-                        });
-                    }
+            let orderRec = table1.jqGrid('getRowData', rowid);
+            for (i = 0; i < dbset.proprodList.length; i++) {
+                
+                let proprodRec = dbset.proprodList[i];
+                let script = proprodRec[PROPROD.script];
+                if (proprodRec[3] == orderRec.id) {
+                    
+                    table2.jqGrid('addRowData', i + 1, {
+                        id: proprodRec[PROPROD.id],
+                        name: proprodRec[PROPROD.name],
+                        script: proprodRec[PROPROD.script],
+                        project_id: proprodRec[PROPROD.project_id],
+                        systree_id: proprodRec[PROPROD.systree_id]
+                    });
                 }
-                table2.jqGrid("setSelection", 3);
             }
+            table2.jqGrid("setSelection", 3);
         }
     });
     table2.jqGrid({

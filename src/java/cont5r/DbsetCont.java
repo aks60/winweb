@@ -38,8 +38,12 @@ public class DbsetCont extends HttpServlet {
         String action = request.getParameter("action");
         try (PrintWriter out = response.getWriter()) {
 
-            if (action.equalsIgnoreCase("treeList")) {
-                JSONObject output = Dbset.treeList(request, response);
+            if (action.equalsIgnoreCase("systreeList")) {
+                JSONObject output = Dbset.systreeList(request, response);
+                out.write(JSONObject.toJSONString(output));
+                
+            } else if (action.equalsIgnoreCase("sysprodList")) {
+                JSONObject output = Dbset.sysprodList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("colorGroup")) {
@@ -58,8 +62,8 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.artdetList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
-            } else if (action.equalsIgnoreCase("prodList")) {
-                JSONObject output = Dbset.prodList(request, response);
+            } else if (action.equalsIgnoreCase("proprodList")) {
+                JSONObject output = Dbset.proprodList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("sysfurnList")) {

@@ -1,7 +1,7 @@
-
+//------------------------------------------------------------------------------
 import {draw_elements} from './drawing.js';
 import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
-import {SYS, CGR, COL, ART, ADET, PROD} from './dbset.js';
+//------------------------------------------------------------------------------
 
 winc.build = function (canvasTag) {
     new Wincalc(canvasTag).parse();
@@ -28,7 +28,7 @@ class Wincalc {
             this.width = obj.width;          //ширина окна, мм
             this.height = obj.height;        //высота окна, мм 
             this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
-            this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COL.rgb].toString(16);
+            this.RGB = '#' + dbset.find_rec(obj.color2, dbset.colorList)[COLOR.rgb].toString(16);
 
             this.root = new Root(obj, null, this); //главное окно
 

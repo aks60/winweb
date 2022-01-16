@@ -7,6 +7,7 @@
         <title>Order</title>
 
         <script type="text/javascript">
+
             order.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
@@ -18,15 +19,6 @@
 
             function test() {
                 $("#table2").jqGrid("setSelection", 1);
-//                $.ajax({
-//                    url: 'dbset?action=testList',
-//                    success: function (data) {
-//                        debugger;
-//                        let obj1 = data.param;
-//                        let obj2 = obj1.typeOpen;
-//                        let obj3 = obj1.sysfurnID;
-//                    }
-//                });
             }
 
             $(document).ready(function () {
@@ -36,13 +28,14 @@
 
                 order.init_table($("#table1"), $("#table2"));
                 order.load_table($("#table1"), $("#table2"));
+                $('#dialog-dic').load('frm/dialog/systree.jsp');
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
-            <button onClick="test();">Кнопка2</button>
+            <button onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
