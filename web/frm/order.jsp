@@ -5,7 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <script type="text/javascript" src="frm/order.js"></script> 
         <title>Order</title>
-
         <script type="text/javascript">
 
             order.resize = function () {
@@ -28,7 +27,7 @@
 
                 order.init_table($("#table1"), $("#table2"));
                 order.load_table($("#table1"), $("#table2"));
-                $('#dialog-dic').load('frm/dialog/systree.jsp');
+                //$('#dialog-dic').load('frm/dialog/systree.jsp');
             });
         </script>
     </head>
@@ -45,7 +44,7 @@
                 <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
 
-                        <canvas id="cnv" style="border:2px solid black;" width="400" height="290"></canvas>
+                        <canvas id="cnv" style="border:2px solid black;" width="460" height="280"></canvas>
 
                     </div>
                     <div id="east3" style="height: 100%;">

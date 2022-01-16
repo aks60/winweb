@@ -8,20 +8,40 @@ systree.init_dialog = function (dialog) {
         modal: false,
         buttons: {
             "Выбрать": function () {
-                //systree.resize();
+//                winc.build(document.getElementById('cnv2'));
+
+                let table = document.getElementById('tab-sysprod');
+                let canvas = document.createElement("canvas");
+                canvas.width = 68;
+                canvas.height = 68;
+                canvas.id = "cnv" + table.rows.length;;
+                canvas.class = "cnv";                
+                
+                
                 let td1 = document.createElement('td');
-                let td2 = document.createElement('td');    
+                let td2 = document.createElement('td');
                 let text1 = document.createTextNode('Text1');
                 let text2 = document.createTextNode('Text2');
                 let tr = document.createElement('tr');
                 td1.appendChild(text1);
-                td2.appendChild(text2);
+                td2.appendChild(canvas);
                 tr.appendChild(td1);
                 tr.appendChild(td2);
-                $("#tab-sysprod").appendChild(tr);
+                table.appendChild(tr);
+
+                systree.resize();
             },
             "Закрыть": function () {
-                $(this).dialog("close");
+                winc.build(document.getElementById('cnv3'));
+
+                //$(this).dialog("close");
+                //$("#tab-sysprod tbody tr").remove(); 
+//                let j = 1;
+//                let table = document.getElementById('tab-sysprod');
+//                let rc = table.rows.length;
+//                for (let i = j; i < rc; i++) {
+//                    table.deleteRow(j);
+//                }
             }
         }
     });
@@ -105,7 +125,7 @@ order.create_table = function (table_area, table) {
     }
 
     table_area.appendChild(table);
-}//
+}
 //------------------------------------------------------------------------------
 systree.load_table = function (table1, table2) {
 

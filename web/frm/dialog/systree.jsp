@@ -7,6 +7,8 @@
         <title>SYSTREE</title>
 
         <style>
+
+            /*canvas.cnv { border: px solid black; }*/
             #tab-sysprod tr { height:68px; } 
             #tab-sysprod tr :first-child { width: 212px; }
             #tab-sysprod tr :last-child { width: 68px; }
@@ -29,6 +31,8 @@
                 systree.init_table($("#tab1-dic"), $("#tab-sysprod"));
                 systree.load_table($("#tab1-dic"), $("#tab-sysprod"));
             });
+            function test() {
+            }
         </script> 
     </head> 
     <body> 
@@ -39,10 +43,18 @@
             </div>
 
             <div id="east" style="position: absolute; height: 99.6%; width: 290px; top: 0; right: -300px;">
-                <table id="tab-sysprod" border="1">
-                    <tr style="height: 20px; background-color: #e7f4f9"><th>Наименование</th><th>Изображение</th></tr>
-                    <tr> <td>Ячейка 1</td><td>Ячейка 2</td> </tr>
-                    <tr> <td>Ячейка 3</td><td>Ячейка 4</td> </tr>
+
+                <table id="tab-sysprod" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
+                    <tr style="height: 22px; background-color: #e7f4f9">
+                        <th>Наименование</th><th>Изображение</th></tr>
+                    <tr> <td>Ячейка 1</td>
+                        <td>
+                            <canvas class="cnv" id="cnv1" width="68" height="68"></canvas>
+                        </td> </tr>
+                    <tr> <td>Ячейка 3</td>
+                        <td>
+                            <canvas class="cnv" id="cnv2" width="68" height="68"></canvas>
+                        </td> </tr>
                 </table>            
             </div>
         </div>  

@@ -1,3 +1,6 @@
+//https://qna.habr.com/q/113113
+//draw_canvas.style.width = "500px"
+//draw_canvas.style.height = "500px"
 
 export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
 
