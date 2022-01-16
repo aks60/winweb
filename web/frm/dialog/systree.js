@@ -10,11 +10,15 @@ systree.init_dialog = function (dialog) {
             "Выбрать": function () {
                 //systree.resize();
                 let td1 = document.createElement('td');
-                let td2 = document.createElement('td')    let text1 = document.createTextNode('Text1');
-                        let tr = document.createElement('tr');
+                let td2 = document.createElement('td');    
+                let text1 = document.createTextNode('Text1');
+                let text2 = document.createTextNode('Text2');
+                let tr = document.createElement('tr');
                 td1.appendChild(text1);
-                tr[i].appendChild(td1);
-                $("#tab-sysprod").appendChild(tr[i]);
+                td2.appendChild(text2);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                $("#tab-sysprod").appendChild(tr);
             },
             "Закрыть": function () {
                 $(this).dialog("close");
