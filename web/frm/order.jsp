@@ -33,7 +33,7 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <button onClick="winc.build(document.getElementById('cnv'));">Кнопка1</button>
+            <button onClick="winc.build(document.getElementById('cnv'), order.sel_table2.script);">Кнопка1</button>
             <button onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
         </div>     
         <div id = "context">        

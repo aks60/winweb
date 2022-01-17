@@ -10,8 +10,9 @@
 
             /*canvas.cnv { border: px solid black; }*/
             #tab-sysprod tr { height:68px; } 
-            #tab-sysprod tr :first-child { width: 212px; }
-            #tab-sysprod tr :last-child { width: 68px; }
+            #tab-sysprod tr :first-child { width: 0px; }
+            #tab-sysprod tr :nth-child(2) { width: 212px; }
+            #tab-sysprod tr :last-child { width: 68px;  }
         </style>
 
         <script type="text/javascript">
@@ -46,15 +47,17 @@
 
                 <table id="tab-sysprod" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                     <tr style="height: 22px; background-color: #e7f4f9">
-                        <th>Наименование</th><th>Изображение</th></tr>
-                    <tr> <td>Ячейка 1</td>
+                        <th></th><th>Наименование</th><th>Изображение</th></tr>
+                    <tr> <td></td> <td>Ячейка 1</td>
                         <td>
                             <canvas class="cnv" id="cnv1" width="68" height="68"></canvas>
-                        </td> </tr>
-                    <tr> <td>Ячейка 3</td>
+                        </td>                                          
+                    </tr>
+                    <tr> <td></td> <td>Ячейка 3</td>
                         <td>
                             <canvas class="cnv" id="cnv2" width="68" height="68"></canvas>
-                        </td> </tr>
+                        </td> 
+                    </tr>
                 </table>            
             </div>
         </div>  

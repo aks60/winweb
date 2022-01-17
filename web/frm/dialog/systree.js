@@ -14,10 +14,9 @@ systree.init_dialog = function (dialog) {
                 let canvas = document.createElement("canvas");
                 canvas.width = 68;
                 canvas.height = 68;
-                canvas.id = "cnv" + table.rows.length;;
-                canvas.class = "cnv";                
-                
-                
+                canvas.id = "cnv" + table.rows.length;
+                canvas.class = "cnv";
+
                 let td1 = document.createElement('td');
                 let td2 = document.createElement('td');
                 let text1 = document.createTextNode('Text1');
@@ -31,7 +30,7 @@ systree.init_dialog = function (dialog) {
                 systree.resize();
             },
             "Закрыть": function () {
-                winc.build(document.getElementById('cnv3'));
+                winc.build(document.getElementById('cnv3'), order.sel_table2.script);
 
                 //$(this).dialog("close");
                 //$("#tab-sysprod tbody tr").remove(); 
@@ -71,16 +70,18 @@ systree.init_table = function (table1, table2) {
                     let sysprodRec = dbset.sysprodList[i];
                     if (sysprodRec != undefined) {
 
-                        let script = sysprodRec[SYSPROD.script];
-                        if (sysprodRec[SYSPROD.systree_id] == systreeRec.id) {
-
-                            /*table2.jqGrid('addRowData', i + 1, {                               
-                             id: sysprodRec[SYSPROD.id],
-                             name: sysprodRec[SYSPROD.name],
-                             script: sysprodRec[SYSPROD.script],
-                             systree_id: sysprodRec[SYSPROD.systree_id]
-                             });*/
-                        }
+                        systree.create_sysprodRec(systreeRec);
+                        
+//                        let script = sysprodRec[SYSPROD.script];
+//                        if (sysprodRec[SYSPROD.systree_id] == systreeRec.id) {
+//
+//                            table2.jqGrid('addRowData', i + 1, {                               
+//                             id: sysprodRec[SYSPROD.id],
+//                             name: sysprodRec[SYSPROD.name],
+//                             script: sysprodRec[SYSPROD.script],
+//                             systree_id: sysprodRec[SYSPROD.systree_id]
+//                             });
+//                        }
                     }
                 }
                 //table2.jqGrid("setSelection", 3);
@@ -103,7 +104,7 @@ systree.init_table = function (table1, table2) {
 //    });
 }
 //------------------------------------------------------------------------------
-order.create_table = function (table_area, table) {
+systree.create_table = function (table_area, table) {
     //let tablearea = document.getElementById('tablearea');
     //let table = document.createElement('table');
     let tr = [];
@@ -145,4 +146,25 @@ systree.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
+systree.create_sysprodRec = function (sysprodRec) {
 
+    let table = document.getElementById('tab-sysprod');
+    let canvas = document.createElement("canvas");
+    canvas.id = 'cnv' + sysprodRec[SYSPROD.id];
+    canvas.width = 68;
+    canvas.height = 68;
+    canvas.class = "cnv";
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+    let tr = document.createElement('tr');
+    td1.appendChild(sysprodRec[SYSPROD.id]);
+    td2.appendChild(sysprodRec[SYSPROD.name]);
+    td3.appendChild(canvas);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    table.appendChild(tr);
+    winc.build(canvas, order.sel_table2.script);
+
+}
