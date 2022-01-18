@@ -27,7 +27,7 @@
 
                 order.init_table($("#table1"), $("#table2"));
                 order.load_table($("#table1"), $("#table2"));
-                //$('#dialog-dic').load('frm/dialog/systree.jsp');
+                $('#dialog-dic').load('frm/dialog/systree.jsp');
             });
         </script>
     </head>
