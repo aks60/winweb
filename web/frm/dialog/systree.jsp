@@ -51,8 +51,7 @@
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            
             </div>
-        </div>            
-        <script>          
+        </div>                   
     </body> 
 </html> 
 
