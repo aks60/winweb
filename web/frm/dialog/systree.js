@@ -8,14 +8,13 @@ systree.init_dialog = function (dialog) {
         modal: false,
         buttons: {
             "Выбрать": function () {
-                test();
 //                let table2 = document.getElementById('tab-sysprod');
 //                let j = 1;
 //                let rc = table2.rows.length;
 //                for (let i = j; i < rc; i++) {
 //                    table2.deleteRow(j);
 //                }
-//                systree.resize();
+                systree.resize();
             },
             "Закрыть": function () {
                 $(this).dialog("close");
@@ -57,6 +56,7 @@ systree.init_table = function (table1, table2) {
                     }
                 }
             }
+            $('#tab-sysprod tr > *:nth-child(1)').hide();
             systree.resize();
         }
     });
@@ -101,12 +101,29 @@ systree.clone_sysprodRec = function (table, sysprodRec) {
     td1.appendChild(id);
     td2.appendChild(name);
     td3.appendChild(canvas);
-
-    tr.setAttribute("tabindex", -1); 
+ 
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     table.appendChild(tr);
-    winc.build(canvas, script);
-    $('#tab-sysprod tr > *:nth-child(1)').hide();
+    winc.build(canvas, script);    
 }
+//------------------------------------------------------------------------------
+systree.get_parentTag = function (node, tag) {
+    if (node)
+        return (node.tagName == tag) ? node : systree.get_parentTag(node.parentElement, tag);
+    return null;
+}
+//------------------------------------------------------------------------------
+systree.event_clicked = function (e) {
+    var row = systree.get_parentTag(e.target, 'TR');
+    if (row) {
+        let table = this, idx = table.getAttribute('activeRowIndex');
+        table.rows[idx].classList.remove('activeRow');
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', row.rowIndex);
+        systree.sysprodID = row.cells[0].innerHTML;
+        alert('info = ' + systree.sysprodID);
+    }
+}
+//------------------------------------------------------------------------------

@@ -23,11 +23,11 @@
             //Поля таблиц
             var SYSTREE = {id: 0, glas: 1, parent_id: 2},
                     SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
+                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4},
                     GROUPS = {id: 0, name: 1},
                     COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
                     ARTIKL = {id: 0, name: 1, code: 2, height: 3},
-                    ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
-                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4},
+                    ARTDET = {id: 0, color_fk: 1, artikl_id: 2},                    
                     SYSFUR = {id: 0, side_open: 1, systree_id: 2};
             
             //Глобальные объекты

@@ -9,7 +9,7 @@
         <style>
             #tab-sysprod tr:hover {background:#E2EEFF;}
             #tab-sysprod .activeRow, #tab-sysprod .activeRow:hover {background:#6598C7; color:#fff;}
-            
+
             #tab-sysprod tr { height: 68px; };
             #tab-sysprod tr  > *:nth-child(1) { display: none !important; }
             #tab-sysprod tr > *:nth-child(2) { width: 212px !important; }
@@ -20,8 +20,6 @@
             systree.resize = function () {
                 $("#tab-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #centr").width());
                 $("#tab-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #centr").height() - 26);
-                $("#tab-sysprod").jqGrid('setGridWidth', $("#dialog-dic #midl #east").width());
-                $("#tab-sysprod").jqGrid('setGridHeight', $("#dialog-dic #midl #east").height() - 26);
             }
 
             $(document).ready(function () {
@@ -29,13 +27,14 @@
                     systree.resize();
                 }).trigger('resize');
 
+                let tab_sysprod = document.getElementById('tab-sysprod');
+                tab_sysprod.setAttribute('activeRowIndex', 0);
+                tab_sysprod.addEventListener('click', systree.event_clicked);
                 systree.init_dialog($("#dialog-dic"));
-                systree.init_table($("#tab-systree"), document.getElementById('tab-sysprod'));
-                systree.load_table($("#tab-systree"), document.getElementById('tab-sysprod'));
+                systree.init_table($("#tab-systree"), tab_sysprod);
+                systree.load_table($("#tab-systree"), tab_sysprod);
             });
             function test() {
-                var index = $("#tab-sysprod tbody tr.info").index();
-                console.log(index);
             }
         </script> 
     </head> 
@@ -52,28 +51,8 @@
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            
             </div>
-        </div>  
-        <script>
-            function parentTag(node, tag) {
-                if (node)
-                    return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
-                return null;
-            }
-            let table = document.getElementById('tab-sysprod');
-            table.setAttribute('activeRowIndex', 0);
-            table.addEventListener('click', clicked);
-            function clicked(e) {
-                var row = parentTag(e.target, 'TR');
-                if (row) {
-                    var tbl = this, idx = tbl.getAttribute('activeRowIndex');
-                    tbl.rows[idx].classList.remove('activeRow');
-                    row.classList.add('activeRow');
-                    tbl.setAttribute('activeRowIndex', row.rowIndex);
-                    systree.sysprodID = row.cells[0].innerHTML;
-//                    alert('info = ' + systree.sysprodID);
-                }
-            }
-        </script>          
+        </div>            
+        <script>          
     </body> 
 </html> 
 

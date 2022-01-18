@@ -17,41 +17,21 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
-            table2.jqGrid('clearGridData', true);
+            let j = 1;
+            let rc = table2.rows.length;
+            for (let i = j; i < rc; i++) {
+                table2.deleteRow(j);
+            }
             let orderRec = table1.jqGrid('getRowData', rowid);
-            for (i = 0; i < dbset.proprodList.length; i++) {
-                
-                let proprodRec = dbset.proprodList[i];
-                let script = proprodRec[PROPROD.script];
-                if (proprodRec[3] == orderRec.id) {
-                    
-                    table2.jqGrid('addRowData', i + 1, {
-                        id: proprodRec[PROPROD.id],
-                        name: proprodRec[PROPROD.name],
-                        script: proprodRec[PROPROD.script],
-                        project_id: proprodRec[PROPROD.project_id],
-                        systree_id: proprodRec[PROPROD.systree_id]
-                    });
+            for (let i = 0; i < dbset.proprodList.length; i++) {
+                let prprodRec = dbset.proprodList[i];
+
+                if (orderRec.id == prprodRec[PROPROD.project_id]) {
+                    order.clone_sysprodRec(table2, prprodRec);
                 }
             }
-            table2.jqGrid("setSelection", 2);
-        }
-    });
-    table2.jqGrid({
-        datatype: "local",
-        gridview: true,
-        rownumbers: true,
-        colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
-        colModel: [
-            {name: 'id', hidden: true, key: true},
-            {name: 'name', width: 120, sorttype: "text"},
-            {name: 'script', width: 220, sorttype: "text"},
-            {name: 'project_id', hidden: true},
-            {name: 'systree_id', hidden: true}
-        ],
-        onSelectRow: function (rowid) {
-            order.sel_table2 = table2.jqGrid('getRowData', rowid);
-            //alert(rowid);
+            $('#table2 tr > *:nth-child(1)').hide();
+            order.resize();
         }
     });
 }
@@ -80,4 +60,51 @@ order.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
+order.clone_sysprodRec = function (table, prpprodRec) {
+
+    let id = document.createTextNode(prpprodRec[SYSPROD.id]);
+    let name = document.createTextNode(prpprodRec[SYSPROD.name]);
+    let script = prpprodRec[SYSPROD.script];
+
+    let canvas = document.createElement("canvas");
+    canvas.class = "cnv";
+    canvas.id = 'cnv' + prpprodRec.id;
+    canvas.width = 68;
+    canvas.height = 68;
+
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+    let tr = document.createElement('tr');
+
+    td1.appendChild(id);
+    td2.appendChild(name);
+    td3.appendChild(canvas);
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    table.appendChild(tr);
+    winc.build(canvas, script);
+}
+//------------------------------------------------------------------------------
+order.get_parentTag = function (node, tag) {
+    if (node)
+        return (node.tagName == tag) ? node : order.get_parentTag(node.parentElement, tag);
+    return null;
+}
+//------------------------------------------------------------------------------
+order.event_clicked = function (e) {
+    var row = order.get_parentTag(e.target, 'TR');
+    if (row) {
+        let table = this, idx = table.getAttribute('activeRowIndex');
+        table.rows[idx].classList.remove('activeRow');
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', row.rowIndex);
+        order.proprodID = row.cells[0].innerHTML;
+        alert('info = ' + order.proprodID);
+    }
+}
+//------------------------------------------------------------------------------
+
 
