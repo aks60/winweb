@@ -45,6 +45,7 @@
                 <table id="tab-systree"  class="ui-jqgrid-btable"></table> 
             </div>
 
+            <!--<div id="east" style="overflow-y: scroll; position: absolute; height: 99.6%; width: 290px; top: 0; right: -300px;">-->
             <div id="east" style="position: absolute; height: 99.6%; width: 290px; top: 0; right: -300px;">
                 <table id="tab-sysprod" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                     <tr style="height: 22px; background-color: #e7f4f9">

@@ -53,12 +53,13 @@
                 <div id="centr" style="height: 100%; width: 100%;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
-                <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0">
+                <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0;">
                     <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
 
                         <canvas id="cnv" style="border:2px solid black;" width="460" height="280"></canvas>
 
                     </div>
+                    <!--<div id="east3" style="overflow-y: scroll; height: 100%;">-->
                     <div id="east3" style="height: 100%;">
                         <table id="table2" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                             <tr style="height: 22px; background-color: #e7f4f9">
