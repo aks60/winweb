@@ -18,7 +18,7 @@ product.init_table1 = function (table) {
 }
 //------------------------------------------------------------------------------
 product.load_table1 = function (table) {
-    for (i = 0; i < order.prodList.length; i++) {
+    for (let i = 0; i < order.prodList.length; i++) {
         let tr = order.prodList[i];
         table.jqGrid('addRowData', i + 1, {
             id: tr[0],

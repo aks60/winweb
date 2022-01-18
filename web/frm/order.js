@@ -42,7 +42,7 @@ order.load_table = function (table1, table2) {
         url: 'order?action=orderList',
         success: function (data) {
             order.orderList = data.orderList;
-            for (i = 0; i < order.orderList.length; i++) {
+            for (let i = 0; i < order.orderList.length; i++) {
                 let tr = order.orderList[i];
                 table1.jqGrid('addRowData', i + 1, {
                     id: tr[0],
@@ -95,7 +95,7 @@ order.get_parentTag = function (node, tag) {
 }
 //------------------------------------------------------------------------------
 order.event_clicked = function (e) {
-    var row = order.get_parentTag(e.target, 'TR');
+    let row = order.get_parentTag(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');

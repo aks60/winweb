@@ -45,7 +45,7 @@ users.load_table1 = function (table) {
         url: 'users?action=userList',
         success: function (data) {
             users.userList = data.userList;
-            for (i = 0; i < users.userList.length; i++) {
+            for (let i = 0; i < users.userList.length; i++) {
                 let tr = users.userList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[0],
@@ -65,7 +65,7 @@ users.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('#pan2 .login:last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         if (att[i] == '') {
             alert(mes[i]);
             return;
@@ -101,7 +101,7 @@ users.logim_create = function () {
     var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
     //console.log(att);
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         if (att[i] == '') {
             alert(mes[i]);
             return;
@@ -109,7 +109,7 @@ users.logim_create = function () {
     }
     var login = [att[2], att[3]];
     var re = /^[a-zA-Z0-9]+$/;
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         if (!re.test(login[i])) {
             alert('Логин и пароль пользователя может состоять только из букв английского алфавита и цифр');
             return false;
@@ -179,7 +179,7 @@ users.token_create = function (login) {
         var role = null;
         var uch = null;
         var element = document.getElementById('combo').value;
-        for (var index = 0; index < regionList.length; ++index) {
+        for (let index = 0; index < regionList.length; ++index) {
             var record = regionList[index].name
             if (element == record) {
 
@@ -275,7 +275,7 @@ users.token_delete = function () {
 users.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");
-    for (var i = log_list.options.length - 1; i >= 0; i--) {
+    for (let i = log_list.options.length - 1; i >= 0; i--) {
         log_list.remove(i);
     }
     if (!plugin.valid) {
@@ -285,7 +285,7 @@ users.token_refresh = function () {
     var ret = plugin.rtwIsTokenPresentAndOK();
     if (ret == true) {
         count_cont = plugin.rtwGetNumberOfContainers();
-        for (i = 0; i < count_cont; i++) {
+        for (let i = 0; i < count_cont; i++) {
             cont_name = plugin.rtwGetContainerName(i);
             add_item(log_list, cont_name.replace("#%#", " - "), cont_name, 0, 0);
         }

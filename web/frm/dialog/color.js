@@ -50,7 +50,7 @@ color.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             table2.jqGrid("clearGridData", true);
             let colgrpRec = table1.getRowData(rowid);
-            for (i = 0; i < dbset.colorList.length; i++) {
+            for (let i = 0; i < dbset.colorList.length; i++) {
                 let colorRec = dbset.colorList[i];
                 if (colgrpRec.id == colorRec[3]) {
                     table2.jqGrid('addRowData', i + 1, {
@@ -83,7 +83,7 @@ color.load_table = function (table1, table2) {
         url: 'dbset?action=colorGroup',
         success: function (data) {
             color.colorGroup = data.colorGroup;
-            for (i = 0; i < color.colorGroup.length; i++) {
+            for (let i = 0; i < color.colorGroup.length; i++) {
                 let tr = color.colorGroup[i];
                 table1.jqGrid('addRowData', i + 1, {
                     id: tr[0],

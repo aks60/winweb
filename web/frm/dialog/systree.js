@@ -116,7 +116,7 @@ systree.get_parentTag = function (node, tag) {
 }
 //------------------------------------------------------------------------------
 systree.event_clicked = function (e) {
-    var row = systree.get_parentTag(e.target, 'TR');
+    let row = systree.get_parentTag(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');

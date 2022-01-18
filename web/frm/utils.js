@@ -14,7 +14,7 @@ utils.init_obj = function (selector_table) {
         map: {value: function (_selectorHtml) {
                 var mapobj = this;
                 var arg = arguments.length;
-                for (var index = 0; index < _selectorHtml.length; ++index) {
+                for (let index = 0; index < _selectorHtml.length; ++index) {
                     var selectorHtml = _selectorHtml[index];
                     $(selectorHtml + ' div2.tag2').each(function (indx, elem) {
                         var
@@ -112,7 +112,7 @@ utils.init_obj = function (selector_table) {
         //установить ссылку на справочник
         link: {
             value: function (fields) {
-                for (var key in fields) {
+                for (let key in fields) {
                     if (this['_' + key]) {
                         this['_' + key]['dict'] = fields[key];
                     } else {
@@ -124,7 +124,7 @@ utils.init_obj = function (selector_table) {
         //очистка html
         clear: {
             value: function () {
-                for (var key in this) {
+                for (let key in this) {
                     this[key.substring(1, key.length)] = null;
                 }
             }, enumerable: false, configurable: true
@@ -138,12 +138,12 @@ utils.init_obj = function (selector_table) {
                     var rowid = $(this.name_table).getGridParam('selrow');
                     var record = $(this.name_table).getRowData(rowid);
                     //найдём запись в data сервер
-                    for (var index = 0; index < this.table.length; ++index) {
+                    for (let index = 0; index < this.table.length; ++index) {
                         record2 = this.table[index];
                         if (record.id == record2.id) {
                             //запишем value через set() в компонент html
-                            for (var field in this) {
-                                for (var field2 in record2) {
+                            for (let field in this) {
+                                for (let field2 in record2) {
                                     //если ключи совпали
                                     if (field == '_' + field2) {
                                         this[field2] = record2[field2];
@@ -160,7 +160,7 @@ utils.init_obj = function (selector_table) {
         loadRecord: {
             value: function (indexData, indexTable) {
                 var obj = {};
-                for (var key in this.table[indexData]) {
+                for (let key in this.table[indexData]) {
                     var dict = (this['_' + key]) ? this['_' + key]['dict'] : undefined;
                     if (typeof (dict) == 'undefined') {
                         obj[key] = this.table[indexData][key];
@@ -181,13 +181,13 @@ utils.init_obj = function (selector_table) {
                     record = $(this.name_table).getRowData(rowid);
                 }
                 //найдём запись в data сервер
-                for (var index2 = 0; index2 < this.table.length; ++index2) {
+                for (let index2 = 0; index2 < this.table.length; ++index2) {
                     var record2 = this.table[index2];
                     if (record.id == record2.id) {
                         //цыкл по полям field2[name2]
-                        for (var field in this) {
+                        for (let field in this) {
                             //цыкл по полям data сервер
-                            for (var field2 in record2) {
+                            for (let field2 in record2) {
                                 //если поля совпали
                                 if (field == '_' + field2) {
                                     //если были изменения данных в field2[name2]
@@ -256,15 +256,15 @@ utils.init_obj = function (selector_table) {
             data[name_table] = []; //объект для отправки на сервер
             //заполним объект дата если были изменения
             objItem.saveLocal();
-            for (var index = 0; index < objItem.table.length; ++index) {
+            for (let index = 0; index < objItem.table.length; ++index) {
                 if (objItem.table[index].up != 'SEL') {
                     data[name_table].push(objItem.table[index]);
                 }
             }
         });
         var counter = 0;
-        for (var key in data) {
-            for (var index = 0; index < data[key].length; ++index) {
+        for (let key in data) {
+            for (let index = 0; index < data[key].length; ++index) {
                 counter++;
             }
         }
@@ -279,7 +279,7 @@ utils.init_obj = function (selector_table) {
                     if (data.result == 'ok') {
                         //запишем SEL
                         objList.forEach(function (item) {
-                            for (var index = 0; index < item.table.length; ++index) {
+                            for (let index = 0; index < item.table.length; ++index) {
                                 item.table[index].up = 'SEL';
                             }
                         });
@@ -315,7 +315,7 @@ utils.init_obj = function (selector_table) {
 //            data2[name_table] = []; //объект для отправки на сервер
 //        });
         //загрузим удаляемую запись
-        for (var indexDel = 0; indexDel < focusTable.length; ++indexDel) {
+        for (let indexDel = 0; indexDel < focusTable.length; ++indexDel) {
             if (selectRecord.id == focusTable[indexDel].id) {
 
                 if (confirm("Вы действительно хотите удалить текущую запись?")) {
@@ -359,14 +359,14 @@ utils.focus_obj = {
         focusObj.wrap_table = '#' + event.currentTarget.id;
         focusObj.card_table = '#card' + event.currentTarget.id.substring(4);
         focusObj.name_table = '#tab' + event.currentTarget.id.substring(4);
-        for (var i = 0; i < focusObj.history_table.length; i++) {
+        for (let i = 0; i < focusObj.history_table.length; i++) {
             //снимем все выделения бордер
             $(focusObj.history_table[i]).css('outline', '0');
         }
         //запишем бордер текушего выделения
         $(focusObj.wrap_table).css('outline', '1px solid #00f');
         //проверим историю
-        for (var i = 0; i < focusObj.history_table.length; i++) {
+        for (let i = 0; i < focusObj.history_table.length; i++) {
             if (focusObj.history_table[i] == focusObj.wrap_table)
                 return;
         }

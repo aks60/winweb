@@ -29,7 +29,7 @@ kits.load_table1 = function (table) {
         url: 'kits?action=kitsList',
         success: function (data) {
             kits.kitsList = data.kitsList;
-            for (i = 0; i < kits.kitsList.length; i++) {
+            for (let i = 0; i < kits.kitsList.length; i++) {
                 let tr = kits.kitsList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[0],

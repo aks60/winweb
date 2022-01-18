@@ -19,9 +19,8 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
-login.que_requests = 0;
-
-login.init_login = function () {
+login.init_login = function (src) {
+    console.log(login.que_requests + " " + src);
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
@@ -42,7 +41,7 @@ login.user_connect = function () {
     //debugger;
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         if (att[i] == '') {
             alert(mes[i]);
             return;
@@ -54,7 +53,7 @@ login.user_connect = function () {
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
             login.data = data;
-            login.init_login();
+            login.init_login('log');
         },
         error: function () {
             alert('Ошибка авторизации пользователя');
@@ -68,7 +67,7 @@ login.token_check = function () {
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('pan2 .login.last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
     console.log(att);
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         if (att[i] == '') {
             alert(mes[i]);
             return;
@@ -157,7 +156,7 @@ login.token_sign = function (random) {
 login.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");
-    for (var i = log_list.options.length - 1; i >= 0; i--) {
+    for (let i = log_list.options.length - 1; i >= 0; i--) {
         log_list.remove(i);
     }
     if (!plugin.valid) {
@@ -168,7 +167,7 @@ login.token_refresh = function () {
     if (ret == true) {
         document.all.mesCell.innerHTML = '';
         count_cont = plugin.rtwGetNumberOfContainers();
-        for (i = 0; i < count_cont; i++) {
+        for (let i = 0; i < count_cont; i++) {
             cont_name = plugin.rtwGetContainerName(i);
             add_item(log_list, cont_name.replace("#%#", " - "), cont_name, 0, 0);
         }

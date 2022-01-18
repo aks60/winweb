@@ -31,9 +31,9 @@
                     SYSFUR = {id: 0, side_open: 1, systree_id: 2};
             
             //Глобальные объекты
-            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {},
+            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 0},
                     users = {}, order = {}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
-
+                
             $(document).ready(function () {
 
                 //Глобальные настройки и параметры 
@@ -74,7 +74,7 @@
                     load_sysfurnList()
                 ]).then(() => { //загрузка базы данных 
                     
-                  login.init_login();
+                  login.init_login('dat');
 
                }).catch(() => {
                     alert('Ошибка загрузки бд');
