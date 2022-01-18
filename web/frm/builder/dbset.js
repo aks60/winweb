@@ -1,13 +1,13 @@
 //------------------------------------------------------------------------------
 dbset.find_rec = function (id, ds) {
-    for (i = 0; i < ds.length; i++) {
+    for (let i = 0; i < ds.length; i++) {
         if (id == ds[i][0]) {
             return ds[i];
         }
     }
 }
 dbset.find2_rec = function (key, val, ds) {
-    for (i = 0; i < ds.length; i++) {
+    for (let i = 0; i < ds.length; i++) {
         if (val == ds[i][key]) {
             return ds[i];
         }
@@ -15,7 +15,7 @@ dbset.find2_rec = function (key, val, ds) {
 }
 dbset.find_list = function (id, ds, fk) {
     let list = new Array();
-    for (i = 0; i < ds.length; i++) {
+    for (let i = 0; i < ds.length; i++) {
         if (id == ds[i][fk]) {
             list.push(ds[i]);
         }

@@ -16,8 +16,7 @@ class Wincalc {
 
     parse(script) {
         //try {
-        if (order.sel_table2 != undefined) {
-            
+
             let obj = JSON.parse(script);
             this.obj = obj;                  //объект калькуляции
             this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
@@ -35,7 +34,7 @@ class Wincalc {
             this.elements(this.root, obj, arr); //создадим элементы конструкции
             arr.sort((a, b) => a.id - b.id);
             draw_elements(this, arr); //рисуем конструкцию            
-        }
+            
         //} catch (e) { alert('Ошибка: ' + e.message); }
     }
 
