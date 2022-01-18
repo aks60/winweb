@@ -82,14 +82,14 @@ systree.load_table = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 systree.clone_sysprodRec = function (table, sysprodRec) {
-
+//debugger;
     let id = document.createTextNode(sysprodRec[SYSPROD.id]);
     let name = document.createTextNode(sysprodRec[SYSPROD.name]);
     let script = sysprodRec[SYSPROD.script];
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
-    canvas.id = 'cnv' + sysprodRec.id;
+    canvas.id = 'cnv' + sysprodRec[SYSPROD.id];
     canvas.width = 68;
     canvas.height = 68;
 
