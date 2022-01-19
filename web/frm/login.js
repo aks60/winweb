@@ -20,7 +20,9 @@ err[-52] = 'Библиотека не поддерживает расширен�
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
 login.init_login = function (src) {
-    console.log(login.que_requests + " " + src);
+
+    let DB = dbset;
+    debugger;
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
@@ -47,7 +49,6 @@ login.user_connect = function () {
             return;
         }
     }
-    ++login.que_requests;
     $.ajax({
         url: 'login?action=userConnect',
         data: {'username': att[0], 'password': att[1]},

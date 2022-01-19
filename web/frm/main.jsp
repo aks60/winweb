@@ -31,7 +31,7 @@
                     SYSFUR = {id: 0, side_open: 1, systree_id: 2};
             
             //Глобальные объекты
-            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 0},
+            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 8},
                     users = {}, order = {}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
                 
             $(document).ready(function () {
@@ -63,7 +63,7 @@
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
-                ++login.que_requests;
+
                 Promise.all([
                     load_systreeList(), 
                     load_sysprodList(),

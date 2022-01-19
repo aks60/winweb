@@ -34,8 +34,6 @@
                 systree.init_table($("#tab-systree"), tab_sysprod);
                 systree.load_table($("#tab-systree"), tab_sysprod);
             });
-            function test() {
-            }
         </script> 
     </head> 
     <body> 
