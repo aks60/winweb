@@ -21,8 +21,9 @@ err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
 login.init_login = function (src) {
 
-    let DB = dbset;
-    debugger;
+     //alert(src);
+     console.log(src);
+
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {

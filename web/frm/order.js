@@ -22,6 +22,7 @@ order.init_table = function (table1, table2) {
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
+            debugger;
             let orderRec = table1.jqGrid('getRowData', rowid);
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let prprodRec = dbset.proprodList[i];
