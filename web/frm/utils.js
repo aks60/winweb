@@ -1,3 +1,4 @@
+//------------------------------------------------------------------------------
 //создание объекта маппинга 
 utils.init_obj = function (selector_table) {
 
@@ -348,7 +349,7 @@ utils.init_obj = function (selector_table) {
         }
     }
 }
-
+//------------------------------------------------------------------------------
 //маппинг карточки ввода
 utils.focus_obj = {
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
@@ -386,7 +387,7 @@ utils.focus_obj = {
         return this;
     }
 }
-
+//------------------------------------------------------------------------------
 //генератор ключей
 utils.genId = function (name) {
     $.ajax({
@@ -397,7 +398,7 @@ utils.genId = function (name) {
         }
     });
 }
-
+//------------------------------------------------------------------------------
 utils.format_date2 = function (d) {
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
@@ -409,3 +410,4 @@ utils.format_date2 = function (d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
+//------------------------------------------------------------------------------

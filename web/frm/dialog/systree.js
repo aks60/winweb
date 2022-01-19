@@ -8,12 +8,6 @@ systree.init_dialog = function (dialog) {
         modal: false,
         buttons: {
             "Выбрать": function () {
-//                let table2 = document.getElementById('tab-sysprod');
-//                let j = 1;
-//                let rc = table2.rows.length;
-//                for (let i = j; i < rc; i++) {
-//                    table2.deleteRow(j);
-//                }
                 systree.resize();
             },
             "Закрыть": function () {

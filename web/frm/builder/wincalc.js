@@ -15,7 +15,7 @@ class Wincalc {
     }
 
     parse(script) {
-        //try {
+        try {
 
             let obj = JSON.parse(script);
             this.obj = obj;                  //объект калькуляции
@@ -35,7 +35,7 @@ class Wincalc {
             arr.sort((a, b) => a.id - b.id);
             draw_elements(this, arr); //рисуем конструкцию            
             
-        //} catch (e) { alert('Ошибка: ' + e.message); }
+        } catch (e) { alert('Ошибка: ' + e.message); }
     }
 
     elements(owner, obj, arr) {

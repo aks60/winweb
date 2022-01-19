@@ -20,7 +20,7 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
-
+//------------------------------------------------------------------------------
 users.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
@@ -38,7 +38,7 @@ users.init_table1 = function (table) {
         ]
     });
 }
-
+//------------------------------------------------------------------------------
 users.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
@@ -59,7 +59,7 @@ users.load_table1 = function (table) {
         }
     });
 }
-
+//------------------------------------------------------------------------------
 //проверка корректности ввода учётной записи
 users.token_check = function () {
 
@@ -94,7 +94,7 @@ users.token_check = function () {
         }
     });
 }
-
+//------------------------------------------------------------------------------
 //создание учётной записи логин-пароль пользователя на сервере
 users.logim_create = function () {
     //debugger;
@@ -136,7 +136,7 @@ users.logim_create = function () {
         }
     });
 }
-
+//------------------------------------------------------------------------------
 //удаление учётной записи логин-пароль пользователя на сервере
 users.login_delete = function () {
     var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
@@ -159,7 +159,7 @@ users.login_delete = function () {
         });
     }
 }
-
+//------------------------------------------------------------------------------
 //создание учётной записи пользователя на сервере
 users.token_create = function (login) {
     plugin = document.getElementById("cryptoPlugin");
@@ -203,7 +203,7 @@ users.token_create = function (login) {
         });
     }
 }
-
+//------------------------------------------------------------------------------
 //отправим учётку, получим случайное сообщение
 users.token_random = function () {
     var login = document.getElementById('token_login').value;
@@ -222,7 +222,7 @@ users.token_random = function () {
         });
     }
 }
-
+//------------------------------------------------------------------------------
 //подписание сообщения сервера закрытым ключём токена
 users.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
@@ -251,7 +251,7 @@ users.token_sign = function (random) {
         }
     }
 }
-
+//------------------------------------------------------------------------------
 //удаление логина из токена
 users.token_delete = function () {
     plugin = document.getElementById("cryptoPlugin");
@@ -270,7 +270,7 @@ users.token_delete = function () {
         }
     }
 }
-
+//------------------------------------------------------------------------------
 //подучение списка учёных записей токена
 users.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
@@ -293,7 +293,7 @@ users.token_refresh = function () {
         alert(err[ret]);
     }
 }
-
+//------------------------------------------------------------------------------
 users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected) {
     var oOption = document.createElement("option");
     oOption.appendChild(document.createTextNode(text));
@@ -304,3 +304,4 @@ users.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
 }
+//------------------------------------------------------------------------------

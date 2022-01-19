@@ -1,7 +1,7 @@
 //https://qna.habr.com/q/113113
 //draw_canvas.style.width = "500px"
 //draw_canvas.style.height = "500px"
-
+//------------------------------------------------------------------------------
 export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
 
     let ctx = iwin.ctx;
@@ -13,7 +13,7 @@ export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
     ctx.fill();
     ctx.stroke();
 }
-
+//------------------------------------------------------------------------------
 export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = iwin.ctx;
@@ -27,7 +27,7 @@ export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
     ctx.fill();
     ctx.stroke();
 }
-
+//------------------------------------------------------------------------------
 export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = iwin.ctx;
@@ -40,7 +40,7 @@ export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
     ctx.closePath();
     ctx.fill();
 }
-
+//------------------------------------------------------------------------------
 export function draw_full_circle(iwin) {
 
     let ctx = iwin.ctx;
@@ -48,14 +48,14 @@ export function draw_full_circle(iwin) {
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
     ctx.stroke();
 }
-
+//------------------------------------------------------------------------------
 export function draw_text(iwin) {
 
     let ctx = iwin.ctx;
     ctx.font = "30px Arial";
     ctx.strokeText("Hello World", 10, 50);
 }
-
+//------------------------------------------------------------------------------
 //Рисуем конструкцию
 export function draw_elements(iwin, arr) {
     //try {
@@ -100,3 +100,4 @@ export function draw_elements(iwin, arr) {
 //        console.error('Ошибка: ' + e.message);
 //    }
 }
+//------------------------------------------------------------------------------
