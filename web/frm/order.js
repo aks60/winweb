@@ -103,7 +103,10 @@ order.event_clicked = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         order.proprodID = row.cells[0].innerHTML;
-        alert('info = ' + order.proprodID);
+        //alert('info = ' + order.proprodID); 
+        order.sel_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
+        //alert(order.sel_table2[PROPROD.script]);
+
     }
 }
 //------------------------------------------------------------------------------

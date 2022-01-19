@@ -28,7 +28,6 @@ export function load_systreeList() {
         url: 'dbset?action=systreeList',
 //        success: function (data) {
 //            dbset.systreeList = data.systreeList;  
-//            --login.que_requests;
 //        }
     });
 }
@@ -38,7 +37,6 @@ export function load_sysprodList() {
         url: 'dbset?action=sysprodList',
 //        success: function (data) {
 //            dbset.sysprodList = data.sysprodList; 
-//            --login.que_requests;
 //        }
     });
 }
@@ -48,7 +46,6 @@ export function load_colorList() {
         url: 'dbset?action=colorList',
 //        success: function (data) {
 //            dbset.colorList = data.colorList;
-//            --login.que_requests;
 //        }
     });
 }
@@ -58,7 +55,6 @@ export function load_artiklList() {
         url: 'dbset?action=artiklList',
 //        success: function (data) {
 //            dbset.artiklList = data.artiklList;
-//            --login.que_requests;
 //        }
     });
 }
@@ -68,7 +64,6 @@ export function load_artdetList() {
         url: 'dbset?action=artdetList',
 //        success: function (data) {
 //            dbset.artdetList = data.artdetList; 
-//            --login.que_requests;
 //        }
     });
 }
@@ -78,7 +73,6 @@ export function load_proprodList() {
         url: 'dbset?action=proprodList',
 //        success: function (data) {
 //            dbset.proprodList = data.proprodList;
-//            --login.que_requests;
 //        }
     });
 }
@@ -88,7 +82,6 @@ export function load_sysfurnList() {
         url: 'dbset?action=sysfurnList',
 //        success: function (data) {
 //            dbset.sysfurnList = data.sysfurnList;
-//            --login.que_requests;
 //        }
     });
 }

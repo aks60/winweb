@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <script type="text/javascript" src="frm/order.js"></script> 
         <title>Order</title>
-        
+
         <style>
             #table2 tr:hover {background:#E2EEFF;}
             #table2 .activeRow, #table2 .activeRow:hover {background:#6598C7; color:#fff;}
@@ -15,7 +15,7 @@
             #table2 tr > *:nth-child(2) { width: 390px !important; }
             #table2 tr > *:nth-child(3) { width: 68px !important;  }
         </style>        
-        
+
         <script type="text/javascript">
 
             order.resize = function () {
@@ -26,7 +26,11 @@
             }
 
             function test() {
-                $("#table2").jqGrid("setSelection", 1);
+
+                var canvas = document.querySelector("#cnv");
+                canvas.width = 120;
+                canvas.height = 120;
+                winc.build(canvas, order.sel_table2[PROPROD.script]);
             }
 
             $(document).ready(function () {
@@ -39,24 +43,25 @@
                 tab_sysprod.addEventListener('click', order.event_clicked);
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
-                $('#dialog-dic').load('frm/dialog/systree.jsp');
+//                $('#dialog-dic').load('frm/dialog/systree.jsp');
             });
         </script>
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <button onClick="winc.build(document.getElementById('cnv'), order.sel_table2.script);">Кнопка1</button>
+            <button onClick="winc.build(document.getElementById('cnv'), order.sel_table2[PROPROD.script]);">Кнопка1</button>
             <button onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
+            <button onClick="test()">Кнопка3</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
                 <div id="centr" style="height: 100%; width: 100%;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
-                <div id="east" style="position: absolute; margin-top: 300px; width: 472px; top: 0; right: -480px; bottom: 0;">
-                    <div id="east2" style="margin-left: -2px; margin-top: -302px; height: 298px;">
+                <div id="east" style="position: absolute; margin-top: 200px; width: 472px; top: 0; right: -480px; bottom: 0;">
+                    <div id="east2" style="margin-left: -2px; margin-top: -202px; height: 198px;">
 
-                        <canvas id="cnv" style="border:2px solid black;" width="460" height="280"></canvas>
+                        <canvas id="cnv" style="border:2px solid black;" width="460" height="190"></canvas>
 
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">

@@ -27,12 +27,12 @@
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            NORTH
+            <button onClick="">Кнопка1</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%;">
-                    CENTER
+                    <canvas id="cnv" style="border:2px solid black;" width="460" height="460"></canvas>
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-top: -302px; height: 300px;">
