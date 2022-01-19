@@ -63,17 +63,14 @@
                     load_artiklList(), load_artdetList(), load_proprodList(), load_sysfurnList()
                     
                 ).done((p1, p2, p3, p4, p5, p6, p7) => { //загрузка базы данных 
-                    dbset.systreeList = new Array(p1[0]);
-                    dbset.sysprodList = new Array(p2[0]);
-                    dbset.colorList = new Array(p3[0]);
-                    dbset.artiklList = new Array(p4[0]);
-                    dbset.artdetList = new Array(p5[0]);
-                    dbset.proprodList = new Array(p6[0]);
-                    dbset.sysfurnList = new Array(p7[0]);
-                    
-//                   let mmm = dbset.proprodList.length;
-//                   debugger;
-                   
+                    dbset.systreeList = p1[0].systreeList;
+                    dbset.sysprodList = p2[0].sysprodList;
+                    dbset.colorList = p3[0].colorList;
+                    dbset.artiklList = p4[0].artiklList;
+                    dbset.artdetList = p5[0].artdetList;
+                    dbset.proprodList = p6[0].proprodList;
+                    dbset.sysfurnList = p7[0].sysfurnList;
+
                     login.init_login('dat');
         
                }).catch(() => {

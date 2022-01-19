@@ -22,13 +22,13 @@ order.init_table = function (table1, table2) {
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
-            debugger;
+            //debugger;
             let orderRec = table1.jqGrid('getRowData', rowid);
             for (let i = 0; i < dbset.proprodList.length; i++) {
-                let prprodRec = dbset.proprodList[i];
+                let proprodRec = dbset.proprodList[i];
 
-                if (orderRec.id == prprodRec[PROPROD.project_id]) {
-                    order.clone_sysprodRec(table2, prprodRec);
+                if (orderRec.id == proprodRec[PROPROD.project_id]) {
+                    order.clone_sysprodRec(table2, proprodRec);
                 }
             }
             $('#table2 tr > *:nth-child(1)').hide();

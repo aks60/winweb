@@ -39,7 +39,7 @@
                 tab_sysprod.addEventListener('click', order.event_clicked);
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
-                //$('#dialog-dic').load('frm/dialog/systree.jsp');
+                $('#dialog-dic').load('frm/dialog/systree.jsp');
             });
         </script>
     </head>
