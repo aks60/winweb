@@ -60,7 +60,6 @@
 
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">
-                    <!--<div id="east3" style="height: 100%;">-->
                         <table id="table2" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                             <tr style="height: 22px; background-color: #e7f4f9">
                                 <th></th><th>Наименование</th><th>Изображение</th></tr>

@@ -28,7 +28,7 @@ export function load_systreeList() {
         url: 'dbset?action=systreeList',
         success: function (data) {
             dbset.systreeList = data.systreeList;  
-            console.log('dbset.systreeList');
+            //console.log('dbset.systreeList');
         }
     });
 }
@@ -38,7 +38,7 @@ export function load_sysprodList() {
         url: 'dbset?action=sysprodList',
         success: function (data) {
             dbset.sysprodList = data.sysprodList; 
-            console.log('dbset.sysprodList');
+            //console.log('dbset.sysprodList');
         }
     });
 }
@@ -48,7 +48,7 @@ export function load_colorList() {
         url: 'dbset?action=colorList',
         success: function (data) {
             dbset.colorList = data.colorList;
-            console.log('dbset.colorList');
+            //console.log('dbset.colorList');
         }
     });
 }
@@ -58,7 +58,7 @@ export function load_artiklList() {
         url: 'dbset?action=artiklList',
         success: function (data) {
             dbset.artiklList = data.artiklList;
-            console.log('dbset.artiklList');
+            //console.log('dbset.artiklList');
         }
     });
 }
@@ -68,7 +68,7 @@ export function load_artdetList() {
         url: 'dbset?action=artdetList',
         success: function (data) {
             dbset.artdetList = data.artdetList; 
-            console.log('dbset.artdetList ');
+            //console.log('dbset.artdetList ');
         }
     });
 }
@@ -78,7 +78,7 @@ export function load_proprodList() {
         url: 'dbset?action=proprodList',
         success: function (data) {
             dbset.proprodList = data.proprodList;
-            console.log('dbset.proprodList');
+            //console.log('dbset.proprodList');
         }
     });
 }
@@ -88,7 +88,7 @@ export function load_sysfurnList() {
         url: 'dbset?action=sysfurnList',
         success: function (data) {
             dbset.sysfurnList = data.sysfurnList;
-            console.log('dbset.sysfurnList');
+            //console.log('dbset.sysfurnList');
         }
     });
 }
