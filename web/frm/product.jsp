@@ -11,14 +11,14 @@
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
-                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 24);
+//                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
+//                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 24);
 
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    winc.build(cvs, order.rec_table2[PROPROD.script]);  
+                    winc.build(cvs, order.rec_table2[PROPROD.script]);
                 }
             }
 
@@ -29,6 +29,7 @@
 
 //                product.init_table1($("#table1"));
 //                product.load_table1($("#table1"));
+                product.create_tree_iwin();
             });
         </script>
     </head>
@@ -45,8 +46,8 @@
                     <div id="east2" style="margin-top: -302px; height: 300px;">
                         EAST2
                     </div>
-                    <div id="east3" style="height: 100%; width: 100%;">
-                        <table id="table1"  class="ui-jqgrid-btable"></table> 
+                    <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
+                        <div id="tree-iwin"></div>
                     </div>                
                 </div>
             </div>

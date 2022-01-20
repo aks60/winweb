@@ -1,20 +1,20 @@
 //------------------------------------------------------------------------------
 product.init_table1 = function (table) {
-        table.jqGrid({
-            datatype: "local",
-            gridview: true,
-            //rownumbers: true,
-            autowidth: true,
-            height: "auto",            
-            colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
-            colModel: [
-                {name: 'id', hidden: true, key: true},
-                {name: 'name', width: 120, sorttype: "text"},
-                {name: 'scripl', width: 120, sorttype: "text"},
-                {name: 'project_id', hidden: true},
-                {name: 'systree_id', hidden: true}
-            ]
-        });
+    table.jqGrid({
+        datatype: "local",
+        gridview: true,
+        //rownumbers: true,
+        autowidth: true,
+        height: "auto",
+        colNames: ['id', 'Наименование', 'Рисунок', 'project_id', 'systree_id'],
+        colModel: [
+            {name: 'id', hidden: true, key: true},
+            {name: 'name', width: 120, sorttype: "text"},
+            {name: 'scripl', width: 120, sorttype: "text"},
+            {name: 'project_id', hidden: true},
+            {name: 'systree_id', hidden: true}
+        ]
+    });
 }
 //------------------------------------------------------------------------------
 product.load_table1 = function (table) {
@@ -31,7 +31,7 @@ product.load_table1 = function (table) {
     product.resize();
 }
 //------------------------------------------------------------------------------
-order.create_table = function (tablearea, table) {
+product.create_table = function (tablearea, table) {
     //let tablearea = document.getElementById('tablearea');
     //let table = document.createElement('table');
     let tr = [];
@@ -54,4 +54,19 @@ order.create_table = function (tablearea, table) {
     tablearea.appendChild(table);
 }
 //------------------------------------------------------------------------------
+product.create_tree_iwin = function () {
+    $('#tree-iwin').jstree({'core': {
+            'data': [
+                {"id": "1", "parent": "#", "text": "Окно четырёхугольное"},
+                {"id": "2", "parent": "1", "text": "Параметры конструкции"},
+                {"id": "3", "parent": "1", "text": "Коробка"},
+                {"id": "4", "parent": "3", "text": "Сторона коробки"},
+                {"id": "5", "parent": "3", "text": "Сторона коробки"},
+                {"id": "6", "parent": "3", "text": "Сторона коробки"},
+                {"id": "7", "parent": "3", "text": "Сторона коробки"},
+                {"id": "8", "parent": "1", "text": "Створка"},
+                {"id": "9", "parent": "1", "text": "Створка"},
+            ]
+        }});
+}
 

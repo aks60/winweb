@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
         <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid-4.6.3/ui.jqgrid.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/jstree-3.3.12/themes/default/style.min.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
@@ -16,6 +17,7 @@
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
+        <script type="text/javascript" src="jss/jstree-3.3.12/jstree.min.js"></script>
         <script type="module" src="frm/builder/wincalc.js"></script>
 
         <script type="text/javascript">
@@ -40,6 +42,7 @@
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('button').button();
+//                $.jstree.defaults.core.themes.variant = "large";
             });
             window.onload = function () { };
         </script>         
