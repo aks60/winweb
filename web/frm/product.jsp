@@ -13,11 +13,13 @@
                 $("#context").css("height", height - 80);
                 $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east3").height() - 24);
-                
-                var canvas = document.querySelector("#cnv2");
-                canvas.width = $("#centr").width() - 4;
-                canvas.height = $("#centr").height() - 4;
-                //winc.build(canvas, order.sel_table2[PROPROD.script]);                
+
+                let cvs = document.querySelector("#cnv2");
+                if (cvs != undefined) {
+                    cvs.width = $("#centr").width() - 4;
+                    cvs.height = $("#centr").height() - 4;
+                    winc.build(cvs, order.rec_table2[PROPROD.script]);  
+                }
             }
 
             $(document).ready(function () {

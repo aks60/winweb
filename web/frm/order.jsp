@@ -19,18 +19,19 @@
         <script type="text/javascript">
 
             order.resize = function () {
-                var height = window.innerHeight;
-                $("#context").css("height", height - 80);
+                $("#context").css("height", window.innerHeight - 80);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
             function test() {
-
-                var canvas = document.querySelector("#cnv");
-                canvas.width = 120;
-                canvas.height = 120;
-                winc.build(canvas, order.sel_table2[PROPROD.script]);
+                let table = document.getElementById('table2')
+//                let row = order.parentTag(table.target, 'TR');
+//                debugger;
+                order.select_table_html(table, order.row_table2);
+                //debugger;
+                order.event_clicked2(order.row_e, order.row_table2, table);
+                
             }
 
             $(document).ready(function () {
@@ -49,7 +50,7 @@
     </head>
     <body>        
         <div id="north" style="height: 20px;">
-            <button onClick="winc.build(document.getElementById('cnv'), order.sel_table2[PROPROD.script]);">Кнопка1</button>
+            <button onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
             <button onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
             <button onClick="test()">Кнопка3</button>
         </div>     

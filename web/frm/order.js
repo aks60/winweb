@@ -31,6 +31,8 @@ order.init_table = function (table1, table2) {
                     order.clone_sysprodRec(table2, proprodRec);
                 }
             }
+            //select_table_html(table2, order.row_table2);  
+            
             $('#table2 tr > *:nth-child(1)').hide();
             order.resize();
         }
@@ -54,8 +56,8 @@ order.load_table = function (table1, table2) {
                     propart_id: tr[5],
                     manager: tr[6]
                 });
-            }
-            table1.jqGrid("setSelection", 8);
+            }            
+            table1.jqGrid("setSelection", order.sel_table1);
             order.resize();
         }
     });
@@ -89,24 +91,53 @@ order.clone_sysprodRec = function (table, proprodRec) {
     winc.build(canvas, script);
 }
 //------------------------------------------------------------------------------
-order.get_parentTag = function (node, tag) {
+order.parentTag = function (node, tag) {
     if (node)
-        return (node.tagName == tag) ? node : order.get_parentTag(node.parentElement, tag);
+        return (node.tagName == tag) ? node : order.parentTag(node.parentElement, tag);
     return null;
 }
 //------------------------------------------------------------------------------
 order.event_clicked = function (e) {
-    let row = order.get_parentTag(e.target, 'TR');
+    //debugger;
+    let row = order.parentTag(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
+        
         order.proprodID = row.cells[0].innerHTML;
-        //alert('info = ' + order.proprodID); 
-        order.sel_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
-        //alert(order.sel_table2[PROPROD.script]);
+        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
+        order.row_table2 = row;
+        order.row_e = e;
+    }
+}
+//------------------------------------------------------------------------------
+order.event_clicked2 = function (e, row, table) {
 
+    if (row) {
+        idx = table.getAttribute('activeRowIndex');
+        table.rows[idx].classList.remove('activeRow');
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', row.rowIndex);
+        
+        order.proprodID = row.cells[0].innerHTML;
+        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
+        order.row_table2 = row;
+        order.row_e = e;
+    }
+}
+//------------------------------------------------------------------------------
+order.select_table_html = function (table, row) {
+    if (row) {
+        //let idx = table.getAttribute('activeRowIndex');
+        //table.rows[idx].classList.remove('activeRow');
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', 2);
+        
+//        order.proprodID = row.cells[0].innerHTML;
+//        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
+//        oreder.row_table2 = row;
     }
 }
 //------------------------------------------------------------------------------

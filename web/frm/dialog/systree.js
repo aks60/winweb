@@ -103,14 +103,14 @@ systree.clone_sysprodRec = function (table, sysprodRec) {
     winc.build(canvas, script);    
 }
 //------------------------------------------------------------------------------
-systree.get_parentTag = function (node, tag) {
+systree.parentTag = function (node, tag) {
     if (node)
-        return (node.tagName == tag) ? node : systree.get_parentTag(node.parentElement, tag);
+        return (node.tagName == tag) ? node : systree.parentTag(node.parentElement, tag);
     return null;
 }
 //------------------------------------------------------------------------------
 systree.event_clicked = function (e) {
-    let row = systree.get_parentTag(e.target, 'TR');
+    let row = systree.parentTag(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');
