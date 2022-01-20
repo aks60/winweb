@@ -25,13 +25,8 @@
             }
 
             function test() {
-                let table = document.getElementById('table2')
-//                let row = order.parentTag(table.target, 'TR');
-//                debugger;
-                order.select_table_html(table, order.row_table2);
-                //debugger;
-                order.event_clicked2(order.row_e, order.row_table2, table);
-                
+                let id = 'cnv' + order.proprodID;
+                document.getElementById(id).click();                
             }
 
             $(document).ready(function () {
@@ -51,7 +46,7 @@
     <body>        
         <div id="north" style="height: 20px;">
             <button onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
-            <button onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
+            <button id="c2" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
             <button onClick="test()">Кнопка3</button>
         </div>     
         <div id = "context">        

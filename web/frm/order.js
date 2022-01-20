@@ -31,8 +31,10 @@ order.init_table = function (table1, table2) {
                     order.clone_sysprodRec(table2, proprodRec);
                 }
             }
-            //select_table_html(table2, order.row_table2);  
-            
+            if (order.proprodID != undefined) {
+                let id = 'cnv' + order.proprodID;
+                document.getElementById(id).click();
+            }
             $('#table2 tr > *:nth-child(1)').hide();
             order.resize();
         }
@@ -56,7 +58,7 @@ order.load_table = function (table1, table2) {
                     propart_id: tr[5],
                     manager: tr[6]
                 });
-            }            
+            }
             table1.jqGrid("setSelection", order.sel_table1);
             order.resize();
         }
@@ -105,39 +107,9 @@ order.event_clicked = function (e) {
         table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
-        
-        order.proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
-        order.row_table2 = row;
-        order.row_e = e;
-    }
-}
-//------------------------------------------------------------------------------
-order.event_clicked2 = function (e, row, table) {
 
-    if (row) {
-        idx = table.getAttribute('activeRowIndex');
-        table.rows[idx].classList.remove('activeRow');
-        row.classList.add('activeRow');
-        table.setAttribute('activeRowIndex', row.rowIndex);
-        
         order.proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
-        order.row_table2 = row;
-        order.row_e = e;
-    }
-}
-//------------------------------------------------------------------------------
-order.select_table_html = function (table, row) {
-    if (row) {
-        //let idx = table.getAttribute('activeRowIndex');
-        //table.rows[idx].classList.remove('activeRow');
-        row.classList.add('activeRow');
-        table.setAttribute('activeRowIndex', 2);
-        
-//        order.proprodID = row.cells[0].innerHTML;
-//        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);              
-//        oreder.row_table2 = row;
+        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);
     }
 }
 //------------------------------------------------------------------------------
