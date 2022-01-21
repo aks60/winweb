@@ -4,7 +4,9 @@ import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
 //------------------------------------------------------------------------------
 
 winc.build = function (canvas, script) {
-    new Wincalc(canvas).parse(script);
+   let w = new Wincalc(canvas);
+   w.parse(script);
+   return w;
 }
 
 class Wincalc {
@@ -30,10 +32,10 @@ class Wincalc {
 
             this.root = new Root(obj, null, this); //главное окно
 
-            let arr = new Array(); //массив элементов конструкции            
-            this.elements(this.root, obj, arr); //создадим элементы конструкции
-            arr.sort((a, b) => a.id - b.id);
-            draw_elements(this, arr); //рисуем конструкцию            
+            this.elemList = new Array(); //массив элементов конструкции            
+            this.elements(this.root, obj, this.elemList); //создадим элементы конструкции
+            this.elemList.sort((a, b) => a.id - b.id);
+            draw_elements(this, this.elemList); //рисуем конструкцию            
             
         } catch (e) { alert('Ошибка: ' + e.message); }
     }

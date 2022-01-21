@@ -17,6 +17,8 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
+            
+            order.wincalcMap.clear()
             let j = 1;
             let rc = table2.rows.length;
             for (let i = j; i < rc; i++) {
@@ -28,11 +30,11 @@ order.init_table = function (table1, table2) {
                 let proprodRec = dbset.proprodList[i];
 
                 if (orderRec.id == proprodRec[PROPROD.project_id]) {
-                    order.clone_sysprodRec(table2, proprodRec);
+                    order.add_proprodClone(table2, proprodRec);
                 }
             }
-            if (order.proprodID != undefined) {
-                let id = 'cnv' + order.proprodID;
+            if (order.rec_table2 != undefined) {
+                let id = 'cnv' + order.rec_table2[0];
                 document.getElementById(id).click();
             }
             $('#table2 tr > *:nth-child(1)').hide();
@@ -59,23 +61,25 @@ order.load_table = function (table1, table2) {
                     manager: tr[6]
                 });
             }
-            table1.jqGrid("setSelection", order.sel_table1);
+            table1.jqGrid("setSelection", order.rowid_table1);
             order.resize();
         }
     });
 }
 //------------------------------------------------------------------------------
-order.clone_sysprodRec = function (table, proprodRec) {
-
-    let id = document.createTextNode(proprodRec[PROPROD.id]);
-    let name = document.createTextNode(proprodRec[PROPROD.name]);
-    let script = proprodRec[PROPROD.script];
+order.add_proprodClone = function (table, proprodRec) {
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
     canvas.id = 'cnv' + proprodRec[PROPROD.id];
     canvas.width = 68;
     canvas.height = 68;
+
+    let id = document.createTextNode(proprodRec[PROPROD.id]);
+    let name = document.createTextNode(proprodRec[PROPROD.name]);
+    let script = proprodRec[PROPROD.script];
+    let iwincalc = winc.build(canvas, script);
+    order.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
@@ -90,7 +94,7 @@ order.clone_sysprodRec = function (table, proprodRec) {
     tr.appendChild(td2);
     tr.appendChild(td3);
     table.appendChild(tr);
-    winc.build(canvas, script);
+
 }
 //------------------------------------------------------------------------------
 order.parentTag = function (node, tag) {
@@ -100,7 +104,7 @@ order.parentTag = function (node, tag) {
 }
 //------------------------------------------------------------------------------
 order.event_clicked = function (e) {
-    //debugger;
+    
     let row = order.parentTag(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
@@ -108,8 +112,8 @@ order.event_clicked = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
 
-        order.proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = dbset.find_rec(order.proprodID, dbset.proprodList);
+        let proprodID = row.cells[0].innerHTML;
+        order.rec_table2 = dbset.find_rec(proprodID, dbset.proprodList);
     }
 }
 //------------------------------------------------------------------------------

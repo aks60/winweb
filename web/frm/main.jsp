@@ -34,7 +34,7 @@
             
             //Глобальные объекты
             var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
-                    users = {}, order = {sel_table1: 8, sel_table2: 1}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
+                    users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
 
             $(document).ready(function () {
 

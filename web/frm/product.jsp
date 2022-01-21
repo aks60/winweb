@@ -11,8 +11,8 @@
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-//                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
-//                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 24);
+                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
+                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 30);
 
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
@@ -27,9 +27,9 @@
                     product.resize();
                 }).trigger('resize');
 
-//                product.init_table1($("#table1"));
-//                product.load_table1($("#table1"));
-                product.create_tree_iwin();
+                product.init_table($("#table1"));
+                product.load_table($("#table1"));
+                //product.create_tree_iwin();
             });
         </script>
     </head>
@@ -47,7 +47,7 @@
                         EAST2
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
-                        <div id="tree-iwin"></div>
+                        <table id="table1"  class="ui-jqgrid-btable"></table> 
                     </div>                
                 </div>
             </div>

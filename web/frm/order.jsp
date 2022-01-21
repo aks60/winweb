@@ -11,9 +11,10 @@
             #table2 .activeRow, #table2 .activeRow:hover {background:#6598C7; color:#fff;}
 
             #table2 tr { height: 68px; };
-            #table2 tr  > *:nth-child(1) { display: none !important; }
+            #table2 tr > *:nth-child(1) { display: none !important; }
             #table2 tr > *:nth-child(2) { width: 390px !important; }
             #table2 tr > *:nth-child(3) { width: 68px !important;  }
+            #table2 tr > *:nth-child(4) { display: none !important; }
         </style>        
 
         <script type="text/javascript">
@@ -24,9 +25,7 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
-            function test() {
-                let id = 'cnv' + order.proprodID;
-                document.getElementById(id).click();                
+            function test() {                
             }
 
             $(document).ready(function () {

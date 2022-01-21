@@ -46,11 +46,11 @@ systree.init_table = function (table1, table2) {
                     let sysprodRec = dbset.sysprodList[i];
                     
                     if (sysprodRec != undefined && systreeRec.id == sysprodRec[SYSPROD.systree_id]) {
-                        systree.clone_sysprodRec(table2, sysprodRec);
+                        systree.add_sysprodClone(table2, sysprodRec);
                     }
                 }
             }
-            $('#tab-sysprod tr > *:nth-child(1)').hide();
+            $('#table2a tr > *:nth-child(1)').hide();
             systree.resize();
         }
     });
@@ -75,7 +75,7 @@ systree.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
-systree.clone_sysprodRec = function (table, sysprodRec) {
+systree.add_sysprodClone = function (table, sysprodRec) {
 //debugger;
     let id = document.createTextNode(sysprodRec[SYSPROD.id]);
     let name = document.createTextNode(sysprodRec[SYSPROD.name]);
