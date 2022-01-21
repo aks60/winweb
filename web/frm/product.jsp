@@ -11,7 +11,7 @@
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 4);
+                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 0);
                 $("#table1").jqGrid('setGridHeight', $("#east3").height() - 30);
 
                 let cvs = document.querySelector("#cnv2");
