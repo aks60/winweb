@@ -21,9 +21,11 @@ product.init_table = function (table1) {
 product.load_table = function (table1) {
 
     table1.jqGrid('clearGridData', true);
-    let winс = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-
     let arr = new Array();
+    let winс = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    winс.root.frames.forEach((frame, key, map) => {
+        
+    });
     arr.push({parent: 0, level: 0, name: 'Окно четырёхугольное', id: 0, isLeaf: false});
     arr.push({parent: 0, level: 1, name: 'Параметры по умолчанию', id: 1, isLeaf: true});
     arr.push({parent: 0, level: 1, name: 'Коробка', id: 2, isLeaf: false});
