@@ -4,10 +4,11 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
-        <script type="text/javascript" src="frm/product.js"></script>
         <title>Product</title>
 
-        <script type="text/javascript">
+        <script type="module"> 
+            import {init_table, load_tree} from "./frm/product.js"
+            
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
@@ -27,9 +28,9 @@
                     product.resize();
                 }).trigger('resize');
 
-                product.init_table($("#table1"));
-                product.load_table($("#table1"));
-                //product.create_tree_iwin();
+                //init_table($("#table1"));
+                //load_table($("#table1"));
+                load_tree($('#tree-iwin'));
             });
         </script>
     </head>
@@ -47,7 +48,8 @@
                         EAST2
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
-                        <table id="table1"  class="ui-jqgrid-btable"></table> 
+                        <!--<table id="table1"  class="ui-jqgrid-btable"></table>--> 
+                        <div id="tree-iwin"></div>
                     </div>                
                 </div>
             </div>
