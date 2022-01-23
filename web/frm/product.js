@@ -98,7 +98,7 @@ product.load_tree = function () {
                 $(this).jstree("open_node", $("#0"));
             })
             .bind("select_node.jstree", function (evt, data) {
-                //alert($("#tree-iwin").jstree("get_selected")[0]);
+                alert($("#tree-iwin").jstree("get_selected")[0]);
             });
 }
 
