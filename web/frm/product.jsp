@@ -7,13 +7,13 @@
         <title>Product</title>
 
         <script type="module"> 
-            import {init_table, load_tree} from "./frm/product.js"
+            import {init_table, load_table, load_tree} from "./frm/product.js"
             
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 0);
-                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 30);
+//                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 0);
+//                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 30);
 
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
@@ -28,8 +28,8 @@
                     product.resize();
                 }).trigger('resize');
 
-                //init_table($("#table1"));
-                //load_table($("#table1"));
+//                init_table($("#table1"));
+//                load_table($("#table1"));
                 load_tree($('#tree-iwin'));
             });
         </script>
