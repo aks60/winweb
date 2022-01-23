@@ -11,13 +11,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
-        <script type="text/javascript" src="jss/jquery-3.6.0/jquery-3.6.0.min.js"></script>                       
+        <script type="text/javascript" src="jss/jquery-3.6.0/jquery-3.6.0.js"></script>                       
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
-        <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.min.js"></script>        
+        <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.js"></script>        
 
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
-        <script type="text/javascript" src="jss/jstree-3.3.12/jstree.min.js"></script>
+        <script type="text/javascript" src="jss/jstree-3.3.12/jstree.js"></script>
         <script type="module" src="frm/builder/wincalc.js"></script>
 
         <script type="text/javascript">
