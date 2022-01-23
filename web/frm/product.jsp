@@ -4,10 +4,10 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
+        <script type="text/javascript" src="frm/product.js"></script>
         <title>Product</title>
 
-        <script type="module"> 
-            import {load_tree} from "./frm/product.js";
+        <script type="text/javascript">
 
             product.resize = function () {
             var height = window.innerHeight;
@@ -26,10 +26,9 @@
                 product.resize();
               }).trigger('resize');
 
-              load_tree($('#tree-iwin'));
+              product.load_tree($('#tree-iwin'));
             });
-        </script>
-        <script type="text/javascript">
+       
          function test() {
            let node = $("#tree-iwin").jstree("get_selected"); 
            alert($("#tree-iwin").jstree("get_selected")[0]);
