@@ -53,6 +53,7 @@ export function load_table(table1) {
     });
     product.resize();
 }
+
 function element(com, arr) {
 
     if (com instanceof Stvorka) {
@@ -92,16 +93,16 @@ export function load_tree() {
     let root = winc.root;
 
     if (root.type == 'RECTANGL')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/open.gif'});
+        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
     else if (root.type == 'TRAPEZE')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/open.gif'});
+        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
     else if (root.type == 'TRIANGL')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/open.gif'});
+        arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
     else if (root.type == 'ARCH')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/open.gif'});
+        arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
 
     arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
-    arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/open.gif'});
+    arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
 
     arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
@@ -120,7 +121,7 @@ export function load_tree() {
 function elements(com, arr) {
 
     if (com instanceof Stvorka) {
-        arr.push({'id': com.id, 'parent': 0, 'text': 'Створка'});
+        arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'img/tool/folder.gif'});
         arr.push({'id': com.frames.get('BOTT').id, 'parent': com.id, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('RIGHT').id, 'parent': com.id, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('TOP').id, 'parent': com.id, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
@@ -147,4 +148,5 @@ function elements(com, arr) {
         }
     }
 }
+
 
