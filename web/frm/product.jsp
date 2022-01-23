@@ -7,32 +7,38 @@
         <title>Product</title>
 
         <script type="module"> 
-            import {load_tree} from "./frm/product.js"
-            
-            product.resize = function () {
-                var height = window.innerHeight;
-                $("#context").css("height", height - 80);
+            import {load_tree} from "./frm/product.js";
 
-                let cvs = document.querySelector("#cnv2");
-                if (cvs != undefined) {
-                    cvs.width = $("#centr").width() - 4;
-                    cvs.height = $("#centr").height() - 4;
-                    winc.build(cvs, order.rec_table2[PROPROD.script]);
-                }
+            product.resize = function () {
+            var height = window.innerHeight;
+            $("#context").css("height", height - 80);
+
+              let cvs = document.querySelector("#cnv2");
+              if (cvs != undefined) {
+                cvs.width = $("#centr").width() - 4;
+                cvs.height = $("#centr").height() - 4;
+                winc.build(cvs, order.rec_table2[PROPROD.script]);
+              }
             }
 
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    product.resize();
-                }).trigger('resize');
-                
-                load_tree($('#tree-iwin'));
+              $(window).bind('resize', function () {
+                product.resize();
+              }).trigger('resize');
+
+              load_tree($('#tree-iwin'));
             });
+        </script>
+        <script type="text/javascript">
+         function test() {
+           let node = $("#tree-iwin").jstree("get_selected"); 
+           alert($("#tree-iwin").jstree("get_selected")[0]);
+         }
         </script>
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            <button onClick="">Кнопка1</button>
+            <button onClick="test();">Кнопка1</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%;">
@@ -41,7 +47,8 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-top: -302px; height: 300px;">
-                        EAST2
+                        <div2 class='tag2' type='txt' label='Полное наименование' name2="name1" width='200' dx="200"/><br>
+                        <div2 class='tag2' type='txt' label='Сокращённое наименование' name2="name2" width='200' dx="200"/><br> 
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
                         <div id="tree-iwin"></div>

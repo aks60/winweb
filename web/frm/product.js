@@ -27,9 +27,13 @@ export function load_tree() {
 
     $('#tree-iwin').jstree({'core': {
             'data': arr,
-        }}).jstree("set_theme", "default").bind("loaded.jstree", function (event, data) {
-        $(this).jstree("open_node", $("#0"));
-    });
+        }})
+            .bind("loaded.jstree", function (event, data) {
+                $(this).jstree("open_node", $("#0"));
+            })
+            .bind("select_node.jstree", function (evt, data) {
+                //alert($("#tree-iwin").jstree("get_selected")[0]);
+            });
 }
 
 function elements(com, arr) {
