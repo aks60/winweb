@@ -7,13 +7,11 @@
         <title>Product</title>
 
         <script type="module"> 
-            import {init_table, load_table, load_tree} from "./frm/product.js"
+            import {load_tree} from "./frm/product.js"
             
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-//                $("#table1").jqGrid('setGridWidth', $("#east3").width() - 0);
-//                $("#table1").jqGrid('setGridHeight', $("#east3").height() - 30);
 
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
@@ -27,9 +25,7 @@
                 $(window).bind('resize', function () {
                     product.resize();
                 }).trigger('resize');
-
-//                init_table($("#table1"));
-//                load_table($("#table1"));
+                
                 load_tree($('#tree-iwin'));
             });
         </script>
@@ -48,7 +44,6 @@
                         EAST2
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
-                        <!--<table id="table1"  class="ui-jqgrid-btable"></table>--> 
                         <div id="tree-iwin"></div>
                     </div>                
                 </div>
