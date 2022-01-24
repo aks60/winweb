@@ -9,8 +9,8 @@
 
         <script type="text/javascript">
 
-            var objUch = new mapObj('#tab-empty');
-            var objList = [objUch];
+            //var objUch = new mapObj('#tab-empty');
+            //var objList = [objUch];
 
             product.resize = function () {
                 var height = window.innerHeight;
@@ -26,7 +26,7 @@
 
             $(document).ready(function () {
 
-                objUch.map(['#tabs-1 .sub-pan']);
+                taq_deploy(['#tabs-1 .sub-pan']);
                 //objUch.loadField();
 
                 $(window).bind('resize', function () {
@@ -37,7 +37,14 @@
             });
 
             function test() {
-                $('#tabs-2').replaceWith('<button onClick="test();">Кнопка1x</button>');
+//                var TabCh = document.querySelectorAll('#tabs-1 .sub-pan div2.tag2');
+//                for (var i = 0; i < TabCh.length; i++) {
+//                    var tab = TabCh[i];
+//                    console.log(tab);
+//                }
+                $('#tabs-1 .sub-pan div2.tag2').each(function (index, elem) {
+                    console.log(this);
+                });
             }
         </script>
     </head>
@@ -54,13 +61,12 @@
                     <div id="east2" style="margin-top: -302px; height: 300px;">
                         <div id="tabs-1" style="padding: 0px;">
                             <div class="sub-pan">                                                            
-                                <div2 class='tag2' type='txt' label='Имя 1' name2='name1' width='140' dx='200'/><br>
-                                <div2 class='tag2' type='btn' label='Имя 2' name2=name2 width='140' dx='200' click=''/><br>
+                                <div2 class='tag2' type='txt' label='Полное' name2="name1" width='200' dx="200"></div2><br>
+                                <div2 class='tag2' type='txt' label='Сокращ' name2="name2" width='200' dx="200"></div2><br> 
+                                <div2 class='tag2' type='btn' label='Орган' name2="ypr_obr_sp" width='200' dx="200" click=""></div2><br>
                             </div>
                         </div>
                         <div id="tabs-2" style="padding: 0px;">
-                            <button onClick="test();">Кнопка1</button>
-                            <button onClick="test();">Кнопка1</button>
                         </div>
                         <div id="tabs-3" style="padding: 0px;">
                         </div>
@@ -68,11 +74,11 @@
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
                         <div id="tree-iwin"></div>
                     </div>                
+
                 </div>
-            </div>
-        </div> 
-        <div id="south" style="height: 20px">
-            SOUTH
-        </div> 
+            </div> 
+            <div id="south" style="height: 20px">
+                SOUTH
+            </div> 
     </body>
 </html>

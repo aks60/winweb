@@ -1,7 +1,7 @@
+/*
 //------------------------------------------------------------------------------
 //import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './builder/model.js';
 //------------------------------------------------------------------------------
-/*
 export function load_tree2() {
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
@@ -67,6 +67,7 @@ function elements2(com, arr) {
     }
 }
 */
+
 product.load_tree = function () {
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);

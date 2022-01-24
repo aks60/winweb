@@ -32,7 +32,7 @@
                     ARTIKL = {id: 0, name: 1, code: 2, height: 3},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
                     SYSFUR = {id: 0, side_open: 1, systree_id: 2};
-            
+
             //Глобальные объекты
             var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
                     users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
@@ -43,7 +43,7 @@
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: "POST", dataType: "json", async: true, cache: false});
                 $('button').button();
-//                $.jstree.defaults.core.themes.variant = "large";
+                //$.jstree.defaults.core.themes.variant = "large";
             });
             window.onload = function () { };
         </script>         

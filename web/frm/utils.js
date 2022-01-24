@@ -1,366 +1,65 @@
 
-//создание объекта маппинга 
-function mapObj(selector_table) {
+function taq_deploy(_selectorHtml) {
+    let mapobj = this;
+    for (let index = 0; index < _selectorHtml.length; ++index) {
 
-    Object.defineProperties(this, {
-        //данные дата сервер
-        table: {value: {}, enumerable: false, writable: true},
-        //имя таблицы
-        name_table: {value: selector_table, enumerable: false, writable: true},
-        //имя враппера
-        wrap_table: {value: '#wrap' + selector_table.substring(4), enumerable: false, writable: true},
-        //имя карточки ввода
-        card_table: {value: '#card' + selector_table.substring(4), enumerable: false, writable: true},
-        //маппинг объектов html сраницы
-        map: {value: function (_selectorHtml) {
-                var mapobj = this;
-                var arg = arguments.length;
-                for (var index = 0; index < _selectorHtml.length; ++index) {
-                    
-                    var selectorHtml = _selectorHtml[index];
-                    $(selectorHtml + ' div2.tag2').each(function (indx, elem) {
-                        
-                        console.log(elem);
-                        var
-                                width = $(elem).attr('width'),
-                                size2 = $(elem).attr('size'),
-                                label = $(elem).attr('label'),
-                                name2 = $(elem).attr('name2'),
-                                type2 = $(elem).attr('type'),
-                                key2 = mapobj.name_table.substr(1) + name2;
+        let selectorHtml = _selectorHtml[index];
+        $(selectorHtml + ' div2.tag2').each(function (indx, elem) {
+            let
+                    width = $(elem).attr('width'),
+                    size2 = $(elem).attr('size'),
+                    label = $(elem).attr('label'),
+                    name2 = $(elem).attr('name2'),
+                    type2 = $(elem).attr('type');
 
-                        if (typeof (name2) == 'undefined') {
-                            console.log("НЕУДАЧА! поле = " + $(elem).html());
-                        } else {
-                            if ($(elem).attr('nul') == '*') {
-                                label = label + "<span class='nul'>*</span>";
-                            }
-                            if (type2 == 'ref') {
-                                $(elem).replaceWith("<input class='field2' type='text' name2='" + name2 + "' style='width: 40px; display: none;'>");
-
-                            } else if (type2 == 'txt') {
-                                var height = +$(elem).attr('height');
-                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
-                                var readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
-
-                                let mmm = "<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
-                                        + "</p><input class='field2' type='text' " + dx + "name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;' " + readonly + ">";
-
-                                
-                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
-                                        + "</p><input class='field2' type='text' " + dx + "name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;' " + readonly + ">");
-
-                            } else if (type2 == 'btn') {
-                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
-                                var src = $(elem).attr('click');
-                                var readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
-                                                                
-                                let mmmm = "<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                                        + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">"
-                                        + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">";
-
-
-                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                                        + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">"
-                                        + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
-
-                            } else if (type2 == 'btn2') { //background: #eee
-                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
-                                var src = $(elem).attr('click');
-                                var readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
-                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                                        + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">");
-                            } else if (type2 == 'date') {
-                                var src = $(elem).attr('click');
-                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                                        + "<input class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>"
-                                        + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
-
-                            } else if (type2 == 'date2') {
-                                var src = $(elem).attr('click');
-                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                                        + "<input id='" + key2 + "' class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>");
-                                $('#' + key2).datepicker({changeMonth: true, changeYear: true});
-
-                            } else if (type2 == 'area') {
-                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
-                                var height = +$(elem).attr('height');
-                                if (typeof (label) == 'undefined') {
-                                    $(elem).replaceWith("<div><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
-                                } else {
-                                    $(elem).replaceWith("<div><p class='field2' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
-                                            + "</p><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
-                                }
-                            }
-
-                            //запишем селектор на компонент в html
-                            mapobj['_' + name2] = {'selector': selectorHtml + " .field2[name2 = '" + name2 + "']"};
-                            //теперь get-set
-                            Object.defineProperty(mapobj, name2, {
-                                get: function () {
-                                    var ret = $(mapobj['_' + name2]['selector']).val();
-                                    var dict = mapobj['_' + name2]['dict']
-                                    if (typeof (dict) == 'undefined') {
-                                        //если нет справочника   
-                                        return (ret == '') ? null : ret;
-                                    } else { //тогда это ссылка на спрвочник
-                                        return (ret == '') ? null : $(mapobj['_' + name2]['selector']).attr('sp');
-                                    }
-                                },
-                                set: function (v) {
-                                    var dict = mapobj['_' + name2]['dict']
-                                    if (typeof (dict) == 'undefined') {
-                                        //если нет справочника
-                                        $(mapobj['_' + name2]['selector']).val(v);
-                                    } else { //тогда это ссылка на спрвочник
-                                        var v2 = (v != null) ? dict[v] : v;
-                                        $(mapobj['_' + name2]['selector']).attr('sp', v);
-                                        $(mapobj['_' + name2]['selector']).val(v2);
-                                    }
-                                },
-                                configurable: false
-                            });
-                        }
-                    });
+            if (typeof (name2) == 'undefined') {
+                console.log("НЕУДАЧА! поле = " + $(elem).html());
+            } else {
+                if ($(elem).attr('nul') == '*') {
+                    label = label + "<span class='nul'>*</span>";
                 }
-            }, enumerable: false, configurable: true},
-        //установить ссылку на справочник
-        link: {
-            value: function (fields) {
-                for (var key in fields) {
-                    if (this['_' + key]) {
-                        this['_' + key]['dict'] = fields[key];
+                if (type2 == 'ref') {
+                    $(elem).replaceWith("<input class='field2' type='text' name2='" + name2 + "' style='width: 40px; display: none;'>");
+
+                } else if (type2 == 'txt') {
+                    let height = +$(elem).attr('height');
+                    let dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
+                    let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
+                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
+                            + "</p><input class='field2' type='text' " + dx + "name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;' " + readonly + ">");
+
+                } else if (type2 == 'btn') {
+                    let dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
+                    let src = $(elem).attr('click');
+                    let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
+                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">"
+                            + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
+
+                } else if (type2 == 'btn2') { //background: #eee
+                    let dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
+                    let src = $(elem).attr('click');
+                    let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
+                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">");
+                } else if (type2 == 'date') {
+                    let src = $(elem).attr('click');
+                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>"
+                            + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
+
+                } else if (type2 == 'area') {
+                    let dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
+                    let height = +$(elem).attr('height');
+                    if (typeof (label) == 'undefined') {
+                        $(elem).replaceWith("<div><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
                     } else {
-                        alert("Неудача link на " + key);
+                        $(elem).replaceWith("<div><p class='field2' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
+                                + "</p><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
                     }
-                }
-            }, enumerable: false, configurable: true
-        },
-        //очистка html
-        clear: {
-            value: function () {
-                for (var key in this) {
-                    this[key.substring(1, key.length)] = null;
-                }
-            }, enumerable: false, configurable: true
-        },
-        //загрузка данных в теги html страницы
-        loadField: {
-            value: function () {
-                var record2 = this.table[0];
-                if (this.name_table.substr(0, 4) != '#nul') {
-                    //найдём выделенную запись в таблице html
-                    var rowid = $(this.name_table).getGridParam('selrow');
-                    var record = $(this.name_table).getRowData(rowid);
-                    //найдём запись в data сервер
-                    for (var index = 0; index < this.table.length; ++index) {
-                        record2 = this.table[index];
-                        if (record.id == record2.id) {
-                            //запишем value через set() в компонент html
-                            for (var field in this) {
-                                for (var field2 in record2) {
-                                    //если ключи совпали
-                                    if (field == '_' + field2) {
-                                        this[field2] = record2[field2];
-                                    }
-                                }
-                            }
-                            return;
-                        }
-                    }
-                }
-            }, enumerable: false, configurable: true
-        },
-        //загрузка данных в строку html таблицы
-        loadRecord: {
-            value: function (indexData, indexTable) {
-                var obj = {};
-                for (var key in this.table[indexData]) {
-                    var dict = (this['_' + key]) ? this['_' + key]['dict'] : undefined;
-                    if (typeof (dict) == 'undefined') {
-                        obj[key] = this.table[indexData][key];
-                    } else {
-                        obj[key] = dict[this.table[indexData][key]];
-                    }
-                }
-                $(this.name_table).addRowData(indexTable, obj);
-            }, enumerable: false, configurable: true
-        },
-        //локальное сохранение строки html таблицы и html тегов полей в data сервер
-        saveLocal: {
-            value: function () {
-                var record = this.table[0];
-                if (this.name_table.substr(0, 4) != '#nul') {
-                    //найдём выделенную запись в таблице html страницы
-                    var rowid = $(this.name_table).getGridParam('selrow');
-                    record = $(this.name_table).getRowData(rowid);
-                }
-                //найдём запись в data сервер
-                for (var index2 = 0; index2 < this.table.length; ++index2) {
-                    var record2 = this.table[index2];
-                    if (record.id == record2.id) {
-                        //цыкл по полям field2[name2]
-                        for (var field in this) {
-                            //цыкл по полям data сервер
-                            for (var field2 in record2) {
-                                //если поля совпали
-                                if (field == '_' + field2) {
-                                    //если были изменения данных в field2[name2]
-                                    if (this[field2] != record2[field2]) {
-                                        //перезапишем дата сервер
-                                        record2['up'] = (record2['up'] == 'SEL') ? 'UPD' : record2['up'];
-                                        record2[field2] = this[field2];
-                                        //если field2[name2] из карточки ввода есть в таблице, 
-                                        //перезапишем значения в самой таблице
-                                        if (this.name_table.substr(0, 4) != '#nul') {
-                                            if (field2 in record) {
-                                                if ('dict' in this[field]) {
-                                                    $(this.name_table).jqGrid('setCell', rowid, field2, this[field]['dict'][this[field2]]);
-                                                } else {
-                                                    $(this.name_table).jqGrid('setCell', rowid, field2, this[field2]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }, enumerable: false, configurable: true
-        }
-    });
-    //перед вставкой
-    this.beforeInsert = function () {
-        //console.log('event -> prepareInsert()');
-    }
-    //перед вставкой
-    this.beforeUpdate = function () {
-        //console.log('event -> prepareInsert()');
-    }
-    //перед удалением записи
-    this.beforeDelete = function () {
-        //console.log('event -> beforeDelete()');
-    }
-    //перед вставкой
-    this.prepareInsert = function (record) {
-        //console.log('event -> prepareInsert()');
-    }
-    //подготовка карты
-    this.prepareCard = function (type, record) {
-        //console.log('event -> prepareCard()');
-    }
-    //после нажатия выбрать
-    this.afterCard = function (type) {
-        //console.log('event -> afterCard()');
-    }
-    //после сохранения на сервере
-    this.afterSave = function (record) {
-        //console.log('event -> afterSave()');
-    }
-    //после удаления записи
-    this.afterDelete = function (record) {
-        //console.log('event -> afterDelete()');
-    }
-    //статическая функция сохранение на сервере data сервер
-    mapObj.saveServer = function (objList, url_path) {
-        var data = {};
-        objList.forEach(function (objItem) {
-            var name_table = objItem.name_table.substr(5);
-            data[name_table] = []; //объект для отправки на сервер
-            //заполним объект дата если были изменения
-            objItem.saveLocal();
-            for (var index = 0; index < objItem.table.length; ++index) {
-                if (objItem.table[index].up != 'SEL') {
-                    data[name_table].push(objItem.table[index]);
                 }
             }
         });
-        var counter = 0;
-        for (var key in data) {
-            for (var index = 0; index < data[key].length; ++index) {
-                counter++;
-            }
-        }
-        if (counter == 0) {
-            dialogSec("<p>Изменений данных не было");
-        } else {
-            $.ajax({
-                url: url_path,
-                data: {param: JSON.stringify(data)},
-                success: function (data) {
-
-                    if (data.result == 'ok') {
-                        //запишем SEL
-                        objList.forEach(function (item) {
-                            for (var index = 0; index < item.table.length; ++index) {
-                                item.table[index].up = 'SEL';
-                            }
-                        });
-                        dialogPrg("<p>Данные успешно сохранены на сервере");
-                        objList.forEach(function (item) {
-                            //после сохранения записи
-                            item.afterSave();
-                        });
-                    } else {
-                        dialogMes('<p>' + data.result);
-                    }
-                },
-                error: function () {
-                    dialogMes("<p>Ошибка при сохранении данных на сервере");
-                }
-            });
-        }
-    }
-    //статическая функция удаление выделенной записи
-    mapObj.deleteRecord = function (objList, url_path) {
-//TODO парамети objList теперь не нужен
-        //перед удалением записи
-        if (focusObj.mapobj.beforeDelete() != undefined) {
-            return;
-        }
-        //найдём выделенную запись в таблице html
-        var selectRowid = $(focusObj.name_table).getGridParam('selrow');
-        var selectRecord = $(focusObj.name_table).getRowData(selectRowid);
-        var focusTable = focusObj.mapobj.table;
-        var data2 = {};
-//        objList.forEach(function (item) {
-//            var name_table = item.name_table.substr(5);
-//            data2[name_table] = []; //объект для отправки на сервер
-//        });
-        //загрузим удаляемую запись
-        for (var indexDel = 0; indexDel < focusTable.length; ++indexDel) {
-            if (selectRecord.id == focusTable[indexDel].id) {
-
-                if (confirm("Вы действительно хотите удалить текущую запись?")) {
-                    focusTable[indexDel].up = 'DEL';
-                    data2[focusObj.mapobj.name_table.substr(5)] = [focusTable[indexDel]];
-                    $.ajax({
-                        url: url_path,
-                        data: {param: JSON.stringify(data2)},
-                        success: function (data) {
-                            if (data.result == 'ok') {
-
-                                //удалим запись data server
-                                focusTable.splice(indexDel, 1);
-
-                                //после удаления записи
-                                focusObj.mapobj.afterDelete(selectRecord);
-
-                                dialogPrg("<p>Данные успешно удалены");
-                            } else {
-                                dialogMes('<p>' + data.result);
-                            }
-                        },
-                        error: function () {
-                            dialogMes("<p>Ошибка при удалении данных с сервера");
-                        }
-                    });
-                    return;
-                }
-            }
-        }
     }
 }
 
@@ -400,17 +99,6 @@ var focusObj = {
         }
         return this;
     }
-}
-
-//генератор ключей
-function genId(name) {
-    $.ajax({
-        url: 'admin?action=genId',
-        data: {param: name},
-        success: function (data) {
-            alert(data.id);
-        }
-    });
 }
 
 function formatDate2(d) {
