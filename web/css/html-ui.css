@@ -42,7 +42,8 @@ html, body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;  
-} 
+} */
+
 #myProgress {
     position: relative;
     width: 200px;
@@ -177,5 +178,5 @@ p.field2 {
     font-size: small;
     height: 20px;
     line-height: 20px;
-}*/
+}
 

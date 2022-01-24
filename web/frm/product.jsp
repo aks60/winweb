@@ -9,30 +9,36 @@
 
         <script type="text/javascript">
 
-            product.resize = function () {
-            var height = window.innerHeight;
-            $("#context").css("height", height - 80);
+            var objUch = new mapObj('#tab-empty');
+            var objList = [objUch];
 
-              let cvs = document.querySelector("#cnv2");
-              if (cvs != undefined) {
-                cvs.width = $("#centr").width() - 4;
-                cvs.height = $("#centr").height() - 4;
-                winc.build(cvs, order.rec_table2[PROPROD.script]);
-              }
+            product.resize = function () {
+                var height = window.innerHeight;
+                $("#context").css("height", height - 80);
+
+                let cvs = document.querySelector("#cnv2");
+                if (cvs != undefined) {
+                    cvs.width = $("#centr").width() - 4;
+                    cvs.height = $("#centr").height() - 4;
+                    winc.build(cvs, order.rec_table2[PROPROD.script]);
+                }
             }
 
             $(document).ready(function () {
-              $(window).bind('resize', function () {
-                product.resize();
-              }).trigger('resize');
 
-              product.load_tree($('#tree-iwin'));
+                objUch.map(['#tabs-1 .sub-pan']);
+                //objUch.loadField();
+
+                $(window).bind('resize', function () {
+                    product.resize();
+                }).trigger('resize');
+
+                product.load_tree($('#tree-iwin'));
             });
-       
-         function test() {
-           let node = $("#tree-iwin").jstree("get_selected"); 
-           alert($("#tree-iwin").jstree("get_selected")[0]);
-         }
+
+            function test() {
+                $('#tabs-2').replaceWith('<button onClick="test();">Кнопка1x</button>');
+            }
         </script>
     </head>
     <body>
@@ -46,8 +52,18 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-top: -302px; height: 300px;">
-                        <div2 class='tag2' type='txt' label='Полное наименование' name2="name1" width='200' dx="200"/><br>
-                        <div2 class='tag2' type='txt' label='Сокращённое наименование' name2="name2" width='200' dx="200"/><br> 
+                        <div id="tabs-1" style="padding: 0px;">
+                            <div class="sub-pan">                                                            
+                                <div2 class='tag2' type='txt' label='Имя 1' name2='name1' width='140' dx='200'/><br>
+                                <div2 class='tag2' type='btn' label='Имя 2' name2=name2 width='140' dx='200' click=''/><br>
+                            </div>
+                        </div>
+                        <div id="tabs-2" style="padding: 0px;">
+                            <button onClick="test();">Кнопка1</button>
+                            <button onClick="test();">Кнопка1</button>
+                        </div>
+                        <div id="tabs-3" style="padding: 0px;">
+                        </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
                         <div id="tree-iwin"></div>

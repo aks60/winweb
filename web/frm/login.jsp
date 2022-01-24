@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>        
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script type="text/javascript"src="frm/utils.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
         <script type="text/javascript" src="frm/login.js"></script>
         <title>Login</title>
 
@@ -13,7 +12,7 @@
                 url: 'login?action=property',
                 success: function (data) {
                     utils.param = data.param;
-                    utils.dateNow = utils.format_date2(new Date());
+//                    utils.dateNow = format_date2(new Date());
                 }
             });
 
@@ -40,7 +39,7 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-//            login.user_connect();            
+            login.user_connect();            
         </script>         
     </head>
     <body>

@@ -1,6 +1,6 @@
-//------------------------------------------------------------------------------
+
 //создание объекта маппинга 
-utils.init_obj = function (selector_table) {
+function mapObj(selector_table) {
 
     Object.defineProperties(this, {
         //данные дата сервер
@@ -15,66 +15,80 @@ utils.init_obj = function (selector_table) {
         map: {value: function (_selectorHtml) {
                 var mapobj = this;
                 var arg = arguments.length;
-                for (let index = 0; index < _selectorHtml.length; ++index) {
+                for (var index = 0; index < _selectorHtml.length; ++index) {
+                    
                     var selectorHtml = _selectorHtml[index];
                     $(selectorHtml + ' div2.tag2').each(function (indx, elem) {
+                        
+                        console.log(elem);
                         var
-                                width = $(this).attr('width'),
-                                size2 = $(this).attr('size'),
-                                label = $(this).attr('label'),
-                                name2 = $(this).attr('name2'),
-                                type2 = $(this).attr('type'),
+                                width = $(elem).attr('width'),
+                                size2 = $(elem).attr('size'),
+                                label = $(elem).attr('label'),
+                                name2 = $(elem).attr('name2'),
+                                type2 = $(elem).attr('type'),
                                 key2 = mapobj.name_table.substr(1) + name2;
 
                         if (typeof (name2) == 'undefined') {
-                            console.log("НЕУДАЧА! поле = " + $(this).html());
+                            console.log("НЕУДАЧА! поле = " + $(elem).html());
                         } else {
-                            if ($(this).attr('nul') == '*') {
+                            if ($(elem).attr('nul') == '*') {
                                 label = label + "<span class='nul'>*</span>";
                             }
                             if (type2 == 'ref') {
-                                $(this).replaceWith("<input class='field2' type='text' name2='" + name2 + "' style='width: 40px; display: none;'>");
+                                $(elem).replaceWith("<input class='field2' type='text' name2='" + name2 + "' style='width: 40px; display: none;'>");
 
                             } else if (type2 == 'txt') {
-                                var height = +$(this).attr('height');
-                                var dx = (size2 == null) ? " dx='" + (+$(this).attr('dx') + 14) + "'" : "";
-                                var readonly = ($(this).attr('nul') == 'r') ? 'readonly' : '';
-                                $(this).replaceWith("<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
+                                var height = +$(elem).attr('height');
+                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
+                                var readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
+
+                                let mmm = "<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
+                                        + "</p><input class='field2' type='text' " + dx + "name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;' " + readonly + ">";
+
+                                
+                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
                                         + "</p><input class='field2' type='text' " + dx + "name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;' " + readonly + ">");
 
                             } else if (type2 == 'btn') {
-                                var dx = (size2 == null) ? " dx='" + (+$(this).attr('dx') + 42) + "'" : "";
-                                var src = $(this).attr('click');
-                                var readonly = ($(this).attr('nul') == 'w') ? '' : 'readonly';
-                                $(this).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
+                                var src = $(elem).attr('click');
+                                var readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
+                                                                
+                                let mmmm = "<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                                        + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">"
+                                        + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">";
+
+
+                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
                                         + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">"
                                         + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                             } else if (type2 == 'btn2') { //background: #eee
-                                var dx = (size2 == null) ? " dx='" + (+$(this).attr('dx') + 16) + "'" : "";
-                                var src = $(this).attr('click');
-                                var readonly = ($(this).attr('nul') == 'w') ? '' : 'readonly';
-                                $(this).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
+                                var src = $(elem).attr('click');
+                                var readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
+                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
                                         + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + size2 + ";' sp='' " + readonly + ">");
                             } else if (type2 == 'date') {
-                                var src = $(this).attr('click');
-                                $(this).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                                var src = $(elem).attr('click');
+                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
                                         + "<input class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>"
                                         + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                             } else if (type2 == 'date2') {
-                                var src = $(this).attr('click');
-                                $(this).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
+                                var src = $(elem).attr('click');
+                                $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
                                         + "<input id='" + key2 + "' class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>");
                                 $('#' + key2).datepicker({changeMonth: true, changeYear: true});
 
                             } else if (type2 == 'area') {
-                                var dx = (size2 == null) ? " dx='" + (+$(this).attr('dx') + 8) + "'" : "";
-                                var height = +$(this).attr('height');
+                                var dx = (size2 == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
+                                var height = +$(elem).attr('height');
                                 if (typeof (label) == 'undefined') {
-                                    $(this).replaceWith("<div><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
+                                    $(elem).replaceWith("<div><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
                                 } else {
-                                    $(this).replaceWith("<div><p class='field2' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
+                                    $(elem).replaceWith("<div><p class='field2' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
                                             + "</p><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + size2 + "; height: " + height + "px;'></textarea></div>");
                                 }
                             }
@@ -113,7 +127,7 @@ utils.init_obj = function (selector_table) {
         //установить ссылку на справочник
         link: {
             value: function (fields) {
-                for (let key in fields) {
+                for (var key in fields) {
                     if (this['_' + key]) {
                         this['_' + key]['dict'] = fields[key];
                     } else {
@@ -125,7 +139,7 @@ utils.init_obj = function (selector_table) {
         //очистка html
         clear: {
             value: function () {
-                for (let key in this) {
+                for (var key in this) {
                     this[key.substring(1, key.length)] = null;
                 }
             }, enumerable: false, configurable: true
@@ -139,12 +153,12 @@ utils.init_obj = function (selector_table) {
                     var rowid = $(this.name_table).getGridParam('selrow');
                     var record = $(this.name_table).getRowData(rowid);
                     //найдём запись в data сервер
-                    for (let index = 0; index < this.table.length; ++index) {
+                    for (var index = 0; index < this.table.length; ++index) {
                         record2 = this.table[index];
                         if (record.id == record2.id) {
                             //запишем value через set() в компонент html
-                            for (let field in this) {
-                                for (let field2 in record2) {
+                            for (var field in this) {
+                                for (var field2 in record2) {
                                     //если ключи совпали
                                     if (field == '_' + field2) {
                                         this[field2] = record2[field2];
@@ -161,7 +175,7 @@ utils.init_obj = function (selector_table) {
         loadRecord: {
             value: function (indexData, indexTable) {
                 var obj = {};
-                for (let key in this.table[indexData]) {
+                for (var key in this.table[indexData]) {
                     var dict = (this['_' + key]) ? this['_' + key]['dict'] : undefined;
                     if (typeof (dict) == 'undefined') {
                         obj[key] = this.table[indexData][key];
@@ -169,7 +183,7 @@ utils.init_obj = function (selector_table) {
                         obj[key] = dict[this.table[indexData][key]];
                     }
                 }
-                $(this.name_table).jqGrid('addRowData', indexTable, obj);
+                $(this.name_table).addRowData(indexTable, obj);
             }, enumerable: false, configurable: true
         },
         //локальное сохранение строки html таблицы и html тегов полей в data сервер
@@ -182,13 +196,13 @@ utils.init_obj = function (selector_table) {
                     record = $(this.name_table).getRowData(rowid);
                 }
                 //найдём запись в data сервер
-                for (let index2 = 0; index2 < this.table.length; ++index2) {
+                for (var index2 = 0; index2 < this.table.length; ++index2) {
                     var record2 = this.table[index2];
                     if (record.id == record2.id) {
                         //цыкл по полям field2[name2]
-                        for (let field in this) {
+                        for (var field in this) {
                             //цыкл по полям data сервер
-                            for (let field2 in record2) {
+                            for (var field2 in record2) {
                                 //если поля совпали
                                 if (field == '_' + field2) {
                                     //если были изменения данных в field2[name2]
@@ -250,22 +264,22 @@ utils.init_obj = function (selector_table) {
         //console.log('event -> afterDelete()');
     }
     //статическая функция сохранение на сервере data сервер
-    mapobj.saveServer = function (objList, url_path) {
+    mapObj.saveServer = function (objList, url_path) {
         var data = {};
         objList.forEach(function (objItem) {
             var name_table = objItem.name_table.substr(5);
             data[name_table] = []; //объект для отправки на сервер
             //заполним объект дата если были изменения
             objItem.saveLocal();
-            for (let index = 0; index < objItem.table.length; ++index) {
+            for (var index = 0; index < objItem.table.length; ++index) {
                 if (objItem.table[index].up != 'SEL') {
                     data[name_table].push(objItem.table[index]);
                 }
             }
         });
         var counter = 0;
-        for (let key in data) {
-            for (let index = 0; index < data[key].length; ++index) {
+        for (var key in data) {
+            for (var index = 0; index < data[key].length; ++index) {
                 counter++;
             }
         }
@@ -280,7 +294,7 @@ utils.init_obj = function (selector_table) {
                     if (data.result == 'ok') {
                         //запишем SEL
                         objList.forEach(function (item) {
-                            for (let index = 0; index < item.table.length; ++index) {
+                            for (var index = 0; index < item.table.length; ++index) {
                                 item.table[index].up = 'SEL';
                             }
                         });
@@ -300,7 +314,7 @@ utils.init_obj = function (selector_table) {
         }
     }
     //статическая функция удаление выделенной записи
-    mapobj.deleteRecord = function (objList, url_path) {
+    mapObj.deleteRecord = function (objList, url_path) {
 //TODO парамети objList теперь не нужен
         //перед удалением записи
         if (focusObj.mapobj.beforeDelete() != undefined) {
@@ -316,7 +330,7 @@ utils.init_obj = function (selector_table) {
 //            data2[name_table] = []; //объект для отправки на сервер
 //        });
         //загрузим удаляемую запись
-        for (let indexDel = 0; indexDel < focusTable.length; ++indexDel) {
+        for (var indexDel = 0; indexDel < focusTable.length; ++indexDel) {
             if (selectRecord.id == focusTable[indexDel].id) {
 
                 if (confirm("Вы действительно хотите удалить текущую запись?")) {
@@ -349,9 +363,9 @@ utils.init_obj = function (selector_table) {
         }
     }
 }
-//------------------------------------------------------------------------------
+
 //маппинг карточки ввода
-utils.focus_obj = {
+var focusObj = {
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
     click: function (event) {
         //запишем объект карточки ввода
@@ -360,14 +374,14 @@ utils.focus_obj = {
         focusObj.wrap_table = '#' + event.currentTarget.id;
         focusObj.card_table = '#card' + event.currentTarget.id.substring(4);
         focusObj.name_table = '#tab' + event.currentTarget.id.substring(4);
-        for (let i = 0; i < focusObj.history_table.length; i++) {
+        for (var i = 0; i < focusObj.history_table.length; i++) {
             //снимем все выделения бордер
             $(focusObj.history_table[i]).css('outline', '0');
         }
         //запишем бордер текушего выделения
         $(focusObj.wrap_table).css('outline', '1px solid #00f');
         //проверим историю
-        for (let i = 0; i < focusObj.history_table.length; i++) {
+        for (var i = 0; i < focusObj.history_table.length; i++) {
             if (focusObj.history_table[i] == focusObj.wrap_table)
                 return;
         }
@@ -387,19 +401,19 @@ utils.focus_obj = {
         return this;
     }
 }
-//------------------------------------------------------------------------------
+
 //генератор ключей
-utils.genId = function (name) {
+function genId(name) {
     $.ajax({
-        url: 'login?action=genId',
+        url: 'admin?action=genId',
         data: {param: name},
         success: function (data) {
             alert(data.id);
         }
     });
 }
-//------------------------------------------------------------------------------
-utils.format_date2 = function (d) {
+
+function formatDate2(d) {
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
     if (dd < 10) {
@@ -410,4 +424,3 @@ utils.format_date2 = function (d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
-//------------------------------------------------------------------------------
