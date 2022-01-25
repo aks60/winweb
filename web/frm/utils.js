@@ -5,12 +5,9 @@ function taq_deploy(_selectorHtml) {
 
         let selectorHtml = _selectorHtml[index];
         $(selectorHtml + ' div2.tag2').each(function (index, elem) {
-            let
-                    width = $(elem).attr('width'),
-                    wid1h = $(elem).attr('wid1h'),
-                    label = $(elem).attr('label'),
-                    name2 = $(elem).attr('name2'),
-                    type2 = $(elem).attr('type');
+
+            let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
+                    label = $(elem).attr('label'), name2 = $(elem).attr('name2'), type2 = $(elem).attr('type');
 
             if (typeof (name2) == 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
@@ -42,7 +39,7 @@ function taq_deploy(_selectorHtml) {
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
                             + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">");
-                
+
                 } else if (type2 == 'date') {
                     let src = $(elem).attr('click');
                     $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
