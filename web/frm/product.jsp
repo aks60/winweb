@@ -9,10 +9,8 @@
 
         <script type="text/javascript">
 
-            //var objUch = new mapObj('#tab-empty');
-            //var objList = [objUch];
-
             product.resize = function () {
+                
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
 
@@ -22,12 +20,17 @@
                     cvs.height = $("#centr").height() - 4;
                     winc.build(cvs, order.rec_table2[PROPROD.script]);
                 }
+
+                let winWidth = $('#east').width() - 24;
+                $("div .field2[dx]").each(function (index) {
+                    var width = $(this).attr('dx');
+                    $(this).width(winWidth - width);
+                });
             }
 
             $(document).ready(function () {
 
-                taq_deploy(['#tabs-1 .sub-pan']);
-                //objUch.loadField();
+                taq_deploy(['#tabs-1', '#tabs-2', '#tabs-3']);
 
                 $(window).bind('resize', function () {
                     product.resize();
@@ -36,21 +39,18 @@
                 product.load_tree($('#tree-iwin'));
             });
 
+            function on_page(val) {
+                $("#tabs-1, #tabs-2, #tabs-3").hide();
+                $("#tabs-" + val).show();
+            }
+
             function test() {
-//                var TabCh = document.querySelectorAll('#tabs-1 .sub-pan div2.tag2');
-//                for (var i = 0; i < TabCh.length; i++) {
-//                    var tab = TabCh[i];
-//                    console.log(tab);
-//                }
-                $('#tabs-1 .sub-pan div2.tag2').each(function (index, elem) {
-                    console.log(this);
-                });
             }
         </script>
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            <button onClick="test();">Кнопка1</button>
+            <button onClick="on_page(2);">Кнопка1</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%;">
@@ -59,19 +59,18 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-top: -302px; height: 300px;">
-                        <div id="tabs-1" style="padding: 0px;">
-                            <div class="sub-pan">                                                            
-                                <div2 class='tag2' type='txt' label='Полное' name2="name1" width='200' dx="200"></div2><br>
-                                <div2 class='tag2' type='txt' label='Сокращ' name2="name2" width='200' dx="200"></div2><br> 
-                                <div2 class='tag2' type='btn' label='Орган' name2="ypr_obr_sp" width='200' dx="200" click=""></div2><br>
-                            </div>
+                        <div id="tabs-1" style="padding: 0px;">                                                            
+                            <div2 class='tag2' type='txt' label='Полное' name2="name1" width='200' wid1h="254"></div2><br>
+                            <div2 class='tag2' type='txt' label='Сокращ' name2="name2" width='200' wid1h="254"></div2><br> 
+                            <div2 class='tag2' type='btn' label='Органh' name2="name3" width='200' wid1h="226" click=""></div2><br>
                         </div>
-                        <div id="tabs-2" style="padding: 0px;">
+                        <div id="tabs-2" style="padding: 0px; display: none;">                            
+                            <div2 class='tag2' type='txt' label='Пол777' name2="name1" width='200' wid1h="254"></div2><br>
                         </div>
-                        <div id="tabs-3" style="padding: 0px;">
+                        <div id="tabs-3" style="padding: 0px; display: none;">
                         </div>
                     </div>
-                    <div id="east3" style="overflow-y: auto; height: 100%; width: 100%;">
+                    <div id="east3" style="overflow-y: auto; height: 100%;">
                         <div id="tree-iwin"></div>
                     </div>                
 
