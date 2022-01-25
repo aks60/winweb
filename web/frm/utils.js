@@ -1,5 +1,6 @@
-
+//------------------------------------------------------------------------------
 function taq_deploy(_selectorHtml) {
+
     let mapobj = this;
     for (let index = 0; index < _selectorHtml.length; ++index) {
 
@@ -61,6 +62,7 @@ function taq_deploy(_selectorHtml) {
     }
 }
 
+//------------------------------------------------------------------------------
 //маппинг карточки ввода
 var focusObj = {
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
@@ -99,6 +101,7 @@ var focusObj = {
     }
 }
 
+//------------------------------------------------------------------------------
 function formatDate2(d) {
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
@@ -109,4 +112,19 @@ function formatDate2(d) {
         mm = '0' + mm
     }
     return dd + '.' + mm + '.' + d.getFullYear();
+}
+
+//------------------------------------------------------------------------------
+function find_of_winc(id, area) {
+    debugger;
+    for (let com of area.childs) {
+        if (["AREA", "RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "STVORKA"].includes(com.type, 0)) {
+            for (let c of com.frames)
+                if (c.id == id)
+                    return c;
+            find(id, com);
+        } else if (com.id == id) {
+            return com;
+        }
+    }
 }

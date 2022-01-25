@@ -46,12 +46,19 @@ class Wincalc {
             for (let ob2 of obj.childs) {
 
                 if (ob2.type == "FRAME_SIDE") {
-                    owner.frames.set(ob2.layout, new Frame(ob2, owner, this));
+                    let frm = new Frame(ob2, owner, this);
+                    owner.frames.set(ob2.layout, frm);
+                    arr.push(frm, ob2);
+                    
                 } else if (ob2.type == "STVORKA") {
                     let stv = new Stvorka(ob2, owner, this);
                     owner.childs.push(stv);
                     hm.set(stv, ob2);
                     arr.push(stv);
+//                    arr.push(stv.frames.get("BOTT"));
+//                    arr.push(stv.frames.get("RIGHT"));
+//                    arr.push(stv.frames.get("TOP"));
+//                    arr.push(stv.frames.get("LEFT"));
 
                 } else if (ob2.type == "AREA") {
                     let area = new Area(ob2, owner, this);

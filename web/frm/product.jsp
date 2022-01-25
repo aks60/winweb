@@ -45,12 +45,20 @@
             }
 
             function test() {
+                //debugger;
+                let id = order.rec_table2[PROPROD.id];
+                let winc = order.wincalcMap.get(id);
+                winc.elemList.find(function(el, index, array) {
+                    console.log(el);
+                });
+                let e = winc.elemList.find(el => el.id == id);
+                alert(e);
             }
         </script>
     </head>
     <body>
         <div id="north" style=" height: 20px;">
-            <button onClick="on_page(2);">Кнопка1</button>
+            <button onClick="test();">Кнопка1</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%;">
@@ -61,13 +69,15 @@
                     <div id="east2" style="margin-top: -302px; height: 300px;">
                         <div id="tabs-1" style="padding: 0px;">                                                            
                             <div2 class='tag2' type='txt' label='Полное' name2="name1" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='txt' label='Сокращ' name2="name2" width='200' wid1h="254"></div2><br> 
-                            <div2 class='tag2' type='btn' label='Органh' name2="name3" width='200' wid1h="226" click=""></div2><br>
+                            <div2 class='tag2' type='btn' label='Органh' name2="name2" width='200' wid1h="226" click=""></div2><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">                            
-                            <div2 class='tag2' type='txt' label='Пол777' name2="name1" width='200' wid1h="254"></div2><br>
+                            <div2 class='tag2' type='txt' label='Полное' name2="name3" width='200' wid1h="254"></div2><br>
+                            <div2 class='tag2' type='btn' label='Органh' name2="name4" width='200' wid1h="226" click=""></div2><br>>
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
+                            <div2 class='tag2' type='txt' label='Полное' name2="name5" width='200' wid1h="254"></div2><br>
+                            <div2 class='tag2' type='btn' label='Органh' name2="name6" width='200' wid1h="226" click=""></div2><br>>                           
                         </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">
