@@ -10,7 +10,7 @@
         <script type="text/javascript">
 
             product.resize = function () {
-                
+
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
 
@@ -45,14 +45,6 @@
             }
 
             function test() {
-                //debugger;
-                let id = order.rec_table2[PROPROD.id];
-                let winc = order.wincalcMap.get(id);
-                winc.elemList.find(function(el, index, array) {
-                    console.log(el);
-                });
-                let e = winc.elemList.find(el => el.id == id);
-                alert(e);
             }
         </script>
     </head>

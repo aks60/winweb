@@ -32,7 +32,9 @@ product.load_tree = function () {
             })
             .bind("select_node.jstree", function (evt, data) {                
                 let id = $("#tree-iwin").jstree("get_selected")[0];
-                alert(id);
+                let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+                let e = winc.elemList.find(it => it.id == id);
+                alert(e.id + " " + e.type);
             });
 }
 //------------------------------------------------------------------------------

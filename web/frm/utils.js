@@ -113,18 +113,4 @@ function formatDate2(d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
-
 //------------------------------------------------------------------------------
-function find_of_winc(id, area) {
-    debugger;
-    for (let com of area.childs) {
-        if (["AREA", "RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "STVORKA"].includes(com.type, 0)) {
-            for (let c of com.frames)
-                if (c.id == id)
-                    return c;
-            find(id, com);
-        } else if (com.id == id) {
-            return com;
-        }
-    }
-}

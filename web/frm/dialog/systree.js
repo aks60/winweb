@@ -76,7 +76,7 @@ systree.load_table = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 systree.add_sysprodClone = function (table, sysprodRec) {
-//debugger;
+
     let id = document.createTextNode(sysprodRec[SYSPROD.id]);
     let name = document.createTextNode(sysprodRec[SYSPROD.name]);
     let script = sysprodRec[SYSPROD.script];
