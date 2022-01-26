@@ -103,6 +103,7 @@ var focusObj = {
 
 //------------------------------------------------------------------------------
 function formatDate2(d) {
+    
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
     if (dd < 10) {
@@ -114,3 +115,14 @@ function formatDate2(d) {
     return dd + '.' + mm + '.' + d.getFullYear();
 }
 //------------------------------------------------------------------------------
+function prepareToolBar() {
+    
+    $("#btnIns").button({icons: {primary: "ui-icon-document"}});
+    $("#btnUpdate").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnSave").button({icons: {primary: "ui-icon-disk"}});
+    $("#btnDelit").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnReport").button({icons: {primary: "ui-icon-print"}});
+    $("#btnFind").button({icons: {primary: "ui-icon-search"}});
+    $("#menu").menu({items: "> :not(.ui-widget-header)"});
+}
+//------------------------------------------------------------------------------            

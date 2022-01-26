@@ -25,7 +25,7 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
-            function test() {                
+            function test() {
             }
 
             $('button').button();
@@ -33,21 +33,22 @@
                 $(window).bind('resize', function () {
                     order.resize();
                 }).trigger('resize');
-                
+
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.event_clicked);
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
 //                $('#dialog-dic').load('frm/dialog/systree.jsp');
+                prepareToolBar();
             });
         </script>
     </head>
     <body>        
         <div id="north">
-            <button onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
-            <button id="c2" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
-            <button onClick="test()">Кнопка3</button>
+            <button id="btnIns" onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
+            <button id="btnUpdate" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
+            <button id="btnSave" onClick="test()">Кнопка3</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

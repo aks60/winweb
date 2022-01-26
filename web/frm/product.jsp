@@ -37,6 +37,7 @@
                 }).trigger('resize');
 
                 product.load_tree($('#tree-iwin'));
+                prepareToolBar();
             });
 
             function swich_page(type) {
@@ -61,7 +62,7 @@
     </head>
     <body>
         <div id="north">
-            <button onClick="test();">Кнопка1</button>
+            <button id="btnIns" onClick="test();">Кнопка1</button>
             <button onClick="$('#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5').hide();">Кнопка2</button>
         </div> 
         <div id = "context">

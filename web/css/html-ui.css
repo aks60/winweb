@@ -41,6 +41,7 @@ html, body {
 #north button.ui-widget {
     height: 20px;
     margin-top: 1px;
+    margin-left: 8px;
     padding: 2px;
     width: 120px;
 }
