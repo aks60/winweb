@@ -41,7 +41,7 @@
 
             function swich_page(type) {
                 $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-                
+
                 if (type == "RECTANGL" || type == "TRAPEZE" || type == "TRIANGL" || type == "ARCH" || type == "DOOR")
                     $("#tabs-1").show();
                 else if (type == "DEF_PARAM")
@@ -71,25 +71,40 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 300px; width: 476px; top: 0; right: -480px; bottom: 0">
                     <div id="east2" style="margin-top: -302px; height: 300px;">
-                        <div id="tabs-1" style="padding: 0px;">                                                            
-                            <div2 class='tag2' type='txt' label='Полное1' name2="name1" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='btn' label='Органh' name2="name2" width='200' wid1h="226" click=""></div2><br>
+                        <div id="tabs-1" style="padding: 0px;">  
+                            <p class="pantitle">Основные размеры</p> 
+                            <div2 class='tag2' type='txt' label='Ширина' name2="name11" width='80' wid1h="60"></div2><br>
+                            <div2 class='tag2' type='txt' label='Высота1' name2="name12" width='80' wid1h="60"></div2><br>
+                            <div2 class='tag2' type='txt' label='Высота2' name2="name13" width='80' wid1h="60"></div2><br>  
+                            <p class="pantitle">Текстура изделия</p> 
+                            <div2 class='tag2' type='btn' label='Основная' name2="name14" width='80' wid1h="240" click=""></div2><br>
+                            <div2 class='tag2' type='btn' label='Внутренняя' name2="name15" width='80' wid1h="260" click=""></div2><br>
+                            <div2 class='tag2' type='btn' label='Внещняя' name2="name16" width='80' wid1h="260" click=""></div2><br>
                         </div>
-                        <div id="tabs-2" style="padding: 0px; display: none;">                            
-                            <div2 class='tag2' type='txt' label='Полное2' name2="name3" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='btn' label='Органh' name2="name4" width='200' wid1h="226" click=""></div2><br>
+                        <div id="tabs-2" style="padding: 0px; display: none;">  
+                            <p class="pantitle">Параметры изделия</p> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
-                            <div2 class='tag2' type='txt' label='Полное3' name2="name5" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='btn' label='Органh' name2="name6" width='200' wid1h="226" click=""></div2><br>                          
+                            <p class="pantitle">Сторона рамы</p> 
+                            <div2 class='tag2' type='btn' label='Артикул' name2="name31" width='80' wid1h="260" click=""></div2><br>
+                            <div2 class='tag2' type='txt' label='Название' name2="name32" width='80' wid1h="288"></div2><br>
+                            <p class="pantitle">Текстура изделия</p>  
+                            <div2 class='tag2' type='btn' label='Основная' name2="name33" width='80' wid1h="260" click=""></div2><br>                          
+                            <div2 class='tag2' type='btn' label='Внутренняя' name2="name34" width='80' wid1h="260" click=""></div2><br>                          
+                            <div2 class='tag2' type='btn' label='Внещняя' name2="name35" width='80' wid1h="260" click=""></div2><br>                          
                         </div>
                         <div id="tabs-4" style="padding: 0px; display: none;">
-                            <div2 class='tag2' type='txt' label='Полное4' name2="name7" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='btn' label='Органh' name2="name8" width='200' wid1h="226" click=""></div2><br>                          
+                            <p class="pantitle">Створка</p> 
+                            <div2 class='tag2' type='txt' label='Ширина' name2="name41" width='60' wid1h="60"></div2> &nbsp; &nbsp;
+                            <div2 class='tag2' type='txt' label='Высота' name2="name42" width='60' wid1h="60"></div2><br>                        
+                            <div2 class='tag2' type='btn' label='Фурнитура' name2="name43" width='120' wid1h="220" click=""></div2><br>                          
+                            <div2 class='tag2' type='btn' label='Напр. открывания' name2="name44" width='120' wid1h="220" click=""></div2><br>                          
+                            <div2 class='tag2' type='btn' label='Высота ручки' name2="name45" width='120' wid1h="220" click=""></div2><br>                          
+
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
-                            <div2 class='tag2' type='txt' label='Полное5' name2="name9" width='200' wid1h="254"></div2><br>
-                            <div2 class='tag2' type='btn' label='Органh' name2="name10" width='200' wid1h="226" click=""></div2><br>                          
+                            <div2 class='tag2' type='btn' label='Артикул' name2="name51" width='80' wid1h="260" click=""></div2><br>
+                            <div2 class='tag2' type='txt' label='Название' name2="name52" width='80' wid1h="288"></div2><br>                         
                         </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">

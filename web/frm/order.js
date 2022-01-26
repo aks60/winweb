@@ -17,23 +17,31 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
-            
+
             order.wincalcMap.clear()
             let j = 1;
             let rc = table2.rows.length;
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
+            let proprodID = null;
             let orderRec = table1.jqGrid('getRowData', rowid);
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let proprodRec = dbset.proprodList[i];
 
                 if (orderRec.id == proprodRec[PROPROD.project_id]) {
                     order.add_proprodClone(table2, proprodRec);
+                    if (proprodID == null) {
+                        proprodID = proprodRec[PROPROD.id];
+                    }
                 }
-            }
-            if (order.rec_table2 != undefined) {
+            }           
+            if (proprodID != null && order.rec_table2 != undefined) {
                 let id = 'cnv' + order.rec_table2[0];
+                document.getElementById(id).click();
+
+            } else if (proprodID != null) {
+                let id = 'cnv' + proprodID;
                 document.getElementById(id).click();
             }
             $('#table2 tr > *:nth-child(1)').hide();
@@ -78,7 +86,7 @@ order.add_proprodClone = function (table, proprodRec) {
     let name = document.createTextNode(proprodRec[PROPROD.name]);
     let script = proprodRec[PROPROD.script];
     let iwincalc = winc.build(canvas, script);
-    
+
     //Массив объектов winc
     order.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);
 
@@ -98,15 +106,15 @@ order.add_proprodClone = function (table, proprodRec) {
 
 }
 //------------------------------------------------------------------------------
-order.parentTag = function (node, tag) {
+order.taq_parent = function (node, tag) {
     if (node)
-        return (node.tagName == tag) ? node : order.parentTag(node.parentElement, tag);
+        return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
     return null;
 }
 //------------------------------------------------------------------------------
 order.event_clicked = function (e) {
-    
-    let row = order.parentTag(e.target, 'TR');
+
+    let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this, idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');
