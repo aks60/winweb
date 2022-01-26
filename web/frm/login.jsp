@@ -68,7 +68,7 @@
                             </tr>
                             <td></td>
                             <td>
-                                <button tabindex="2" type="button" onclick="login.user_connect();"style="width: 106px;">Войти</button>
+                                <button tabindex="2" type="button" onclick="login.user_connect();" style="width: 106px;">Войти</button>
                             </td>                            
                         </table>
 
