@@ -25,15 +25,15 @@
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
-            $(document).ready(function () {
-                $("button").button();
+            
+            $("button").button();
+            $(document).ready(function () {                
                 $("#btn2").focus();
 
                 $(window).bind('resize', function () {
                     login.resize();
                 }).trigger('resize');
             });
-
 
 //            $('#pan1 .login').val('admin');
 //            $('#pan1 .password').val('masterkey');

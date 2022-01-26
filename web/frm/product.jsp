@@ -27,7 +27,7 @@
                     $(this).width(winWidth - width);
                 });
             }
-
+            $('button').button();
             $(document).ready(function () {
 
                 taq_deploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);

@@ -14,6 +14,7 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 24);
             }
 
+            $('button').button();
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     kits.resize();

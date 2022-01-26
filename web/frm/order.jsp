@@ -28,11 +28,12 @@
             function test() {                
             }
 
+            $('button').button();
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     order.resize();
                 }).trigger('resize');
-                $('button').button();
+                
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.event_clicked);
