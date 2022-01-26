@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 product.load_tree = function () {
-    
+
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
     let root = winc.root;
@@ -30,11 +30,9 @@ product.load_tree = function () {
             .bind("loaded.jstree", function (event, data) {
                 $(this).jstree("open_node", $("#0"));
             })
-            .bind("select_node.jstree", function (evt, data) {                
+            .bind("select_node.jstree", function (evt, data) {
                 let id = $("#tree-iwin").jstree("get_selected")[0];
-                let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-                let e = winc.elemList.find(it => it.id == id);
-                alert(e.id + " " + e.type);
+                view_winc_property(id);
             });
 }
 //------------------------------------------------------------------------------
@@ -53,10 +51,10 @@ function elements(com, arr) {
         }
     } else {
         for (let com2 of com.childs) {
-            if(['AREA', 'STVORKA'].includes(com2.type , 0)) {
+            if (['AREA', 'STVORKA'].includes(com2.type, 0)) {
                 elements(com2, arr);
             } else {
-                if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type , 0)) {
+                if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
                     let lay = (com.layout == "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'img/tool/leaf.gif'});
 
@@ -68,5 +66,18 @@ function elements(com, arr) {
     }
 }
 //------------------------------------------------------------------------------
+function view_winc_property(proprodID) {
+
+    let id = order.rec_table2[PROPROD.id];
+    if (proprodID >= 0) {
+        let winc = order.wincalcMap.get(id);
+        let elem = winc.elemList.find(it => it.id == proprodID);
+        swich_page(elem.type);
+        
+    } else if(proprodID == -1) {
+        swich_page("DEF_PARAM");
+        
+    }
+}
 
 
