@@ -10,15 +10,18 @@ html, body {
     background-repeat:repeat-x;
     background-image:url('../img/shadow2.jpg');
     width: calc(100% - 4px);
+    height: 24px;
 }
 #south { 
     background-repeat:repeat-x;
     background-image:url('../img/shadow3.jpg'); 
     width: calc(100% - 4px);
+    height: 16px;
 }
 #north, #west, #west2, #centr, #centr2, #east, #east2, #east3, #south {  
-    border: 2px solid #ccc; 
+    border: 1px solid #ccc; 
 }
+
 #midl { 
     border: 0 !important; 
 }
@@ -168,15 +171,5 @@ p.field2 {
 }
 .currentRow {
     background-color: #fbec88 !important;
-}
-.handsontable th { 
-    background-color:#dfeffc;  
-    font-weight: bold;
-    color: #2e6e9e;           
-}
-.handsontable td, .handsontable th  {
-    font-size: small;
-    height: 20px;
-    line-height: 20px;
 }
 

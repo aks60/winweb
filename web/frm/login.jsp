@@ -39,11 +39,11 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-            login.user_connect();            
+//            login.user_connect();            
         </script>         
     </head>
     <body>
-        <div id="north" style=" height: 20px;">
+        <div id="north">
             <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций</h6> 
         </div>
         <div id = "context">
@@ -110,7 +110,7 @@
                 </div>            
             </div>
         </div>    
-        <div id="south" style="height: 20px">
+        <div id="south">
             <object id="cryptoPlugin" type="application/x-rutoken" width="0" height="0">
                 <param name="onload" value="pluginit" />
             </object> 

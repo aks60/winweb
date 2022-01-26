@@ -60,7 +60,7 @@
         </script>
     </head>
     <body>
-        <div id="north" style=" height: 20px;">
+        <div id="north">
             <button onClick="test();">Кнопка1</button>
             <button onClick="$('#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5').hide();">Кнопка2</button>
         </div> 
@@ -98,8 +98,8 @@
 
                 </div>
             </div> 
-            <div id="south" style="height: 20px">
-                SOUTH
+            <div id="south">
+                Итого:
             </div> 
     </body>
 </html>

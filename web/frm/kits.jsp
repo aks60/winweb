@@ -25,16 +25,15 @@
         </script>         
     </head>
     <body>
-        <div id="north" style=" height: 20px;">
-            NORTH
+        <div id="north">           
         </div> 
         <div id = "context">              
             <div id="centr" style="height: 100%">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>          
         </div>
-        <div id="south" style="height: 20px;">
-            SOUTH
+        <div id="south">
+            Итого:
         </div>
     </body>
 </html>

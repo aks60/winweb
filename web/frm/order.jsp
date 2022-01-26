@@ -43,7 +43,7 @@
         </script>
     </head>
     <body>        
-        <div id="north" style="height: 20px;">
+        <div id="north">
             <button onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
             <button id="c2" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
             <button onClick="test()">Кнопка3</button>
@@ -68,8 +68,8 @@
                 </div>
             </div>
         </div>
-        <div id="south" style="height: 20px">
-            SOUTH
+        <div id="south">
+            Итого:
         </div> 
     </body>
 </html>
