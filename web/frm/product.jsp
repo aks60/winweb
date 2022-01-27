@@ -76,7 +76,6 @@
                     <div id="east2" style="margin-top: -270px; height: 268px;">
                         <div id="tabs-1" style="padding: 0px;">  
                             <p class="pantitle">Основные размеры</p> 
-                            <input class="login" placeholder='Введите логин' type='text' size='16'><br>
                             <jst class='tag' type='txt' label='Ширина' name="name11" width='80' wid1h="60"></jst><br>
                             <jst class='tag' type='txt' label='Высота1' name="name12" width='80' wid1h="60"></jst><br>
                             <jst class='tag' type='txt' label='Высота2' name="name13" width='80' wid1h="60"></jst><br>  
