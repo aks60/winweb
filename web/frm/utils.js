@@ -1,6 +1,8 @@
 //------------------------------------------------------------------------------
-function tag_deploy2(selector) {
-    
+function load_fields(selector, record, fields) {
+   for (let fiekd of fields) {
+       $("#tabs-1 .field[name = 'name11']").val('777');
+   } 
 }
 //------------------------------------------------------------------------------
 function taq_deploy(_selectorHtml) {
@@ -9,7 +11,7 @@ function taq_deploy(_selectorHtml) {
     for (let index = 0; index < _selectorHtml.length; ++index) {
 
         let selectorHtml = _selectorHtml[index];
-        $(selectorHtml + ' jst.tag').each(function (index, elem) {
+        $(selectorHtml + ' jst').each(function (index, elem) {
 
             let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
                     label = $(elem).attr('label'), name = $(elem).attr('name'), type2 = $(elem).attr('type');

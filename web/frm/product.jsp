@@ -57,7 +57,7 @@
             }
 
             function test() {
-                $("#tabs-1 .field[name = 'name11']").val('777')
+                $("#tabs-1 .field[name = 'name11']").val('777');
             }
         </script>
     </head>
@@ -76,44 +76,44 @@
                     <div id="east2" style="margin-top: -270px; height: 268px;">
                         <div id="tabs-1" style="padding: 0px;">  
                             <p class="pantitle">Основные размеры</p> 
-                            <jst class='tag' type='txt' label='Ширина' name="name11" width='80' wid1h="60"></jst><br>
-                            <jst class='tag' type='txt' label='Высота1' name="name12" width='80' wid1h="60"></jst><br>
-                            <jst class='tag' type='txt' label='Высота2' name="name13" width='80' wid1h="60"></jst><br>  
+                            <jst type='txt' label='Ширина' name="name11" width='80' wid1h="60"></jst><br>
+                            <jst type='txt' label='Высота1' name="name12" width='80' wid1h="60"></jst><br>
+                            <jst type='txt' label='Высота2' name="name13" width='80' wid1h="60"></jst><br>  
                             <p class="pantitle">Текстура изделия</p> 
-                            <jst class='tag' type='btn' label='Основная' name="name14" width='80' wid1h="260" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Внутренняя' name="name15" width='80' wid1h="260" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Внещняя' name="name16" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Основная' name="name14" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Внутренняя' name="name15" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Внещняя' name="name16" width='80' wid1h="260" click=""></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">  
                             <p class="pantitle">Параметры изделия</p> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона рамы</p> 
-                            <jst class='tag' type='btn' label='Артикул' name="name31" width='80' wid1h="260" click=""></jst><br>
-                            <jst class='tag' type='txt' label='Название' name="name32" width='80' wid1h="288"></jst><br>
+                            <jst type='btn' label='Артикул' name="name31" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='txt' label='Название' name="name32" width='80' wid1h="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
-                            <jst class='tag' type='btn' label='Основная' name="name33" width='80' wid1h="260" click=""></jst><br>                          
-                            <jst class='tag' type='btn' label='Внутренняя' name="name34" width='80' wid1h="260" click=""></jst><br>                          
-                            <jst class='tag' type='btn' label='Внещняя' name="name35" width='80' wid1h="260" click=""></jst><br>                          
+                            <jst type='btn' label='Основная' name="name33" width='80' wid1h="260" click=""></jst><br>                          
+                            <jst type='btn' label='Внутренняя' name="name34" width='80' wid1h="260" click=""></jst><br>                          
+                            <jst type='btn' label='Внещняя' name="name35" width='80' wid1h="260" click=""></jst><br>                          
                         </div>
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 
-                            <jst class='tag' type='txt' label='Ширина' name="name41" width='60' wid1h="60"></jst> &nbsp; &nbsp;
-                            <jst class='tag' type='txt' label='Высота' name="name42" width='60' wid1h="60"></jst><br>                        
-                            <jst class='tag' type='btn' label='Фурнитура' name="name43" width='120' wid1h="220" click=""></jst><br>                          
-                            <jst class='tag' type='btn' label='Напр. открывания' name="name44" width='120' wid1h="220" click=""></jst><br> 
-                            <jst class='tag' type='txt' label='Высота ручки' name="name45" width='120' wid1h="154"></jst>
-                            <jst class='tag' type='btn' label='' name="name46" width='0' wid1h="47" click=""></jst><br>                            
-                            <jst class='tag' type='btn' label='Ручка' name="name47" width='120' wid1h="220" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Текстура' name="name48" width='120' wid1h="220" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Подвес' name="name49" width='120' wid1h="220" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Текстура' name="name410" width='120' wid1h="220" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Замок' name="name411" width='120' wid1h="220" click=""></jst><br>
-                            <jst class='tag' type='btn' label='Текстура' name="name412" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='txt' label='Ширина' name="name41" width='60' wid1h="60"></jst> &nbsp; &nbsp;
+                            <jst type='txt' label='Высота' name="name42" width='60' wid1h="60"></jst><br>                        
+                            <jst type='btn' label='Фурнитура' name="name43" width='120' wid1h="220" click=""></jst><br>                          
+                            <jst type='btn' label='Напр. открывания' name="name44" width='120' wid1h="220" click=""></jst><br> 
+                            <jst type='txt' label='Высота ручки' name="name45" width='120' wid1h="154"></jst>
+                            <jst type='btn' label='' name="name46" width='0' wid1h="47" click=""></jst><br>                            
+                            <jst type='btn' label='Ручка' name="name47" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура' name="name48" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Подвес' name="name49" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура' name="name410" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Замок' name="name411" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура' name="name412" width='120' wid1h="220" click=""></jst><br>
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
-                            <jst class='tag' type='btn' label='Артикул' name="name51" width='80' wid1h="260" click=""></jst><br>
-                            <jst class='tag' type='txt' label='Название' name="name52" width='80' wid1h="288"></jst><br>                         
+                            <jst type='btn' label='Артикул' name="name51" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='txt' label='Название' name="name52" width='80' wid1h="288"></jst><br>                         
                         </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">
