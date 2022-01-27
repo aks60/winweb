@@ -1,60 +1,64 @@
 //------------------------------------------------------------------------------
+function tag_deploy2(selector) {
+    
+}
+//------------------------------------------------------------------------------
 function taq_deploy(_selectorHtml) {
 
     let mapobj = this;
     for (let index = 0; index < _selectorHtml.length; ++index) {
 
         let selectorHtml = _selectorHtml[index];
-        $(selectorHtml + ' div2.tag2').each(function (index, elem) {
+        $(selectorHtml + ' jst.tag').each(function (index, elem) {
 
             let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
-                    label = $(elem).attr('label'), name2 = $(elem).attr('name2'), type2 = $(elem).attr('type');
+                    label = $(elem).attr('label'), name = $(elem).attr('name'), type2 = $(elem).attr('type');
 
-            if (typeof (name2) == 'undefined') {
+            if (typeof (name) == 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
             } else {
                 if ($(elem).attr('nul') == '*') {
                     label = label + "<span class='nul'>*</span>";
                 }
                 if (type2 == 'ref') {
-                    $(elem).replaceWith("<input class='field2' type='text' name2='" + name2 + "' style='width: 40px; display: none;'>");
+                    $(elem).replaceWith("<input class='field' type='text' name='" + name + "' style='width: 40px; display: none;'>");
 
                 } else if (type2 == 'txt') {
                     let height = +$(elem).attr('height');
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
                     let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
-                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px; height: " + height + "px;'>" + label
-                            + "</p><input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px; height: " + height + "px;' " + readonly + ">");
+                    $(elem).replaceWith("<p class='field' style='width: " + width + "px; height: " + height + "px;'>" + label
+                            + "</p><input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;' " + readonly + ">");
 
                 } else if (type2 == 'btn') {
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
-                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">"
-                            + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
+                    $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">"
+                            + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type2 == 'btn2') { //background: #eee
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
-                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field2' type='text' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">");
+                    $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">");
 
                 } else if (type2 == 'date') {
                     let src = $(elem).attr('click');
-                    $(elem).replaceWith("<p class='field2' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field2' type='text' name2='" + name2 + "' style='width: 80px;'>"
-                            + "<input class='field2' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
+                    $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
+                            + "<input class='field' type='text' name='" + name + "' style='width: 80px;'>"
+                            + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type2 == 'area') {
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
                     let height = +$(elem).attr('height');
                     if (typeof (label) == 'undefined') {
-                        $(elem).replaceWith("<div><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
+                        $(elem).replaceWith("<div><textarea class='field' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
                     } else {
-                        $(elem).replaceWith("<div><p class='field2' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
-                                + "</p><textarea class='field2' " + dx + " name2='" + name2 + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
+                        $(elem).replaceWith("<div><p class='field' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
+                                + "</p><textarea class='field' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
                     }
                 }
             }

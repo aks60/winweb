@@ -64,7 +64,7 @@ p.pantitle {
     margin-left: 3px;
 }
 
-p.field2, input.field2, textarea.field2 {
+p.field, input.field, textarea.field {
     border: transparent;     
     border: 1px groove #ccc;   
     height: 14px;  
@@ -78,7 +78,7 @@ p.field2, input.field2, textarea.field2 {
     display: inline-block;
 }
 
-p.field2 {
+p.field {
     background-color: #dfeffc;
     padding-top: 1px;
 }
