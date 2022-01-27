@@ -59,6 +59,12 @@ export function load_proprodList() {
     });
 }
 //----------------------------  SYSFURN  ---------------------------------------
+export function load_sysprofList() {
+    return  $.ajax({
+        url: 'dbset?action=sysprofList',
+    });
+}
+//----------------------------  SYSFURN  ---------------------------------------
 export function load_sysfurnList() {
     return  $.ajax({
         url: 'dbset?action=sysfurnList',

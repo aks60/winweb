@@ -72,12 +72,33 @@ function view_winc_property(proprodID) {
     if (proprodID >= 0) {
         let winc = order.wincalcMap.get(id);
         let elem = winc.elemList.find(it => it.id == proprodID);
-        swich_page(elem.type);
-        
-    } else if(proprodID == -1) {
-        swich_page("DEF_PARAM");
-        
+        swich_page(elem);
+
+    } else if (proprodID == -1) {
+        swich_page({'type': 'DEF_PARAM'});
+
     }
 }
+//------------------------------------------------------------------------------
+function swich_page(elem) {
+    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+    let tp = elem.type;
+    let artikl = elem.artikl;
+    if (tp == "RECTANGL" || tp == "TRAPEZE" || tp == "TRIANGL" || tp == "ARCH" || tp == "DOOR") {
+        $("#tabs-1").show();
 
+    } else if (tp == "DEF_PARAM") {
+        $("#tabs-2").show();
+
+    } else if (tp == "FRAME_SIDE" || tp == "STVORKA_SIDE" || tp == "IMPOST" || tp == "SHTULP" || tp == "STOIKA") {
+        $("#tabs-3").show();
+
+    } else if (tp == "STVORKA") {
+        $("#tabs-4").show();
+
+    } else if (tp == "GLASS") {
+        $("#tabs-5").show();
+
+    }
+}
 

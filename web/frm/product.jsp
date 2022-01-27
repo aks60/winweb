@@ -40,24 +40,9 @@
                 prepareToolBar();
             });
 
-            function swich_page(type) {
-                $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-
-                if (type == "RECTANGL" || type == "TRAPEZE" || type == "TRIANGL" || type == "ARCH" || type == "DOOR")
-                    $("#tabs-1").show();
-                else if (type == "DEF_PARAM")
-                    $("#tabs-2").show();
-                else if (type == "FRAME_SIDE" || type == "STVORKA_SIDE" || type == "IMPOST" || type == "SHTULP" || type == "STOIKA")
-                    $("#tabs-3").show();
-                else if (type == "STVORKA")
-                    $("#tabs-4").show();
-                else if (type == "GLASS")
-                    $("#tabs-5").show();
-
-            }
-
             function test() {
                 $("#tabs-1 .field[name = 'name11']").val('777');
+                load_fields('tabs-1', {'name12': '888', 'name13': '999'}, ['name12', 'name13']);
             }
         </script>
     </head>

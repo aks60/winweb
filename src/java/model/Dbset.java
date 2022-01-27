@@ -10,6 +10,7 @@ import domain.eProject;
 import domain.eProprod;
 import domain.eSysfurn;
 import domain.eSysprod;
+import domain.eSysprof;
 import domain.eSystree;
 import enums.TypeGroups;
 import java.util.ArrayList;
@@ -134,6 +135,23 @@ public class Dbset {
                     rec.get(eSysfurn.systree_id)));
         }
         JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
+        return output;
+    }
+
+    public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSysprof = new Query(Att.att(request).connect(), eSysprof.id, eSysprof.prio, eSysprof.use_type,
+        eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up);
+        for (Record rec : qSysprof) {
+            list.add(Arrays.asList(
+                    rec.get(eSysprof.id),
+                    rec.get(eSysprof.prio),
+                    rec.get(eSysprof.use_type),
+                    rec.get(eSysprof.use_side),
+                    rec.get(eSysprof.artikl_id),
+                    rec.get(eSysprof.systree_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("sysprofList", list));
         return output;
     }
 }

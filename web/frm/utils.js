@@ -1,20 +1,13 @@
 //------------------------------------------------------------------------------
-function load_fields(selector, record, fields) {
-   for (let fiekd of fields) {
-       $("#tabs-1 .field[name = 'name11']").val('777');
-   } 
-}
-//------------------------------------------------------------------------------
-function taq_deploy(_selectorHtml) {
+function taq_deploy(selectors) {
 
     let mapobj = this;
-    for (let index = 0; index < _selectorHtml.length; ++index) {
+    for (let selector of selectors) {
 
-        let selectorHtml = _selectorHtml[index];
-        $(selectorHtml + ' jst').each(function (index, elem) {
+        $(selector + ' jst').each(function (index, elem) {
 
             let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
-                    label = $(elem).attr('label'), name = $(elem).attr('name'), type2 = $(elem).attr('type');
+                    label = $(elem).attr('label'), name = $(elem).attr('name'), type = $(elem).attr('type');
 
             if (typeof (name) == 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
@@ -22,17 +15,17 @@ function taq_deploy(_selectorHtml) {
                 if ($(elem).attr('nul') == '*') {
                     label = label + "<span class='nul'>*</span>";
                 }
-                if (type2 == 'ref') {
+                if (type == 'ref') {
                     $(elem).replaceWith("<input class='field' type='text' name='" + name + "' style='width: 40px; display: none;'>");
 
-                } else if (type2 == 'txt') {
+                } else if (type == 'txt') {
                     let height = +$(elem).attr('height');
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
                     let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px; height: " + height + "px;'>" + label
                             + "</p><input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;' " + readonly + ">");
 
-                } else if (type2 == 'btn') {
+                } else if (type == 'btn') {
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
@@ -40,20 +33,20 @@ function taq_deploy(_selectorHtml) {
                             + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
-                } else if (type2 == 'btn2') { //background: #eee
+                } else if (type == 'btn2') { //background: #eee
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
                             + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">");
 
-                } else if (type2 == 'date') {
+                } else if (type == 'date') {
                     let src = $(elem).attr('click');
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
                             + "<input class='field' type='text' name='" + name + "' style='width: 80px;'>"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
-                } else if (type2 == 'area') {
+                } else if (type == 'area') {
                     let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
                     let height = +$(elem).attr('height');
                     if (typeof (label) == 'undefined') {
@@ -69,8 +62,18 @@ function taq_deploy(_selectorHtml) {
 }
 
 //------------------------------------------------------------------------------
+function load_fields(selector, record, fields) {
+    
+   for (let field of fields) {
+       let value = record[field];
+       $("#" + selector + " .field[name = '" + field + "']").val(value);
+   } 
+}
+
+//------------------------------------------------------------------------------
 //маппинг карточки ввода
 var focusObj = {
+    
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
     click: function (event) {
         //запишем объект карточки ввода

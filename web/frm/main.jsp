@@ -24,14 +24,15 @@
         <script type="text/javascript">
 
             //Поля таблиц
-            var SYSTREE = {id: 0, glas: 1, parent_id: 2},
-                    SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
-                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4},
-                    GROUPS = {id: 0, name: 1},
-                    COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
-                    ARTIKL = {id: 0, name: 1, code: 2, height: 3},
-                    ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
-                    SYSFUR = {id: 0, side_open: 1, systree_id: 2};
+            var SYSTREE = {'id': 0, 'glas': 1, 'parent_id': 2},                                        
+                    GROUPS = {'id': 0, 'name': 1},
+                    COLOR = {'id': 0, 'name': 1, 'rgb': 2, 'colgrp_id': 3},
+                    ARTIKL = {'id': 0, 'name': 1, 'code': 2, 'height': 3},
+                    ARTDET = {'id': 0, 'color_fk': 1, 'artikl_id': 2},
+                    SYSPROF = {'id': 0, 'prio': 1, 'use_type': 2, 'use_side': 3, 'artikl_id': 4, 'systree_id': 5},
+                    SYSFUR = {'id': 0, 'side_open': 1, 'systree_id': 2},
+                    SYSPROD = {'id': 0, 'name': 1, 'script': 2, 'systree_id': 3},
+                    PROPROD = {'id': 0, 'name': 1, 'script': 2, 'project_id': 3, 'systree_id': 4};
 
             //Глобальные объекты
             var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
@@ -56,17 +57,19 @@
 
         <script type="module">
             import {
-                load_systreeList, load_sysprodList, load_colorList, 
-                load_artiklList, load_artdetList, load_proprodList, load_sysfurnList
+                load_systreeList, load_sysprodList, load_colorList,
+                load_artiklList, load_artdetList, load_proprodList, 
+                load_sysfurnList, load_sysprofList
             } from './frm/builder/dbset.js';
         
             $("#outbody").load('frm/login.jsp', function () {                
         
                 $.when(
-                    load_systreeList(), load_sysprodList(), load_colorList(),  
-                    load_artiklList(), load_artdetList(), load_proprodList(), load_sysfurnList()
+                    load_systreeList(), load_sysprodList(), load_colorList(), 
+                    load_artiklList(), load_artdetList(), load_proprodList(), 
+                    load_sysfurnList(), load_sysprofList()
                     
-                ).done((p1, p2, p3, p4, p5, p6, p7) => { //загрузка базы данных 
+                ).done((p1, p2, p3, p4, p5, p6, p7, p8) => { //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
@@ -74,6 +77,7 @@
                     dbset.artdetList = p5[0].artdetList;
                     dbset.proprodList = p6[0].proprodList;
                     dbset.sysfurnList = p7[0].sysfurnList;
+                    dbset.sysprofList = p8[0].sysprofList;
 
                     login.init_login('dat');
         

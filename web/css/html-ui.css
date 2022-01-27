@@ -41,7 +41,7 @@ html, body {
     margin-left: 8px;
     padding: 2px;
     width: 94px;
-    border-radius: 1;
+    border-radius: 0;
 }
 
 .ui-jqgrid .ui-jqgrid-htable th {

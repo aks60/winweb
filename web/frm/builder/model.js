@@ -234,6 +234,13 @@ export class Frame extends Com5t {
                 this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frm, owner.y2);
             }
         }
+        
+        if (obj.param != undefined && obj.param.sysprofID != undefined) {
+            //let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            //this.typeOpen = obj.param.typeOpen;
+        } else {
+            //this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
+        }        
     }
 
     paint() {
