@@ -46,19 +46,20 @@
     </head>
     <body>        
         <div id="north">
-            <button id="btnIns" onClick="winc.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Кнопка1</button>
-            <button id="btnUpdate" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Кнопка2</button>
-            <button id="btnSave" onClick="test()">Кнопка3</button>
+            <button id="btnIns" onClick="">Добавить</button>
+            <button id="btnUpdate" onClick="">Изменить</button>
+            <button id="btnSave" onClick="">Сохранить</button>
+            <button id="btnDelit" onClick="">Удалить</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
                 <div id="centr" style="height: 100%; width: 100%;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
-                <div id="east" style="position: absolute; margin-top: 200px; width: 472px; top: 0; right: -480px; bottom: 0;">
-                    <div id="east2" style="margin-left: -2px; margin-top: -202px; height: 198px;">
+                <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">
+                    <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px;">
 
-                        <canvas id="cnv" style="border:2px solid black;" width="460" height="190"></canvas>
+                        <canvas id="cnv" style="border:2px solid black;" width="468" height="154"></canvas>
 
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">

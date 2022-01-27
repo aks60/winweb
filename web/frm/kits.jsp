@@ -26,7 +26,11 @@
         </script>         
     </head>
     <body>
-        <div id="north">           
+        <div id="north">   
+            <button id="btnIns" onClick="">Добавить</button>
+            <button id="btnUpdate" onClick="">Изменить</button>
+            <button id="btnSave" onClick="">Сохранить</button>
+            <button id="btnDelit" onClick="">Удалить</button>            
         </div> 
         <div id = "context">              
             <div id="centr" style="height: 100%">
