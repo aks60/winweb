@@ -2,8 +2,8 @@
 product.load_tree = function () {
 
     let arr = new Array();
-    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-    let root = winc.root;
+    let win = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let root = win.root;
 
     if (root.type == 'RECTANGL')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
@@ -70,8 +70,8 @@ function view_winc_property(proprodID) {
 
     let id = order.rec_table2[PROPROD.id];
     if (proprodID >= 0) {
-        let winc = order.wincalcMap.get(id);
-        let elem = winc.elemList.find(it => it.id == proprodID);
+        let win = order.wincalcMap.get(id);
+        let elem = win.elemList.find(it => it.id == proprodID);
         swich_page(elem);
 
     } else if (proprodID == -1) {

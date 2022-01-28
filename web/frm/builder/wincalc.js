@@ -3,7 +3,7 @@ import {draw_elements} from './drawing.js';
 import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
 //------------------------------------------------------------------------------
 
-winc.build = function (canvas, script) {
+win.build = function (canvas, script) {
     let w = new Wincalc(canvas);
     w.parse(script);
     return w;

@@ -100,7 +100,7 @@ systree.add_sysprodClone = function (table, sysprodRec) {
     tr.appendChild(td2);
     tr.appendChild(td3);
     table.appendChild(tr);
-    winc.build(canvas, script);    
+    win.build(canvas, script);    
 }
 //------------------------------------------------------------------------------
 systree.parentTag = function (node, tag) {

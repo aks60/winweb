@@ -99,8 +99,8 @@ export class Stvorka extends Area {
         this.frames = new Map(); //рамы конструкции 
 
         //Коррекция area створки с учётом ширины рамы и нахлёста
-        this.dimension(owner.x1 + (this.margin("LEFT") - winc.naxl), owner.y1 + (this.margin("TOP") - winc.naxl),
-                owner.x2 - (this.margin("RIGHT") - winc.naxl), owner.y2 - (this.margin("TOP") - winc.naxl));
+        this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
+                owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("TOP") - win.naxl));
 
         this.frames.set("BOTT", new Frame(obj, this, iwin, this.id + '.1', "BOTT", "STVORKA_SIDE"));
         this.frames.set("RIGHT", new Frame(obj, this, iwin, this.id + '.2', "RIGHT", "STVORKA_SIDE"));
@@ -124,13 +124,13 @@ export class Stvorka extends Area {
     //Отступ створки
     margin(side) {
         if ("BOTT" == side)
-            return (this.iwin.root.y2 - this.y2 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
+            return (this.iwin.root.y2 - this.y2 > 200) ? win.dh_crss / 2 : win.dh_frm;
         else if ("RIGHT" == side)
-            return (this.iwin.root.x2 - this.x2 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
+            return (this.iwin.root.x2 - this.x2 > 200) ? win.dh_crss / 2 : win.dh_frm;
         else if ("TOP" == side)
-            return (this.y1 - this.iwin.root.y1 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
+            return (this.y1 - this.iwin.root.y1 > 200) ? win.dh_crss / 2 : win.dh_frm;
         else if ("LEFT" == side)
-            return (this.x1 - this.iwin.root.x1 > 200) ? winc.dh_crss / 2 : winc.dh_frm;
+            return (this.x1 - this.iwin.root.x1 > 200) ? win.dh_crss / 2 : win.dh_frm;
     }
 
     paint() {
@@ -182,10 +182,10 @@ export class Cross extends Com5t {
                 let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
 
                 if ("VERT" == owner.layout) { //сверху вниз
-                    this.dimension(prevArea.x1, prevArea.y2 - winc.dh_crss / 2, prevArea.x2, prevArea.y2 + winc.dh_crss / 2);
+                    this.dimension(prevArea.x1, prevArea.y2 - win.dh_crss / 2, prevArea.x2, prevArea.y2 + win.dh_crss / 2);
 
                 } else if ("HORIZ" == owner.layout) { //слева направо
-                    this.dimension(prevArea.x2 - winc.dh_crss / 2, prevArea.y1, prevArea.x2 + winc.dh_crss / 2, prevArea.y2);
+                    this.dimension(prevArea.x2 - win.dh_crss / 2, prevArea.y1, prevArea.x2 + win.dh_crss / 2, prevArea.y2);
                 }
                 break;
             }
@@ -214,37 +214,38 @@ export class Frame extends Com5t {
 
         if (owner.type == "ARCH") {
             if ("TOP" == this.layout) {
-                //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frm);            
+                //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);            
             } else if ("BOTT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - winc.dh_frm, owner.x2, owner.y2);
+                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - winc.dh_frm, owner.y1, owner.x2, owner.y2);
+                this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
             } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frm, owner.y2);
+                this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
             }
 
         } else {
             if ("BOTT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - winc.dh_frm, owner.x2, owner.y2);
+                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - winc.dh_frm, owner.y1, owner.x2, owner.y2);
+                this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
             } else if ("TOP" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + winc.dh_frm);
+                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);
             } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + winc.dh_frm, owner.y2);
+                this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
             }
         }
         
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            //let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
             //this.typeOpen = obj.param.typeOpen;
         } else {
+            //let sysprofRec = dbset.find_list(obj.param.sysprofID, dbset.sysprofList, );
             //this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
         }        
     }
 
     paint() {
-        let dh = winc.dh_frm;
+        let dh = win.dh_frm;
         if (this.owner.type == "ARCH") {
             let Y1 = this.iwin.height - this.iwin.heightAdd;
             if ("TOP" == this.layout) {

@@ -85,7 +85,7 @@ order.add_proprodClone = function (table, proprodRec) {
     let id = document.createTextNode(proprodRec[PROPROD.id]);
     let name = document.createTextNode(proprodRec[PROPROD.name]);
     let script = proprodRec[PROPROD.script];
-    let iwincalc = winc.build(canvas, script);
+    let iwincalc = win.build(canvas, script);
 
     //Массив объектов winc
     order.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);

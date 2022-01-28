@@ -50,6 +50,7 @@
             <button id="btnUpdate" onClick="">Изменить</button>
             <button id="btnSave" onClick="">Сохранить</button>
             <button id="btnDelit" onClick="">Удалить</button>
+            <button id="btnTest" onClick="win.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Test</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

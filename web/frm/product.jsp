@@ -18,7 +18,7 @@
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    winc.build(cvs, order.rec_table2[PROPROD.script]);
+                    win.build(cvs, order.rec_table2[PROPROD.script]);
                 }
 
                 let winWidth = $('#east').width() - 24;

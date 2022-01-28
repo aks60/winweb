@@ -35,7 +35,7 @@
                     PROPROD = {'id': 0, 'name': 1, 'script': 2, 'project_id': 3, 'systree_id': 4};
 
             //Глобальные объекты
-            var utils = {}, winc = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
+            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
                     users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
 
             $(document).ready(function () {
