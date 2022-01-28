@@ -234,14 +234,27 @@ export class Frame extends Com5t {
                 this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
             }
         }
-        
+
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
-            //this.typeOpen = obj.param.typeOpen;
+//            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+//            this.typeOpen = obj.param.typeOpen;
         } else {
-            //let sysprofRec = dbset.find_list(obj.param.sysprofID, dbset.sysprofList, );
+//            let sideID = -1;
+//            if ("BOTT" == this.layout)
+//                sideID = 1;
+//            else if ("RIGHT" == this.layout)
+//                sideID = 2;
+//            else if ("TOP" == this.layout)
+//                sideID = 3;
+//            else if ("LEFT" == this.layout)
+//                sideID = 4;
+//
+//            let sysprofList = dbset.find_list(this.winc.nuni, dbset.sysprofList, SYSPROF.systree_id);
+//            let sysprofList2 = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
+//                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
+//            sysprofList2.sort();
             //this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
-        }        
+        }
     }
 
     paint() {

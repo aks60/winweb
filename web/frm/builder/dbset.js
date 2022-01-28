@@ -22,6 +22,12 @@ dbset.find_list = function (id, ds, fk) {
     }
     return list;
 }
+//------------------------  ENUMS  -------------------------------------------
+export function load_enumList() {
+  return  $.ajax({
+        url: 'enum?action=enumList',
+    });
+}
 //------------------------  SYSTREE  -------------------------------------------
 export function load_systreeList() {
   return  $.ajax({

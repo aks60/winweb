@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 
-    let ctx = win.ctx;
+    let ctx = winc.ctx;
     ctx.fillStyle = '#000000';
     ctx.beginPath();
     ctx.moveTo(x1, y1);
