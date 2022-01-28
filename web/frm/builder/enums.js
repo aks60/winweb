@@ -7,5 +7,6 @@ load_enumtList = function () {
         }
     });
 }
+//var UseSide = {'ANY': -1, 'HORIZ': -2, 'VERT': -3, 'BOT': 1, 'RIGHT': 2, 'TOP': 3, 'LEFT': 4}; //сторона использования  
 
 

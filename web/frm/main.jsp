@@ -32,9 +32,7 @@
                     SYSPROF = {'id': 0, 'prio': 1, 'use_type': 2, 'use_side': 3, 'artikl_id': 4, 'systree_id': 5},
                     SYSFUR = {'id': 0, 'side_open': 1, 'systree_id': 2},
                     SYSPROD = {'id': 0, 'name': 1, 'script': 2, 'systree_id': 3},
-                    PROPROD = {'id': 0, 'name': 1, 'script': 2, 'project_id': 3, 'systree_id': 4};
-
-            //var UseSide = {'ANY': -1, 'HORIZ': -2, 'VERT': -3, 'BOT': 1, 'RIGHT': 2, 'TOP': 3, 'LEFT': 4}; //сторона использования  
+                    PROPROD = {'id': 0, 'name': 1, 'script': 2, 'project_id': 3, 'systree_id': 4};            
 
             //Глобальные объекты
             var utils = {}, enums = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
