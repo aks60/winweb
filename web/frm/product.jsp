@@ -36,7 +36,7 @@
                     product.resize();
                 }).trigger('resize');
 
-                product.load_tree($('#tree-iwin'));
+                product.load_tree($('#tree-winc'));
                 prepareToolBar();
             });
 
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%;">
-                        <div id="tree-iwin"></div>
+                        <div id="tree-winc"></div>
                     </div>                
 
                 </div>

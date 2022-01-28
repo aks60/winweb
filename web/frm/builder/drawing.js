@@ -2,9 +2,9 @@
 //draw_canvas.style.width = "500px"
 //draw_canvas.style.height = "500px"
 //------------------------------------------------------------------------------
-export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
+export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 
-    let ctx = iwin.ctx;
+    let ctx = win.ctx;
     ctx.fillStyle = '#000000';
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -14,9 +14,9 @@ export  function draw_line(iwin, x1, y1, x2, y2, rgb) {
     ctx.stroke();
 }
 //------------------------------------------------------------------------------
-export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
+export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
-    let ctx = iwin.ctx;
+    let ctx = winc.ctx;
     ctx.fillStyle = rgb;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -28,9 +28,9 @@ export  function draw_stroke_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
     ctx.stroke();
 }
 //------------------------------------------------------------------------------
-export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
+export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
-    let ctx = iwin.ctx;
+    let ctx = winc.ctx;
     ctx.fillStyle = rgb;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -41,27 +41,27 @@ export  function draw_full_polygon(iwin, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
     ctx.fill();
 }
 //------------------------------------------------------------------------------
-export function draw_full_circle(iwin) {
+export function draw_full_circle(winc) {
 
-    let ctx = iwin.ctx;
+    let ctx = winc.ctx;
     ctx.beginPath();
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
     ctx.stroke();
 }
 //------------------------------------------------------------------------------
-export function draw_text(iwin) {
+export function draw_text(winc) {
 
-    let ctx = iwin.ctx;
+    let ctx = winc.ctx;
     ctx.font = "30px Arial";
     ctx.strokeText("Hello World", 10, 50);
 }
 //------------------------------------------------------------------------------
 //Рисуем конструкцию
-export function draw_elements(iwin, arr) {
+export function draw_elements(winc, arr) {
     //try {
-    iwin.ctx.save();
+    winc.ctx.save();
 
-    let obj = iwin.obj, cnv = iwin.cnv, ctx = iwin.ctx;
+    let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx;
     ctx.fillStyle = '#ffffff';
     ctx.clearRect(0, 0, cnv.width, cnv.height);
 
@@ -81,15 +81,15 @@ export function draw_elements(iwin, arr) {
     cross.forEach((v, k, map) => v.paint());
 
 //        //Прорисовка штульпов
-//        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(iwin.listSortEl, Type.SHTULP);
+//        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(winc.listSortEl, Type.SHTULP);
 //        elemShtulpList.stream().forEach(el - > el.paint());
 //        
 //        //Прорисовка стоек
-//        LinkedList < ElemCross > elemStoikaList = UCom.listSortObj(iwin.listSortEl, Type.STOIKA);
+//        LinkedList < ElemCross > elemStoikaList = UCom.listSortObj(winc.listSortEl, Type.STOIKA);
 //        elemStoikaList.stream().forEach(el - > el.paint());
 
     //Прорисовка рам
-    iwin.root.frames.forEach((val, key, map) => val.paint());
+    winc.root.frames.forEach((val, key, map) => val.paint());
 
     //Прорисовка створок
     let stv = arr.filter((v, i, arr) => v.type == "STVORKA");

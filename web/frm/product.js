@@ -24,14 +24,14 @@ product.load_tree = function () {
 
     elements(root, arr);  //вход в рекурсию    
 
-    $('#tree-iwin').jstree({'core': {
+    $('#tree-winc').jstree({'core': {
             'data': arr,
         }})
             .bind("loaded.jstree", function (event, data) {
                 $(this).jstree("open_node", $("#0"));
             })
             .bind("select_node.jstree", function (evt, data) {
-                let id = $("#tree-iwin").jstree("get_selected")[0];
+                let id = $("#tree-winc").jstree("get_selected")[0];
                 view_winc_property(id);
             });
 }
