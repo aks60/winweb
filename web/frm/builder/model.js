@@ -236,24 +236,26 @@ export class Frame extends Com5t {
         }
 
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-//            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
-//            this.typeOpen = obj.param.typeOpen;
+            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+
         } else {
-//            let sideID = -1;
-//            if ("BOTT" == this.layout)
-//                sideID = 1;
-//            else if ("RIGHT" == this.layout)
-//                sideID = 2;
-//            else if ("TOP" == this.layout)
-//                sideID = 3;
-//            else if ("LEFT" == this.layout)
-//                sideID = 4;
-//
-//            let sysprofList = dbset.find_list(this.winc.nuni, dbset.sysprofList, SYSPROF.systree_id);
-//            let sysprofList2 = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
-//                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
-//            sysprofList2.sort();
-            //this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
+            let sideID = -1;
+            if ("BOTT" == this.layout) {
+                sideID = 1;
+            } else if ("RIGHT" == this.layout) {
+                sideID = 2;
+            } else if ("TOP" == this.layout) {
+                sideID = 3;
+            } else if ("LEFT" == this.layout) {
+                sideID = 4;
+            }
+            let sysprofList = dbset.find_list(this.winc.nuni, dbset.sysprofList, SYSPROF.systree_id);
+            let sysprofList2 = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
+                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
+            sysprofList2.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
+            let sysprofRec = sysprofList2[0];
+            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
         }
     }
 
