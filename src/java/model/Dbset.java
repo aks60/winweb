@@ -126,12 +126,13 @@ public class Dbset {
 
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.systree_id)
-                .select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.hand_pos, 
+                eSysfurn.systree_id).select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
         for (Record rec : qSysfurn) {
             list.add(Arrays.asList(
                     rec.get(eSysfurn.id),
                     rec.get(eSysfurn.side_open),
+                    rec.get(eSysfurn.hand_pos),
                     rec.get(eSysfurn.systree_id)));
         }
         JSONObject output = new JSONObject(App.asMap("sysfurnList", list));

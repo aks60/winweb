@@ -107,17 +107,66 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(obj, this, winc, this.id + '.3', "TOP", "STVORKA_SIDE"));
         this.frames.set("LEFT", new Frame(obj, this, winc, this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
-        //Фурнитура створки, ручка, подвес
+        //Фурнитура створки
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
-            this.sysfurn = dbset.find_rec(obj.param.sysfurnID, dbset.sysfurnList);
+            this.sysfurnRec = dbset.find_rec(obj.param.sysfurnID, dbset.sysfurnList);
         } else {
-            this.sysfurn = dbset.find2_rec(SYSFUR.systree_id, winc.nuni, dbset.sysfurnList);
+            this.sysfurnRec = dbset.find2_rec(SYSFURN.systree_id, winc.nuni, dbset.sysfurnList);
+        }
+        //Ручка
+        if (obj.param != undefined && obj.param.artiklHandl != undefined) {
+            this.handleRec = obj.param.artiklHandl;
+        }
+        //Текстура ручки
+        if (obj.param != undefined && obj.param.colorHandl != undefined) {
+            this.handleColor = obj.param.colorHandl;
+        }
+        //Подвес (петли)
+        if (obj.param != undefined && obj.param.artiklLoop != undefined) {
+            this.loopRec = obj.param.artiklLoop;
+        }
+        //Текстура подвеса
+        if (obj.param != undefined && obj.param.colorLoop != undefined) {
+            this.loopColor = obj.param.colorLoop;
+        }
+        //Замок
+        if (obj.param != undefined && obj.param.artiklLock != undefined) {
+            this.lockRec = obj.param.artiklLock;
+        }
+        //Текстура замка
+        if (obj.param != undefined && obj.param.colorLock != undefined) {
+            this.lockColor = obj.param.colorLock;
         }
         //Сторона открывания
         if (obj.param != undefined && obj.param.typeOpen != undefined) {
             this.typeOpen = obj.param.typeOpen;
+        } else if (this.sysfurnRec != undefined) {
+            this.typeOpen = (this.sysfurnRec[SYSFURN.side_open] == 1) ? 1 : 2;
+        }
+
+        //Положение или высота ручки на створке
+        if (obj.param != undefined && obj.param.positionHandl != undefined) {
+            let position = obj.param.positionHandl;
+            if (position == 3) { //VARIAT.id
+                this.handleLayout = 'VARIAT';
+                this.handleHeight = obj.param.heightHandl;
+            } else {
+                this.handleLayout = (this.position == 'MIDL') ? 'MIDL' : 'CONST';
+                this.handleHeight = this.frames.get("LEFT").height() / 2;
+
+            }
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 1) {  //MIDL.id
+            this.handleLayout = 'MIDL';
+            this.handleHeight = this.frames.get("LEFT").height() / 2;
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 2) {    //CONST.id) {
+            this.handleLayout = 'CONST';
+            this.handleHeight = this.frames.get("LEFT").height() / 2;
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 3) {    //VARIAT.id) {
+            this.handleLayout = 'VARIAT';
+            this.handleHeight = this.frames.get("LEFT").height() / 2;
         } else {
-            this.typeOpen = (this.sysfurn[SYSFUR.side_open] == 1) ? 1 : 2;
+            this.handleLayout = 'MIDL'; //по умолчанию
+            this.handleHeight = this.frames.get("LEFT").height() / 2;
         }
     }
 
@@ -190,6 +239,24 @@ export class Cross extends Com5t {
                 break;
             }
         }
+
+        if (obj.param != undefined && obj.param.sysprofID != undefined) {
+            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+
+        } else {
+            let sideID = -1;
+            if ("HORIZ" == this.layout) {
+                sideID = -2;
+            } else if ("VERT" == this.layout) {
+                sideID = -3;
+            }
+            let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
+                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
+            sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
+            let sysprofRec = sysprofList[0];
+            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+        }
     }
 
     paint() {
@@ -250,11 +317,10 @@ export class Frame extends Com5t {
             } else if ("LEFT" == this.layout) {
                 sideID = 4;
             }
-            let sysprofList = dbset.find_list(this.winc.nuni, dbset.sysprofList, SYSPROF.systree_id);
-            let sysprofList2 = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
+            let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
                         rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
-            sysprofList2.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
-            let sysprofRec = sysprofList2[0];
+            sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
+            let sysprofRec = sysprofList[0];
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
         }
     }
