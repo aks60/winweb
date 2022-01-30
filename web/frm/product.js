@@ -28,7 +28,8 @@ product.load_tree = function () {
             'data': arr,
         }})
             .bind("loaded.jstree", function (event, data) {
-                $(this).jstree("open_node", $("#0"));
+                $(this).jstree('open_node', $('#0'));
+                $(this).jstree('select_node', 0.0);
             })
             .bind("select_node.jstree", function (evt, data) {
                 let id = $("#tree-winc").jstree("get_selected")[0];
@@ -68,37 +69,39 @@ function elements(com, arr) {
 //------------------------------------------------------------------------------
 function view_winc_property(proprodID) {
 
+    let winc = null;
     let id = order.rec_table2[PROPROD.id];
     if (proprodID >= 0) {
-        let win = order.wincalcMap.get(id);
-        let elem = win.elemList.find(it => it.id == proprodID);
-        swich_page(elem);
-
+        winc = order.wincalcMap.get(id);
     } else if (proprodID == -1) {
-        swich_page({'type': 'DEF_PARAM'});
-
+        winc = {'type': 'DEF_PARAM'};
     }
-}
-//------------------------------------------------------------------------------
-function swich_page(elem) {
-    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    let tp = elem.type;
-    let artikl = elem.artikl;
-    if (tp == "RECTANGL" || tp == "TRAPEZE" || tp == "TRIANGL" || tp == "ARCH" || tp == "DOOR") {
-        $("#tabs-1").show();
 
-    } else if (tp == "DEF_PARAM") {
+    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+    let type = winc.root.type;
+    let elem = winc.elemList.find(it => it.id == proprodID);
+    let artikl = elem.artikl;
+
+    if (type == "RECTANGL" || type == "TRAPEZE" || type == "TRIANGL" || type == "ARCH" || type == "DOOR") {
+        $("#tabs-1").show();
+        load_fields('tabs-1', {
+            'name11': winc.width, 'name12': winc.height, name13: winc.heightAdd,
+            name14: winc.rgb1[COLOR.name], name15: winc.rgb2[COLOR.name], name16: winc.rgb3[COLOR.name]
+        }, ['name11', 'name12', 'name13', 'name14', 'name15', 'name16']);
+
+    } else if (type == "DEF_PARAM") {
         $("#tabs-2").show();
 
-    } else if (tp == "FRAME_SIDE" || tp == "STVORKA_SIDE" || tp == "IMPOST" || tp == "SHTULP" || tp == "STOIKA") {
+    } else if (type == "FRAME_SIDE" || type == "STVORKA_SIDE" || type == "IMPOST" || type == "SHTULP" || type == "STOIKA") {
         $("#tabs-3").show();
 
-    } else if (tp == "STVORKA") {
+    } else if (type == "STVORKA") {
         $("#tabs-4").show();
 
-    } else if (tp == "GLASS") {
+    } else if (type == "GLASS") {
         $("#tabs-5").show();
 
     }
 }
+//------------------------------------------------------------------------------
 

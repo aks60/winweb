@@ -1,6 +1,3 @@
-//https://qna.habr.com/q/113113
-//draw_canvas.style.width = "500px"
-//draw_canvas.style.height = "500px"
 //------------------------------------------------------------------------------
 export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 
@@ -17,7 +14,7 @@ export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = winc.ctx;
-    ctx.fillStyle = rgb;
+    ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -31,7 +28,7 @@ export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
 export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = winc.ctx;
-    ctx.fillStyle = rgb;
+    ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
