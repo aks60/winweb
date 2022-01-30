@@ -27,7 +27,7 @@
             var SYSTREE = {'id': 0, 'glas': 1, 'parent_id': 2},
                     GROUPS = {'id': 0, 'name': 1},
                     COLOR = {'id': 0, 'name': 1, 'rgb': 2, 'colgrp_id': 3},
-                    ARTIKL = {'id': 0, 'name': 1, 'code': 2, 'height': 3},
+                    ARTIKL = {'id': 0, 'name': 1, 'code': 2, 'height': 3, 'analog_id': 4},
                     ARTDET = {'id': 0, 'color_fk': 1, 'artikl_id': 2},
                     SYSPROF = {'id': 0, 'prio': 1, 'use_type': 2, 'use_side': 3, 'artikl_id': 4, 'systree_id': 5},
                     SYSFURN = {'id': 0, 'side_open': 1, 'hand_pos': 2, 'systree_id': 3},

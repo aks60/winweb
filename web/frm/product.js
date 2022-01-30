@@ -81,38 +81,40 @@ function view_winc_property(proprodID) {
     let elem = winc.elemList.find(it => it.id == proprodID);
     let artikl = elem.artikl;
 
-    if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(winc.root.type, 0)) {
+    if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
         let typ = {"RECTANGL": 'Окно четырёхугольное', "TRAPEZE": 'Окно трапециидальное', "TRIANGL": 'Окно треугольное', "ARCH": 'Окно арочное', "DOOR": 'Дверь'};
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
         load_fields('tabs-1', {
-            'name11': winc.width, 'name12': winc.height, name13: winc.heightAdd,
-            name14: winc.rgb1[COLOR.name], name15: winc.rgb2[COLOR.name], name16: winc.rgb3[COLOR.name]
-        }, ['name11', 'name12', 'name13', 'name14', 'name15', 'name16']);
+            'n11': winc.width, 'n12': winc.height, n13: winc.heightAdd,
+            n14: winc.rgb1[COLOR.name], n15: winc.rgb2[COLOR.name], n16: winc.rgb3[COLOR.name]
+        }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
 
     } else if (winc.root.type == "DEF_PARAM") {
         $("#tabs-2").show();
 
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
-        debugger;
         let lay = {'BOTT': 'нижняя', 'RIGHT': 'правая', 'TOP': 'верхняя', 'LEFT': 'левая', 'VERT': 'вертикальный', 'HORIZ': 'горизонтальный'};
         if (elem.type == "FRAME_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
         } else if (elem.type == "STVORKA_SIDE") {
-            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + +lay[elem.layout]);
+            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + lay[elem.layout]);
         } else {
-            $("#tabs-3 :nth-child(1)").text('Импост ' + +lay[elem.layout]);
+            $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
         }
-//        load_fields('tabs-3', {
-//            'name11': winc.width, 'name12': winc.height, name13: winc.heightAdd,
-//            name14: winc.rgb1[COLOR.name], name15: winc.rgb2[COLOR.name], name16: winc.rgb3[COLOR.name]
-//        }, ['name11', 'name12', 'name13', 'name14', 'name15', 'name16']);
+        load_fields('tabs-3', {
+            'n31': elem.artiklAn[ARTIKL.code], 'n32': elem.artiklAn[ARTIKL.name],
+            n33: elem.rgb1[COLOR.name], n34: elem.rgb2[COLOR.name], n35: elem.rgb3[COLOR.name]
+        }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
 
     } else if (elem.type == "STVORKA") {
         $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {
+        load_fields('tabs-5', {
+            'n51': elem.artiklRec[ARTIKL.code], 'n52': elem.artiklRec[ARTIKL.name], n53: elem.rgb1[COLOR.name]
+        }, ['n51', 'n52', 'n53']);        
         $("#tabs-5").show();
 
     }

@@ -307,6 +307,10 @@ export class Frame extends Com5t {
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
             let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
+            if (this.artiklAn == undefined) {
+                this.artiklAn = this.artiklRec;
+            }
 
         } else {
             let sideID = -1;
@@ -324,6 +328,10 @@ export class Frame extends Com5t {
             sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
             let sysprofRec = sysprofList[0];
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
+            if (this.artiklAn == undefined) {
+                this.artiklAn = this.artiklRec;
+            }
         }
     }
 
@@ -359,22 +367,17 @@ export class Glass extends Com5t {
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
         this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
+        
 
-        let artdetRec = null;
         if (obj.param != undefined && obj.param.artglasID != undefined) {
-            artdetRec = find2_rec(ARTDET.artikl_id, obj.param.artglasID, dbset.artdetList);
+            this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.code]);
         } else {
-            let treeRec = dbset.find_rec(winc.nuni, dbset.systreeList); //по умолчанию стеклопакет
-            for (let i = 0; i < dbset.artiklList.length; i++) {
-                if (treeRec[SYSTREE.glas] == dbset.artiklList[i][ARTIKL.code]) {
-                    let artiklRec = dbset.artiklList[i];
-                    artdetRec = dbset.find2_rec(ARTDET.artikl_id, artiklRec[ARTIKL.id], dbset.artdetList);
-                    break;
-                }
-            }
+            let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]); //по умолчанию стеклопакет
+            this.artiklRec = dbset.artiklList.find(rec => systreeRec[SYSTREE.glas] == rec[ARTIKL.code]);
         }
+        let artdetRec = dbset.artdetList.find(rec => this.artiklRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
         let color_fk = artdetRec[ARTDET.color_fk];
-        this.rgb2 = dbset.find_rec(color_fk, dbset.colorList);
+        this.rgb1 = dbset.colorList.find(rec => color_fk == rec[COLOR.id]);
     }
 
     paint() {
@@ -382,7 +385,7 @@ export class Glass extends Com5t {
 
         } else {
             draw_full_polygon(this.winc, this.owner.x1, this.owner.x2, this.owner.x2,
-                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb2);
+                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb1);
         }
     }
 }
