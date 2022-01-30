@@ -60,7 +60,7 @@
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0">
                     <div id="east2" style="margin-top: -270px; height: 268px;">
                         <div id="tabs-1" style="padding: 0px;">  
-                            <p class="pantitle">Основные размеры</p> 
+                            <p id="a123" class="pantitle">Основные размеры*</p> 
                             <jst type='txt' label='Ширина' name="name11" width='80' wid1h="60"></jst><br>
                             <jst type='txt' label='Высота1' name="name12" width='80' wid1h="60"></jst><br>
                             <jst type='txt' label='Высота2' name="name13" width='80' wid1h="60"></jst><br>  
@@ -73,7 +73,7 @@
                             <p class="pantitle">Параметры изделия</p> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
-                            <p class="pantitle">Сторона рамы</p> 
+                            <p class="pantitle">Сторона коробки</p> 
                             <jst type='btn' label='Артикул' name="name31" width='80' wid1h="260" click=""></jst><br>
                             <jst type='txt' label='Название' name="name32" width='80' wid1h="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  

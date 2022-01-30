@@ -78,27 +78,41 @@ function view_winc_property(proprodID) {
     }
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    let type = winc.root.type;
     let elem = winc.elemList.find(it => it.id == proprodID);
     let artikl = elem.artikl;
 
-    if (type == "RECTANGL" || type == "TRAPEZE" || type == "TRIANGL" || type == "ARCH" || type == "DOOR") {
-        $("#tabs-1").show();
+    if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(winc.root.type, 0)) {
+        let typ = {"RECTANGL": 'Окно четырёхугольное', "TRAPEZE": 'Окно трапециидальное', "TRIANGL": 'Окно треугольное', "ARCH": 'Окно арочное', "DOOR": 'Дверь'};
+        $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
         load_fields('tabs-1', {
             'name11': winc.width, 'name12': winc.height, name13: winc.heightAdd,
             name14: winc.rgb1[COLOR.name], name15: winc.rgb2[COLOR.name], name16: winc.rgb3[COLOR.name]
         }, ['name11', 'name12', 'name13', 'name14', 'name15', 'name16']);
+        $("#tabs-1").show();
 
-    } else if (type == "DEF_PARAM") {
+    } else if (winc.root.type == "DEF_PARAM") {
         $("#tabs-2").show();
 
-    } else if (type == "FRAME_SIDE" || type == "STVORKA_SIDE" || type == "IMPOST" || type == "SHTULP" || type == "STOIKA") {
+    } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
+        debugger;
+        let lay = {'BOTT': 'нижняя', 'RIGHT': 'правая', 'TOP': 'верхняя', 'LEFT': 'левая', 'VERT': 'вертикальный', 'HORIZ': 'горизонтальный'};
+        if (elem.type == "FRAME_SIDE") {
+            $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
+        } else if (elem.type == "STVORKA_SIDE") {
+            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + +lay[elem.layout]);
+        } else {
+            $("#tabs-3 :nth-child(1)").text('Импост ' + +lay[elem.layout]);
+        }
+//        load_fields('tabs-3', {
+//            'name11': winc.width, 'name12': winc.height, name13: winc.heightAdd,
+//            name14: winc.rgb1[COLOR.name], name15: winc.rgb2[COLOR.name], name16: winc.rgb3[COLOR.name]
+//        }, ['name11', 'name12', 'name13', 'name14', 'name15', 'name16']);
         $("#tabs-3").show();
 
-    } else if (type == "STVORKA") {
+    } else if (elem.type == "STVORKA") {
         $("#tabs-4").show();
 
-    } else if (type == "GLASS") {
+    } else if (elem.type == "GLASS") {
         $("#tabs-5").show();
 
     }
