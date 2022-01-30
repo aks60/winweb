@@ -10,14 +10,14 @@ html, body {
 
 #north { 
     background-repeat:repeat-x;
-    background-image:url('../img/shadow2.jpg');
+    background-image:url('../img/shadow3.jpg');
     width: calc(100% - 4px);
     height: 22px;
 }
 
 #south { 
     background-repeat:repeat-x;
-    background-image:url('../img/shadow3.jpg'); 
+    background-image:url('../img/shadow2.jpg'); 
     width: calc(100% - 4px);
     height: 18px;
 }

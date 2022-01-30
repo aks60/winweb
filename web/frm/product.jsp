@@ -57,8 +57,8 @@
                 <div id="centr" style="height: 100%; width: 100%;">
                     <canvas id="cnv2" style="border:2px solid black;"></canvas>
                 </div>
-                <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0">
-                    <div id="east2" style="margin-top: -270px; height: 268px;">
+                <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
+                    <div id="east2" style="margin-top: -270px; height: 268px; background: #f5f8f9">
                         <div id="tabs-1" style="padding: 0px;">  
                             <p id="a123" class="pantitle">Основные размеры*</p> 
                             <jst type='txt' label='Ширина' name="n11" width='80' wid1h="60"></jst><br>
@@ -102,7 +102,7 @@
                             <jst type='btn' label='Цвет' name="n53" width='80' wid1h="260" click=""></jst><br>
                         </div>
                     </div>
-                    <div id="east3" style="overflow-y: auto; height: 100%;">
+                    <div id="east3" style="overflow-y: auto; height: 100%; background: #f5f8f9">
                         <div id="tree-winc"></div>
                     </div>                
 
