@@ -109,6 +109,10 @@ function view_winc_property(proprodID) {
         $("#tabs-3").show();
 
     } else if (elem.type == "STVORKA") {
+        load_fields('tabs-4', {
+            'n41': elem.width(), 'n42': elem.height(),
+            n43: elem.sysfurnRec[SYSFURN.na], n44: 'elem.rgb2[COLOR.name]', n45: 'elem.rgb3[COLOR.name]'
+        }, ['n41', 'n42', 'n43', 'n44', 'n45']);        
         $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {

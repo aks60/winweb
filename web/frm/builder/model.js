@@ -111,10 +111,11 @@ export class Stvorka extends Area {
 
         //Фурнитура створки
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
-            this.sysfurnRec = dbset.find_rec(obj.param.sysfurnID, dbset.sysfurnList);
+            this.sysfurnRec = dbset.sysfurnList.find(rec => obj.param.sysfurnID == rec[SYSFURN.id]);
         } else {
-            this.sysfurnRec = dbset.find2_rec(SYSFURN.systree_id, winc.nuni, dbset.sysfurnList);
+            this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == winc.nuni);
         }
+        
         //Ручка
         if (obj.param != undefined && obj.param.artiklHandl != undefined) {
             this.handleRec = obj.param.artiklHandl;
