@@ -34,7 +34,7 @@
         <div id="north">
             <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Регистрация нового пользователя</h6>
         </div>        
-        <div id = "context" style=" background: #f5f8f9">
+        <div id = "context" style=" background: #efeffb">
             <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                     <div id="west2" style="height: 112px">

@@ -39,14 +39,14 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');
-//            login.user_connect();            
+            login.user_connect();            
         </script>         
     </head>
     <body>
         <div id="north">
             <h6 style="padding-left: 32%; margin-top: 1px; font-size: 16px;">Расчёт конструкций</h6> 
         </div>
-        <div id = "context" style="background: #f5f8f9">
+        <div id = "context" style="background: #efeffb">
             <div id="midl" style="position: relative; margin: 0 200px 0 200px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 200px; margin-left: -202px;">
                     <button id="btn1"  type="button" onClick="onPage('2');" style="width: 164px; margin: 12px;">Авторизация пользователя(токен)</button>

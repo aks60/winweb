@@ -8,7 +8,7 @@
 
         <style>
             #table2a tr:hover {background:#E2EEFF;}
-            #table2a .activeRow, #table2a .activeRow:hover {background:#6598C7; color:#fff;}
+            #table2a .activeRow, #table2a .activeRow:hover {background:#efeffb; color:#fff;}
 
             #table2a tr { height: 68px; };
             #table2a tr  > *:nth-child(1) { display: none !important; }
