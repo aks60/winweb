@@ -6,22 +6,22 @@ dbset.find_rec = function (id, ds) {
         }
     }
 }
-dbset.find2_rec = function (key, val, ds) {
-    for (let i = 0; i < ds.length; i++) {
-        if (val == ds[i][key]) {
-            return ds[i];
-        }
-    }
-}
-dbset.find_list = function (id, ds, fk) {
-    let list = new Array();
-    for (let i = 0; i < ds.length; i++) {
-        if (id == ds[i][fk]) {
-            list.push(ds[i]);
-        }
-    }
-    return list;
-}
+//dbset.find2_rec = function (key, val, ds) {
+//    for (let i = 0; i < ds.length; i++) {
+//        if (val == ds[i][key]) {
+//            return ds[i];
+//        }
+//    }
+//}
+//dbset.find_list = function (id, ds, fk) {
+//    let list = new Array();
+//    for (let i = 0; i < ds.length; i++) {
+//        if (id == ds[i][fk]) {
+//            list.push(ds[i]);
+//        }
+//    }
+//    return list;
+//}
 //------------------------  ENUMS  -------------------------------------------
 export function load_enumList() {
   return  $.ajax({
@@ -56,6 +56,12 @@ export function load_artiklList() {
 export function load_artdetList() {
     return  $.ajax({
         url: 'dbset?action=artdetList',
+    });
+}
+//---------------------------  FURNITURE  --------------------------------------
+export function load_furnitureList() {
+    return  $.ajax({
+        url: 'dbset?action=furnitureList',
     });
 }
 //---------------------------  PROPROD  ----------------------------------------

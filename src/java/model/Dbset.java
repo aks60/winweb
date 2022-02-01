@@ -5,6 +5,7 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eFurniture;
 import domain.eGroups;
 import domain.eProject;
 import domain.eProprod;
@@ -36,7 +37,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("systreeList", list));
         return output;
     }
-    
+
     public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysprod = new Query(Att.att(request).connect(), eSysprod.id, eSysprod.name, eSysprod.script, eSysprod.systree_id).select(eSysprod.up);
@@ -109,6 +110,18 @@ public class Dbset {
         return output;
     }
 
+    public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qFurniture = new Query(Att.att(request).connect(), eFurniture.id, eFurniture.name).select(eFurniture.up);
+        for (Record rec : qFurniture) {
+            list.add(Arrays.asList(
+                    rec.get(eFurniture.id),
+                    rec.get(eFurniture.name)));
+        }
+        JSONObject output = new JSONObject(App.asMap("furnitureList", list));
+        return output;
+    }
+    
     public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
@@ -127,14 +140,33 @@ public class Dbset {
 
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.hand_pos, 
-                eSysfurn.systree_id).select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.systree_id, eSysfurn.furniture_id)
+                .select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
         for (Record rec : qSysfurn) {
             list.add(Arrays.asList(
                     rec.get(eSysfurn.id),
                     rec.get(eSysfurn.side_open),
+                    rec.get(eSysfurn.systree_id),
+                    rec.get(eSysfurn.furniture_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
+        return output;
+    }
+
+    public static JSONObject sysfurnList2(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.values(), eFurniture.values())
+                .select(eSysfurn.up, "left join", eFurniture.up, "on", eSysfurn.furniture_id, "=", eFurniture.id);
+        Query qFurniture = qSysfurn.table(eFurniture.up);
+        for (int index = 0; index < qSysfurn.size(); ++index) {
+            Record rec = qSysfurn.get(index);
+            Record rec2 = qFurniture.get(index);
+            list.add(Arrays.asList(
+                    rec.get(eSysfurn.id),
+                    rec.get(eSysfurn.side_open),
                     rec.get(eSysfurn.hand_pos),
-                    rec.get(eSysfurn.systree_id)));
+                    rec.get(eSysfurn.systree_id),
+                    rec2.get(eFurniture.name)));
         }
         JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
         return output;
@@ -143,7 +175,7 @@ public class Dbset {
     public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysprof = new Query(Att.att(request).connect(), eSysprof.id, eSysprof.prio, eSysprof.use_type,
-        eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up);
+                eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up);
         for (Record rec : qSysprof) {
             list.add(Arrays.asList(
                     rec.get(eSysprof.id),
