@@ -109,22 +109,21 @@ function view_winc_property(proprodID) {
         $("#tabs-3").show();
 
     } else if (elem.type == "STVORKA") {
-//        let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
-//        //Сторона открывания
-//        let side_open = "откидная";
-//        if ([1, 3, 11].includes(elem.typeOpen, 0)) {
-//            side_open = "левая";
-//        } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
-//            side_open = "правая";
-//        }
-//        //Положение или высота ручки на створке
-////        let hm = new Map({'MIDL': 'По середине', 'CONST': 'Константная', 'VARIAT': 'Установлена'});
-//
-//        load_fields('tabs-4', {
-//            'n41': elem.width(), 'n42': elem.height(), n43: 'hm.get(this.handleLayout)',
-//            n44: side_open, n45: 'this.handleHeight'
-//        }, ['n41', 'n42', 'n43', 'n44', 'n45']);
-//        $("#tabs-4").show();
+        let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
+        //Сторона открывания
+        let side_open = "откидная";
+        if ([1, 3, 11].includes(elem.typeOpen, 0)) {
+            side_open = "левая";
+        } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
+            side_open = "правая";
+        }
+        //Положение или высота ручки на створке
+        let obj = {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'};
+        load_fields('tabs-4', {
+            'n41': elem.width(), 'n42': elem.height(), 'n43': furnitureRec[FURNITURE.name],
+            'n44': side_open, 'n45': obj[elem.handleLayout],
+        }, ['n41', 'n42', 'n43', 'n44', 'n45']);
+        $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {

@@ -115,10 +115,6 @@ export class Stvorka extends Area {
         } else {
             this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == winc.nuni); //ищем первую в системе
         }
-        if(this.sysfurnRec == undefined) {
-            this.sysfurnRec = [null,null,null,null,null,null,null,null,null];
-        }
-
         //Ручка
         if (obj.param != undefined && obj.param.artiklHandl != undefined) {
             this.handleRec = obj.param.artiklHandl;
@@ -126,7 +122,6 @@ export class Stvorka extends Area {
         } else  if(this.sysfurnRec != undefined) {
             this.handleRec = dbset.artiklList.find(rec => this.sysfurnRec[SYSFURN.artikl_id1] == rec[ARTIKL.id]);
         }
-
         //Текстура ручки
         if (obj.param != undefined && obj.param.colorHandl != undefined) {
             this.handleColor = obj.param.colorHandl;
@@ -160,7 +155,6 @@ export class Stvorka extends Area {
         } else if (this.sysfurnRec != undefined) {
             this.typeOpen = (this.sysfurnRec[SYSFURN.side_open] == 1) ? 1 : 2;
         }
-
         //Положение или высота ручки на створке
         if (obj.param != undefined && obj.param.positionHandl != undefined) {
             let position = obj.param.positionHandl;
