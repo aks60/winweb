@@ -6,13 +6,19 @@ dbset.find_rec = function (id, ds) {
         }
     }
 }
-//dbset.find2_rec = function (key, val, ds) {
-//    for (let i = 0; i < ds.length; i++) {
-//        if (val == ds[i][key]) {
-//            return ds[i];
-//        }
-//    }
+//dbset.find_rec = function (id, ds, def) {
+//    let tokenList = ds.filter(rec => id == rec[0] || -3 == rec[0]);
+//    let tokenRec = ds.find(rec => id == rec[0]);
+//    return (tokenRec != undefined) ? tokenRec : def;
 //}
+//dbset.find2_rec = function (fname, val, ds) {
+//    let record = ds.find(rec => val == rec[fname]);
+//    if(record == undefined) {
+//        record = ds.find(rec => -3 == rec[fname]);
+//    }
+//    return record;
+//}
+//
 //dbset.find_list = function (id, ds, fk) {
 //    let list = new Array();
 //    for (let i = 0; i < ds.length; i++) {
@@ -24,13 +30,13 @@ dbset.find_rec = function (id, ds) {
 //}
 //------------------------  ENUMS  -------------------------------------------
 export function load_enumList() {
-  return  $.ajax({
+    return  $.ajax({
         url: 'enum?action=enumList',
     });
 }
 //------------------------  SYSTREE  -------------------------------------------
 export function load_systreeList() {
-  return  $.ajax({
+    return  $.ajax({
         url: 'dbset?action=systreeList',
     });
 }

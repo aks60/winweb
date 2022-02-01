@@ -17,7 +17,7 @@ class Wincalc {
     }
 
     parse(script) {
-        try {
+//        try {
             let obj = JSON.parse(script);
             this.obj = obj;                  //объект калькуляции
             this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
@@ -39,13 +39,13 @@ class Wincalc {
             this.elemList.sort((a, b) => a.id - b.id);
             draw_elements(this, this.elemList); //рисуем конструкцию 
 
-        } catch (e) {
-            alert('Ошибка: ' + e.message);
-        }
+//        } catch (e) {
+//            alert('Ошибка: ' + e.message);
+//        }
     }
 
     elements(owner, obj) {
-        try {
+//        try {
             let hm = new Map();
             for (let ob2 of obj.childs) {
 
@@ -76,9 +76,9 @@ class Wincalc {
             for (let k of hm.keys()) {
                 this.elements(k, hm.get(k));
             }
-        } catch (e) {
-            alert('Ошибка: ' + e.message);
-        }
+//        } catch (e) {
+//            alert('Ошибка: ' + e.message);
+//        }
     }
 
     arr_of_winc(area, arr) {

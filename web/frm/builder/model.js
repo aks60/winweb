@@ -113,20 +113,34 @@ export class Stvorka extends Area {
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => obj.param.sysfurnID == rec[SYSFURN.id]);
         } else {
-            this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == winc.nuni);
+            this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == winc.nuni); //ищем первую в системе
         }
-        
+        if(this.sysfurnRec == undefined) {
+            this.sysfurnRec = [null,null,null,null,null,null,null,null,null];
+        }
+
         //Ручка
         if (obj.param != undefined && obj.param.artiklHandl != undefined) {
             this.handleRec = obj.param.artiklHandl;
+            //Ручка по умолчанию
+        } else  if(this.sysfurnRec != undefined) {
+            this.handleRec = dbset.artiklList.find(rec => this.sysfurnRec[SYSFURN.artikl_id1] == rec[ARTIKL.id]);
         }
+
         //Текстура ручки
         if (obj.param != undefined && obj.param.colorHandl != undefined) {
             this.handleColor = obj.param.colorHandl;
+        } else if(this.handleRec != undefined) {
+            let colorRec = dbset.artdetList.find(rec => this.handleRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
+            this.handleColor = colorRec[ARTDET.color_fk];
+            if (this.handleColor < 0) {
+                this.handleColor = dbset.colorList.find(rec => -1 * colorFK == rec[COLOR.colgrp_id])[0]; //первый цвет в группе
+            }
         }
         //Подвес (петли)
         if (obj.param != undefined && obj.param.artiklLoop != undefined) {
-            this.loopRec = obj.param.artiklLoop;
+            //this.loopRec = obj.param.artiklLoop;
+            loopRec = dbset.artiklList.find(rec  => obj.param.artiklLoop == rec[ARTIKL.id]);
         }
         //Текстура подвеса
         if (obj.param != undefined && obj.param.colorLoop != undefined) {
@@ -368,7 +382,7 @@ export class Glass extends Com5t {
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
         this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
-        
+
 
         if (obj.param != undefined && obj.param.artglasID != undefined) {
             this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.code]);

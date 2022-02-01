@@ -86,7 +86,7 @@
                             <jst type='txt' label='Ширина' name="n41" width='60' wid1h="60"></jst> &nbsp; &nbsp;
                             <jst type='txt' label='Высота' name="n42" width='60' wid1h="60"></jst><br>                        
                             <jst type='btn' label='Фурнитура' name="n43" width='120' wid1h="220" click=""></jst><br>                          
-                            <jst type='btn' label='Напр. открывания' name="n44" width='120' wid1h="220" click=""></jst><br> 
+                            <jst type='btn' label='Сторона открывания' name="n44" width='120' wid1h="220" click=""></jst><br> 
                             <jst type='txt' label='Высота ручки' name="n45" width='120' wid1h="154"></jst>
                             <jst type='btn' label='' name="n46" width='0' wid1h="47" click=""></jst><br>                            
                             <jst type='btn' label='Ручка' name="n47" width='120' wid1h="220" click=""></jst><br>

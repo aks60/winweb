@@ -140,33 +140,18 @@ public class Dbset {
 
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, eSysfurn.systree_id, eSysfurn.furniture_id)
-                .select(eSysfurn.up, "order by", eSysfurn.npp, ",", eSysfurn.id);
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, 
+                eSysfurn.hand_pos, eSysfurn.systree_id, eSysfurn.furniture_id, eSysfurn.artikl_id1, eSysfurn.artikl_id2)
+                .select(eSysfurn.up, "order by", eSysfurn.npp);
         for (Record rec : qSysfurn) {
-            list.add(Arrays.asList(
-                    rec.get(eSysfurn.id),
-                    rec.get(eSysfurn.side_open),
-                    rec.get(eSysfurn.systree_id),
-                    rec.get(eSysfurn.furniture_id)));
-        }
-        JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
-        return output;
-    }
-
-    public static JSONObject sysfurnList2(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.values(), eFurniture.values())
-                .select(eSysfurn.up, "left join", eFurniture.up, "on", eSysfurn.furniture_id, "=", eFurniture.id);
-        Query qFurniture = qSysfurn.table(eFurniture.up);
-        for (int index = 0; index < qSysfurn.size(); ++index) {
-            Record rec = qSysfurn.get(index);
-            Record rec2 = qFurniture.get(index);
             list.add(Arrays.asList(
                     rec.get(eSysfurn.id),
                     rec.get(eSysfurn.side_open),
                     rec.get(eSysfurn.hand_pos),
                     rec.get(eSysfurn.systree_id),
-                    rec2.get(eFurniture.name)));
+                    rec.get(eSysfurn.furniture_id),
+                    rec.get(eSysfurn.artikl_id1),
+                    rec.get(eSysfurn.artikl_id2)));
         }
         JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
         return output;
@@ -189,3 +174,23 @@ public class Dbset {
         return output;
     }
 }
+
+
+    /*public static JSONObject sysfurnList2(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.values(), eFurniture.values())
+                .select(eSysfurn.up, "left join", eFurniture.up, "on", eSysfurn.furniture_id, "=", eFurniture.id);
+        Query qFurniture = qSysfurn.table(eFurniture.up);
+        for (int index = 0; index < qSysfurn.size(); ++index) {
+            Record rec = qSysfurn.get(index);
+            Record rec2 = qFurniture.get(index);
+            list.add(Arrays.asList(
+                    rec.get(eSysfurn.id),
+                    rec.get(eSysfurn.side_open),
+                    rec.get(eSysfurn.hand_pos),
+                    rec.get(eSysfurn.systree_id),
+                    rec2.get(eFurniture.name)));
+        }
+        JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
+        return output;
+    }*/
