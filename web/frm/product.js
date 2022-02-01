@@ -74,7 +74,7 @@ function view_winc_property(proprodID) {
     if (proprodID >= 0) {
         winc = order.wincalcMap.get(id);
     } else if (proprodID == -1) {
-        winc = {'type': 'DEF_PARAM'};
+        winc = {type: 'DEF_PARAM'};
     }
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
@@ -82,10 +82,10 @@ function view_winc_property(proprodID) {
     let artikl = elem.artikl;
 
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
-        let typ = {"RECTANGL": 'Окно четырёхугольное', "TRAPEZE": 'Окно трапециидальное', "TRIANGL": 'Окно треугольное', "ARCH": 'Окно арочное', "DOOR": 'Дверь'};
+        let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
         load_fields('tabs-1', {
-            'n11': winc.width, 'n12': winc.height, n13: winc.heightAdd,
+            n11: winc.width, n12: winc.height, n13: winc.heightAdd,
             n14: winc.rgb1[COLOR.name], n15: winc.rgb2[COLOR.name], n16: winc.rgb3[COLOR.name]
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
@@ -94,7 +94,7 @@ function view_winc_property(proprodID) {
         $("#tabs-2").show();
 
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
-        let lay = {'BOTT': 'нижняя', 'RIGHT': 'правая', 'TOP': 'верхняя', 'LEFT': 'левая', 'VERT': 'вертикальный', 'HORIZ': 'горизонтальный'};
+        let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
         if (elem.type == "FRAME_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
         } else if (elem.type == "STVORKA_SIDE") {
@@ -103,7 +103,7 @@ function view_winc_property(proprodID) {
             $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
         }
         load_fields('tabs-3', {
-            'n31': elem.artiklAn[ARTIKL.code], 'n32': elem.artiklAn[ARTIKL.name],
+            n31: elem.artiklAn[ARTIKL.code], n32: elem.artiklAn[ARTIKL.name],
             n33: elem.rgb1[COLOR.name], n34: elem.rgb2[COLOR.name], n35: elem.rgb3[COLOR.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
@@ -120,14 +120,16 @@ function view_winc_property(proprodID) {
         //Положение или высота ручки на створке
         let obj = {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'};
         load_fields('tabs-4', {
-            'n41': elem.width(), 'n42': elem.height(), 'n43': furnitureRec[FURNITURE.name],
-            'n44': side_open, 'n45': obj[elem.handleLayout],
-        }, ['n41', 'n42', 'n43', 'n44', 'n45']);
+            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name],
+            n44: side_open, n45: obj[elem.handleLayout], n46: elem.handleHeight, 
+            n47: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
+            n48: dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id])[COLOR.name]
+        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48']);
         $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {
-            'n51': elem.artiklRec[ARTIKL.code], 'n52': elem.artiklRec[ARTIKL.name], n53: elem.rgb1[COLOR.name]
+            n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.rgb1[COLOR.name]
         }, ['n51', 'n52', 'n53']);
         $("#tabs-5").show();
 

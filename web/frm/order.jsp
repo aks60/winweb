@@ -58,7 +58,7 @@
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
                 <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">
-                    <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px;">
+                    <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px; background: #efeffb">
 
                         <canvas id="cnv" style="border:2px solid black;" width="468" height="154"></canvas>
 
