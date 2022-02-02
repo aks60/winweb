@@ -1,8 +1,11 @@
 //------------------------------------------------------------------------------
 dbset.find = function (id, ds) {
-    for (let i = 0; i < ds.length; i++) {
-        if (id == ds[i][0]) {
-            return ds[i];
+    if(id == -3) {
+        return ds.virtualRec;
+    }
+    for(let dr of ds) {
+        if (id == dr[0]) {
+            return dr;
         }
     }
 }

@@ -1,8 +1,8 @@
 //==============================================================================
 import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
 //=========================  Виртуальные артиклы  ==============================
-export let sysfurnVirt = {id: null, side_open: null, hand_pos: null, systree_id: null, furniture_id: null, artikl_id1: null, artikl_id2: null};
-export let artiklVirt = {id: -3, name: "Virtual", code: "Virtual", height: 80, analog_id: -3};
+//dbset.artiklList.virtualRec = {id: -3, name: "Virtual", code: "Virtual", height: 80, analog_id: -3};
+//dbset.sysfurnList.virtualRec = {id: null, side_open: null, hand_pos: null, systree_id: null, furniture_id: null, artikl_id1: null, artikl_id2: null};
 //============================  BASE  ==========================================
 export class Com5t {
 
@@ -112,10 +112,10 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(obj, this, winc, this.id + '.3', "TOP", "STVORKA_SIDE"));
         this.frames.set("LEFT", new Frame(obj, this, winc, this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
-        this.sysfurnRec = sysfurnVirt;
-        this.handleRec = artiklVirt;        
-        this.loopRec = artiklVirt;
-        this.lockRec = artiklVirt;
+        this.sysfurnRec = dbset.artiklList.virtualRec;
+        this.handleRec = dbset.sysfurnList.virtualRec;        
+        this.loopRec = dbset.sysfurnList.virtualRec;
+        this.lockRec = dbset.sysfurnList.virtualRec;
         this.handleColor = -3;
         this.loopColor = -3;
         this.lockColor = -3;
@@ -139,10 +139,11 @@ export class Stvorka extends Area {
             this.handleColor = obj.param.colorHandl;
         } else if (this.handleRec != undefined) {
             let colorRec = dbset.artdetList.find(rec => this.handleRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
-            this.handleColor = colorRec[ARTDET.color_fk];
-            if (this.handleColor < 0) {
-                this.handleColor = dbset.colorList.find(rec => -1 * colorFK == rec[COLOR.colgrp_id])[0]; //первый цвет в группе
-            }
+//            debugger;
+//            this.handleColor = colorRec[ARTDET.color_fk];
+//            if (this.handleColor < 0) {
+//                this.handleColor = dbset.colorList.find(rec => -1 * colorFK == rec[COLOR.colgrp_id])[0]; //первый цвет в группе
+//            }
         }
         //Подвес (петли)
         if (obj.param != undefined && obj.param.artiklLoop != undefined) {

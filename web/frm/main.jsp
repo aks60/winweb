@@ -33,7 +33,7 @@
                     SYSPROF = {id: 0, prio: 1, use_type: 2, use_side: 3, artikl_id: 4, systree_id: 5},
                     SYSFURN = {id: 0, side_open: 1, hand_pos: 2, systree_id: 3, furniture_id: 4, artikl_id1: 5, artikl_id2: 6},
                     SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
-                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4};            
+                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4};
 
             //Глобальные объекты
             var utils = {}, enums = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
@@ -48,6 +48,7 @@
                 $.jstree.defaults.core.themes.variant = "large";
             });
             window.onload = function () { };
+
         </script>         
     </head>
     <body>
@@ -74,7 +75,7 @@
             dbset.systreeList = p1[0].systreeList;
             dbset.sysprodList = p2[0].sysprodList;
             dbset.colorList = p3[0].colorList;
-            dbset.artiklList = p4[0].artiklList;
+            dbset.artiklList = p4[0].artiklList;            
             dbset.artdetList = p5[0].artdetList;
             dbset.furnitureList = p6[0].furnitureList;
             dbset.proprodList = p7[0].proprodList;
@@ -82,6 +83,11 @@
             dbset.sysprofList = p9[0].sysprofList;
 
             login.init_login('dat');
+            
+            dbset.artiklList.virtualRec = {id: -3, name: "Virtual", code: "Virtual", height: 80, analog_id: -3};
+            dbset.sysfurnList.virtualRec = {id: null, side_open: null, hand_pos: null, systree_id: null, furniture_id: null, artikl_id1: null, artikl_id2: null};
+
+            //dbset.sysprofList.find2();
 
             }).catch(() => {
             alert('Ошибка загрузки бд');
