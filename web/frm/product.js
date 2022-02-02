@@ -123,8 +123,9 @@ function view_winc_property(proprodID) {
             n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name],
             n44: side_open, n45: obj[elem.handleLayout], n46: elem.handleHeight, 
             n47: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
-            n48: dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id])[COLOR.name]
-        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48']);
+            n48: dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id])[COLOR.name],
+            n49: 'elem.loopRec[ARTIKL.name]'
+        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49']);
         $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {

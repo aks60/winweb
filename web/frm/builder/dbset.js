@@ -1,33 +1,11 @@
 //------------------------------------------------------------------------------
-dbset.find_rec = function (id, ds) {
+dbset.find = function (id, ds) {
     for (let i = 0; i < ds.length; i++) {
         if (id == ds[i][0]) {
             return ds[i];
         }
     }
 }
-//dbset.find_rec = function (id, ds, def) {
-//    let tokenList = ds.filter(rec => id == rec[0] || -3 == rec[0]);
-//    let tokenRec = ds.find(rec => id == rec[0]);
-//    return (tokenRec != undefined) ? tokenRec : def;
-//}
-//dbset.find2_rec = function (fname, val, ds) {
-//    let record = ds.find(rec => val == rec[fname]);
-//    if(record == undefined) {
-//        record = ds.find(rec => -3 == rec[fname]);
-//    }
-//    return record;
-//}
-//
-//dbset.find_list = function (id, ds, fk) {
-//    let list = new Array();
-//    for (let i = 0; i < ds.length; i++) {
-//        if (id == ds[i][fk]) {
-//            list.push(ds[i]);
-//        }
-//    }
-//    return list;
-//}
 //------------------------  ENUMS  -------------------------------------------
 export function load_enumList() {
     return  $.ajax({

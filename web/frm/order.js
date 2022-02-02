@@ -122,7 +122,7 @@ order.event_clicked = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
 
         let proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = dbset.find_rec(proprodID, dbset.proprodList);
+        order.rec_table2 = dbset.find(proprodID, dbset.proprodList);
     }
 }
 //------------------------------------------------------------------------------

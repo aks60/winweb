@@ -1,5 +1,8 @@
 //==============================================================================
 import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
+//=========================  Виртуальные артиклы  ==============================
+export let sysfurnVirt = {id: null, side_open: null, hand_pos: null, systree_id: null, furniture_id: null, artikl_id1: null, artikl_id2: null};
+export let artiklVirt = {id: -3, name: "Virtual", code: "Virtual", height: 80, analog_id: -3};
 //============================  BASE  ==========================================
 export class Com5t {
 
@@ -109,6 +112,15 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(obj, this, winc, this.id + '.3', "TOP", "STVORKA_SIDE"));
         this.frames.set("LEFT", new Frame(obj, this, winc, this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
+        this.sysfurnRec = sysfurnVirt;
+        this.handleRec = artiklVirt;        
+        this.loopRec = artiklVirt;
+        this.lockRec = artiklVirt;
+        this.handleColor = -3;
+        this.loopColor = -3;
+        this.lockColor = -3;
+        this.typeOpen = 0;
+
         //Фурнитура створки
         if (obj.param != undefined && obj.param.sysfurnID != undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => obj.param.sysfurnID == rec[SYSFURN.id]);
@@ -119,13 +131,13 @@ export class Stvorka extends Area {
         if (obj.param != undefined && obj.param.artiklHandl != undefined) {
             this.handleRec = obj.param.artiklHandl;
             //Ручка по умолчанию
-        } else  if(this.sysfurnRec != undefined) {
+        } else if (this.sysfurnRec != undefined) {
             this.handleRec = dbset.artiklList.find(rec => this.sysfurnRec[SYSFURN.artikl_id1] == rec[ARTIKL.id]);
         }
         //Текстура ручки
         if (obj.param != undefined && obj.param.colorHandl != undefined) {
             this.handleColor = obj.param.colorHandl;
-        } else if(this.handleRec != undefined) {
+        } else if (this.handleRec != undefined) {
             let colorRec = dbset.artdetList.find(rec => this.handleRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
             this.handleColor = colorRec[ARTDET.color_fk];
             if (this.handleColor < 0) {
@@ -134,8 +146,7 @@ export class Stvorka extends Area {
         }
         //Подвес (петли)
         if (obj.param != undefined && obj.param.artiklLoop != undefined) {
-            //this.loopRec = obj.param.artiklLoop;
-            loopRec = dbset.artiklList.find(rec  => obj.param.artiklLoop == rec[ARTIKL.id]);
+            this.loopRec = dbset.artiklList.find(rec => obj.param.artiklLoop == rec[ARTIKL.id]);
         }
         //Текстура подвеса
         if (obj.param != undefined && obj.param.colorLoop != undefined) {
@@ -252,7 +263,7 @@ export class Cross extends Com5t {
         }
 
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            let sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
 
         } else {
@@ -314,7 +325,7 @@ export class Frame extends Com5t {
         }
 
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            let sysprofRec = dbset.find_rec(obj.param.sysprofID, dbset.sysprofList);
+            let sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
             this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
             if (this.artiklAn == undefined) {
