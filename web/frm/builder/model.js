@@ -330,20 +330,13 @@ export class Frame extends Com5t {
             }
 
         } else {
-            let sideID = -1;
-            if ("BOTT" == this.layout) {
-                sideID = 1;
-            } else if ("RIGHT" == this.layout) {
-                sideID = 2;
-            } else if ("TOP" == this.layout) {
-                sideID = 3;
-            } else if ("LEFT" == this.layout) {
-                sideID = 4;
-            }
+            let lay = {BOTT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
+            let sideID = (lay[this.layout] == undefined) ?-1 :lay[this.layout];
             let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
                         rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
             sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
             let sysprofRec = sysprofList[0];
+
             this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
             this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
             if (this.artiklAn == undefined) {
