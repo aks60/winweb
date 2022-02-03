@@ -259,23 +259,24 @@ export class Cross extends Com5t {
             }
         }
 
-        if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            let sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
-            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+        /*        if (obj.param != undefined && obj.param.sysprofID != undefined) {
+         let sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
+         this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+         
+         } else {
+         let sideID = -1;
+         if ("HORIZ" == this.layout) {
+         sideID = -2;
+         } else if ("VERT" == this.layout) {
+         sideID = -3;
+         }
+         let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
+         rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
+         sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
+         let sysprofRec = sysprofList[0];
+         this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
+         }*/
 
-        } else {
-            let sideID = -1;
-            if ("HORIZ" == this.layout) {
-                sideID = -2;
-            } else if ("VERT" == this.layout) {
-                sideID = -3;
-            }
-            let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
-                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
-            sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
-            let sysprofRec = sysprofList[0];
-            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
-        }
     }
 
     paint() {
@@ -322,26 +323,30 @@ export class Frame extends Com5t {
         }
 
         if (obj.param != undefined && obj.param.sysprofID != undefined) {
-            let sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
-            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
-            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
-            if (this.artiklAn == undefined) {
-                this.artiklAn = this.artiklRec;
-            }
+            this.sysprofRec = dbset.find(obj.param.sysprofID, dbset.sysprofList);
 
         } else {
-            let lay = {BOTT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
-            let sideID = (lay[this.layout] == undefined) ?-1 :lay[this.layout];
-            let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni &&
-                        rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
+            /*let lay = {ANY: 0, BOTT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
+            let sideID = (lay[this.layout] == undefined) ? -1 : lay[this.layout];
+            let sysprofList = dbset.sysprofList.filter(rec => rec[SYSPROF.systree_id] == this.winc.nuni && rec[SYSPROF.use_type] == 1 && (rec[SYSPROF.use_side] == -1 || rec[SYSPROF.use_side] == sideID));
             sysprofList.sort((a, b) => a[SYSPROF.prio] - b[SYSPROF.prio]);
-            let sysprofRec = sysprofList[0];
-
-            this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == sysprofRec[SYSPROF.artikl_id]);
-            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
-            if (this.artiklAn == undefined) {
-                this.artiklAn = this.artiklRec;
-            }
+            this.sysprofRec = sysprofList[0];*/
+            
+            if ('BOTT' == this.layout) {
+                //sysprofRec = eSysprof.find6(iwin.nuni, type.id2, UseSide.BOT, UseSide.HORIZ);
+                this.sysprofRec = dbset.sysprofList.filter(rec => this.winc.nuni == rec[SYSPROF.systree_id] && this.type ==                
+            } else if ('RIGHT' == this.layout) {
+                //sysprofRec = eSysprof.find6(iwin.nuni, type.id2, UseSide.RIGHT, UseSide.VERT);
+            } else if ('TOP' == this.layout) {
+                //sysprofRec = eSysprof.find6(iwin.nuni, type.id2, UseSide.TOP, UseSide.HORIZ);
+            } else if ('LEFT' == this.layout) {
+                //sysprofRec = eSysprof.find6(iwin.nuni, type.id2, UseSide.LEFT, UseSide.VERT);
+            }            
+        }
+        this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
+        this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
+        if (this.artiklAn == undefined) {
+            this.artiklAn = this.artiklRec;
         }
     }
 
