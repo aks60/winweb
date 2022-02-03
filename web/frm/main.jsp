@@ -84,10 +84,10 @@
 
             login.init_login('dat');
             
-            dbset.artiklList.virtualRec = {id: -3, name: "Virtual", code: "Virtual", height: 80, analog_id: -3};
-            dbset.sysfurnList.virtualRec = {id: null, side_open: null, hand_pos: null, systree_id: null, furniture_id: null, artikl_id1: null, artikl_id2: null};
-
-            //dbset.sysprofList.find2();
+            //Виртуальные артиклы            
+            dbset.artiklList.virtualRec = [-3, "Virtual", "Virtual",80, -3];
+            dbset.artdetList.virtualRec = [-3, -3, -3];
+            dbset.colorList.virtualRec = [-3, "Virtual", -3, -3];
 
             }).catch(() => {
             alert('Ошибка загрузки бд');

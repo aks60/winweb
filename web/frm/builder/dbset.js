@@ -1,12 +1,22 @@
 //------------------------------------------------------------------------------
 dbset.find = function (id, ds) {
-    if(id == -3) {
+    if (id == -3) {
         return ds.virtualRec;
     }
-    for(let dr of ds) {
+    for (let dr of ds) {
         if (id == dr[0]) {
             return dr;
         }
+    }
+}
+//------------------------------------------------------------------------------
+dbset.newRecord = function (ds) {
+    if (ds == undefined || ds[0] == undefined || ds[0] == null) {
+        return undefined;
+    }
+    let arr = [];
+    for (let dr of ds[0]) {
+        arr.push(null);
     }
 }
 //------------------------  ENUMS  -------------------------------------------

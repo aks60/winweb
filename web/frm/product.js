@@ -117,15 +117,18 @@ function view_winc_property(proprodID) {
         } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
             side_open = "правая";
         }
-        //Положение или высота ручки на створке
-        let obj = {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'};
+        //debugger;        
         load_fields('tabs-4', {
-            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name],
-            n44: side_open, n45: obj[elem.handleLayout], n46: elem.handleHeight, 
-            n47: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
-            n48: dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id])[COLOR.name],
-            n49: 'elem.loopRec[ARTIKL.name]'
-        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49']);
+            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: side_open, 
+            n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
+            n46: dbset.find(elem.handleColor, dbset.colorList)[COLOR.name],            
+            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout], 
+            n48: elem.handleHeight, 
+            n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name], 
+            n4A: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
+            n4B: elem.lockRec[ARTIKL.code] + ' ÷ ' + elem.lockRec[ARTIKL.name],
+            n4C: 'vvvv'
+        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
 
     } else if (elem.type == "GLASS") {
@@ -137,4 +140,3 @@ function view_winc_property(proprodID) {
     }
 }
 //------------------------------------------------------------------------------
-
