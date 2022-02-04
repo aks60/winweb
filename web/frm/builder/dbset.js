@@ -8,6 +8,7 @@ dbset.find = function (id, ds) {
             return dr;
         }
     }
+    return undefined;
 }
 //------------------------------------------------------------------------------
 dbset.newRecord = function (ds) {

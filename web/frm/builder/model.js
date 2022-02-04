@@ -274,25 +274,23 @@ export class Cross extends Com5t {
 
         } else {
             if ("VERT" == this.layout) { //сверху вниз
-                this.sysprofRec = this.find_first(this.winc.nuni, this.type, UseSide.HORIZ);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.HORIZ);
 
             } else if ("HORIZ" == this.layout) { //слева направо
-                this.sysprofRec = this.find_first(this.winc.nuni, this.type, UseSide.VERT);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.VERT);
             }
-        }
-        debugger;
-        this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
-        this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
+        }        
+        this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
+        this.artiklAn = dbset.find(this.artiklRec[ARTIKL.analog_id], dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }        
     }
 
     find_first(nuni, typ, us1) {
-        let record = dbset.sysprofList.find(rec => nuni == rec[SYSFURN.systree_id]
-                    && rec[SYSFURN.use_type] == typ
-                    && UseSide.MANUAL.id != rec[SYSFURN.use_side]
-                    && (us1.id == rec[SYSFURN.use_side] || UseSide.ANY.id == rec[SYSFURN.use_side]));
+        let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id]
+                    && rec[SYSPROF.use_type] == typ && UseSide.MANUAL != rec[SYSPROF.use_side]
+                    && (us1 == rec[SYSPROF.use_side] || UseSide.ANY == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
             return [-3, 0, typ, -1, -3, -3];
         }
