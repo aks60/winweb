@@ -80,4 +80,16 @@ export function load_sysfurnList() {
         url: 'dbset?action=sysfurnList',
     });
 }
+//----------------------------  SYSPAR1  ---------------------------------------
+export function load_syspar1List() {
+    return  $.ajax({
+        url: 'dbset?action=syspar1List',
+    });
+}
+//----------------------------  PARAMS  ---------------------------------------
+export function load_paramsList() {
+    return  $.ajax({
+        url: 'dbset?action=paramsList',
+    });
+}
 //------------------------------------------------------------------------------

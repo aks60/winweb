@@ -66,7 +66,8 @@
             import {
             load_systreeList, load_sysprodList, load_colorList,
             load_artiklList, load_artdetList, load_furnitureList, 
-            load_proprodList, load_sysfurnList, load_sysprofList
+            load_proprodList, load_sysfurnList, load_sysprofList,
+            load_syspar1List, load_paramsList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
@@ -74,9 +75,10 @@
             $.when(
             load_systreeList(), load_sysprodList(), load_colorList(), 
             load_artiklList(), load_artdetList(), load_furnitureList(), 
-            load_proprodList(), load_sysfurnList(), load_sysprofList()
+            load_proprodList(), load_sysfurnList(), load_sysprofList(),
+            load_syspar1List(), load_paramsList()
 
-            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9) => { //загрузка базы данных 
+            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB) => { //загрузка базы данных 
             dbset.systreeList = p1[0].systreeList;
             dbset.sysprodList = p2[0].sysprodList;
             dbset.colorList = p3[0].colorList;
@@ -86,6 +88,8 @@
             dbset.proprodList = p7[0].proprodList;
             dbset.sysfurnList = p8[0].sysfurnList;
             dbset.sysprofList = p9[0].sysprofList;
+            dbset.syspar1List = pA[0].syspar1List;
+            dbset.paramsList = pB[0].paramsList;
 
             login.init_login('dat');
 

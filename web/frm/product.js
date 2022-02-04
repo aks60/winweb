@@ -32,8 +32,8 @@ product.load_tree = function () {
                 $(this).jstree('select_node', 0.0);
             })
             .bind("select_node.jstree", function (evt, data) {
-                let id = $("#tree-winc").jstree("get_selected")[0];
-                view_winc_property(id);
+                let node = $("#tree-winc").jstree("get_selected")[0];
+                view_winc_property(node);
             });
 }
 //------------------------------------------------------------------------------
@@ -67,19 +67,20 @@ function elements(com, arr) {
     }
 }
 //------------------------------------------------------------------------------
-function view_winc_property(proprodID) {
+function view_winc_property(nodeID) {
 
-    let winc = null;
+    nodeID = (nodeID == -2) ?0 :nodeID;
+    let elem = {}, artikl = null;
     let id = order.rec_table2[PROPROD.id];
-    if (proprodID >= 0) {
-        winc = order.wincalcMap.get(id);
-    } else if (proprodID == -1) {
-        winc = {type: 'DEF_PARAM'};
+    let winc = order.wincalcMap.get(id);
+    if (nodeID == -1) {
+        elem = {type: 'DEF_PARAM'};
+    } else {
+        elem = winc.elemList.find(it => it.id == nodeID);
+        artikl = elem.artikl;
     }
-
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    let elem = winc.elemList.find(it => it.id == proprodID);
-    let artikl = elem.artikl;
+
 
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
         let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
@@ -90,8 +91,10 @@ function view_winc_property(proprodID) {
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
 
-    } else if (winc.root.type == "DEF_PARAM") {
+
+    } else if (elem.type == "DEF_PARAM") {
         $("#tabs-2").show();
+
 
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
@@ -108,6 +111,7 @@ function view_winc_property(proprodID) {
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
 
+
     } else if (elem.type == "STVORKA") {
         let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
         //Сторона открывания
@@ -116,20 +120,20 @@ function view_winc_property(proprodID) {
             side_open = "левая";
         } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
             side_open = "правая";
-        }
-        //debugger;        
+        }       
         load_fields('tabs-4', {
-            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: side_open, 
+            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: side_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
-            n46: dbset.find(elem.handleColor, dbset.colorList)[COLOR.name],            
-            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout], 
-            n48: elem.handleHeight, 
-            n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name], 
+            n46: dbset.find(elem.handleColor, dbset.colorList)[COLOR.name],
+            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
+            n48: elem.handleHeight,
+            n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name],
             n4A: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
             n4B: elem.lockRec[ARTIKL.code] + ' ÷ ' + elem.lockRec[ARTIKL.name],
-            n4C: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name], 
+            n4C: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
+
 
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {

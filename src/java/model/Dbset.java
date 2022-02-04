@@ -7,9 +7,11 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eFurniture;
 import domain.eGroups;
+import domain.eParams;
 import domain.eProject;
 import domain.eProprod;
 import domain.eSysfurn;
+import domain.eSyspar1;
 import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
@@ -173,24 +175,34 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("sysprofList", list));
         return output;
     }
-}
 
-
-    /*public static JSONObject sysfurnList2(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject syspar1List(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.values(), eFurniture.values())
-                .select(eSysfurn.up, "left join", eFurniture.up, "on", eSysfurn.furniture_id, "=", eFurniture.id);
-        Query qFurniture = qSysfurn.table(eFurniture.up);
-        for (int index = 0; index < qSysfurn.size(); ++index) {
-            Record rec = qSysfurn.get(index);
-            Record rec2 = qFurniture.get(index);
+        Query qSyspar1 = new Query(Att.att(request).connect(), eSyspar1.id, 
+                eSyspar1.text, eSyspar1.params_id, eSyspar1.fixed, eSyspar1.systree_id).select(eSyspar1.up);
+        for (Record rec : qSyspar1) {
             list.add(Arrays.asList(
-                    rec.get(eSysfurn.id),
-                    rec.get(eSysfurn.side_open),
-                    rec.get(eSysfurn.hand_pos),
-                    rec.get(eSysfurn.systree_id),
-                    rec2.get(eFurniture.name)));
+                    rec.get(eSyspar1.id),
+                    rec.get(eSyspar1.text),
+                    rec.get(eSyspar1.params_id),
+                    rec.get(eSyspar1.fixed),
+                    rec.get(eSyspar1.systree_id)));
         }
-        JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
+        JSONObject output = new JSONObject(App.asMap("syspar1List", list));
         return output;
-    }*/
+    }
+
+    public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        Query qParams = new Query(Att.att(request).connect(), eParams.id, 
+                eParams.text, eParams.params_id).select(eParams.up);
+        for (Record rec : qParams) {
+            list.add(Arrays.asList(
+                    rec.get(eParams.id),
+                    rec.get(eParams.text),
+                    rec.get(eParams.params_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("paramsList", list));
+        return output;
+    }
+}

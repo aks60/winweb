@@ -27,7 +27,6 @@
                     $(this).width(winWidth - width);
                 });
             }
-            $('button').button();
             $(document).ready(function () {
 
                 taq_deploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
@@ -49,8 +48,8 @@
     <body>
         <div id="north">
             <button id="btnReport" onClick="test();">Test1</button>
-            <button id="btnReport" onClick="$('#tabs-1 .login').val('asd');">Test2</button>
-            <button id="btnReport" onClick="$('#tabs-1 input.field :nth-child(1)').val('asd');">Test3</button>
+            <button id="btnUpdate" onClick="$('#tabs-1 .login').val('asd');">Test2</button>
+            <button id="btnIns" onClick="$('#tabs-1 input.field :nth-child(1)').val('asd');">Test3</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
@@ -71,6 +70,7 @@
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">  
                             <p class="pantitle">Параметры изделия</p> 
+                             <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
@@ -97,6 +97,7 @@
                             <jst type='btn' label='Текстура' name="n4C" width='120' wid1h="220" click=""></jst><br>
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
+                            <p class="pantitle">Заполнение</p> 
                             <jst type='btn' label='Артикул' name="n51" width='80' wid1h="260" click=""></jst><br>
                             <jst type='txt' label='Название' name="n52" width='80' wid1h="288"></jst><br>
                             <jst type='btn' label='Цвет' name="n53" width='80' wid1h="260" click=""></jst><br>
