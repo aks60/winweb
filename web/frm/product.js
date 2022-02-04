@@ -1,9 +1,49 @@
 //------------------------------------------------------------------------------
+product.init_table = function (table1) {
+    table1.jqGrid({
+        datatype: "local",
+        gridview: true,
+        rownumbers: true,
+        autowidth: true,
+        height: "auto",
+        colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
+        colModel: [
+            {name: 'id', hidden: true, key: true},
+            {name: 'name', width: 220, sorttype: "text"},
+            {name: 'valdef', width: 160, sorttype: "text"},
+            {name: 'check', width: 80, sorttype: "text"}
+        ],
+        onSelectRow: function (rowid) {
+        }
+    });
+}
+//------------------------------------------------------------------------------
+product.load_table = function (table1) {
+
+    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let root = winc.root;
+    table1.jqGrid('clearGridData', true);
+    let sysparam1List2 = dbset.sysparam1List.filter(rec => winc.nuni == rec['XXX']);
+
+    for (let i = 0; i < sysparam1List2.length; i++) {
+        let tr = sysparam1List[i];
+        table1.jqGrid('addRowData', i + 1, {
+            id: tr[0],
+            param: tr[1],
+            name: tr[2],
+            valdef: tr[3],
+            check: tr[4]
+        });
+    }
+    table1.jqGrid("setSelection", product.rowid_table1);
+    product.resize();
+}
+//------------------------------------------------------------------------------
 product.load_tree = function () {
 
     let arr = new Array();
-    let win = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-    let root = win.root;
+    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let root = winc.root;
 
     if (root.type == 'RECTANGL')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
@@ -35,6 +75,7 @@ product.load_tree = function () {
                 let node = $("#tree-winc").jstree("get_selected")[0];
                 view_winc_property(node);
             });
+    product.resize();
 }
 //------------------------------------------------------------------------------
 function elements(com, arr) {
@@ -69,7 +110,7 @@ function elements(com, arr) {
 //------------------------------------------------------------------------------
 function view_winc_property(nodeID) {
 
-    nodeID = (nodeID == -2) ?0 :nodeID;
+    nodeID = (nodeID == -2) ? 0 : nodeID;
     let elem = {}, artikl = null;
     let id = order.rec_table2[PROPROD.id];
     let winc = order.wincalcMap.get(id);
@@ -120,7 +161,7 @@ function view_winc_property(nodeID) {
             side_open = "левая";
         } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
             side_open = "правая";
-        }       
+        }
         load_fields('tabs-4', {
             n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: side_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],

@@ -13,6 +13,8 @@
 
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
+                $("#table1").jqGrid('setGridWidth', $("#east2").width() - 2);
+                $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
 
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
@@ -35,6 +37,7 @@
                     product.resize();
                 }).trigger('resize');
 
+                product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
             });
@@ -68,8 +71,7 @@
                             <jst type='btn' label='Внутренняя' name="n15" width='80' wid1h="260" click=""></jst><br>
                             <jst type='btn' label='Внещняя' name="n16" width='80' wid1h="260" click=""></jst><br>
                         </div>
-                        <div id="tabs-2" style="padding: 0px; display: none;">  
-                            <p class="pantitle">Параметры изделия</p> 
+                        <div id="tabs-2" style="padding: 0px; display: none;">   
                              <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
@@ -87,14 +89,14 @@
                             <jst type='txt' label='Высота' name="n42" width='60' wid1h="60"></jst><br>                        
                             <jst type='btn' label='Фурнитура' name="n43" width='120' wid1h="220" click=""></jst><br>                          
                             <jst type='btn' label='Сторона открывания' name="n44" width='120' wid1h="220" click=""></jst><br>
-                            <jst type='btn' label='Ручка (арт/наимен)' name="n45" width='120' wid1h="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура' name="n46" width='120' wid1h="220" click=""></jst><br>                            
+                            <jst type='btn' label='Ручка (арт/наименов)' name="n45" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура ручки' name="n46" width='120' wid1h="220" click=""></jst><br>                            
                             <jst type='txt' label='Высота ручки' name="n47" width='120' wid1h="153"></jst>
                             <jst type='btn' label='' name="n48" width='0' wid1h="47" click=""></jst><br>                            
-                            <jst type='btn' label='Подвес (арт/наимен)' name="n49" width='120' wid1h="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура' name="n4A" width='120' wid1h="220" click=""></jst><br>
-                            <jst type='btn' label='Замок (арт/наимен)' name="n4B" width='120' wid1h="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура' name="n4C" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Подвес (арт/наименов)' name="n49" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура подвеса' name="n4A" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Замок (арт/наименов)' name="n4B" width='120' wid1h="220" click=""></jst><br>
+                            <jst type='btn' label='Текстура замка' name="n4C" width='120' wid1h="220" click=""></jst><br>
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
