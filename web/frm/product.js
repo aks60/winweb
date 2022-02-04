@@ -9,9 +9,9 @@ product.init_table = function (table1) {
         colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'name', width: 220, sorttype: "text"},
-            {name: 'valdef', width: 160, sorttype: "text"},
-            {name: 'check', width: 80, sorttype: "text"}
+            {name: 'text', width: 220, sorttype: "text"},
+            {name: 'val', width: 180, sorttype: "text"},
+            {name: 'fixed', width: 60, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
         }
@@ -19,20 +19,19 @@ product.init_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_table = function (table1) {
-
-    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-    let root = winc.root;
+//debugger;
     table1.jqGrid('clearGridData', true);
-    let sysparam1List2 = dbset.sysparam1List.filter(rec => winc.nuni == rec['XXX']);
-
-    for (let i = 0; i < sysparam1List2.length; i++) {
-        let tr = sysparam1List[i];
+    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let syspar1List2 = dbset.syspar1List.filter(rec => winc.nuni == rec[SYSPAR1.systree_id]);
+    for (let i = 0; i < syspar1List2.length; i++) {
+        let syspar1Rec = syspar1List2[i];
+        let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {
-            id: tr[0],
-            param: tr[1],
-            name: tr[2],
-            valdef: tr[3],
-            check: tr[4]
+            
+            id: syspar1Rec[SYSPAR1.id],
+            text: paramsRec[PARAMS.text],
+            val: syspar1Rec[SYSPAR1.text],            
+            fixed: syspar1Rec[SYSPAR1.fixed]
         });
     }
     table1.jqGrid("setSelection", product.rowid_table1);
@@ -134,6 +133,7 @@ function view_winc_property(nodeID) {
 
 
     } else if (elem.type == "DEF_PARAM") {
+        product.load_table($('#table1'));
         $("#tabs-2").show();
 
 

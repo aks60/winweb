@@ -13,21 +13,19 @@
 
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                $("#table1").jqGrid('setGridWidth', $("#east2").width() - 2);
-                $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
-
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
                     win.build(cvs, order.rec_table2[PROPROD.script]);
                 }
-
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
                     var width = $(this).attr('dx');
                     $(this).width(winWidth - width);
                 });
+                $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
+                $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
             }
             $(document).ready(function () {
 
@@ -50,7 +48,7 @@
     </head>
     <body>
         <div id="north">
-            <button id="btnReport" onClick="test();">Test1</button>
+            <button id="btnReport" onClick="product.resize();">Test1</button>
             <button id="btnUpdate" onClick="$('#tabs-1 .login').val('asd');">Test2</button>
             <button id="btnIns" onClick="$('#tabs-1 input.field :nth-child(1)').val('asd');">Test3</button>
         </div> 
@@ -72,7 +70,7 @@
                             <jst type='btn' label='Внещняя' name="n16" width='80' wid1h="260" click=""></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">   
-                             <table id="table1"  class="ui-jqgrid-btable"></table> 
+                            <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
