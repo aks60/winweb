@@ -160,7 +160,7 @@ public class Dbset {
     public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysprof = new Query(Att.att(request).connect(), eSysprof.id, eSysprof.prio, eSysprof.use_type,
-                eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up);
+                eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up, "order by", eSysprof.prio);
         for (Record rec : qSysprof) {
             list.add(Arrays.asList(
                     rec.get(eSysprof.id),

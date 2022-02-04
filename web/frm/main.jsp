@@ -35,6 +35,11 @@
                     SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
                     PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4};
 
+            //Enum - перечисления
+            var Type = {NONE: 0, FRAME_SIDE: 1, STVORKA_SIDE: 2, IMPOST: 3, STOIKA: 5, 
+                ERKER: 7, EDGE: 8, SHTULP: 9, RECTANGL: 1, TRAPEZE: 1, TRIANGL: 1, ARCH: 1, STVORKA: 2, FRAME: 3, DOOR: 3};
+            var UseSide = {VERT: -3, HORIZ: -2, ANY: -1, MANUAL: 0, BOT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
+
             //Глобальные объекты
             var utils = {}, enums = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
                     users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
@@ -83,7 +88,7 @@
             dbset.sysprofList = p9[0].sysprofList;
 
             login.init_login('dat');
-            
+
             //Виртуальные артиклы            
             dbset.artiklList.virtualRec = [-3, "Virtual", "Virtual",80, -3];
             dbset.artdetList.virtualRec = [-3, -3, -3];
