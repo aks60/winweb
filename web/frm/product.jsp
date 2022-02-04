@@ -108,7 +108,6 @@
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <div id="tree-winc"></div>
                     </div>                
-
                 </div>
             </div> 
             <div id="south">
