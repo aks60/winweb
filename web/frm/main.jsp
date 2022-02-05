@@ -54,7 +54,11 @@
                 $('button').button();
                 $.jstree.defaults.core.themes.variant = "large";
             });
-            window.onload = function () { };
+            window.onload = function () {
+             if(product.resize != undefined) {
+                 product.resize();
+             }
+            };
 
         </script>         
     </head>

@@ -12,8 +12,9 @@ product.init_table = function (table1) {
             {name: 'text', width: 220, sorttype: "text"},
             {name: 'val', width: 180, sorttype: "text"},
             {name: 'fixed', width: 60, sorttype: "text"}
-        ],
-        onSelectRow: function (rowid) {
+
+        ], ondblClickRow: function (rowid) {
+            $('#dialog-dic').load('frm/dialog/sysprof.jsp');
         }
     });
 }
@@ -27,15 +28,15 @@ product.load_table = function (table1) {
         let syspar1Rec = syspar1List2[i];
         let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {
-            
+
             id: syspar1Rec[SYSPAR1.id],
             text: paramsRec[PARAMS.text],
-            val: syspar1Rec[SYSPAR1.text],            
+            val: syspar1Rec[SYSPAR1.text],
             fixed: syspar1Rec[SYSPAR1.fixed]
         });
     }
     table1.jqGrid("setSelection", product.rowid_table1);
-    product.resize();
+    setTimeout(function () {product.resize();}, 10);
 }
 //------------------------------------------------------------------------------
 product.load_tree = function () {
@@ -74,7 +75,7 @@ product.load_tree = function () {
                 let node = $("#tree-winc").jstree("get_selected")[0];
                 view_winc_property(node);
             });
-    product.resize();
+    setTimeout(function () {product.resize();}, 10);
 }
 //------------------------------------------------------------------------------
 function elements(com, arr) {

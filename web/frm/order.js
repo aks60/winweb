@@ -45,7 +45,6 @@ order.init_table = function (table1, table2) {
                 document.getElementById(id).click();
             }
             $('#table2 tr > *:nth-child(1)').hide();
-            order.resize();
         }
     });
 }
