@@ -9,7 +9,7 @@ product.init_table = function (table1) {
         colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'text', width: 220, sorttype: "text"},
+            {name: 'text', width: 220, sorttype: "text", edittype: "button"},
             {name: 'val', width: 180, sorttype: "text"},
             {name: 'fixed', width: 60, sorttype: "text"}
 
