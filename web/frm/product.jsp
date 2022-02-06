@@ -48,9 +48,14 @@
     </head>
     <body>
         <div id="north">
-            <button id="btnReport" onClick="parserInt('1;79-10;0-10');">Test1</button>
-            <button id="btnUpdate" onClick="$('#tabs-1 .login').val('asd');">Test2</button>
-            <button id="btnIns" onClick="$('#tabs-1 input.field :nth-child(1)').val('asd');">Test3</button>
+            <button id="btnReport" onClick="">Test1</button>
+            <button id="btnUpdate" onClick="">Test2</button>
+            <button id="btnIns" onClick="">Test3</button>
+            
+            <button id="btn1" onClick="$('#dialog-dic').load('frm/dialog/sysprof.jsp');">Sysprof</button> 
+            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/artikl.jsp');">Artikl</button>
+            <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
+            <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">

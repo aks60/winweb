@@ -1,6 +1,6 @@
-sysprof.init_dialog = function (table) {
+artikl.init_dialog = function (table) {
     table.dialog({
-        title: "Профили системы",
+        title: "Справочник артиклов",
         width: 500,
         height: 400,
         modal: false,
@@ -15,23 +15,23 @@ sysprof.init_dialog = function (table) {
     });
 }
 
-sysprof.init_table1 = function(table) {
+artikl.init_table1 = function(table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
         autowidth: true,
         height: "auto",         
-        colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
+        colNames: ['id', 'Тип артикула', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'use_side', width: 60, sorttype: "text"},
+            {name: 'types', width: 60, sorttype: "text"},
             {name: 'artikl_id', width: 80, sorttype: "text"},
             {name: 'artikl_id', width: 200, sorttype: "text"}
         ]
     });   
 }
 
-sysprof.load_table1 = function(table) {
+artikl.load_table1 = function(table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'sysprof?action=sysprofList',
@@ -41,7 +41,7 @@ sysprof.load_table1 = function(table) {
                 let tr = sysprof.sysprofList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[0], 
-                    use_side: tr[1], 
+                    types: tr[1], 
                     artikl_id: tr[2], 
                     artikl_id: tr[2]
                 });
@@ -51,3 +51,6 @@ sysprof.load_table1 = function(table) {
         }
     });   
 }
+
+
+

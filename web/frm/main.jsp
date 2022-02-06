@@ -44,8 +44,9 @@
             var UseSide = {VERT: -3, HORIZ: -2, ANY: -1, MANUAL: 0, BOT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
 
             //Глобальные объекты
-            var utils = {}, enums = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
-                    users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, product = {}, dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
+            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, 
+                    users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, artikl = {}, product = {}, 
+                    dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
 
             $(document).ready(function () {
 

@@ -24,9 +24,9 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Спецификация</a></li>
-                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Смета</a></li>
-                                            <li><a onClick="$('#dialog-dic').load('frm/dialog/sysprof.jsp');">Счёт-фактура</a></li>
+                                            <li><a onClick="">Спецификация</a></li>
+                                            <li><a onClick="">Смета</a></li>
+                                            <li><a onClick="">Счёт-фактура</a></li>
                                         </ul>
                                     </li>
                                 </ul>
