@@ -30,6 +30,7 @@
                     ARTIKL = {id: 0, name: 1, code: 2, height: 3, analog_id: 4},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
                     FURNITURE = {id: 0, name: 1},
+                    SYSTREE = {id: 0, name: 1, glas: 2, depth: 3, col1: 4, col2: 5, col3: 6, cgrp: 7, types: 8, parent_id: 9},
                     SYSPROF = {id: 0, prio: 1, use_type: 2, use_side: 3, artikl_id: 4, systree_id: 5},
                     SYSFURN = {id: 0, side_open: 1, hand_pos: 2, systree_id: 3, furniture_id: 4, artikl_id1: 5, artikl_id2: 6},
                     SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},

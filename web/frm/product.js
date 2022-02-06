@@ -36,7 +36,9 @@ product.load_table = function (table1) {
         });
     }
     table1.jqGrid("setSelection", product.rowid_table1);
-    setTimeout(function () {product.resize();}, 10);
+    setTimeout(function () {
+        product.resize();
+    }, 10);
 }
 //------------------------------------------------------------------------------
 product.load_tree = function () {
@@ -44,7 +46,6 @@ product.load_tree = function () {
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
     let root = winc.root;
-
     if (root.type == 'RECTANGL')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
     else if (root.type == 'TRAPEZE')
@@ -53,16 +54,13 @@ product.load_tree = function () {
         arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
     else if (root.type == 'ARCH')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
-
     arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
-
     arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
-
-    elements(root, arr);  //вход в рекурсию    
+    elements(root, arr); //вход в рекурсию    
 
     $('#tree-winc').jstree({'core': {
             'data': arr,
@@ -75,7 +73,9 @@ product.load_tree = function () {
                 let node = $("#tree-winc").jstree("get_selected")[0];
                 view_winc_property(node);
             });
-    setTimeout(function () {product.resize();}, 10);
+    setTimeout(function () {
+        product.resize();
+    }, 10);
 }
 //------------------------------------------------------------------------------
 function elements(com, arr) {
@@ -99,7 +99,6 @@ function elements(com, arr) {
                 if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
                     let lay = (com.layout == "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'img/tool/leaf.gif'});
-
                 } else if (com2.type == "GLASS") {
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "img/tool/leaf.gif"});
                 }
@@ -121,8 +120,6 @@ function view_winc_property(nodeID) {
         artikl = elem.artikl;
     }
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-
-
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
         let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
@@ -131,13 +128,9 @@ function view_winc_property(nodeID) {
             n14: winc.rgb1[COLOR.name], n15: winc.rgb2[COLOR.name], n16: winc.rgb3[COLOR.name]
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
-
-
     } else if (elem.type == "DEF_PARAM") {
         product.load_table($('#table1'));
         $("#tabs-2").show();
-
-
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
         if (elem.type == "FRAME_SIDE") {
@@ -152,8 +145,6 @@ function view_winc_property(nodeID) {
             n33: elem.rgb1[COLOR.name], n34: elem.rgb2[COLOR.name], n35: elem.rgb3[COLOR.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
-
-
     } else if (elem.type == "STVORKA") {
         let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
         //Сторона открывания
@@ -175,14 +166,89 @@ function view_winc_property(nodeID) {
             n4C: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
-
-
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {
             n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.rgb1[COLOR.name]
         }, ['n51', 'n52', 'n53']);
         $("#tabs-5").show();
+    }
+}
+//------------------------------------------------------------------------------
+function color_to_windows(num_btn) {
+    debugger;
+    try {
+        let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+        let set = new Set();
+        let arr1 = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
+        let jfield = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+                : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+                : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
+        let arr2 = UCom.parserInt(jfield);
+        if (arr1 != null) {
+            for (let s1 of arr1) { //группы
+                let se2 = new Set();
+                let b = false;
+                for (let rec of dbset.colorList) {
+                    if (rec[COLOR.colgrp_id] == s1) {
+                        se2.push(rec); //текстуры группы
+                        for (let i = 0; i < arr2.length; i = i + 2) { //тестуры
+                            if (rec[COLOR.id] >= arr2[i] && rec[COLOR.id] <= arr2[i + 1]) {
+                                b = true;
+                            }
+                        }
+                    }
+                }
+                if (b == false) { //если небыло пападаний то добавляем всю группу
+                    set.push(se2);
+                }
+            }
+        }
+        if (arr2.length != 0) {
+            for (let rec of eColor.query()) {
+                if (arr1 != null) {
 
+                    for (let s1 of arr1) { //группы
+                        if (rec[COLOR.colgrp_id] == s1) {
+                            for (let i = 0; i < arr2.length; i = i + 2) { //текстуры
+                                if (rec[COLOR.id] >= arr2[i] && rec[eColor.id] <= arr2[i + 1]) {
+                                    set.push(rec);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < arr2.length; i = i + 2) { //тестуры
+                        if (rec[eColor.id] >= arr2[i] && rec[eColor.id] <= arr2[i + 1]) {
+                            set.push(rec);
+                        }
+                    }
+                }
+            }
+        }
+
+//            ListenerRecord listenerColor = (colorRec) -> {
+//
+//                Wincalc iwin = iwin();
+//                builder.script.GsonElem rootArea = iwin.rootGson.find(node);
+//                if (rootArea != null) {
+//                    if (evt.getSource() == btn9) {
+//                        iwin.rootGson.color1 = colorRec.getInt(eColor.id);
+//                    } else if (evt.getSource() == btn13) {
+//                        iwin.rootGson.color2 = colorRec.getInt(eColor.id);
+//                    } else {
+//                        iwin.rootGson.color3 = colorRec.getInt(eColor.id);
+//                    }
+//                    updateScript(node);
+//                    btnRefresh(null);
+//                }
+//            };
+//            if (arr1 == null && arr2.length == 0) {
+//                new DicColor(this, listenerColor);
+//            } else {
+//                new DicColor(this, listenerColor, set);
+//            }
+    } catch (e) {
+        console.log("Ошибка color_to_windows(): " + e.message);
     }
 }
 //------------------------------------------------------------------------------

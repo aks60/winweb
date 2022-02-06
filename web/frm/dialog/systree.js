@@ -50,8 +50,7 @@ systree.init_table = function (table1, table2) {
                     }
                 }
             }
-            $('#table2a tr > *:nth-child(1)').hide();
-            systree.resize();
+            $('#table2a tr > *:nth-child(1)').hide();            
         }
     });
 }
@@ -62,15 +61,16 @@ systree.load_table = function (table1, table2) {
     $.ajax({
         url: 'systree?action=sysTree',
         success: function (data) {
-            systree.sysTree = data.sysTree;
+            //systree.sysTree = data.sysTree;
             table1[0].addJSONData({
                 total: 1,
                 page: 1,
-                records: systree.sysTree.length,
-                rows: systree.sysTree
+                records: data.sysTree.length,
+                rows: data.sysTree
             });
 
             table1.jqGrid("setSelection", 1);
+            setTimeout(function () {systree.resize();}, 10);
         }
     });
 }

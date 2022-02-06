@@ -73,7 +73,7 @@ order.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
-order.add_proprodClone = function (table, proprodRec) {
+order.add_proprodClone = function (table2, proprodRec) {
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
@@ -101,7 +101,7 @@ order.add_proprodClone = function (table, proprodRec) {
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
-    table.appendChild(tr);
+    table2.appendChild(tr);
 
 }
 //------------------------------------------------------------------------------

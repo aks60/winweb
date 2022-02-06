@@ -48,7 +48,7 @@
     </head>
     <body>
         <div id="north">
-            <button id="btnReport" onClick="product.resize();">Test1</button>
+            <button id="btnReport" onClick="parserInt('1;79-10;0-10');">Test1</button>
             <button id="btnUpdate" onClick="$('#tabs-1 .login').val('asd');">Test2</button>
             <button id="btnIns" onClick="$('#tabs-1 input.field :nth-child(1)').val('asd');">Test3</button>
         </div> 
@@ -65,9 +65,9 @@
                             <jst type='txt' label='Высота1' name="n12" width='80' wid1h="60"></jst><br>
                             <jst type='txt' label='Высота2' name="n13" width='80' wid1h="60"></jst><br>  
                             <p class="pantitle">Текстура изделия</p> 
-                            <jst type='btn' label='Основная' name="n14" width='80' wid1h="260" click=""></jst><br>
-                            <jst type='btn' label='Внутренняя' name="n15" width='80' wid1h="260" click=""></jst><br>
-                            <jst type='btn' label='Внещняя' name="n16" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Основная' name="n14" width='80' wid1h="260" click="color_to_windows(1);"></jst><br>
+                            <jst type='btn' label='Внутренняя' name="n15" width='80' wid1h="260" click="color_to_windows(2);"></jst><br>
+                            <jst type='btn' label='Внещняя' name="n16" width='80' wid1h="260" click="color_to_windows(3);"></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">   
                             <table id="table1"  class="ui-jqgrid-btable"></table> 

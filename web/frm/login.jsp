@@ -38,8 +38,7 @@
 //            $('#pan1 .login').val('admin');
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
-            $('#pan1 .password').val('qwerty');
-//            login.user_connect();            
+            $('#pan1 .password').val('qwerty');            login.user_connect();            
         </script>         
     </head>
     <body>

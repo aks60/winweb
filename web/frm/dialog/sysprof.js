@@ -46,7 +46,8 @@ sysprof.load_table1 = function(table) {
                     artikl_id: tr[2]
                 });
             }
-            sysprof.resize();
+            //sysprof.resize();
+            //setTimeout(function () {sysprof.resize();}, 500);
         }
     });   
 }

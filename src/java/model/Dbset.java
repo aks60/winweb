@@ -29,11 +29,19 @@ public class Dbset {
 
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.glas, eSystree.parent_id).select(eSystree.up);
+        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth
+                , eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
             list.add(Arrays.asList(
                     rec.get(eSystree.id),
+                    rec.get(eSystree.name),
                     rec.get(eSystree.glas),
+                    rec.get(eSystree.depth),
+                    rec.get(eSystree.col1),
+                    rec.get(eSystree.col2),
+                    rec.get(eSystree.col3),
+                    rec.get(eSystree.cgrp),
+                    rec.get(eSystree.types),
                     rec.get(eSystree.parent_id)));
         }
         JSONObject output = new JSONObject(App.asMap("systreeList", list));

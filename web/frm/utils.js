@@ -134,4 +134,36 @@ function prepareToolBar() {
     $("#btnFind").button({icons: {primary: "ui-icon-search"}});
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
+//------------------------------------------------------------------------------
+    //1;79-10;0-10 => [1,1,79,10,0,10]
+    function  parserInt(txt) {
+        if (txt == undefined || txt == null) {
+            return [];
+        }
+        let arrList = new Array();
+        txt = (txt[txt.length - 1] == '@') ? txt.slice(0, txt.length() - 1) : txt;
+        let arr = txt.split(";");
+        if (arr.length == 1) {
+            arr = arr[0].split("-");
+            if (arr.length == 1) {
+                arrList.push(arr[0]);
+                arrList.push(arr[0]);
+            } else {
+                arrList.add(arr[0]);
+                arrList.add(arr[1]);
+            }
+        } else {
+            for (let index = 0; index < arr.length; index++) {
+                let arr2 = arr[index].split("-");
+                if (arr2.length == 1) {
+                    arrList.push(arr2[0]);
+                    arrList.push(arr2[0]);
+                } else {
+                    arrList.push(arr2[0]);
+                    arrList.push(arr2[1]);
+                }
+            }
+        }
+        return arrList;
+    }
 //------------------------------------------------------------------------------            
