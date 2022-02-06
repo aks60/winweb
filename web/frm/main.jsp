@@ -27,7 +27,7 @@
             var SYSTREE = {id: 0, glas: 1, parent_id: 2},
                     GROUPS = {id: 0, name: 1},
                     COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
-                    ARTIKL = {id: 0, name: 1, code: 2, height: 3, analog_id: 4},
+                    ARTIKL = {id: 0, code: 1, name: 2, height: 3, analog_id: 4},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
                     FURNITURE = {id: 0, name: 1},
                     SYSTREE = {id: 0, name: 1, glas: 2, depth: 3, col1: 4, col2: 5, col3: 6, cgrp: 7, types: 8, parent_id: 9},
@@ -46,7 +46,7 @@
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, 
                     users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, artikl = {}, product = {}, 
-                    dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {};
+                    dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {}, params = {};
 
             $(document).ready(function () {
 
@@ -72,19 +72,19 @@
 
         <script type="module">
             import {
-            load_systreeList, load_sysprodList, load_colorList,
-            load_artiklList, load_artdetList, load_furnitureList, 
-            load_proprodList, load_sysfurnList, load_sysprofList,
-            load_syspar1List, load_paramsList
+            systreeList, sysprodList, colorList,
+            artiklList, artdetList, furnitureList, 
+            proprodList, sysfurnList, sysprofList,
+            syspar1List, paramsList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
 
             $.when(
-            load_systreeList(), load_sysprodList(), load_colorList(), 
-            load_artiklList(), load_artdetList(), load_furnitureList(), 
-            load_proprodList(), load_sysfurnList(), load_sysprofList(),
-            load_syspar1List(), load_paramsList()
+            systreeList(), sysprodList(), colorList(), 
+            artiklList(), artdetList(), furnitureList(), 
+            proprodList(), sysfurnList(), sysprofList(),
+            syspar1List(), paramsList()
 
             ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB) => { //загрузка базы данных 
             dbset.systreeList = p1[0].systreeList;

@@ -30,6 +30,9 @@ html, body {
     border: 0 !important; 
 }
 
+.ui-dialog-buttonpane {
+   background: #efeffb !important; 
+}
 
 .ui-button-text-only .ui-button-text {
     padding: .2em .2em;

@@ -97,8 +97,8 @@ public class Dbset {
         for (Record rec : qArtikl) {
             list.add(Arrays.asList(
                     rec.get(eArtikl.id),
-                    rec.get(eArtikl.name),
                     rec.get(eArtikl.code),
+                    rec.get(eArtikl.name),
                     rec.get(eArtikl.height),
                     rec.get(eArtikl.analog_id)));
         }

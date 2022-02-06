@@ -11,7 +11,7 @@ dbset.find = function (id, ds) {
     return undefined;
 }
 //------------------------------------------------------------------------------
-dbset.newRecord = function (ds) {
+dbset.nullRecord = function (ds) {
     if (ds == undefined || ds[0] == undefined || ds[0] == null) {
         return undefined;
     }
@@ -21,73 +21,73 @@ dbset.newRecord = function (ds) {
     }
 }
 //------------------------  ENUMS  -------------------------------------------
-export function load_enumList() {
+export function enumList() {
     return  $.ajax({
         url: 'enum?action=enumList',
     });
 }
 //------------------------  SYSTREE  -------------------------------------------
-export function load_systreeList() {
+export function systreeList() {
     return  $.ajax({
         url: 'dbset?action=systreeList',
     });
 }
 //------------------------  SYSPROD  -------------------------------------------
-export function load_sysprodList() {
+export function sysprodList() {
     return  $.ajax({
         url: 'dbset?action=sysprodList',
     });
 }
 //-------------------------  COLOR  --------------------------------------------
-export function load_colorList() {
+export function colorList() {
     return  $.ajax({
         url: 'dbset?action=colorList',
     });
 }
 //--------------------------  ARTIKL  ------------------------------------------
-export function load_artiklList() {
+export function artiklList() {
     return  $.ajax({
         url: 'dbset?action=artiklList',
     });
 }
 //---------------------------  ARTDET  -----------------------------------------
-export function load_artdetList() {
+export function artdetList() {
     return  $.ajax({
         url: 'dbset?action=artdetList',
     });
 }
 //---------------------------  FURNITURE  --------------------------------------
-export function load_furnitureList() {
+export function furnitureList() {
     return  $.ajax({
         url: 'dbset?action=furnitureList',
     });
 }
 //---------------------------  PROPROD  ----------------------------------------
-export function load_proprodList() {
+export function proprodList() {
     return  $.ajax({
         url: 'dbset?action=proprodList',
     });
 }
 //----------------------------  SYSFURN  ---------------------------------------
-export function load_sysprofList() {
+export function sysprofList() {
     return  $.ajax({
         url: 'dbset?action=sysprofList',
     });
 }
 //----------------------------  SYSFURN  ---------------------------------------
-export function load_sysfurnList() {
+export function sysfurnList() {
     return  $.ajax({
         url: 'dbset?action=sysfurnList',
     });
 }
 //----------------------------  SYSPAR1  ---------------------------------------
-export function load_syspar1List() {
+export function syspar1List() {
     return  $.ajax({
         url: 'dbset?action=syspar1List',
     });
 }
 //----------------------------  PARAMS  ---------------------------------------
-export function load_paramsList() {
+export function paramsList() {
     return  $.ajax({
         url: 'dbset?action=paramsList',
     });
