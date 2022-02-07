@@ -175,79 +175,73 @@ function view_winc_property(nodeID) {
 }
 //------------------------------------------------------------------------------
 function color_to_windows(num_btn) {
-    debugger;
-    try {
-        let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-        let set = new Set();
-        let arr1 = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
-        let jfield = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-                : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
-                : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
-        let arr2 = UCom.parserInt(jfield);
-        if (arr1 != null) {
-            for (let s1 of arr1) { //группы
-                let se2 = new Set();
-                let b = false;
-                for (let rec of dbset.colorList) {
-                    if (rec[COLOR.colgrp_id] == s1) {
-                        se2.push(rec); //текстуры группы
-                        for (let i = 0; i < arr2.length; i = i + 2) { //тестуры
-                            if (rec[COLOR.id] >= arr2[i] && rec[COLOR.id] <= arr2[i + 1]) {
-                                b = true;
-                            }
+    //try {
+    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let groupSet = new Set();
+    let colorSet = new Set();
+    
+    let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
+    let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
+    let colorTxt = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+            : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+            : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
+    let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
+
+    //Поле группы текстур заполнено
+    if (groupArr != null) {
+        for (let s1 of groupArr) { //группы
+            let groupSet2 = new Set();
+            let colorSet2 = new Set();
+            let b = false;
+            for (let rec of dbset.colorList) {
+                if (rec[COLOR.colgrp_id] == s1) {
+                    groupSet2.add(rec[COLOR.colgrp_id]); //группы
+                    colorSet2.add(rec); //текстуры
+                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                        if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                            b = true;
                         }
                     }
                 }
-                if (b == false) { //если небыло пападаний то добавляем всю группу
-                    set.push(se2);
-                }
+            }
+            if (b == false) { //если небыло пападаний то добавляем всю группу
+                groupSet.add(groupSet2);
+                colorSet.add(colorSet2);
             }
         }
-        if (arr2.length != 0) {
-            for (let rec of eColor.query()) {
-                if (arr1 != null) {
-
-                    for (let s1 of arr1) { //группы
-                        if (rec[COLOR.colgrp_id] == s1) {
-                            for (let i = 0; i < arr2.length; i = i + 2) { //текстуры
-                                if (rec[COLOR.id] >= arr2[i] && rec[eColor.id] <= arr2[i + 1]) {
-                                    set.push(rec);
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    for (let i = 0; i < arr2.length; i = i + 2) { //тестуры
-                        if (rec[eColor.id] >= arr2[i] && rec[eColor.id] <= arr2[i + 1]) {
-                            set.push(rec);
-                        }
-                    }
-                }
-            }
-        }
-
-            let listenerColor = (colorRec) => {
-
-                let rootArea = winc.elemList.find(node);
-                if (rootArea != null) {
-                    if (nubtn == 1) {
-                        winc.rootGson.rgb1 = colorRec[COLOR.id];
-                    } else if (nubtn == 2) {
-                        winc.rootGson.rgb2 = colorRec[COLOR.id];
-                    } else {
-                        winc.rootGson.rgb3 = colorRec[COLOR.id];
-                    }
-                    updateScript(node);
-                    btnRefresh(null);
-                }
-            };
-            if (arr1 == null && arr2.length == 0) {
-                //new DicColor(this, listenerColor);
-            } else {
-                //new DicColor(this, listenerColor, set);
-            }
-    } catch (e) {
-        console.log("Ошибка color_to_windows(): " + e.message);
     }
+    //Поле текстур заполнено
+    if (colorArr.length != 0) {
+        for (let rec of dbset.colorList) {
+            if (groupArr != null) {
+
+                for (let s1 of groupArr) { //группы
+                    if (rec[COLOR.colgrp_id] == s1) {
+                        for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                            if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                                groupSet.add(rec[COLOR.colgrp_id]);
+                                colorSet.add(rec);
+                            }
+                        }
+                    }
+                }
+            } else {
+                for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                    if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                        groupSet.add(rec[COLOR.colgrp_id]);
+                        colorSet.add(rec);
+                    }
+                }
+            }
+        }
+    }
+    product.groupSet = groupSet;
+    product.colorArr = Array.from(colorSet);
+    product.buttonNum = num_btn;
+    $('#dialog-dic').load('frm/dialog/color.jsp');
+    
+//    } catch (e) {
+//        console.log("Ошибка color_to_windows(): " + e.message);
+//    }
 }
 //------------------------------------------------------------------------------

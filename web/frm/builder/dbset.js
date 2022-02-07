@@ -92,4 +92,10 @@ export function paramsList() {
         url: 'dbset?action=paramsList',
     });
 }
+//----------------------------  GROUP  ---------------------------------------
+export function groupList() {
+    return  $.ajax({
+        url: 'dbset?action=groupList',
+    });
+}
 //------------------------------------------------------------------------------

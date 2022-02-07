@@ -25,7 +25,7 @@
 
             //Поля таблиц
             var SYSTREE = {id: 0, glas: 1, parent_id: 2},
-                    GROUPS = {id: 0, name: 1},
+                    GROUP = {id: 0, grp: 1, name: 2, val: 3},
                     COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
                     ARTIKL = {id: 0, code: 1, name: 2, height: 3, analog_id: 4, level1: 5},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
@@ -47,7 +47,7 @@
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
                     users = {}, order = {rowid_table1: 8, rec_table2: null, wincalcMap: new Map()}, artikl = {}, product = {},
-                    dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {}, params = {};
+                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {};
 
             $(document).ready(function () {
 
@@ -76,7 +76,7 @@
             systreeList, sysprodList, colorList,
             artiklList, artdetList, furnitureList, 
             proprodList, sysfurnList, sysprofList,
-            syspar1List, paramsList
+            syspar1List, paramsList, groupList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
@@ -85,9 +85,9 @@
             systreeList(), sysprodList(), colorList(), 
             artiklList(), artdetList(), furnitureList(), 
             proprodList(), sysfurnList(), sysprofList(),
-            syspar1List(), paramsList()
+            syspar1List(), paramsList(), groupList()
 
-            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB) => { //загрузка базы данных 
+            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC) => { //загрузка базы данных 
             dbset.systreeList = p1[0].systreeList;
             dbset.sysprodList = p2[0].sysprodList;
             dbset.colorList = p3[0].colorList;
@@ -99,6 +99,7 @@
             dbset.sysprofList = p9[0].sysprofList;
             dbset.syspar1List = pA[0].syspar1List;
             dbset.paramsList = pB[0].paramsList;
+            dbset.groupList = pC[0].groupList;
 
             login.init_login('dat');
 

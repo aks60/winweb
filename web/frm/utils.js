@@ -8,7 +8,6 @@ function taq_deploy(selectors) {
 
             let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
                     label = $(elem).attr('label'), name = $(elem).attr('name'), type = $(elem).attr('type');
-
             if (typeof (name) == 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
             } else {
@@ -63,17 +62,17 @@ function taq_deploy(selectors) {
 
 //------------------------------------------------------------------------------
 function load_fields(selector, record, fields) {
-    
-   for (let field of fields) {
-       let value = record[field];
-       $("#" + selector + " .field[name = '" + field + "']").val(value);
-   } 
+
+    for (let field of fields) {
+        let value = record[field];
+        $("#" + selector + " .field[name = '" + field + "']").val(value);
+    }
 }
 
 //------------------------------------------------------------------------------
 //маппинг карточки ввода
 var focusObj = {
-    
+
     mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
     click: function (event) {
         //запишем объект карточки ввода
@@ -112,7 +111,7 @@ var focusObj = {
 
 //------------------------------------------------------------------------------
 function formatDate2(d) {
-    
+
     var dd = d.getDate();
     var mm = d.getMonth() + 1;
     if (dd < 10) {
@@ -125,7 +124,7 @@ function formatDate2(d) {
 }
 //------------------------------------------------------------------------------
 function prepareToolBar() {
-    
+
     $("#btnIns").button({icons: {primary: "ui-icon-document"}});
     $("#btnUpdate").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnSave").button({icons: {primary: "ui-icon-disk"}});
@@ -135,35 +134,35 @@ function prepareToolBar() {
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
 //------------------------------------------------------------------------------
-    //1;79-10;0-10 => [1,1,79,10,0,10]
-    function  parserInt(txt) {
-        if (txt == undefined || txt == null) {
-            return [];
-        }
-        let arrList = new Array();
-        txt = (txt[txt.length - 1] == '@') ? txt.slice(0, txt.length() - 1) : txt;
-        let arr = txt.split(";");
-        if (arr.length == 1) {
-            arr = arr[0].split("-");
-            if (arr.length == 1) {
-                arrList.push(arr[0]);
-                arrList.push(arr[0]);
-            } else {
-                arrList.add(arr[0]);
-                arrList.add(arr[1]);
-            }
-        } else {
-            for (let index = 0; index < arr.length; index++) {
-                let arr2 = arr[index].split("-");
-                if (arr2.length == 1) {
-                    arrList.push(arr2[0]);
-                    arrList.push(arr2[0]);
-                } else {
-                    arrList.push(arr2[0]);
-                    arrList.push(arr2[1]);
-                }
-            }
-        }
-        return arrList;
+//1;79-10;0-10 => [1,1,79,10,0,10]
+function  parserInt(txt) {
+    if (txt == undefined || txt == null) {
+        return [];
     }
+    let arrList = new Array();
+    txt = (txt[txt.length - 1] == '@') ? txt.slice(0, txt.length() - 1) : txt;
+    let arr = txt.split(";");
+    if (arr.length == 1) {
+        arr = arr[0].split("-");
+        if (arr.length == 1) {
+            arrList.push(arr[0]);
+            arrList.push(arr[0]);
+        } else {
+            arrList.push(arr[0]);
+            arrList.push(arr[1]);
+        }
+    } else {
+        for (let index = 0; index < arr.length; index++) {
+            let arr2 = arr[index].split("-");
+            if (arr2.length == 1) {
+                arrList.push(arr2[0]);
+                arrList.push(arr2[0]);
+            } else {
+                arrList.push(arr2[0]);
+                arrList.push(arr2[1]);
+            }
+        }
+    }
+    return arrList;
+}
 //------------------------------------------------------------------------------            

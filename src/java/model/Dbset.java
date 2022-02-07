@@ -62,16 +62,17 @@ public class Dbset {
         return output;
     }
 
-    public static JSONObject colorGroup(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject groupList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qGroup = new Query(Att.att(request).connect(), eGroups.values())
-                .select(eGroups.up, "where", eGroups.grup, "=", TypeGroups.COLOR.id, "order by", eGroups.name);
+        Query qGroup = new Query(Att.att(request).connect(), eGroups.values()).select(eGroups.up, "order by", eGroups.name);
         for (Record rec : qGroup) {
             list.add(Arrays.asList(
                     rec.get(eGroups.id),
-                    rec.get(eGroups.name)));
+                    rec.get(eGroups.grup),
+                    rec.get(eGroups.name),
+                    rec.get(eGroups.val)));
         }
-        JSONObject output = new JSONObject(App.asMap("colorGroup", list));
+        JSONObject output = new JSONObject(App.asMap("groupList", list));
         return output;
     }
 
