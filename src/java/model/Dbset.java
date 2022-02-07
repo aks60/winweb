@@ -100,7 +100,8 @@ public class Dbset {
                     rec.get(eArtikl.code),
                     rec.get(eArtikl.name),
                     rec.get(eArtikl.height),
-                    rec.get(eArtikl.analog_id)));
+                    rec.get(eArtikl.analog_id),
+                    rec.get(eArtikl.level1)));
         }
         JSONObject output = new JSONObject(App.asMap("artiklList", list));
         return output;

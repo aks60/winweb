@@ -15,39 +15,43 @@ sysprof.init_dialog = function (table) {
     });
 }
 
-sysprof.init_table1 = function(table) {
+sysprof.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
         autowidth: true,
-        height: "auto",         
+        height: "auto",
         colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'use_side', width: 60, sorttype: "text"},
-            {name: 'artikl_id', width: 80, sorttype: "text"},
-            {name: 'artikl_id', width: 200, sorttype: "text"}
+            {name: 'side', width: 60, sorttype: "text"},
+            {name: 'code', width: 80, sorttype: "text"},
+            {name: 'name', width: 200, sorttype: "text"}
         ]
-    });   
+    });
 }
 
-sysprof.load_table1 = function(table) {
+sysprof.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
-    $.ajax({
-        url: 'sysprof?action=sysprofList',
-        success: function (data) {
-            sysprof.sysprofList = data.sysprofList;
-            for (let i = 0; i < sysprof.sysprofList.length; i++) {
-                let tr = sysprof.sysprofList[i];
-                table.jqGrid('addRowData', i + 1, {
-                    id: tr[0], 
-                    use_side: tr[1], 
-                    artikl_id: tr[2], 
-                    artikl_id: tr[2]
-                });
-            }
-            //sysprof.resize();
-            //setTimeout(function () {sysprof.resize();}, 500);
-        }
-    });   
+    let id = order.rec_table2[SYSPROF.id];
+    let winc = order.wincalcMap.get(id);
+    let sysprofList = dbset.sysprofList.filter(rec => winc.nuni == rec[SYSPROF.systree_id]);
+
+    for (let i = 0; i < sysprofList.length; i++) {
+        let tr = sysprofList[i];
+        let arec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
+        //debugger;
+        table.jqGrid('addRowData', i + 1, {
+            id: tr[SYSPROF.id],
+            side: sysprof.use_name(tr[SYSPROF.use_side]),
+            code: arec[ARTIKL.code],
+            name: arec[ARTIKL.name]
+        });
+    }
+}
+sysprof.use_name = (v) => {
+    for (let k in UseSide) {
+        if (v == UseSide[k][0])
+            return UseSide[k][1];
+    }
 }

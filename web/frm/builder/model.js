@@ -274,10 +274,10 @@ export class Cross extends Com5t {
 
         } else {
             if ("VERT" == this.layout) { //сверху вниз
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.HORIZ);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.HORIZ[0]);
 
             } else if ("HORIZ" == this.layout) { //слева направо
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.VERT);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.VERT[0]);
             }
         }        
         this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
@@ -289,8 +289,8 @@ export class Cross extends Com5t {
 
     find_first(nuni, typ, us1) {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id]
-                    && rec[SYSPROF.use_type] == typ && UseSide.MANUAL != rec[SYSPROF.use_side]
-                    && (us1 == rec[SYSPROF.use_side] || UseSide.ANY == rec[SYSPROF.use_side]));
+                    && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
+                    && (us1 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
             return [-3, 0, typ, -1, -3, -3];
         }
@@ -350,13 +350,13 @@ export class Frame extends Com5t {
         } else {
             //debugger;
             if ('BOTT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['BOT'], UseSide['HORIZ']);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['BOT'][0], UseSide['HORIZ'][0]);
             } else if ('RIGHT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['RIGHT'], UseSide['VERT']);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['RIGHT'][0], UseSide['VERT'][0]);
             } else if ('TOP' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['TOP'], UseSide['HORIZ']);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['TOP'][0], UseSide['HORIZ'][0]);
             } else if ('LEFT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['LEFT'], UseSide['VERT']);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['LEFT'][0], UseSide['VERT'][0]);
             }
         }
         this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
@@ -368,7 +368,7 @@ export class Frame extends Com5t {
 
     find_first(nuni, typ, us1, us2) {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
-                    && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY == rec[SYSPROF.use_side]));
+                    && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
             return [-3, 0, typ, -1, -3, -3];
         }

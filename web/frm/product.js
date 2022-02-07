@@ -226,27 +226,26 @@ function color_to_windows(num_btn) {
             }
         }
 
-//            ListenerRecord listenerColor = (colorRec) -> {
-//
-//                Wincalc iwin = iwin();
-//                builder.script.GsonElem rootArea = iwin.rootGson.find(node);
-//                if (rootArea != null) {
-//                    if (evt.getSource() == btn9) {
-//                        iwin.rootGson.color1 = colorRec.getInt(eColor.id);
-//                    } else if (evt.getSource() == btn13) {
-//                        iwin.rootGson.color2 = colorRec.getInt(eColor.id);
-//                    } else {
-//                        iwin.rootGson.color3 = colorRec.getInt(eColor.id);
-//                    }
-//                    updateScript(node);
-//                    btnRefresh(null);
-//                }
-//            };
-//            if (arr1 == null && arr2.length == 0) {
-//                new DicColor(this, listenerColor);
-//            } else {
-//                new DicColor(this, listenerColor, set);
-//            }
+            let listenerColor = (colorRec) => {
+
+                let rootArea = winc.elemList.find(node);
+                if (rootArea != null) {
+                    if (nubtn == 1) {
+                        winc.rootGson.rgb1 = colorRec[COLOR.id];
+                    } else if (nubtn == 2) {
+                        winc.rootGson.rgb2 = colorRec[COLOR.id];
+                    } else {
+                        winc.rootGson.rgb3 = colorRec[COLOR.id];
+                    }
+                    updateScript(node);
+                    btnRefresh(null);
+                }
+            };
+            if (arr1 == null && arr2.length == 0) {
+                //new DicColor(this, listenerColor);
+            } else {
+                //new DicColor(this, listenerColor, set);
+            }
     } catch (e) {
         console.log("Ошибка color_to_windows(): " + e.message);
     }

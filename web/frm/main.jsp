@@ -27,7 +27,7 @@
             var SYSTREE = {id: 0, glas: 1, parent_id: 2},
                     GROUPS = {id: 0, name: 1},
                     COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
-                    ARTIKL = {id: 0, code: 1, name: 2, height: 3, analog_id: 4},
+                    ARTIKL = {id: 0, code: 1, name: 2, height: 3, analog_id: 4, level1: 5},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
                     FURNITURE = {id: 0, name: 1},
                     SYSTREE = {id: 0, name: 1, glas: 2, depth: 3, col1: 4, col2: 5, col3: 6, cgrp: 7, types: 8, parent_id: 9},
@@ -39,13 +39,14 @@
                     PARAMS = {id: 0, text: 1, params_id: 2};
 
             //Enum - перечисления
-            var Type = {NONE: 0, FRAME_SIDE: 1, STVORKA_SIDE: 2, IMPOST: 3, STOIKA: 5, 
+            var Type = {NONE: 0, FRAME_SIDE: 1, STVORKA_SIDE: 2, IMPOST: 3, STOIKA: 5,
                 ERKER: 7, EDGE: 8, SHTULP: 9, RECTANGL: 1, TRAPEZE: 1, TRIANGL: 1, ARCH: 1, STVORKA: 2, FRAME: 3, DOOR: 3};
-            var UseSide = {VERT: -3, HORIZ: -2, ANY: -1, MANUAL: 0, BOT: 1, RIGHT: 2, TOP: 3, LEFT: 4};
+            var UseSide = {VERT: [-3, 'Вертикальная'], HORIZ: [-2, 'Горизонтальная'], ANY: [-1, 'Любая'], MANUAL: [0, 'Вручную'],
+                BOT: [1, 'Нижняя'], RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая']};
 
             //Глобальные объекты
-            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, 
-                    users = {}, order = {rowid_table1: 8, wincalcMap: new Map()}, artikl = {}, product = {}, 
+            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
+                    users = {}, order = {rowid_table1: 8, rec_table2: null, wincalcMap: new Map()}, artikl = {}, product = {},
                     dialog = {}, systree = {}, kits = {}, color = {}, sysprof = {}, params = {};
 
             $(document).ready(function () {
@@ -57,9 +58,9 @@
                 $.jstree.defaults.core.themes.variant = "large";
             });
             window.onload = function () {
-             if(product.resize != undefined) {
-                 product.resize();
-             }
+                if (product.resize != undefined) {
+                    product.resize();
+                }
             };
 
         </script>         

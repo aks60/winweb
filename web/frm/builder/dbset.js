@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-dbset.find = function (id, ds) {
+dbset.find = (id, ds) => {
     if (id == -3) {
         return ds.virtualRec;
     }
@@ -11,7 +11,7 @@ dbset.find = function (id, ds) {
     return undefined;
 }
 //------------------------------------------------------------------------------
-dbset.nullRecord = function (ds) {
+dbset.nullRecord = (ds) => {
     if (ds == undefined || ds[0] == undefined || ds[0] == null) {
         return undefined;
     }
