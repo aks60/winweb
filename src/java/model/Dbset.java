@@ -93,7 +93,7 @@ public class Dbset {
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id,
-                eArtikl.name, eArtikl.code, eArtikl.height, eArtikl.analog_id).select(eArtikl.up);
+                eArtikl.name, eArtikl.code, eArtikl.height, eArtikl.analog_id, eArtikl.level1).select(eArtikl.up);
         for (Record rec : qArtikl) {
             list.add(Arrays.asList(
                     rec.get(eArtikl.id),

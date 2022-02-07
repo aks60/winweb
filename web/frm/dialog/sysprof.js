@@ -1,7 +1,7 @@
 sysprof.init_dialog = function (table) {
     table.dialog({
         title: "Профили системы",
-        width: 500,
+        width: 600,
         height: 400,
         modal: false,
         buttons: {
@@ -25,8 +25,8 @@ sysprof.init_table1 = function (table) {
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'side', width: 60, sorttype: "text"},
-            {name: 'code', width: 80, sorttype: "text"},
-            {name: 'name', width: 200, sorttype: "text"}
+            {name: 'code', width: 200, sorttype: "text"},
+            {name: 'name', width: 340, sorttype: "text"}
         ]
     });
 }
@@ -40,7 +40,6 @@ sysprof.load_table1 = function (table) {
     for (let i = 0; i < sysprofList.length; i++) {
         let tr = sysprofList[i];
         let arec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
-        //debugger;
         table.jqGrid('addRowData', i + 1, {
             id: tr[SYSPROF.id],
             side: sysprof.use_name(tr[SYSPROF.use_side]),
