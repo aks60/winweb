@@ -274,10 +274,10 @@ export class Cross extends Com5t {
 
         } else {
             if ("VERT" == this.layout) { //сверху вниз
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.HORIZ[0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.HORIZ[0]);
 
             } else if ("HORIZ" == this.layout) { //слева направо
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide.VERT[0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
             }
         }        
         this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
@@ -350,13 +350,13 @@ export class Frame extends Com5t {
         } else {
             //debugger;
             if ('BOTT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['BOT'][0], UseSide['HORIZ'][0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0]);
             } else if ('RIGHT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['RIGHT'][0], UseSide['VERT'][0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['RIGHT'][0], UseSide['VERT'][0]);
             } else if ('TOP' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['TOP'][0], UseSide['HORIZ'][0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['TOP'][0], UseSide['HORIZ'][0]);
             } else if ('LEFT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type], UseSide['LEFT'][0], UseSide['VERT'][0]);
+                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0]);
             }
         }
         this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);

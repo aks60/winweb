@@ -18,8 +18,8 @@
                 }).trigger('resize');
 
                 sysprof.init_dialog($("#dialog-dic"));
-                sysprof.init_table1($("#tab1-dic"))
-                sysprof.load_table1($("#tab1-dic"))
+                sysprof.init_table($("#tab1-dic"))
+                sysprof.load_table($("#tab1-dic"))
             });
             
         </script>        

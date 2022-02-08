@@ -39,8 +39,12 @@
                     PARAMS = {id: 0, text: 1, params_id: 2};
 
             //Enum - перечисления
-            var Type = {NONE: 0, FRAME_SIDE: 1, STVORKA_SIDE: 2, IMPOST: 3, STOIKA: 5,
-                ERKER: 7, EDGE: 8, SHTULP: 9, RECTANGL: 1, TRAPEZE: 1, TRIANGL: 1, ARCH: 1, STVORKA: 2, FRAME: 3, DOOR: 3};
+            var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
+                IMPOST: [3, 3, 'Импост'], STOIKA: [5, 5, 'Стойка'], ERKER: [7, 7, 'Эркер'], EDGE: [8, 8, 'Грань'], SHTULP: [9, 9, 'Штульп'],
+                RECTANGL: [1001, 1, 'Окно четырёхугольно'], TRAPEZE: [1002, 1, 'Окно трапеция'], TRIANGL: [1003, 1, 'Треугольное окно'],
+                ARCH: [1004, 1, 'Арочное окно'], STVORKA: [1005, 2, 'Створка'], FRAME: [1006, 3, 'Коробка'], DOOR: [1007, 3, 'Дверь']};
+            var Layout = {ANY: [-1, 'Любая'], HORIZ: [-2, 'Горизонт.'], VERT: [-3, 'Вертикальн.'], BOTT: [1, 'Нижняя'],
+                RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая'], FULL: [6, '']};
             var UseSide = {VERT: [-3, 'Вертикальная'], HORIZ: [-2, 'Горизонтальная'], ANY: [-1, 'Любая'], MANUAL: [0, 'Вручную'],
                 BOT: [1, 'Нижняя'], RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая']};
 

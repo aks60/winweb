@@ -52,24 +52,22 @@ color.init_table = function (table1, table2) {
             table2.jqGrid("clearGridData", true);
             let colgrpRec = table1.getRowData(rowid);
             if (product.colorArr.length == 0) {
-                for (let i = 0; i < dbset.colorList.length; i++) {
-                    let colorRec = dbset.colorList[i];
-                    if (colgrpRec.id == colorRec[COLOR.colgrp_id]) {
+                let colorList = dbset.colorList.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
+                for (let i = 0; i < colorList.length; i++) {                    
+                    let colorRec = colorList[i];
                         table2.jqGrid('addRowData', i + 1, {
                             id: colorRec[COLOR.id],
                             name: colorRec[COLOR.name]
                         });
-                    }
                 }
             } else {
-                for (let i = 0; i < product.colorArr.length; i++) {
-                    let colorRec = product.colorArr[i];
-                    if (colgrpRec.id == colorRec[COLOR.colgrp_id]) {
+                let colorArr = product.colorArr.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
+                for (let i = 0; i < colorArr.length; i++) {
+                    let colorRec = colorArr[i];
                         table2.jqGrid('addRowData', i + 1, {
                             id: colorRec[COLOR.id],
                             name: colorRec[COLOR.name]
                         });
-                    }
                 }
             }
             table2.jqGrid("setSelection", 1);

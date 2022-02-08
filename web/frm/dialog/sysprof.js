@@ -15,7 +15,7 @@ sysprof.init_dialog = function (table) {
     });
 }
 
-sysprof.init_table1 = function (table) {
+sysprof.init_table = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
@@ -31,20 +31,19 @@ sysprof.init_table1 = function (table) {
     });
 }
 
-sysprof.load_table1 = function (table) {
+sysprof.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     let id = order.rec_table2[SYSPROF.id];
     let winc = order.wincalcMap.get(id);
-    let sysprofList = dbset.sysprofList.filter(rec => winc.nuni == rec[SYSPROF.systree_id]);
 
-    for (let i = 0; i < sysprofList.length; i++) {
-        let tr = sysprofList[i];
-        let arec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
+    for (let i = 0; i < product.sysprofArr.length; i++) {
+        let tr = product.sysprofArr[i];
+        let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
         table.jqGrid('addRowData', i + 1, {
             id: tr[SYSPROF.id],
             side: sysprof.use_name(tr[SYSPROF.use_side]),
-            code: arec[ARTIKL.code],
-            name: arec[ARTIKL.name]
+            code: artRec[ARTIKL.code],
+            name: artRec[ARTIKL.name]
         });
     }
 }

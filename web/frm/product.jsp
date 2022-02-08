@@ -79,12 +79,12 @@
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
-                            <jst type='btn' label='Артикул' name="n31" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Артикул' name="n31" width='80' wid1h="260" click="sysprof_to_frame(1)"></jst><br>
                             <jst type='txt' label='Название' name="n32" width='80' wid1h="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
-                            <jst type='btn' label='Основная' name="n33" width='80' wid1h="260" click=""></jst><br>                          
-                            <jst type='btn' label='Внутренняя' name="n34" width='80' wid1h="260" click=""></jst><br>                          
-                            <jst type='btn' label='Внещняя' name="n35" width='80' wid1h="260" click=""></jst><br>                          
+                            <jst type='btn' label='Основная' name="n33" width='80' wid1h="260" click="color_to_frame(1);"></jst><br>                          
+                            <jst type='btn' label='Внутренняя' name="n34" width='80' wid1h="260" click="color_to_frame(2);"></jst><br>                          
+                            <jst type='btn' label='Внещняя' name="n35" width='80' wid1h="260" click="color_to_frame(3);"></jst><br>                          
                         </div>
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 

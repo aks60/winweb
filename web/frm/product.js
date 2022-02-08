@@ -175,73 +175,178 @@ function view_winc_property(nodeID) {
 }
 //------------------------------------------------------------------------------
 function color_to_windows(num_btn) {
-    //try {
-    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-    let groupSet = new Set();
-    let colorSet = new Set();
-    
-    let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
-    let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-    let colorTxt = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-            : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
-            : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
-    let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
+    try {
+        let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+        let groupSet = new Set();
+        let colorSet = new Set();
 
-    //Поле группы текстур заполнено
-    if (groupArr != null) {
-        for (let s1 of groupArr) { //группы
-            let groupSet2 = new Set();
-            let colorSet2 = new Set();
-            let b = false;
-            for (let rec of dbset.colorList) {
-                if (rec[COLOR.colgrp_id] == s1) {
-                    groupSet2.add(rec[COLOR.colgrp_id]); //группы
-                    colorSet2.add(rec); //текстуры
-                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                        if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                            b = true;
-                        }
-                    }
-                }
-            }
-            if (b == false) { //если небыло пападаний то добавляем всю группу
-                groupSet.add(groupSet2);
-                colorSet.add(colorSet2);
-            }
-        }
-    }
-    //Поле текстур заполнено
-    if (colorArr.length != 0) {
-        for (let rec of dbset.colorList) {
-            if (groupArr != null) {
+        let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
+        let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
+        let colorTxt = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+                : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+                : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
+        let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
 
-                for (let s1 of groupArr) { //группы
+        //Поле группы текстур заполнено
+        if (groupArr != null) {
+            for (let s1 of groupArr) { //группы
+                let groupSet2 = new Set();
+                let colorSet2 = new Set();
+                let b = false;
+                for (let rec of dbset.colorList) {
                     if (rec[COLOR.colgrp_id] == s1) {
-                        for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                        groupSet2.add(rec[COLOR.colgrp_id]); //группы
+                        colorSet2.add(rec); //текстуры
+                        for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
                             if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                                groupSet.add(rec[COLOR.colgrp_id]);
-                                colorSet.add(rec);
+                                b = true;
                             }
                         }
                     }
                 }
-            } else {
-                for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                    if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                        groupSet.add(rec[COLOR.colgrp_id]);
-                        colorSet.add(rec);
+                if (b == false) { //если небыло пападаний то добавляем всю группу
+                    groupSet.add(groupSet2);
+                    colorSet.add(colorSet2);
+                }
+            }
+        }
+        //Поле текстур заполнено
+        if (colorArr.length != 0) {
+            for (let rec of dbset.colorList) {
+                if (groupArr != null) {
+
+                    for (let s1 of groupArr) { //группы
+                        if (rec[COLOR.colgrp_id] == s1) {
+                            for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                                if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                                    groupSet.add(rec[COLOR.colgrp_id]);
+                                    colorSet.add(rec);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                        if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                            groupSet.add(rec[COLOR.colgrp_id]);
+                            colorSet.add(rec);
+                        }
                     }
                 }
             }
         }
+        product.groupSet = groupSet;
+        product.colorArr = Array.from(colorSet);
+        product.buttonNum = num_btn;
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+
+    } catch (e) {
+        console.log("Ошибка color_to_windows(): " + e.message);
     }
-    product.groupSet = groupSet;
-    product.colorArr = Array.from(colorSet);
-    product.buttonNum = num_btn;
-    $('#dialog-dic').load('frm/dialog/color.jsp');
-    
-//    } catch (e) {
-//        console.log("Ошибка color_to_windows(): " + e.message);
-//    }
 }
+//------------------------------------------------------------------------------
+function color_to_frame(num_btn) {
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let proprodID = order.rec_table2[PROPROD.id];
+        let winc = order.wincalcMap.get(proprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
+        let groupSet = new Set();
+        let colorSet = new Set();
+
+        //Все текстуры артикула элемента конструкции
+        dbset.artdetList.forEach(artdetRec => {
+            if (artdetRec[ARTDET.artikl_id] == elem.artiklRec[ARTIKL.id]) {
+                if (artdetRec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+
+                    dbset.colorList.forEach(colorRec => {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(artdetRec[ARTDET.color_fk])) {
+
+                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            colorSet.add(colorRec);
+                        }
+                    });
+                } else { //текстура color_fk 
+                    let color2Rec = dbset.colorList.find(rec3 => artdetRec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    colorSet.add(color2Rec);
+                }
+            }
+        });
+        product.groupSet = groupSet;
+        product.colorArr = Array.from(colorSet);
+        product.buttonNum = num_btn;
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+
+    } catch (e) {
+        console.log("Ошибка: colorToFrame() " + e.message);
+    }
+}
+//------------------------------------------------------------------------------
+function sysprof_to_frame(num_btn) {
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let proprodID = order.rec_table2[PROPROD.id];
+        let winc = order.wincalcMap.get(proprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
+        let sysprofSet = new Set();
+        
+        //Цикл по профилям ветки 
+        for (let sysprofRec of dbset.sysprofList) {
+            //Отфильтруем подходящие по параметрам
+            if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
+                let use_side_ID = sysprofRec[SYSPROF.use_side];
+                
+                if (use_side_ID == Layout[elem.layout][0]
+                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
+                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
+                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
+
+                    sysprofSet.add(sysprofRec);
+                }
+            }
+        } 
+       //debugger;
+        product.sysprofArr = Array.from(sysprofSet);
+        product.buttonNum = num_btn;
+        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
+
+    } catch (e) {
+        console.log("Ошибка:sysprof_to_frame() " + e.message);
+    }
+}
+//------------------------------------------------------------------------------
+function artikl_to_glass(num_btn) {                               
+        try {
+          /*  let nodeID = $("#tree-winc").jstree("get_selected")[0];
+            let proprodID = order.rec_table2[PROPROD.id];
+            let winc = order.wincalcMap.get(proprodID);
+            let elem = winc.elemList.find(it => it.id == nodeID);            
+            //float selectID = winNode.com5t().id();
+            
+            //Список доступных толщин в ветке системы например 4;5;8
+            String depth = sysNode.rec().getStr(eSystree.depth);
+            if (depth != null && depth.isEmpty() == false) {
+                depth = depth.replace(";", ",");
+                if (depth.charAt(depth.length() - 1) == ',') {
+                    depth = depth.substring(0, depth.length() - 1);
+                }
+            }
+            //Список стеклопакетов
+            depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
+            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
+                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
+
+            new DicArtikl(this, (artiklRec) -> {
+
+                GsonElem glassElem = (GsonElem) iwin().rootGson.find(selectID);
+                glassElem.param().addProperty(PKjson.artglasID, artiklRec.getStr(eArtikl.id));
+                updateScript(selectID);
+
+            }, qArtikl);*/
+
+        } catch (e) {
+            console.log("Ошибка:sysprof_to_frame() " + e.message);
+        }
+    } 
 //------------------------------------------------------------------------------
