@@ -32,8 +32,8 @@ artikl.init_table1 = function (table) {
 
 artikl.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
-    for (let i = 0; i < 100; i++) {
-        let tr = dbset.artiklList[i];
+    for (let i = 0; i < product.artiklArr.length; i++) {
+        let tr = dbset.artiklArr[i];
         table.jqGrid('addRowData', i + 1, {
             id: tr[ARTIKL.id],
             code: tr[ARTIKL.code],

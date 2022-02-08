@@ -1,5 +1,6 @@
 //------------------------------------------------------------------------------
 product.init_table = function (table1) {
+
     table1.jqGrid({
         datatype: "local",
         gridview: true,
@@ -20,7 +21,7 @@ product.init_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_table = function (table1) {
-//debugger;
+
     table1.jqGrid('clearGridData', true);
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
     let syspar1List2 = dbset.syspar1List.filter(rec => winc.nuni == rec[SYSPAR1.systree_id]);
@@ -290,13 +291,12 @@ function sysprof_to_frame(num_btn) {
         let winc = order.wincalcMap.get(proprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
         let sysprofSet = new Set();
-        
+
         //Цикл по профилям ветки 
         for (let sysprofRec of dbset.sysprofList) {
             //Отфильтруем подходящие по параметрам
             if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
                 let use_side_ID = sysprofRec[SYSPROF.use_side];
-                
                 if (use_side_ID == Layout[elem.layout][0]
                         || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
                         || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
@@ -305,8 +305,8 @@ function sysprof_to_frame(num_btn) {
                     sysprofSet.add(sysprofRec);
                 }
             }
-        } 
-       //debugger;
+        }
+        //debugger;
         product.sysprofArr = Array.from(sysprofSet);
         product.buttonNum = num_btn;
         $('#dialog-dic').load('frm/dialog/sysprof.jsp');
@@ -316,37 +316,36 @@ function sysprof_to_frame(num_btn) {
     }
 }
 //------------------------------------------------------------------------------
-function artikl_to_glass(num_btn) {                               
-        try {
-          /*  let nodeID = $("#tree-winc").jstree("get_selected")[0];
-            let proprodID = order.rec_table2[PROPROD.id];
-            let winc = order.wincalcMap.get(proprodID);
-            let elem = winc.elemList.find(it => it.id == nodeID);            
-            //float selectID = winNode.com5t().id();
-            
-            //Список доступных толщин в ветке системы например 4;5;8
-            String depth = sysNode.rec().getStr(eSystree.depth);
-            if (depth != null && depth.isEmpty() == false) {
-                depth = depth.replace(";", ",");
-                if (depth.charAt(depth.length() - 1) == ',') {
-                    depth = depth.substring(0, depth.length() - 1);
-                }
-            }
-            //Список стеклопакетов
-            depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-            Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-                    "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
+function artikl_to_glass(num_btn) {
+//        try {
+    let nodeID = $("#tree-winc").jstree("get_selected")[0];
+    let proprodID = order.rec_table2[PROPROD.id];
+    let winc = order.wincalcMap.get(proprodID);
+    let elem = winc.elemList.find(it => it.id == nodeID);
 
-            new DicArtikl(this, (artiklRec) -> {
-
-                GsonElem glassElem = (GsonElem) iwin().rootGson.find(selectID);
-                glassElem.param().addProperty(PKjson.artglasID, artiklRec.getStr(eArtikl.id));
-                updateScript(selectID);
-
-            }, qArtikl);*/
-
-        } catch (e) {
-            console.log("Ошибка:sysprof_to_frame() " + e.message);
+    //Список доступных толщин в ветке системы например 4;5;8
+    let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
+    if (systreeRec != undefined) {
+        let depth = systreeRec[SYSTREE.depth];
+        depth = depth.replace(/;/g, ',');
+        if (depth.charAt(depth.length - 1) == ',') {
+            depth = depth.substring(0, depth.length - 1);
         }
-    } 
+        depth = depth.split(',');
+        let artiklList = dbset.artiklList.filter(rec => 5 == rec[ARTIKL.level1]
+                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth]));
+        product.artiklArr = artiklList;
+        product.buttonNum = num_btn;
+        $('#dialog-dic').load('frm/dialog/artikl.jsp');
+    }
+
+    //Список стеклопакетов
+    //depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
+    //Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
+    // "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
+
+//        } catch (e) {
+//            console.log("Ошибка:sysprof_to_frame() " + e.message);
+//        }
+}
 //------------------------------------------------------------------------------

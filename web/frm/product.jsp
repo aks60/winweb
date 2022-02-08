@@ -103,7 +103,7 @@
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
-                            <jst type='btn' label='Артикул' name="n51" width='80' wid1h="260" click=""></jst><br>
+                            <jst type='btn' label='Артикул' name="n51" width='80' wid1h="260" click="artikl_to_glass(1);"></jst><br>
                             <jst type='txt' label='Название' name="n52" width='80' wid1h="288"></jst><br>
                             <jst type='btn' label='Цвет' name="n53" width='80' wid1h="260" click=""></jst><br>
                         </div>
