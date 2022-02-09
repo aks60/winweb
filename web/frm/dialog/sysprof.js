@@ -1,5 +1,5 @@
-sysprof.init_dialog = function (table) {
-    table.dialog({
+sysprof.init_dialog = function () {
+    $("#dialog-list").dialog({
         title: "Профили системы",
         width: 600,
         height: 400,
@@ -13,10 +13,15 @@ sysprof.init_dialog = function (table) {
             }
         }
     });
+    
+    $(window).bind('resize', function () {
+        $('#dtable').setGridWidth($("#dialog-list").width() - 4);
+        $('#dtable').setGridHeight($("#dialog-list").height() - 26);
+    }).trigger('resize');    
 }
 
-sysprof.init_table = function (table) {
-    table.jqGrid({
+sysprof.init_table = function () {
+    $('#dtable').jqGrid({
         datatype: "local",
         gridview: true,
         autowidth: true,
@@ -31,15 +36,15 @@ sysprof.init_table = function (table) {
     });
 }
 
-sysprof.load_table = function (table) {
-    table.jqGrid('clearGridData', true);
+sysprof.load_table = function () {
+    $('#dtable').jqGrid('clearGridData', true);
     let id = order.rec_table2[SYSPROF.id];
     let winc = order.wincalcMap.get(id);
 
     for (let i = 0; i < product.sysprofArr.length; i++) {
         let tr = product.sysprofArr[i];
         let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
-        table.jqGrid('addRowData', i + 1, {
+        $('#dtable').jqGrid('addRowData', i + 1, {
             id: tr[SYSPROF.id],
             side: sysprof.use_name(tr[SYSPROF.use_side]),
             code: artRec[ARTIKL.code],

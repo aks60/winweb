@@ -1,40 +1,51 @@
-artikl.init_dialog = function (table) {
-    table.dialog({
-        title: "Справочник артиклов",
-        width: 600,
-        height: 400,
+//------------------------------------------------------------------------------
+artikl.init_dialog = function () {
+
+    $("#dialog-list").dialog({
+        title: "Справочник-", 
+        width: 600, 
+        height: 500, 
         modal: true,
         buttons: {
             "Выбрать": function () {
-                sysprof.resize();
             },
             "Закрыть": function () {
                 $(this).dialog("close");
             }
         }
     });
-}
 
-artikl.init_table = function (table) {
-    table.jqGrid({
+    $(window).bind('resize', function () {
+        $('#dtable').setGridWidth($("#dialog-list").width() - 4);
+        $('#dtable').setGridHeight($("#dialog-list").height() - 26);
+    }).trigger('resize');
+}
+//------------------------------------------------------------------------------
+artikl.init_table = function () {
+
+    $("#dtable").jqGrid({
         datatype: "local",
-        gridview: true,
+        multiselect: false,
         autowidth: true,
-        height: "auto",
+        height: ($("#dialog-list").height() - 26),
         colNames: ['id', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 200, sorttype: "text"},
             {name: 'name', width: 400, sorttype: "text"}
-        ]
+        ],
+        ondblClickRow: function (rowId) {
+        }
     });
+    $("#dtable").jqGrid('bindKeys', {scrollingRows: true});
 }
+//------------------------------------------------------------------------------
+artikl.load_table = function () {
 
-artikl.load_table = function (table) {
-    table.jqGrid('clearGridData', true);
+    $("#dtable").jqGrid('clearGridData', true);
     for (let i = 0; i < product.artiklArr.length; i++) {
         let tr = product.artiklArr[i];
-        table.jqGrid('addRowData', i + 1, {
+        $("#dtable").jqGrid('addRowData', i + 1, {
             id: tr[ARTIKL.id],
             code: tr[ARTIKL.code],
             name: tr[ARTIKL.name]
@@ -43,6 +54,6 @@ artikl.load_table = function (table) {
     //sysprof.resize();
     //setTimeout(function () {sysprof.resize();}, 500);  
 }
-
+//------------------------------------------------------------------------------
 
 
