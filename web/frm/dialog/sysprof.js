@@ -40,7 +40,7 @@ sysprof.load_table = function () {
     $('#dtable').jqGrid('clearGridData', true);
     let id = order.rec_table2[SYSPROF.id];
     let winc = order.wincalcMap.get(id);
-
+//debugger;
     for (let i = 0; i < product.sysprofArr.length; i++) {
         let tr = product.sysprofArr[i];
         let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);

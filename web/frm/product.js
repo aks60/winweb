@@ -338,7 +338,7 @@ function artikl_to_glass(num_btn) {
         product.artiklArr = artiklList;
         product.buttonNum = num_btn;
         //$('#dialog-dic').load('frm/dialog/artikl.jsp');
-        sysprof_dialog();
+        artikl_dialog();
     }
 
     //Список стеклопакетов
