@@ -3,7 +3,7 @@ params.init_dialog = function (table) {
         title: "Профили системы",
         width: 500,
         height: 400,
-        modal: false,
+        modal: true,
         buttons: {
             "Выбрать": function () {
                 params.resize();

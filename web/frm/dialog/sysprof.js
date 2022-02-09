@@ -3,7 +3,7 @@ sysprof.init_dialog = function (table) {
         title: "Профили системы",
         width: 600,
         height: 400,
-        modal: false,
+        modal: true,
         buttons: {
             "Выбрать": function () {
                 sysprof.resize();

@@ -111,14 +111,13 @@ function elements(com, arr) {
 function view_winc_property(nodeID) {
 
     nodeID = (nodeID == -2) ? 0 : nodeID;
-    let elem = {}, artikl = null;
+    let elem = {};
     let id = order.rec_table2[PROPROD.id];
     let winc = order.wincalcMap.get(id);
     if (nodeID == -1) {
         elem = {type: 'DEF_PARAM'};
     } else {
         elem = winc.elemList.find(it => it.id == nodeID);
-        artikl = elem.artikl;
     }
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
@@ -332,8 +331,9 @@ function artikl_to_glass(num_btn) {
             depth = depth.substring(0, depth.length - 1);
         }
         depth = depth.split(',');
-        let artiklList = dbset.artiklList.filter(rec => 5 == rec[ARTIKL.level1]
-                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth]));
+        let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
+                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
+        
         product.artiklArr = artiklList;
         product.buttonNum = num_btn;
         $('#dialog-dic').load('frm/dialog/artikl.jsp');

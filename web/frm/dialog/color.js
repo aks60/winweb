@@ -5,7 +5,7 @@ color.init_dialog = function (dialogTag) {
         title: "Справочник текстур*",
         width: 400,
         height: 500,
-        modal: false,
+        modal: true,
         buttons: {
             "Выбрать": function () {
 

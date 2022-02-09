@@ -5,7 +5,7 @@ systree.init_dialog = function (dialog) {
         title: "Конструкции систем профилей",
         width: 600,
         height: 500,
-        modal: false,
+        modal: true,
         buttons: {
             "Выбрать": function () {
                 systree.resize();

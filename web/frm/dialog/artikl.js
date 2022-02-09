@@ -1,9 +1,9 @@
 artikl.init_dialog = function (table) {
     table.dialog({
         title: "Справочник артиклов",
-        width: 500,
-        height: 500,
-        modal: false,
+        width: 600,
+        height: 400,
+        modal: true,
         buttons: {
             "Выбрать": function () {
                 sysprof.resize();
@@ -15,7 +15,7 @@ artikl.init_dialog = function (table) {
     });
 }
 
-artikl.init_table1 = function (table) {
+artikl.init_table = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
@@ -25,15 +25,15 @@ artikl.init_table1 = function (table) {
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 200, sorttype: "text"},
-            {name: 'name', width: 300, sorttype: "text"}
+            {name: 'name', width: 400, sorttype: "text"}
         ]
     });
 }
 
-artikl.load_table1 = function (table) {
+artikl.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     for (let i = 0; i < product.artiklArr.length; i++) {
-        let tr = dbset.artiklArr[i];
+        let tr = product.artiklArr[i];
         table.jqGrid('addRowData', i + 1, {
             id: tr[ARTIKL.id],
             code: tr[ARTIKL.code],
