@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="frm/product.js"></script>
+        <!--<script type="text/javascript" src="frm/dialog/artikl2.js"></script>-->
         <title>Product</title>
 
         <script type="text/javascript">
@@ -38,11 +39,15 @@
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
+                
             });
 
-            function test() {
-                $("#tabs-1 .field[name = 'n11']").val('777');
-                load_fields('tabs-1', {'n12': '888', 'n13': '999'}, ['n12', 'n13']);
+            function test777() {
+                $.getScript('frm/dialog/artikl2.js', function () {
+                    artikl2.init_dialog();
+                    artikl2.init_table();
+                    artikl2.load_table();
+                });
             }
         </script>
     </head>
@@ -51,9 +56,9 @@
             <button id="btnReport" onClick="">Test1</button>
             <button id="btnUpdate" onClick="">Test2</button>
             <button id="btnIns" onClick="">Test3</button>
-            
+
             <button id="btn1" onClick="$('#dialog-dic').load('frm/dialog/sysprof.jsp');">Sysprof</button> 
-            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/artikl.jsp');">Artikl</button>
+            <button id="btn2" onClick="test777();">Artikl</button>
             <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
             <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
         </div> 

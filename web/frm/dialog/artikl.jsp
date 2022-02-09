@@ -8,8 +8,8 @@
         
         <script type="text/javascript">
             artikl.resize = function () {
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width() + 8);
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                //$("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width() + 8);
+                //$("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
             }
 
             $(document).ready(function () {
