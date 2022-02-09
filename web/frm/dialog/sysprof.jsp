@@ -10,8 +10,8 @@
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-//                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width() + 8);
-//                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
+                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
                 }).trigger('resize');
 
                 sysprof.init_dialog($("#dialog-dic"));

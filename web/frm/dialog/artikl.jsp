@@ -10,7 +10,7 @@
 
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width() + 8);
+                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
                     $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
                 }).trigger('resize');
 
