@@ -10,7 +10,19 @@ sysprof.init_dialog = function (table) {
             "Выбрать": function () {
                 let rowid = table.getGridParam('selrow');
                 let tableRec = table.getRowData(rowid);
- 
+
+                let elemID = $("#tree-winc").jstree("get_selected")[0];
+                let wincID = order.rec_table2[PROPROD.id];
+                let winc = order.wincalcMap.get(wincID);
+                let elem = winc.elemList.find(it => it.id == elemID);
+                if(elem.obj.param == undefined) {
+                   elem.obj.param = {}; 
+                }
+                elem.obj.param.sysprofID = tableRec.id;
+                console.log(JSON.stringify(winc.obj));
+                
+                debugger;
+                
                 //Запишем выбранную запись в src
                 $("#n31").val(tableRec.code);
                 $("#n32").val(tableRec.name);
