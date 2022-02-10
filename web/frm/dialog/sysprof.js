@@ -12,10 +12,9 @@ sysprof.init_dialog = function (table) {
                 let tableRec = table.getRowData(rowid);
  
                 //Запишем выбранную запись в src
-                $(".field[name='n31']").val(tableRec.code);
-                $(".field[name='n32']").val(tableRec.code);
+                $("#n31").val(tableRec.code);
+                $("#n32").val(tableRec.name);
 
-//                $("#n32").val('name');
                 $(this).dialog("close");
             },
             "Закрыть": function () {

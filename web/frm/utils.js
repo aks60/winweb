@@ -6,53 +6,53 @@ function taq_deploy(selectors) {
 
         $(selector + ' jst').each(function (index, elem) {
 
-            let  width = $(elem).attr('width'), wid1h = $(elem).attr('wid1h'),
-                    label = $(elem).attr('label'), name = $(elem).attr('name'), type = $(elem).attr('type');
-            if (typeof (name) == 'undefined') {
+            let  width = $(elem).attr('width'), width2 = $(elem).attr('width2'),
+                    label = $(elem).attr('label'), num = $(elem).attr('id'), type = $(elem).attr('type');
+            if (typeof (num) == 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
             } else {
                 if ($(elem).attr('nul') == '*') {
                     label = label + "<span class='nul'>*</span>";
                 }
                 if (type == 'ref') {
-                    $(elem).replaceWith("<input class='field' type='text' name='" + name + "' style='width: 40px; display: none;'>");
+                    $(elem).replaceWith("<input class='field' type='text' id='" + num + "' style='width: 40px; display: none;'>");
 
                 } else if (type == 'txt') {
                     let height = +$(elem).attr('height');
-                    let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
+                    let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
                     let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px; height: " + height + "px;'>" + label
-                            + "</p><input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;' " + readonly + ">");
+                            + "</p><input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;' " + readonly + ">");
 
                 } else if (type == 'btn') {
-                    let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
+                    let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">"
+                            + "<input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px;' sp='' " + readonly + ">"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type == 'btn2') { //background: #eee
-                    let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
+                    let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' " + dx + " name='" + name + "' style='width: " + wid1h + "px;' sp='' " + readonly + ">");
+                            + "<input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px;' sp='' " + readonly + ">");
 
                 } else if (type == 'date') {
                     let src = $(elem).attr('click');
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' name='" + name + "' style='width: 80px;'>"
+                            + "<input class='field' type='text' id='" + num + "' style='width: 80px;'>"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type == 'area') {
-                    let dx = (wid1h == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
+                    let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
                     let height = +$(elem).attr('height');
                     if (typeof (label) == 'undefined') {
-                        $(elem).replaceWith("<div><textarea class='field' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
+                        $(elem).replaceWith("<div><textarea class='field' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
                     } else {
                         $(elem).replaceWith("<div><p class='field' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
-                                + "</p><textarea class='field' " + dx + " name='" + name + "' style='width: " + wid1h + "px; height: " + height + "px;'></textarea></div>");
+                                + "</p><textarea class='field' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
                     }
                 }
             }
@@ -65,7 +65,7 @@ function load_fields(selector, record, fields) {
 
     for (let field of fields) {
         let value = record[field];
-        $("#" + selector + " .field[name = '" + field + "']").val(value);
+        $("#" + field).val(value);
     }
 }
 
