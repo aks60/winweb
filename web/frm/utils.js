@@ -15,21 +15,21 @@ function taq_deploy(selectors) {
                     label = label + "<span class='nul'>*</span>";
                 }
                 if (type == 'ref') {
-                    $(elem).replaceWith("<input class='field' type='text' id='" + num + "' style='width: 40px; display: none;'>");
+                    $(elem).replaceWith("<input id='" + num + "' class='field' type='text' style='width: 40px; display: none;'>");
 
                 } else if (type == 'txt') {
                     let height = +$(elem).attr('height');
                     let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
                     let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px; height: " + height + "px;'>" + label
-                            + "</p><input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;' " + readonly + ">");
+                            + "</p><input id='" + num + "' class='field' type='text' " + dx + " style='width: " + width2 + "px; height: " + height + "px;' " + readonly + ">");
 
                 } else if (type == 'btn') {
                     let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px;' sp='' " + readonly + ">"
+                            + "<input id='" + num + "' class='field' type='text' " + dx + " style='width: " + width2 + "px;' sp='' " + readonly + ">"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type == 'btn2') { //background: #eee
@@ -37,22 +37,22 @@ function taq_deploy(selectors) {
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' " + dx + " id='" + num + "' style='width: " + width2 + "px;' sp='' " + readonly + ">");
+                            + "<input id='" + num + "' class='field' type='text' " + dx + " style='width: " + width2 + "px;' sp='' " + readonly + ">");
 
                 } else if (type == 'date') {
                     let src = $(elem).attr('click');
                     $(elem).replaceWith("<p class='field' style='width: " + width + "px;'>" + label + "</p>"
-                            + "<input class='field' type='text' id='" + num + "' style='width: 80px;'>"
+                            + "<input id='" + num + "' class='field' type='text' style='width: 80px;'>"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">");
 
                 } else if (type == 'area') {
                     let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
                     let height = +$(elem).attr('height');
                     if (typeof (label) == 'undefined') {
-                        $(elem).replaceWith("<div><textarea class='field' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
+                        $(elem).replaceWith("<div><textarea id='" + num + "' class='field' " + dx + " style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
                     } else {
                         $(elem).replaceWith("<div><p class='field' style='width: " + width + "px; height: " + (height + 1) + "px;'>" + label
-                                + "</p><textarea class='field' " + dx + " id='" + num + "' style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
+                                + "</p><textarea id='" + num + "' class='field' " + dx + " style='width: " + width2 + "px; height: " + height + "px;'></textarea></div>");
                     }
                 }
             }

@@ -62,46 +62,46 @@
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
                         <div id="tabs-1" style="padding: 0px;">  
                             <p id="a123" class="pantitle">Основные размеры*</p> 
-                            <jst type='txt' label='Ширина' id="n11" width='80' width2="60"></jst><br>
-                            <jst type='txt' label='Высота1' id="n12" width='80' width2="60"></jst><br>
-                            <jst type='txt' label='Высота2' id="n13" width='80' width2="60"></jst><br>  
+                            <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
+                            <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
+                            <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  
                             <p class="pantitle">Текстура изделия</p> 
-                            <jst type='btn' label='Основная' id="n14" width='80' width2="260" click="color_to_windows(1);"></jst><br>
-                            <jst type='btn' label='Внутренняя' id="n15" width='80' width2="260" click="color_to_windows(2);"></jst><br>
-                            <jst type='btn' label='Внещняя' id="n16" width='80' width2="260" click="color_to_windows(3);"></jst><br>
+                            <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="color_to_windows(1);"></jst><br>
+                            <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_windows(2);"></jst><br>
+                            <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="color_to_windows(3);"></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">   
                             <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
-                            <jst type='btn' label='Артикул' id="n31" width='80' width2="260" click="sysprof_to_frame($(this).prev())"></jst><br>
-                            <jst type='txt' label='Название' id="n32" width='80' width2="288"></jst><br>
+                            <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="sysprof_to_frame($(this).prev())"></jst><br>
+                            <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
-                            <jst type='btn' label='Основная' id="n33" width='80' width2="260" click="color_to_frame(1);"></jst><br>                          
-                            <jst type='btn' label='Внутренняя' id="n34" width='80' width2="260" click="color_to_frame(2);"></jst><br>                          
-                            <jst type='btn' label='Внещняя' id="n35" width='80' width2="260" click="color_to_frame(3);"></jst><br>                          
+                            <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="color_to_frame(1);"></jst><br>                          
+                            <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_frame(2);"></jst><br>                          
+                            <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="color_to_frame(3);"></jst><br>                          
                         </div>
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 
-                            <jst type='txt' label='Ширина' id="n41" width='60' width2="60"></jst> &nbsp; &nbsp;
-                            <jst type='txt' label='Высота' id="n42" width='60' width2="60"></jst><br>                        
-                            <jst type='bid=tn' label='Фурнитура' id="n43" width='120' width2="220" click=""></jst><br>                          
-                            <jst type='btn' label='Сторона открывания' id="n44" width='120' width2="220" click=""></jst><br>
-                            <jst type='btn' label='Ручка (арт/наименов)' id="n45" width='120' width2="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура ручки' id="n46" width='120' width2="220" click=""></jst><br>                            
-                            <jst type='txt' label='Высота ручки' id="n47" width='120' width2="153"></jst>
-                            <jst type='btn' label='' id="n48" width='0' width2="47" click=""></jst><br>                            
-                            <jst type='btn' label='Подвес (арт/наименов)' id="n49" width='120' width2="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура подвеса' id="n4A" width='120' width2="220" click=""></jst><br>
-                            <jst type='btn' label='Замок (арт/наименов)' id="n4B" width='120' width2="220" click=""></jst><br>
-                            <jst type='btn' label='Текстура замка' id="n4C" width='120' width2="220" click=""></jst><br>
+                            <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
+                            <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
+                            <jst id="n43" type='bid=tn' label='Фурнитура' width='120' width2="220" click=""></jst><br>                          
+                            <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click=""></jst><br>
+                            <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click=""></jst><br>
+                            <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click=""></jst><br>                            
+                            <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
+                            <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
+                            <jst id="n49" type='btn' label='Подвес (арт/наименов)' width='120' width2="220" click=""></jst><br>
+                            <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220" click=""></jst><br>
+                            <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click=""></jst><br>
+                            <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click=""></jst><br>
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
-                            <jst type='btn' label='Артикул' id="n51" width='80' width2="260" click="artikl_to_glass(1);"></jst><br>
-                            <jst type='txt' label='Название' id="n52" width='80' width2="288"></jst><br>
-                            <jst type='btn' label='Цвет' id="n53" width='80' width2="260" click=""></jst><br>
+                            <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="artikl_to_glass(1);"></jst><br>
+                            <jst id="n52" type='txt' label='Название' width='80' width2="288"></jst><br>
+                            <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click=""></jst><br>
                         </div>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
