@@ -174,7 +174,7 @@ function view_winc_property(nodeID) {
     }
 }
 //------------------------------------------------------------------------------
-function color_to_windows(num_btn) {
+function color_to_windows(btnSrc) {
     try {
         let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
         let groupSet = new Set();
@@ -182,8 +182,8 @@ function color_to_windows(num_btn) {
 
         let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
         let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-        let colorTxt = (num_btn == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-                : (num_btn == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+        let colorTxt = (btnSrc == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+                : (btnSrc == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
                 : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
         let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
 
@@ -237,7 +237,7 @@ function color_to_windows(num_btn) {
         }
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
-        product.buttonNum = num_btn;
+        product.buttonSrc = btnSrc;
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
@@ -245,7 +245,7 @@ function color_to_windows(num_btn) {
     }
 }
 //------------------------------------------------------------------------------
-function color_to_frame(num_btn) {
+function color_to_frame(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -275,7 +275,7 @@ function color_to_frame(num_btn) {
         });
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
-        product.buttonNum = num_btn;
+        product.buttonSrc = btnSrc;
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
@@ -283,7 +283,7 @@ function color_to_frame(num_btn) {
     }
 }
 //------------------------------------------------------------------------------
-function sysprof_to_frame(num_btn) {
+function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -307,7 +307,7 @@ function sysprof_to_frame(num_btn) {
         }
         //debugger;
         product.sysprofArr = Array.from(sysprofSet);
-        product.buttonNum = num_btn;
+        product.buttonSrc = btnSrc;
 //        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
         sysprof_dialog();
 
@@ -316,7 +316,7 @@ function sysprof_to_frame(num_btn) {
     }
 }
 //------------------------------------------------------------------------------
-function artikl_to_glass(num_btn) {
+function artikl_to_glass(btnSrc) {
 //        try {
     let nodeID = $("#tree-winc").jstree("get_selected")[0];
     let proprodID = order.rec_table2[PROPROD.id];
@@ -336,7 +336,7 @@ function artikl_to_glass(num_btn) {
                     && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
 
         product.artiklArr = artiklList;
-        product.buttonNum = num_btn;
+        product.buttonSrc = btnSrc;
         //$('#dialog-dic').load('frm/dialog/artikl.jsp');
         sysprof_dialog();
     }
