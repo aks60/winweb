@@ -5,7 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="frm/product.js"></script>
-        <!--<script type="text/javascript" src="frm/dialog/artikl2.js"></script>-->
         <title>Product</title>
 
         <script type="text/javascript">
@@ -41,21 +40,6 @@
                 prepareToolBar();
                 
             });
-
-            function artikl_dialog() {
-                $.getScript('frm/dialog/artikl.js', function () {
-                    artikl.init_dialog();
-                    artikl.init_table();
-                    artikl.load_table();
-                });
-            }
-            function sysprof_dialog() {
-                $.getScript('frm/dialog/sysprof.js', function () {
-                    sysprof.init_dialog();
-                    sysprof.init_table();
-                    sysprof.load_table();
-                });
-            }
         </script>
     </head>
     <body>

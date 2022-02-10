@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
-artikl.init_dialog = function () {
+artikl.init_dialog = function (dialogTag) {
 
-    $("#dialog-list").dialog({
+    dialogTag.dialog({
         title: "Справочник-", 
         width: 600, 
         height: 500, 
@@ -14,16 +14,11 @@ artikl.init_dialog = function () {
             }
         }
     });
-
-    $(window).bind('resize', function () {
-        $('#dtable').setGridWidth($("#dialog-list").width() - 4);
-        $('#dtable').setGridHeight($("#dialog-list").height() - 26);
-    }).trigger('resize');
 }
 //------------------------------------------------------------------------------
-artikl.init_table = function () {
+artikl.init_table = function (table) {
 
-    $("#dtable").jqGrid({
+    table.jqGrid({
         datatype: "local",
         multiselect: false,
         autowidth: true,
@@ -37,21 +32,20 @@ artikl.init_table = function () {
         ondblClickRow: function (rowId) {
         }
     });
-    $("#dtable").jqGrid('bindKeys', {scrollingRows: true});
 }
 //------------------------------------------------------------------------------
-artikl.load_table = function () {
+artikl.load_table = function (table) {
+    table.jqGrid('clearGridData', true);
 
-    $("#dtable").jqGrid('clearGridData', true);
     for (let i = 0; i < product.artiklArr.length; i++) {
         let tr = product.artiklArr[i];
-        $("#dtable").jqGrid('addRowData', i + 1, {
+        table.jqGrid('addRowData', i + 1, {
             id: tr[ARTIKL.id],
             code: tr[ARTIKL.code],
             name: tr[ARTIKL.name]
         });
     }
-    //sysprof.resize();
+    table.jqGrid("setSelection", 1);
     //setTimeout(function () {sysprof.resize();}, 500);  
 }
 //------------------------------------------------------------------------------

@@ -305,11 +305,9 @@ function sysprof_to_frame(btnSrc) {
                 }
             }
         }
-        //debugger;
         product.sysprofArr = Array.from(sysprofSet);
         product.buttonSrc = btnSrc;
-//        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
-        sysprof_dialog();
+        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
 
     } catch (e) {
         console.log("Ошибка:sysprof_to_frame() " + e.message);
@@ -337,8 +335,8 @@ function artikl_to_glass(btnSrc) {
 
         product.artiklArr = artiklList;
         product.buttonSrc = btnSrc;
-        //$('#dialog-dic').load('frm/dialog/artikl.jsp');
-        sysprof_dialog();
+        $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
     }
 
     //Список стеклопакетов
