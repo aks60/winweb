@@ -115,13 +115,15 @@ order.event_clicked = function (e) {
 
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
-        let table = this, idx = table.getAttribute('activeRowIndex');
+        let table = this;
+        let idx = table.getAttribute('activeRowIndex');
         table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
 
         let proprodID = row.cells[0].innerHTML;
         order.rec_table2 = dbset.find(proprodID, dbset.proprodList);
+        let script = order.rec_table2[PROPROD.script];
     }
 }
 //------------------------------------------------------------------------------

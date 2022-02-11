@@ -15,7 +15,9 @@ import domain.eSyspar1;
 import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
-import enums.TypeGroups;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,13 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
 import model.sys.Att;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 public class Dbset {
 
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth
-                , eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
+        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth,
+                 eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
             list.add(Arrays.asList(
                     rec.get(eSystree.id),
@@ -93,7 +96,7 @@ public class Dbset {
 
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id, eArtikl.code, eArtikl.level1, 
+        Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id, eArtikl.code, eArtikl.level1,
                 eArtikl.level2, eArtikl.name, eArtikl.height, eArtikl.depth, eArtikl.analog_id).select(eArtikl.up);
         for (Record rec : qArtikl) {
             list.add(Arrays.asList(
@@ -104,7 +107,7 @@ public class Dbset {
                     rec.get(eArtikl.name),
                     rec.get(eArtikl.height),
                     rec.get(eArtikl.depth),
-                    rec.get(eArtikl.analog_id)));                   
+                    rec.get(eArtikl.analog_id)));
         }
         JSONObject output = new JSONObject(App.asMap("artiklList", list));
         return output;
@@ -135,7 +138,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("furnitureList", list));
         return output;
     }
-    
+
     public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
@@ -154,7 +157,7 @@ public class Dbset {
 
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open, 
+        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open,
                 eSysfurn.hand_pos, eSysfurn.systree_id, eSysfurn.furniture_id, eSysfurn.artikl_id1, eSysfurn.artikl_id2)
                 .select(eSysfurn.up, "order by", eSysfurn.npp);
         for (Record rec : qSysfurn) {
@@ -190,7 +193,7 @@ public class Dbset {
 
     public static JSONObject syspar1List(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSyspar1 = new Query(Att.att(request).connect(), eSyspar1.id, 
+        Query qSyspar1 = new Query(Att.att(request).connect(), eSyspar1.id,
                 eSyspar1.text, eSyspar1.params_id, eSyspar1.fixed, eSyspar1.systree_id).select(eSyspar1.up);
         for (Record rec : qSyspar1) {
             list.add(Arrays.asList(
@@ -206,7 +209,7 @@ public class Dbset {
 
     public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qParams = new Query(Att.att(request).connect(), eParams.id, 
+        Query qParams = new Query(Att.att(request).connect(), eParams.id,
                 eParams.text, eParams.params_id).select(eParams.up);
         for (Record rec : qParams) {
             list.add(Arrays.asList(
@@ -216,5 +219,22 @@ public class Dbset {
         }
         JSONObject output = new JSONObject(App.asMap("paramsList", list));
         return output;
+    }
+
+    public static JSONObject saveScript(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
+
+        try (Connection connection = Att.att(request).connect()) {            
+            Statement statement = statement = connection.createStatement();
+            String sql = "update proprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
+            statement.executeUpdate(sql);
+            output.put("result", "ok");
+            return output;
+            
+        } catch (SQLException e) {
+            return output;
+        }
     }
 }

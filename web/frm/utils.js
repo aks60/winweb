@@ -122,6 +122,7 @@ function formatDate2(d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
+
 //------------------------------------------------------------------------------
 function prepareToolBar() {
 
@@ -132,6 +133,88 @@ function prepareToolBar() {
     $("#btnReport").button({icons: {primary: "ui-icon-print"}});
     $("#btnFind").button({icons: {primary: "ui-icon-search"}});
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
+}
+//------------------------------------------------------------------------------
+//диалог окна  сообщений
+function dialogSec(mes) {
+    $("#dialog-mes").html(mes);
+    $("#dialog-mes").dialog({
+        modal: true
+    });
+    setTimeout("$('#dialog-mes').dialog('close');", 600);
+}
+//------------------------------------------------------------------------------
+//диалог окна  сообщений
+function dialogMes(mes) {
+    $("#dialog-mes").html(mes);
+    $("#dialog-mes").dialog({
+        modal: true,
+        buttons: {
+            Ok: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+//------------------------------------------------------------------------------
+//диалог окна прогрес сохранения
+//TODO доработать прогресс
+function dialogPrg2() {
+
+    $("#dialog-mes").html("AKS " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
+    $("#dialog-mes").dialog({modal: true});
+    this.pgbar = $("#progressbar");
+    this.pglab = $(".progress-label");
+
+    this.pgbar.progressbar({
+        value: false,
+        change: function () {
+            $("this.pglab").text(this.pgbar.progressbar("value") + "%");
+        },
+        complete: function () {
+            $("this.pglab").text("Complete!");
+        }
+    });
+    this.progressloop();
+
+    this.progressloop = function () {
+        var val = this.pgbar.progressbar("value") || 0;
+        this.pgbar.progressbar("value", val + 2);
+
+        if (val < 99) {
+            setTimeout(foo_catch, 2000);
+        } else {
+            $('#dialog-mes').dialog('close');
+        }
+    }
+}
+//------------------------------------------------------------------------------
+//прогресс бар
+function dialogPrg(mes) {
+    $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
+    $("#dialog-mes").dialog({
+        modal: true
+    });
+    $(function () {
+        var pgbar = $("#progressbar"), pglab = $(".progress-label");
+
+        pgbar.progressbar({
+            value: false,
+            change: function () {
+                pglab.text(pgbar.progressbar("value") + "%");
+            }
+        });
+        function progress() {
+            var val = pgbar.progressbar("value") || 0;
+            pgbar.progressbar("value", val + 4);
+
+            if (val < 99) {
+                setTimeout(progress, 0);
+            }
+        }
+        progress();
+    });
+    setTimeout("$('#dialog-mes').dialog('close');", 2600);
 }
 //------------------------------------------------------------------------------
 //1;79-10;0-10 => [1,1,79,10,0,10]
@@ -165,4 +248,5 @@ function  parserInt(txt) {
     }
     return arrList;
 }
+
 //------------------------------------------------------------------------------            
