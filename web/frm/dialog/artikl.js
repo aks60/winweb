@@ -1,19 +1,60 @@
 //------------------------------------------------------------------------------
-artikl.init_dialog = function (dialogTag) {
+artikl.init_dialog = function (table) {
 
-    dialogTag.dialog({
-        title: "Справочник-", 
-        width: 600, 
-        height: 500, 
+    $("#dialog-dic").dialog({
+        title: "Справочник-",
+        width: 600,
+        height: 400,
         modal: true,
         buttons: {
             "Выбрать": function () {
+                artikl.rec_dialog_save(table);
+                $(this).dialog("close");
             },
+
             "Закрыть": function () {
                 $(this).dialog("close");
             }
         }
     });
+}
+//------------------------------------------------------------------------------
+artikl.rec_dialog_save = function (table) {
+//    try {
+        let rowid = table.getGridParam('selrow'); //index профиля из справочника
+        let tableRec = table.getRowData(rowid);  //record справочника
+        let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+        let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+
+        let winc = order.wincalcMap.get(proprodID);
+        let elem = winc.elemList.find(it => it.id == elemID);
+        if (elem.obj.param == undefined) {
+            elem.obj.param = {};
+        }
+        debugger;
+        elem.obj.param.artglasID = tableRec.id; //запишем профиль в скрипт
+        let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+        proprodRec[PROPROD.script] = JSON.stringify(winc.obj); //запишем профиль в локальн. бд  
+        let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj));
+        order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+
+        $.ajax({//запишем профиль в серверную базу данных
+            url: 'dbset?action=saveScript',
+            data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
+            success: function (data) {
+                if (data.result == 'ok') {
+                    //Запишем выбранную запись в тег страницы
+                    $("#n51").val(tableRec.code);
+                    $("#n52").val(tableRec.name);
+                }
+            },
+            error: function () {
+                dialogMes("<p>Ошибка при сохранении данных на сервере");
+            }
+        });
+//    } catch (e) {
+//        console.error("Ошибка:rec_dialog_save() " + e.message);
+//    }
 }
 //------------------------------------------------------------------------------
 artikl.init_table = function (table) {
@@ -22,14 +63,16 @@ artikl.init_table = function (table) {
         datatype: "local",
         multiselect: false,
         autowidth: true,
-        height: ($("#dialog-list").height() - 26),
+        height: "auto",
         colNames: ['id', 'Код артикула', 'Наименование артикула'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 200, sorttype: "text"},
             {name: 'name', width: 400, sorttype: "text"}
-        ],
-        ondblClickRow: function (rowId) {
+
+        ], ondblClickRow: function (rowid) {
+            artikl.rec_dialog_save(table);
+            $("#dialog-dic").dialog("close");
         }
     });
 }
@@ -46,7 +89,7 @@ artikl.load_table = function (table) {
         });
     }
     table.jqGrid("setSelection", 1);
-    //setTimeout(function () {sysprof.resize();}, 500);  
+    //setTimeout(function () {artikl.resize();}, 500);  
 }
 //------------------------------------------------------------------------------
 

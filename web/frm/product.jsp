@@ -75,7 +75,7 @@
                         </div>
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
-                            <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="sysprof_to_frame($(this).prev())"></jst><br>
+                            <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="sysprof_to_frame(1)"></jst><br>
                             <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
                             <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="color_to_frame(1);"></jst><br>                          
@@ -99,7 +99,7 @@
                         </div>
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
-                            <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="artikl_to_glass(1);"></jst><br>
+                            <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="artikl_to_glass();"></jst><br>
                             <jst id="n52" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click=""></jst><br>
                         </div>

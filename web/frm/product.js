@@ -241,7 +241,7 @@ function color_to_windows(btnSrc) {
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
-        console.log("Ошибка color_to_windows(): " + e.message);
+        console.error("Ошибка color_to_windows(): " + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -279,7 +279,7 @@ function color_to_frame(btnSrc) {
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
-        console.log("Ошибка: colorToFrame() " + e.message);
+        console.error("Ошибка: colorToFrame() " + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -310,7 +310,7 @@ function sysprof_to_frame(btnSrc) {
         $('#dialog-dic').load('frm/dialog/sysprof.jsp');
 
     } catch (e) {
-        console.log("Ошибка:sysprof_to_frame() " + e.message);
+        console.error("Ошибка:sysprof_to_frame() " + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -345,7 +345,7 @@ function artikl_to_glass(btnSrc) {
     // "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
 
 //        } catch (e) {
-//            console.log("Ошибка:sysprof_to_frame() " + e.message);
+//            console.error("Ошибка:sysprof_to_frame() " + e.message);
 //        }
 }
 //------------------------------------------------------------------------------

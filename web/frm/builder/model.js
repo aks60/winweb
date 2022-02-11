@@ -125,8 +125,9 @@ export class Stvorka extends Area {
         //Фурнитура створки
         if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]);
-        } else {
-            this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == winc.nuni); //ищем первую в системе
+        }
+        if(this.sysfurnRec == undefined) {
+            this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni); //ищем первую в системе
         }
         //Ручка
         if (this.obj.param != undefined && this.obj.param.artiklHandl != undefined) {
@@ -268,23 +269,24 @@ export class Cross extends Com5t {
     }
 
     init_constructiv() {
-        
+
         if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
             this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
 
-        } else {
+        } 
+        if(this.sysprofRec == undefined) {
             if ("VERT" == this.layout) { //сверху вниз
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.HORIZ[0]);
 
             } else if ("HORIZ" == this.layout) { //слева направо
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
             }
-        }        
+        }
         this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
         this.artiklAn = dbset.find(this.artiklRec[ARTIKL.analog_id], dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
-        }        
+        }
     }
 
     find_first(nuni, typ, us1) {
@@ -347,8 +349,8 @@ export class Frame extends Com5t {
         if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
             this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
 
-        } else {
-            //debugger;
+        } 
+        if(this.sysprofRec == undefined) {
             if ('BOTT' == this.layout) {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0]);
             } else if ('RIGHT' == this.layout) {
@@ -411,7 +413,8 @@ export class Glass extends Com5t {
 
         if (obj.param != undefined && obj.param.artglasID != undefined) {
             this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.code]);
-        } else {
+        }
+        if (this.artiklRec == undefined) {
             let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]); //по умолчанию стеклопакет
             this.artiklRec = dbset.artiklList.find(rec => systreeRec[SYSTREE.glas] == rec[ARTIKL.code]);
         }
