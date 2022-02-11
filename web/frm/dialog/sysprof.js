@@ -8,30 +8,47 @@ sysprof.init_dialog = function (table) {
         modal: true,
         buttons: {
             "Выбрать": function () {
-                let rowid = table.getGridParam('selrow');
-                let tableRec = table.getRowData(rowid);
-
-                let elemID = $("#tree-winc").jstree("get_selected")[0];
-                let wincID = order.rec_table2[PROPROD.id];
-                let winc = order.wincalcMap.get(wincID);
-                let elem = winc.elemList.find(it => it.id == elemID);
-                if(elem.obj.param == undefined) {
-                   elem.obj.param = {}; 
-                }
-                elem.obj.param.sysprofID = tableRec.id;
-                console.log(JSON.stringify(winc.obj));
-                
-                debugger;
-                
-                //Запишем выбранную запись в src
-                $("#n31").val(tableRec.code);
-                $("#n32").val(tableRec.name);
-
+                sysprof.rec_dialog_save(table);
                 $(this).dialog("close");
             },
+
             "Закрыть": function () {
                 $(this).dialog("close");
             }
+        }
+    });
+}
+//------------------------------------------------------------------------------
+sysprof.rec_dialog_save = function (table) {
+
+    let rowid = table.getGridParam('selrow'); //index профиля из справочника
+    let tableRec = table.getRowData(rowid);  //record справочника
+    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+
+    let winc = order.wincalcMap.get(proprodID);
+    let elem = winc.elemList.find(it => it.id == elemID);
+    if (elem.obj.param == undefined) {
+        elem.obj.param = {};
+    }
+    elem.obj.param.sysprofID = tableRec.id; //запишем профиль в скрипт
+    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+    proprodRec[PROPROD.script] = JSON.stringify(winc.obj); //запишем профиль в локальн. бд  
+    let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj));
+    order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+
+    $.ajax({//запишем профиль в серверную базу данных
+        url: 'dbset?action=saveScript',
+        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
+        success: function (data) {
+            if (data.result == 'ok') {
+                //Запишем выбранную запись в тег страницы
+                $("#n31").val(tableRec.code);
+                $("#n32").val(tableRec.name);
+            }
+        },
+        error: function () {
+            dialogMes("<p>Ошибка при сохранении данных на сервере");
         }
     });
 }
@@ -48,7 +65,10 @@ sysprof.init_table = function (table) {
             {name: 'side', width: 60, sorttype: "text"},
             {name: 'code', width: 200, sorttype: "text"},
             {name: 'name', width: 340, sorttype: "text"}
-        ]
+        ], ondblClickRow: function (rowid) {
+            sysprof.rec_dialog_save(table);
+            $("#dialog-dic").dialog("close");
+        }
     });
 }
 //------------------------------------------------------------------------------

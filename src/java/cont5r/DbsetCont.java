@@ -85,6 +85,10 @@ public class DbsetCont extends HttpServlet {
             } else if (action.equalsIgnoreCase("paramsList")) {
                 JSONObject output = Dbset.paramsList(request, response);
                 out.write(JSONObject.toJSONString(output));
+                
+            } else if (action.equalsIgnoreCase("saveScript")) {
+                JSONObject output = Dbset.saveScript(request, response);
+                out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("testList")) {
                 String str = "{\"typeOpen\":1, \"sysfurnID\":1634}";
