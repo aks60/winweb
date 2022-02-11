@@ -412,7 +412,7 @@ export class Glass extends Com5t {
 
 
         if (obj.param != undefined && obj.param.artglasID != undefined) {
-            this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.code]);
+            this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.id]);
         }
         if (this.artiklRec == undefined) {
             let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]); //по умолчанию стеклопакет

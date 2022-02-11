@@ -31,7 +31,7 @@ artikl.rec_dialog_save = function (table) {
         if (elem.obj.param == undefined) {
             elem.obj.param = {};
         }
-        debugger;
+        //debugger;
         elem.obj.param.artglasID = tableRec.id; //запишем профиль в скрипт
         let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
         proprodRec[PROPROD.script] = JSON.stringify(winc.obj); //запишем профиль в локальн. бд  
