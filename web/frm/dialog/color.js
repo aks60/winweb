@@ -1,14 +1,13 @@
 //------------------------------------------------------------------------------
-color.init_dialog = function (dialogTag) {
+color.init_dialog = function (table1, table2) {
 
-    dialogTag.dialog({
+    $("#dialog-dic").dialog({
         title: "Справочник текстур*",
         width: 400,
         height: 500,
         modal: true,
         buttons: {
             "Выбрать": function () {
-
 //                    var rowid = $("#dialogBol").getGridParam('selrow');
 //                    var record = $("#dialogBol").getRowData(rowid);
 //                    //запишем выбранную запись в src
@@ -53,21 +52,25 @@ color.init_table = function (table1, table2) {
             let colgrpRec = table1.getRowData(rowid);
             if (product.colorArr.length == 0) {
                 let colorList = dbset.colorList.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
-                for (let i = 0; i < colorList.length; i++) {                    
+                for (let i = 0; i < colorList.length; i++) {
                     let colorRec = colorList[i];
-                        table2.jqGrid('addRowData', i + 1, {
-                            id: colorRec[COLOR.id],
-                            name: colorRec[COLOR.name]
-                        });
-                }
+                    table2.jqGrid('addRowData', i + 1, {
+                        id: colorRec[COLOR.id],
+                        name: colorRec[COLOR.name]
+                    });
+                    let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                    table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                }                    
             } else {
                 let colorArr = product.colorArr.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
                 for (let i = 0; i < colorArr.length; i++) {
                     let colorRec = colorArr[i];
-                        table2.jqGrid('addRowData', i + 1, {
-                            id: colorRec[COLOR.id],
-                            name: colorRec[COLOR.name]
-                        });
+                    table2.jqGrid('addRowData', i + 1, {
+                        id: colorRec[COLOR.id],
+                        name: colorRec[COLOR.name]
+                    });
+                    let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                    table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                 }
             }
             table2.jqGrid("setSelection", 1);
@@ -79,8 +82,8 @@ color.init_table = function (table1, table2) {
         datatype: "local",
         colNames: ['Код', 'Описание текстур'],
         colModel: [
-            {name: 'id', width: 80, key: true},
-            {name: 'name', width: 180}
+            {name: 'id', width: 60, key: true},
+            {name: 'name', width: 340}
         ],
         ondblClickRow: function (rowId) {
             alert("2 click");

@@ -30,11 +30,20 @@ sysprof.rec_dialog_save = function (table) {
     let elem = winc.elemList.find(it => it.id == elemID);
     if (elem.obj.param == undefined) {
         elem.obj.param = {};
+    }          
+    if(elem.type == "FRAME_SIDE") { //коробка
+        elem.obj.param.sysprofID = tableRec.id; //запишем профиль в скрипт
+    } else { //створка
+       
+        let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
+        elem.obj.param[sideLayout] = {sysprofID: tableRec.id};
+        let test = 0;
     }
-    elem.obj.param.sysprofID = tableRec.id; //запишем профиль в скрипт
+    
     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+    
     proprodRec[PROPROD.script] = JSON.stringify(winc.obj); //запишем профиль в локальн. бд  
-    let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj));
+    let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj));   
     order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
     $.ajax({//запишем профиль в серверную базу данных

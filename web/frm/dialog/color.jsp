@@ -19,7 +19,7 @@
                     color.resize();
                 }).trigger('resize');
 
-                color.init_dialog($("#dialog-dic"));
+                color.init_dialog($("#tab1-dic"), $("#tab2-dic"));
                 color.init_table($("#tab1-dic"), $("#tab2-dic"));
                 color.load_table($("#tab1-dic"), $("#tab2-dic"))                
             });

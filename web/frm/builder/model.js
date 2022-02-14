@@ -126,7 +126,7 @@ export class Stvorka extends Area {
         if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]);
         }
-        if(this.sysfurnRec == undefined) {
+        if (this.sysfurnRec == undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni); //ищем первую в системе
         }
         //Ручка
@@ -273,8 +273,8 @@ export class Cross extends Com5t {
         if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
             this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
 
-        } 
-        if(this.sysprofRec == undefined) {
+        }
+        if (this.sysprofRec == undefined) {
             if ("VERT" == this.layout) { //сверху вниз
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.HORIZ[0]);
 
@@ -346,11 +346,20 @@ export class Frame extends Com5t {
     }
 
     init_constructiv() {
-        if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
-            this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
 
-        } 
-        if(this.sysprofRec == undefined) {
+
+        if (this.type == "STVORKA_SIDE") {
+            let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[this.layout][0]];
+            if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined
+                    && this.obj.param[sideLayout]['sysprofID'] != undefined) {
+                this.sysprofRec = this.obj.param[sideLayout]['sysprofID'];
+            }
+        } else {
+            if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
+                this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
+            }            
+        }
+        if (this.sysprofRec == undefined) {
             if ('BOTT' == this.layout) {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0]);
             } else if ('RIGHT' == this.layout) {
