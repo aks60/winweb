@@ -34,13 +34,13 @@ artikl.rec_dialog_save = function (table) {
         //debugger;
         elem.obj.param.artglasID = tableRec.id; //запишем профиль в скрипт
         let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-        proprodRec[PROPROD.script] = JSON.stringify(winc.obj); //запишем профиль в локальн. бд  
-        let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj));
+        proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => !Boolean(v) ? undefined : v); //запишем профиль в локальн. бд  
+        let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => !Boolean(v) ? undefined : v));
         order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
         $.ajax({//запишем профиль в серверную базу данных
             url: 'dbset?action=saveScript',
-            data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
+            data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => !Boolean(v) ? undefined : v)})},
             success: function (data) {
                 if (data.result == 'ok') {
                     //Запишем выбранную запись в тег страницы

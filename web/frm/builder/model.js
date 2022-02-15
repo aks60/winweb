@@ -347,7 +347,6 @@ export class Frame extends Com5t {
 
     init_constructiv() {
 
-
         if (this.type == "STVORKA_SIDE") {
             let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[this.layout][0]];
             if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined
@@ -357,7 +356,7 @@ export class Frame extends Com5t {
         } else {
             if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
                 this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
-            }            
+            }
         }
         if (this.sysprofRec == undefined) {
             if ('BOTT' == this.layout) {
@@ -370,12 +369,18 @@ export class Frame extends Com5t {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0]);
             }
         }
-        this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
-        
+        this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
         this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }
+        
+//        this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
+//        if (this.artiklRec != undefined)
+//            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
+//        if (this.artiklAn == undefined) {
+//            this.artiklAn = this.artiklRec;
+//        }
     }
 
     find_first(nuni, typ, us1, us2) {

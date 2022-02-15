@@ -26,6 +26,9 @@
             }
 
             function test() {
+                let o = {param: {name1: 99, name2: undefined, name3: null, name4: '', name5: "", name6: {}}};
+                let s = JSON.stringify(o, (k, v) => !Boolean(v) ? undefined : v);
+                console.log(s);                
             }
 
             $('button').button();
@@ -50,7 +53,7 @@
             <button id="btnUpdate" onClick="">Изменить</button>
             <button id="btnSave" onClick="">Сохранить</button>
             <button id="btnDelit" onClick="">Удалить</button>
-            <button id="btnTest" onClick="win.build(document.getElementById('cnv'), order.rec_table2[PROPROD.script]);">Test</button>
+            <button id="btnTest" onClick="test();">Test</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

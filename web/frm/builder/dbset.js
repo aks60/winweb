@@ -1,14 +1,8 @@
 //------------------------------------------------------------------------------
 dbset.find = (id, ds) => {
-    if (id == -3) {
-        return ds.virtualRec;
-    }
-    for (let dr of ds) {
-        if (id == dr[0]) {
-            return dr;
-        }
-    }
-    return undefined;
+    
+    let record = ds.find(rec => id == rec[0])
+    return (record == undefined) ? ds.virtualRec : record;
 }
 //------------------------------------------------------------------------------
 dbset.nullRecord = (ds) => {
