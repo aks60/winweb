@@ -26,23 +26,19 @@
             }
 
             function test() {
-                let o = {param: {name1: 99, name2: undefined, name3: null, name4: '', name5: "", name6: {}}};
-                let s = JSON.stringify(o, (k, v) => !Boolean(v) ? undefined : v);
-                console.log(s);                
             }
+
 
             $('button').button();
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     order.resize();
                 }).trigger('resize');
-
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.event_clicked);
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
-//                $('#dialog-dic').load('frm/dialog/systree.jsp');
                 prepareToolBar();
             });
         </script>

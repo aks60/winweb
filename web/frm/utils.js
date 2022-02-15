@@ -248,5 +248,16 @@ function  parserInt(txt) {
     }
     return arrList;
 }
-
+//------------------------------------------------------------------------------     
+ function isEmpty(v) {
+     
+        if (v === "" || v === undefined || v === null)
+            return undefined;
+        else {
+            if (typeof v === 'object' && Object.keys(v).length === 0)
+                return undefined;
+            else
+                return v;
+        }
+    }       
 //------------------------------------------------------------------------------            

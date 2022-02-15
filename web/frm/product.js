@@ -42,7 +42,7 @@ product.load_table = function (table1) {
     }, 10);
 }
 //------------------------------------------------------------------------------
-product.load_tree = function () {
+product.load_tree = function (tabtree) {
 
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
@@ -61,9 +61,10 @@ product.load_tree = function () {
     arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
+    
     elements(root, arr); //вход в рекурсию    
 
-    $('#tree-winc').jstree({'core': {
+    tabtree.jstree({'core': {
             'data': arr,
         }})
             .bind("loaded.jstree", function (event, data) {
@@ -71,7 +72,7 @@ product.load_tree = function () {
                 $(this).jstree('select_node', 0.0);
             })
             .bind("select_node.jstree", function (evt, data) {
-                let node = $("#tree-winc").jstree("get_selected")[0];
+                let node = tabtree.jstree("get_selected")[0];
                 view_winc_property(node);
             });
     setTimeout(function () {
