@@ -108,7 +108,7 @@
             login.init_login('dat');
 
             //Виртуальные артиклы  
-            dbset.sysprofList.virtualRec = [-3, 0, 0, 0, -3, -3];
+            dbset.sysprofList.virtualRec = [-3, 0, 0, -1, -3, -3];
             dbset.artiklList.virtualRec = [-3, "Virtual", 0, 0, "Virtual", 80, 4, -3];
             dbset.artdetList.virtualRec = [-3, -3, -3];
             dbset.colorList.virtualRec = [-3, "Virtual", -3, -3];

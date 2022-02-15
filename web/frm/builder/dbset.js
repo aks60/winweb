@@ -13,6 +13,7 @@ dbset.nullRecord = (ds) => {
     for (let dr of ds[0]) {
         arr.push(null);
     }
+    return arr;
 }
 //------------------------  ENUMS  -------------------------------------------
 export function enumList() {

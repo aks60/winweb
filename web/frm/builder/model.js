@@ -294,7 +294,7 @@ export class Cross extends Com5t {
                     && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
-            return [-3, 0, typ, -1, -3, -3];
+            return dbset.sysprofList.virtualRec; //[-3, 0, typ, -1, -3, -3];
         }
         return record;
     }
@@ -347,47 +347,39 @@ export class Frame extends Com5t {
 
     init_constructiv() {
 
+        this.sysprofID = -3;
         if (this.type == "STVORKA_SIDE") {
             let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[this.layout][0]];
-            if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined
-                    && this.obj.param[sideLayout]['sysprofID'] != undefined) {
-                this.sysprofRec = this.obj.param[sideLayout]['sysprofID'];
-            }
+            if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined && this.obj.param[sideLayout]['sysprofID'] != undefined)
+                this.sysprofID = this.obj.param[sideLayout]['sysprofID'];
         } else {
-            if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
-                this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
-            }
+            if (this.obj.param != undefined && this.obj.param.sysprofID != undefined)
+                this.sysprofID = dbset.find(this.obj.param.sysprofID, dbset.sysprofList)[SYSPROF.id];
         }
-        if (this.sysprofRec == undefined) {
-            if ('BOTT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0]);
-            } else if ('RIGHT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['RIGHT'][0], UseSide['VERT'][0]);
-            } else if ('TOP' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['TOP'][0], UseSide['HORIZ'][0]);
-            } else if ('LEFT' == this.layout) {
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0]);
-            }
+        if (this.sysprofID == -3) {
+            if ('BOTT' == this.layout)
+                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
+            else if ('RIGHT' == this.layout)
+                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['RIGHT'][0], UseSide['VERT'][0])[SYSPROF.id];
+            else if ('TOP' == this.layout)
+                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['TOP'][0], UseSide['HORIZ'][0])[SYSPROF.id];
+            else if ('LEFT' == this.layout)
+                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0])[SYSPROF.id];
+
         }
+        this.sysprofRec = dbset.find(this.sysprofID, dbset.sysprofList);
         this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
         this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }
-        
-//        this.artiklRec = dbset.artiklList.find(el => el[ARTIKL.id] == this.sysprofRec[SYSPROF.artikl_id]);
-//        if (this.artiklRec != undefined)
-//            this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
-//        if (this.artiklAn == undefined) {
-//            this.artiklAn = this.artiklRec;
-//        }
     }
 
     find_first(nuni, typ, us1, us2) {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
-            return [-3, 0, typ, -1, -3, -3];
+            dbset.sysprofList.virtualRec; //[-3, 0, typ, -1, -3, -3];
         }
         return record;
     }
