@@ -41,9 +41,8 @@ sysprof.rec_dialog_save = function (table) {
     }
     
     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-    
-    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmepty(v)); //запишем профиль в локальн. бд  
-    let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmepty(v)));   
+    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+    let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));   
     order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
     $.ajax({//запишем профиль в серверную базу данных
