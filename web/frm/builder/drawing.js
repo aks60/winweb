@@ -54,11 +54,11 @@ export function draw_text(winc) {
 }
 //------------------------------------------------------------------------------
 //Рисуем конструкцию
-export function draw_elements(winc, arr) {
+export function draw_elements(winc) {
     //try {
-    winc.ctx.save();
-
-    let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx;
+    let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
+    
+    ctx.save();
     ctx.fillStyle = '#ffffff';
     ctx.clearRect(0, 0, cnv.width, cnv.height);
 
