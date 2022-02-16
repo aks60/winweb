@@ -126,7 +126,7 @@ function view_winc_property(nodeID) {
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
         load_fields('tabs-1', {
             n11: winc.width, n12: winc.height, n13: winc.heightAdd,
-            n14: winc.rgb1[COLOR.name], n15: winc.rgb2[COLOR.name], n16: winc.rgb3[COLOR.name]
+            n14: winc.color1Rec[COLOR.name], n15: color2Rec.rgb2[COLOR.name], n16: winc.color3Rec[COLOR.name]
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
     } else if (elem.type == "DEF_PARAM") {
@@ -143,7 +143,7 @@ function view_winc_property(nodeID) {
         }
         load_fields('tabs-3', {
             n31: elem.artiklAn[ARTIKL.code], n32: elem.artiklAn[ARTIKL.name],
-            n33: elem.rgb1[COLOR.name], n34: elem.rgb2[COLOR.name], n35: elem.rgb3[COLOR.name]
+            n33: elem.color1Rec[COLOR.name], n34: color2Rec.rgb2[COLOR.name], n35: elem.color3Rec[COLOR.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
     } else if (elem.type == "STVORKA") {
@@ -169,7 +169,7 @@ function view_winc_property(nodeID) {
         $("#tabs-4").show();
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {
-            n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.rgb1[COLOR.name]
+            n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.color1Rec[COLOR.name]
         }, ['n51', 'n52', 'n53']);
         $("#tabs-5").show();
     }

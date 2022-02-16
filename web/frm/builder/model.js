@@ -10,9 +10,9 @@ export class Com5t {
         this.winc = winc;//главный класс калькуляции   
         this.layout = obj.layout;//напрвление расположения
         this.type = obj.type;//тип элемента
-        this.rgb1 = winc.rgb1;
-        this.rgb2 = winc.rgb2;
-        this.rgb3 = winc.rgb3;
+        this.color1Rec = winc.color1Rec;
+        this.color2Rec = winc.color2Rec;
+        this.color3Rec = winc.color3Rec;
     }
 
     dimension(x1, y1, x2, y2) {
@@ -233,7 +233,7 @@ export class Stvorka extends Area {
         if (this.winc.root.type == "DOOR") {
 
         } else {
-            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, this.rgb2);
+            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, this.color2Rec);
             DX = DX - 12;
             Y1 = Y1 + 20;
         }
@@ -301,10 +301,10 @@ export class Cross extends Com5t {
 
     paint() {
         if ("VERT" == this.owner.layout) {
-            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
 
         } else if ("HORIZ" == this.owner.layout) {
-            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
         }
     }
 }
@@ -390,23 +390,23 @@ export class Frame extends Com5t {
         if (this.owner.type == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
             if ("TOP" == this.layout) {
-                //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+                //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
             } else if ("BOTT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
             } else if ("RIGHT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2, this.y2 - dh, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2, this.y2 - dh, this.color2Rec);
             } else if ("LEFT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2 - dh, this.y2, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2 - dh, this.y2, this.color2Rec);
             }
         } else {
             if ("BOTT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
             } else if ("RIGHT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh, this.y1, this.y2, this.y2 - dh, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh, this.y1, this.y2, this.y2 - dh, this.color2Rec);
             } else if ("TOP" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
             } else if ("LEFT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh, this.y2 - dh, this.y2, this.rgb2);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh, this.y2 - dh, this.y2, this.color2Rec);
             }
         }
     }
@@ -428,7 +428,7 @@ export class Glass extends Com5t {
         }
         let artdetRec = dbset.artdetList.find(rec => this.artiklRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
         let color_fk = artdetRec[ARTDET.color_fk];
-        this.rgb1 = dbset.colorList.find(rec => color_fk == rec[COLOR.id]);
+        this.color1Rec = dbset.colorList.find(rec => color_fk == rec[COLOR.id]);
     }
 
     paint() {
@@ -436,7 +436,7 @@ export class Glass extends Com5t {
 
         } else {
             draw_full_polygon(this.winc, this.owner.x1, this.owner.x2, this.owner.x2,
-                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.rgb1);
+                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.color1Rec);
         }
     }
 }
