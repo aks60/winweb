@@ -38,13 +38,21 @@
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
-                
+
             });
+
+            function test() {
+                debugger;
+                let id = order.rec_table2[PROPROD.id];
+                let winc = order.wincalcMap.get(id);
+                winc.ctx.fillStyle = '#ffffff';
+                winc.ctx.clearRect(0, 0, winc.cnv.width, winc.cnv.height);
+            }
         </script>
     </head>
     <body>
         <div id="north">
-            <button id="btnReport" onClick="">Test1</button>
+            <button id="btnReport" onClick="test();">Test1</button>
             <button id="btnUpdate" onClick="">Test2</button>
             <button id="btnIns" onClick="">Test3</button>
 

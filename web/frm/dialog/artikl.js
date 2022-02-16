@@ -31,12 +31,11 @@ artikl.rec_dialog_save = function (table) {
         if (elem.obj.param == undefined) {
             elem.obj.param = {};
         }
-        //debugger;
         elem.obj.param.artglasID = tableRec.id; //запишем профиль в скрипт
         let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
         proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-        let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-        order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+        let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
+        order.wincalcMap.set(proprodID, winc2); //новый экз.
 
         $.ajax({//запишем профиль в серверную базу данных
             url: 'dbset?action=saveScript',
