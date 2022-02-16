@@ -348,14 +348,15 @@ export class Frame extends Com5t {
     init_constructiv() {
 
         this.sysprofID = -3;
-        if (this.type == "STVORKA_SIDE") {
+        if (this.type == "STVORKA_SIDE") {  //створка
             let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[this.layout][0]];
             if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined && this.obj.param[sideLayout]['sysprofID'] != undefined)
                 this.sysprofID = this.obj.param[sideLayout]['sysprofID'];
-        } else {
+        } else { //рама
             if (this.obj.param != undefined && this.obj.param.sysprofID != undefined)
                 this.sysprofID = dbset.find(this.obj.param.sysprofID, dbset.sysprofList)[SYSPROF.id];
         }
+        
         if (this.sysprofID == -3) {
             if ('BOTT' == this.layout)
                 this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
