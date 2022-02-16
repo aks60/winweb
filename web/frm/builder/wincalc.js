@@ -50,7 +50,7 @@ class Wincalc {
             for (let ob2 of obj.childs) {
 
                 if (ob2.type == "FRAME_SIDE") {
-                    let frm = new Frame(ob2, owner, this);
+                    let frm = new Frame(ob2, owner, this, ob2.param);
                     owner.frames.set(ob2.layout, frm);
 
                 } else if (ob2.type == "STVORKA") {

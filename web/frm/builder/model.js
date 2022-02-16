@@ -104,10 +104,10 @@ export class Stvorka extends Area {
         this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
                 owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("TOP") - win.naxl));
 
-        this.frames.set("BOTT", new Frame(obj, this, winc, this.id + '.1', "BOTT", "STVORKA_SIDE"));
-        this.frames.set("RIGHT", new Frame(obj, this, winc, this.id + '.2', "RIGHT", "STVORKA_SIDE"));
-        this.frames.set("TOP", new Frame(obj, this, winc, this.id + '.3', "TOP", "STVORKA_SIDE"));
-        this.frames.set("LEFT", new Frame(obj, this, winc, this.id + '.4', "LEFT", "STVORKA_SIDE"));
+        this.frames.set("BOTT", new Frame(obj, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
+        this.frames.set("RIGHT", new Frame(obj, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
+        this.frames.set("TOP", new Frame(obj, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
+        this.frames.set("LEFT", new Frame(obj, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
         this.sysfurnRec = dbset.sysfurnList.virtualRec; //фурнитура створки
         this.handleRec = dbset.artiklList.virtualRec;   //ручка       
@@ -204,6 +204,14 @@ export class Stvorka extends Area {
             return (this.y1 - this.winc.root.y1 > 200) ? win.dh_crss / 2 : win.dh_frm;
         else if ("LEFT" == side)
             return (this.x1 - this.winc.root.x1 > 200) ? win.dh_crss / 2 : win.dh_frm;
+    }
+
+    param(side) {
+
+        if (this.obj.param != undefined && this.obj.param[side] != undefined)
+            return this.obj.param[side];
+        else
+            return undefined;
     }
 
     paint() {
@@ -311,10 +319,10 @@ export class Cross extends Com5t {
 //================================  FRAME  =====================================
 export class Frame extends Com5t {
 
-    constructor(obj, owner, winc, id, layout, type) {
+    constructor(obj, owner, winc, param, id, layout, type) {
         super(obj, owner, winc);
-        if (id != undefined) {
-            this.id = id;
+        if (id != undefined) { //если сторона створки
+            this.id = id;      //дополнительные параметры
             this.layout = layout;
             this.type = type;
         }
@@ -342,22 +350,23 @@ export class Frame extends Com5t {
             }
         }
 
-        this.init_constructiv();
+        this.init_constructiv(param);
     }
 
-    init_constructiv() {
+    init_constructiv(param) {
+      
+        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? dbset.find(param.colorID1, dbset.colorList) : this.winc.color1Rec;
+        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? dbset.find(param.colorID2, dbset.colorList) : this.winc.color2Rec;
+        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? dbset.find(param.colorID3, dbset.colorList) : this.winc.color3Rec;
 
         this.sysprofID = -3;
-        if (this.type == "STVORKA_SIDE") {  //створка
-            let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[this.layout][0]];
-            if (this.obj.param != undefined && this.obj.param[sideLayout] != undefined && this.obj.param[sideLayout]['sysprofID'] != undefined)
-                this.sysprofID = this.obj.param[sideLayout]['sysprofID'];
-        } else { //рама
-            if (this.obj.param != undefined && this.obj.param.sysprofID != undefined)
-                this.sysprofID = dbset.find(this.obj.param.sysprofID, dbset.sysprofList)[SYSPROF.id];
-        }
-        
-        if (this.sysprofID == -3) {
+        if (this.type == "STVORKA_SIDE" && param != undefined && param.sysprofID != undefined)  //створка
+            this.sysprofID = param.sysprofID; //сист.профиль
+
+        else if (param != undefined && param.sysprofID != undefined)
+            this.sysprofID = dbset.find(param.sysprofID, dbset.sysprofList)[SYSPROF.id]; //сист.профиль
+
+        else { //профиль по умолчанию
             if ('BOTT' == this.layout)
                 this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
             else if ('RIGHT' == this.layout)
@@ -376,7 +385,8 @@ export class Frame extends Com5t {
         }
     }
 
-    find_first(nuni, typ, us1, us2) {
+    find_first(nuni, typ, us1, us2)
+    {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
@@ -385,7 +395,8 @@ export class Frame extends Com5t {
         return record;
     }
 
-    paint() {
+    paint()
+    {
         let dh = win.dh_frm;
         if (this.owner.type == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
