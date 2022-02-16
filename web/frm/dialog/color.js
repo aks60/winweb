@@ -1,6 +1,4 @@
 //------------------------------------------------------------------------------
-//import {draw_elements} from './drawing.js';
-//------------------------------------------------------------------------------
 color.init_dialog = function (table1, table2) {
 
     $("#dialog-dic").dialog({
@@ -21,12 +19,14 @@ color.init_dialog = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 color.rec_dialog_save = function (table2) {
-//    try {
+//    try {  
+
     let rowid = table2.getGridParam('selrow'); //index профиля из справочника
     let tableRec = table2.getRowData(rowid);  //record справочника
     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
     let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
     let winc = order.wincalcMap.get(proprodID);
+    let elem = winc.elemList.find(it => it.id == elemID);
 
     //Запишем профиль в скрипт
     if (product.buttonSrc == 1)
@@ -36,6 +36,27 @@ color.rec_dialog_save = function (table2) {
     else if (product.buttonSrc == 3)
         winc.obj.color3 = tableRec.id;
 
+    if (elem.type == "FRAME_SIDE") { //коробка
+        if (product.buttonSrc == 4)
+            elem.obj.param.colorID1 = tableRec.id;
+        else if (product.buttonSrc == 5)
+            elem.obj.param.colorID2 = tableRec.id;
+        else if (product.buttonSrc == 6)
+            elem.obj.param.colorID3 = tableRec.id;
+
+    } else { //створка
+        let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
+        if (elem.obj.param[sideLayout] == undefined) {
+            elem.obj.param[sideLayout] = null;
+        }
+        if (product.buttonSrc == 4)
+            elem.obj.param[sideLayout].colorID1 = tableRec.id;
+        else if (product.buttonSrc == 5)
+            elem.obj.param[sideLayout].colorID2 = tableRec.id;
+        else if (product.buttonSrc == 6)
+            elem.obj.param[sideLayout].colorID3 = tableRec.id;
+    }
+
     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
     proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
     let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
@@ -43,7 +64,7 @@ color.rec_dialog_save = function (table2) {
 
     $.ajax({//запишем профиль в серверную базу данных
         url: 'dbset?action=saveScript',
-        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
+        data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
         success: function (data) {
             if (data.result == 'ok') {
                 //Запишем выбранную запись в тег страницы
@@ -53,6 +74,12 @@ color.rec_dialog_save = function (table2) {
                     $("#n15").val(tableRec.name);
                 else if (product.buttonSrc == 3)
                     $("#n16").val(tableRec.name);
+                else if (product.buttonSrc == 4)
+                    $("#n33").val(tableRec.name);
+                else if (product.buttonSrc == 5)
+                    $("#n34").val(tableRec.name);
+                else if (product.buttonSrc == 6)
+                    $("#n35").val(tableRec.name);
             }
         },
         error: function () {

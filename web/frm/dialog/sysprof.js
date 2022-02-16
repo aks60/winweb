@@ -33,11 +33,10 @@ sysprof.rec_dialog_save = function (table) {
     }          
     if(elem.type == "FRAME_SIDE") { //коробка
         elem.obj.param.sysprofID = tableRec.id; //запишем профиль в скрипт
-    } else { //створка
-       
+        
+    } else { //створка       
         let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
         elem.obj.param[sideLayout] = {sysprofID: tableRec.id};
-        let test = 0;
     }
     
     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);

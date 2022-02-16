@@ -86,9 +86,9 @@
                             <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="sysprof_to_frame(1)"></jst><br>
                             <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
-                            <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="color_to_frame(3);"></jst><br>                          
-                            <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_frame(4);"></jst><br>                          
-                            <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="color_to_frame(5);"></jst><br>                          
+                            <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="color_to_frame(4);"></jst><br>                          
+                            <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_frame(5);"></jst><br>                          
+                            <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="color_to_frame(6);"></jst><br>                          
                         </div>
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 
