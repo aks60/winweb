@@ -24,7 +24,8 @@ product.load_table = function (table1) {
 
     table1.jqGrid('clearGridData', true);
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-    let syspar1List2 = dbset.syspar1List.filter(rec => winc.nuni == rec[SYSPAR1.systree_id]);
+    //for (let val of winc.pardefMap.values()) {
+    //let syspar1List2 = dbset.syspar1List.filter(rec => winc.nuni == rec[SYSPAR1.systree_id]);
     for (let i = 0; i < syspar1List2.length; i++) {
         let syspar1Rec = syspar1List2[i];
         let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);

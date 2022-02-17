@@ -37,6 +37,8 @@ color.rec_dialog_save = function (table2) {
         winc.obj.color3 = tableRec.id;
 
     if (elem.type == "FRAME_SIDE") { //коробка
+        elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+
         if (product.buttonSrc == 4)
             elem.obj.param.colorID1 = tableRec.id;
         else if (product.buttonSrc == 5)
@@ -46,9 +48,8 @@ color.rec_dialog_save = function (table2) {
 
     } else { //створка
         let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-        if (elem.obj.param[sideLayout] == undefined) {
-            elem.obj.param[sideLayout] = null;
-        }
+        elem.obj.param[sideLayout] = (elem.obj.param[sideLayout] == undefined) ? {} : elem.obj.param[sideLayout];
+
         if (product.buttonSrc == 4)
             elem.obj.param[sideLayout].colorID1 = tableRec.id;
         else if (product.buttonSrc == 5)
@@ -139,7 +140,8 @@ color.init_table = function (table1, table2) {
             {name: 'name', width: 340}
         ],
         ondblClickRow: function (rowId) {
-            alert("2 click");
+            color.rec_dialog_save(table2);
+            $("#dialog-dic").dialog("close");
         }
     });
 };

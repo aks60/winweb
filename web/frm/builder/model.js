@@ -91,6 +91,26 @@ export class Root extends Area {
         super(obj, owner, winc);
 
         this.frames = new Map(); //рамы конструкции 
+        this.pardefMap = new Map(); //параметры по умолчанию        
+        for(let tr of dbset.syspar1List) {
+            
+            if(winc.nuni == tr[SYSPAR1.systree_id]) {
+                this.pardefMap.set(tr[SYSPAR1.id], tr);
+            }
+        }
+        //this.init_constructiv();
+    }
+
+    init_constructiv() {
+        if (this.obj.param != undefined) {
+            //Добавим к параметрам системы конструкции параметры конкретной конструкции
+            let paramArr = this.obj.param.ioknaParam;
+            for (let it of paramArr) {
+                
+                let paramsRec = dbset.paramsList.find(rec => it == rec[PARAMS.id]);
+                this.pardefMap.set(paramsRec[PARAMS.params_id], paramsRec);
+            }
+        }
     }
 }
 //==============================  STVORKA  =====================================
@@ -354,7 +374,7 @@ export class Frame extends Com5t {
     }
 
     init_constructiv(param) {
-      
+
         this.color1Rec = (param != undefined && param.colorID1 != undefined) ? dbset.find(param.colorID1, dbset.colorList) : this.winc.color1Rec;
         this.color2Rec = (param != undefined && param.colorID2 != undefined) ? dbset.find(param.colorID2, dbset.colorList) : this.winc.color2Rec;
         this.color3Rec = (param != undefined && param.colorID3 != undefined) ? dbset.find(param.colorID3, dbset.colorList) : this.winc.color3Rec;
