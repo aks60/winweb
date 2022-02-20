@@ -72,7 +72,7 @@
         <div id="mainmenu"></div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
-        <div id="dialog-mes"></div>
+        <div id="dialog-mes" title="Сообщение"></div>
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">

@@ -145,16 +145,12 @@ function dialogSec(mes) {
 }
 //------------------------------------------------------------------------------
 //диалог окна  сообщений
-function dialogMes(mes) {
-    $("#dialog-mes").html(mes);
-    $("#dialog-mes").dialog({
-        modal: true,
-        buttons: {
-            Ok: function () {
-                $(this).dialog("close");
-            }
-        }
-    });
+function dialogMes(title, mes, height) {
+    $("#dialog-mes").html("<p>" + mes);
+    $("#dialog-mes").dialog({modal: true, height: height, title: title, buttons: [{
+                text: "Ok", icon: "ui-icon-close", click: function () {
+                    $(this).dialog("close");
+                }}]});
 }
 //------------------------------------------------------------------------------
 //диалог окна прогрес сохранения
@@ -249,15 +245,15 @@ function  parserInt(txt) {
     return arrList;
 }
 //------------------------------------------------------------------------------     
- function isEmpty(v) {
-     
-        if (v === "" || v === undefined || v === null)
+function isEmpty(v) {
+
+    if (v === "" || v === undefined || v === null)
+        return undefined;
+    else {
+        if (typeof v === 'object' && Object.keys(v).length === 0)
             return undefined;
-        else {
-            if (typeof v === 'object' && Object.keys(v).length === 0)
-                return undefined;
-            else
-                return v;
-        }
-    }       
+        else
+            return v;
+    }
+}
 //------------------------------------------------------------------------------            

@@ -20,7 +20,6 @@ err[-52] = 'Библиотека не поддерживает расширен�
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
 login.init_login = function (src) {
-    //console.log(src);
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
@@ -31,7 +30,8 @@ login.init_login = function (src) {
                 $("#outbody").load('frm/order.jsp');
             }
         } else {
-            alert(login.data.result);
+            login.que_requests = 1;
+            dialogMes("Неудача", login.data.result, 168);
         }
     }
 }
@@ -42,7 +42,7 @@ login.user_connect = function () {
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     for (let i = 0; i < 2; i++) {
         if (att[i] == '') {
-            alert(mes[i]);
+            dialogMes("Ошибка", mes[i], 160);
             return;
         }
     }
@@ -54,7 +54,7 @@ login.user_connect = function () {
             login.init_login('log');
         },
         error: function () {
-            alert('Ошибка авторизации пользователя');
+            dialogMes('Сообщение', 'Ошибка авторизации пользователя', 168);
         }
     });
 }
@@ -67,18 +67,18 @@ login.token_check = function () {
     console.log(att);
     for (let i = 0; i < 3; i++) {
         if (att[i] == '') {
-            alert(mes[i]);
+            dialogMes('Сообщение', mes[i], 168);
             return;
         }
     }
     var login = att[2];
     var re = /^[a-zA-Z0-9]+$/;
     if (!re.test(login)) {
-        alert('Логин может состоять только из букв английского алфавита и цифр');
+        dialogMes('Сообщение', 'Логин может состоять только из букв английского алфавита и цифр', 168);
         return false;
     }
     if (login.length < 3 || login.length > 16) {
-        alert('Логин должен быть не меньше 3-х и не больше 16 символов');
+        dialogMes('Сообщение', 'Логин должен быть не меньше 3-х и не больше 16 символов', 168);
         return false;
     }
     login = login + '-rono';
@@ -87,7 +87,7 @@ login.token_check = function () {
         data: {'admname': att[0], 'password': att[1], 'login': login},
         success: function (data) {
             if (data.login == 'false') {
-                alert(data.mes);
+                dialogMes('Сообщение', data.mes, 168);
             } else {
                 token_link(login);
             }
@@ -99,13 +99,13 @@ login.token_check = function () {
 login.token_connect = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
-        alert("Выберите учетную запись на USB-токене.");
+        dialogMes('Сообщение', 'Выберите учетную запись на USB-токене.', 168);
     } else {
         $.ajax({
             url: 'login?action=rtwRandom',
             data: {'login': login},
             error: function () {
-                alert("Ошибка на сервере");
+                dialogMes('Сообщение', 'Ошибка на сервере', 128);
             },
             success: function (data) {
                 token_sign(data.random)
@@ -118,7 +118,7 @@ login.token_connect = function () {
 login.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
-        alert('Не установлен плагин для работы с USB-токеном');
+        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном', 168);
         return;
     }
     var random_hash = Sha256.hash(random);
@@ -126,13 +126,13 @@ login.token_sign = function (random) {
     var sign = plugin.rtwSign(pin, random_hash);
     if (sign != -7 && sign != -12) {
         if (sign < 0) {
-            alert(err[sign]);
+            dialogMes('Сообщение', err[sign], 168);
         } else {
             $.ajax({
                 url: 'login?action=rtwConnect',
                 data: {'sign': sign},
                 error: function () {
-                    alert("Ошибка авторизации токена");
+                    dialogMes('Сообщение', 'Ошибка авторизации токена', 168);
                 },
                 success: function (data) {
                     if (data.result == 'true') {
@@ -142,7 +142,7 @@ login.token_sign = function (random) {
                         }
                         loadBody('frm/patt/simpl3.jsp')
                     } else {
-                        alert(data.result);
+                        dialogMes('Сообщение', data.result, 168);
                     }
                 }
             });
@@ -158,7 +158,7 @@ login.token_refresh = function () {
         log_list.remove(i);
     }
     if (!plugin.valid) {
-        alert("Не установлен плагин для работы с USB-токеном");
+        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном', 168);
         return;
     }
     var ret = plugin.rtwIsTokenPresentAndOK();
