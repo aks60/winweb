@@ -22,12 +22,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.crypto.NoSuchPaddingException;
-import javax.servlet.annotation.WebServlet;
 
 import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
@@ -271,11 +271,11 @@ public class Login {
         JSONObject output = new JSONObject(App.asMap("result", "Ошибка удаления пользователя"));
         try {
             Query qUser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
-            if(qUser.isEmpty() == false) {
+            if (qUser.isEmpty() == false) {
                 qUser.delete(qUser.get(0));
                 output.put("result", true);
                 output.put("mes", "Пользователь успешно удалён");
-            } 
+            }
             return output;
 
         } catch (Exception e) {
@@ -294,16 +294,22 @@ public class Login {
         JSONObject output = new JSONObject();
         try {
             if (username.equals("admin") || username.equals("sysdba")) {
+                try {
+                    Class.forName("org.firebirdsql.jdbc.FBDriver");
+                    DatabaseMetaData metadata = connect.getMetaData();
+                    String url = metadata.getURL();
+                    Connection con = DriverManager.getConnection(url, username, password);
+                    con.close();
 
-                if (username.equals("admin") || username.equals("sysdba")) {
-                    att.login(username);
-                    att.role("RDB$ADMIN");
-                    output.put("role", "RDB$ADMIN");
-                    output.put("user", username);
-                    output.put("result", "true");
-                } else {
-                    output.put("result", "Ошибка ввода пароля администратора");
+                } catch (Exception e) {
+                    output.put("result", "Ошибка ввода пароля или имени администратора");
+                    return output;
                 }
+                att.login(username);
+                att.role("RDB$ADMIN");
+                output.put("role", "RDB$ADMIN");
+                output.put("user", username);
+                output.put("result", "true");
                 return output;
 
             } else {
