@@ -38,7 +38,6 @@ login.init_login = function (src) {
 
 //авторизация через логин-пароль
 login.user_connect = function () {
-
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     for (let i = 0; i < 2; i++) {

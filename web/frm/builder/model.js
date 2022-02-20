@@ -92,22 +92,23 @@ export class Root extends Area {
 
         this.frames = new Map(); //рамы конструкции 
         this.pardefMap = new Map(); //параметры по умолчанию        
-        for(let tr of dbset.syspar1List) {
-            
-            if(winc.nuni == tr[SYSPAR1.systree_id]) {
-                this.pardefMap.set(tr[SYSPAR1.id], tr);
+        for (let syspar1Rec of dbset.syspar1List) {
+
+            if (winc.nuni == syspar1Rec[SYSPAR1.systree_id]) {
+                this.pardefMap.set(syspar1Rec[SYSPAR1.param_id], syspar1Rec);
             }
         }
-        //this.init_constructiv();
+        this.init_constructiv();
     }
 
     init_constructiv() {
         if (this.obj.param != undefined) {
             //Добавим к параметрам системы конструкции параметры конкретной конструкции
-            let paramArr = this.obj.param.ioknaParam;
-            for (let it of paramArr) {
-                
-                let paramsRec = dbset.paramsList.find(rec => it == rec[PARAMS.id]);
+            let groupArr = this.obj.param.ioknaParam;
+            for (let group of groupArr) {
+
+                let paramsRec = dbset.paramsList.find(rec => group == rec[PARAMS.id]);
+                let syspar1Rec = dbset.syspar1List.find(rec => paramsRec[PARAMS.params_id] == rec[SYSPAR1.params_id]);
                 this.pardefMap.set(paramsRec[PARAMS.params_id], paramsRec);
             }
         }
@@ -256,6 +257,10 @@ export class Stvorka extends Area {
             Y1 = elemL.y1 + (elemL.y2 - elemL.y1) / 2;
             draw_line(this.winc, elemR.x2, elemR.y1, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
             draw_line(this.winc, elemR.x2, elemR.y2, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
+        }
+        if (this.typeOpen.id == 3 || this.typeOpen.id == 4) {
+            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x1, elemB.y2);
+            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x2, elemB.y2);
         }
 
         if (this.winc.root.type == "DOOR") {

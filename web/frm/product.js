@@ -21,7 +21,12 @@ product.init_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_table = function (table1) {
-
+/*
+                 Map<Integer, String> map = new HashMap();
+                iwin.mapPardef.forEach((pk, rec) -> map.put(pk, rec.getStr(eSyspar1.text)));
+                map.forEach((pk, txt) -> qSyspar1.add(new Record(Query.SEL, pk, txt, null, pk, null)));
+                ((DefTableModel) tab7.getModel()).fireTableDataChanged();
+ */
     table1.jqGrid('clearGridData', true);
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
     //for (let val of winc.pardefMap.values()) {
