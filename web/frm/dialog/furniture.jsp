@@ -21,13 +21,13 @@
             furniture.init_dialog = function (table) {
 
                 $("#dialog-dic").dialog({
-                    title: "Профили системы",
+                    title: "Фурнитура системы",
                     width: 600,
                     height: 400,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            sysprof.rec_dialog_save(table);
+                            furniture.rec_dialog_save(table);
                             $(this).dialog("close");
                         },
 
@@ -39,7 +39,7 @@
             }
 //------------------------------------------------------------------------------
             furniture.rec_dialog_save = function (table) {
-
+/*
                 let rowid = table.getGridParam('selrow'); //index профиля из справочника
                 let tableRec = table.getRowData(rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
@@ -74,9 +74,10 @@
                         }
                     },
                     error: function () {
-                        dialogMes("<p>Ошибка при сохранении данных на сервере");
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                     }
                 });
+*/                
             }
 //------------------------------------------------------------------------------
             furniture.init_table = function (table) {
@@ -85,21 +86,19 @@
                     gridview: true,
                     autowidth: true,
                     height: "auto",
-                    colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
+                    colNames: ['id', 'Наименование'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'side', width: 60, sorttype: "text"},
-                        {name: 'code', width: 200, sorttype: "text"},
                         {name: 'name', width: 340, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        sysprof.rec_dialog_save(table);
+                        furniture.rec_dialog_save(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
             furniture.load_table = function (table) {
-
+/*
                 table.jqGrid('clearGridData', true);
                 let id = order.rec_table2[SYSPROF.id];
                 let winc = order.wincalcMap.get(id);
@@ -115,6 +114,7 @@
                     });
                 }
                 table.jqGrid("setSelection", 1);
+*/                
             }
 //------------------------------------------------------------------------------
         </script>        
