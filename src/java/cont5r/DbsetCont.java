@@ -41,7 +41,7 @@ public class DbsetCont extends HttpServlet {
             if (action.equalsIgnoreCase("systreeList")) {
                 JSONObject output = Dbset.systreeList(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("sysprodList")) {
                 JSONObject output = Dbset.sysprodList(request, response);
                 out.write(JSONObject.toJSONString(output));
@@ -57,11 +57,11 @@ public class DbsetCont extends HttpServlet {
             } else if (action.equalsIgnoreCase("artiklList")) {
                 JSONObject output = Dbset.artiklList(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("artdetList")) {
                 JSONObject output = Dbset.artdetList(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("furnitureList")) {
                 JSONObject output = Dbset.furnitureList(request, response);
                 out.write(JSONObject.toJSONString(output));
@@ -77,25 +77,32 @@ public class DbsetCont extends HttpServlet {
             } else if (action.equalsIgnoreCase("sysprofList")) {
                 JSONObject output = Dbset.sysprofList(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("syspar1List")) {
                 JSONObject output = Dbset.syspar1List(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("paramsList")) {
                 JSONObject output = Dbset.paramsList(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
+
             } else if (action.equalsIgnoreCase("saveScript")) {
                 JSONObject output = Dbset.saveScript(request, response);
                 out.write(JSONObject.toJSONString(output));
+
+            } else if (action.equalsIgnoreCase("kitsList")) {
+                JSONObject output = Dbset.kitsList(request, response);
+                out.write(JSONObject.toJSONString(output)); 
+                
+            } else if (action.equalsIgnoreCase("userList")) {
+                JSONObject output = Dbset.userList(request, response);
+                out.write(JSONObject.toJSONString(output));                 
 
             } else if (action.equalsIgnoreCase("testList")) {
                 String str = "{\"typeOpen\":1, \"sysfurnID\":1634}";
                 JSONObject output = new JSONObject();
                 output.put("param", str);
                 out.write(JSONObject.toJSONString(output));
-
             }
         }
     }

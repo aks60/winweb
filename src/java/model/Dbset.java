@@ -9,12 +9,14 @@ import domain.eFurniture;
 import domain.eGroups;
 import domain.eParams;
 import domain.eProject;
+import domain.eProkit;
 import domain.eProprod;
 import domain.eSysfurn;
 import domain.eSyspar1;
 import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
+import domain.eSysuser;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,7 +35,7 @@ public class Dbset {
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth,
-                 eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
+                eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
             list.add(Arrays.asList(
                     rec.get(eSystree.id),
@@ -226,15 +228,53 @@ public class Dbset {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        try (Connection connection = Att.att(request).connect()) {            
+        try (Connection connection = Att.att(request).connect()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update proprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
             output.put("result", "ok");
             return output;
-            
+
         } catch (SQLException e) {
             return output;
         }
     }
+
+    public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+
+        Query qProkit = new Query(Att.att(request).connect(), eProkit.values()).select(eProkit.up);
+        for (Record rec : qProkit) {
+            list.add(Arrays.asList(
+                    rec.get(eProkit.id),
+                    rec.get(eProkit.artikl_id),
+                    rec.get(eProkit.artikl_id),
+                    rec.get(eProkit.color1_id),
+                    rec.get(eProkit.color2_id),
+                    rec.get(eProkit.color3_id),
+                    rec.get(eProkit.width),
+                    rec.get(eProkit.height),
+                    rec.get(eProkit.numb),
+                    rec.get(eProkit.angl1),
+                    rec.get(eProkit.angl2)));
+        }
+        JSONObject output = new JSONObject(App.asMap("kitsList", list));
+        return output;
+    }
+    
+    public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        
+        Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
+        for (Record rec : qSysuser) {
+            list.add(Arrays.asList(
+                    rec.get(eSysuser.id), 
+                    rec.get(eSysuser.fio), 
+                    rec.get(eSysuser.desc), 
+                    rec.get(eSysuser.login), 
+                    rec.get(eSysuser.role)));
+        }
+        JSONObject output = new JSONObject(App.asMap("userList", list));
+        return output; 
+    }    
 }

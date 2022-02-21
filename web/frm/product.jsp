@@ -9,6 +9,14 @@
 
         <script type="text/javascript">
 
+            $.ajax({
+                url: 'product?action=productRec',
+                data: {'nuni': 8},
+                success: function (data) {
+                    product.wincStv = data.wincStv;
+                }
+            });
+
             product.resize = function () {
 
                 var height = window.innerHeight;

@@ -26,7 +26,7 @@ kits.init_table1 = function (table) {
 kits.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
-        url: 'kits?action=kitsList',
+        url: 'dbset?action=kitsList',
         success: function (data) {
             kits.kitsList = data.kitsList;
             for (let i = 0; i < kits.kitsList.length; i++) {

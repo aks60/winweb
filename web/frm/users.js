@@ -42,7 +42,7 @@ users.init_table1 = function (table) {
 users.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
-        url: 'users?action=userList',
+        url: 'dbset?action=userList',
         success: function (data) {
             users.userList = data.userList;
             for (let i = 0; i < users.userList.length; i++) {
