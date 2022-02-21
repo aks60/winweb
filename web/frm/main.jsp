@@ -50,7 +50,7 @@
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
                     users = {}, order = {rowid_table1: 8, rec_table2: null, wincalcMap: new Map()}, artikl = {}, product = {},
-                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {};
+                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {};
 
             $(document).ready(function () {
 
