@@ -114,7 +114,7 @@
             dbset.colorList.virtualRec = [-3, "Virtual", -3, -3];
 
             }).catch(() => {
-            alert('Ошибка загрузки бд');
+            dialogMes("Ошибка", 'Ошибка загрузки базы данных', 150);
             })
             });
         </script> 

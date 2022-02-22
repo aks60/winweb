@@ -361,9 +361,17 @@ function get_stvorka_fields() {
                     url: 'dbset?action=stvFields',
                     data: {'proprodID': proprodID},
                     success: function (data) {
-                        alert(111);
-                        //product.stvFields = data.stvFields;
-                        //console.log(product.stvFields);
+                        product.stvFields = data.stvFields;
+                        let id = order.rec_table2[PROPROD.id];
+                        let winc = order.wincalcMap.get(id);
+                        for (let el of winc.elemList) {
+                            if (el.type == 'STVORKA') {
+                                let fields = product.stvFields[el.id];
+                                console.log(fields);
+                            }
+                        }
+                        //let node = tabtree.jstree("get_selected")[0];
+                        //view_winc_property(node);
                     }
                 });
             }
