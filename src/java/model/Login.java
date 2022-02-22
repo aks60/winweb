@@ -100,7 +100,7 @@ public class Login {
         String user_desc = request.getParameter("desc");
 
         HashMap output = app.asMap("login", login, "openkey", openkey);
-        Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values());
+        Query qSysuser = new Query(eSysuser.values());
         Record record = eSysuser.up.newRecord(Query.INS);
         record.setNo(eSysuser.login, login);
         record.setNo(eSysuser.role, user_role);
@@ -133,7 +133,7 @@ public class Login {
         try {
             HttpSession session = request.getSession();
             String loginToken = session.getAttribute("login").toString();
-            Query qSysuser = new Query(att.connect(), eSysuser.values()).select("select * from uchusers a where a.user2 = " + loginToken);
+            Query qSysuser = new Query(eSysuser.values()).select("select * from uchusers a where a.user2 = " + loginToken);
             if (qSysuser == null) {
                 session.setAttribute("login", request.getParameter("empty"));
                 output.put("result", "Ошибка! Такой логин пользователя не зарегистрирован на сервере");
@@ -270,7 +270,7 @@ public class Login {
     public JSONObject deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
         JSONObject output = new JSONObject(App.asMap("result", "Ошибка удаления пользователя"));
         try {
-            Query qUser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
+            Query qUser = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
             if (qUser.isEmpty() == false) {
                 qUser.delete(qUser.get(0));
                 output.put("result", true);

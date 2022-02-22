@@ -361,8 +361,9 @@ function get_stvorka_fields() {
                     url: 'dbset?action=stvFields',
                     data: {'proprodID': proprodID},
                     success: function (data) {
-                        product.stvFields = data.stvFields;
-                        console.log(product.stvFields);
+                        alert(111);
+                        //product.stvFields = data.stvFields;
+                        //console.log(product.stvFields);
                     }
                 });
             }

@@ -40,7 +40,7 @@ public class Dbset {
     
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth,
+        Query qSystree = new Query(eSystree.id, eSystree.name, eSystree.glas, eSystree.depth,
                 eSystree.col1, eSystree.col2, eSystree.col3, eSystree.cgrp, eSystree.types, eSystree.parent_id).select(eSystree.up);
         for (Record rec : qSystree) {
             list.add(Arrays.asList(
@@ -61,7 +61,7 @@ public class Dbset {
     
     public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysprod = new Query(Att.att(request).connect(), eSysprod.id, eSysprod.name, eSysprod.script, eSysprod.systree_id).select(eSysprod.up);
+        Query qSysprod = new Query(eSysprod.id, eSysprod.name, eSysprod.script, eSysprod.systree_id).select(eSysprod.up);
         for (Record rec : qSysprod) {
             list.add(Arrays.asList(
                     rec.get(eSysprod.id),
@@ -75,7 +75,7 @@ public class Dbset {
     
     public static JSONObject groupList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qGroup = new Query(Att.att(request).connect(), eGroups.values()).select(eGroups.up, "order by", eGroups.name);
+        Query qGroup = new Query(eGroups.values()).select(eGroups.up, "order by", eGroups.name);
         for (Record rec : qGroup) {
             list.add(Arrays.asList(
                     rec.get(eGroups.id),
@@ -89,8 +89,7 @@ public class Dbset {
     
     public static JSONObject colorList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qColor = new Query(Att.att(request).connect(),
-                eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
+        Query qColor = new Query(eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
         for (Record rec : qColor) {
             list.add(Arrays.asList(
                     rec.get(eColor.id),
@@ -104,7 +103,7 @@ public class Dbset {
     
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id, eArtikl.code, eArtikl.level1,
+        Query qArtikl = new Query(eArtikl.id, eArtikl.code, eArtikl.level1,
                 eArtikl.level2, eArtikl.name, eArtikl.height, eArtikl.depth, eArtikl.analog_id).select(eArtikl.up);
         for (Record rec : qArtikl) {
             list.add(Arrays.asList(
@@ -123,8 +122,7 @@ public class Dbset {
     
     public static JSONObject artdetList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qArtdet = new Query(Att.att(request).connect(), eArtdet.id,
-                eArtdet.color_fk, eArtdet.artikl_id).select(eArtdet.up);
+        Query qArtdet = new Query(eArtdet.id, eArtdet.color_fk, eArtdet.artikl_id).select(eArtdet.up);
         for (Record rec : qArtdet) {
             list.add(Arrays.asList(
                     rec.get(eArtdet.id),
@@ -137,7 +135,7 @@ public class Dbset {
     
     public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qFurniture = new Query(Att.att(request).connect(), eFurniture.id, eFurniture.name).select(eFurniture.up);
+        Query qFurniture = new Query(eFurniture.id, eFurniture.name).select(eFurniture.up);
         for (Record rec : qFurniture) {
             list.add(Arrays.asList(
                     rec.get(eFurniture.id),
@@ -149,7 +147,7 @@ public class Dbset {
     
     public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
+        Query qProprod = new Query(eProprod.id, eProprod.name, eProprod.script,
                 eProprod.project_id, eProprod.systree_id).select(eProprod.up);
         for (Record rec : qProprod) {
             list.add(Arrays.asList(
@@ -165,7 +163,7 @@ public class Dbset {
     
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open,
+        Query qSysfurn = new Query(eSysfurn.id, eSysfurn.side_open,
                 eSysfurn.hand_pos, eSysfurn.systree_id, eSysfurn.furniture_id, eSysfurn.artikl_id1, eSysfurn.artikl_id2)
                 .select(eSysfurn.up, "order by", eSysfurn.npp);
         for (Record rec : qSysfurn) {
@@ -184,7 +182,7 @@ public class Dbset {
     
     public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSysprof = new Query(Att.att(request).connect(), eSysprof.id, eSysprof.prio, eSysprof.use_type,
+        Query qSysprof = new Query(eSysprof.id, eSysprof.prio, eSysprof.use_type,
                 eSysprof.use_side, eSysprof.artikl_id, eSysprof.systree_id).select(eSysprof.up, "order by", eSysprof.prio);
         for (Record rec : qSysprof) {
             list.add(Arrays.asList(
@@ -201,8 +199,7 @@ public class Dbset {
     
     public static JSONObject syspar1List(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qSyspar1 = new Query(Att.att(request).connect(), eSyspar1.id,
-                eSyspar1.text, eSyspar1.params_id, eSyspar1.fixed, eSyspar1.systree_id).select(eSyspar1.up);
+        Query qSyspar1 = new Query(eSyspar1.id, eSyspar1.text, eSyspar1.params_id, eSyspar1.fixed, eSyspar1.systree_id).select(eSyspar1.up);
         for (Record rec : qSyspar1) {
             list.add(Arrays.asList(
                     rec.get(eSyspar1.id),
@@ -217,8 +214,7 @@ public class Dbset {
     
     public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qParams = new Query(Att.att(request).connect(), eParams.id,
-                eParams.text, eParams.params_id).select(eParams.up);
+        Query qParams = new Query(eParams.id, eParams.text, eParams.params_id).select(eParams.up);
         for (Record rec : qParams) {
             list.add(Arrays.asList(
                     rec.get(eParams.id),
@@ -249,7 +245,7 @@ public class Dbset {
     public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         
-        Query qProkit = new Query(Att.att(request).connect(), eProkit.values()).select(eProkit.up);
+        Query qProkit = new Query(eProkit.values()).select(eProkit.up);
         for (Record rec : qProkit) {
             list.add(Arrays.asList(
                     rec.get(eProkit.id),
@@ -272,9 +268,7 @@ public class Dbset {
         ArrayList<List> list = new ArrayList();
         String proprodID = request.getParameter("proprodID");
         Query qProprod = new Query(eProprod.values()).select(eProprod.up, "where", eProprod.id, "=", proprodID);
-        //String script = qProprod.getAs(0, eProprod.script);
-        //Wincalc winc = new Wincalc(script);
-        String script = qProprod.get(0).getStr(eProprod.script);
+        String script = qProprod.getAs(0, eProprod.script);
         Wincalc winc = new Wincalc(script);
         new Furniture(winc, true);
         LinkedList<AreaStvorka> elemStvorkaList = UCom.listSortObj(winc.listSortAr, Type.STVORKA);
@@ -286,7 +280,7 @@ public class Dbset {
     public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         
-        Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
+        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
         for (Record rec : qSysuser) {
             list.add(Arrays.asList(
                     rec.get(eSysuser.id),

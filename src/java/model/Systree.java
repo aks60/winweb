@@ -20,7 +20,7 @@ public class Systree {
     public JSONObject sysTree(HttpServletRequest request, HttpServletResponse response) {
 
         ArrayList<HashMap> dict = new ArrayList<HashMap>();
-        Query qDict = new Query(Att.att(request).connect(), eSystree.values()).select(eSystree.up);
+        Query qDict = new Query(eSystree.values()).select(eSystree.up);
 
         //Первый уровень
         for (Record rec1 : qDict) {
@@ -64,7 +64,7 @@ public class Systree {
     public JSONObject sysProd(HttpServletRequest request, HttpServletResponse response) {
 
         List<List> prod = new ArrayList();
-        Query qSysprod = new Query(Att.att(request).connect(), eSysprod.values()).select(eSysprod.up, "order by name");
+        Query qSysprod = new Query(eSysprod.values()).select(eSysprod.up, "order by name");
         for (Record rec : qSysprod) {
             prod.add(Arrays.asList(
                     rec.get(eSysprod.id), 

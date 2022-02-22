@@ -22,7 +22,7 @@ public class Order {
 
     public JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-        Query qProject = new Query(Att.att(request).connect(), eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
+        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
         for (Record rec : qProject) {
             list.add(Arrays.asList(
                     rec.get(eProject.id),
