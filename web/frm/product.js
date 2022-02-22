@@ -59,7 +59,7 @@ product.load_tree = function (tabtree) {
     arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
-    
+
     elements(root, arr); //вход в рекурсию    
 
     tabtree.jstree({'core': {
@@ -119,6 +119,8 @@ function view_winc_property(nodeID) {
         elem = winc.elemList.find(it => it.id == nodeID);
     }
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+
+    //Коробка
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
         let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
@@ -127,9 +129,13 @@ function view_winc_property(nodeID) {
             n14: winc.color1Rec[COLOR.name], n15: winc.color2Rec[COLOR.name], n16: winc.color3Rec[COLOR.name]
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
+
+        //Парам. по умолчанию
     } else if (elem.type == "DEF_PARAM") {
         product.load_table($('#table1'));
         $("#tabs-2").show();
+
+        //Сторона коробки, створки
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
         if (elem.type == "FRAME_SIDE") {
@@ -144,10 +150,12 @@ function view_winc_property(nodeID) {
             n33: elem.color1Rec[COLOR.name], n34: elem.color2Rec[COLOR.name], n35: elem.color3Rec[COLOR.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
+
+        //Створка
     } else if (elem.type == "STVORKA") {
         let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
-        //Сторона открывания
-        let side_open = "откидная";
+
+        let side_open = "откидная"; //сторона открывания
         if ([1, 3, 11].includes(elem.typeOpen, 0)) {
             side_open = "левая";
         } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
@@ -165,6 +173,8 @@ function view_winc_property(nodeID) {
             n4C: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
+
+        //Стеклопакет
     } else if (elem.type == "GLASS") {
         load_fields('tabs-5', {
             n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.color1Rec[COLOR.name]
@@ -314,37 +324,51 @@ function sysprof_to_frame(btnSrc) {
 }
 //------------------------------------------------------------------------------
 function artikl_to_glass(btnSrc) {
-//        try {
-    let nodeID = $("#tree-winc").jstree("get_selected")[0];
-    let proprodID = order.rec_table2[PROPROD.id];
-    let winc = order.wincalcMap.get(proprodID);
-    let elem = winc.elemList.find(it => it.id == nodeID);
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let proprodID = order.rec_table2[PROPROD.id];
+        let winc = order.wincalcMap.get(proprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
 
-    //Список доступных толщин в ветке системы например 4;5;8
-    let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
-    if (systreeRec != undefined) {
-        let depth = systreeRec[SYSTREE.depth];
-        depth = depth.replace(/;/g, ',');
-        if (depth.charAt(depth.length - 1) == ',') {
-            depth = depth.substring(0, depth.length - 1);
+        //Список доступных толщин в ветке системы например 4;5;8
+        let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
+        if (systreeRec != undefined) {
+            let depth = systreeRec[SYSTREE.depth];
+            depth = depth.replace(/;/g, ',');
+            if (depth.charAt(depth.length - 1) == ',') {
+                depth = depth.substring(0, depth.length - 1);
+            }
+            depth = depth.split(',');
+            let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
+                        && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
+
+            product.artiklArr = artiklList;
+            product.buttonSrc = btnSrc;
+            $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
         }
-        depth = depth.split(',');
-        let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
-                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
-
-        product.artiklArr = artiklList;
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/artikl.jsp');
-
+    } catch (e) {
+        console.error("Ошибка:sysprof_to_frame() " + e.message);
     }
-
-    //Список стеклопакетов
-    //depth = (depth != null && depth.isEmpty() == false) ? " and " + eArtikl.depth.name() + " in (" + depth + ")" : "";
-    //Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up,
-    // "where", eArtikl.level1, "= 5 and", eArtikl.level2, "in (1,2,3)", depth);
-
-//        } catch (e) {
-//            console.error("Ошибка:sysprof_to_frame() " + e.message);
-//        }
+}
+//------------------------------------------------------------------------------
+function get_stvorka_fields() {
+    try {
+        if (order.rec_table2 != undefined) {
+            let proprodID = order.rec_table2[PROPROD.id];
+            if (proprodID != undefined) {
+                $.ajax({
+                    url: 'dbset?action=stvFields',
+                    data: {'proprodID': proprodID},
+                    success: function (data) {
+                        product.stvFields = data.stvFields;
+                        console.log(product.stvFields);
+                    }
+                });
+            }
+        }
+    } catch (e) {
+        console.error("Ошибка:get_stvorka_fields() " + e.message);
+    }
 }
 //------------------------------------------------------------------------------

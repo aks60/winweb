@@ -1,5 +1,9 @@
 package model;
 
+import builder.Wincalc;
+import builder.making.Furniture;
+import builder.model.AreaStvorka;
+import common.UCom;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
@@ -17,11 +21,13 @@ import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import domain.eSysuser;
+import enums.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +37,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 public class Dbset {
-
+    
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSystree = new Query(Att.att(request).connect(), eSystree.id, eSystree.name, eSystree.glas, eSystree.depth,
@@ -52,7 +58,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("systreeList", list));
         return output;
     }
-
+    
     public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysprod = new Query(Att.att(request).connect(), eSysprod.id, eSysprod.name, eSysprod.script, eSysprod.systree_id).select(eSysprod.up);
@@ -66,7 +72,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("sysprodList", list));
         return output;
     }
-
+    
     public static JSONObject groupList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qGroup = new Query(Att.att(request).connect(), eGroups.values()).select(eGroups.up, "order by", eGroups.name);
@@ -80,7 +86,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("groupList", list));
         return output;
     }
-
+    
     public static JSONObject colorList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qColor = new Query(Att.att(request).connect(),
@@ -95,7 +101,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("colorList", list));
         return output;
     }
-
+    
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qArtikl = new Query(Att.att(request).connect(), eArtikl.id, eArtikl.code, eArtikl.level1,
@@ -114,7 +120,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("artiklList", list));
         return output;
     }
-
+    
     public static JSONObject artdetList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qArtdet = new Query(Att.att(request).connect(), eArtdet.id,
@@ -128,7 +134,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("artdetList", list));
         return output;
     }
-
+    
     public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qFurniture = new Query(Att.att(request).connect(), eFurniture.id, eFurniture.name).select(eFurniture.up);
@@ -140,7 +146,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("furnitureList", list));
         return output;
     }
-
+    
     public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qProprod = new Query(Att.att(request).connect(), eProprod.id, eProprod.name, eProprod.script,
@@ -156,7 +162,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("proprodList", list));
         return output;
     }
-
+    
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysfurn = new Query(Att.att(request).connect(), eSysfurn.id, eSysfurn.side_open,
@@ -175,7 +181,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("sysfurnList", list));
         return output;
     }
-
+    
     public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSysprof = new Query(Att.att(request).connect(), eSysprof.id, eSysprof.prio, eSysprof.use_type,
@@ -192,7 +198,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("sysprofList", list));
         return output;
     }
-
+    
     public static JSONObject syspar1List(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qSyspar1 = new Query(Att.att(request).connect(), eSyspar1.id,
@@ -208,7 +214,7 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("syspar1List", list));
         return output;
     }
-
+    
     public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         Query qParams = new Query(Att.att(request).connect(), eParams.id,
@@ -222,27 +228,27 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("paramsList", list));
         return output;
     }
-
+    
     public static JSONObject saveScript(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-
+        
         try (Connection connection = Att.att(request).connect()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update proprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
             output.put("result", "ok");
             return output;
-
+            
         } catch (SQLException e) {
             return output;
         }
     }
-
+    
     public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
-
+        
         Query qProkit = new Query(Att.att(request).connect(), eProkit.values()).select(eProkit.up);
         for (Record rec : qProkit) {
             list.add(Arrays.asList(
@@ -262,19 +268,34 @@ public class Dbset {
         return output;
     }
     
+    public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
+        String proprodID = request.getParameter("proprodID");
+        Query qProprod = new Query(eProprod.values()).select(eProprod.up, "where", eProprod.id, "=", proprodID);
+        //String script = qProprod.getAs(0, eProprod.script);
+        //Wincalc winc = new Wincalc(script);
+        String script = qProprod.get(0).getStr(eProprod.script);
+        Wincalc winc = new Wincalc(script);
+        new Furniture(winc, true);
+        LinkedList<AreaStvorka> elemStvorkaList = UCom.listSortObj(winc.listSortAr, Type.STVORKA);
+        
+        JSONObject output = new JSONObject(App.asMap("stvFields", list));
+        return output;        
+    }
+    
     public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
         
         Query qSysuser = new Query(Att.att(request).connect(), eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
         for (Record rec : qSysuser) {
             list.add(Arrays.asList(
-                    rec.get(eSysuser.id), 
-                    rec.get(eSysuser.fio), 
-                    rec.get(eSysuser.desc), 
-                    rec.get(eSysuser.login), 
+                    rec.get(eSysuser.id),
+                    rec.get(eSysuser.fio),
+                    rec.get(eSysuser.desc),
+                    rec.get(eSysuser.login),
                     rec.get(eSysuser.role)));
         }
         JSONObject output = new JSONObject(App.asMap("userList", list));
-        return output; 
+        return output;        
     }    
 }
