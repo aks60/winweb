@@ -32,17 +32,17 @@ kits.load_table1 = function (table) {
             for (let i = 0; i < kits.kitsList.length; i++) {
                 let tr = kits.kitsList[i];
                 table.jqGrid('addRowData', i + 1, {
-                    id: tr[0],
-                    artikl_id: tr[1],
-                    artikl_id: tr[2],
-                    color1_id: tr[3],
-                    color2_id: tr[4],
-                    color3_id: tr[5],
-                    width: tr[6],
-                    height: tr[7],
-                    numb: tr[8],
-                    angl1: tr[9],
-                    angl2: tr[10]
+                    id: tr[KITS.id],
+                    artikl_id: tr[KITS.artikl_id],
+                    artikl_id: tr[KITS.artikl_id],
+                    color1_id: tr[KITS.color1_id],
+                    color2_id: tr[KITS.color2_id],
+                    color3_id: tr[KITS.color3_id],
+                    width: tr[KITS.width],
+                    height: tr[KITS.height],
+                    numb: tr[KITS.numb],
+                    angl1: tr[KITS.angl1],
+                    angl2: tr[KITS.angl2]
                 });
             }
             kits.resize();

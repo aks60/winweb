@@ -5,6 +5,12 @@ dbset.find = (id, ds) => {
     return (record == undefined) ? ds.virtualRec : record;
 }
 //------------------------------------------------------------------------------
+dbset.find2 = (id, ds) => {
+    
+    let record = ds.find(rec => id == rec[1])
+    return (record == undefined) ? ds.virtualRec : record;
+}
+//------------------------------------------------------------------------------
 dbset.nullRecord = (ds) => {
     if (ds == undefined || ds[0] == undefined || ds[0] == null) {
         return undefined;

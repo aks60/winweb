@@ -58,13 +58,13 @@ order.load_table = function (table1, table2) {
             for (let i = 0; i < order.orderList.length; i++) {
                 let tr = order.orderList[i];
                 table1.jqGrid('addRowData', i + 1, {
-                    id: tr[0],
-                    num_ord: tr[1],
-                    num_acc: tr[2],
-                    date4: tr[3],
-                    date6: tr[4],
-                    propart_id: tr[5],
-                    manager: tr[6]
+                    id: tr[ORDER.id],
+                    num_ord: tr[ORDER.num_ord],
+                    num_acc: tr[ORDER.num_acc],
+                    date4: tr[ORDER .date4],
+                    date6: tr[ORDER.date6],
+                    propart_id: tr[ORDER.propart_id],
+                    manager: tr[ORDER.manager]
                 });
             }
             table1.jqGrid("setSelection", order.rowid_table1);
@@ -122,7 +122,7 @@ order.event_clicked = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
 
         let proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = dbset.find(proprodID, dbset.proprodList);
+        order.rec_table2 = dbset.find2(proprodID, dbset.proprodList);
         let script = order.rec_table2[PROPROD.script];
     }
 }
