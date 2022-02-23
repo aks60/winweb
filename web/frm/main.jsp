@@ -24,17 +24,17 @@
         <script type="text/javascript">
 
             //Поля таблиц
-            var SYSTREE = {id: 0, name: 1, glas: 2, depth: 3, col1: 4, col2: 5, col3: 6, cgrp: 7, types: 8, parent_id: 9},
-                    GROUP = {id: 0, grp: 1, name: 2, val: 3},
-                    COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
+            var SYSTREE = {id: 1, name: 2, glas: 3, depth: 4, col1: 5, col2: 6, col3: 7, cgrp: 8, types: 12, parent_id: 13},
+                    GROUP = {id: 1, grp: 2, name: 4, val: 5},
+                    COLOR = {id: 1, name: 2, rgb: 4, colgrp_id: 14},
                     ARTIKL = {id: 1, code: 2, level1: 3, level2: 4, name: 5, height: 14, depth: 15, analog_id: 35},
-                    ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
-                    FURNITURE = {id: 0, name: 1},
-                    SYSPROF = {id: 0, prio: 1, use_type: 2, use_side: 3, artikl_id: 4, systree_id: 5},
-                    SYSFURN = {id: 0, side_open: 1, hand_pos: 2, systree_id: 3, furniture_id: 4, artikl_id1: 5, artikl_id2: 6},
-                    SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
-                    PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4},
-                    SYSPAR1 = {id: 0, text: 1, params_id: 2, fixed: 3, systree_id: 4},
+                    ARTDET = {id: 1, color_fk: 14, artikl_id: 15},
+                    FURNITURE = {id: 1, name: 2},
+                    SYSPROF = {id: 1, prio: 2, use_type: 3, use_side: 4, artikl_id: 5, systree_id: 6},
+                    SYSFURN = {id: 1, side_open: 4, hand_pos: 5, furniture_id: 6, artikl_id1: 7, artikl_id2: 8, systree_id: 9},
+                    SYSPROD = {id: 1, name: 2, script: 3, systree_id: 4},
+                    PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
+                    SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 0, text: 1, params_id: 2},
                     ORDER = {id: 0, num_ord: 1, num_acc: 2, date4: 3, date6: 4, propart_id: 5, manager: 6},
                     USER = {id: 0, fio: 1, desc: 2, login: 3, role: 4},
@@ -115,11 +115,10 @@
             login.init_login('dat');
 
             //Виртуальные артикулы  
-            dbset.sysprofList.virtualRec = [-3, 0, 0, -1, -3, -3];
+            dbset.sysprofList.virtualRec = createVirtueRec(7, {1:-3, 2:0, 3:0, 4:-1, 5:-3, 6:-3});
             dbset.artiklList.virtualRec = createVirtueRec(37, {1: -3, 2: 'Virtual', 5: 'Virtual', 14: 80, 15: 4, 35: -3});
-            //dbset.artiklList.virtualRec = [-3, "Virtual", 0, 0, "Virtual", 80, 4, -3];
-            dbset.artdetList.virtualRec = [-3, -3, -3];
-            dbset.colorList.virtualRec = [-3, "Virtual", -3, -3];
+            dbset.artdetList.virtualRec = createVirtueRec(37, {1:-3, 14: -3, 15: -3});
+            dbset.colorList.virtualRec = createVirtueRec(15, {1:-3, 2: 'Virtual', 4:-3, 14:-3});
 
             }).catch(() => {
             dialogMes("Ошибка", 'Ошибка загрузки базы данных', 150);

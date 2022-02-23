@@ -27,9 +27,9 @@ class Wincalc {
             this.width = obj.width;          //ширина окна, мм
             this.height = obj.height;        //высота окна, мм 
             this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
-            this.color1Rec = dbset.find(obj.color1, dbset.colorList);
-            this.color2Rec = dbset.find(obj.color2, dbset.colorList);
-            this.color3Rec = dbset.find(obj.color3, dbset.colorList);
+            this.color1Rec = dbset.find2(obj.color1, dbset.colorList);
+            this.color2Rec = dbset.find2(obj.color2, dbset.colorList);
+            this.color3Rec = dbset.find2(obj.color3, dbset.colorList);
             
             this.root = new Root(obj, null, this); //главное окно                      
             this.elements(this.root, obj); //создадим элементы конструкции
