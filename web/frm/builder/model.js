@@ -169,7 +169,7 @@ export class Stvorka extends Area {
         }
         //Подвес (петли)
         if (this.obj.param != undefined && this.obj.param.artiklLoop != undefined) {
-            this.loopRec = dbset.find(this.obj.param.artiklLoop, dbset.artiklList);
+            this.loopRec = dbset.find2(this.obj.param.artiklLoop, dbset.artiklList);
         }
         //Текстура подвеса
         if (this.obj.param != undefined && this.obj.param.colorLoop != undefined) {
@@ -315,8 +315,8 @@ export class Cross extends Com5t {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
             }
         }
-        this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
-        this.artiklAn = dbset.find(this.artiklRec[ARTIKL.analog_id], dbset.artiklList);
+        this.artiklRec = dbset.find2(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
+        this.artiklAn = dbset.find2(this.artiklRec[ARTIKL.analog_id], dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }
@@ -403,7 +403,7 @@ export class Frame extends Com5t {
 
         }
         this.sysprofRec = dbset.find(this.sysprofID, dbset.sysprofList);
-        this.artiklRec = dbset.find(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
+        this.artiklRec = dbset.find2(this.sysprofRec[SYSPROF.artikl_id], dbset.artiklList);
         this.artiklAn = dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
