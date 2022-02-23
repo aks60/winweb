@@ -257,3 +257,10 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
+function createVirtueRec(size, data) {
+    let arr = new Array(size);
+    for (let k in data)
+        arr[k] = data[k];
+    return arr;
+}
+//------------------------------------------------------------------------------            

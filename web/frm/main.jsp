@@ -35,7 +35,10 @@
                     SYSPROD = {id: 0, name: 1, script: 2, systree_id: 3},
                     PROPROD = {id: 0, name: 1, script: 2, project_id: 3, systree_id: 4},
                     SYSPAR1 = {id: 0, text: 1, params_id: 2, fixed: 3, systree_id: 4},
-                    PARAMS = {id: 0, text: 1, params_id: 2};
+                    PARAMS = {id: 0, text: 1, params_id: 2},
+                    ORDER = {id: 0, num_ord: 1, num_acc: 2, date4: 3, date6: 4, propart_id: 5, manager: 6},
+                    USER = {id: 0, fio: 1, desc: 2, login: 3, role: 4},
+                    KITS = {id: 0, artikl_id: 1, color1_id: 2, color2_id: 3, color3_id: 4, width: 5, height: 6, numb: 7, angl1: 8, angl2: 9};
 
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
@@ -46,7 +49,7 @@
                 RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая'], FULL: [6, '']};
             var UseSide = {VERT: [-3, 'Вертикальная'], HORIZ: [-2, 'Горизонтальная'], ANY: [-1, 'Любая'], MANUAL: [0, 'Вручную'],
                 BOT: [1, 'Нижняя'], RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая']};
-            var  TypeOpen = {FIXED: [0, "Глухая створка (не открывается)"], LEFT: [1, "Левая поворотная (открывается справа-налево, ручка справа)"],
+            var TypeOpen = {FIXED: [0, "Глухая створка (не открывается)"], LEFT: [1, "Левая поворотная (открывается справа-налево, ручка справа)"],
                 RIGHT: [2, "Правая поворотная (открывается слева-направо, ручка слева)"], LEFTUP: [3, "Левая поворотно-откидная"],
                 RIGHTUP: [4, "Правая поворотно-откидная"], UPPER: [5, "Откидная (открывается сверху)"], LEFTMOV: [11, "Раздвижная влево (открывается справа-налево, защелка справа"],
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
@@ -57,13 +60,13 @@
                     dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {};
 
             $(document).ready(function () {
-
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
                 $('button').button();
                 $.jstree.defaults.core.themes.variant = "large";
             });
+
             window.onload = function () {
                 if (product.resize != undefined) {
                     product.resize();
@@ -113,7 +116,8 @@
 
             //Виртуальные артикулы  
             dbset.sysprofList.virtualRec = [-3, 0, 0, -1, -3, -3];
-            dbset.artiklList.virtualRec = [-3, "Virtual", 0, 0, "Virtual", 80, 4, -3];
+            dbset.artiklList.virtualRec = createVirtueRec(37, {1: -3, 2: 'Virtual', 5: 'Virtual', 14: 80, 15: 4, 35: -3});
+            //dbset.artiklList.virtualRec = [-3, "Virtual", 0, 0, "Virtual", 80, 4, -3];
             dbset.artdetList.virtualRec = [-3, -3, -3];
             dbset.colorList.virtualRec = [-3, "Virtual", -3, -3];
 

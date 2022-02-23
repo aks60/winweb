@@ -255,7 +255,6 @@ public class Dbset {
             list.add(Arrays.asList(
                     rec.get(eProkit.id),
                     rec.get(eProkit.artikl_id),
-                    rec.get(eProkit.artikl_id),
                     rec.get(eProkit.color1_id),
                     rec.get(eProkit.color2_id),
                     rec.get(eProkit.color3_id),
