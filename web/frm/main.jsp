@@ -27,7 +27,7 @@
             var SYSTREE = {id: 0, name: 1, glas: 2, depth: 3, col1: 4, col2: 5, col3: 6, cgrp: 7, types: 8, parent_id: 9},
                     GROUP = {id: 0, grp: 1, name: 2, val: 3},
                     COLOR = {id: 0, name: 1, rgb: 2, colgrp_id: 3},
-                    ARTIKL = {id: 0, code: 1, level1: 2, level2: 3, name: 4, height: 5, depth: 6, analog_id: 7},
+                    ARTIKL = {id: 1, code: 2, level1: 3, level2: 4, name: 5, height: 14, depth: 15, analog_id: 35},
                     ARTDET = {id: 0, color_fk: 1, artikl_id: 2},
                     FURNITURE = {id: 0, name: 1},
                     SYSPROF = {id: 0, prio: 1, use_type: 2, use_side: 3, artikl_id: 4, systree_id: 5},
@@ -46,6 +46,10 @@
                 RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая'], FULL: [6, '']};
             var UseSide = {VERT: [-3, 'Вертикальная'], HORIZ: [-2, 'Горизонтальная'], ANY: [-1, 'Любая'], MANUAL: [0, 'Вручную'],
                 BOT: [1, 'Нижняя'], RIGHT: [2, 'Правая'], TOP: [3, 'Верхняя'], LEFT: [4, 'Левая']};
+            var  TypeOpen = {FIXED: [0, "Глухая створка (не открывается)"], LEFT: [1, "Левая поворотная (открывается справа-налево, ручка справа)"],
+                RIGHT: [2, "Правая поворотная (открывается слева-направо, ручка слева)"], LEFTUP: [3, "Левая поворотно-откидная"],
+                RIGHTUP: [4, "Правая поворотно-откидная"], UPPER: [5, "Откидная (открывается сверху)"], LEFTMOV: [11, "Раздвижная влево (открывается справа-налево, защелка справа"],
+                RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
 
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},

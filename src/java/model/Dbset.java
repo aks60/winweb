@@ -104,22 +104,25 @@ public class Dbset {
     }
 
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
-        Query qArtikl = new Query(eArtikl.id, eArtikl.code, eArtikl.level1,
-                eArtikl.level2, eArtikl.name, eArtikl.height, eArtikl.depth, eArtikl.analog_id).select(eArtikl.up);
-        for (Record rec : qArtikl) {
-            list.add(Arrays.asList(
-                    rec.get(eArtikl.id),
-                    rec.get(eArtikl.code),
-                    rec.get(eArtikl.level1),
-                    rec.get(eArtikl.level2),
-                    rec.get(eArtikl.name),
-                    rec.get(eArtikl.height),
-                    rec.get(eArtikl.depth),
-                    rec.get(eArtikl.analog_id)));
-        }
-        JSONObject output = new JSONObject(App.asMap("artiklList", list));
-        return output;
+        Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up);
+        return new JSONObject(App.asMap("artiklList", qArtikl));
+
+//        ArrayList<List> list = new ArrayList();
+//        Query qArtikl = new Query(eArtikl.id, eArtikl.code, eArtikl.level1,
+//                eArtikl.level2, eArtikl.name, eArtikl.height, eArtikl.depth, eArtikl.analog_id).select(eArtikl.up);
+//        for (Record rec : qArtikl) {
+//            list.add(Arrays.asList(
+//                    rec.get(eArtikl.id),
+//                    rec.get(eArtikl.code),
+//                    rec.get(eArtikl.level1),
+//                    rec.get(eArtikl.level2),
+//                    rec.get(eArtikl.name),
+//                    rec.get(eArtikl.height),
+//                    rec.get(eArtikl.depth),
+//                    rec.get(eArtikl.analog_id)));
+//        }
+//        JSONObject output = new JSONObject(App.asMap("artiklList", list));
+//        return output;
     }
 
     public static JSONObject artdetList(HttpServletRequest request, HttpServletResponse response) {

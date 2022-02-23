@@ -60,10 +60,10 @@
                 for (let i = 0; i < dbset.sysprofList.length; i++) {
                     let tr = dbset.sysprofList[i];
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[0],
-                        use_side: tr[1],
-                        artikl_id: tr[2],
-                        artikl_id: tr[2]
+                        id: tr[SYSPROF.id],
+                        use_side: tr[SYSPROF.use_side],
+                        artikl_id: tr[SYSPROF.artikl_id],
+                        artikl_id: tr[SYSPROF.artikl_id]
                     });
                 }
                 //sysprof.resize();

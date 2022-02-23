@@ -71,7 +71,7 @@ product.load_tree = function (tabtree) {
             })
             .bind("select_node.jstree", function (evt, data) {
                 let node = tabtree.jstree("get_selected")[0];
-                view_winc_property(node);
+                winc_to_property(node);
             });
     setTimeout(function () {
         product.resize();
@@ -107,7 +107,7 @@ function elements(com, arr) {
     }
 }
 //------------------------------------------------------------------------------
-function view_winc_property(nodeID) {
+function winc_to_property(nodeID) {
 
     nodeID = (nodeID == -2) ? 0 : nodeID;
     let elem = {};
@@ -154,15 +154,14 @@ function view_winc_property(nodeID) {
         //Створка
     } else if (elem.type == "STVORKA") {
         let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
-
-        let side_open = "откидная"; //сторона открывания
-        if ([1, 3, 11].includes(elem.typeOpen, 0)) {
-            side_open = "левая";
-        } else if ([2, 4, 12].includes(elem.typeOpen, 0)) {
-            side_open = "правая";
+        let type_open = TypeOpen.INVALID[1]; //сторона открывания
+        for (let k in TypeOpen) {
+            if (TypeOpen[k][0] == elem.typeOpen) {
+                type_open = TypeOpen[k][1];
+            }
         }
         load_fields('tabs-4', {
-            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: side_open,
+            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: type_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
             n46: dbset.find(elem.handleColor, dbset.colorList)[COLOR.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
@@ -366,12 +365,27 @@ function get_stvorka_fields() {
                         let winc = order.wincalcMap.get(id);
                         for (let el of winc.elemList) {
                             if (el.type == 'STVORKA') {
-                                let fields = product.stvFields[el.id];
-                                console.log(fields);
+                                for (let fk in data.stvFields) {
+                                    if (fk == el.id) {
+
+                                        el.handleRec = data.stvFields[fk].handleRec;
+                                        el.handleColor = data.stvFields[fk].handleColor;
+                                        el.loopRec = data.stvFields[fk].loopRec;
+                                        el.loopColor = data.stvFields[fk].loopColor;
+                                        el.handleRec = data.stvFields[fk].handleRec;
+                                        el.lockRec = data.stvFields[fk].lockRec;
+                                    }
+                                }
                             }
                         }
-                        //let node = tabtree.jstree("get_selected")[0];
-                        //view_winc_property(node);
+                        let tr = $("#tree-winc").jstree("get_selected")
+                        if (tr != undefined) {
+                            let nodeID = tr[0];
+                            let elem = winc.elemList.find(it => it.id == nodeID);
+                            if (elem.type == 'STVORKA') {
+                                winc_to_property(nodeID);
+                            }
+                        }
                     }
                 });
             }

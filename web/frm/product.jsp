@@ -47,8 +47,14 @@
                 debugger;
                 let id = order.rec_table2[PROPROD.id];
                 let winc = order.wincalcMap.get(id);
-                winc.ctx.fillStyle = '#ffffff';
-                winc.ctx.clearRect(0, 0, winc.cnv.width, winc.cnv.height);
+                let tr = $("#tree-winc").jstree("get_selected")
+                if (tr != undefined) {
+                    let nodeID = tr[0];
+                    let elem = winc.elemList.find(it => it.id == nodeID);
+                    if (elem.type == 'STVORKA') {
+                        winc_to_property(nodeID);
+                    }
+                }
             }
         </script>
     </head>
@@ -58,7 +64,7 @@
             <button id="btnUpdate" onClick="">Test2</button>
             <button id="btnIns" onClick="">Test3</button>
 
-            <button id="btn1" onClick="$('#dialog-dic').load('frm/dialog/sysprof.jsp');">Sysprof</button> 
+            <button id="btn1" onClick="test();">Sysprof</button> 
             <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/furniture.jsp');">Фурнитура</button>
             <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
             <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
@@ -96,7 +102,7 @@
                             <p class="pantitle">Створка</p> 
                             <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
                             <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
-                            <jst id="n43" type='bid=tn' label='Фурнитура' width='120' width2="220" click=""></jst><br>                          
+                            <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click=""></jst><br>                          
                             <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click=""></jst><br>
                             <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click=""></jst><br>
                             <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click=""></jst><br>                            
