@@ -164,7 +164,7 @@ export class Stvorka extends Area {
             let colorRec = dbset.find(this.handleRec[ARTIKL.id], dbset.artdetList);
             this.handleColor = colorRec[ARTDET.color_fk];
             if (this.handleColor < 0) {
-                this.handleColor = dbset.find(-1 * this.handleColor, dbset.colorList)[0]; //первый цвет в группе
+                this.handleColor = dbset.find(-1 * this.handleColor, dbset.colorList)[1]; //первый цвет в группе
             }
         }
         //Подвес (петли)
