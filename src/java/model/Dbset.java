@@ -96,16 +96,8 @@ public class Dbset {
     }
 
     public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
-        Query qParams = new Query(eParams.id, eParams.text, eParams.params_id).select(eParams.up);
-        for (Record rec : qParams) {
-            list.add(Arrays.asList(
-                    rec.get(eParams.id),
-                    rec.get(eParams.text),
-                    rec.get(eParams.params_id)));
-        }
-        JSONObject output = new JSONObject(App.asMap("paramsList", list));
-        return output;
+        Query qParams = new Query(eParams.values()).select(eParams.up);
+        return new JSONObject(App.asMap("paramsList", qParams));
     }
 
     public static JSONObject saveScript(HttpServletRequest request, HttpServletResponse response) {
@@ -125,7 +117,7 @@ public class Dbset {
         }
     }
 
-    public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject prokitList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();
 
         Query qProkit = new Query(eProkit.values()).select(eProkit.up);
@@ -142,7 +134,7 @@ public class Dbset {
                     rec.get(eProkit.angl1),
                     rec.get(eProkit.angl2)));
         }
-        JSONObject output = new JSONObject(App.asMap("kitsList", list));
+        JSONObject output = new JSONObject(App.asMap("prokitList", list));
         return output;
     }
 

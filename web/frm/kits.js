@@ -26,11 +26,11 @@ kits.init_table1 = function (table) {
 kits.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
-        url: 'dbset?action=kitsList',
+        url: 'dbset?action=prokitList',
         success: function (data) {
-            kits.kitsList = data.kitsList;
-            for (let i = 0; i < kits.kitsList.length; i++) {
-                let tr = kits.kitsList[i];
+            kits.prokitList = data.prokitList;
+            for (let i = 0; i < kits.prokitList.length; i++) {
+                let tr = kits.prokitList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[KITS.id],
                     artikl_id: tr[KITS.artikl_id],

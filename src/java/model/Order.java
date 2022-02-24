@@ -21,20 +21,8 @@ public class Order {
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
     public JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
         Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
-        for (Record rec : qProject) {
-            list.add(Arrays.asList(
-                    rec.get(eProject.id),
-                    rec.get(eProject.num_ord),
-                    rec.get(eProject.num_acc),
-                    format(rec.get(eProject.date4)),
-                    format(rec.get(eProject.date6)),
-                    rec.get(eProject.propart_id),
-                    rec.get(eProject.manager)));
-        }
-        JSONObject output = new JSONObject(App.asMap("orderList", list));
-        return output;
+        return new JSONObject(App.asMap("orderList", qProject));
     }
 
    private String format(Object date) {
