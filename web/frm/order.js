@@ -61,7 +61,7 @@ order.load_table = function (table1, table2) {
                     id: tr[ORDER.id],
                     num_ord: tr[ORDER.num_ord],
                     num_acc: tr[ORDER.num_acc],
-                    date4: tr[ORDER .date4],
+                    date4: tr[ORDER.date4],
                     date6: tr[ORDER.date6],
                     propart_id: tr[ORDER.propart_id],
                     manager: tr[ORDER.manager]

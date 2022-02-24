@@ -21,10 +21,17 @@ public class Order {
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
     public JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<List> list = new ArrayList();
         Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
-        return new JSONObject(App.asMap("orderList", qProject));
+        for (Record rec : qProject) {
+            list.add(Arrays.asList(rec.get(eProject.up), rec.get(eProject.id), rec.get(eProject.num_ord),
+                    rec.get(eProject.num_acc), format(rec.get(eProject.date4)), format(rec.get(eProject.date6)),
+                    rec.get(eProject.manager), rec.get(eProject.propart_id)));
+        }
+        JSONObject output = new JSONObject(App.asMap("orderList", list));
+        return output;
     }
-
+    
    private String format(Object date) {
        if(date instanceof Date) {
            return fd.format(date);
