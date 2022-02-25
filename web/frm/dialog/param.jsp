@@ -32,11 +32,13 @@
                         "Выбрать": function () {
                             let rowid = table.getGridParam('selrow');
                             let paramsRow = table.getRowData(rowid);
-                            let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-                            let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
-                            //let script = order.rec_table2[PROPROD.script];
+                            let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                            let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);
+                            //let script = order.row_table2[PROPROD.script];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;
+                            
+                            
                             winc.obj.param.ioknaParam.push(paramsRow[PARAMS.id]); //запишем профиль в скрипт
 
                             $.ajax({//запишем профиль в серверную базу данных

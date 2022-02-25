@@ -19,7 +19,7 @@
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    win.build(cvs, order.rec_table2[PROPROD.script]);
+                    win.build(cvs, order.row_table2[PROPROD.script]);
                 }
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
@@ -45,7 +45,7 @@
 
             function test() {
                 debugger;
-                let id = order.rec_table2[PROPROD.id];
+                let id = order.row_table2[PROPROD.id];
                 let winc = order.wincalcMap.get(id);
                 let tr = $("#tree-winc").jstree("get_selected")
                 if (tr != undefined) {
