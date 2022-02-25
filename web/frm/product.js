@@ -15,12 +15,12 @@ product.init_table = function (table1) {
             {name: 'fixed', width: 60, sorttype: "text"}
 
         ], ondblClickRow: function (rowid) {
-            $('#dialog-dic').load('frm/dialog/sysprof.jsp');
+            $('#dialog-dic').load('frm/dialog/param.jsp');
+            
+        }, onSelectRow: function (rowid) {
+            let syspar1Row = table1.getRowData(rowid);
+            product.group_param = dbset.find(syspar1Row.id, dbset.syspar1List)[SYSPAR1.params_id];
         }
-//        , onSelectRow: function (rowid) {
-//            let syspar1Rec = table1.getRowData(rowid);
-//            alert(syspar1Rec);
-//        }
     });
 }
 //------------------------------------------------------------------------------

@@ -133,9 +133,9 @@
                     ],
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
-                        let colgrpRec = table1.getRowData(rowid);
+                        let colgrpRow = table1.getRowData(rowid);
                         if (product.colorArr.length == 0) {
-                            let colorList = dbset.colorList.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
+                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
                             for (let i = 0; i < colorList.length; i++) {
                                 let colorRec = colorList[i];
                                 table2.jqGrid('addRowData', i + 1, {
@@ -146,7 +146,7 @@
                                 table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         } else {
-                            let colorArr = product.colorArr.filter(rec => colgrpRec.id == rec[COLOR.colgrp_id]);
+                            let colorArr = product.colorArr.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
                             for (let i = 0; i < colorArr.length; i++) {
                                 let colorRec = colorArr[i];
                                 table2.jqGrid('addRowData', i + 1, {

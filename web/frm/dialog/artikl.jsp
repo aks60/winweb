@@ -41,7 +41,7 @@
             artikl.rec_dialog_save = function (table) {
                 // try {
                 let rowid = table.getGridParam('selrow'); //index профиля из справочника
-                let tableRec = table.getRowData(rowid);  //record справочника
+                let tableRow = table.getRowData(rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
 
@@ -50,7 +50,7 @@
                 if (elem.obj.param == undefined) {
                     elem.obj.param = {};
                 }
-                elem.obj.param.artglasID = tableRec.id; //запишем профиль в скрипт
+                elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                 proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
@@ -62,8 +62,8 @@
                     success: function (data) {
                         if (data.result == 'ok') {
                             //Запишем выбранную запись в тег страницы
-                            $("#n51").val(tableRec.code);
-                            $("#n52").val(tableRec.name);
+                            $("#n51").val(tableRow.code);
+                            $("#n52").val(tableRow.name);
                         }
                     },
                     error: function () {

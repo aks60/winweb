@@ -30,7 +30,43 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            params.resize();
+                            let rowid = table.getGridParam('selrow');
+                            let paramsRow = table.getRowData(rowid);
+                            let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+                            let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+                            //let script = order.rec_table2[PROPROD.script];
+                            winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
+                            winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;
+                            winc.obj.param.ioknaParam.push(paramsRow[PARAMS.id]); //запишем профиль в скрипт
+
+                            $.ajax({//запишем профиль в серверную базу данных
+                                url: 'dbset?action=saveScript',
+                                data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
+                                success: function (data) {
+                                    if (data.result == 'ok') {
+                                        //Запишем выбранную запись в тег страницы
+                                        $("#n51").val(tableRow.code);
+                                        $("#n52").val(tableRow.name);
+                                    }
+                                },
+                                error: function () {
+                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                }
+                            });
+
+//            int index = UGui.getIndexRec(tab5);
+//            int index2 = UGui.getIndexRec(tab7);
+//            if (index != -1) {
+//                Record sysprodRec = qSysprod.get(index);
+//                String script = sysprodRec.getStr(eSysprod.script);
+//                String script2 = UGui.paramdefAdd(script, record.getInt(eParams.id), qParams);
+//                sysprodRec.set(eSysprod.script, script2);
+//                qSysprod.execsql();
+//                iwin().build(script2);
+//                UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
+//                selectionWinTree();
+//                UGui.setSelectedIndex(tab7, index2);
+
                         },
                         "Закрыть": function () {
                             $(this).dialog("close");
@@ -49,21 +85,24 @@
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'text', width: 400, sorttype: "text"}
-                    ]
+                    ], onSelectRow: function (rowid) {
+                        let syspar1Row = table.getRowData(rowid);
+                        //debugger;
+                    }
                 });
             }
 //------------------------------------------------------------------------------
             params.load_table1 = function (table) {
                 table.jqGrid('clearGridData', true);
-                for (let i = 0; i < dbset.paramsList.length; i++) {
-                    let tr = dbset.paramsList[i];
+                let params2List = dbset.paramsList.filter(rec => product.group_param == rec[PARAMS.params_id] && rec[PARAMS.id] != rec[PARAMS.params_id]);
+                for (let i = 0; i < params2List.length; i++) {
+                    let tr = params2List[i];
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[PARAMS.id],
                         text: tr[PARAMS.text]
                     });
                 }
-                //sysprof.resize();
-                //setTimeout(function () {sysprof.resize();}, 500);
+                table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
         </script>        
