@@ -121,7 +121,7 @@
             dbset.colorList.virtualRec = createVirtueRec(15, {1:-3, 2: 'Virtual', 4:-3, 14:-3});
 
             }).catch(() => {
-            dialogMes("Ошибка", 'Ошибка загрузки базы данных', 150);
+            dialogMes('Ошибка', 'Ошибка загрузки базы данных', 150);
             })
             });
         </script> 
