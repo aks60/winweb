@@ -17,6 +17,10 @@ product.init_table = function (table1) {
         ], ondblClickRow: function (rowid) {
             $('#dialog-dic').load('frm/dialog/sysprof.jsp');
         }
+//        , onSelectRow: function (rowid) {
+//            let syspar1Rec = table1.getRowData(rowid);
+//            alert(syspar1Rec);
+//        }
     });
 }
 //------------------------------------------------------------------------------

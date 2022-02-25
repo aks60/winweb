@@ -24,8 +24,8 @@
 //------------------------------------------------------------------------------            
             params.init_dialog = function (table) {
                 table.dialog({
-                    title: "Профили системы",
-                    width: 500,
+                    title: "Справочник параметров",
+                    width: 400,
                     height: 400,
                     modal: true,
                     buttons: {
@@ -45,25 +45,21 @@
                     gridview: true,
                     autowidth: true,
                     height: "auto",
-                    colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
+                    colNames: ['id', 'Значение параметра'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'use_side', width: 60, sorttype: "text"},
-                        {name: 'artikl_id', width: 80, sorttype: "text"},
-                        {name: 'artikl_id', width: 200, sorttype: "text"}
+                        {name: 'text', width: 400, sorttype: "text"}
                     ]
                 });
             }
 //------------------------------------------------------------------------------
             params.load_table1 = function (table) {
                 table.jqGrid('clearGridData', true);
-                for (let i = 0; i < dbset.sysprofList.length; i++) {
-                    let tr = dbset.sysprofList[i];
+                for (let i = 0; i < dbset.paramsList.length; i++) {
+                    let tr = dbset.paramsList[i];
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[SYSPROF.id],
-                        use_side: tr[SYSPROF.use_side],
-                        artikl_id: tr[SYSPROF.artikl_id],
-                        artikl_id: tr[SYSPROF.artikl_id]
+                        id: tr[PARAMS.id],
+                        text: tr[PARAMS.text]
                     });
                 }
                 //sysprof.resize();
