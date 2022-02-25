@@ -17,29 +17,36 @@
                     params.resize();
                 }).trigger('resize');
 
-                params.init_dialog($("#dialog-dic"));
+                params.init_dialog($("#tab1-dic"));
                 params.init_table1($("#tab1-dic"))
                 params.load_table1($("#tab1-dic"))
             });
 //------------------------------------------------------------------------------            
             params.init_dialog = function (table) {
-                table.dialog({
+                $("#dialog-dic").dialog({
                     title: "Справочник параметров",
                     width: 400,
                     height: 400,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
+                            debugger;
                             let rowid = table.getGridParam('selrow');
-                            let paramsRow = table.getRowData(rowid);
+                            let paramRow = table.getRowData(rowid);
+                            let paramDef = paramRow.id;
+                            let titleID1 = paramRow[PARAMS.params_id];
                             let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
                             let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);
                             //let script = order.row_table2[PROPROD.script];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;
-                            
-                            
-                            winc.obj.param.ioknaParam.push(paramsRow[PARAMS.id]); //запишем профиль в скрипт
+                            for(let i = 0; i < winc.obj.param.ioknaParam.length; ++i) {
+                              let titleID2 = dbset.paramsList.find(rec => winc.obj.param.ioknaParam[i] == rec[PARAMS.params_id])[PARAMS.params_id];
+                              if(titleID1 == titleID2) {
+                                  paramArr.splice(i, 1);
+                              }
+                            }
+                            winc.obj.param.ioknaParam.push(paramDef); //запишем профиль в скрипт
 
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=saveScript',

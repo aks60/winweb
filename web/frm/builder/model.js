@@ -103,13 +103,16 @@ export class Root extends Area {
 
     init_constructiv() {
         if (this.obj.param != undefined) {
-            //Добавим к параметрам системы конструкции параметры конкретной конструкции
-            let groupArr = this.obj.param.ioknaParam;
-            for (let group of groupArr) {
+            if (this.obj.param.ioknaParam != undefined) {
+                
+                //Добавим к параметрам системы конструкции параметры конкретной конструкции
+                let groupArr = this.obj.param.ioknaParam;
+                for (let group of groupArr) {
 
-                let paramsRec = dbset.paramsList.find(rec => group == rec[PARAMS.id]);
-                let syspar1Rec = dbset.syspar1List.find(rec => paramsRec[PARAMS.params_id] == rec[SYSPAR1.params_id]);
-                this.pardefMap.set(paramsRec[PARAMS.params_id], paramsRec);
+                    let paramsRec = dbset.paramsList.find(rec => group == rec[PARAMS.id]);
+                    let syspar1Rec = dbset.syspar1List.find(rec => paramsRec[PARAMS.params_id] == rec[SYSPAR1.params_id]);
+                    this.pardefMap.set(paramsRec[PARAMS.params_id], paramsRec);
+                }
             }
         }
     }
