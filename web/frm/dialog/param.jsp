@@ -30,52 +30,39 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            debugger;
                             let rowid = table.getGridParam('selrow');
-                            let paramRow = table.getRowData(rowid);
-                            let paramDef = paramRow.id;
-                            let titleID1 = paramRow[PARAMS.params_id];
+                            let paramsRow = table.getRowData(rowid);
+                            let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
+                            let paramDef = paramsRow.id;                            
                             let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
                             let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);
-                            //let script = order.row_table2[PROPROD.script];
+                            let titleID1 = paramsRec[PARAMS.params_id];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;
                             for(let i = 0; i < winc.obj.param.ioknaParam.length; ++i) {
-                              let titleID2 = dbset.paramsList.find(rec => winc.obj.param.ioknaParam[i] == rec[PARAMS.params_id])[PARAMS.params_id];
+                                
+                              let titleID2 = dbset.paramsList.find(rec => winc.obj.param.ioknaParam[i] == rec[PARAMS.id])[PARAMS.params_id];
                               if(titleID1 == titleID2) {
-                                  paramArr.splice(i, 1);
+                                  winc.obj.param.ioknaParam.splice(i, 1);
                               }
                             }
-                            winc.obj.param.ioknaParam.push(paramDef); //запишем профиль в скрипт
-
+                            winc.obj.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
+                            
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=saveScript',
                                 data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                                 success: function (data) {
                                     if (data.result == 'ok') {
                                         //Запишем выбранную запись в тег страницы
-                                        $("#n51").val(tableRow.code);
-                                        $("#n52").val(tableRow.name);
+                                        //$("#n51").val(tableRow.code);
+                                        //$("#n52").val(tableRow.name);
                                     }
                                 },
                                 error: function () {
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                                 }
                             });
-
-//            int index = UGui.getIndexRec(tab5);
-//            int index2 = UGui.getIndexRec(tab7);
-//            if (index != -1) {
-//                Record sysprodRec = qSysprod.get(index);
-//                String script = sysprodRec.getStr(eSysprod.script);
-//                String script2 = UGui.paramdefAdd(script, record.getInt(eParams.id), qParams);
-//                sysprodRec.set(eSysprod.script, script2);
-//                qSysprod.execsql();
-//                iwin().build(script2);
-//                UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
-//                selectionWinTree();
-//                UGui.setSelectedIndex(tab7, index2);
-
+                            $(this).dialog("close");
                         },
                         "Закрыть": function () {
                             $(this).dialog("close");
@@ -108,8 +95,8 @@
                     let tr = params2List[i];
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[PARAMS.id],
-                        text: tr[PARAMS.text],
-                        text: tr[PARAMS.params_id]
+                        text: tr[PARAMS.text]
+                        //text: tr[PARAMS.params_id]
                     });
                 }
                 table.jqGrid("setSelection", 1);
