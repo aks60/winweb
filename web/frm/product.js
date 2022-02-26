@@ -16,7 +16,6 @@ product.init_table = function (table1) {
 
         ], ondblClickRow: function (rowid) {
             $('#dialog-dic').load('frm/dialog/param.jsp');
-            
         }, onSelectRow: function (rowid) {
             let syspar1Row = table1.getRowData(rowid);
             product.group_param = dbset.find(syspar1Row.id, dbset.syspar1List)[SYSPAR1.params_id];
@@ -25,10 +24,15 @@ product.init_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_table = function (table1) {
+    let syspar1List2 = [];
     table1.jqGrid('clearGridData', true);
-    let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);
-    let syspar1List2 = dbset.syspar1List.filter(rec => winc.nuni == rec[SYSPAR1.systree_id])
+    let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);          
+    for (let val of winc.root.pardefMap.values()) {      
+        syspar1List2.push(val);
+    }
+    syspar1List2.sort((a, b) => b[SYSPAR1.params_id] - a[SYSPAR1.params_id]);
     for (let i = 0; i < syspar1List2.length; i++) {
+        
         let syspar1Rec = syspar1List2[i];
         let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {

@@ -89,13 +89,12 @@ export class Root extends Area {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
-
         this.frames = new Map(); //рамы конструкции 
-        this.pardefMap = new Map(); //параметры по умолчанию        
-        for (let syspar1Rec of dbset.syspar1List) {
+        this.pardefMap = new Map(); //параметры по умолчанию   
 
+        for (let syspar1Rec of dbset.syspar1List) {
             if (winc.nuni == syspar1Rec[SYSPAR1.systree_id]) {
-                this.pardefMap.set(syspar1Rec[SYSPAR1.param_id], syspar1Rec);
+                this.pardefMap.set(syspar1Rec[SYSPAR1.params_id], syspar1Rec);
             }
         }
         this.init_constructiv();
@@ -104,14 +103,12 @@ export class Root extends Area {
     init_constructiv() {
         if (this.obj.param != undefined) {
             if (this.obj.param.ioknaParam != undefined) {
-                
-                //Добавим к параметрам системы конструкции параметры конкретной конструкции
+                //Накладываем к параметрам системы конструкции параметры конкретной конструкции
                 let groupArr = this.obj.param.ioknaParam;
                 for (let group of groupArr) {
-
                     let paramsRec = dbset.paramsList.find(rec => group == rec[PARAMS.id]);
-                    let syspar1Rec = dbset.syspar1List.find(rec => paramsRec[PARAMS.params_id] == rec[SYSPAR1.params_id]);
-                    this.pardefMap.set(paramsRec[PARAMS.params_id], paramsRec);
+                    let syspar1Rec = this.pardefMap.get(paramsRec[PARAMS.params_id]);
+                    syspar1Rec[SYSPAR1.text] = paramsRec[PARAMS.text];
                 }
             }
         }

@@ -108,7 +108,8 @@
                     let tr = params2List[i];
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[PARAMS.id],
-                        text: tr[PARAMS.text]
+                        text: tr[PARAMS.text],
+                        text: tr[PARAMS.params_id]
                     });
                 }
                 table.jqGrid("setSelection", 1);
