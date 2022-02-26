@@ -118,7 +118,6 @@ function elements(com, arr) {
 //------------------------------------------------------------------------------
 function winc_to_property(nodeID) {
 
-    nodeID = (nodeID == -2) ? 0 : nodeID;
     let elem = {};
     let id = order.row_table2[PROPROD.id];
     let winc = order.wincalcMap.get(id);

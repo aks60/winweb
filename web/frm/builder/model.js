@@ -97,10 +97,10 @@ export class Root extends Area {
                 this.pardefMap.set(syspar1Rec[SYSPAR1.params_id], syspar1Rec);
             }
         }
-        this.init_constructiv();
+        this.init_pardef_map();
     }
 
-    init_constructiv() {
+    init_pardef_map() {
         if (this.obj.param != undefined) {
             if (this.obj.param.ioknaParam != undefined) {
                 //Накладываем к параметрам системы конструкции параметры конкретной конструкции

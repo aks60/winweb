@@ -18,8 +18,8 @@
                 }).trigger('resize');
 
                 params.init_dialog($("#tab1-dic"));
-                params.init_table1($("#tab1-dic"))
-                params.load_table1($("#tab1-dic"))
+                params.init_table1($("#tab1-dic"));
+                params.load_table1($("#tab1-dic"));
             });
 //------------------------------------------------------------------------------            
             params.init_dialog = function (table) {
@@ -53,9 +53,8 @@
                                 data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                                 success: function (data) {
                                     if (data.result == 'ok') {
-                                        //Запишем выбранную запись в тег страницы
-                                        //$("#n51").val(tableRow.code);
-                                        //$("#n52").val(tableRow.name);
+                                        winc.root.init_pardef_map();
+                                        product.load_table($('#table1'));
                                     }
                                 },
                                 error: function () {
