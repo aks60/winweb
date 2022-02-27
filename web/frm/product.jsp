@@ -45,16 +45,9 @@
 
             function test() {
                 debugger;
-                let id = order.row_table2[PROPROD.id];
-                let winc = order.wincalcMap.get(id);
-                let tr = $("#tree-winc").jstree("get_selected")
-                if (tr != undefined) {
-                    let nodeID = tr[0];
-                    let elem = winc.elemList.find(it => it.id == nodeID);
-                    if (elem.type == 'STVORKA') {
-                        winc_to_property(nodeID);
-                    }
-                }
+                let furnitureList = dbset.furnitureList.filter(tr1 => 
+                    dbset.sysfurnList.filter(tr2 => tr1[FURNITURE.id] == tr2[SYSFURN.furniture_id] && tr1 == 8)
+                );
             }
         </script>
     </head>
