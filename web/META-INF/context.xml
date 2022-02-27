@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/winweb">
-    <Resource
+    <Resource        
         name="jdbc/winweb"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="org.firebirdsql.jdbc.FBDriver"
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.FDB"
+        columnLabelForName="true"
+        defaultAutoCommit="false"
+        maxActive="100"
+        maxIdle="3"
+        maxWait="10000"
+        username="sysdba" 
+        password="masterke"        
+    />
+</Context>
+
+<!--        name="jdbc/winweb"
         description="Основная БД"
         auth="Container"
         type="javax.sql.DataSource"
-        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
         driverClassName="org.firebirdsql.jdbc.FBDriver"
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.FDB"
         username="sysdba"
         password ="masterkey"
-        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.FDB"
-        maxActive="200"
+        maxActive="100"
         maxIdle="10"
         minIdle="5"
         initialSize="1"
@@ -19,13 +35,12 @@
         testWhileIdle="true"
         testOnReturn="false"
         validationQuery="SELECT 'NOW' from RDB$DATABASE"
-        validationInterval="30000"
+        validationInterval="300"
         timeBetweenEvictionRunsMillis="30000"
         removeAbandonedTimeout="6000"
         removeAbandoned="true"
         logAbandoned="true"
-        minEvictableIdleTimeMillis="30000" 
-        jmxEnabled="true"
-    />
-</Context>
+        minEvictableIdleTimeMillis="300" 
+        jmxEnabled="true"-->
+        
 

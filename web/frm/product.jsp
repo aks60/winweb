@@ -44,17 +44,6 @@
             });
 
             function test() {
-                debugger;
-                let id = order.row_table2[PROPROD.id];
-                let winc = order.wincalcMap.get(id);
-                let tr = $("#tree-winc").jstree("get_selected")
-                if (tr != undefined) {
-                    let nodeID = tr[0];
-                    let elem = winc.elemList.find(it => it.id == nodeID);
-                    if (elem.type == 'STVORKA') {
-                        winc_to_property(nodeID);
-                    }
-                }
             }
         </script>
     </head>
@@ -102,7 +91,7 @@
                             <p class="pantitle">Створка</p> 
                             <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
                             <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
-                            <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click=""></jst><br>                          
+                            <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="$('#dialog-dic').load('frm/dialog/furniture.jsp');"></jst><br>                          
                             <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click=""></jst><br>
                             <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click=""></jst><br>
                             <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click=""></jst><br>                            
