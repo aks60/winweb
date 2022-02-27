@@ -26,13 +26,13 @@ product.init_table = function (table1) {
 product.load_table = function (table1) {
     let syspar1List2 = [];
     table1.jqGrid('clearGridData', true);
-    let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);          
-    for (let val of winc.root.pardefMap.values()) {      
+    let winc = order.wincalcMap.get(order.row_table2[PROPROD.id]);
+    for (let val of winc.root.pardefMap.values()) {
         syspar1List2.push(val);
     }
     syspar1List2.sort((a, b) => b[SYSPAR1.params_id] - a[SYSPAR1.params_id]);
     for (let i = 0; i < syspar1List2.length; i++) {
-        
+
         let syspar1Rec = syspar1List2[i];
         let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {
@@ -118,6 +118,10 @@ function elements(com, arr) {
 //------------------------------------------------------------------------------
 function winc_to_property(nodeID) {
 
+    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+    if (nodeID == -2) {
+        return;
+    }
     let elem = {};
     let id = order.row_table2[PROPROD.id];
     let winc = order.wincalcMap.get(id);
@@ -126,7 +130,6 @@ function winc_to_property(nodeID) {
     } else {
         elem = winc.elemList.find(it => it.id == nodeID);
     }
-    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
 
     //Коробка
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
