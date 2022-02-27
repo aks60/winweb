@@ -143,6 +143,7 @@ export class Stvorka extends Area {
     }
 
     init_constructiv() {
+
         //Фурнитура створки
         if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined) {
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]);
