@@ -9,10 +9,10 @@ import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eFurndet;
 import domain.eFurniture;
 import domain.eGroups;
 import domain.eParams;
-import domain.eProject;
 import domain.eProkit;
 import domain.eProprod;
 import domain.eSysfurn;
@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
@@ -70,6 +69,11 @@ public class Dbset {
         return new JSONObject(App.asMap("artdetList", qArtdet));
     }
 
+    public static JSONObject furndetList(HttpServletRequest request, HttpServletResponse response) {
+        Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up);
+        return new JSONObject(App.asMap("furndetList", qFurndet));
+    }
+    
     public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurniture = new Query(eFurniture.values()).select(eFurniture.up);
         return new JSONObject(App.asMap("furnitureList", qFurniture));

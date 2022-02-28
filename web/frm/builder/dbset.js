@@ -57,6 +57,12 @@ export function furnitureList() {
         url: 'dbset?action=furnitureList',
     });
 }
+//---------------------------  FURNDET  --------------------------------------
+export function furndetList() {
+    return  $.ajax({
+        url: 'dbset?action=furndetList',
+    });
+}
 //---------------------------  PROPROD  ----------------------------------------
 export function proprodList() {
     return  $.ajax({

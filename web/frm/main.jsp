@@ -30,6 +30,7 @@
                     ARTIKL = {id: 1, code: 2, level1: 3, level2: 4, name: 5, height: 14, depth: 15, analog_id: 35},
                     ARTDET = {id: 1, color_fk: 14, artikl_id: 15},
                     FURNITURE = {id: 1, name: 2},
+                    FURNDET = {id: 1, color_fk: 3, artikl_id: 4, furniture_id1: 5, furniture_id2: 6, furndet_id: 7},
                     SYSPROF = {id: 1, prio: 2, use_type: 3, use_side: 4, artikl_id: 5, systree_id: 6},
                     SYSFURN = {id: 1, side_open: 4, hand_pos: 5, furniture_id: 6, artikl_id1: 7, artikl_id2: 8, systree_id: 9},
                     SYSPROD = {id: 1, name: 2, script: 3, systree_id: 4},
@@ -55,8 +56,8 @@
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
 
             //Глобальные объекты
-            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2},
-                    users = {}, order = {rowid_table1: 8, row_table2: null, wincalcMap: new Map()}, artikl = {}, product = {},
+            var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, furndet = {},
+                    users = {}, order = {rowid_table1: 8, row_table2: null, wincalcMap: new Map()}, artikl = {dialogType: 0}, product = {},
                     dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {}, sideopen = {};
 
             $(document).ready(function () {
@@ -86,8 +87,9 @@
             import {
             systreeList, sysprodList, colorList,
             artiklList, artdetList, furnitureList, 
-            proprodList, sysfurnList, sysprofList,
-            syspar1List, paramsList, groupList
+            furndetList, proprodList, sysfurnList, 
+            sysprofList, syspar1List, paramsList, 
+            groupList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {                
@@ -95,22 +97,23 @@
             $.when(
             systreeList(), sysprodList(), colorList(), 
             artiklList(), artdetList(), furnitureList(), 
-            proprodList(), sysfurnList(), sysprofList(),
-            syspar1List(), paramsList(), groupList()
+            furndetList(), proprodList(), sysfurnList(), 
+            sysprofList(), syspar1List(), paramsList(), groupList()
 
-            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC) => { //загрузка базы данных 
+            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD) => { //загрузка базы данных 
             dbset.systreeList = p1[0].systreeList;
             dbset.sysprodList = p2[0].sysprodList;
             dbset.colorList = p3[0].colorList;
             dbset.artiklList = p4[0].artiklList;            
             dbset.artdetList = p5[0].artdetList;
             dbset.furnitureList = p6[0].furnitureList;
-            dbset.proprodList = p7[0].proprodList;
-            dbset.sysfurnList = p8[0].sysfurnList;
-            dbset.sysprofList = p9[0].sysprofList;
-            dbset.syspar1List = pA[0].syspar1List;
-            dbset.paramsList = pB[0].paramsList;
-            dbset.groupList = pC[0].groupList;
+            dbset.furndetList = p7[0].furndetList;
+            dbset.proprodList = p8[0].proprodList;
+            dbset.sysfurnList = p9[0].sysfurnList;
+            dbset.sysprofList = pA[0].sysprofList;
+            dbset.syspar1List = pB[0].syspar1List;
+            dbset.paramsList = pC[0].paramsList;
+            dbset.groupList = pD[0].groupList;
 
             login.init_login('dat');
 

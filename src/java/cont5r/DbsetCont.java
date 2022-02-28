@@ -66,6 +66,10 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.furnitureList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
+            } else if (action.equalsIgnoreCase("furndetList")) {
+                JSONObject output = Dbset.furndetList(request, response);
+                out.write(JSONObject.toJSONString(output));
+
             } else if (action.equalsIgnoreCase("proprodList")) {
                 JSONObject output = Dbset.proprodList(request, response);
                 out.write(JSONObject.toJSONString(output));

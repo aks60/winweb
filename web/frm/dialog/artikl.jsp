@@ -98,16 +98,57 @@
             artikl.load_table = function (table) {
                 table.jqGrid('clearGridData', true);
 
-                for (let i = 0; i < product.artiklArr.length; i++) {
-                    let tr = product.artiklArr[i];
-                    table.jqGrid('addRowData', i + 1, {
-                        id: tr[ARTIKL.id],
-                        code: tr[ARTIKL.code],
-                        name: tr[ARTIKL.name]
-                    });
+                if (artikl.dialogType == 1) {
+                    for (let i = 0; i < product.artiklArr.length; i++) {
+                        let tr = product.artiklArr[i];
+                        table.jqGrid('addRowData', i + 1, {
+                            id: tr[ARTIKL.id],
+                            code: tr[ARTIKL.code],
+                            name: tr[ARTIKL.name]
+                        });
+                    }
+
+                } else if (artikl.dialogType == 1) {
+                    for (let artiklRec of dbset.artiklList) {
+                        if (artiklRec[ARTIKL.level1] == 2 && artiklRec[ARTIKL.level2] == 11) {
+                            artikl.pk2x11Set.push(artiklRec[ARTIKL.id]); //множество артикулов  уровня 2, 11
+                        }
+                    }
+                    let artiklArr = [];
+                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                    let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                    let winc = order.wincalcMap.get(proprodID);
+                    let elem = winc.elemList.find(it => it.id == elemID);
+                    let furndetList = dbset.furndetList.filter(rec => artikl.pk2x11Set.includes(rec[FURNDET.artikl_id], 0)); //детализация фурнитуры уровня 2, 11
+                    //Цикл детализаций конкретной записи фурнитуры
+                    for (let furndetRec of dbset.furndetList) {
+
+                        if (furndetRec[FURNDET.furniture_id1] == elem.param.sysfurnID) {
+
+                            if (furndetRec[FURNDET.furniture_id2] == null) { //не набор   
+                                artiklArr.push(dbset.artiklList.find(rec => furndetRec[FURNDET.artikl_id] == rec[ARTIKL.id]));
+                            } else { //это набор
+                                for (let furndetRec2 of dbset.furndetList) {
+                                    if (furndetRec2[FURNDET.furniture_id1] == elem.param.sysfurnID) {
+                                        artiklArr.push(dbset.artiklList.find(rec => furndetRec2[FURNDET.artikl_id] == rec[ARTIKL.id]));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (let i = 0; i < artiklArr.length; i++) {
+                        let tr = artiklArr[i];
+                        table.jqGrid('addRowData', i + 1, {
+                            id: tr[ARTIKL.id],
+                            code: tr[ARTIKL.code],
+                            name: tr[ARTIKL.name]
+                        });
+                    }
                 }
                 table.jqGrid("setSelection", 1);
-                //setTimeout(function () {artikl.resize();}, 500);  
+                setTimeout(function () {
+                    artikl.resize();
+                }, 100);
             }
 //------------------------------------------------------------------------------
         </script>        
