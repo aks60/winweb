@@ -54,7 +54,7 @@
             <button id="btnIns" onClick="">Test3</button>
 
             <button id="btn1" onClick="test();">Sysprof</button> 
-            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/furniture.jsp');">Фурнитура</button>
+            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/sideopen.jsp');">Фурнитура</button>
             <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
             <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
         </div> 
@@ -92,7 +92,7 @@
                             <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
                             <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
                             <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="$('#dialog-dic').load('frm/dialog/furniture.jsp');"></jst><br>                          
-                            <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click=""></jst><br>
+                            <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click="$('#dialog-dic').load('frm/dialog/sideopen.jsp');"></jst><br>
                             <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click=""></jst><br>
                             <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click=""></jst><br>                            
                             <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
