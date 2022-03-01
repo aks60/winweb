@@ -47,7 +47,7 @@
                 let rowid = table.getGridParam('selrow'); //index профиля из справочника
                 let tableRow = table.getRowData(rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
 
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
@@ -121,7 +121,7 @@
                     let pkSet = new Set();
                     let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == 2 && rec[ARTIKL.level2] == 11);
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     for (let furndetRec1 of dbset.furndetList) {
@@ -151,7 +151,7 @@
                     let pkSet = new Set();
                     let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == 2 && rec[ARTIKL.level2] == 12);
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     for (let furndetRec1 of dbset.furndetList) {
@@ -181,7 +181,7 @@
                     let pkSet = new Set();
                     let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == 2 && rec[ARTIKL.level2] == 9);
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     for (let furndetRec1 of dbset.furndetList) {

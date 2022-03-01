@@ -36,8 +36,8 @@ order.init_table = function (table1, table2) {
                     }
                 }
             }  
-            if (proprodID != null && order.row_table2 != undefined) {
-                let id = 'cnv' + order.row_table2[1];
+            if (proprodID != null && order.rec_table2 != undefined) {
+                let id = 'cnv' + order.rec_table2[PROPROD.id];
                 document.getElementById(id).click();
 
             } else if (proprodID != null) {
@@ -122,8 +122,8 @@ order.event_clicked = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
 
         let proprodID = row.cells[0].innerHTML;
-        order.row_table2 = dbset.find(proprodID, dbset.proprodList);
-        let script = order.row_table2[PROPROD.script];
+        order.rec_table2 = dbset.find(proprodID, dbset.proprodList);
+        let script = order.rec_table2[PROPROD.script];
     }
 }
 //------------------------------------------------------------------------------
