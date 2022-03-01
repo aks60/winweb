@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 dbset.find = (id, ds) => {
-    
+
     let record = ds.find(rec => id == rec[1])
     return (record == undefined) ? ds.virtualRec : record;
 }
@@ -14,6 +14,20 @@ dbset.nullRecord = (ds) => {
         arr.push(null);
     }
     return arr;
+}
+//------------------------  ENUMS  -------------------------------------------
+dbset.saveScript = (winc, proprodID) => {
+    $.ajax({//запишем профиль в серверную базу данных
+        url: 'dbset?action=saveScript',
+        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
+        success: (data) => {
+            if (data.result != 'ok')
+                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+        },
+        error: () => {
+            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+        }
+    });
 }
 //------------------------  ENUMS  -------------------------------------------
 export function enumList() {

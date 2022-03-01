@@ -97,7 +97,7 @@
                             <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click=""></jst><br>                            
                             <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                             <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
-                            <jst id="n49" type='btn' label='Подвес (арт/наименов)' width='120' width2="220" click=""></jst><br>
+                            <jst id="n49" type='btn' label='Подвес (арт/наименов)' width='120' width2="220" click="artikl.dialogType = 3; $('#dialog-dic').load('frm/dialog/artikl.jsp');"></jst><br>
                             <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220" click=""></jst><br>
                             <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click=""></jst><br>
                             <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click=""></jst><br>

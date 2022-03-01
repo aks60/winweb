@@ -7,10 +7,14 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
+            artikl.resize = function () {
+                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
+                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+            }
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                    artikl.resize();
                 }).trigger('resize');
 
                 artikl.init_dialog($("#tab1-dic"));
@@ -47,29 +51,35 @@
 
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
-                if (elem.obj.param == undefined) {
-                    elem.obj.param = {};
+                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+
+                //Стеклопакет
+                if (artikl.dialogType == 1) {
+                    elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
+                    $("#n51").val(tableRow.code);
+                    $("#n52").val(tableRow.name);
+
+                    //Ручка
+                } else if (artikl.dialogType == 2) {
+                    elem.obj.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
+                    $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
+                    $("#n46").val('');
+
+                    //Подвес
+                } else if (artikl.dialogType == 3) {
+                    elem.obj.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
+                    $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
+                    $("#n4A").val('');
                 }
-                elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
+
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                 proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
                 order.wincalcMap.set(proprodID, winc2); //новый экз.
 
-                $.ajax({//запишем профиль в серверную базу данных
-                    url: 'dbset?action=saveScript',
-                    data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
-                    success: function (data) {
-                        if (data.result == 'ok') {
-                            //Запишем выбранную запись в тег страницы
-                            $("#n51").val(tableRow.code);
-                            $("#n52").val(tableRow.name);
-                        }
-                    },
-                    error: function () {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
-                    }
-                });
+                //Запишем профиль в серверную базу данных
+                dbset.saveScript = (winc2, proprodID);
+
                 // } catch (e) {
                 //     console.error("Ошибка:rec_dialog_save() " + e.message);
                 // }
@@ -82,7 +92,7 @@
                     multiselect: false,
                     autowidth: true,
                     height: "auto",
-                    colNames: ['id', 'Код артикула', 'Наименование артикула'],
+                    colNames: ['id', 'Код артикула+', 'Наименование артикула'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'code', width: 200, sorttype: "text"},
@@ -97,64 +107,84 @@
 //------------------------------------------------------------------------------
             artikl.load_table = function (table) {
                 table.jqGrid('clearGridData', true);
-
+                //Стеклопакет
                 if (artikl.dialogType == 1) {
                     for (let i = 0; i < product.artiklArr.length; i++) {
                         let tr = product.artiklArr[i];
                         table.jqGrid('addRowData', i + 1, {
-                            id: tr[ARTIKL.id],
-                            code: tr[ARTIKL.code],
-                            name: tr[ARTIKL.name]
+                            id: tr[ARTIKL.id], code: tr[ARTIKL.code], name: tr[ARTIKL.name]
                         });
                     }
 
-                } else if (artikl.dialogType == 1) {
-                    for (let artiklRec of dbset.artiklList) {
-                        if (artiklRec[ARTIKL.level1] == 2 && artiklRec[ARTIKL.level2] == 11) {
-                            artikl.pk2x11Set.push(artiklRec[ARTIKL.id]); //множество артикулов  уровня 2, 11
-                        }
-                    }
-                    let artiklArr = [];
+                    //Ручка
+                } else if (artikl.dialogType == 2) {
+                    let pkSet = new Set();
+                    let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == 2 && rec[ARTIKL.level2] == 11);
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                     let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
-                    let furndetList = dbset.furndetList.filter(rec => artikl.pk2x11Set.includes(rec[FURNDET.artikl_id], 0)); //детализация фурнитуры уровня 2, 11
-                    //Цикл детализаций конкретной записи фурнитуры
-                    for (let furndetRec of dbset.furndetList) {
+                    for (let furndetRec1 of dbset.furndetList) {
+                        if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
 
-                        if (furndetRec[FURNDET.furniture_id1] == elem.param.sysfurnID) {
-
-                            if (furndetRec[FURNDET.furniture_id2] == null) { //не набор   
-                                artiklArr.push(dbset.artiklList.find(rec => furndetRec[FURNDET.artikl_id] == rec[ARTIKL.id]));
-                            } else { //это набор
+                            if (furndetRec1[FURNDET.furniture_id2] == null) { //НЕ НАБОР                                
+                                pkSet.add(furndetRec1[FURNDET.artikl_id]);
+                            } else {
                                 for (let furndetRec2 of dbset.furndetList) {
-                                    if (furndetRec2[FURNDET.furniture_id1] == elem.param.sysfurnID) {
-                                        artiklArr.push(dbset.artiklList.find(rec => furndetRec2[FURNDET.artikl_id] == rec[ARTIKL.id]));
+                                    if (furndetRec1[FURNDET.furniture_id2] == furndetRec2[FURNDET.furniture_id1]) {
+                                        pkSet.add(furndetRec2[FURNDET.artikl_id]);
                                     }
                                 }
                             }
                         }
                     }
-                    for (let i = 0; i < artiklArr.length; i++) {
-                        let tr = artiklArr[i];
+                    let artiklList = artiklArr.filter(rec => pkSet.has(rec[ARTIKL.id]));
+                    for (let i = 0; i < artiklList.length; i++) {
+                        let tr = artiklList[i];
                         table.jqGrid('addRowData', i + 1, {
-                            id: tr[ARTIKL.id],
-                            code: tr[ARTIKL.code],
-                            name: tr[ARTIKL.name]
+                            id: tr[ARTIKL.id], code: tr[ARTIKL.code], name: tr[ARTIKL.name]
+                        });
+                    }
+                    //Подвес
+                } else if (artikl.dialogType == 3) {
+                   
+                    let pkSet = new Set();
+                    let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == 2 && rec[ARTIKL.level2] == 12);
+                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                    let proprodID = order.row_table2[PROPROD.id]; //id proprod заказа
+                    let winc = order.wincalcMap.get(proprodID);
+                    let elem = winc.elemList.find(it => it.id == elemID);
+                    for (let furndetRec1 of dbset.furndetList) {
+                        if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
+
+                            if (furndetRec1[FURNDET.furniture_id2] == null) { //НЕ НАБОР                                
+                                pkSet.add(furndetRec1[FURNDET.artikl_id]);
+                            } else {
+                                for (let furndetRec2 of dbset.furndetList) {
+                                    if (furndetRec1[FURNDET.furniture_id2] == furndetRec2[FURNDET.furniture_id1]) {
+                                        pkSet.add(furndetRec2[FURNDET.artikl_id]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    let artiklList = artiklArr.filter(rec => pkSet.has(rec[ARTIKL.id]));
+                    for (let i = 0; i < artiklList.length; i++) {
+                        let tr = artiklList[i];
+                        table.jqGrid('addRowData', i + 1, {
+                            id: tr[ARTIKL.id], code: tr[ARTIKL.code], name: tr[ARTIKL.name]
                         });
                     }
                 }
                 table.jqGrid("setSelection", 1);
-                setTimeout(function () {
-                    artikl.resize();
-                }, 100);
+                setTimeout(() => artikl.resize(), 100);
             }
 //------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
         <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 
