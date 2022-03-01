@@ -35,9 +35,9 @@ order.init_table = function (table1, table2) {
                         proprodID = proprodRec[PROPROD.id];
                     }
                 }
-            }           
+            }  
             if (proprodID != null && order.row_table2 != undefined) {
-                let id = 'cnv' + order.row_table2[0];
+                let id = 'cnv' + order.row_table2[1];
                 document.getElementById(id).click();
 
             } else if (proprodID != null) {
