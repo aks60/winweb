@@ -18,7 +18,6 @@
                 $(window).bind('resize', function () {
                     color.resize();
                 }).trigger('resize');
-
                 color.init_dialog($("#tab1-dic"), $("#tab2-dic"));
                 color.init_table($("#tab1-dic"), $("#tab2-dic"));
                 color.load_table($("#tab1-dic"), $("#tab2-dic"))
@@ -50,14 +49,17 @@
 //------------------------------------------------------------------------------
             color.rec_dialog_save = function (table2) {
 //          try {  
-
+            debugger;
                 let rowid = table2.getGridParam('selrow'); //index профиля из справочника
-                let tableRec = table2.getRowData(rowid);  //record справочника
+                let tableRec = table2.getRowData(rowid); //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
-
+                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
+                elem.obj.param[sideLayout] = (elem.obj.param[sideLayout] == undefined) ? {} : elem.obj.param[sideLayout];
+                
                 //Запишем профиль в скрипт
                 if (product.buttonSrc == 'n14')
                     winc.obj.color1 = tableRec.id;
@@ -65,28 +67,18 @@
                     winc.obj.color2 = tableRec.id;
                 else if (product.buttonSrc == 'n16')
                     winc.obj.color3 = tableRec.id;
-
-                if (elem.type == "FRAME_SIDE") { //коробка
-                    elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
-
-                    if (product.buttonSrc == 'n33')
-                        elem.obj.param.colorID1 = tableRec.id;
-                    else if (product.buttonSrc == 'n34')
-                        elem.obj.param.colorID2 = tableRec.id;
-                    else if (product.buttonSrc == 'n35')
-                        elem.obj.param.colorID3 = tableRec.id;
-
-                } else { //створка
-                    let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-                    elem.obj.param[sideLayout] = (elem.obj.param[sideLayout] == undefined) ? {} : elem.obj.param[sideLayout];
-
-                    if (product.buttonSrc == 'n46')
-                        elem.obj.param[sideLayout].colorID1 = tableRec.id;
-                    else if (product.buttonSrc == 'n4A')
-                        elem.obj.param[sideLayout].colorID2 = tableRec.id;
-                    else if (product.buttonSrc == 'n4C')
-                        elem.obj.param[sideLayout].colorID3 = tableRec.id;
-                }
+                else if (product.buttonSrc == 'n33')
+                    elem.obj.param.colorID1 = tableRec.id;
+                else if (product.buttonSrc == 'n34')
+                    elem.obj.param.colorID2 = tableRec.id;
+                else if (product.buttonSrc == 'n35')
+                    elem.obj.param.colorID3 = tableRec.id;
+                else if (product.buttonSrc == 'n46')
+                    elem.obj.param[sideLayout].colorID1 = tableRec.id;
+                else if (product.buttonSrc == 'n4A')
+                    elem.obj.param[sideLayout].colorID2 = tableRec.id;
+                else if (product.buttonSrc == 'n4C')
+                    elem.obj.param[sideLayout].colorID3 = tableRec.id;
 
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                 proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
@@ -161,7 +153,6 @@
                         color.resize();
                     }
                 });
-
                 table2.jqGrid({
                     datatype: "local",
                     colNames: ['Код', 'Описание текстур'],
