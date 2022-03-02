@@ -80,53 +80,55 @@
         <div id="mainmenu"></div>
         <div id="outbody"></div>  
         <div id="dialog-dic"</div> 
-        <div id="dialog-mes" title="Сообщение"></div>
-        <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
+            <div id="dialog-mes" title="Сообщение"></div>
+            <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
-        <script type="module">
-            import {
-            systreeList, sysprodList, colorList,
-            artiklList, artdetList, furnitureList, 
-            furndetList, proprodList, sysfurnList, 
-            sysprofList, syspar1List, paramsList, 
-            groupList
-            } from './frm/builder/dbset.js';
+            <script type="module">
+                import {
+                systreeList, sysprodList, colorList,
+                        artiklList, artdetList, furnitureList,
+                        furndetList, proprodList, sysfurnList,
+                        sysprofList, syspar1List, paramsList,
+                        groupList
+                } from './frm/builder/dbset.js';
 
-            $("#outbody").load('frm/login.jsp', function () {                
+                $("#outbody").load('frm/login.jsp', function () {
 
-            $.when(
-            systreeList(), sysprodList(), colorList(), 
-            artiklList(), artdetList(), furnitureList(), 
-            furndetList(), proprodList(), sysfurnList(), 
-            sysprofList(), syspar1List(), paramsList(), groupList()
+                    $.when(
+                            systreeList(), sysprodList(), colorList(),
+                            artiklList(), artdetList(), furnitureList(),
+                            furndetList(), proprodList(), sysfurnList(),
+                            sysprofList(), syspar1List(), paramsList(), groupList()
 
-            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD) => { //загрузка базы данных 
-            dbset.systreeList = p1[0].systreeList;
-            dbset.sysprodList = p2[0].sysprodList;
-            dbset.colorList = p3[0].colorList;
-            dbset.artiklList = p4[0].artiklList;            
-            dbset.artdetList = p5[0].artdetList;
-            dbset.furnitureList = p6[0].furnitureList;
-            dbset.furndetList = p7[0].furndetList;
-            dbset.proprodList = p8[0].proprodList;
-            dbset.sysfurnList = p9[0].sysfurnList;
-            dbset.sysprofList = pA[0].sysprofList;
-            dbset.syspar1List = pB[0].syspar1List;
-            dbset.paramsList = pC[0].paramsList;
-            dbset.groupList = pD[0].groupList;
+                            ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD) => { //загрузка базы данных 
+                        dbset.systreeList = p1[0].systreeList;
+                        dbset.sysprodList = p2[0].sysprodList;
+                        dbset.colorList = p3[0].colorList;
+                        dbset.artiklList = p4[0].artiklList;
+                        dbset.artdetList = p5[0].artdetList;
+                        dbset.furnitureList = p6[0].furnitureList;
+                        dbset.furndetList = p7[0].furndetList;
+                        dbset.proprodList = p8[0].proprodList;
+                        dbset.sysfurnList = p9[0].sysfurnList;
+                        dbset.sysprofList = pA[0].sysprofList;
+                        dbset.syspar1List = pB[0].syspar1List;
+                        dbset.paramsList = pC[0].paramsList;
+                        dbset.groupList = pD[0].groupList;
 
-            login.init_login('dat');
+                        login.init_login('dat');
 
-            //Виртуальные артикулы  
-            dbset.sysprofList.virtualRec = createVirtueRec(7, {1:-3, 2:0, 3:0, 4:-1, 5:-3, 6:-3});
-            dbset.artiklList.virtualRec = createVirtueRec(37, {1: -3, 2: 'Virtual', 5: 'Virtual', 14: 80, 15: 4, 35: -3});
-            dbset.artdetList.virtualRec = createVirtueRec(37, {1:-3, 14: -3, 15: -3});
-            dbset.colorList.virtualRec = createVirtueRec(15, {1:-3, 2: 'Virtual', 4:-3, 14:-3});
+                        //Виртуальные артикулы  
+                        dbset.sysprofList.virtualRec = createVirtueRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                        dbset.artiklList.virtualRec = createVirtueRec(37, {1: -3, 2: 'Virtual', 5: 'Virtual', 14: 80, 15: 4, 35: -3});
+                        dbset.artdetList.virtualRec = createVirtueRec(37, {1: -3, 14: -3, 15: -3});
+                        dbset.colorList.virtualRec = createVirtueRec(15, {1: -3, 2: 'Virtual', 4: -3, 14: -3});
+                        dbset.sysfurnList.virtualRec = createVirtueRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+                        
 
-            }).catch(() => {
-            dialogMes('Ошибка', 'Ошибка загрузки базы данных', 150);
-            })
-            });
-        </script> 
+                    }).catch(() => {
+                        dialogMes('Ошибка', 'Ошибка загрузки базы данных', 150);
+                    })
+                });
+            </script> 
     </body>
 </html>

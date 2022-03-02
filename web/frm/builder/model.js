@@ -145,45 +145,58 @@ export class Stvorka extends Area {
     init_constructiv() {
 
         //Фурнитура створки
-        if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined) {
+        if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined)
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]);
-        }
-        if (this.sysfurnRec == undefined) {
+        else if (this.sysfurnRec == undefined)
             this.sysfurnRec = dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni); //ищем первую в системе
-        }
+        if (this.sysfurnRec == undefined)
+            this.sysfurnRec = dbset.sysfurnList.virtualRec;
+
         //Ручка
-        if (this.obj.param != undefined && this.obj.param.artiklHandl != undefined) {
+        if (this.obj.param != undefined && this.obj.param.artiklHandl != undefined)
             this.handleRec = this.obj.param.artiklHandl;
-            //Ручка по умолчанию
-        } else if (this.sysfurnRec != undefined) {
+        else if (this.sysfurnRec != undefined)  //ручка по умолчанию
             this.handleRec = dbset.artiklList.find(rec => this.sysfurnRec[SYSFURN.artikl_id1] == rec[ARTIKL.id]);
-        }
+        if (this.handleRec == undefined)
+            this.handleRec = dbset.artiklList.virtualRec;
+
         //Текстура ручки
-        if (this.obj.param != undefined && this.obj.param.colorHandl != undefined) {
+        if (this.obj.param != undefined && this.obj.param.colorHandl != undefined)
             this.handleColor = this.obj.param.colorHandl;
-        } else if (this.handleRec != undefined) {
+        else if (this.handleRec != undefined) {
             let colorRec = dbset.find(this.handleRec[ARTIKL.id], dbset.artdetList);
             this.handleColor = colorRec[ARTDET.color_fk];
             if (this.handleColor < 0) {
                 this.handleColor = dbset.find(-1 * this.handleColor, dbset.colorList)[1]; //первый цвет в группе
             }
         }
+        if(this.handleColor == undefined) 
+            this.handleColor = -3;
+        
         //Подвес (петли)
-        if (this.obj.param != undefined && this.obj.param.artiklLoop != undefined) {
+        if (this.obj.param != undefined && this.obj.param.artiklLoop != undefined)
             this.loopRec = dbset.find(this.obj.param.artiklLoop, dbset.artiklList);
-        }
+        if (this.loopRec == undefined)
+            this.loopRec = dbset.artiklList.virtualRec
+
         //Текстура подвеса
-        if (this.obj.param != undefined && this.obj.param.colorLoop != undefined) {
+        if (this.obj.param != undefined && this.obj.param.colorLoop != undefined) 
             this.loopColor = this.obj.param.colorLoop;
-        }
+        if(this.loopColor = undefined)
+            this.loopColor = -3;
+        
         //Замок
-        if (this.obj.param != undefined && this.obj.param.artiklLock != undefined) {
+        if (this.obj.param != undefined && this.obj.param.artiklLock != undefined) 
             this.lockRec = this.obj.param.artiklLock;
-        }
+        if(this.lockRec == undefined)
+            this.lockRec = dbset.artiklList.virtualRec;
+        
         //Текстура замка
-        if (this.obj.param != undefined && this.obj.param.colorLock != undefined) {
+        if (this.obj.param != undefined && this.obj.param.colorLock != undefined) 
             this.lockColor = this.obj.param.colorLock;
-        }
+        if(this.lockColor)
+            this.lockColor = -3;
+        
         //Сторона открывания
         if (this.obj.param != undefined && this.obj.param.typeOpen != undefined) {
             this.typeOpen = this.obj.param.typeOpen;

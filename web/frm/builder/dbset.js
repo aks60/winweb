@@ -15,7 +15,15 @@ dbset.nullRecord = (ds) => {
     }
     return arr;
 }
-//------------------------  ENUMS  -------------------------------------------
+//------------------------------------------------------------------------------
+dbset.isEmrty = (record) => {
+    if (record == undefined)
+        return true;
+    else if (record[1] == -3)
+        return true;
+    return false;
+}
+//------------------------  ENUMS  ---------------------------------------------
 export function enumList() {
     return  $.ajax({
         url: 'enum?action=enumList',

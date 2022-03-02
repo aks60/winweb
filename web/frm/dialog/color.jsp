@@ -55,7 +55,11 @@
                     let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
-                    let param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                    let param = elem.obj.param;
+                    if(elem.obj.param == undefined) {
+                        elem.obj.param = {};
+                        param = elem.obj.param;
+                    }
                     if (elem.type == 'STVORKA_SIDE') {
                         let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
                         if (elem.obj.param[sideLayout] == undefined) {
@@ -90,7 +94,6 @@
                     proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                     let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
                     order.wincalcMap.set(proprodID, winc2); //новый экз.
-
 
                     //Запишем профиль в серверную базу данных
                     $.ajax({
