@@ -9,7 +9,7 @@
 
         <script type="text/javascript">
 
-            get_stvorka_fields();
+            product.get_stvorka_fields();
 
             product.resize = function () {
 
@@ -65,28 +65,31 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
+                        
                         <div id="tabs-1" style="padding: 0px;">  
                             <p id="a123" class="pantitle">Основные размеры*</p> 
                             <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
                             <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
                             <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  
                             <p class="pantitle">Текстура изделия</p> 
-                            <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="color_to_windows('n14');"></jst><br>
-                            <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_windows('n15');"></jst><br>
-                            <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="color_to_windows('n16');"></jst><br>
+                            <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="product.color_to_windows('n14');"></jst><br>
+                            <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_windows('n15');"></jst><br>
+                            <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_windows('n16');"></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">   
                             <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
+                        
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
-                            <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="sysprof_to_frame('n31');"></jst><br>
+                            <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="product.sysprof_to_frame('n31');"></jst><br>
                             <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <p class="pantitle">Текстура изделия</p>  
-                            <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="color_to_frame('n33');"></jst><br>                          
-                            <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="color_to_frame('n34');"></jst><br>                          
-                            <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="color_to_frame('n35');"></jst><br>                          
+                            <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="product.color_to_frame('n33');"></jst><br>                          
+                            <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_frame('n34');"></jst><br>                          
+                            <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_frame('n35');"></jst><br>                          
                         </div>
+                        
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 
                             <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
@@ -102,13 +105,15 @@
                             <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click="product.buttonSrc = 'n4B'; $('#dialog-dic').load('frm/dialog/artikl.jsp');"></jst><br>
                             <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click=""></jst><br>
                         </div>
+                        
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
-                            <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="artikl_to_glass('n51');"></jst><br>
+                            <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="product.artikl_to_glass('n51');"></jst><br>
                             <jst id="n52" type='txt' label='Название' width='80' width2="288"></jst><br>
                             <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click=""></jst><br>
                         </div>
                     </div>
+                    
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <div id="tree-winc"></div>
                     </div>                

@@ -61,7 +61,7 @@ function taq_deploy(selectors) {
 }
 
 //------------------------------------------------------------------------------
-function load_fields(selector, record, fields) {
+function load_tabs(selector, record, fields) {
 
     for (let field of fields) {
         let value = record[field];

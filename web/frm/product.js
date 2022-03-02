@@ -69,7 +69,7 @@ product.load_tree = function (tabtree) {
     arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
     arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
 
-    elements(root, arr); //вход в рекурсию    
+    product.elements(root, arr); //вход в рекурсию    
 
     tabtree.jstree({'core': {
             'data': arr,
@@ -80,14 +80,13 @@ product.load_tree = function (tabtree) {
             })
             .bind("select_node.jstree", function (evt, data) {
                 let node = tabtree.jstree("get_selected")[0];
-                winc_to_property(node);
+                product.load_fields(node);
             });
     setTimeout(function () {
         product.resize();
     }, 10);
 }
-//------------------------------------------------------------------------------
-function elements(com, arr) {
+product.elements = function (com, arr) {
 
     if (com.type == "STVORKA") {
         arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'img/tool/folder.gif'});
@@ -103,7 +102,7 @@ function elements(com, arr) {
     } else {
         for (let com2 of com.childs) {
             if (['AREA', 'STVORKA'].includes(com2.type, 0)) {
-                elements(com2, arr);
+                product.elements(com2, arr);
             } else {
                 if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
                     let lay = (com.layout == "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
@@ -116,7 +115,7 @@ function elements(com, arr) {
     }
 }
 //------------------------------------------------------------------------------
-function winc_to_property(nodeID) {
+product.load_fields = function (nodeID) {
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
     if (nodeID == -2) {
@@ -130,12 +129,11 @@ function winc_to_property(nodeID) {
     } else {
         elem = winc.elemList.find(it => it.id == nodeID);
     }
-
     //Коробка
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
         let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
         $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
-        load_fields('tabs-1', {
+        load_tabs('tabs-1', {
             n11: winc.width, n12: winc.height, n13: winc.heightAdd,
             n14: winc.color1Rec[COLOR.name], n15: winc.color2Rec[COLOR.name], n16: winc.color3Rec[COLOR.name]
         }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
@@ -156,7 +154,7 @@ function winc_to_property(nodeID) {
         } else {
             $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
         }
-        load_fields('tabs-3', {
+        load_tabs('tabs-3', {
             n31: elem.artiklAn[ARTIKL.code], n32: elem.artiklAn[ARTIKL.name],
             n33: elem.color1Rec[COLOR.name], n34: elem.color2Rec[COLOR.name], n35: elem.color3Rec[COLOR.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
@@ -171,7 +169,7 @@ function winc_to_property(nodeID) {
                 type_open = TypeOpen[k][1];
             }
         }
-        load_fields('tabs-4', {
+        load_tabs('tabs-4', {
             n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: type_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
             n46: dbset.find(elem.handleColor, dbset.colorList)[COLOR.name],
@@ -186,14 +184,14 @@ function winc_to_property(nodeID) {
 
         //Стеклопакет
     } else if (elem.type == "GLASS") {
-        load_fields('tabs-5', {
+        load_tabs('tabs-5', {
             n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.color1Rec[COLOR.name]
         }, ['n51', 'n52', 'n53']);
         $("#tabs-5").show();
     }
 }
 //-----------------------   Текстура изделия  ----------------------------------
-function color_to_windows(btnSrc) {
+product.color_to_windows = function (btnSrc) {
     try {
         let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
         let groupSet = new Set();
@@ -260,11 +258,11 @@ function color_to_windows(btnSrc) {
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
-        console.error("Ошибка color_to_windows(): " + e.message);
+        console.error("Ошибка:product.color_to_windows(): " + e.message);
     }
 }
 //------------------------  Сторона коробки  -----------------------------------
-function sysprof_to_frame(btnSrc) {
+product.sysprof_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -291,11 +289,11 @@ function sysprof_to_frame(btnSrc) {
         $('#dialog-dic').load('frm/dialog/sysprof.jsp');
 
     } catch (e) {
-        console.error("Ошибка:sysprof_to_frame() " + e.message);
+        console.error("Ошибка:product.sysprof_to_frame() " + e.message);
     }
 }
 //------------------------  Текстура изделия  ----------------------------------
-function color_to_frame(btnSrc) {
+product.color_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -333,7 +331,7 @@ function color_to_frame(btnSrc) {
     }
 }
 //-----------------------  Заполнение  -----------------------------------------
-function artikl_to_glass(btnSrc) {
+product.artikl_to_glass = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -358,11 +356,11 @@ function artikl_to_glass(btnSrc) {
 
         }
     } catch (e) {
-        console.error("Ошибка:artikl_to_glass() " + e.message);
+        console.error("Ошибка:product.artikl_to_glass() " + e.message);
     }
 }
 //------------------------------------------------------------------------------
-function get_stvorka_fields() {
+product.get_stvorka_fields = function() {
     try {
         if (order.rec_table2 != undefined) {
             let proprodID = order.rec_table2[PROPROD.id];
@@ -394,7 +392,7 @@ function get_stvorka_fields() {
                             let nodeID = tr[0];
                             let elem = winc.elemList.find(it => it.id == nodeID);
                             if (elem.type == 'STVORKA') {
-                                winc_to_property(nodeID);
+                                product.load_fields(nodeID);
                             }
                         }
                     }
@@ -402,7 +400,7 @@ function get_stvorka_fields() {
             }
         }
     } catch (e) {
-        console.error("Ошибка:get_stvorka_fields() " + e.message);
+        console.error("Ошибка:product.get_stvorka_fields() " + e.message);
     }
 }
 //------------------------------------------------------------------------------
