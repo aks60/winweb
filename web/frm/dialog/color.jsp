@@ -6,14 +6,14 @@
         <title>COLOR</title>
 
         <script type="text/javascript">
-            //------------------------------------------------------------------
+//------------------------------------------------------------------------------
             color.resize = function () {
                 $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
                 $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 20);
                 $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #centr2").width());
                 $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #centr2").height() - 20);
             }
-            //------------------------------------------------------------------
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     color.resize();
@@ -23,7 +23,7 @@
                 color.init_table($("#tab1-dic"), $("#tab2-dic"));
                 color.load_table($("#tab1-dic"), $("#tab2-dic"))
             });
-            //------------------------------------------------------------------
+//------------------------------------------------------------------------------
             window.onload = function () {
                 alert('Страница загружена');
                 //color.resize();
@@ -47,7 +47,7 @@
                     }
                 });
             }
-            //------------------------------------------------------------------
+//------------------------------------------------------------------------------
             color.rec_dialog_save = function (table2) {
 //          try {  
 
