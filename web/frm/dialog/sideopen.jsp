@@ -104,6 +104,7 @@
     </head>
     <body>
         <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 

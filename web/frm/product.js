@@ -71,9 +71,7 @@ product.load_tree = function (tabtree) {
 
     product.elements(root, arr); //вход в рекурсию    
 
-    tabtree.jstree({'core': {
-            'data': arr,
-        }})
+    tabtree.jstree({'core': {'data': arr}})
             .bind("loaded.jstree", function (event, data) {
                 $(this).jstree('open_node', $('#0'));
                 $(this).jstree('select_node', 0.0);
@@ -360,7 +358,7 @@ product.artikl_to_glass = function (btnSrc) {
     }
 }
 //------------------------------------------------------------------------------
-product.get_stvorka_fields = function() {
+product.get_stvorka_fields = function () {
     try {
         if (order.rec_table2 != undefined) {
             let proprodID = order.rec_table2[PROPROD.id];

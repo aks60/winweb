@@ -48,79 +48,78 @@
             }
 //------------------------------------------------------------------------------
             color.rec_dialog_save = function (table2) {
-//          try {  
-                debugger;
-                let rowid = table2.getGridParam('selrow'); //index профиля из справочника
-                let tableRec = table2.getRowData(rowid); //record справочника
-                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-                let winc = order.wincalcMap.get(proprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
-                let param = (elem.obj.param == undefined) ? {} : elem.obj.param;
-                if (elem.type == 'STVORKA_SIDE') {
-                    let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-                    if(elem.obj.param[sideLayout] == undefined) {
-                        elem.obj.param[sideLayout] = {};
-                        param = elem.obj.param[sideLayout];
-                    } else {
-                       param = elem.obj.param[sideLayout]; 
-                    }
-                }
-
-                //Запишем профиль в скрипт
-                if (product.buttonSrc == 'n14')
-                    winc.obj.color1 = tableRec.id;
-                else if (product.buttonSrc == 'n15')
-                    winc.obj.color2 = tableRec.id;
-                else if (product.buttonSrc == 'n16')
-                    winc.obj.color3 = tableRec.id;
-                else if (product.buttonSrc == 'n33')
-                    param.colorID1 = tableRec.id;
-                else if (product.buttonSrc == 'n34')
-                    param.colorID2 = tableRec.id;
-                else if (product.buttonSrc == 'n35')
-                    param.colorID3 = tableRec.id;
-                else if (product.buttonSrc == 'n46')
-                    param.colorID1 = tableRec.id;
-                else if (product.buttonSrc == 'n4A')
-                    param.colorID2 = tableRec.id;
-                else if (product.buttonSrc == 'n4C')
-                    param.colorID3 = tableRec.id;
-
-                let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
-                order.wincalcMap.set(proprodID, winc2); //новый экз.
-
-
-                //Запишем профиль в серверную базу данных
-                $.ajax({
-                    url: 'dbset?action=saveScript',
-                    data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
-                    success: function (data) {
-                        if (data.result == 'ok') {
-                            //Запишем выбранную запись в тег страницы
-                            if (product.buttonSrc == 'n14')
-                                $("#n14").val(tableRec.name);
-                            else if (product.buttonSrc == 'n15')
-                                $("#n15").val(tableRec.name);
-                            else if (product.buttonSrc == 'n16')
-                                $("#n16").val(tableRec.name);
-                            else if (product.buttonSrc == 'n33')
-                                $("#n33").val(tableRec.name);
-                            else if (product.buttonSrc == 'n34')
-                                $("#n34").val(tableRec.name);
-                            else if (product.buttonSrc == 'n35')
-                                $("#n35").val(tableRec.name);
+                try {
+                    let rowid = table2.getGridParam('selrow'); //index профиля из справочника
+                    let tableRec = table2.getRowData(rowid); //record справочника
+                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+                    let winc = order.wincalcMap.get(proprodID);
+                    let elem = winc.elemList.find(it => it.id == elemID);
+                    let param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                    if (elem.type == 'STVORKA_SIDE') {
+                        let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
+                        if (elem.obj.param[sideLayout] == undefined) {
+                            elem.obj.param[sideLayout] = {};
+                            param = elem.obj.param[sideLayout];
+                        } else {
+                            param = elem.obj.param[sideLayout];
                         }
-                    },
-                    error: function () {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                     }
-                });
-//         } catch (e) {
-//            console.error("Ошибка:rec_dialog_save() " + e.message);
-//         }
+
+                    //Запишем профиль в скрипт
+                    if (product.buttonSrc == 'n14')
+                        winc.obj.color1 = tableRec.id;
+                    else if (product.buttonSrc == 'n15')
+                        winc.obj.color2 = tableRec.id;
+                    else if (product.buttonSrc == 'n16')
+                        winc.obj.color3 = tableRec.id;
+                    else if (product.buttonSrc == 'n33')
+                        param.colorID1 = tableRec.id;
+                    else if (product.buttonSrc == 'n34')
+                        param.colorID2 = tableRec.id;
+                    else if (product.buttonSrc == 'n35')
+                        param.colorID3 = tableRec.id;
+                    else if (product.buttonSrc == 'n46')
+                        param.colorID1 = tableRec.id;
+                    else if (product.buttonSrc == 'n4A')
+                        param.colorID2 = tableRec.id;
+                    else if (product.buttonSrc == 'n4C')
+                        param.colorID3 = tableRec.id;
+
+                    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                    let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
+                    order.wincalcMap.set(proprodID, winc2); //новый экз.
+
+
+                    //Запишем профиль в серверную базу данных
+                    $.ajax({
+                        url: 'dbset?action=saveScript',
+                        data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
+                        success: function (data) {
+                            if (data.result == 'ok') {
+                                //Запишем выбранную запись в тег страницы
+                                if (product.buttonSrc == 'n14')
+                                    $("#n14").val(tableRec.name);
+                                else if (product.buttonSrc == 'n15')
+                                    $("#n15").val(tableRec.name);
+                                else if (product.buttonSrc == 'n16')
+                                    $("#n16").val(tableRec.name);
+                                else if (product.buttonSrc == 'n33')
+                                    $("#n33").val(tableRec.name);
+                                else if (product.buttonSrc == 'n34')
+                                    $("#n34").val(tableRec.name);
+                                else if (product.buttonSrc == 'n35')
+                                    $("#n35").val(tableRec.name);
+                            }
+                        },
+                        error: function () {
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                        }
+                    });
+                } catch (e) {
+                    console.error("Ошибка:rec_dialog_save() " + e.message);
+                }
             }
 //------------------------------------------------------------------------------
             color.init_table = function (table1, table2) {
@@ -202,5 +201,6 @@
         <div id="centr2" style="height: 60%; width: calc(100% - 4px)">
             <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
         </div>
+        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

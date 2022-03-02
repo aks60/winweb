@@ -58,17 +58,18 @@
                     elem.obj.param[sideLayout] = {sysprofID: tableRec.id};
                 }
 
+                //Запишем профиль в локальн. бд
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));   
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
-                $.ajax({//запишем профиль в серверную базу данных
+                //Запишем профиль в серверную базу данных
+                $.ajax({
                     url: 'dbset?action=saveScript',
                     data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
                     success: function (data) {
                         if (data.result == 'ok') {
-                            //Запишем выбранную запись в тег страницы
                             $("#n31").val(tableRec.code);
                             $("#n32").val(tableRec.name);
                         }
@@ -128,5 +129,6 @@
     </head>
     <body>
         <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

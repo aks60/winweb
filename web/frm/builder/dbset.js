@@ -16,20 +16,6 @@ dbset.nullRecord = (ds) => {
     return arr;
 }
 //------------------------  ENUMS  -------------------------------------------
-dbset.saveScript = (winc, proprodID) => {
-    $.ajax({//запишем профиль в серверную базу данных
-        url: 'dbset?action=saveScript',
-        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
-        success: (data) => {
-            if (data.result != 'ok')
-                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
-        },
-        error: () => {
-            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
-        }
-    });
-}
-//------------------------  ENUMS  -------------------------------------------
 export function enumList() {
     return  $.ajax({
         url: 'enum?action=enumList',

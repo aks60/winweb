@@ -174,6 +174,8 @@
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            
             </div>
+            
+            <div id="dialog-mes" title="Сообщение"></div>
         </div>                   
     </body> 
 </html> 

@@ -82,7 +82,6 @@
                         {name: 'text', width: 400, sorttype: "text"}
                     ], onSelectRow: function (rowid) {
                         let syspar1Row = table.getRowData(rowid);
-                        //debugger;
                     }
                 });
             }
@@ -106,6 +105,7 @@
     <body>
         <div id="centr" style="height: calc(100% - 4px); width: 100%;">
             <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+            <div id="dialog-mes" title="Сообщение"></div>
         </div>
     </body>
 </html>
