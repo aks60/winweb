@@ -59,32 +59,32 @@
                 let elem = winc.elemList.find(it => it.id == elemID);
 
                 //Запишем профиль в скрипт
-                if (product.buttonSrc == 1)
+                if (product.buttonSrc == 'n14')
                     winc.obj.color1 = tableRec.id;
-                else if (product.buttonSrc == 2)
+                else if (product.buttonSrc == 'n15')
                     winc.obj.color2 = tableRec.id;
-                else if (product.buttonSrc == 3)
+                else if (product.buttonSrc == 'n16')
                     winc.obj.color3 = tableRec.id;
 
                 if (elem.type == "FRAME_SIDE") { //коробка
                     elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
 
-                    if (product.buttonSrc == 4)
+                    if (product.buttonSrc == 'n33')
                         elem.obj.param.colorID1 = tableRec.id;
-                    else if (product.buttonSrc == 5)
+                    else if (product.buttonSrc == 'n34')
                         elem.obj.param.colorID2 = tableRec.id;
-                    else if (product.buttonSrc == 6)
+                    else if (product.buttonSrc == 'n35')
                         elem.obj.param.colorID3 = tableRec.id;
 
                 } else { //створка
                     let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
                     elem.obj.param[sideLayout] = (elem.obj.param[sideLayout] == undefined) ? {} : elem.obj.param[sideLayout];
 
-                    if (product.buttonSrc == 4)
+                    if (product.buttonSrc == 'n46')
                         elem.obj.param[sideLayout].colorID1 = tableRec.id;
-                    else if (product.buttonSrc == 5)
+                    else if (product.buttonSrc == 'n4A')
                         elem.obj.param[sideLayout].colorID2 = tableRec.id;
-                    else if (product.buttonSrc == 6)
+                    else if (product.buttonSrc == 'n4C')
                         elem.obj.param[sideLayout].colorID3 = tableRec.id;
                 }
 
@@ -99,17 +99,17 @@
                     success: function (data) {
                         if (data.result == 'ok') {
                             //Запишем выбранную запись в тег страницы
-                            if (product.buttonSrc == 1)
+                            if (product.buttonSrc == 'n14')
                                 $("#n14").val(tableRec.name);
-                            else if (product.buttonSrc == 2)
+                            else if (product.buttonSrc == 'n15')
                                 $("#n15").val(tableRec.name);
-                            else if (product.buttonSrc == 3)
+                            else if (product.buttonSrc == 'n16')
                                 $("#n16").val(tableRec.name);
-                            else if (product.buttonSrc == 4)
+                            else if (product.buttonSrc == 'n33')
                                 $("#n33").val(tableRec.name);
-                            else if (product.buttonSrc == 5)
+                            else if (product.buttonSrc == 'n34')
                                 $("#n34").val(tableRec.name);
-                            else if (product.buttonSrc == 6)
+                            else if (product.buttonSrc == 'n35')
                                 $("#n35").val(tableRec.name);
                         }
                     },

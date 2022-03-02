@@ -192,7 +192,7 @@ function winc_to_property(nodeID) {
         $("#tabs-5").show();
     }
 }
-//------------------------------------------------------------------------------
+//-----------------------   Текстура изделия  ----------------------------------
 function color_to_windows(btnSrc) {
     try {
         let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
@@ -201,8 +201,8 @@ function color_to_windows(btnSrc) {
 
         let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
         let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-        let colorTxt = (btnSrc == 1) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-                : (btnSrc == 2) ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+        let colorTxt = (btnSrc == 'n14') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+                : (btnSrc == 'n15') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
                 : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
         let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
 
@@ -263,7 +263,38 @@ function color_to_windows(btnSrc) {
         console.error("Ошибка color_to_windows(): " + e.message);
     }
 }
-//------------------------------------------------------------------------------
+//------------------------  Сторона коробки  -----------------------------------
+function sysprof_to_frame(btnSrc) {
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let proprodID = order.rec_table2[PROPROD.id];
+        let winc = order.wincalcMap.get(proprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
+        let sysprofSet = new Set();
+
+        //Цикл по профилям ветки 
+        for (let sysprofRec of dbset.sysprofList) {
+            //Отфильтруем подходящие по параметрам
+            if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
+                let use_side_ID = sysprofRec[SYSPROF.use_side];
+                if (use_side_ID == Layout[elem.layout][0]
+                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
+                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
+                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
+
+                    sysprofSet.add(sysprofRec);
+                }
+            }
+        }
+        product.sysprofArr = Array.from(sysprofSet);
+        product.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
+
+    } catch (e) {
+        console.error("Ошибка:sysprof_to_frame() " + e.message);
+    }
+}
+//------------------------  Текстура изделия  ----------------------------------
 function color_to_frame(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -301,38 +332,7 @@ function color_to_frame(btnSrc) {
         console.error("Ошибка: colorToFrame() " + e.message);
     }
 }
-//------------------------------------------------------------------------------
-function sysprof_to_frame(btnSrc) {
-    try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = order.rec_table2[PROPROD.id];
-        let winc = order.wincalcMap.get(proprodID);
-        let elem = winc.elemList.find(it => it.id == nodeID);
-        let sysprofSet = new Set();
-
-        //Цикл по профилям ветки 
-        for (let sysprofRec of dbset.sysprofList) {
-            //Отфильтруем подходящие по параметрам
-            if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
-                let use_side_ID = sysprofRec[SYSPROF.use_side];
-                if (use_side_ID == Layout[elem.layout][0]
-                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
-                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
-                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
-
-                    sysprofSet.add(sysprofRec);
-                }
-            }
-        }
-        product.sysprofArr = Array.from(sysprofSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/sysprof.jsp');
-
-    } catch (e) {
-        console.error("Ошибка:sysprof_to_frame() " + e.message);
-    }
-}
-//------------------------------------------------------------------------------
+//-----------------------  Заполнение  -----------------------------------------
 function artikl_to_glass(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -358,7 +358,7 @@ function artikl_to_glass(btnSrc) {
 
         }
     } catch (e) {
-        console.error("Ошибка:sysprof_to_frame() " + e.message);
+        console.error("Ошибка:artikl_to_glass() " + e.message);
     }
 }
 //------------------------------------------------------------------------------

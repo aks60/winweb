@@ -53,22 +53,28 @@
                 elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
 
                 //Стеклопакет
-                if (artikl.dialogType == 1) {
+                if (product.buttonSrc == 'n51') {
                     elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
                     $("#n51").val(tableRow.code);
                     $("#n52").val(tableRow.name);
 
                     //Ручка
-                } else if (artikl.dialogType == 2) {
+                } else if (product.buttonSrc == 'n45') {
                     elem.obj.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
                     $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
                     $("#n46").val('');
 
                     //Подвес
-                } else if (artikl.dialogType == 3) {
+                } else if (product.buttonSrc == 'n49') {
                     elem.obj.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
                     $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
                     $("#n4A").val('');
+                    
+                    //Замок
+                } else if (product.buttonSrc == 'n4B') {
+                    elem.obj.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
+                    $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
+                    $("#n4C").val('');
                 }
 
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
@@ -138,21 +144,21 @@
             artikl.load_table = function (table) {
                 table.jqGrid('clearGridData', true);
                 //Стеклопакет
-                if (artikl.dialogType == 1) {
+                if (product.buttonSrc == 'n51') {
                     for (let i = 0; i < product.artiklArr.length; i++) {
                         let tr = product.artiklArr[i];
                         table.jqGrid('addRowData', i + 1, {id: tr[ARTIKL.id], code: tr[ARTIKL.code], name: tr[ARTIKL.name]});
                     }
                     //Ручка
-                } else if (artikl.dialogType == 2) {
+                } else if (product.buttonSrc == 'n45') {
                     artikl.load(2, 11);
 
                     //Подвес
-                } else if (artikl.dialogType == 3) {
+                } else if (product.buttonSrc == 'n49') {
                     artikl.load(2, 12);
 
                     //Замок
-                } else if (artikl.dialogType == 4) {
+                } else if (product.buttonSrc == 'n4B') {
                     artikl.load(2, 9);
                    
                 }
