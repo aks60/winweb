@@ -78,7 +78,7 @@ product.load_tree = function (tabtree) {
             })
             .bind("select_node.jstree", function (evt, data) {
                 let node = tabtree.jstree("get_selected")[0];
-                product.load_fields(node);
+                product.local_to_fields(node);
             });
     setTimeout(function () {
         product.resize();
@@ -113,7 +113,51 @@ product.elements = function (com, arr) {
     }
 }
 //------------------------------------------------------------------------------
-product.load_fields = function (nodeID) {
+product.server_to_fields = function () {
+    try {
+        if (order.rec_table2 != undefined) {
+            let proprodID = order.rec_table2[PROPROD.id];
+            if (proprodID != undefined) {
+                $.ajax({
+                    url: 'dbset?action=stvFields',
+                    data: {'proprodID': proprodID},
+                    success: function (data) {
+                        product.stvFields = data.stvFields;
+                        let id = order.rec_table2[PROPROD.id];
+                        let winc = order.wincalcMap.get(id);
+                        for (let el of winc.elemList) {
+                            if (el.type == 'STVORKA') {
+                                for (let fk in data.stvFields) {
+                                    if (fk == el.id) {
+
+                                        el.handleRec = data.stvFields[fk].handleRec;
+                                        el.handleColor = data.stvFields[fk].handleColor;
+                                        el.loopRec = data.stvFields[fk].loopRec;
+                                        el.loopColor = data.stvFields[fk].loopColor;
+                                        el.handleRec = data.stvFields[fk].handleRec;
+                                        el.lockRec = data.stvFields[fk].lockRec;
+                                    }
+                                }
+                            }
+                        }
+                        let tr = $("#tree-winc").jstree("get_selected")
+                        if (tr != undefined) {
+                            let nodeID = tr[0];
+                            let elem = winc.elemList.find(it => it.id == nodeID);
+                            if (elem.type == 'STVORKA') {
+                                product.local_to_fields(nodeID);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    } catch (e) {
+        console.error("Ошибка:product.server_to_fields() " + e.message);
+    }
+}
+//------------------------------------------------------------------------------
+product.local_to_fields = function (nodeID) {
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
     if (nodeID == -2) {
@@ -358,47 +402,18 @@ product.artikl_to_glass = function (btnSrc) {
     }
 }
 //------------------------------------------------------------------------------
-product.get_stvorka_fields = function () {
-    try {
-        if (order.rec_table2 != undefined) {
-            let proprodID = order.rec_table2[PROPROD.id];
-            if (proprodID != undefined) {
-                $.ajax({
-                    url: 'dbset?action=stvFields',
-                    data: {'proprodID': proprodID},
-                    success: function (data) {
-                        product.stvFields = data.stvFields;
-                        let id = order.rec_table2[PROPROD.id];
-                        let winc = order.wincalcMap.get(id);
-                        for (let el of winc.elemList) {
-                            if (el.type == 'STVORKA') {
-                                for (let fk in data.stvFields) {
-                                    if (fk == el.id) {
-
-                                        el.handleRec = data.stvFields[fk].handleRec;
-                                        el.handleColor = data.stvFields[fk].handleColor;
-                                        el.loopRec = data.stvFields[fk].loopRec;
-                                        el.loopColor = data.stvFields[fk].loopColor;
-                                        el.handleRec = data.stvFields[fk].handleRec;
-                                        el.lockRec = data.stvFields[fk].lockRec;
-                                    }
-                                }
-                            }
-                        }
-                        let tr = $("#tree-winc").jstree("get_selected")
-                        if (tr != undefined) {
-                            let nodeID = tr[0];
-                            let elem = winc.elemList.find(it => it.id == nodeID);
-                            if (elem.type == 'STVORKA') {
-                                product.load_fields(nodeID);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    } catch (e) {
-        console.error("Ошибка:product.get_stvorka_fields() " + e.message);
-    }
+product.furniture_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/furniture.jsp');
+}
+//------------------------------------------------------------------------------
+product.sideopen_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/sideopen.jsp');
+}
+//------------------------------------------------------------------------------
+product.artikl_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
 //------------------------------------------------------------------------------
