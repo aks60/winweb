@@ -121,7 +121,7 @@
                         }
                     });
                 } catch (e) {
-                    console.error("Ошибка:rec_dialog_save() " + e.message);
+                    console.error("Ошибка: rec_dialog_save() " + e.message);
                 }
             }
 //------------------------------------------------------------------------------

@@ -153,7 +153,7 @@ product.server_to_fields = function () {
             }
         }
     } catch (e) {
-        console.error("Ошибка:product.server_to_fields() " + e.message);
+        console.error("Ошибка: product.server_to_fields() " + e.message);
     }
 }
 //-------------------  Загрузка тегов страницы  --------------------------------
@@ -300,7 +300,7 @@ product.color_to_windows = function (btnSrc) {
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
-        console.error("Ошибка:product.color_to_windows(): " + e.message);
+        console.error("Ошибка: product.color_to_windows(): " + e.message);
     }
 }
 //--------------------  Сторона коробки  ---------------------------------------
@@ -331,7 +331,7 @@ product.sysprof_to_frame = function (btnSrc) {
         $('#dialog-dic').load('frm/dialog/sysprof.jsp');
 
     } catch (e) {
-        console.error("Ошибка:product.sysprof_to_frame() " + e.message);
+        console.error("Ошибка: product.sysprof_to_frame() " + e.message);
     }
 }
 //-------------------  Текстура изделия  ---------------------------------------
@@ -345,19 +345,19 @@ product.color_to_frame = function (btnSrc) {
         let colorSet = new Set();
 
         //Все текстуры артикула элемента конструкции
-        dbset.artdetList.forEach(artdetRec => {
-            if (artdetRec[ARTDET.artikl_id] == elem.artiklRec[ARTIKL.id]) {
-                if (artdetRec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+        dbset.artdetList.forEach(rec => {
+            if (rec[ARTDET.artikl_id] == elem.artiklRec[ARTIKL.id]) {
+                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
 
                     dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(artdetRec[ARTDET.color_fk])) {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
 
                             groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => artdetRec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
                     groupSet.add(color2Rec[COLOR.colgrp_id]);
                     colorSet.add(color2Rec);
                 }
@@ -389,35 +389,77 @@ product.artikl_to_stvorka = function (btnSrc) {
 }
 //-----------------------  Заполнение  -----------------------------------------
 product.color_to_stvorka = function (btnSrc) {
-  alert(88);  
-}
-//-----------------------  Заполнение  -----------------------------------------
-product.artikl_to_glass = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
         let winc = order.wincalcMap.get(proprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
+        let groupSet = new Set();
+        let colorSet = new Set();
+        let artiklElem = null;
 
-        //Список доступных толщин в ветке системы например 4;5;8
-        let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
-        if (systreeRec != undefined) {
-            let depth = systreeRec[SYSTREE.depth];
-            depth = depth.replace(/;/g, ',');
-            if (depth.charAt(depth.length - 1) == ',') {
-                depth = depth.substring(0, depth.length - 1);
+        if (btnSrc == 'n46')
+            artiklElem = elem.handleRec;
+        else if (btnSrc == 'n4A')
+            artiklElem = elem.loopRec;
+        else if (btnSrc == 'n4C')
+            artiklElem = elem.loopRec;
+
+        //Все текстуры артикула элемента конструкции
+        for (let rec of dbset.artdetList) {
+            if (rec[ARTDET.artikl_id] == artiklElem[ARTIKL.id]) {
+                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+
+                    dbset.colorList.forEach(colorRec => {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+
+                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            colorSet.add(colorRec);
+                        }
+                    });
+                } else { //текстура color_fk 
+                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    colorSet.add(color2Rec);
+                }
             }
-            depth = depth.split(',');
-            let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
-                        && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
-
-            product.artiklArr = artiklList;
-            product.buttonSrc = btnSrc;
-            $('#dialog-dic').load('frm/dialog/artikl.jsp');
-
         }
+        product.groupSet = groupSet;
+        product.colorArr = Array.from(colorSet);
+        product.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+
     } catch (e) {
-        console.error("Ошибка:product.artikl_to_glass() " + e.message);
+        console.error("Ошибка: product.color_to_stvorka() " + e.message);
     }
+}
+//-----------------------  Заполнение  -----------------------------------------
+product.artikl_to_glass = function (btnSrc) {
+    //try {
+    let nodeID = $("#tree-winc").jstree("get_selected")[0];
+    let proprodID = order.rec_table2[PROPROD.id];
+    let winc = order.wincalcMap.get(proprodID);
+    let elem = winc.elemList.find(it => it.id == nodeID);
+
+    //Список доступных толщин в ветке системы например 4;5;8
+    let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
+    if (systreeRec != undefined) {
+        let depth = systreeRec[SYSTREE.depth];
+        depth = depth.replace(/;/g, ',');
+        if (depth.charAt(depth.length - 1) == ',') {
+            depth = depth.substring(0, depth.length - 1);
+        }
+        depth = depth.split(',');
+        let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
+                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
+
+        product.artiklArr = artiklList;
+        product.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
+    }
+    //} catch (e) {
+    //    console.error("Ошибка: product.artikl_to_glass() " + e.message);
+    //}
 }
 //------------------------------------------------------------------------------

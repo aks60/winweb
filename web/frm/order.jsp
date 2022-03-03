@@ -7,14 +7,28 @@
         <title>Order</title>
 
         <style>
-            #table2 tr:hover {background:#E2EEFF;}
-            #table2 .activeRow, #table2 .activeRow:hover {background:#6598C7; color:#fff;}
-
-            #table2 tr { height: 68px; };
-            #table2 tr > *:nth-child(1) { display: none !important; }
-            #table2 tr > *:nth-child(2) { width: 390px !important; }
-            #table2 tr > *:nth-child(3) { width: 68px !important;  }
-            #table2 tr > *:nth-child(4) { display: none !important; }
+            #table2 tr:hover {
+                background:#E2EEFF;
+            }
+            #table2 .activeRow, #table2 .activeRow:hover {
+                background:#6598C7;
+                color:#fff;
+            }
+            #table2 tr {
+                height: 68px;
+            }
+            #table2 tr > *:nth-child(1) {
+                display: none !important;
+            }
+            #table2 tr > *:nth-child(2) {
+                width: 390px !important;
+            }
+            #table2 tr > *:nth-child(3) {
+                width: 68px !important;
+            }
+            #table2 tr > *:nth-child(4) {
+                display: none !important;
+            }
         </style>        
 
         <script type="text/javascript">
@@ -37,6 +51,11 @@
                 order.load_table($("#table1"), tab_sysprod);
                 prepareToolBar();
             });
+            
+            function test() {
+                let mmm = findef(dbset.artiklList.find(v => v[1] == -7), dbset.artiklList);
+                alert(mmm);
+            }            
         </script>
     </head>
     <body>        

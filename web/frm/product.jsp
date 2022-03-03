@@ -62,7 +62,7 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
-                        
+
                         <div id="tabs-1" style="padding: 0px;">  
                             <p id="a123" class="pantitle">Основные размеры*</p> 
                             <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
@@ -76,7 +76,7 @@
                         <div id="tabs-2" style="padding: 0px; display: none;">   
                             <table id="table1"  class="ui-jqgrid-btable"></table> 
                         </div>
-                        
+
                         <div id="tabs-3" style="padding: 0px; display: none;">
                             <p class="pantitle">Сторона коробки</p> 
                             <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="product.sysprof_to_frame('n31');"></jst><br>
@@ -86,7 +86,7 @@
                             <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_frame('n34');"></jst><br>                          
                             <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_frame('n35');"></jst><br>                          
                         </div>
-                        
+
                         <div id="tabs-4" style="padding: 0px; display: none;">
                             <p class="pantitle">Створка</p> 
                             <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
@@ -102,7 +102,7 @@
                             <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
                             <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click="product.color_to_stvorka('n4C');"></jst><br>
                         </div>
-                        
+
                         <div id="tabs-5" style="padding: 0px; display: none;">
                             <p class="pantitle">Заполнение</p> 
                             <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="product.artikl_to_glass('n51');"></jst><br>
@@ -110,7 +110,7 @@
                             <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click=""></jst><br>
                         </div>
                     </div>
-                    
+
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <div id="tree-winc"></div>
                     </div>                
