@@ -112,7 +112,7 @@ product.elements = function (com, arr) {
         }
     }
 }
-//------------------------------------------------------------------------------
+//-------------------  Загрузка свойств конструкции  ---------------------------
 product.server_to_fields = function () {
     try {
         if (order.rec_table2 != undefined) {
@@ -156,7 +156,7 @@ product.server_to_fields = function () {
         console.error("Ошибка:product.server_to_fields() " + e.message);
     }
 }
-//------------------------------------------------------------------------------
+//-------------------  Загрузка тегов страницы  --------------------------------
 product.local_to_fields = function (nodeID) {
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
@@ -232,7 +232,7 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-5").show();
     }
 }
-//-----------------------   Текстура изделия  ----------------------------------
+//-------------------  Текстура изделия  ---------------------------------------
 product.color_to_windows = function (btnSrc) {
     try {
         let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
@@ -303,7 +303,7 @@ product.color_to_windows = function (btnSrc) {
         console.error("Ошибка:product.color_to_windows(): " + e.message);
     }
 }
-//------------------------  Сторона коробки  -----------------------------------
+//--------------------  Сторона коробки  ---------------------------------------
 product.sysprof_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -334,7 +334,7 @@ product.sysprof_to_frame = function (btnSrc) {
         console.error("Ошибка:product.sysprof_to_frame() " + e.message);
     }
 }
-//------------------------  Текстура изделия  ----------------------------------
+//-------------------  Текстура изделия  ---------------------------------------
 product.color_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -372,6 +372,25 @@ product.color_to_frame = function (btnSrc) {
         console.error("Ошибка: colorToFrame() " + e.message);
     }
 }
+//-------------------  Фурнитура стеклопакета  ---------------------------------
+product.furniture_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/furniture.jsp');
+}
+//--------------------  Сторона открывания  ------------------------------------
+product.sideopen_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/sideopen.jsp');
+}
+//-------------------  Артикл ручки, подвеса, замка  ---------------------------
+product.artikl_to_stvorka = function (btnSrc) {
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/artikl.jsp');
+}
+//-----------------------  Заполнение  -----------------------------------------
+product.color_to_stvorka = function (btnSrc) {
+  alert(88);  
+}
 //-----------------------  Заполнение  -----------------------------------------
 product.artikl_to_glass = function (btnSrc) {
     try {
@@ -400,20 +419,5 @@ product.artikl_to_glass = function (btnSrc) {
     } catch (e) {
         console.error("Ошибка:product.artikl_to_glass() " + e.message);
     }
-}
-//------------------------------------------------------------------------------
-product.furniture_to_stvorka = function (btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frm/dialog/furniture.jsp');
-}
-//------------------------------------------------------------------------------
-product.sideopen_to_stvorka = function (btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frm/dialog/sideopen.jsp');
-}
-//------------------------------------------------------------------------------
-product.artikl_to_stvorka = function (btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
 //------------------------------------------------------------------------------
