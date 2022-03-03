@@ -218,7 +218,7 @@ product.local_to_fields = function (nodeID) {
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
             n48: elem.handleHeight,
             n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name],
-            n4A: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
+            n4A: dbset.find(elem.loopColor, dbset.colorList)[COLOR.name],
             n4B: elem.lockRec[ARTIKL.code] + ' ÷ ' + elem.lockRec[ARTIKL.name],
             n4C: dbset.find(elem.lockColor, dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);

@@ -174,15 +174,15 @@ export class Stvorka extends Area {
 
         //Текстура подвеса
         if (this.obj.param != undefined && this.obj.param.colorLoop != undefined)
-            this.loopColor = (this.obj.param.colorLoop == undefined) ? -3 : this.obj.param.colorLoop;
+            this.loopColor = this.obj.param.colorLoop;
 
         //Замок
         if (this.obj.param != undefined && this.obj.param.artiklLock != undefined)
-            this.lockRec = (this.obj.param.artiklLock == undefined) ? -3 : this.obj.param.artiklLock;
+            this.lockRec = findef(dbset.artiklList.find(rec => this.obj.param.artiklLock == rec[ARTIKL.id]), dbset.artiklList);
 
         //Текстура замка
         if (this.obj.param != undefined && this.obj.param.colorLock != undefined)
-            this.lockColor = (this.obj.param.colorLock == undefined) ? -3 : this.obj.param.colorLock;
+            this.lockColor = this.obj.param.colorLock;
 
         //Сторона открывания
         if (this.obj.param != undefined && this.obj.param.typeOpen != undefined) {

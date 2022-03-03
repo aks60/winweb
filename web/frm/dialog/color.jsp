@@ -56,7 +56,7 @@
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     let param = elem.obj.param;
-                    if(elem.obj.param == undefined) {
+                    if (elem.obj.param == undefined) {
                         elem.obj.param = {};
                         param = elem.obj.param;
                     }
@@ -70,7 +70,7 @@
                         }
                     }
 
-                    //Запишем профиль в скрипт
+                    //Запишем текстуру в параметр
                     if (product.buttonSrc == 'n14')
                         winc.obj.color1 = tableRec.id;
                     else if (product.buttonSrc == 'n15')
@@ -84,18 +84,19 @@
                     else if (product.buttonSrc == 'n35')
                         param.colorID3 = tableRec.id;
                     else if (product.buttonSrc == 'n46')
-                        param.colorID1 = tableRec.id;
+                        elem.obj.param.colorHandl = tableRec.id;
                     else if (product.buttonSrc == 'n4A')
-                        param.colorID2 = tableRec.id;
+                        elem.obj.param.colorLoop = tableRec.id;
                     else if (product.buttonSrc == 'n4C')
-                        param.colorID3 = tableRec.id;
+                        elem.obj.param.colorLock = tableRec.id;
 
+                    //Запишем скрипт в локальн. бд
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                     let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
                     order.wincalcMap.set(proprodID, winc2); //новый экз.
 
-                    //Запишем профиль в серверную базу данных
+                    //Запишем скрипт в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=saveScript',
                         data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
@@ -114,6 +115,12 @@
                                     $("#n34").val(tableRec.name);
                                 else if (product.buttonSrc == 'n35')
                                     $("#n35").val(tableRec.name);
+                                else if (product.buttonSrc == 'n46')
+                                    $("#n46").val(tableRec.name);
+                                else if (product.buttonSrc == 'n4A')
+                                    $("#n4A").val(tableRec.name);
+                                else if (product.buttonSrc == 'n4C')
+                                    $("#n4C").val(tableRec.name);
                             }
                         },
                         error: function () {
