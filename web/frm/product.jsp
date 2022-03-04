@@ -42,6 +42,9 @@
                 prepareToolBar();
 
             });
+            function test() {
+                alert(dbset.artiklList.virtualRec);
+            }
         </script>
     </head>
     <body>

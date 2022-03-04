@@ -2,7 +2,7 @@
 export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 
     let ctx = winc.ctx;
-    ctx.fillStyle = '#000000';
+    ctx.strokeStyle = (rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -14,6 +14,7 @@ export  function draw_line(winc, x1, y1, x2, y2, rgb) {
 export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = winc.ctx;
+    ctx.strokeStyle = 'rgb(0,0,0)';
     ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -29,6 +30,7 @@ export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
 export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
     let ctx = winc.ctx;
+    ctx.strokeStyle = 'rgb(0,0,0)';
     ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -68,7 +70,7 @@ export function draw_elements(winc) {
         ctx.scale(scale, scale);
         ctx.translate(80, 0);
         ctx.lineWidth = 5;
-        ctx.strokeStyle = "rgb(0,0,0)";
+        //ctx.strokeStyle = "rgb(0,0,0)";
 
         //Прорисовка стеклопакетов
         let glass = arr.filter((v, i, arr) => v.type == "GLASS");
@@ -88,10 +90,10 @@ export function draw_elements(winc) {
 
         //Прорисовка рам
         winc.root.frames.forEach((frame, key, map) => {
-            ctx.strokeStyle = '#' + frame.color2Rec[COLOR.rgb].toString(16);
+            //ctx.strokeStyle = '#' + frame.color2Rec[COLOR.rgb].toString(16);
             frame.paint();
         });
-        ctx.strokeStyle = "rgb(0,0,0)";
+        //ctx.strokeStyle = "rgb(0,0,0)";
 
         //Прорисовка створок
         let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
