@@ -90,7 +90,7 @@
                     else if (product.buttonSrc == 'n4C')
                         elem.obj.param.colorLock = tableRec.id;
                     else if (product.buttonSrc == 'n53')
-                        elem.obj.param.color1Rec = tableRec.id;
+                        elem.obj.param.colorGlass = tableRec.id;
 
                     //Запишем скрипт в локальн. бд
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
@@ -123,6 +123,8 @@
                                     $("#n4A").val(tableRec.name);
                                 else if (product.buttonSrc == 'n4C')
                                     $("#n4C").val(tableRec.name);
+                                else if (product.buttonSrc == 'n53')
+                                    $("#n53").val(tableRec.name);
                             }
                         },
                         error: function () {

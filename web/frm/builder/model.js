@@ -268,7 +268,8 @@ export class Stvorka extends Area {
         if (this.winc.root.type == "DOOR") {
 
         } else {
-            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, this.color2Rec);
+            let handlRGB = findef(dbset.colorList.find(rec => this.handleColor == rec[COLOR.id]), dbset.colorList);
+            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB);
             DX = DX - 12;
             Y1 = Y1 + 20;
         }
@@ -304,12 +305,10 @@ export class Cross extends Com5t {
     }
 
     init_constructiv() {
-
-        if (this.obj.param != undefined && this.obj.param.sysprofID != undefined) {
-            this.sysprofRec = dbset.find(this.obj.param.sysprofID, dbset.sysprofList);
-
-        }
-        if (this.sysprofRec == undefined) {
+        //Профиль поперечины
+        if (this.obj.param != undefined && this.obj.param.sysprofID != undefined)
+            this.sysprofRec = findef(dbset.sysprofList.find(this.obj.param.sysprofID), dbset.sysprofList);
+        else {
             if ("VERT" == this.layout) { //сверху вниз
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.HORIZ[0]);
 
@@ -381,7 +380,6 @@ export class Frame extends Com5t {
     }
 
     init_constructiv(param) {
-
         this.color1Rec = (param != undefined && param.colorID1 != undefined) ? dbset.find(param.colorID1, dbset.colorList) : this.winc.color1Rec;
         this.color2Rec = (param != undefined && param.colorID2 != undefined) ? dbset.find(param.colorID2, dbset.colorList) : this.winc.color2Rec;
         this.color3Rec = (param != undefined && param.colorID3 != undefined) ? dbset.find(param.colorID3, dbset.colorList) : this.winc.color3Rec;
@@ -412,8 +410,7 @@ export class Frame extends Com5t {
         }
     }
 
-    find_first(nuni, typ, us1, us2)
-    {
+    find_first(nuni, typ, us1, us2)  {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
@@ -422,8 +419,7 @@ export class Frame extends Com5t {
         return record;
     }
 
-    paint()
-    {
+    paint()  {
         let dh = win.dh_frm;
         if (this.owner.type == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
@@ -455,18 +451,25 @@ export class Glass extends Com5t {
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
         this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
+        this.init_constructiv();
+    }
 
+    init_constructiv() {
 
-        if (obj.param != undefined && obj.param.artglasID != undefined) {
-            this.artiklRec = dbset.artiklList.find(rec => obj.param.artglasID == rec[ARTIKL.id]);
-        }
-        if (this.artiklRec == undefined) {
+        //Артикул стекла
+        if (this.obj.param != undefined && this.obj.param.artglasID != undefined)
+            this.artiklRec = dbset.artiklList.find(rec => this.obj.param.artglasID == rec[ARTIKL.id]);
+        else {
             let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]); //по умолчанию стеклопакет
             this.artiklRec = dbset.artiklList.find(rec => systreeRec[SYSTREE.glas] == rec[ARTIKL.code]);
         }
-        let artdetRec = dbset.artdetList.find(rec => this.artiklRec[ARTIKL.id] == rec[ARTDET.artikl_id]);
-        let color_fk = artdetRec[ARTDET.color_fk];
-        this.color1Rec = dbset.colorList.find(rec => color_fk == rec[COLOR.id]);
+        //Цвет стекла
+        if (this.obj.param != undefined && this.obj.param.colorGlass != undefined)
+            this.color1Rec = findef(dbset.colorList.find(rec => this.obj.param.colorGlass == rec[COLOR.id]), dbset.colorList);
+        else {
+            let color_fk = findef(dbset.artdetList.find(rec => this.artiklRec[ARTIKL.id] == rec[ARTDET.artikl_id]), dbset.artdetList)[ARTDET.color_fk];
+            this.color1Rec = findef(dbset.colorList.find(rec => color_fk == rec[COLOR.id]), dbset.colorList);
+        }
     }
 
     paint() {

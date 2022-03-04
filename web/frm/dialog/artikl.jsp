@@ -51,29 +51,29 @@
 
                     let winc = order.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
-                    let param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                    elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
 
                     //Стеклопакет
                     if (product.buttonSrc == 'n51') {
-                        param.artglasID = tableRow.id; //запишем профиль в скрипт
+                        elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
                         $("#n51").val(tableRow.code);
                         $("#n52").val(tableRow.name);
 
                         //Ручка
                     } else if (product.buttonSrc == 'n45') {
-                        param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
+                        elem.obj.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
                         $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
                         $("#n46").val('');
 
                         //Подвес
                     } else if (product.buttonSrc == 'n49') {
-                        param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
+                        elem.obj.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
                         $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
                         $("#n4A").val('');
 
                         //Замок
                     } else if (product.buttonSrc == 'n4B') {
-                        param.artiklLock = tableRow.id; //запишем артикул в скрипт 
+                        elem.obj.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
                         $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
                         $("#n4C").val('');
                     }
