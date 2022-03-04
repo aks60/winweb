@@ -78,16 +78,17 @@
                         $("#n4C").val('');
                     }
 
-                    //Запишем профиль в локальн. бд 
+                    //Запишем скрипт в локальн. бд 
                     proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                     let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
                     order.wincalcMap.set(proprodID, winc2); //новый экз.
 
-                    //Запишем профиль в серверную базу данных
+                    //Запишем скрипт в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=saveScript',
                         data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                         success: (data) => {
+                            alert(55);
                             if (data.result != 'ok')
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                         },

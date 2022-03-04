@@ -89,6 +89,8 @@
                         elem.obj.param.colorLoop = tableRec.id;
                     else if (product.buttonSrc == 'n4C')
                         elem.obj.param.colorLock = tableRec.id;
+                    else if (product.buttonSrc == 'n53')
+                        elem.obj.param.color1Rec = tableRec.id;
 
                     //Запишем скрипт в локальн. бд
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);

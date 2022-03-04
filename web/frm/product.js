@@ -335,7 +335,7 @@ product.sysprof_to_frame = function (btnSrc) {
     }
 }
 //-------------------  Текстура изделия  ---------------------------------------
-product.color_to_frame = function (btnSrc) {
+product.color_to_frame2 = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -388,7 +388,7 @@ product.artikl_to_stvorka = function (btnSrc) {
     $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
 //-----------------------  Заполнение  -----------------------------------------
-product.color_to_stvorka = function (btnSrc) {
+product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let proprodID = order.rec_table2[PROPROD.id];
@@ -398,12 +398,20 @@ product.color_to_stvorka = function (btnSrc) {
         let colorSet = new Set();
         let artiklElem = null;
 
-        if (btnSrc == 'n46')
+        if (btnSrc == 'n33')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n34')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n35')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n46')
             artiklElem = elem.handleRec;
         else if (btnSrc == 'n4A')
             artiklElem = elem.loopRec;
         else if (btnSrc == 'n4C')
-            artiklElem = elem.loopRec;
+            artiklElem = elem.lockRec;
+        else if (btnSrc == 'n53')
+            artiklElem = elem.artiklRec;
 
         //Все текстуры артикула элемента конструкции
         for (let rec of dbset.artdetList) {
@@ -430,7 +438,7 @@ product.color_to_stvorka = function (btnSrc) {
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
     } catch (e) {
-        console.error("Ошибка: product.color_to_stvorka() " + e.message);
+        console.error("Ошибка: product.color_to_element() " + e.message);
     }
 }
 //-----------------------  Заполнение  -----------------------------------------
