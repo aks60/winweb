@@ -43,7 +43,9 @@
 
             });
             function test() {
-                alert(dbset.artiklList.virtualRec);
+                for(let rec of dbset.artiklList) {
+                    if(rec[1] == -3) alert(rec);
+                }
             }
         </script>
     </head>
