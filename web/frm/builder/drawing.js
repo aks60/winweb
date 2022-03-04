@@ -23,6 +23,7 @@ export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+
 }
 //------------------------------------------------------------------------------
 export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
@@ -55,27 +56,27 @@ export function draw_text(winc) {
 //------------------------------------------------------------------------------
 //Рисуем конструкцию
 export function draw_elements(winc) {
-    //try {
-    let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
-    
-    ctx.save();
-    ctx.fillStyle = '#ffffff';
-    ctx.clearRect(0, 0, cnv.width, cnv.height);
+    try {
+        let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
 
-    //Настроим контекст
-    let scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
-    ctx.scale(scale, scale);
-    ctx.translate(80, 0);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "rgb(0,0,0)";
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.clearRect(0, 0, cnv.width, cnv.height);
 
-    //Прорисовка стеклопакетов
-    let glass = arr.filter((v, i, arr) => v.type == "GLASS");
-    glass.forEach((v, k, map) => v.paint());
+        //Настроим контекст
+        let scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
+        ctx.scale(scale, scale);
+        ctx.translate(80, 0);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "rgb(0,0,0)";
 
-    //Прорисовка импостов
-    let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
-    cross.forEach((v, k, map) => v.paint());
+        //Прорисовка стеклопакетов
+        let glass = arr.filter((v, i, arr) => v.type == "GLASS");
+        glass.forEach((v, k, map) => v.paint());
+
+        //Прорисовка импостов
+        let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
+        cross.forEach((v, k, map) => v.paint());
 
 //        //Прорисовка штульпов
 //        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(winc.listSortEl, Type.SHTULP);
@@ -85,16 +86,20 @@ export function draw_elements(winc) {
 //        LinkedList < ElemCross > elemStoikaList = UCom.listSortObj(winc.listSortEl, Type.STOIKA);
 //        elemStoikaList.stream().forEach(el - > el.paint());
 
-    //Прорисовка рам
-    winc.root.frames.forEach((val, key, map) => val.paint());
+        //Прорисовка рам
+        winc.root.frames.forEach((frame, key, map) => {
+            ctx.strokeStyle = '#' + frame.color2Rec[COLOR.rgb].toString(16);
+            frame.paint();
+        });
+        ctx.strokeStyle = "rgb(0,0,0)";
 
-    //Прорисовка створок
-    let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
-    stv.forEach((v, k, map) => v.paint());
+        //Прорисовка створок
+        let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
+        stv.forEach((v, k, map) => v.paint());
 
-    ctx.restore();
-//    } catch (e) {
-//        console.error('Ошибка: ' + e.message);
-//    }
+        ctx.restore();
+    } catch (e) {
+        console.error('Ошибка: ' + e.message);
+    }
 }
 //------------------------------------------------------------------------------
