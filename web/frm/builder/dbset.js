@@ -1,34 +1,3 @@
-//------------------------------------------------------------------------------
-dbset.find = (id, ds) => {
-
-    let record = ds.find(rec => id == rec[1])
-    return (record == undefined) ? ds.virtualRec : record;
-}
-//------------------------------------------------------------------------------
-dbset.nullRecord = (ds) => {
-    if (ds == undefined || ds[0] == undefined || ds[0] == null) {
-        return undefined;
-    }
-    let arr = [];
-    for (let dr of ds[0]) {
-        arr.push(null);
-    }
-    return arr;
-}
-//------------------------------------------------------------------------------
-dbset.isEmrty = (record) => {
-    if (record == undefined)
-        return true;
-    else if (record[1] == -3)
-        return true;
-    return false;
-}
-//------------------------  ENUMS  ---------------------------------------------
-export function enumList() {
-    return  $.ajax({
-        url: 'enum?action=enumList',
-    });
-}
 //------------------------  SYSTREE  -------------------------------------------
 export function systreeList() {
     return  $.ajax({
