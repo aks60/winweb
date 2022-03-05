@@ -85,10 +85,9 @@
 
                     //Запишем скрипт в серверную базу данных
                     $.ajax({
-                        url: 'dbset?action=saveScript',
+                        url: 'dbset?action=updateScript',
                         data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                         success: (data) => {
-                            alert(55);
                             if (data.result != 'ok')
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                         },

@@ -55,7 +55,7 @@
                 order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных
-                    url: 'dbset?action=saveScript',
+                    url: 'dbset?action=updateScript',
                     data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
                     success: function (data) {
                         if (data.result == 'ok') {

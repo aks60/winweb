@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.Furniture;
 import builder.model.AreaStvorka;
 import common.UCom;
+import dataset.Conn;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
@@ -104,7 +105,7 @@ public class Dbset {
         return new JSONObject(App.asMap("paramsList", qParams));
     }
 
-    public static JSONObject saveScript(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject updateScript(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
@@ -119,6 +120,25 @@ public class Dbset {
         } catch (SQLException e) {
             return output;
         }
+    }
+    
+    public static JSONObject insertProprod(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
+        
+        Query qProprod = new Query(eProprod.values());
+        Record record = new Record();
+        record.add("INS");
+        record.add(Conn.genId(eProprod.up));
+        record.add(0);
+        record.add(obj.get("name"));
+        record.add(obj.get("script"));
+        record.add(obj.get("projectID"));
+        record.add(obj.get("systreeID"));
+        qProprod.insert(record);
+        output.put("result", "ok");
+        return output;
     }
 
     public static JSONObject prokitList(HttpServletRequest request, HttpServletResponse response) {

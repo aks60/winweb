@@ -46,15 +46,13 @@
                 }).trigger('resize');
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
-                tab_sysprod.addEventListener('click', order.event_clicked);
+                tab_sysprod.addEventListener('click', order.click_table2);
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
                 prepareToolBar();
             });
             
             function test() {
-                let mmm = findef(dbset.artiklList.find(v => v[1] == -7), dbset.artiklList);
-                alert(mmm);
             }            
         </script>
     </head>
@@ -64,7 +62,7 @@
             <button id="btnUpdate" onClick="">Изменить</button>
             <button id="btnSave" onClick="">Сохранить</button>
             <button id="btnDelit" onClick="">Удалить</button>
-            <button id="btnTest" onClick="test();">Test</button>
+            <button id="btnTest" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Test</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

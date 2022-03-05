@@ -100,7 +100,7 @@
 
                     //Запишем скрипт в серверную базу данных
                     $.ajax({
-                        url: 'dbset?action=saveScript',
+                        url: 'dbset?action=updateScript',
                         data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
                         success: function (data) {
                             if (data.result == 'ok') {

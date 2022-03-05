@@ -56,7 +56,7 @@
             <button id="btnIns" onClick="">Test3</button>
 
             <button id="btn1" onClick="test();">Sysprof</button> 
-            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/sideopen.jsp');">Фурнитура</button>
+            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/furniture.jsp');">Фурнитура</button>
             <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
             <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
         </div> 

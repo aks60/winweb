@@ -25,11 +25,11 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             let proprodID = null;
-            let orderRec = table1.jqGrid('getRowData', rowid);
+            order.row_table1 = table1.jqGrid('getRowData', rowid);
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let proprodRec = dbset.proprodList[i];
 
-                if (orderRec.id == proprodRec[PROPROD.project_id]) {
+                if (order.row_table1.id == proprodRec[PROPROD.project_id]) {
                     order.add_proprodClone(table2, proprodRec);
                     if (proprodID == null) {
                         proprodID = proprodRec[PROPROD.id];
@@ -111,7 +111,7 @@ order.taq_parent = function (node, tag) {
     return null;
 }
 //------------------------------------------------------------------------------
-order.event_clicked = function (e) {
+order.click_table2 = function (e) {
 
     let row = order.taq_parent(e.target, 'TR');
     if (row) {

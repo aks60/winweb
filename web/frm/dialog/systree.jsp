@@ -6,13 +6,27 @@
         <title>SYSTREE</title>
 
         <style>
-            #table2a tr:hover {background:#E2EEFF;}
-            #table2a .activeRow, #table2a .activeRow:hover {background:#efeffb; color:#fff;}
+            #table2a tr:hover {
+                background:#E2EEFF;
+            }
+            #table2a .activeRow, #table2a .activeRow:hover {
+                background:#efeffb;
+                color:#fff;
+            }
 
-            #table2a tr { height: 68px; };
-            #table2a tr  > *:nth-child(1) { display: none !important; }
-            #table2a tr > *:nth-child(2) { width: 212px !important; }
-            #table2a tr > *:nth-child(3) { width: 68px !important;  }
+            #table2a tr {
+                height: 68px;
+            }
+            ;
+            #table2a tr  > *:nth-child(1) {
+                display: none !important;
+            }
+            #table2a tr > *:nth-child(2) {
+                width: 212px !important;
+            }
+            #table2a tr > *:nth-child(3) {
+                width: 68px !important;
+            }
         </style>
 
         <script type="text/javascript">
@@ -35,18 +49,36 @@
                 systree.load_table($("#table1a"), tab_sysprod);
             });
 //------------------------------------------------------------------------------
-            systree.init_dialog = function (dialog) {
+            systree.init_dialog = function (dialogTaq) {
 
-                dialog.dialog({
+                dialogTaq.dialog({
                     title: "Конструкции систем профилей",
                     width: 600,
                     height: 500,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            systree.resize();
+                            debugger;
+                            let sysprodRec = dbset.sysprodList.find(rec => systree.sysprodID == rec[SYSPROD.id]);
+                            if (sysprodRec != undefined) {
+                                //Запишем скрипт в серверную базу данных
+                                $.ajax({
+                                    url: 'dbset?action=insertProprod',
+                                    data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
+                                            projectID: order.row_table1.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
+                                    success: (data) => {
+                                        alert(55);
+                                        if (data.result != 'ok')
+                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                    },
+                                    error: () => {
+                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                    }
+                                });
+                            }
                         },
                         "Закрыть": function () {
+                            systree.rec_table1 = null;
                             $(this).dialog("close");
                         }
                     }
@@ -97,7 +129,6 @@
                 $.ajax({
                     url: 'systree?action=sysTree',
                     success: function (data) {
-                        //systree.sysTree = data.sysTree;
                         table1[0].addJSONData({
                             total: 1,
                             page: 1,
@@ -106,9 +137,7 @@
                         });
 
                         table1.jqGrid("setSelection", 1);
-                        setTimeout(function () {
-                            systree.resize();
-                        }, 10);
+                        systree.resize();
                     }
                 });
             }
@@ -155,7 +184,7 @@
                     row.classList.add('activeRow');
                     table.setAttribute('activeRowIndex', row.rowIndex);
                     systree.sysprodID = row.cells[0].innerHTML;
-                    alert('info = ' + systree.sysprodID);
+                    //alert('info = ' + systree.sysprodID);
                 }
             }
 //------------------------------------------------------------------------------
@@ -174,7 +203,7 @@
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            
             </div>
-            
+
             <div id="dialog-mes" title="Сообщение"></div>
         </div>                   
     </body> 

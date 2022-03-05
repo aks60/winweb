@@ -49,7 +49,7 @@
                             winc.obj.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
                             
                             $.ajax({//запишем профиль в серверную базу данных
-                                url: 'dbset?action=saveScript',
+                                url: 'dbset?action=updateScript',
                                 data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                                 success: function (data) {
                                     if (data.result == 'ok') {
