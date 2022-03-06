@@ -126,12 +126,12 @@ function formatDate2(d) {
 //------------------------------------------------------------------------------
 function prepareToolBar() {
 
-    $("#btnOrder1").button({icons: {primary: "ui-icon-document"}});
+    $("#btnOrder1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnOrder2").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnOrder3").button({icons: {primary: "ui-icon-trash"}});
     $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnProd3").button({icons: {primary: "ui-icon-pencil"}});
-    
+
     //$("#btnSave").button({icons: {primary: "ui-icon-disk"}});
     //$("#btnReport").button({icons: {primary: "ui-icon-print"}});
     //$("#btnFind").button({icons: {primary: "ui-icon-search"}});
@@ -148,10 +148,15 @@ function dialogSec(mes) {
 }
 //------------------------------------------------------------------------------
 //диалог окна  сообщений
-function dialogMes(title, mes, height) {
+function dialogMes(title, mes) {
     $("#dialog-mes").html("<p>" + mes);
-    $("#dialog-mes").dialog({modal: true, height: height, title: title, buttons: [{
-                text: "Ok", icon: "ui-icon-close", click: function () {
+    $("#dialog-mes").dialog({
+        modal: true,
+        height: "auto",
+        title: title,
+        buttons: [{
+                text: "Ok", icon: "ui-icon-close",
+                click: function () {
                     $(this).dialog("close");
                 }}]});
 }

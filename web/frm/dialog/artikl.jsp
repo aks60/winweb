@@ -89,10 +89,10 @@
                         data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                         success: (data) => {
                             if (data.result != 'ok')
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                         },
                         error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                         }
                     });
 

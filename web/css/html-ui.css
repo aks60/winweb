@@ -10,9 +10,9 @@ html, body {
 
 #north { 
     background-repeat:repeat-x;
-    background-image:url('../img/shadow3.jpg');
+    background-image:url('../img/shadow4.jpg');
     width: calc(100% - 4px);
-    height: 26px;
+    height: 28px;
 }
 
 #south { 
@@ -40,7 +40,7 @@ html, body {
 
 #north button.ui-widget {
     height: 22px;
-    margin-top: 2px;
+    margin-top: 3px;
     margin-left: 8px;
     padding: 2px;
     width: 94px;

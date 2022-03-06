@@ -35,7 +35,7 @@ order.init_table = function (table1, table2) {
                         proprodID = proprodRec[PROPROD.id];
                     }
                 }
-            }  
+            }
             if (proprodID != null && order.rec_table2 != undefined) {
                 let id = 'cnv' + order.rec_table2[PROPROD.id];
                 document.getElementById(id).click();
@@ -74,7 +74,39 @@ order.load_table = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 order.delete_proprod = function () {
-    alert();
+
+    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущую запись?");
+    $("#dialog-mes").dialog({
+        title: "Подтверждение",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Да": function () {
+                $.ajax({
+                    url: 'dbset?action=deleteProprod',
+                    data: {param: JSON.stringify({id: order.rec_table2[PROPROD.id]})},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            let id = 'tr' + order.rec_table2[PROPROD.id];
+                            var trow = document.getElementById(id);
+                            trow.remove();
+                        } else
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            Нет: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 }
 //------------------------------------------------------------------------------
 order.add_proprodClone = function (table2, proprodRec) {
@@ -97,6 +129,7 @@ order.add_proprodClone = function (table2, proprodRec) {
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
     let tr = document.createElement('tr');
+    tr.id = 'tr' + proprodRec[PROPROD.id];
 
     td1.appendChild(id);
     td2.appendChild(name);

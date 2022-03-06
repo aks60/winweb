@@ -141,6 +141,18 @@ public class Dbset {
         output.put("id", record.getInt(eProprod.id));
         return output;
     }
+    
+    public static JSONObject deleteProprod(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);    
+        Query qProprod = new Query(eProprod.values());
+        Record record = eProprod.up.newRecord("DEL");
+        record.set(eProprod.id, obj.get("id"));
+        qProprod.delete(record);
+        output.put("result", "ok");
+        return output;
+    }
 
     public static JSONObject prokitList(HttpServletRequest request, HttpServletResponse response) {
         ArrayList<List> list = new ArrayList();

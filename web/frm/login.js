@@ -31,7 +31,7 @@ login.init_login = function (src) {
             }
         } else {
             login.que_requests = 1;
-            dialogMes("Неудача", login.data.result, 168);
+            dialogMes("Неудача", login.data.result);
         }
     }
 }
@@ -42,7 +42,7 @@ login.user_connect = function () {
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
     for (let i = 0; i < 2; i++) {
         if (att[i] == '') {
-            dialogMes("Ошибка", mes[i], 160);
+            dialogMes("Ошибка", mes[i]);
             return;
         }
     }
@@ -54,7 +54,7 @@ login.user_connect = function () {
             login.init_login('log');
         },
         error: function () {
-            dialogMes('Сообщение', 'Ошибка авторизации пользователя', 168);
+            dialogMes('Сообщение', 'Ошибка авторизации пользователя');
         }
     });
 }
@@ -67,18 +67,18 @@ login.token_check = function () {
     console.log(att);
     for (let i = 0; i < 3; i++) {
         if (att[i] == '') {
-            dialogMes('Сообщение', mes[i], 168);
+            dialogMes('Сообщение', mes[i]);
             return;
         }
     }
     var login = att[2];
     var re = /^[a-zA-Z0-9]+$/;
     if (!re.test(login)) {
-        dialogMes('Сообщение', 'Логин может состоять только из букв английского алфавита и цифр', 168);
+        dialogMes('Сообщение', 'Логин может состоять только из букв английского алфавита и цифр');
         return false;
     }
     if (login.length < 3 || login.length > 16) {
-        dialogMes('Сообщение', 'Логин должен быть не меньше 3-х и не больше 16 символов', 168);
+        dialogMes('Сообщение', 'Логин должен быть не меньше 3-х и не больше 16 символов');
         return false;
     }
     login = login + '-rono';
@@ -87,7 +87,7 @@ login.token_check = function () {
         data: {'admname': att[0], 'password': att[1], 'login': login},
         success: function (data) {
             if (data.login == 'false') {
-                dialogMes('Сообщение', data.mes, 168);
+                dialogMes('Сообщение', data.mes);
             } else {
                 token_link(login);
             }
@@ -99,13 +99,13 @@ login.token_check = function () {
 login.token_connect = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
-        dialogMes('Сообщение', 'Выберите учетную запись на USB-токене.', 168);
+        dialogMes('Сообщение', 'Выберите учетную запись на USB-токене.');
     } else {
         $.ajax({
             url: 'login?action=rtwRandom',
             data: {'login': login},
             error: function () {
-                dialogMes('Сообщение', 'Ошибка на сервере', 128);
+                dialogMes('Сообщение', 'Ошибка на сервере');
             },
             success: function (data) {
                 token_sign(data.random)
@@ -118,7 +118,7 @@ login.token_connect = function () {
 login.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
-        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном', 168);
+        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном');
         return;
     }
     var random_hash = Sha256.hash(random);
@@ -126,13 +126,13 @@ login.token_sign = function (random) {
     var sign = plugin.rtwSign(pin, random_hash);
     if (sign != -7 && sign != -12) {
         if (sign < 0) {
-            dialogMes('Сообщение', err[sign], 168);
+            dialogMes('Сообщение', err[sign]);
         } else {
             $.ajax({
                 url: 'login?action=rtwConnect',
                 data: {'sign': sign},
                 error: function () {
-                    dialogMes('Сообщение', 'Ошибка авторизации токена', 168);
+                    dialogMes('Сообщение', 'Ошибка авторизации токена');
                 },
                 success: function (data) {
                     if (data.result == 'true') {
@@ -142,7 +142,7 @@ login.token_sign = function (random) {
                         }
                         loadBody('frm/patt/simpl3.jsp')
                     } else {
-                        dialogMes('Сообщение', data.result, 168);
+                        dialogMes('Сообщение', data.result);
                     }
                 }
             });
@@ -158,7 +158,7 @@ login.token_refresh = function () {
         log_list.remove(i);
     }
     if (!plugin.valid) {
-        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном', 168);
+        dialogMes('Сообщение', 'Не установлен плагин для работы с USB-токеном');
         return;
     }
     var ret = plugin.rtwIsTokenPresentAndOK();

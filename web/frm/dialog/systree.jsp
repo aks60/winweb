@@ -72,10 +72,10 @@
                                             dbset.proprodList.push(record);
                                             order.add_proprodClone(document.getElementById('table2'), record);                                           
                                         } else
-                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                     },
                                     error: () => {
-                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
+                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                     }
                                 });
                             }

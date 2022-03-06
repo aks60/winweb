@@ -52,6 +52,7 @@
             });
             
             function test() {
+                dialogMes('Сообщение', 'Логин может состоять только из букв английского алфавита и цифр');
             }            
         </script>
     </head>
@@ -63,7 +64,7 @@
             
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_proprod();">Удалить констр.</button>            
-            <button id="btnTest" onClick="">Test</button>
+            <button id="btnTest" onClick="test();">Test</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
