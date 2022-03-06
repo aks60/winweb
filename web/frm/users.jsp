@@ -14,7 +14,6 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
-            $("button").button();
             function onpage(val) {
                 $("#pan1, #pan2, #pan3, #pan4").hide();
                 $("#pan" + val).show();

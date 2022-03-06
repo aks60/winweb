@@ -39,7 +39,6 @@
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
 
-            $('button').button();
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     order.resize();
@@ -58,11 +57,13 @@
     </head>
     <body>        
         <div id="north">
-            <button id="btnIns" onClick="">Добавить</button>
-            <button id="btnUpdate" onClick="">Изменить</button>
-            <button id="btnSave" onClick="">Сохранить</button>
-            <button id="btnDelit" onClick="">Удалить</button>
-            <button id="btnTest" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Test</button>
+            <button id="btnOrder1" style="width: 128px" onClick="">Добавить заказ</button>
+            <button id="btnOrder2" style="width: 128px" onClick="">Изменить заказ</button>
+            <button id="btnOrder3" style="width: 128px" onClick="">Удалить заказ</button>
+            
+            <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
+            <button id="btnProd3" style="width: 128px" onClick="">Удалить констр.</button>            
+            <button id="btnTest" onClick="">Test</button>
         </div>     
         <div id = "context">        
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">

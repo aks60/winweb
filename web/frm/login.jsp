@@ -26,7 +26,6 @@
                 $("#pan" + val).show();
             }
             
-            $("button").button();
             $(document).ready(function () {                
                 $("#btn2").focus();
 

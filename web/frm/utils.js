@@ -126,12 +126,15 @@ function formatDate2(d) {
 //------------------------------------------------------------------------------
 function prepareToolBar() {
 
-    $("#btnIns").button({icons: {primary: "ui-icon-document"}});
-    $("#btnUpdate").button({icons: {primary: "ui-icon-pencil"}});
-    $("#btnSave").button({icons: {primary: "ui-icon-disk"}});
-    $("#btnDelit").button({icons: {primary: "ui-icon-trash"}});
-    $("#btnReport").button({icons: {primary: "ui-icon-print"}});
-    $("#btnFind").button({icons: {primary: "ui-icon-search"}});
+    $("#btnOrder1").button({icons: {primary: "ui-icon-document"}});
+    $("#btnOrder2").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnOrder3").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnProd3").button({icons: {primary: "ui-icon-pencil"}});
+    
+    //$("#btnSave").button({icons: {primary: "ui-icon-disk"}});
+    //$("#btnReport").button({icons: {primary: "ui-icon-print"}});
+    //$("#btnFind").button({icons: {primary: "ui-icon-search"}});
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
 //------------------------------------------------------------------------------

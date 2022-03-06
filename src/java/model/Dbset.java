@@ -138,6 +138,7 @@ public class Dbset {
         record.add(obj.get("systreeID"));
         qProprod.insert(record);
         output.put("result", "ok");
+        output.put("id", record.getInt(eProprod.id));
         return output;
     }
 

@@ -58,7 +58,6 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            debugger;
                             let sysprodRec = dbset.sysprodList.find(rec => systree.sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {
                                 //Запишем скрипт в серверную базу данных
@@ -67,8 +66,12 @@
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
                                             projectID: order.row_table1.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
                                     success: (data) => {
-                                        alert(55);
-                                        if (data.result != 'ok')
+                                        if (data.result == 'ok') {
+                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name], 
+                                                sysprodRec[SYSPROD.script], order.row_table1.id, sysprodRec[SYSPROD.systree_id]];
+                                            dbset.proprodList.push(record);
+                                            order.add_proprodClone(document.getElementById('table2'), record);                                           
+                                        } else
                                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере", 168);
                                     },
                                     error: () => {
@@ -76,11 +79,12 @@
                                     }
                                 });
                             }
+                            $(this).dialog("close");
                         },
                         "Закрыть": function () {
                             systree.rec_table1 = null;
                             $(this).dialog("close");
-                        }
+                        }                        
                     }
                 });
             }

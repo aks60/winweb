@@ -12,7 +12,7 @@ html, body {
     background-repeat:repeat-x;
     background-image:url('../img/shadow3.jpg');
     width: calc(100% - 4px);
-    height: 22px;
+    height: 26px;
 }
 
 #south { 
@@ -39,8 +39,8 @@ html, body {
 }
 
 #north button.ui-widget {
-    height: 18px;
-    margin-top: 1px;
+    height: 22px;
+    margin-top: 2px;
     margin-left: 8px;
     padding: 2px;
     width: 94px;
