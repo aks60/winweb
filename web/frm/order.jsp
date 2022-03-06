@@ -62,7 +62,7 @@
             <button id="btnOrder3" style="width: 128px" onClick="">Удалить заказ</button>
             
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
-            <button id="btnProd3" style="width: 128px" onClick="">Удалить констр.</button>            
+            <button id="btnProd3" style="width: 128px" onClick="order.delete_proprod();">Удалить констр.</button>            
             <button id="btnTest" onClick="">Test</button>
         </div>     
         <div id = "context">        

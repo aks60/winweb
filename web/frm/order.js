@@ -73,6 +73,10 @@ order.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
+order.delete_proprod = function () {
+    alert();
+}
+//------------------------------------------------------------------------------
 order.add_proprodClone = function (table2, proprodRec) {
 
     let canvas = document.createElement("canvas");
@@ -110,7 +114,6 @@ order.taq_parent = function (node, tag) {
         return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
     return null;
 }
-//------------------------------------------------------------------------------
 order.click_table2 = function (e) {
 
     let row = order.taq_parent(e.target, 'TR');
