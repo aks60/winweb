@@ -73,7 +73,42 @@ order.load_table = function (table1, table2) {
     });
 }
 //------------------------------------------------------------------------------
-order.delete_proprod = function () {
+order.delete_table1 = function (table1) {
+    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущий заказ?");
+    $("#dialog-mes").dialog({
+        title: "Подтверждение",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Да": function () {
+                $.ajax({
+                    url: 'dbset?action=deleteProject',
+                    data: {param: JSON.stringify({id: order.row_table1.id})},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            let rowid = table1.jqGrid('getGridParam', "selrow");
+                            if (rowid != null)
+                                table1.jqGrid('delRowData', rowid);
+                        } else
+                            dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            Нет: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+//------------------------------------------------------------------------------
+order.delete_table2 = function () {
 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -94,10 +129,10 @@ order.delete_proprod = function () {
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
                     },
                     error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
                     }
                 });
                 $(this).dialog("close");

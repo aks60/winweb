@@ -14,6 +14,7 @@ import domain.eFurndet;
 import domain.eFurniture;
 import domain.eGroups;
 import domain.eParams;
+import domain.eProject;
 import domain.eProkit;
 import domain.eProprod;
 import domain.eSysfurn;
@@ -139,6 +140,18 @@ public class Dbset {
         qProprod.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProprod.id));
+        return output;
+    }
+    
+    public static JSONObject deleteProject(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);    
+        Query qProject = new Query(eProject.values());
+        Record record = eProject.up.newRecord("DEL");
+        record.set(eProject.id, obj.get("id"));
+        qProject.delete(record);
+        output.put("result", "ok");
         return output;
     }
     

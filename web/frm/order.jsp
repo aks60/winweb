@@ -60,10 +60,10 @@
         <div id="north">
             <button id="btnOrder1" style="width: 128px" onClick="">Добавить заказ</button>
             <button id="btnOrder2" style="width: 128px" onClick="">Изменить заказ</button>
-            <button id="btnOrder3" style="width: 128px" onClick="">Удалить заказ</button>
+            <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
             
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
-            <button id="btnProd3" style="width: 128px" onClick="order.delete_proprod();">Удалить констр.</button>            
+            <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
             <button id="btnTest" onClick="test();">Test</button>
         </div>     
         <div id = "context">        
