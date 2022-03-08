@@ -49,11 +49,11 @@
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
                 prepareToolBar();
+                taq_deploy(['#card-1']);
             });
-            
+
             function test() {
-                dialogMes('Сообщение', 'Логин может состоять только из букв английского алфавита и цифр');
-            }            
+            }
         </script>
     </head>
     <body>        
@@ -61,12 +61,19 @@
             <button id="btnOrder1" style="width: 128px" onClick="">Добавить заказ</button>
             <button id="btnOrder2" style="width: 128px" onClick="">Изменить заказ</button>
             <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
-            
+
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
             <button id="btnTest" onClick="test();">Test</button>
         </div>     
-        <div id = "context">        
+        <div id = "context">     
+            <div id="card-1" card_width="600" card_height="220" style="display: none;">
+                <jst id="n32" type='txt' label='Номер заказа' width='80' width2="288"></jst><br>
+                <jst id="n32" type='txt' label='Номер счёта' width='80' width2="288"></jst><br>
+                <jst id="n01" type='btn' label='Дата от...' width='80' width2="260" click=""></jst><br>
+                <jst id="n01" type='btn' label='Дата до...' width='80' width2="260" click=""></jst><br>
+                <jst id="n32" type='txt' label='Контрагент' width='80' width2="288"></jst><br>
+            </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
                 <div id="centr" style="height: 100%; width: 100%;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 

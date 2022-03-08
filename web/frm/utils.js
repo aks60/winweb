@@ -61,6 +61,100 @@ function taq_deploy(selectors) {
 }
 
 //------------------------------------------------------------------------------
+//Карточка ввода данных
+function card_dialog(taq, type) {
+    let
+            title2 = $(taq).attr('card_title'),
+            width2 = $(taq).attr('card_width'),
+            height2 = $(taq).attr('card_height');
+
+    if (type == 'INS') {
+        
+        focusObj.mapobj.beforeInsert(); //перед вставкой
+        $.ajax({ //получим ключь и образ строки с сервера
+            url: 'dbset?action=genId',
+            data: {param: focusObj.name_table.substr(5)},
+            success: function (data) {
+                let record = data.record[0];                  
+                focusObj.mapobj.clear(); //очистим поля        
+                focusObj.mapobj.prepareCard(type, record); //подготовка карты
+
+                //Открытие диалога insert
+                $(taq).dialog({title: title2, width: width2, height: height2, modal: true,
+                    buttons: [
+                        {text: "OK", click: function () {
+                               
+                                focusObj.mapobj.prepareInsert(record); //подготовка записи
+                                //Загрузим record данными из карточки
+                                for (let field in focusObj.mapobj) {
+                                    for (let field2 in record) {
+                                        if (field == '_' + field2) {
+                                            record[field2] = focusObj.mapobj[field2]
+                                        }
+                                    }
+                                }                               
+                                focusObj.mapobj.table.push(record); //добавим строку в data сервер
+                                focusObj.mapobj.loadRecord(focusObj.mapobj.table.length - 1); //добавим строку в html таблицу
+                                focusObj.mapobj.loadField(focusObj.name_table); //заполним поля обратно
+                                $(this).dialog("close"); //закроем карточку
+                                focusObj.mapobj.afterCard(type); //после закрытия карточки
+                            }}
+                    ],
+                    resize: function (event, ui) {
+                        resizes($(this).width());
+                    }
+                });
+                resizes($(taq).dialog("option", "width") - 40);
+            },
+            error: function () {
+                dialogMes("<p>Ошибка получения первичного ключа с сервера");
+                return;
+            }
+        });
+
+    } else if (type == 'UPD') {
+
+        
+        if (focusObj.mapobj.beforeUpdate() != undefined) { //перед изменениями
+            return;
+        }       
+        let rowid = $(focusObj.name_table).getGridParam('selrow'); //если строка в таблице не выделена
+        if (rowid == null) {
+            return;
+        }
+        if (focusObj.mapobj.prepareCard(type) != undefined) { //подготовка карты
+            return;
+        }
+        if (title2 == undefined) {
+            title2 = "Карточка изменения текущей записи";
+        }
+
+        //открытие диалога update
+        $(taq).dialog({title: title2, width: width2, height: height2, modal: true,
+            buttons: [
+                {text: "OK", click: function () {
+                        focusObj.mapobj.saveLocal();
+                        $(this).dialog("close");               
+                        if (focusObj.mapobj.afterCard(type) != undefined) { //после закрытия карточки
+                            return;
+                        }
+                    }}
+            ],
+            resize: function (event, ui) {
+                resizes($(this).width());
+            }
+        });
+        resizes($(taq).dialog("option", "width") - 40);
+    }
+    function resizes(width) {
+        $(taq + " .field2[dx]").each(function (index) {
+            let width2 = $(this).attr('dx');
+            $(this).width((width - width2 - 20) + 'px');
+        });
+    }
+}
+
+//------------------------------------------------------------------------------
 function load_tabs(selector, record, fields) {
 
     for (let field of fields) {
@@ -70,50 +164,10 @@ function load_tabs(selector, record, fields) {
 }
 
 //------------------------------------------------------------------------------
-//маппинг карточки ввода
-var focusObj = {
-
-    mapobj: {}, wrap_table: '', history_table: [], card_table: '', name_table: '',
-    click: function (event) {
-        //запишем объект карточки ввода
-        focusObj.mapobj = (event.data) ? event.data['mapobj'] : null;
-        //запишем селектора текущего выделения объекта html
-        focusObj.wrap_table = '#' + event.currentTarget.id;
-        focusObj.card_table = '#card' + event.currentTarget.id.substring(4);
-        focusObj.name_table = '#tab' + event.currentTarget.id.substring(4);
-        for (var i = 0; i < focusObj.history_table.length; i++) {
-            //снимем все выделения бордер
-            $(focusObj.history_table[i]).css('outline', '0');
-        }
-        //запишем бордер текушего выделения
-        $(focusObj.wrap_table).css('outline', '1px solid #00f');
-        //проверим историю
-        for (var i = 0; i < focusObj.history_table.length; i++) {
-            if (focusObj.history_table[i] == focusObj.wrap_table)
-                return;
-        }
-        //если в истории нет, запишем в историю
-        focusObj.history_table.push(focusObj.wrap_table);
-        return this;
-    },
-    fire: function (mapobj) {
-        //запишем объект карточки ввода
-        focusObj.mapobj = mapobj;
-        if (mapobj != null) {
-            //запишем селектора текущего выделения объекта html
-            focusObj.wrap_table = mapobj.wrap_table;
-            focusObj.card_table = mapobj.card_table;
-            focusObj.name_table = mapobj.name_table;
-        }
-        return this;
-    }
-}
-
-//------------------------------------------------------------------------------
 function formatDate2(d) {
 
-    var dd = d.getDate();
-    var mm = d.getMonth() + 1;
+    let dd = d.getDate();
+    let mm = d.getMonth() + 1;
     if (dd < 10) {
         dd = '0' + dd
     }
@@ -138,7 +192,7 @@ function prepareToolBar() {
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
 //------------------------------------------------------------------------------
-//диалог окна  сообщений
+//Диалог окна  сообщений
 function dialogSec(mes) {
     $("#dialog-mes").html(mes);
     $("#dialog-mes").dialog({
@@ -147,7 +201,7 @@ function dialogSec(mes) {
     setTimeout("$('#dialog-mes').dialog('close');", 600);
 }
 //------------------------------------------------------------------------------
-//диалог окна  сообщений
+//Диалог окна  сообщений
 function dialogMes(title, mes) {
     $("#dialog-mes").html("<p>" + mes);
     $("#dialog-mes").dialog({
@@ -161,7 +215,7 @@ function dialogMes(title, mes) {
                 }}]});
 }
 //------------------------------------------------------------------------------
-//диалог окна прогрес сохранения
+//Диалог окна прогрес сохранения
 //TODO доработать прогресс
 function dialogPrg2() {
 
@@ -182,7 +236,7 @@ function dialogPrg2() {
     this.progressloop();
 
     this.progressloop = function () {
-        var val = this.pgbar.progressbar("value") || 0;
+        let val = this.pgbar.progressbar("value") || 0;
         this.pgbar.progressbar("value", val + 2);
 
         if (val < 99) {
@@ -193,14 +247,14 @@ function dialogPrg2() {
     }
 }
 //------------------------------------------------------------------------------
-//прогресс бар
+//Прогресс бар
 function dialogPrg(mes) {
     $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
     $("#dialog-mes").dialog({
         modal: true
     });
     $(function () {
-        var pgbar = $("#progressbar"), pglab = $(".progress-label");
+        let pgbar = $("#progressbar"), pglab = $(".progress-label");
 
         pgbar.progressbar({
             value: false,
@@ -209,7 +263,7 @@ function dialogPrg(mes) {
             }
         });
         function progress() {
-            var val = pgbar.progressbar("value") || 0;
+            let val = pgbar.progressbar("value") || 0;
             pgbar.progressbar("value", val + 4);
 
             if (val < 99) {
