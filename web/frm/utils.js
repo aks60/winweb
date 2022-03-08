@@ -130,7 +130,7 @@ function prepareToolBar() {
     $("#btnOrder2").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnOrder3").button({icons: {primary: "ui-icon-trash"}});
     $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnProd3").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
 
     //$("#btnSave").button({icons: {primary: "ui-icon-disk"}});
     //$("#btnReport").button({icons: {primary: "ui-icon-print"}});
