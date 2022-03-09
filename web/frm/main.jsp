@@ -58,7 +58,7 @@
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, furndet = {},
                     users = {}, order = {rowid_table1: 8, row_table2: null, wincalcMap: new Map()}, artikl = {dialogType: 0}, product = {},
-                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {}, sideopen = {};
+                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {}, sideopen = {}, dealer = {};
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
