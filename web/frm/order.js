@@ -51,26 +51,24 @@ order.init_table = function (table1, table2) {
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
     table1.jqGrid('clearGridData', true);
-//    $.ajax({
-//        url: 'dbset?action=orderList',
-//        success: function (data) {
-            //order.orderList = data.orderList;
-            for (let i = 0; i < dbset.orderList.length; i++) {
-                let tr = dbset.orderList[i];
-                table1.jqGrid('addRowData', i + 1, {
-                    id: tr[ORDER.id],
-                    num_ord: tr[ORDER.num_ord],
-                    num_acc: tr[ORDER.num_acc],
-                    date4: tr[ORDER.date4],
-                    date6: tr[ORDER.date6],
-                    propart_id: tr[ORDER.propart_id],
-                    manager: tr[ORDER.manager]
-                });
-            }
-            table1.jqGrid("setSelection", order.rowid_table1);
-            order.resize();
-//        }
-//    });
+    
+    let test1 = order.color2List;
+    let test2 = order.colorList;
+
+    for (let i = 0; i < dbset.orderList.length; i++) {
+        let tr = dbset.orderList[i];
+        table1.jqGrid('addRowData', i + 1, {
+            id: tr[ORDER.id],
+            num_ord: tr[ORDER.num_ord],
+            num_acc: tr[ORDER.num_acc],
+            date4: tr[ORDER.date4],
+            date6: tr[ORDER.date6],
+            propart_id: tr[ORDER.propart_id],
+            manager: tr[ORDER.manager]
+        });
+    }
+    table1.jqGrid("setSelection", order.rowid_table1);
+    order.resize();
 }
 //------------------------------------------------------------------------------
 order.delete_table1 = function (table1) {

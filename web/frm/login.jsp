@@ -22,8 +22,10 @@
             }
 
             function onPage(val) {
-                $("#pan1, #pan2").hide();
-                $("#pan" + val).show();
+                let o1 = dbset.color2List;
+               debugger;
+                //$("#pan1, #pan2").hide();
+                //$("#pan" + val).show();
             }
             
             $(document).ready(function () {                
@@ -38,7 +40,7 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');            
-            login.user_connect();            
+            //login.user_connect();            
         </script>         
     </head>
     <body>
