@@ -60,22 +60,21 @@ function taq_deploy(selectors) {
     }
 }
 
-//------------------------------------------------------------------------------
-//Карточка ввода данных
-function card_dialog(taq, type) {
+function card_deploy2(taq, type) {
+    debugger;
     let
             title2 = $(taq).attr('card_title'),
             width2 = $(taq).attr('card_width'),
             height2 = $(taq).attr('card_height');
 
     if (type == 'INS') {
-        
-        focusObj.mapobj.beforeInsert(); //перед вставкой
-        $.ajax({ //получим ключь и образ строки с сервера
+
+        //focusObj.mapobj.beforeInsert(); //перед вставкой
+        $.ajax({//получим ключь и образ строки с сервера
             url: 'dbset?action=genId',
             data: {param: focusObj.name_table.substr(5)},
             success: function (data) {
-                let record = data.record[0];                  
+                let record = data.record[0];
                 focusObj.mapobj.clear(); //очистим поля        
                 focusObj.mapobj.prepareCard(type, record); //подготовка карты
 
@@ -83,7 +82,7 @@ function card_dialog(taq, type) {
                 $(taq).dialog({title: title2, width: width2, height: height2, modal: true,
                     buttons: [
                         {text: "OK", click: function () {
-                               
+
                                 focusObj.mapobj.prepareInsert(record); //подготовка записи
                                 //Загрузим record данными из карточки
                                 for (let field in focusObj.mapobj) {
@@ -92,7 +91,7 @@ function card_dialog(taq, type) {
                                             record[field2] = focusObj.mapobj[field2]
                                         }
                                     }
-                                }                               
+                                }
                                 focusObj.mapobj.table.push(record); //добавим строку в data сервер
                                 focusObj.mapobj.loadRecord(focusObj.mapobj.table.length - 1); //добавим строку в html таблицу
                                 focusObj.mapobj.loadField(focusObj.name_table); //заполним поля обратно
@@ -114,10 +113,10 @@ function card_dialog(taq, type) {
 
     } else if (type == 'UPD') {
 
-        
+
         if (focusObj.mapobj.beforeUpdate() != undefined) { //перед изменениями
             return;
-        }       
+        }
         let rowid = $(focusObj.name_table).getGridParam('selrow'); //если строка в таблице не выделена
         if (rowid == null) {
             return;
@@ -134,7 +133,7 @@ function card_dialog(taq, type) {
             buttons: [
                 {text: "OK", click: function () {
                         focusObj.mapobj.saveLocal();
-                        $(this).dialog("close");               
+                        $(this).dialog("close");
                         if (focusObj.mapobj.afterCard(type) != undefined) { //после закрытия карточки
                             return;
                         }
@@ -146,6 +145,7 @@ function card_dialog(taq, type) {
         });
         resizes($(taq).dialog("option", "width") - 40);
     }
+
     function resizes(width) {
         $(taq + " .field2[dx]").each(function (index) {
             let width2 = $(this).attr('dx');

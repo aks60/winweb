@@ -123,6 +123,26 @@ public class Dbset {
         }
     }
     
+    public static JSONObject insertOrder(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
+        
+        Query qProject = new Query(eProject.values());
+        Record record = new Record();
+        record.add("INS");
+        record.add(Conn.genId(eProject.up));
+        record.add(0);
+        record.add(obj.get("name"));
+        record.add(obj.get("script"));
+        record.add(obj.get("projectID"));
+        record.add(obj.get("systreeID"));
+        qProject.insert(record);
+        output.put("result", "ok");
+        output.put("id", record.getInt(eProject.id));
+        return output;
+    }
+    
     public static JSONObject insertProprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");

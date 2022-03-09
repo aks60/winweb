@@ -32,13 +32,13 @@
         </style>        
 
         <script type="text/javascript">
-
+//------------------------------------------------------------------------------
             order.resize = function () {
                 $("#context").css("height", window.innerHeight - 80);
                 $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
             }
-
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     order.resize();
@@ -51,7 +51,7 @@
                 prepareToolBar();
                 taq_deploy(['#card-1']);
             });
-
+//------------------------------------------------------------------------------            
             function test() {
             }
         </script>
@@ -64,10 +64,10 @@
 
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
-            <button id="btnTest" onClick="test();">Test</button>
+            <button id="btnTest" onClick="order.card_deploy ('#card-1', 'INS');">Test</button>
         </div>     
         <div id = "context">     
-            <div id="card-1" card_width="600" card_height="220" style="display: none;">
+            <div id="card-1" card_title="Карточка ввода нового заказа" card_width="460" card_height="220" style="display: none;">
                 <jst id="n32" type='txt' label='Номер заказа' width='80' width2="288"></jst><br>
                 <jst id="n32" type='txt' label='Номер счёта' width='80' width2="288"></jst><br>
                 <jst id="n01" type='btn' label='Дата от...' width='80' width2="260" click=""></jst><br>

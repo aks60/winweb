@@ -34,6 +34,7 @@
                     SYSPROF = {id: 1, prio: 2, use_type: 3, use_side: 4, artikl_id: 5, systree_id: 6},
                     SYSFURN = {id: 1, side_open: 4, hand_pos: 5, furniture_id: 6, artikl_id1: 7, artikl_id2: 8, systree_id: 9},
                     SYSPROD = {id: 1, name: 2, script: 3, systree_id: 4},
+                    //PROJECT = {id: 1, name_ord: 2, num_acc: 3, date4: 37, date6: 39, propart_id:41},
                     PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},

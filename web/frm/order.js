@@ -198,5 +198,38 @@ order.click_table2 = function (e) {
     }
 }
 //------------------------------------------------------------------------------
+//Карточка ввода заказов
+order.card_deploy = function (taq, type) {
+    //debugger;
+
+    if (type == 'INS') {
+        //Открытие диалога insert
+        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'), height: $(taq).attr('card_height'), modal: true,
+            buttons: [
+                {text: "OK", click: function () {
+
+//                    focusObj.mapobj.prepareInsert(record); //подготовка записи
+//                    //Загрузим record данными из карточки
+//                    for (let field in focusObj.mapobj) {
+//                        for (let field2 in record) {
+//                            if (field == '_' + field2) {
+//                                record[field2] = focusObj.mapobj[field2]
+//                            }
+//                        }
+//                    }
+//                    focusObj.mapobj.table.push(record); //добавим строку в data сервер
+//                    focusObj.mapobj.loadRecord(focusObj.mapobj.table.length - 1); //добавим строку в html таблицу
+//                    focusObj.mapobj.loadField(focusObj.name_table); //заполним поля обратно
+                        $(this).dialog("close"); //закроем карточку
+//                    focusObj.mapobj.afterCard(type); //после закрытия карточки
+                    }}
+            ],
+            resize: function (event, ui) {
+                resizes($(this).width());
+            }
+        });
+    }
+}
+//------------------------------------------------------------------------------
 
 
