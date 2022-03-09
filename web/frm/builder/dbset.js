@@ -29,9 +29,9 @@ export function artdetList() {
     });
 }
 //---------------------------  ORDER  -----------------------------------------
-export function color2List() {
+export function orderList() {
     return  $.ajax({
-        url: 'dbset?action=color2List',
+        url: 'dbset?action=orderList',
     });
 }
 //---------------------------  FURNITURE  --------------------------------------

@@ -71,28 +71,6 @@ public class Dbset {
         Query qColor = new Query(eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
         return new JSONObject(App.asMap("colorList", qColor));
     }
-    public static JSONObject color2List(HttpServletRequest request, HttpServletResponse response) {
-//        Query qColor = new Query(eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
-//        Query qProject = new Query(eProject.values()).select(eProject.up, "where id < 100");
-//        return new JSONObject(App.asMap("color2List", qProject));
-
-//{id: 1, name_ord: 2, num_acc: 3, date4: 37, date6: 39, propart_id:41}
-        ArrayList<List> list = new ArrayList();
-        Query qProject = new Query(eProject.values()).select(eProject.up, "where id < 100");
-        for (Record rec : qProject) {
-            list.add(Arrays.asList(
-                    rec.get(eProject.up),
-                    rec.get(eProject.id),
-                    rec.get(eProject.num_ord),
-                    rec.get(eProject.num_acc),
-                    rec.get(eProject.date4),
-                    rec.get(eProject.date6),
-                    rec.get(eProject.propart_id)
-            ));
-        }
-        JSONObject output = new JSONObject(App.asMap("color2List", list));
-        return output;
-    }
 
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up);
@@ -276,7 +254,13 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
-        Query qProject = new Query(eProject.values()).select(eProject.up);//"select first(60) * from " + eProject.up.tname() + " order by date4 desc");
-        return new JSONObject(App.asMap("orderList", qProject));
+        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
+        for (Record rec : qProject) {
+            rec.setNo(eProject.date4, format(rec.get(eProject.date4)));
+            rec.setNo(eProject.date5, format(rec.get(eProject.date5)));
+            rec.setNo(eProject.date6, format(rec.get(eProject.date6)));
+        }
+        JSONObject output = new JSONObject(App.asMap("orderList", qProject));
+        return output;
     }
 }

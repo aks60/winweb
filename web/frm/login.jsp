@@ -22,10 +22,8 @@
             }
 
             function onPage(val) {
-                let o1 = dbset.color2List;
-               debugger;
-                //$("#pan1, #pan2").hide();
-                //$("#pan" + val).show();
+                $("#pan1, #pan2").hide();
+                $("#pan" + val).show();
             }
             
             $(document).ready(function () {                
