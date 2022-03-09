@@ -25,8 +25,10 @@ import domain.eSystree;
 import domain.eSysuser;
 import enums.Type;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,6 +43,15 @@ import org.json.simple.JSONValue;
 
 public class Dbset {
 
+    private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
+
+    private static String format(Object date) {
+        if (date instanceof Date) {
+            return fd.format(date);
+        }
+        return null;
+    }
+
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
         return new JSONObject(App.asMap("systreeList", qSystree));
@@ -48,7 +59,7 @@ public class Dbset {
 
     public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysprod = new Query(eSysprod.values()).select(eSysprod.up);
-        return new JSONObject(App.asMap("sysprodList", qSysprod));      
+        return new JSONObject(App.asMap("sysprodList", qSysprod));
     }
 
     public static JSONObject groupList(HttpServletRequest request, HttpServletResponse response) {
@@ -75,7 +86,7 @@ public class Dbset {
         Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up);
         return new JSONObject(App.asMap("furndetList", qFurndet));
     }
-    
+
     public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurniture = new Query(eFurniture.values()).select(eFurniture.up);
         return new JSONObject(App.asMap("furnitureList", qFurniture));
@@ -122,12 +133,12 @@ public class Dbset {
             return output;
         }
     }
-    
+
     public static JSONObject insertOrder(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-        
+
         Query qProject = new Query(eProject.values());
         Record record = new Record();
         record.add("INS");
@@ -142,12 +153,12 @@ public class Dbset {
         output.put("id", record.getInt(eProject.id));
         return output;
     }
-    
+
     public static JSONObject insertProprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-        
+
         Query qProprod = new Query(eProprod.values());
         Record record = new Record();
         record.add("INS");
@@ -162,11 +173,11 @@ public class Dbset {
         output.put("id", record.getInt(eProprod.id));
         return output;
     }
-    
+
     public static JSONObject deleteProject(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);    
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
         Query qProject = new Query(eProject.values());
         Record record = eProject.up.newRecord("DEL");
         record.set(eProject.id, obj.get("id"));
@@ -174,11 +185,11 @@ public class Dbset {
         output.put("result", "ok");
         return output;
     }
-    
+
     public static JSONObject deleteProprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);    
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
         Query qProprod = new Query(eProprod.values());
         Record record = eProprod.up.newRecord("DEL");
         record.set(eProprod.id, obj.get("id"));
@@ -240,5 +251,10 @@ public class Dbset {
         }
         JSONObject output = new JSONObject(App.asMap("userList", list));
         return output;
+    }
+
+    public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
+        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
+        return new JSONObject(App.asMap("orderList", qProject));
     }
 }

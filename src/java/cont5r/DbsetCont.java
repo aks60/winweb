@@ -54,6 +54,10 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.colorList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
+            } else if (action.equalsIgnoreCase("orderList")) {
+                JSONObject output = Dbset.orderList(request, response);
+                out.write(JSONObject.toJSONString(output));
+
             } else if (action.equalsIgnoreCase("artiklList")) {
                 JSONObject output = Dbset.artiklList(request, response);
                 out.write(JSONObject.toJSONString(output));

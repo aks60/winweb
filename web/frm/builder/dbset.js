@@ -28,6 +28,12 @@ export function artdetList() {
         url: 'dbset?action=artdetList',
     });
 }
+//---------------------------  ORDER  -----------------------------------------
+export function orderList() {
+    return  $.ajax({
+        url: 'dbset?action=orderList',
+    });
+}
 //---------------------------  FURNITURE  --------------------------------------
 export function furnitureList() {
     return  $.ajax({

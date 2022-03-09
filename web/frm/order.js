@@ -51,12 +51,12 @@ order.init_table = function (table1, table2) {
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
     table1.jqGrid('clearGridData', true);
-    $.ajax({
-        url: 'order?action=orderList',
-        success: function (data) {
-            order.orderList = data.orderList;
-            for (let i = 0; i < order.orderList.length; i++) {
-                let tr = order.orderList[i];
+//    $.ajax({
+//        url: 'dbset?action=orderList',
+//        success: function (data) {
+            //order.orderList = data.orderList;
+            for (let i = 0; i < dbset.orderList.length; i++) {
+                let tr = dbset.orderList[i];
                 table1.jqGrid('addRowData', i + 1, {
                     id: tr[ORDER.id],
                     num_ord: tr[ORDER.num_ord],
@@ -69,8 +69,8 @@ order.load_table = function (table1, table2) {
             }
             table1.jqGrid("setSelection", order.rowid_table1);
             order.resize();
-        }
-    });
+//        }
+//    });
 }
 //------------------------------------------------------------------------------
 order.delete_table1 = function (table1) {
