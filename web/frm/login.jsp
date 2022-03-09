@@ -25,7 +25,7 @@
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
-            
+            $("button").button();
             $(document).ready(function () {                
                 $("#btn2").focus();
 
@@ -38,7 +38,7 @@
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
             $('#pan1 .password').val('qwerty');            
-            //login.user_connect();            
+            login.user_connect();            
         </script>         
     </head>
     <body>

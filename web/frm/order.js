@@ -51,10 +51,6 @@ order.init_table = function (table1, table2) {
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
     table1.jqGrid('clearGridData', true);
-    
-    let test1 = order.color2List;
-    let test2 = order.colorList;
-
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
         table1.jqGrid('addRowData', i + 1, {
@@ -205,7 +201,28 @@ order.card_deploy = function (taq, type) {
         $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'), height: $(taq).attr('card_height'), modal: true,
             buttons: [
                 {text: "OK", click: function () {
-
+                        
+                            alert($("#n21").val());
+                            
+                                //Запишем заказ в серверную базу данных
+                                $.ajax({
+                                    url: 'dbset?action=insertProprod',
+                                    data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(),
+                                            data4: $("#n23").val(), date6: $("#n24").val()})},
+                                    success: (data) => {
+//                                        if (data.result == 'ok') {
+//                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name], 
+//                                                sysprodRec[SYSPROD.script], order.row_table1.id, sysprodRec[SYSPROD.systree_id]];
+//                                            dbset.proprodList.push(record);
+//                                            order.add_proprodClone(document.getElementById('table2'), record);                                           
+//                                        } else
+//                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                    },
+                                    error: () => {
+                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                    }
+                                });
+                                
 //                    focusObj.mapobj.prepareInsert(record); //подготовка записи
 //                    //Загрузим record данными из карточки
 //                    for (let field in focusObj.mapobj) {

@@ -68,11 +68,11 @@
         </div>     
         <div id = "context">     
             <div id="card-1" card_title="Карточка ввода нового заказа" card_width="460" card_height="220" style="display: none;">
-                <jst id="n32" type='txt' label='Номер заказа' width='80' width2="288"></jst><br>
-                <jst id="n32" type='txt' label='Номер счёта' width='80' width2="288"></jst><br>
-                <jst id="n01" type='btn' label='Дата от...' width='80' width2="260" click=""></jst><br>
-                <jst id="n01" type='btn' label='Дата до...' width='80' width2="260" click=""></jst><br>
-                <jst id="n32" type='txt' label='Контрагент' width='80' width2="288"></jst><br>
+                <jst id="n21" type='txt' label='Номер заказа' width='80' width2="288"></jst><br>
+                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="288"></jst><br>
+                <jst id="n23" type='btn' label='Дата от...' width='80' width2="260" click=""></jst><br>
+                <jst id="n24" type='btn' label='Дата до...' width='80' width2="260" click=""></jst><br>
+                <jst id="n25" type='txt' label='Контрагент' width='80' width2="288"></jst><br>
             </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%">
                 <div id="centr" style="height: 100%; width: 100%;">
