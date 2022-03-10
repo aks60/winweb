@@ -146,9 +146,10 @@ public class Dbset {
         record.add(Conn.genId(eProject.up));
         record.add(obj.get(eProject.num_ord.name()));
         record.add(obj.get(eProject.num_acc.name()));
-
-        record.add(obj.get(eProject.num_acc.name()));
-        qProject.insert(record);
+        record.add(obj.get(eProject.date4.name()));
+        record.add(obj.get(eProject.date6.name()));
+        record.add(obj.get(eProject.propart_id.name()));
+        //qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
         return output;

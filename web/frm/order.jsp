@@ -46,8 +46,10 @@
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.click_table2);
+                
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
+                
                 prepareToolBar();
                 taq_deploy(['#card-1']);
                 $('#n23').datepicker();

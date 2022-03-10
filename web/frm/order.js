@@ -198,32 +198,36 @@ order.card_deploy = function (taq, type) {
 
     if (type == 'INS') {
         //Открытие диалога insert
-        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'), 
+        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'),
             height: $(taq).attr('card_height'), modal: true, resizable: false,
             buttons: [
                 {text: "OK", click: function () {
-                        
-                            alert($("#n21").val());
-                            
-                                //Запишем заказ в серверную базу данных
-                                $.ajax({
-                                    url: 'dbset?action=insertOrder',
-                                    data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(),
-                                            data4: $("#n23").val(), date6: $("#n24").val(), propart_id: order.row_tab1_dic.id})},
-                                    success: (data) => {
-//                                        if (data.result == 'ok') {
-//                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name], 
-//                                                sysprodRec[SYSPROD.script], order.row_table1.id, sysprodRec[SYSPROD.systree_id]];
-//                                            dbset.proprodList.push(record);
-//                                            order.add_proprodClone(document.getElementById('table2'), record);                                           
-//                                        } else
-//                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                                    },
-                                    error: () => {
-                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                                    }
-                                });
-                                
+                        //Запишем заказ в серверную базу данных
+                        $.ajax({
+                            url: 'dbset?action=insertOrder',
+                            data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(),
+                                    date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.row_tab1dic.id})},
+                            success: (data) => {
+
+                                if (data.result == 'ok') {
+                                    debugger;
+                                    let record = new Array(41);
+                                    record[0] = 'SEL';
+                                    record[1] = data.id;
+                                    record[2] = $("#n21").val();
+                                    record[3] = $("#n22").val();
+                                    record[41] = dealer.row_tab1dic.id;
+                                    dbset.orderList.push(record);
+                                    order.load_table($("#table1"));
+                                    alert(777);
+                                } else
+                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            },
+                            error: () => {
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            }
+                        });
+
 //                    focusObj.mapobj.prepareInsert(record); //подготовка записи
 //                    //Загрузим record данными из карточки
 //                    for (let field in focusObj.mapobj) {

@@ -1,15 +1,4 @@
 //------------------------------------------------------------------------------
-//Диалог окна  даты
-function dialog_date(src) {
-
-    src.datepicker('dialog', null,
-            function (d) {
-                src.val(d);
-            },
-            {showButtonPanel: true, changeMonth: true, changeYear: true, yearRange: "1950:2020"}
-    );
-}
-//------------------------------------------------------------------------------
 function taq_deploy(selectors) {
 
     let mapobj = this;
