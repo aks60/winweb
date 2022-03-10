@@ -149,7 +149,7 @@ public class Dbset {
         record.add(obj.get(eProject.date4.name()));
         record.add(obj.get(eProject.date6.name()));
         record.add(obj.get(eProject.propart_id.name()));
-        //qProject.insert(record);
+        qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
         return output;
@@ -255,7 +255,7 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
-        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by date4 desc");
+        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format(rec.get(eProject.date5)));

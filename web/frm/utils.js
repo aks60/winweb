@@ -328,6 +328,15 @@ function createVirtueRec(size, data) {
 //------------------------------------------------------------------------------            
 function findef(find, def) {
     let ret = find;
-    return (ret == undefined) ? def.virtualRec : ret;
+    if (ret != undefined) {
+        return ret;
+    } else {
+        if (def.virtualRec != undefined) {
+            return def.virtualRec;
+        } else {
+            return new Array(def[0].length);
+        }
+    }
+    //return (ret == undefined) ? def.virtualRec : ret;
 }
 //------------------------------------------------------------------------------            

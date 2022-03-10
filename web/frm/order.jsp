@@ -69,10 +69,10 @@
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
             <button id="btnTest1" onClick="order.card_deploy('#card-1', 'INS');">Test</button>
-            <button id="btnTest2" onClick="$('#dialog-dic').load('frm/dialog/dealer.jsp');">Test</button>
+            <button id="btnTest2" onClick="order.resize();">Test</button>
         </div>     
         <div id = "context">     
-            <div id="card-1" card_title="Карточка ввода нового заказа" card_width="410" card_height="220" style="display: none;">
+            <div id="card-1" card_title="Карточка ввода нового заказа" card_width="416" card_height="230" style="display: none;">
                 <jst id="n21" type='txt' label='Номер заказа' width='80' width2="80"></jst><br>
                 <jst id="n22" type='txt' label='Номер счёта' width='80' width2="80"></jst><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>

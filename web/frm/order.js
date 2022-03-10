@@ -13,7 +13,7 @@ order.init_table = function (table1, table2) {
             {name: 'num_acc', width: 120, sorttype: "text"},
             {name: 'date4', width: 120, sorttype: "text"},
             {name: 'date6', width: 120, sorttype: "text"},
-            {name: 'propart_id', width: 120, sorttype: "text"},
+            {name: 'partner', width: 120, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
@@ -47,10 +47,12 @@ order.init_table = function (table1, table2) {
             $('#table2 tr > *:nth-child(1)').hide();
         }
     });
+    order.resize();
 }
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
     table1.jqGrid('clearGridData', true);
+    dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
         table1.jqGrid('addRowData', i + 1, {
@@ -59,8 +61,10 @@ order.load_table = function (table1, table2) {
             num_acc: tr[ORDER.num_acc],
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
-            propart_id: tr[ORDER.propart_id],
-            manager: tr[ORDER.manager]
+            partner: findef(dbset.dealerList.find(rec =>
+                tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            manager: findef(dbset.dealerList.find(rec =>
+                tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.manager]
         });
     }
     table1.jqGrid("setSelection", order.rowid_table1);
@@ -219,9 +223,7 @@ order.card_deploy = function (taq, type) {
                                     record[ORDER.date6] = $("#n24").val();
                                     record[ORDER.propart_id] = dealer.row_tab1dic.id;
                                     dbset.orderList.push(record);
-                                    //dbset.orderList.sort((a, b) => a[ORDER.date4] - b[ORDER.date4]);
                                     order.load_table($("#table1"));
-                                    alert(777);
                                 } else
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                             },

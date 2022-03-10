@@ -148,7 +148,7 @@ export class Stvorka extends Area {
         if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined)
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]); //по параметру
         else if (this.sysfurnRec == undefined)
-            this.sysfurnRec = findef(dbset.sysfurnList, dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni)); //ищем первую в системе
+            this.sysfurnRec = findef(dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni), dbset.sysfurnList); //ищем первую в системе
 
         //Ручка
         if (this.obj.param != undefined && this.obj.param.artiklHandl != undefined)
