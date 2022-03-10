@@ -37,9 +37,10 @@
                     PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
-                    ORDER = {id: 1, num_ord: 2, num_acc: 3, date4: 37, date6: 39, propart_id:41},
+                    ORDER = {id: 1, num_ord: 2, num_acc: 3, date4: 37, date6: 39, propart_id: 41},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
-                    KITS = {id: 0, artikl_id: 1, color1_id: 2, color2_id: 3, color3_id: 4, width: 5, height: 6, numb: 7, angl1: 8, angl2: 9};
+                    KITS = {id: 0, artikl_id: 1, color1_id: 2, color2_id: 3, color3_id: 4, width: 5, height: 6, numb: 7, angl1: 8, angl2: 9},
+                    DEALER = {id: 1, partner: 2, manager: 3};
 
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
@@ -88,7 +89,7 @@
                     artiklList, artdetList, furnitureList,
                     furndetList, proprodList, sysfurnList,
                     sysprofList, syspar1List, paramsList,
-                    groupList, orderList
+                    groupList, orderList, dealerList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {
@@ -96,10 +97,10 @@
                         systreeList(), sysprodList(), colorList(),
                         artiklList(), artdetList(), furnitureList(),
                         furndetList(), proprodList(), sysfurnList(),
-                        sysprofList(), syspar1List(), paramsList(), 
-                        groupList(), orderList()
-                                
-                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE) => { //загрузка базы данных 
+                        sysprofList(), syspar1List(), paramsList(),
+                        groupList(), orderList(), dealerList()
+
+                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF) => { //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
@@ -114,6 +115,7 @@
                     dbset.paramsList = pC[0].paramsList;
                     dbset.groupList = pD[0].groupList;
                     dbset.orderList = pE[0].orderList;
+                    dbset.dealerList = pF[0].dealerList;
 
                     login.init_login('dat');
 
@@ -123,7 +125,7 @@
                     dbset.artdetList.virtualRec = createVirtueRec(37, {1: -3, 14: -3, 15: -3});
                     dbset.colorList.virtualRec = createVirtueRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurnList.virtualRec = createVirtueRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-                    
+
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })

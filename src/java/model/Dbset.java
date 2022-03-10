@@ -16,6 +16,7 @@ import domain.eGroups;
 import domain.eParams;
 import domain.eProject;
 import domain.eProkit;
+import domain.ePropart;
 import domain.eProprod;
 import domain.eSysfurn;
 import domain.eSyspar1;
@@ -263,4 +264,9 @@ public class Dbset {
         JSONObject output = new JSONObject(App.asMap("orderList", qProject));
         return output;
     }
+
+    public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
+        Query qPropart = new Query(ePropart.values()).select(ePropart.up, "where", ePropart.category, "= дилер", "order by", ePropart.manager);
+        return new JSONObject(App.asMap("dealerList", qPropart));
+    }    
 }

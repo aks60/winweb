@@ -82,4 +82,10 @@ export function groupList() {
         url: 'dbset?action=groupList',
     });
 }
+//----------------------------  DEALER  ---------------------------------------
+export function dealerList() {
+    return  $.ajax({
+        url: 'dbset?action=dealerList',
+    });
+}
 //------------------------------------------------------------------------------
