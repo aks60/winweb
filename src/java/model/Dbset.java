@@ -266,7 +266,7 @@ public class Dbset {
     }
 
     public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
-        Query qPropart = new Query(ePropart.values()).select(ePropart.up, "where", ePropart.category, "= дилер", "order by", ePropart.manager);
+        Query qPropart = new Query(ePropart.values()).select(ePropart.up, "where", ePropart.category, "= 'дилер'", "order by", ePropart.manager);
         return new JSONObject(App.asMap("dealerList", qPropart));
     }    
 }
