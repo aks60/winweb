@@ -210,14 +210,16 @@ order.card_deploy = function (taq, type) {
                             success: (data) => {
 
                                 if (data.result == 'ok') {
-                                    debugger;
                                     let record = new Array(41);
                                     record[0] = 'SEL';
-                                    record[1] = data.id;
-                                    record[2] = $("#n21").val();
-                                    record[3] = $("#n22").val();
-                                    record[41] = dealer.row_tab1dic.id;
+                                    record[ORDER.id] = data.id;
+                                    record[ORDER.num_ord] = $("#n21").val();
+                                    record[ORDER.num_acc] = $("#n22").val();
+                                    record[ORDER.date4] = $("#n23").val();
+                                    record[ORDER.date6] = $("#n24").val();
+                                    record[ORDER.propart_id] = dealer.row_tab1dic.id;
                                     dbset.orderList.push(record);
+                                    //dbset.orderList.sort((a, b) => a[ORDER.date4] - b[ORDER.date4]);
                                     order.load_table($("#table1"));
                                     alert(777);
                                 } else
