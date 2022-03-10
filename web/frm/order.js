@@ -198,7 +198,8 @@ order.card_deploy = function (taq, type) {
 
     if (type == 'INS') {
         //Открытие диалога insert
-        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'), height: $(taq).attr('card_height'), modal: true,
+        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'), 
+            height: $(taq).attr('card_height'), modal: true, resizable: false,
             buttons: [
                 {text: "OK", click: function () {
                         
@@ -206,9 +207,9 @@ order.card_deploy = function (taq, type) {
                             
                                 //Запишем заказ в серверную базу данных
                                 $.ajax({
-                                    url: 'dbset?action=insertProprod',
+                                    url: 'dbset?action=insertOrder',
                                     data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(),
-                                            data4: $("#n23").val(), date6: $("#n24").val()})},
+                                            data4: $("#n23").val(), date6: $("#n24").val(), propart_id: order.row_tab1_dic.id})},
                                     success: (data) => {
 //                                        if (data.result == 'ok') {
 //                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name], 

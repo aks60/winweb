@@ -144,11 +144,10 @@ public class Dbset {
         Record record = new Record();
         record.add("INS");
         record.add(Conn.genId(eProject.up));
-        record.add(0);
-        record.add(obj.get("name"));
-        record.add(obj.get("script"));
-        record.add(obj.get("projectID"));
-        record.add(obj.get("systreeID"));
+        record.add(obj.get(eProject.num_ord.name()));
+        record.add(obj.get(eProject.num_acc.name()));
+
+        record.add(obj.get(eProject.num_acc.name()));
         qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
