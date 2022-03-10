@@ -49,8 +49,8 @@
 //------------------------------------------------------------------------------
             color.rec_dialog_save = function (table2) {
                 try {
-                    let rowid = table2.getGridParam('selrow'); //index профиля из справочника
-                    let tableRec = table2.getRowData(rowid); //record справочника
+                    let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                    let tableRec = table2.jqGrid('getRowData', rowid); //record справочника
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                     let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let winc = order.wincalcMap.get(proprodID);
@@ -147,7 +147,7 @@
                     ],
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
-                        let colgrpRow = table1.getRowData(rowid);
+                        let colgrpRow = table1.jqGrid('getRowData', rowid);
                         if (product.colorArr.length == 0) {
                             let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
                             for (let i = 0; i < colorList.length; i++) {

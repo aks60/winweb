@@ -117,7 +117,7 @@ function card_deploy2(taq, type) {
         if (focusObj.mapobj.beforeUpdate() != undefined) { //перед изменениями
             return;
         }
-        let rowid = $(focusObj.name_table).getGridParam('selrow'); //если строка в таблице не выделена
+        let rowid = $(focusObj.name_table).jqGrid('getGridParam', "selrow"); //если строка в таблице не выделена
         if (rowid == null) {
             return;
         }

@@ -17,7 +17,7 @@ product.init_table = function (table1) {
         ], ondblClickRow: function (rowid) {
             $('#dialog-dic').load('frm/dialog/param.jsp');
         }, onSelectRow: function (rowid) {
-            let syspar1Row = table1.getRowData(rowid);
+            let syspar1Row = table1.jqGrid('getRowData', rowid);
             product.group_param = findef(dbset.syspar1List.find(rec => syspar1Row.id == rec[SYSPAR1.id]), dbset.syspar1List)[SYSPAR1.params_id];
         }
     });

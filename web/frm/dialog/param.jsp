@@ -30,8 +30,8 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let rowid = table.getGridParam('selrow');
-                            let paramsRow = table.getRowData(rowid);
+                            let rowid = table.jqGrid('getGridParam', "selrow");
+                            let paramsRow = table.jqGrid('getRowData', rowid);
                             let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
                             let paramDef = paramsRow.id;                            
                             let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
@@ -81,7 +81,7 @@
                         {name: 'id', hidden: true, key: true},
                         {name: 'text', width: 400, sorttype: "text"}
                     ], onSelectRow: function (rowid) {
-                        let syspar1Row = table.getRowData(rowid);
+                        let syspar1Row = table.jqGrid('getRowData', rowid);
                     }
                 });
             }

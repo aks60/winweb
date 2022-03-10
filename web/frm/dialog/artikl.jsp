@@ -43,8 +43,8 @@
 //------------------------------------------------------------------------------
             dealer.rec_dialog_save = function (table) {
                 try {
-                    let rowid = table.getGridParam('selrow'); //index профиля из справочника
-                    let tableRow = table.getRowData(rowid);  //record справочника
+                    let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                    let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                     let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);

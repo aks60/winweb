@@ -31,7 +31,9 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let rowid = table1.jgGrid()
+                            let rowid = table1.jqGrid('getGridParam', "selrow");
+                            let tableRow = table1.jqGrid('getRowData', rowid);
+                            $('#n25').val("xxxx");
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -48,7 +50,7 @@
                     multiselect: false,
                     autowidth: true,
                     height: "auto",
-                    colNames: ['id', 'Контрагент', 'Диллер'],
+                    colNames: ['id', 'Контрагент', 'Дилер'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'partner', width: 300, sorttype: "text"},

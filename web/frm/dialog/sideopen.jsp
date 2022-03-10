@@ -40,8 +40,8 @@
 //------------------------------------------------------------------------------
             sideopen.rec_dialog_save = function (table) {
 
-                let rowid = table.getGridParam('selrow'); //index профиля из справочника
-                let tableRec = table.getRowData(rowid);  //record справочника
+                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
 
