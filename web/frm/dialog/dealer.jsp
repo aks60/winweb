@@ -31,9 +31,9 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let rowid = table1.jqGrid('getGridParam', "selrow");
-                            let tableRow = table1.jqGrid('getRowData', rowid);
-                            $('#n25').val("xxxx");
+                            let rowid = table.jqGrid('getGridParam', "selrow");
+                            dealer.row_tab1_dic = table.jqGrid('getRowData', rowid);
+                            $('#n25').val(dealer.row_tab1_dic.manager);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -57,7 +57,9 @@
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        //dealer.rec_dialog_save(table);
+                        let rowid = table.jqGrid('getGridParam', "selrow");
+                        dealer.row_tab1_dic = table.jqGrid('getRowData', rowid);
+                        $('#n25').val(dealer.row_tab1_dic.manager);
                         $("#dialog-dic").dialog("close");
                     }
                 });
@@ -67,8 +69,8 @@
                 for (let i = 0; i < dbset.dealerList.length; i++) {
                     let tr = dbset.dealerList[i];
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[DEALER.id], 
-                        partner: tr[DEALER.partner], 
+                        id: tr[DEALER.id],
+                        partner: tr[DEALER.partner],
                         manager: tr[DEALER.manager]});
                 }
                 table.jqGrid("setSelection", 1);
