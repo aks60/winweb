@@ -1,5 +1,6 @@
 package model;
 
+import dataset.Conn;
 import dataset.Query;
 import dataset.Record;
 import domain.*;
@@ -57,15 +58,14 @@ public class Login {
         String adm_name = request.getParameter("admname");
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
-        Att att = Att.att(request);
         try {
-            Connection connect = att.connect();
-            Statement statement = att.statement(connect);
+            Connection connect = Conn.connection();
+            Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("select * from master.dbo.syslogins where name = '" + adm_name + "' and PWDCOMPARE('" + adm_password + "',password) = 1");
             rs.next();
             if ("sa".equals(rs.getString("name")) || "admin".equals(rs.getString("name"))) {
 
-                Query qUser = new Query(connect, eSysuser.values());
+                Query qUser = new Query(eSysuser.values());
                 for (Record recordUser : qUser) {
                     if (login.equals(recordUser.get(eSysuser.login))) {
                         output.putAll(app.asMap("login", true, "mes", "Пользователь с таким именем уже существует в базе данных"));
@@ -207,8 +207,6 @@ public class Login {
     //новый пользователь, сохранение user, password и role в базе данных
     public JSONObject newLogin(HttpServletRequest request, HttpServletResponse response) {
 
-        Att att = Att.att(request);
-        Connection connect = att.connect();
         String adm_name = request.getParameter("username");
         String adm_password = request.getParameter("password");
         String user_name = request.getParameter("username2");
@@ -219,7 +217,7 @@ public class Login {
         JSONObject output = new JSONObject(App.asMap("login", true, "mes", "Новый пользователь создан"));
         try {
             if (adm_name.equals("admin") || adm_name.equals("sysdba")) {
-                Query user = new Query(connect, eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
+                Query user = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
                 if (user.isEmpty() == true) { //если нет создаём его
 
                     Key key = new SecretKeySpec(encoded, algorithm); //зашифруем пароль
@@ -227,10 +225,10 @@ public class Login {
                     cipher.init(Cipher.ENCRYPT_MODE, key);
                     byte[] password3 = cipher.doFinal(user_password.getBytes());
                     String password4 = new String(password3);
-                    Query qSysuser = new Query(connect, eSysuser.values());
+                    Query qSysuser = new Query(eSysuser.values());
 
                     Record record = eSysuser.up.newRecord(Query.INS);
-                    record.set(eSysuser.id, att.genId(eSysuser.up));
+                    record.set(eSysuser.id, Conn.genId(eSysuser.up));
                     record.set(eSysuser.login, user_name);
                     record.set(eSysuser.fio, user_fio);
                     record.set(eSysuser.desc, user_desc);
@@ -287,8 +285,7 @@ public class Login {
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
         Att att = Att.att(request);
-        Connection connect = att.connect();
-        Statement statement = att.statement(connect);
+        Connection connect = Conn.connection();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         JSONObject output = new JSONObject();
@@ -300,6 +297,7 @@ public class Login {
                     String url = metadata.getURL();
                     Connection con = DriverManager.getConnection(url, username, password);
                     con.close();
+                    connect.close();
 
                 } catch (Exception e) {
                     output.put("result", "Ошибка ввода пароля или имени администратора");
@@ -313,7 +311,7 @@ public class Login {
                 return output;
 
             } else {
-                Query user = new Query(connect, eSysuser.values()).select("select * from sysuser a where a.login = '" + username + "'");
+                Query user = new Query(eSysuser.values()).select("select * from sysuser a where a.login = '" + username + "'");
                 if (user.isEmpty() == false) {
                     //декодируем пароль на сервере  
                     Key key = new SecretKeySpec(encoded, algorithm);

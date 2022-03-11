@@ -129,7 +129,7 @@ users.logim_create = function () {
             $('#pan1 .password:last').val('');
             $('#pan1 .fio').val('');
             $('#pan1 .desc').val('');
-            load_users();
+            users.load_table1($("#table1"));
         },
         error: function () {
             alert('Ошибка создания нового пользователя');
@@ -150,7 +150,7 @@ users.login_delete = function () {
                 if (data.result == 'false') {
                     alert(data.mes);
                 } else {
-                    load_users();
+                    users.load_table1($("#table1"));
                 }
             },
             error: function () {

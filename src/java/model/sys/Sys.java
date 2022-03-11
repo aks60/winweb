@@ -73,20 +73,11 @@ public class Sys {
     //init месяц и день перехода
     public static void initDatePass(HttpServletRequest request) {
 
-//        Record recordSys = new Query(request, eSystem.values()).select("select * from sys_m where sp = 1").get(0);
-//        mothPasSchool = recordSys.getInt(eSystem.val1);
-//        dayPasSchool = recordSys.getInt(eSystem.val2);
     }
 
     //дата перехода на новый уч. год
     public static Date getDatePass(HttpServletRequest request, int dxYear) {
 
-//        Record recordSys = new Query(request, eSystem.values()).select("select * from sys_m where sp = 1").get(0);
-//        int year = getYearSchool(null) + dxYear;
-//        int month = recordSys.getInt(eSystem.val1) - 1;
-//        int day = recordSys.getInt(eSystem.val2);
-//        GregorianCalendar schoolCalendar = new GregorianCalendar(year, month, day);
-//        return schoolCalendar.getTime();
         return null;
     }
 

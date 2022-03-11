@@ -78,21 +78,6 @@ public class Systree {
 
     //общий справочник для клиента html
     public HashMap htmlDict(HttpServletRequest request, HttpServletResponse response) {
-
-//        App app = new App();
-//        HashMap output = app.asMap("rootDic", new HashMap(), "mapDic", new HashMap(), "arrDic", new ArrayList());
-//        Query qDict1 = new Query(request, eDict1.values()).select("select a.* from spr_a a");
-//        for (Record it : qDict1) {
-//            ((HashMap) output.get("rootDic")).put(it.get(eDict1.id), it.get(eDict1.cname));
-//        }
-//        Query qDict2 = new Query(request, eDict2.values()).select("select a.* from spr_b a");
-//        for (Record it : qDict2) {
-//            ((HashMap) output.get("mapDic")).put(it.get(eDict2.sp), it.get(eDict2.cname));
-//            ((ArrayList) output.get("arrDic")).add(app.asMap("id", it.get(eDict2.sp), "npp", it.get(eDict2.npp), "cname", it.get(eDict2.cname), "spraId", it.get(eDict2.spra_id)));
-//        }
-//        //HashMap output = new HashMap();
-//        //System.out.println(output);
-//        return output;
         return null;
     }
 }
