@@ -17,7 +17,7 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
-
+            order.row_table1 = table1.jqGrid('getRowData', rowid);
             order.wincalcMap.clear()
             let j = 1;
             let rc = table2.rows.length;
@@ -25,7 +25,6 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             let proprodID = null;
-            order.row_table1 = table1.jqGrid('getRowData', rowid);
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let proprodRec = dbset.proprodList[i];
 
@@ -55,6 +54,9 @@ order.load_table = function (table1, table2) {
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
+        if (order.row_table1 != undefined && tr[ORDER.id] == order.row_table1.id) {
+            order.rowid_table1 = i + 1;
+        }
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
             num_ord: tr[ORDER.num_ord],
