@@ -223,6 +223,7 @@ order.card_deploy = function (taq, type) {
                                     record[ORDER.manager] = login.data.user_fio;
                                     record[ORDER.date4] = $("#n23").val();
                                     record[ORDER.date6] = $("#n24").val();
+                                    record[ORDER.owner] = login.data.user_name;
                                     record[ORDER.propart_id] = dealer.row_tab1dic.id;
                                     dbset.orderList.push(record);
                                     order.load_table($("#table1"));

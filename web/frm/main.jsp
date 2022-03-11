@@ -37,7 +37,7 @@
                     PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
-                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, propart_id: 26},
+                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, owner: 25, propart_id: 27},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
                     KITS = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, angl1: 8, angl2: 9, flag: 10, artikl_id: 11, proprod_id: 12},
                     DEALER = {id: 1, partner: 2, manager: 3};
