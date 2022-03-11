@@ -26,6 +26,7 @@
 
                 users.init_table1($("#table1"));
                 users.load_table1($("#table1"));
+                $('button').button();
             });
         </script>          
     </head>

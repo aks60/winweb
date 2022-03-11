@@ -65,7 +65,7 @@
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
-                $.jstree.defaults.core.themes.variant = "large";
+                $.jstree.defaults.core.themes.variant = "large";                
             });
 
             window.onload = function () {
