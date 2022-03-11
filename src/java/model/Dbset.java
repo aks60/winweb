@@ -255,7 +255,8 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
-        Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by id desc");
+        //Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a, propart b where a.propart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format(rec.get(eProject.date5)));

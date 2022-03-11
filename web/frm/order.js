@@ -50,6 +50,9 @@ order.init_table = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
+    debugger;
+    //let mmm = findef(dbset.dealerList.find(rec => 2310 == rec[DEALER.id]), dbset.dealerList)[DEALER.partner];
+    
     table1.jqGrid('clearGridData', true);
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
@@ -65,8 +68,7 @@ order.load_table = function (table1, table2) {
             date6: tr[ORDER.date6],
             partner: findef(dbset.dealerList.find(rec =>
                 tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-            manager: findef(dbset.dealerList.find(rec =>
-                tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.manager]
+            manager: "xxx" //findef(dbset.dealerList.find(rec => tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.manager]
         });
     }
     table1.jqGrid("setSelection", order.rowid_table1);
