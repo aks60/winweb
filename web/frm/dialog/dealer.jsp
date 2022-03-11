@@ -33,8 +33,8 @@
                         "Выбрать": function () {
                             let rowid = table.jqGrid('getGridParam', "selrow");
                             dealer.row_tab1dic = table.jqGrid('getRowData', rowid);
-                            $('#n25').val(dealer.row_tab1dic.manager);
-                            $(this).dialog("close");
+                            $('#n25').val(dealer.row_tab1dic.partner);
+                            $("#dialog-dic").dialog("close");
                         },
                         "Закрыть": function () {
                             $(this).dialog("close");

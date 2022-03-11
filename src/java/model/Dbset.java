@@ -141,14 +141,14 @@ public class Dbset {
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
         Query qProject = new Query(eProject.values());
-        Record record = new Record();
-        record.add("INS");
-        record.add(Conn.genId(eProject.up));
-        record.add(obj.get(eProject.num_ord.name()));
-        record.add(obj.get(eProject.num_acc.name()));
-        record.add(obj.get(eProject.date4.name()));
-        record.add(obj.get(eProject.date6.name()));
-        record.add(obj.get(eProject.propart_id.name()));
+        Record record = eProject.up.newRecord("INS");
+        record.set(eProject.id, Conn.genId(eProject.up));
+        record.set(eProject.num_ord, obj.get(eProject.num_ord.name()));
+        record.set(eProject.num_acc, obj.get(eProject.num_acc.name()));
+        record.set(eProject.manager, obj.get(eProject.manager.name()));
+        record.set(eProject.date4, obj.get(eProject.date4.name()));
+        record.set(eProject.date6, obj.get(eProject.date6.name()));
+        record.set(eProject.propart_id, obj.get(eProject.propart_id.name()));
         qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
@@ -200,23 +200,8 @@ public class Dbset {
     }
 
     public static JSONObject prokitList(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
-
         Query qProkit = new Query(eProkit.values()).select(eProkit.up);
-        for (Record rec : qProkit) {
-            list.add(Arrays.asList(
-                    rec.get(eProkit.id),
-                    rec.get(eProkit.artikl_id),
-                    rec.get(eProkit.color1_id),
-                    rec.get(eProkit.color2_id),
-                    rec.get(eProkit.color3_id),
-                    rec.get(eProkit.width),
-                    rec.get(eProkit.height),
-                    rec.get(eProkit.numb),
-                    rec.get(eProkit.angl1),
-                    rec.get(eProkit.angl2)));
-        }
-        JSONObject output = new JSONObject(App.asMap("prokitList", list));
+        JSONObject output = new JSONObject(App.asMap("prokitList", qProkit));
         return output;
     }
 
@@ -239,23 +224,12 @@ public class Dbset {
     }
 
     public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<List> list = new ArrayList();
-
         Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        for (Record rec : qSysuser) {
-            list.add(Arrays.asList(
-                    rec.get(eSysuser.id),
-                    rec.get(eSysuser.fio),
-                    rec.get(eSysuser.desc),
-                    rec.get(eSysuser.login),
-                    rec.get(eSysuser.role)));
-        }
-        JSONObject output = new JSONObject(App.asMap("userList", list));
+        JSONObject output = new JSONObject(App.asMap("userList", qSysuser));
         return output;
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
-        //Query qProject = new Query(eProject.values()).select("select first(60) * from " + eProject.up.tname() + " order by id desc");
         Query qProject = new Query(eProject.values()).select("select a.* from project a, propart b where a.propart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format(rec.get(eProject.date4)));

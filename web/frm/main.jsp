@@ -37,9 +37,9 @@
                     PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
-                    ORDER = {id: 1, num_ord: 2, num_acc: 3, date4: 36, date6: 38, propart_id: 40},
+                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, propart_id: 26},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
-                    KITS = {id: 0, artikl_id: 1, color1_id: 2, color2_id: 3, color3_id: 4, width: 5, height: 6, numb: 7, angl1: 8, angl2: 9},
+                    KITS = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, angl1: 8, angl2: 9, flag: 10, artikl_id: 11, proprod_id: 12},
                     DEALER = {id: 1, partner: 2, manager: 3};
 
             //Enum - перечисления
@@ -117,7 +117,7 @@
                     dbset.orderList = pE[0].orderList;
                     dbset.dealerList = pF[0].dealerList;
 
-                    login.init_login('dat');
+                    login.init_login();
 
                     //Виртуальные артикулы  
                     dbset.sysprofList.virtualRec = createVirtueRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});

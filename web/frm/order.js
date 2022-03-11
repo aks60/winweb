@@ -9,11 +9,11 @@ order.init_table = function (table1, table2) {
         colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'num_ord', width: 120, sorttype: "text"},
-            {name: 'num_acc', width: 120, sorttype: "text"},
-            {name: 'date4', width: 120, sorttype: "text"},
-            {name: 'date6', width: 120, sorttype: "text"},
-            {name: 'partner', width: 120, sorttype: "text"},
+            {name: 'num_ord', width: 80, sorttype: "text"},
+            {name: 'num_acc', width: 80, sorttype: "text"},
+            {name: 'date4', width: 80, sorttype: "text"},
+            {name: 'date6', width: 80, sorttype: "text"},
+            {name: 'partner', width: 220, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
@@ -50,9 +50,7 @@ order.init_table = function (table1, table2) {
 }
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
-    debugger;
-    //let mmm = findef(dbset.dealerList.find(rec => 2310 == rec[DEALER.id]), dbset.dealerList)[DEALER.partner];
-    
+
     table1.jqGrid('clearGridData', true);
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
@@ -66,9 +64,8 @@ order.load_table = function (table1, table2) {
             num_acc: tr[ORDER.num_acc],
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
-            partner: findef(dbset.dealerList.find(rec =>
-                tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-            manager: "xxx" //findef(dbset.dealerList.find(rec => tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.manager]
+            partner: findef(dbset.dealerList.find(rec => tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            manager: tr[ORDER.manager]
         });
     }
     table1.jqGrid("setSelection", order.rowid_table1);
@@ -213,7 +210,7 @@ order.card_deploy = function (taq, type) {
                         //Запишем заказ в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=insertOrder',
-                            data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(),
+                            data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
                                     date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.row_tab1dic.id})},
                             success: (data) => {
 
@@ -223,6 +220,7 @@ order.card_deploy = function (taq, type) {
                                     record[ORDER.id] = data.id;
                                     record[ORDER.num_ord] = $("#n21").val();
                                     record[ORDER.num_acc] = $("#n22").val();
+                                    record[ORDER.manager] = login.data.user_fio;
                                     record[ORDER.date4] = $("#n23").val();
                                     record[ORDER.date6] = $("#n24").val();
                                     record[ORDER.propart_id] = dealer.row_tab1dic.id;

@@ -19,7 +19,7 @@ err[-51] = 'Библиотека находится в неинициализи�
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
 
-login.init_login = function (src) {
+login.init_login = function () {
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
@@ -51,7 +51,7 @@ login.user_connect = function () {
         data: {'username': att[0], 'password': att[1]},
         success: function (data) {
             login.data = data;
-            login.init_login('log');
+            login.init_login();
         },
         error: function () {
             dialogMes('Сообщение', 'Ошибка авторизации пользователя');

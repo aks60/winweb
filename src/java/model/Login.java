@@ -306,7 +306,8 @@ public class Login {
                 att.login(username);
                 att.role("RDB$ADMIN");
                 output.put("role", "RDB$ADMIN");
-                output.put("user", username);
+                output.put("user_name", username);
+                output.put("user_fio", "admin");
                 output.put("result", "true");
                 return output;
 
@@ -317,6 +318,7 @@ public class Login {
                     Key key = new SecretKeySpec(encoded, algorithm);
                     Cipher cipher = Cipher.getInstance(algorithm);
                     cipher.init(Cipher.DECRYPT_MODE, key);
+                    String user_fio = user.getAs(0, eSysuser.fio);
                     byte[] openkey = user.get(0, eSysuser.openkey).toString().getBytes();
                     byte[] password2 = cipher.doFinal(openkey);
                     String password3 = new String(password2);
@@ -327,6 +329,8 @@ public class Login {
                         att.role(user.getAs(0, eSysuser.role));
 
                         output.put("role", user.get(0, eSysuser.role));
+                        output.put("user_name", username);
+                        output.put("user_fio", user_fio);
                         output.put("result", "true");
 
                     } else {
