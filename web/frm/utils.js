@@ -185,10 +185,11 @@ function prepareToolBar() {
     $("#btnOrder3").button({icons: {primary: "ui-icon-trash"}});
     $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
-
-    //$("#btnSave").button({icons: {primary: "ui-icon-disk"}});
-    //$("#btnReport").button({icons: {primary: "ui-icon-print"}});
-    //$("#btnFind").button({icons: {primary: "ui-icon-search"}});
+    $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
+    
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
 //------------------------------------------------------------------------------

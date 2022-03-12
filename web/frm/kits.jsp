@@ -13,7 +13,7 @@
                 $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#centr").height() - 24);
             }
-
+            
             $(document).ready(function () {
                 $(window).bind('resize', function () {
                     kits.resize();
@@ -21,15 +21,17 @@
 
                 kits.init_table1($("#table1"));
                 kits.load_table1($("#table1"));
+                $("button").button();
+                prepareToolBar();
             });
         </script>         
     </head>
     <body>
         <div id="north">   
-            <button id="btnIns" onClick="">Добавить</button>
-            <button id="btnUpdate" onClick="">Изменить</button>
-            <button id="btnSave" onClick="">Сохранить</button>
-            <button id="btnDelit" onClick="">Удалить</button>            
+            <button id="btnKit1" style="width: 160px" onClick="">Добавить комплект</button>
+            <button id="btnKit2" style="width: 160px" onClick="">Добавить артикул</button>
+            <button id="btnKit3" style="width: 160px" onClick="">Изменить запись</button>
+            <button id="btnKit4" style="width: 160px" onClick="">Удалить запись</button>            
         </div> 
         <div id = "context">              
             <div id="centr" style="height: 100%">

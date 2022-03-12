@@ -50,7 +50,6 @@ product.load_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
-
     let arr = new Array();
     let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
     let root = winc.root;

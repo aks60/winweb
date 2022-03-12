@@ -25,13 +25,13 @@
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
-            $("button").button();
             $(document).ready(function () {                
                 $("#btn2").focus();
 
                 $(window).bind('resize', function () {
                     login.resize();
                 }).trigger('resize');
+                $("button").button();
             });
 
 //            $('#pan1 .login').val('admin');

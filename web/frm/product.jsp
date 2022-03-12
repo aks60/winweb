@@ -19,7 +19,8 @@
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    win.build(cvs, order.rec_table2[PROPROD.script]);
+                    if (order.rec_table2 != undefined)
+                        win.build(cvs, order.rec_table2[PROPROD.script]);
                 }
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
@@ -38,27 +39,22 @@
                 }).trigger('resize');
 
                 product.init_table($('#table1'));
-                product.load_tree($('#tree-winc'));
+                if (order.rec_table2 != undefined)
+                    product.load_tree($('#tree-winc'));
+                $("button").button();
                 prepareToolBar();
 
             });
             function test() {
-                for(let rec of dbset.artiklList) {
-                    if(rec[1] == -3) alert(rec);
+                for (let rec of dbset.artiklList) {
+                    if (rec[1] == -3)
+                        alert(rec);
                 }
             }
         </script>
     </head>
     <body>
         <div id="north">
-            <button id="btnReport" onClick="test();">Test1</button>
-            <button id="btnUpdate" onClick="">Test2</button>
-            <button id="btnIns" onClick="">Test3</button>
-
-            <button id="btn1" onClick="test();">Sysprof</button> 
-            <button id="btn2" onClick="$('#dialog-dic').load('frm/dialog/furniture.jsp');">Фурнитура</button>
-            <button id="btn3" onClick="$('#dialog-dic').load('frm/dialog/color.jsp');">Color</button>
-            <button id="btn4" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Systree</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">

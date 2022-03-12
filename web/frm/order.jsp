@@ -46,10 +46,11 @@
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.click_table2);
-                
+
                 order.init_table($("#table1"), tab_sysprod);
                 order.load_table($("#table1"), tab_sysprod);
-                
+
+                $("button").button();
                 prepareToolBar();
                 taq_deploy(['#card-1']);
                 $('#n23').datepicker();
@@ -65,10 +66,8 @@
             <button id="btnOrder1" style="width: 128px" onClick="order.card_deploy('#card-1', 'INS');">Добавить заказ</button>
             <button id="btnOrder2" style="width: 128px" onClick="order.card_deploy('#card-1', 'UPD');">Изменить заказ</button>
             <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
-
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
-            <button id="btnTest1" onClick="order.card_deploy('#card-1', 'INS');">Test</button>
             <button id="btnTest2" onClick="order.resize();">Test</button>
         </div>     
         <div id = "context">     
