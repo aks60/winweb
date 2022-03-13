@@ -13,6 +13,8 @@ import domain.eColor;
 import domain.eFurndet;
 import domain.eFurniture;
 import domain.eGroups;
+import domain.eKitdet;
+import domain.eKits;
 import domain.eParams;
 import domain.eProject;
 import domain.eProkit;
@@ -30,11 +32,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
@@ -243,5 +242,15 @@ public class Dbset {
     public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
         Query qPropart = new Query(ePropart.values()).select(ePropart.up, "where", ePropart.category, "= 'дилер'", "order by", ePropart.manager);
         return new JSONObject(App.asMap("dealerList", qPropart));
+    }    
+
+    public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
+        Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.id);
+        return new JSONObject(App.asMap("kitsList", qKits));
+    }    
+
+    public static JSONObject kitdetList(HttpServletRequest request, HttpServletResponse response) {
+        Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "where", "order by", eKitdet.id);
+        return new JSONObject(App.asMap("kitdetList", qKitdet));
     }    
 }

@@ -88,4 +88,16 @@ export function dealerList() {
         url: 'dbset?action=dealerList',
     });
 }
+//----------------------------  KITS  ---------------------------------------
+export function kitsList() {
+    return  $.ajax({
+        url: 'dbset?action=kitsList',
+    });
+}
+//----------------------------  KITDET  ---------------------------------------
+export function kitdetList() {
+    return  $.ajax({
+        url: 'dbset?action=kitdetList',
+    });
+}
 //------------------------------------------------------------------------------

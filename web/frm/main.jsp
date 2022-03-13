@@ -40,6 +40,7 @@
                     ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, owner: 25, propart_id: 27},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
                     KITS = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, angl1: 8, angl2: 9, flag: 10, artikl_id: 11, proprod_id: 12},
+                    KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7};
                     DEALER = {id: 1, partner: 2, manager: 3};
 
             //Enum - перечисления
@@ -89,7 +90,7 @@
                     artiklList, artdetList, furnitureList,
                     furndetList, proprodList, sysfurnList,
                     sysprofList, syspar1List, paramsList,
-                    groupList, orderList, dealerList
+                    groupList, orderList, dealerList, kitsList, kitdetList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {
@@ -98,9 +99,9 @@
                         artiklList(), artdetList(), furnitureList(),
                         furndetList(), proprodList(), sysfurnList(),
                         sysprofList(), syspar1List(), paramsList(),
-                        groupList(), orderList(), dealerList()
+                        groupList(), orderList(), dealerList(), kitsList(), kitdetList()
 
-                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF) => { //загрузка базы данных 
+                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH) => { //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
@@ -116,6 +117,8 @@
                     dbset.groupList = pD[0].groupList;
                     dbset.orderList = pE[0].orderList;
                     dbset.dealerList = pF[0].dealerList;
+                    dbset.kitsList = pG[0].kitsList;
+                    dbset.kitdetList = pH[0].kitdetList;
 
                     login.init_login();
 
