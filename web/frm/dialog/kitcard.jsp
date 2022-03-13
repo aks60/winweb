@@ -6,37 +6,35 @@
         <title>KITCARD</title>
 
         <script type="text/javascript">
-            let kitk = {};
 //------------------------------------------------------------------------------
             kitk.resize = function () {
-                var winWidth = $('#pan1').width() - 24;
+                var width = $('#pan1').width();
                 $("#pan1 .field[dx]").each(function (index) {
-                    var width = $(this).attr('dx');
-                    $(this).width((winWidth - width) + 'px');
-                });                
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #pan2a").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #pan2a").height() - 20);
-                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #pan2b").width());
-                $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #pan2b").height() - 20);
+                    var dx = $(this).attr('dx');
+                    $(this).width((width - dx) + 'px');
+                });
+                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
+                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 228);
+                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    kitk.resize();
-                }).trigger('resize');
-                
                 kitk.init_dialog($("#tab1-dic"), $("#tab2-dic"));
                 kitk.init_table($("#tab1-dic"), $("#tab2-dic"));
                 kitk.load_table($("#tab1-dic"), $("#tab2-dic"))
+
                 taq_deploy(['#pan1']);
+                $(window).bind('resize', function () {
+                    kitk.resize();
+                }).trigger('resize');
             });
 //------------------------------------------------------------------------------
             kitk.init_dialog = function (table1, table2) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник текстур*",
-                    width: 600,
-                    height: 600,
+                    width: 800,
+                    height: 500,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
@@ -89,26 +87,34 @@
                 table1.jqGrid({
                     datatype: "local",
                     autowidth: true,
-                    height: "auto",
-                    colNames: ['id', 'Группы текстур'],
+                    height: 160,
+                    colNames: ['id', 'Категория', 'Название компдекта'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'name', width: 360}
+                        {name: 'categ', width: 100},
+                        {name: 'name', width: 240}
                     ],
                     onSelectRow: function (rowid) {
                         //table2.jqGrid("clearGridData", true);
                         //table2.jqGrid("setSelection", 1);
-                        kitk.resize();
+                        //kitk.resize();
                     }
                 });
                 table2.jqGrid({
                     datatype: "local",
                     autowidth: true,
-                    height: 'auto',
-                    colNames: ['Код', 'Описание текстур'],
+                    height: 100,
+                    colNames: ['id', 'Артикул', 'Название', 'Основная текстура',
+                        'Внутренняя текстура', 'Внешняя текстура', 'Ед.изм.', 'Основн.элемент'],
                     colModel: [
-                        {name: 'id', width: 60, key: true},
-                        {name: 'name', width: 340}
+                        {name: 'id', hidden: true, key: true},
+                        {name: 'code', width: 20},
+                        {name: 'name', width: 120},
+                        {name: 'color1_id', width: 60},
+                        {name: 'color2_id', width: 60},
+                        {name: 'color3_id', width: 60},
+                        {name: 'unit', width: 10},
+                        {name: 'flag', width: 10}
                     ],
                     ondblClickRow: function (rowId) {
                         //kitk.rec_dialog_save(table2);
@@ -118,40 +124,38 @@
             };
 //------------------------------------------------------------------------------
             kitk.load_table = function (table1, table2) {
-//                table1.jqGrid('clearGridData', true);
-//                table2.jqGrid('clearGridData', true);
-//                if (product.groupSet.size > 0) {
-//                    let groupList = dbset.groupList.filter(rec => product.groupSet.has(rec[GROUP.id]));
-//                    for (let i = 0; i < groupList.length; i++) {
-//                        let tr = groupList[i];
-//                        table1.jqGrid('addRowData', i + 1, {
-//                            id: tr[GROUP.id],
-//                            name: tr[GROUP.name]
-//                        });
-//                    }
-//                }
-//                table1.jqGrid("setSelection", 1);
-//                kitkard.resize();
+                table1.jqGrid('clearGridData', true);
+                table2.jqGrid('clearGridData', true);
+                for (let i = 0; i < dbset.kitsList.length; i++) {
+                    let tr = dbset.kitsList[i];
+                    table1.jqGrid('addRowData', i + 1, {
+                        id: tr[KITS.id],
+                        categ: tr[KITS.categ],
+                        name: tr[KITS.name]
+                    });
+                }
+                table1.jqGrid("setSelection", 1);
+                kitk.resize();
             };
 //------------------------------------------------------------------------------
         </script>         
     </head>
     <body>
-        <div id="pan1" style="width: calc(100% - 4px); height: calc(30%);"> 
+        <div id="pan1" style="width: calc(100% - 4px); height: 84px;"> 
             <jst id="n21" type='txt' label='Кол.компл.' width='80' width2="40"></jst>
-            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="180"></jst><br>
+            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="274"></jst><br>
             <jst id="n23" type='txt' label='Длина' width='80' width2="40"></jst>
-            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' width2="80"></jst><br>
+            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="274"></jst><br>
             <jst id="n25" type='txt' label='Ширина' width='80' width2="40"></jst>
-            <jst id="n26" type='btn' label='Внешняя текстура' width='130' width2="80"></jst><br>
+            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="274"></jst><br>
         </div>        
-        <div id="pan2" style="height: calc(70%); width: calc(100%);">        
-            <div id="pan2a" style="height: calc(58%); width: calc(100% - 4px);">           
-                <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
-            </div>         
-            <div id="pan2b" style="height: 100px; width: calc(100% - 4px);"> 
-                <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
-            </div>
+        <div id="pan2" style="width: calc(100%); height: 300px;">        
+            <!--<div id="pan2a" style="width: calc(100% - 4px); height: 200px;">-->           
+            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+            <!--</div>-->         
+            <!--<div id="pan2b" style="width: calc(100% - 4px); height: 100px;">--> 
+            <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
+            <!--</div>-->
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>

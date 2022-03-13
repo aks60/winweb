@@ -39,7 +39,7 @@
                     PARAMS = {id: 1, text: 2, params_id: 12},
                     ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, owner: 25, propart_id: 27},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
-                    KITS = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, angl1: 8, angl2: 9, flag: 10, artikl_id: 11, proprod_id: 12},
+                    KITS = {id: 1, name: 2, types: 3, categ: 4},
                     KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7};
                     DEALER = {id: 1, partner: 2, manager: 3};
 
@@ -59,8 +59,9 @@
 
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, furndet = {},
-                    users = {}, order = {rowid_table1: 8, row_table2: null, wincalcMap: new Map()}, artikl = {dialogType: 0}, product = {},
-                    dialog = {}, systree = {}, kits = {}, group = {}, color = {}, sysprof = {}, params = {}, furniture = {}, sideopen = {}, dealer = {};
+                    users = {}, order = {rowid_table1: 8, row_table2: null, wincalcMap: new Map()}, artikl = {dialogType: 0}, 
+                    product = {}, dialog = {}, systree = {}, kits = {}, kitk = {}, group = {}, color = {}, sysprof = {}, params = {}, 
+                    furniture = {}, sideopen = {}, dealer = {};
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
