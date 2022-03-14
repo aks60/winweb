@@ -13,15 +13,15 @@
                     var dx = $(this).attr('dx');
                     $(this).width((width - dx) + 'px');
                 });
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-card").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
-                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-card").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-card").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
+                $("#tab2-card").jqGrid('setGridWidth', $("#dialog-card").width());
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                kitk.init_dialog($("#tab1-dic"), $("#tab2-dic"));
-                kitk.init_table($("#tab1-dic"), $("#tab2-dic"));
-                kitk.load_table($("#tab1-dic"), $("#tab2-dic"))
+                kitk.init_dialog($("#tab1-card"), $("#tab2-card"));
+                kitk.init_table($("#tab1-card"), $("#tab2-card"));
+                kitk.load_table($("#tab1-card"), $("#tab2-card"))
 
                 taq_deploy(['#pan1']);
                 $(window).bind('resize', function () {
@@ -135,15 +135,15 @@
     <body>
         <div id="pan1" style="width: calc(100% - 4px); height: 84px;"> 
             <jst id="n21" type='txt' label='Кол.компл.' width='80' width2="40"></jst>
-            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="273" click="color.parent = 'kits'; $('#dialog-dic').load('frm/dialog/color.jsp');"></jst><br>
+            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="400" click="kits.color_to_kits('n22')"></jst><br>
             <jst id="n23" type='txt' label='Длина' width='80' width2="40"></jst>
-            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="273"></jst><br>
+            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="400"></jst><br>
             <jst id="n25" type='txt' label='Ширина' width='80' width2="40"></jst>
-            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="273"></jst><br>
+            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="400"></jst><br>
         </div>        
         <div id="pan2" style="width: calc(100%); height: 300px;">                
-            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
-            <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
+            <table id="tab1-card"  class="ui-jqgrid-btable"></table> 
+            <table id="tab2-card"  class="ui-jqgrid-btable"></table>
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>

@@ -25,7 +25,7 @@
             dealer.init_dialog = function (table) {
 
                 $("#dialog-dic").dialog({
-                    title: "Справочник контрагентов",
+                    title: "Справочник артикулов",
                     width: 600,
                     height: 400,
                     modal: true,

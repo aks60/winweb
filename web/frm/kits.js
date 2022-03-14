@@ -1,3 +1,4 @@
+//------------------------------------------------------------------------------
 kits.init_table1 = function (table) {
     table.jqGrid({
         datatype: "local",
@@ -22,7 +23,7 @@ kits.init_table1 = function (table) {
         ]
     });
 }
-
+//------------------------------------------------------------------------------
 kits.load_table1 = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
@@ -50,3 +51,10 @@ kits.load_table1 = function (table) {
         }
     });
 }
+//------------------------------------------------------------------------------
+kits.color_to_kits = function (btnSrc) {
+    color.parent = 'kits'; 
+    $('#dialog-dic').load('frm/dialog/color.jsp');
+    //$('#dialog-dic').load('frm/dialog/dealer.jsp');
+}
+//------------------------------------------------------------------------------
