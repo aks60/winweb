@@ -9,13 +9,13 @@
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $(window).bind('resize', function () {
-                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                    $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic").width());
+                    $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
                 }).trigger('resize');
 
-                furniture.init_dialog($("#tab1-dic"));
-                furniture.init_table($("#tab1-dic"))
-                furniture.load_table($("#tab1-dic"))
+                furniture.init_dialog($("#tab-furniture"));
+                furniture.init_table($("#tab-furniture"))
+                furniture.load_table($("#tab-furniture"))
             });
 //------------------------------------------------------------------------------
             furniture.init_dialog = function (table) {
@@ -113,7 +113,7 @@
         </script>        
     </head>
     <body>
-        <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <table id="tab-furniture"  class="ui-jqgrid-btable"></table> 
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

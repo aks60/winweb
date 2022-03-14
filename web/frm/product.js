@@ -44,9 +44,7 @@ product.load_table = function (table1) {
         });
     }
     table1.jqGrid("setSelection", product.rowid_table1);
-    setTimeout(function () {
-        product.resize();
-    }, 10);
+    product.resize();
 }
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
@@ -79,9 +77,7 @@ product.load_tree = function (tabtree) {
                 let node = tabtree.jstree("get_selected")[0];
                 product.local_to_fields(node);
             });
-    setTimeout(function () {
-        product.resize();
-    }, 10);
+    product.resize();
 }
 product.elements = function (com, arr) {
 

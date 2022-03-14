@@ -8,19 +8,19 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             color.resize = function () {
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 20);
-                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic #centr2").width());
-                $("#tab2-dic").jqGrid('setGridHeight', $("#dialog-dic #centr2").height() - 20);
+                $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab1-color").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 20);
+                $("#tab2-color").jqGrid('setGridWidth', $("#dialog-dic #centr2").width());
+                $("#tab2-color").jqGrid('setGridHeight', $("#dialog-dic #centr2").height() - 20);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
                     color.resize();
-                }).trigger('resize');
-                color.init_dialog($("#tab1-dic"), $("#tab2-dic"));
-                color.init_table($("#tab1-dic"), $("#tab2-dic"));
-                color.load_table($("#tab1-dic"), $("#tab2-dic"))
+                });
+                color.init_dialog($("#tab1-color"), $("#tab2-color"));
+                color.init_table($("#tab1-color"), $("#tab2-color"));
+                color.load_table($("#tab1-color"), $("#tab2-color"))
             });
 //------------------------------------------------------------------------------
             color.init_dialog = function (table1, table2) {
@@ -206,10 +206,10 @@
     </head>
     <body>
         <div id="centr" style="height: calc(40% - 8px); width: calc(100% - 4px);">
-            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+            <table id="tab1-color"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="centr2" style="height: 60%; width: calc(100% - 4px)">
-            <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
+            <table id="tab2-color"  class="ui-jqgrid-btable"></table>
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>

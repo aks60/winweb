@@ -8,18 +8,16 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
-                }).trigger('resize');
-
-                sideopen.init_dialog($("#tab1-dic"));
-                sideopen.init_table($("#tab1-dic"))
-                sideopen.load_table($("#tab1-dic"))
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                    $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic").width());
+                    $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                });
+                sideopen.init_dialog($("#tab-sideopen"));
+                sideopen.init_table($("#tab-sideopen"))
+                sideopen.load_table($("#tab-sideopen"))
             });
 //------------------------------------------------------------------------------
             sideopen.init_dialog = function (table) {
-
                 $("#dialog-dic").dialog({
                     title: "Направление открывания",
                     width: 400,
@@ -103,7 +101,7 @@
         </script>        
     </head>
     <body>
-        <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <table id="tab-sideopen"  class="ui-jqgrid-btable"></table> 
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

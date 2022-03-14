@@ -8,18 +8,17 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
             params.resize = function () {
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
                     params.resize();
-                }).trigger('resize');
-
-                params.init_dialog($("#tab1-dic"));
-                params.init_table1($("#tab1-dic"));
-                params.load_table1($("#tab1-dic"));
+                });
+                params.init_dialog($("#tab-param"));
+                params.init_table1($("#tab-param"));
+                params.load_table1($("#tab-param"));
             });
 //------------------------------------------------------------------------------            
             params.init_dialog = function (table) {
@@ -104,7 +103,7 @@
     </head>
     <body>
         <div id="centr" style="height: calc(100% - 4px); width: 100%;">
-            <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+            <table id="tab-param"  class="ui-jqgrid-btable"></table> 
             <div id="dialog-mes" title="Сообщение"></div>
         </div>
     </body>

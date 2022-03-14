@@ -7,19 +7,18 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-//            dealer.resize = function () {
-//                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width() - 12);
-//                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
-//            }
+            dealer.resize = function () {
+                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic").width() - 12);
+                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+            }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-//                $(window).bind('resize', function () {
-//                    dealer.resize();
-//                }).trigger('resize');
-
-                dealer.init_dialog($("#tab1-dic"));
-                dealer.init_table($("#tab1-dic"))
-                dealer.load_table($("#tab1-dic"))
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                    dealer.resize();
+                });
+                dealer.init_dialog($("#tab-dealer"));
+                dealer.init_table($("#tab-dealer"))
+                dealer.load_table($("#tab-dealer"))
             });
 //------------------------------------------------------------------------------
             dealer.init_dialog = function (table) {
@@ -73,13 +72,12 @@
                         manager: tr[DEALER.manager]});
                 }
                 table.jqGrid("setSelection", 1);
-                //setTimeout(() => dealer.resize(), 10);
             }
 //------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
-        <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <table id="tab-dealer"  class="ui-jqgrid-btable"></table> 
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

@@ -12,7 +12,6 @@
             product.server_to_fields();
 
             product.resize = function () {
-
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
                 let cvs = document.querySelector("#cnv2");
@@ -30,6 +29,7 @@
                 $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
             }
+            
             $(document).ready(function () {
 
                 taq_deploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);

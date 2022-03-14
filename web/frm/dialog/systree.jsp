@@ -6,25 +6,25 @@
         <title>SYSTREE</title>
 
         <style>
-            #table2a tr:hover {
+            #tab2-systree tr:hover {
                 background:#E2EEFF;
             }
-            #table2a .activeRow, #table2a .activeRow:hover {
+            #tab2-systree .activeRow, #tab2-systree .activeRow:hover {
                 background:#efeffb;
                 color:#fff;
             }
 
-            #table2a tr {
+            #tab2-systree tr {
                 height: 68px;
             }
             ;
-            #table2a tr  > *:nth-child(1) {
+            #tab2-systree tr  > *:nth-child(1) {
                 display: none !important;
             }
-            #table2a tr > *:nth-child(2) {
+            #tab2-systree tr > *:nth-child(2) {
                 width: 212px !important;
             }
-            #table2a tr > *:nth-child(3) {
+            #tab2-systree tr > *:nth-child(3) {
                 width: 68px !important;
             }
         </style>
@@ -32,21 +32,21 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
             systree.resize = function () {
-                $("#table1a").jqGrid('setGridWidth', $("#dialog-dic #midl #centr").width());
-                $("#table1a").jqGrid('setGridHeight', $("#dialog-dic #midl #centr").height() - 26);
+                $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #centr").width());
+                $("#tab1-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #centr").height() - 26);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
+                $("#dialog-dic").unbind();
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
                     systree.resize();
-                }).trigger('resize');
-
-                let tab_sysprod = document.getElementById('table2a');
+                });
+                let tab_sysprod = document.getElementById('tab2-systree');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', systree.event_clicked);
                 systree.init_dialog($("#dialog-dic"));
-                systree.init_table($("#table1a"), tab_sysprod);
-                systree.load_table($("#table1a"), tab_sysprod);
+                systree.init_table($("#tab1-systree"), tab_sysprod);
+                systree.load_table($("#tab1-systree"), tab_sysprod);
             });
 //------------------------------------------------------------------------------
             systree.init_dialog = function (dialogTaq) {
@@ -122,7 +122,7 @@
                                 }
                             }
                         }
-                        $('#table2a tr > *:nth-child(1)').hide();
+                        $('#tab2-systree tr > *:nth-child(1)').hide();
                     }
                 });
             }
@@ -198,11 +198,11 @@
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
             <div id="centr" style="height: 99.6%; width: 99%;">
-                <table id="table1a"  class="ui-jqgrid-btable"></table> 
+                <table id="tab1-systree"  class="ui-jqgrid-btable"></table> 
             </div>
 
             <div id="east" style="position: absolute; overflow-y: auto;  height: 99.6%; width: 290px; top: 0; right: -300px;">
-                <table id="table2a" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
+                <table id="tab2-systree" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                     <tr style="height: 22px; background-color: #e7f4f9">
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            

@@ -8,14 +8,13 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
-                }).trigger('resize');
-
-                sysprof.init_dialog($("#tab1-dic"));
-                sysprof.init_table($("#tab1-dic"))
-                sysprof.load_table($("#tab1-dic"))
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                    $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic").width());
+                    $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                });
+                sysprof.init_dialog($("#tab-sysprof"));
+                sysprof.init_table($("#tab-sysprof"))
+                sysprof.load_table($("#tab-sysprof"))
             });
 //------------------------------------------------------------------------------
             sysprof.init_dialog = function (table) {
@@ -60,7 +59,7 @@
 
                 //Запишем профиль в локальн. бд
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));   
+                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
@@ -128,7 +127,7 @@
         </script>        
     </head>
     <body>
-        <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <table id="tab-sysprof"  class="ui-jqgrid-btable"></table> 
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

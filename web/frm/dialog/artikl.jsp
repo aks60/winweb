@@ -7,22 +7,21 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            dealer.resize = function () {
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+            artikl.resize = function () {
+                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic").width());
+                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    dealer.resize();
-                }).trigger('resize');
-
-                dealer.init_dialog($("#tab1-dic"));
-                dealer.init_table($("#tab1-dic"))
-                dealer.load_table($("#tab1-dic"))
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                    artikl.resize();
+                });
+                artikl.init_dialog($("#tab-artikl"));
+                artikl.init_table($("#tab-artikl"))
+                artikl.load_table($("#tab-artikl"))
             });
 //------------------------------------------------------------------------------
-            dealer.init_dialog = function (table) {
+            artikl.init_dialog = function (table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник артикулов",
@@ -31,7 +30,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            dealer.rec_dialog_save(table);
+                            artikl.rec_dialog_save(table);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +40,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            dealer.rec_dialog_save = function (table) {
+            artikl.rec_dialog_save = function (table) {
                 try {
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
@@ -146,7 +145,7 @@
                 let artiklList = artiklArr.filter(rec => pkSet.has(rec[ARTIKL.id]));
                 for (let i = 0; i < artiklList.length; i++) {
                     let tr = artiklList[i];
-                    $("#tab1-dic").jqGrid('addRowData', i + 1, {
+                    $("#tab-artikl").jqGrid('addRowData', i + 1, {
                         id: tr[ARTIKL.id], code: tr[ARTIKL.code], name: tr[ARTIKL.name]
                     });
                 }
@@ -174,13 +173,13 @@
 
                 }                            
                 table.jqGrid("setSelection", 1);
-                setTimeout(() => artikl.resize(), 100);
+                artikl.resize();
             }
 //------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
-        <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
+        <table id="tab-artikl"  class="ui-jqgrid-btable"></table> 
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

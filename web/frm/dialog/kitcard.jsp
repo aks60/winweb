@@ -13,20 +13,20 @@
                     var dx = $(this).attr('dx');
                     $(this).width((width - dx) + 'px');
                 });
-                $("#tab1-card").jqGrid('setGridWidth', $("#dialog-card").width());
-                $("#tab1-card").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
-                $("#tab2-card").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
+                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                kitk.init_dialog($("#tab1-card"), $("#tab2-card"));
-                kitk.init_table($("#tab1-card"), $("#tab2-card"));
-                kitk.load_table($("#tab1-card"), $("#tab2-card"))
+                kitk.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitk.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitk.load_table($("#tab1-kitcard"), $("#tab2-kitcard"))
 
                 taq_deploy(['#pan1']);
-                $(window).bind('resize', function () {
+                $("#dialog-dic").bind("dialogresize", function (event, ui) {
                     kitk.resize();
-                }).trigger('resize');
+                });
             });
 //------------------------------------------------------------------------------
             kitk.init_dialog = function (table1, table2) {
@@ -142,8 +142,8 @@
             <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="400"></jst><br>
         </div>        
         <div id="pan2" style="width: calc(100%); height: 300px;">                
-            <table id="tab1-card"  class="ui-jqgrid-btable"></table> 
-            <table id="tab2-card"  class="ui-jqgrid-btable"></table>
+            <table id="tab1-kitcard"  class="ui-jqgrid-btable"></table> 
+            <table id="tab2-kitcard"  class="ui-jqgrid-btable"></table>
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
