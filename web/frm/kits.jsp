@@ -27,8 +27,9 @@
         </script>         
     </head>
     <body>
+        <div id="dialog-card" style="display: none;"></div>
         <div id="north">   
-            <button id="btnKit1" style="width: 160px" onClick="">Добавить комплект</button>
+            <button id="btnKit1" style="width: 160px" onClick="$('#dialog-card').load('frm/dialog/kitcard.jsp');">Добавить комплект</button>
             <button id="btnKit2" style="width: 160px" onClick="">Добавить артикул</button>
             <button id="btnKit3" style="width: 160px" onClick="">Изменить запись</button>
             <button id="btnKit4" style="width: 160px" onClick="">Удалить запись</button>            

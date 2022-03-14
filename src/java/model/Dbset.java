@@ -250,7 +250,7 @@ public class Dbset {
     }    
 
     public static JSONObject kitdetList(HttpServletRequest request, HttpServletResponse response) {
-        Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "where", "order by", eKitdet.id);
+        Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "order by", eKitdet.id);
         return new JSONObject(App.asMap("kitdetList", qKitdet));
     }    
 }

@@ -54,8 +54,8 @@
         </script>
     </head>
     <body>
-        <div id="north">
-        </div> 
+        <div id="dialog-dic"></div>
+        <div id="north"></div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%;">

@@ -13,9 +13,9 @@
                     var dx = $(this).attr('dx');
                     $(this).width((width - dx) + 'px');
                 });
-                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
-                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-dic").height() - 228);
-                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-dic").width());
+                $("#tab1-dic").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-dic").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
+                $("#tab2-dic").jqGrid('setGridWidth', $("#dialog-card").width());
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -31,14 +31,14 @@
 //------------------------------------------------------------------------------
             kitk.init_dialog = function (table1, table2) {
 
-                $("#dialog-dic").dialog({
+                $("#dialog-card").dialog({
                     title: "Справочник текстур*",
                     width: 800,
                     height: 500,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            //kitk.rec_dialog_save(table2);
+                            kitk.rec_dialog_save(table2);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -50,35 +50,9 @@
 //------------------------------------------------------------------------------
             kitk.rec_dialog_save = function (table2) {
                 try {
-//                    let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-//                    let tableRec = table2.jqGrid('getRowData', rowid); //record справочника
-//                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-//                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-//                    let winc = order.wincalcMap.get(proprodID);
-//                    let elem = winc.elemList.find(it => it.id == elemID);
-//                    let param = elem.obj.param;
-//                    if (elem.obj.param == undefined) {
-//                        elem.obj.param = {};
-//                        param = elem.obj.param;
-//                    }
-//                    if (elem.type == 'STVORKA_SIDE') {
-//                        let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-//                        if (elem.obj.param[sideLayout] == undefined) {
-//                            elem.obj.param[sideLayout] = {};
-//                            param = elem.obj.param[sideLayout];
-//                        } else {
-//                            param = elem.obj.param[sideLayout];
-//                        }
-//                    }
-//
-//                    //Запишем скрипт в локальн. бд
-//                    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-//                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
-//                    let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
-//                    order.wincalcMap.set(proprodID, winc2); //новый экз.
 
                 } catch (e) {
-                    console.error("Ошибка: rec_dialog_save() " + e.message);
+                    console.error("Ошибка:kitk.rec_dialog_savee() " + e.message);
                 }
             }
 //------------------------------------------------------------------------------
@@ -95,9 +69,27 @@
                         {name: 'name', width: 240}
                     ],
                     onSelectRow: function (rowid) {
-                        //table2.jqGrid("clearGridData", true);
-                        //table2.jqGrid("setSelection", 1);
-                        //kitk.resize();
+                        table2.jqGrid("clearGridData", true);
+                        let row_table1 = table1.jqGrid('getRowData', rowid);
+                        let kitdetList = dbset.kitdetList.filter(rec => row_table1.id == rec[KITDET.kits_id]);
+                        if (kitdetList != undefined) {
+                            for (let i = 0; i < kitdetList.length; ++i) {
+                                let tr = kitdetList[i];
+                                let artiklRec = findef(dbset.artiklList.find(rec => tr[ARTIKL.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+                                table2.jqGrid('addRowData', i + 1, {
+                                    id: tr[KITDET.id],
+                                    code: artiklRec[ARTIKL.code],
+                                    name: artiklRec[ARTIKL.name],
+                                    color1_id: findef(dbset.colorList.find(rec => tr[KITDET.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                                    color2_id: findef(dbset.colorList.find(rec => tr[KITDET.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                                    color3_id: findef(dbset.colorList.find(rec => tr[KITDET.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                                    unit: tr[KITDET.unit],
+                                    flag: tr[KITDET.flag]
+                                });
+                            }
+                        }
+                        table2.jqGrid("setSelection", 1);
+                        kitk.resize();
                     }
                 });
                 table2.jqGrid({
@@ -117,8 +109,8 @@
                         {name: 'flag', width: 10}
                     ],
                     ondblClickRow: function (rowId) {
-                        //kitk.rec_dialog_save(table2);
-                        $("#dialog-dic").dialog("close");
+                        kitk.rec_dialog_save(table2);
+                        $("#dialog-card").dialog("close");
                     }
                 });
             };
@@ -143,19 +135,15 @@
     <body>
         <div id="pan1" style="width: calc(100% - 4px); height: 84px;"> 
             <jst id="n21" type='txt' label='Кол.компл.' width='80' width2="40"></jst>
-            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="274"></jst><br>
+            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="273" click="color.parent = 'kits'; $('#dialog-dic').load('frm/dialog/color.jsp');"></jst><br>
             <jst id="n23" type='txt' label='Длина' width='80' width2="40"></jst>
-            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="274"></jst><br>
+            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="273"></jst><br>
             <jst id="n25" type='txt' label='Ширина' width='80' width2="40"></jst>
-            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="274"></jst><br>
+            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="273"></jst><br>
         </div>        
-        <div id="pan2" style="width: calc(100%); height: 300px;">        
-            <!--<div id="pan2a" style="width: calc(100% - 4px); height: 200px;">-->           
+        <div id="pan2" style="width: calc(100%); height: 300px;">                
             <table id="tab1-dic"  class="ui-jqgrid-btable"></table> 
-            <!--</div>-->         
-            <!--<div id="pan2b" style="width: calc(100% - 4px); height: 100px;">--> 
             <table id="tab2-dic"  class="ui-jqgrid-btable"></table>
-            <!--</div>-->
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>

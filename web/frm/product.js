@@ -293,6 +293,7 @@ product.color_to_windows = function (btnSrc) {
                 }
             }
         }
+        color.parent = 'winc';
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
         product.buttonSrc = btnSrc;
@@ -331,44 +332,6 @@ product.sysprof_to_frame = function (btnSrc) {
 
     } catch (e) {
         console.error("Ошибка: product.sysprof_to_frame() " + e.message);
-    }
-}
-//-------------------  Текстура изделия  ---------------------------------------
-product.color_to_frame2 = function (btnSrc) {
-    try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = order.rec_table2[PROPROD.id];
-        let winc = order.wincalcMap.get(proprodID);
-        let elem = winc.elemList.find(it => it.id == nodeID);
-        let groupSet = new Set();
-        let colorSet = new Set();
-
-        //Все текстуры артикула элемента конструкции
-        dbset.artdetList.forEach(rec => {
-            if (rec[ARTDET.artikl_id] == elem.artiklRec[ARTIKL.id]) {
-                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
-
-                    dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
-
-                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
-                            colorSet.add(colorRec);
-                        }
-                    });
-                } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
-                    groupSet.add(color2Rec[COLOR.colgrp_id]);
-                    colorSet.add(color2Rec);
-                }
-            }
-        });
-        product.groupSet = groupSet;
-        product.colorArr = Array.from(colorSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/color.jsp');
-
-    } catch (e) {
-        console.error("Ошибка: colorToFrame() " + e.message);
     }
 }
 //-------------------  Фурнитура стеклопакета  ---------------------------------
@@ -431,6 +394,7 @@ product.color_to_element = function (btnSrc) {
                 }
             }
         }
+        color.parent = 'elem';
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
         product.buttonSrc = btnSrc;

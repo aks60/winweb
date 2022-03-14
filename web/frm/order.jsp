@@ -52,26 +52,27 @@
 
                 $("button").button();
                 prepareToolBar();
-                taq_deploy(['#card1']);
+                taq_deploy(['#dialog-card']);
                 $('#n23').datepicker();
                 $('#n24').datepicker();
             });
 //------------------------------------------------------------------------------            
             function test() {
+                let mm = dbset.kitdetList;
+                debugger;
             }
         </script>
     </head>
     <body>        
         <div id="north">
-            <button id="btnOrder1" style="width: 128px" onClick="order.card_deploy('#card1', 'INS');">Добавить заказ</button>
-            <button id="btnOrder2" style="width: 128px" onClick="order.card_deploy('#card1', 'UPD');">Изменить заказ</button>
+            <button id="btnOrder1" style="width: 128px" onClick="order.card_deploy('#dialog-card', 'INS');">Добавить заказ</button>
+            <button id="btnOrder2" style="width: 128px" onClick="order.card_deploy('#dialog-card', 'UPD');">Изменить заказ</button>
             <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
-            <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>            
-            <button id="btnTest2" onClick="$('#dialog-dic').load('frm/dialog/kitcard.jsp');">Test</button>
+            <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>                        
         </div>     
         <div id = "context">     
-            <div id="card1" card_title="Карточка ввода нового заказа" card_width="416" card_height="230" style="display: none;">
+            <div id="dialog-card" card_title="Карточка ввода нового заказа" card_width="416" card_height="230" style="display: none;">
                 <jst id="n21" type='txt' label='Номер заказа' width='80' width2="80"></jst><br>
                 <jst id="n22" type='txt' label='Номер счёта' width='80' width2="80"></jst><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
