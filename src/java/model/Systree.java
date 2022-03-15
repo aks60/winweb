@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
-import model.sys.Att;
 import org.json.simple.JSONObject;
 
 public class Systree {

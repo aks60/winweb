@@ -37,7 +37,6 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
-import model.sys.Att;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -122,11 +121,12 @@ public class Dbset {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        try (Connection connection = Att.att(request).connect()) {
+        try (Connection connection = Conn.connection()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update proprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
             output.put("result", "ok");
+            connection.close();
             return output;
 
         } catch (SQLException e) {

@@ -53,8 +53,7 @@ public class Login {
     //новый токен, проверка отсутствия логина в базе
     public HashMap rtwEmptyLogin(HttpServletRequest request, HttpServletResponse response) {
 
-        App app = new App();
-        HashMap output = app.asMap("login", "true", "mes", "");
+        HashMap output = App.asMap("login", "true", "mes", "");
         String adm_name = request.getParameter("admname");
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
@@ -68,7 +67,7 @@ public class Login {
                 Query qUser = new Query(eSysuser.values());
                 for (Record recordUser : qUser) {
                     if (login.equals(recordUser.get(eSysuser.login))) {
-                        output.putAll(app.asMap("login", true, "mes", "Пользователь с таким именем уже существует в базе данных"));
+                        output.putAll(App.asMap("login", true, "mes", "Пользователь с таким именем уже существует в базе данных"));
                     }
                 }
             }
@@ -85,7 +84,7 @@ public class Login {
 
         } catch (SQLException e) {
             System.err.println(e);
-            output.putAll(app.asMap("login", true, "mes", "Ошибка авторизации прав администратора"));
+            output.putAll(App.asMap("login", true, "mes", "Ошибка авторизации прав администратора"));
             return output;
         }
     }
@@ -93,13 +92,12 @@ public class Login {
     //новый токен, сохранение user, open key и role в базе данных
     public HashMap newToken(HttpServletRequest request, HttpServletResponse response) {
 
-        App app = new App();
         String openkey = request.getParameter("openkey");
         String login = request.getParameter("login");
         String user_role = request.getParameter("role");
         String user_desc = request.getParameter("desc");
 
-        HashMap output = app.asMap("login", login, "openkey", openkey);
+        HashMap output = App.asMap("login", login, "openkey", openkey);
         Query qSysuser = new Query(eSysuser.values());
         Record record = eSysuser.up.newRecord(Query.INS);
         record.setNo(eSysuser.login, login);
@@ -113,23 +111,19 @@ public class Login {
     //авторизация токен, генерация клиенту случ. последовательности
     public HashMap rtwRandom(HttpServletRequest request, HttpServletResponse response) {
 
-        Att att = Att.att(request);
-        App app = new App();
         HttpSession session = request.getSession();
         session.setAttribute("login", request.getParameter("login"));
         SecureRandom random = new SecureRandom();
         session.setAttribute("random", random);
         String rndstr = new BigInteger(130, random).toString(32);
-        HashMap output = app.asMap("random", rndstr);
+        HashMap output = App.asMap("random", rndstr);
         return output;
     }
 
     //авторизация токен, проверка подписи
     public HashMap rtwConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        Att att = Att.att(request);
-        App app = new App();
-        HashMap output = app.asMap("result", "Ошибка авторизации", "role", "empty");
+        HashMap output = App.asMap("result", "Ошибка авторизации", "role", "empty");
         try {
             HttpSession session = request.getSession();
             String loginToken = session.getAttribute("login").toString();
@@ -186,13 +180,6 @@ public class Login {
             //если подписи совпали
             if (r.equals(R)) {
 
-//                excludeAtt(request, user.user2, user.role)
-//            
-//                Att.att(request).sys.region = user.uchschool.uch_Ter_Sp   
-//                Att.att(request).sys.login = user.user2
-//                Att.att(request).sys.role = user.role            
-//                output.role = user.role
-//                output.result = 'true'
             }
         } catch (NoSuchAlgorithmException e) {
             System.err.println(e);
@@ -284,7 +271,6 @@ public class Login {
 
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        Att att = Att.att(request);
         Connection connect = Conn.connection();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -303,8 +289,6 @@ public class Login {
                     output.put("result", "Ошибка ввода пароля или имени администратора");
                     return output;
                 }
-                att.login(username);
-                att.role("RDB$ADMIN");
                 output.put("role", "RDB$ADMIN");
                 output.put("user_name", username);
                 output.put("user_fio", "admin");
@@ -324,10 +308,7 @@ public class Login {
                     String password3 = new String(password2);
                     //если пароль клиента и сервера совпали
                     if (password.equals(password3)) {
-
-                        att.login(user.getAs(0, eSysuser.login));
-                        att.role(user.getAs(0, eSysuser.role));
-
+                        
                         output.put("role", user.get(0, eSysuser.role));
                         output.put("user_name", username);
                         output.put("user_fio", user_fio);
