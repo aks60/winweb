@@ -70,7 +70,8 @@
                             <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
                             <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  
                             <p class="pantitle">Текстура изделия</p> 
-                            <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="product.color_to_windows('n14');"></jst><br>
+                            <!--<jst id="n14" type='btn' label='Основная' width='80' width2="260" click="product.color_to_windows('n14');"></jst><br>-->
+                            <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="$('#dialog-dic').load('frm/dialog/newjsp.jsp');"></jst><br>
                             <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_windows('n15');"></jst><br>
                             <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_windows('n16');"></jst><br>
                         </div>
