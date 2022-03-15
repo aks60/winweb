@@ -7,15 +7,19 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
+            furniture.resize = function () {
+                $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+            }
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                    $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
-                });                 
+                    furniture.resize();
+                });
                 furniture.init_dialog($("#tab-furniture"));
                 furniture.init_table($("#tab-furniture"))
                 furniture.load_table($("#tab-furniture"))
-                //jQuery("#tab-furniture").jqGrid('gridResize', options);
+                furniture.resize();
             });
 //------------------------------------------------------------------------------
             furniture.init_dialog = function (table) {
@@ -23,7 +27,7 @@
                 $("#dialog-dic").dialog({
                     title: "Фурнитура системы",
                     width: 400,
-                    height: 400,
+                    height: 480,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
@@ -38,47 +42,16 @@
                 });
             }
 //------------------------------------------------------------------------------
-            furniture.rec_dialog_save = function (table) {
-
-                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
-                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-
-                let winc = order.wincalcMap.get(proprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
-                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
-                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec[SYSFURN.furniture_id] && winc.nuni == rec[SYSFURN.systree_id]);
-                elem.obj.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
-                let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
-
-                $.ajax({//запишем профиль в серверную базу данных
-                    url: 'dbset?action=updateScript',
-                    data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
-                    success: function (data) {
-                        if (data.result == 'ok') {
-                            $("#n43").val(tableRec.name);
-                        }
-                    },
-                    error: function () {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                    }
-                });
-            }
-//------------------------------------------------------------------------------
             furniture.init_table = function (table) {
                 table.jqGrid({
                     datatype: "local",
-                    gridview: true,
-                    autowidth: true,
-                    height: "auto",
+//                    gridview: true,
+//                    autowidth: true,
+//                    height: "auto",
                     colNames: ['id', 'Наименование'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'name', width: 400, sorttype: "text"}
+                        {name: 'name', width: 360, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         furniture.rec_dialog_save(table);
                         $("#dialog-dic").dialog("close");
@@ -110,10 +83,41 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
+            furniture.rec_dialog_save = function (table) {
+
+                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
+                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+
+                let winc = order.wincalcMap.get(proprodID);
+                let elem = winc.elemList.find(it => it.id == elemID);
+                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec[SYSFURN.furniture_id] && winc.nuni == rec[SYSFURN.systree_id]);
+                elem.obj.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
+                let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
+                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+
+                $.ajax({//запишем профиль в серверную базу данных
+                    url: 'dbset?action=updateScript',
+                    data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
+                    success: function (data) {
+                        if (data.result == 'ok') {
+                            $("#n43").val(tableRec.name);
+                        }
+                    },
+                    error: function () {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
+            }            
+//------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 8px); width: 100%;">
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-furniture"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="dialog-mes" title="Сообщение"></div>

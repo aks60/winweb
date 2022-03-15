@@ -8,14 +8,14 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             kitkard.resize = function () {
+                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
+                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
+                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
                 var width = $('#pan1').width();
                 $("#pan1 .field[dx]").each(function (index) {
                     var dx = $(this).attr('dx');
                     $(this).width((width - dx) + 'px');
-                });
-                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
-                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-card").height() - 228);
-                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-card").width());
+                });                
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -27,6 +27,7 @@
                 $("#dialog-card").unbind().bind("dialogresize", function (event, ui) {
                     kitkard.resize();
                 });
+                kitkard.resize();
             });
 //------------------------------------------------------------------------------
             kitkard.init_dialog = function (table1, table2) {
@@ -88,7 +89,6 @@
                             }
                         }
                         table2.jqGrid("setSelection", 1);
-                        kitkard.resize();
                     }
                 });
                 table2.jqGrid({
@@ -130,7 +130,6 @@
                     });
                 }
                 table1.jqGrid("setSelection", 1);
-                kitkard.resize();
             };
 //------------------------------------------------------------------------------
         </script>         

@@ -7,14 +7,19 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
+            sideopen.resize = function () {
+                $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+            }
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                    sideopen.resize();
                 });
                 sideopen.init_dialog($("#tab-sideopen"));
-                sideopen.init_table($("#tab-sideopen"))
-                sideopen.load_table($("#tab-sideopen"))
+                sideopen.init_table($("#tab-sideopen"));
+                sideopen.load_table($("#tab-sideopen"));
+                sideopen.resize();
             });
 //------------------------------------------------------------------------------
             sideopen.init_dialog = function (table) {
@@ -32,36 +37,6 @@
                         "Закрыть": function () {
                             $(this).dialog("close");
                         }
-                    }
-                });
-            }
-//------------------------------------------------------------------------------
-            sideopen.rec_dialog_save = function (table) {
-
-                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
-                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-
-                let winc = order.wincalcMap.get(proprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
-                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
-                elem.obj.param.typeOpen = tableRec.id; //запишем тип открывания
-                let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
-
-                $.ajax({//запишем профиль в серверную базу данных
-                    url: 'dbset?action=updateScript',
-                    data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
-                    success: function (data) {
-                        if (data.result == 'ok') {
-                            $("#n44").val(tableRec.name);
-                        }
-                    },
-                    error: function () {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                     }
                 });
             }
@@ -98,10 +73,42 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
+            sideopen.rec_dialog_save = function (table) {
+
+                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
+                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+
+                let winc = order.wincalcMap.get(proprodID);
+                let elem = winc.elemList.find(it => it.id == elemID);
+                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                elem.obj.param.typeOpen = tableRec.id; //запишем тип открывания
+                let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+                proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
+                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+
+                $.ajax({//запишем профиль в серверную базу данных
+                    url: 'dbset?action=updateScript',
+                    data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj)})},
+                    success: function (data) {
+                        if (data.result == 'ok') {
+                            $("#n44").val(tableRec.name);
+                        }
+                    },
+                    error: function () {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
+            }
+//------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
-        <table id="tab-sideopen"  class="ui-jqgrid-btable"></table> 
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+            <table id="tab-sideopen"  class="ui-jqgrid-btable"></table> 
+        </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

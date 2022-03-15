@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             dealer.resize = function () {
-                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic").width() - 12);
-                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -17,8 +17,9 @@
                     dealer.resize();
                 });
                 dealer.init_dialog($("#tab-dealer"));
-                dealer.init_table($("#tab-dealer"))
-                dealer.load_table($("#tab-dealer"))
+                dealer.init_table($("#tab-dealer"));
+                dealer.load_table($("#tab-dealer"));
+                dealer.resize();
             });
 //------------------------------------------------------------------------------
             dealer.init_dialog = function (table) {
@@ -46,9 +47,6 @@
 
                 table.jqGrid({
                     datatype: "local",
-                    multiselect: false,
-                    autowidth: true,
-                    height: "auto",
                     colNames: ['id', 'Контрагент', 'Дилер'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
@@ -77,7 +75,9 @@
         </script>        
     </head>
     <body>
-        <table id="tab-dealer"  class="ui-jqgrid-btable"></table> 
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+            <table id="tab-dealer"  class="ui-jqgrid-btable"></table> 
+        </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

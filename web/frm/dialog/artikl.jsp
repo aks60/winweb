@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             artikl.resize = function () {
-                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic").width());
-                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -19,6 +19,7 @@
                 artikl.init_dialog($("#tab-artikl"));
                 artikl.init_table($("#tab-artikl"))
                 artikl.load_table($("#tab-artikl"))
+                artikl.resize();
             });
 //------------------------------------------------------------------------------
             artikl.init_dialog = function (table) {
@@ -40,73 +41,10 @@
                 });
             }
 //------------------------------------------------------------------------------
-            artikl.rec_dialog_save = function (table) {
-                try {
-                    let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                    let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
-                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-                    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-
-                    let winc = order.wincalcMap.get(proprodID);
-                    let elem = winc.elemList.find(it => it.id == elemID);
-                    elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
-
-                    //Стеклопакет
-                    if (product.buttonSrc == 'n51') {
-                        elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
-                        $("#n51").val(tableRow.code);
-                        $("#n52").val(tableRow.name);
-
-                        //Ручка
-                    } else if (product.buttonSrc == 'n45') {
-                        elem.obj.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
-                        $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
-                        $("#n46").val('');
-
-                        //Подвес
-                    } else if (product.buttonSrc == 'n49') {
-                        elem.obj.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
-                        $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
-                        $("#n4A").val('');
-
-                        //Замок
-                    } else if (product.buttonSrc == 'n4B') {
-                        elem.obj.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
-                        $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
-                        $("#n4C").val('');
-                    }
-
-                    //Запишем скрипт в локальн. бд 
-                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
-                    let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
-                    order.wincalcMap.set(proprodID, winc2); //новый экз.
-
-                    //Запишем скрипт в серверную базу данных
-                    $.ajax({
-                        url: 'dbset?action=updateScript',
-                        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
-                        success: (data) => {
-                            if (data.result != 'ok')
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        }
-                    });
-
-                } catch (e) {
-                    console.error("Ошибка: artikl.rec_dialog_save() " + e.message);
-                }
-            }
-//------------------------------------------------------------------------------
             artikl.init_table = function (table) {
 
                 table.jqGrid({
                     datatype: "local",
-                    multiselect: false,
-                    autowidth: true,
-                    height: "auto",
                     colNames: ['id', 'Код артикула', 'Наименование артикула'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
@@ -171,15 +109,76 @@
                 } else if (product.buttonSrc == 'n4B') {
                     artikl.load(2, 9);
 
-                }                            
+                }
                 table.jqGrid("setSelection", 1);
-                artikl.resize();
+            }
+//------------------------------------------------------------------------------
+            artikl.rec_dialog_save = function (table) {
+                try {
+                    let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                    let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
+                    let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                    let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+                    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+
+                    let winc = order.wincalcMap.get(proprodID);
+                    let elem = winc.elemList.find(it => it.id == elemID);
+                    elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+
+                    //Стеклопакет
+                    if (product.buttonSrc == 'n51') {
+                        elem.obj.param.artglasID = tableRow.id; //запишем профиль в скрипт
+                        $("#n51").val(tableRow.code);
+                        $("#n52").val(tableRow.name);
+
+                        //Ручка
+                    } else if (product.buttonSrc == 'n45') {
+                        elem.obj.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
+                        $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
+                        $("#n46").val('');
+
+                        //Подвес
+                    } else if (product.buttonSrc == 'n49') {
+                        elem.obj.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
+                        $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
+                        $("#n4A").val('');
+
+                        //Замок
+                    } else if (product.buttonSrc == 'n4B') {
+                        elem.obj.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
+                        $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
+                        $("#n4C").val('');
+                    }
+
+                    //Запишем скрипт в локальн. бд 
+                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
+                    let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
+                    order.wincalcMap.set(proprodID, winc2); //новый экз.
+
+                    //Запишем скрипт в серверную базу данных
+                    $.ajax({
+                        url: 'dbset?action=updateScript',
+                        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
+                        success: (data) => {
+                            if (data.result != 'ok')
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        }
+                    });
+
+                } catch (e) {
+                    console.error("Ошибка: artikl.rec_dialog_save() " + e.message);
+                }
             }
 //------------------------------------------------------------------------------
         </script>        
     </head>
     <body>
-        <table id="tab-artikl"  class="ui-jqgrid-btable"></table> 
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+            <table id="tab-artikl"  class="ui-jqgrid-btable"></table> 
+        </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

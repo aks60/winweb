@@ -46,6 +46,7 @@
                 systree.init_dialog($("#dialog-dic"));
                 systree.init_table($("#tab1-systree"), tab_sysprod);
                 systree.load_table($("#tab1-systree"), tab_sysprod);
+                systree.resize();
             });
 //------------------------------------------------------------------------------
             systree.init_dialog = function (dialogTaq) {
@@ -66,10 +67,10 @@
                                             projectID: order.row_table1.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
                                     success: (data) => {
                                         if (data.result == 'ok') {
-                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name], 
+                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
                                                 sysprodRec[SYSPROD.script], order.row_table1.id, sysprodRec[SYSPROD.systree_id]];
                                             dbset.proprodList.push(record);
-                                            order.add_proprodClone(document.getElementById('table2'), record);                                           
+                                            order.add_proprodClone(document.getElementById('table2'), record);
                                         } else
                                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                     },
@@ -83,7 +84,7 @@
                         "Закрыть": function () {
                             systree.rec_table1 = null;
                             $(this).dialog("close");
-                        }                        
+                        }
                     }
                 });
             }
@@ -138,9 +139,7 @@
                             records: data.sysTree.length,
                             rows: data.sysTree
                         });
-
                         table1.jqGrid("setSelection", 1);
-                        systree.resize();
                     }
                 });
             }

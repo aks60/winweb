@@ -7,21 +7,25 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
+            sysprof.resize = function () {
+                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
+                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+            }            
+//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic").width());
-                    $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
+                    sysprof.resize();
                 });
                 sysprof.init_dialog($("#tab-sysprof"));
                 sysprof.init_table($("#tab-sysprof"))
                 sysprof.load_table($("#tab-sysprof"))
+                sysprof.resize();
             });
 //------------------------------------------------------------------------------
             sysprof.init_dialog = function (table) {
-
                 $("#dialog-dic").dialog({
                     title: "Профили системы",
-                    width: 600,
+                    width: 450,
                     height: 400,
                     modal: true,
                     buttons: {
@@ -35,6 +39,41 @@
                         }
                     }
                 });
+            }
+//------------------------------------------------------------------------------
+            sysprof.init_table = function (table) {
+                table.jqGrid({
+                    datatype: "local",
+                    colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
+                    colModel: [
+                        {name: 'id', hidden: true, key: true},
+                        {name: 'side', width: 60, sorttype: "text"},
+                        {name: 'code', width: 140, sorttype: "text"},
+                        {name: 'name', width: 340, sorttype: "text"}
+                    ], ondblClickRow: function (rowid) {
+                        sysprof.rec_dialog_save(table);
+                        $("#dialog-dic").dialog("close");
+                    }
+                });
+            }
+//------------------------------------------------------------------------------
+            sysprof.load_table = function (table) {
+
+                table.jqGrid('clearGridData', true);
+                let id = order.rec_table2[SYSPROF.id];
+                let winc = order.wincalcMap.get(id);
+
+                for (let i = 0; i < product.sysprofArr.length; i++) {
+                    let tr = product.sysprofArr[i];
+                    let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
+                    table.jqGrid('addRowData', i + 1, {
+                        id: tr[SYSPROF.id],
+                        side: sysprof.use_name(tr[SYSPROF.use_side]),
+                        code: artRec[ARTIKL.code],
+                        name: artRec[ARTIKL.name]
+                    });
+                }
+                table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
             sysprof.rec_dialog_save = function (table) {
@@ -77,45 +116,7 @@
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                     }
                 });
-            }
-//------------------------------------------------------------------------------
-            sysprof.init_table = function (table) {
-                table.jqGrid({
-                    datatype: "local",
-                    gridview: true,
-                    autowidth: true,
-                    height: "auto",
-                    colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
-                    colModel: [
-                        {name: 'id', hidden: true, key: true},
-                        {name: 'side', width: 60, sorttype: "text"},
-                        {name: 'code', width: 200, sorttype: "text"},
-                        {name: 'name', width: 340, sorttype: "text"}
-                    ], ondblClickRow: function (rowid) {
-                        sysprof.rec_dialog_save(table);
-                        $("#dialog-dic").dialog("close");
-                    }
-                });
-            }
-//------------------------------------------------------------------------------
-            sysprof.load_table = function (table) {
-
-                table.jqGrid('clearGridData', true);
-                let id = order.rec_table2[SYSPROF.id];
-                let winc = order.wincalcMap.get(id);
-
-                for (let i = 0; i < product.sysprofArr.length; i++) {
-                    let tr = product.sysprofArr[i];
-                    let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
-                    table.jqGrid('addRowData', i + 1, {
-                        id: tr[SYSPROF.id],
-                        side: sysprof.use_name(tr[SYSPROF.use_side]),
-                        code: artRec[ARTIKL.code],
-                        name: artRec[ARTIKL.name]
-                    });
-                }
-                table.jqGrid("setSelection", 1);
-            }
+            }            
 //------------------------------------------------------------------------------
             sysprof.use_name = (v) => {
                 for (let k in UseSide) {
@@ -127,7 +128,9 @@
         </script>        
     </head>
     <body>
-        <table id="tab-sysprof"  class="ui-jqgrid-btable"></table> 
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+            <table id="tab-sysprof"  class="ui-jqgrid-btable"></table> 
+        </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

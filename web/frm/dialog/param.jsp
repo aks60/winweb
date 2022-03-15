@@ -17,8 +17,9 @@
                     params.resize();
                 });
                 params.init_dialog($("#tab-param"));
-                params.init_table1($("#tab-param"));
-                params.load_table1($("#tab-param"));
+                params.init_table($("#tab-param"));
+                params.load_table($("#tab-param"));
+                params.resize();
             });
 //------------------------------------------------------------------------------            
             params.init_dialog = function (table) {
@@ -69,12 +70,9 @@
                 });
             }
 //------------------------------------------------------------------------------
-            params.init_table1 = function (table) {
+            params.init_table = function (table) {
                 table.jqGrid({
                     datatype: "local",
-                    gridview: true,
-                    autowidth: true,
-                    height: "auto",
                     colNames: ['id', 'Значение параметра'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
@@ -85,7 +83,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            params.load_table1 = function (table) {
+            params.load_table = function (table) {
                 table.jqGrid('clearGridData', true);
                 let params2List = dbset.paramsList.filter(rec => product.group_param == rec[PARAMS.params_id] && rec[PARAMS.id] != rec[PARAMS.params_id]);
                 for (let i = 0; i < params2List.length; i++) {
@@ -102,7 +100,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: 100%;">
+        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-param"  class="ui-jqgrid-btable"></table> 
             <div id="dialog-mes" title="Сообщение"></div>
         </div>

@@ -203,56 +203,46 @@ order.card_deploy = function (taq, type) {
 
     if (type == 'INS') {
         //Открытие диалога insert
-        $(taq).dialog({title: $(taq).attr('card_title'), width: $(taq).attr('card_width'),
-            height: $(taq).attr('card_height'), modal: true, resizable: false,
-            buttons: [
-                {text: "OK", click: function () {
-                        //Запишем заказ в серверную базу данных
-                        $.ajax({
-                            url: 'dbset?action=insertOrder',
-                            data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                    date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.row_tab1dic.id})},
-                            success: (data) => {
+        $(taq).dialog({
+            title: $(taq).attr('card_title'),
+            width: $(taq).attr('card_width'),
+            height: $(taq).attr('card_height'),
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Добавить": function () {
+                    //Запишем заказ в серверную базу данных
+                    $.ajax({
+                        url: 'dbset?action=insertOrder',
+                        data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
+                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.row_tab1dic.id})},
+                        success: (data) => {
 
-                                if (data.result == 'ok') {
-                                    let record = new Array(41);
-                                    record[0] = 'SEL';
-                                    record[ORDER.id] = data.id;
-                                    record[ORDER.num_ord] = $("#n21").val();
-                                    record[ORDER.num_acc] = $("#n22").val();
-                                    record[ORDER.manager] = login.data.user_fio;
-                                    record[ORDER.date4] = $("#n23").val();
-                                    record[ORDER.date6] = $("#n24").val();
-                                    record[ORDER.owner] = login.data.user_name;
-                                    record[ORDER.propart_id] = dealer.row_tab1dic.id;
-                                    dbset.orderList.push(record);
-                                    order.load_table($("#table1"));
-                                } else
-                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                            },
-                            error: () => {
+                            if (data.result == 'ok') {
+                                let record = new Array(41);
+                                record[0] = 'SEL';
+                                record[ORDER.id] = data.id;
+                                record[ORDER.num_ord] = $("#n21").val();
+                                record[ORDER.num_acc] = $("#n22").val();
+                                record[ORDER.manager] = login.data.user_fio;
+                                record[ORDER.date4] = $("#n23").val();
+                                record[ORDER.date6] = $("#n24").val();
+                                record[ORDER.owner] = login.data.user_name;
+                                record[ORDER.propart_id] = dealer.row_tab1dic.id;
+                                dbset.orderList.push(record);
+                                order.load_table($("#table1"));
+                            } else
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                            }
-                        });
-
-//                    focusObj.mapobj.prepareInsert(record); //подготовка записи
-//                    //Загрузим record данными из карточки
-//                    for (let field in focusObj.mapobj) {
-//                        for (let field2 in record) {
-//                            if (field == '_' + field2) {
-//                                record[field2] = focusObj.mapobj[field2]
-//                            }
-//                        }
-//                    }
-//                    focusObj.mapobj.table.push(record); //добавим строку в data сервер
-//                    focusObj.mapobj.loadRecord(focusObj.mapobj.table.length - 1); //добавим строку в html таблицу
-//                    focusObj.mapobj.loadField(focusObj.name_table); //заполним поля обратно
-                        $(this).dialog("close"); //закроем карточку
-//                    focusObj.mapobj.afterCard(type); //после закрытия карточки
-                    }}
-            ],
-            resize: function (event, ui) {
-                resizes($(this).width());
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                "Отменить": function () {
+                    $(this).dialog("close");
+                }
             }
         });
     }
