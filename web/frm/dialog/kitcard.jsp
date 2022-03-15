@@ -7,7 +7,7 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            kitk.resize = function () {
+            kitkard.resize = function () {
                 var width = $('#pan1').width();
                 $("#pan1 .field[dx]").each(function (index) {
                     var dx = $(this).attr('dx');
@@ -19,17 +19,17 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                kitk.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitk.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitk.load_table($("#tab1-kitcard"), $("#tab2-kitcard"))
+                kitkard.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitkard.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitkard.load_table($("#tab1-kitcard"), $("#tab2-kitcard"))
 
                 taq_deploy(['#pan1']);
                 $("#dialog-card").unbind().bind("dialogresize", function (event, ui) {
-                    kitk.resize();
+                    kitkard.resize();
                 });
             });
 //------------------------------------------------------------------------------
-            kitk.init_dialog = function (table1, table2) {
+            kitkard.init_dialog = function (table1, table2) {
                 $("#dialog-card").dialog({
                     title: "Справочник текстур*",
                     width: 800,
@@ -37,7 +37,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            kitk.rec_dialog_save(table2);
+                            kitkard.rec_dialog_save(table2);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -47,15 +47,15 @@
                 });
             }
 //------------------------------------------------------------------------------
-            kitk.rec_dialog_save = function (table2) {
+            kitkard.rec_dialog_save = function (table2) {
                 try {
 
                 } catch (e) {
-                    console.error("Ошибка:kitk.rec_dialog_savee() " + e.message);
+                    console.error("Ошибка:kitkard.rec_dialog_savee() " + e.message);
                 }
             }
 //------------------------------------------------------------------------------
-            kitk.init_table = function (table1, table2) {
+            kitkard.init_table = function (table1, table2) {
 
                 table1.jqGrid({
                     datatype: "local",
@@ -74,7 +74,7 @@
                         if (kitdetList != undefined) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let tr = kitdetList[i];
-                                let artiklRec = findef(dbset.artiklList.find(rec => tr[ARTIKL.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+                                let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
                                     code: artiklRec[ARTIKL.code],
@@ -88,7 +88,7 @@
                             }
                         }
                         table2.jqGrid("setSelection", 1);
-                        kitk.resize();
+                        kitkard.resize();
                     }
                 });
                 table2.jqGrid({
@@ -108,13 +108,17 @@
                         {name: 'flag', width: 10}
                     ],
                     ondblClickRow: function (rowId) {
-                        kitk.rec_dialog_save(table2);
+                        kitkard.rec_dialog_save(table2);
                         $("#dialog-card").dialog("close");
+                    },
+                    onSelectRow: function (rowid) {
+                       let row_tab2_kitcard  = table2.jqGrid('getRowData', rowid); 
+                       kits.rec_tab2_kitcard = findef(dbset.artdetList.find(rec => row_tab2_kitcard.id == rec[ARTDET.artikl_id]), dbset.artdetList);
                     }
                 });
             };
 //------------------------------------------------------------------------------
-            kitk.load_table = function (table1, table2) {
+            kitkard.load_table = function (table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
@@ -126,7 +130,7 @@
                     });
                 }
                 table1.jqGrid("setSelection", 1);
-                kitk.resize();
+                kitkard.resize();
             };
 //------------------------------------------------------------------------------
         </script>         

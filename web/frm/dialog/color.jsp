@@ -41,6 +41,89 @@
                 });
             }
 //------------------------------------------------------------------------------
+            color.init_table = function (table1, table2) {
+
+                table1.jqGrid({
+                    datatype: "local",
+                    colNames: ['id', 'Группы текстур'],
+                    colModel: [
+                        {name: 'id', hidden: true, key: true},
+                        {name: 'name', width: 360}
+                    ],
+                    onSelectRow: function (rowid) {
+                        table2.jqGrid("clearGridData", true);
+                        let colgrpRow = table1.jqGrid('getRowData', rowid);
+                        if (product.colorArr.length == 0) {
+                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
+                            for (let i = 0; i < colorList.length; i++) {
+                                let colorRec = colorList[i];
+                                table2.jqGrid('addRowData', i + 1, {
+                                    id: colorRec[COLOR.id],
+                                    name: colorRec[COLOR.name]
+                                });
+                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                            }
+                        } else {
+                            let colorArr = product.colorArr.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
+                            for (let i = 0; i < colorArr.length; i++) {
+                                let colorRec = colorArr[i];
+                                table2.jqGrid('addRowData', i + 1, {
+                                    id: colorRec[COLOR.id],
+                                    name: colorRec[COLOR.name]
+                                });
+                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                            }
+                        }
+                        table2.jqGrid("setSelection", 1);
+                        color.resize();
+                    }
+                });
+                table2.jqGrid({
+                    datatype: "local",
+                    colNames: ['Код', 'Описание текстур'],
+                    colModel: [
+                        {name: 'id', width: 60, key: true},
+                        {name: 'name', width: 340}
+                    ],
+                    ondblClickRow: function (rowId) {
+                        color.rec_dialog_save(table2);
+                        $("#dialog-dic").dialog("close");
+                    }
+                });
+            };
+//------------------------------------------------------------------------------
+            color.load_table = function (table1, table2) {
+                table1.jqGrid('clearGridData', true);
+                table2.jqGrid('clearGridData', true);
+                if (color.parent != 'kits') {
+                    if (product.groupSet.size > 0) {
+                        let groupList = dbset.groupList.filter(rec => product.groupSet.has(rec[GROUP.id]));
+                        for (let i = 0; i < groupList.length; i++) {
+                            let tr = groupList[i];
+                            table1.jqGrid('addRowData', i + 1, {
+                                id: tr[GROUP.id],
+                                name: tr[GROUP.name]
+                            });
+                        }
+                    }
+                } else {
+                    if (kits.groupSet.size > 0) {
+                        let groupList = dbset.groupList.filter(rec => kits.groupSet.has(rec[GROUP.id]));
+                        for (let i = 0; i < groupList.length; i++) {
+                            let tr = groupList[i];
+                            table1.jqGrid('addRowData', i + 1, {
+                                id: tr[GROUP.id],
+                                name: tr[GROUP.name]
+                            });
+                        }
+                    }                    
+                }
+                table1.jqGrid("setSelection", 1);
+                color.resize();
+            };
+//------------------------------------------------------------------------------
             color.rec_dialog_save = function (table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
@@ -128,79 +211,7 @@
                 } catch (e) {
                     console.error("Ошибка: rec_dialog_save() " + e.message);
                 }
-            }
-//------------------------------------------------------------------------------
-            color.init_table = function (table1, table2) {
-
-                table1.jqGrid({
-                    datatype: "local",
-                    colNames: ['id', 'Группы текстур'],
-                    colModel: [
-                        {name: 'id', hidden: true, key: true},
-                        {name: 'name', width: 360}
-                    ],
-                    onSelectRow: function (rowid) {
-                        table2.jqGrid("clearGridData", true);
-                        let colgrpRow = table1.jqGrid('getRowData', rowid);
-                        if (product.colorArr.length == 0) {
-                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
-                            for (let i = 0; i < colorList.length; i++) {
-                                let colorRec = colorList[i];
-                                table2.jqGrid('addRowData', i + 1, {
-                                    id: colorRec[COLOR.id],
-                                    name: colorRec[COLOR.name]
-                                });
-                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
-                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
-                            }
-                        } else {
-                            let colorArr = product.colorArr.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
-                            for (let i = 0; i < colorArr.length; i++) {
-                                let colorRec = colorArr[i];
-                                table2.jqGrid('addRowData', i + 1, {
-                                    id: colorRec[COLOR.id],
-                                    name: colorRec[COLOR.name]
-                                });
-                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
-                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
-                            }
-                        }
-                        table2.jqGrid("setSelection", 1);
-                        color.resize();
-                    }
-                });
-                table2.jqGrid({
-                    datatype: "local",
-                    colNames: ['Код', 'Описание текстур'],
-                    colModel: [
-                        {name: 'id', width: 60, key: true},
-                        {name: 'name', width: 340}
-                    ],
-                    ondblClickRow: function (rowId) {
-                        color.rec_dialog_save(table2);
-                        $("#dialog-dic").dialog("close");
-                    }
-                });
-            };
-//------------------------------------------------------------------------------
-            color.load_table = function (table1, table2) {
-                table1.jqGrid('clearGridData', true);
-                table2.jqGrid('clearGridData', true);
-                if (color.parent != 'kits') {
-                    if (product.groupSet.size > 0) {
-                        let groupList = dbset.groupList.filter(rec => product.groupSet.has(rec[GROUP.id]));
-                        for (let i = 0; i < groupList.length; i++) {
-                            let tr = groupList[i];
-                            table1.jqGrid('addRowData', i + 1, {
-                                id: tr[GROUP.id],
-                                name: tr[GROUP.name]
-                            });
-                        }
-                    }
-                }
-                table1.jqGrid("setSelection", 1);
-                color.resize();
-            };
+            }            
 //------------------------------------------------------------------------------
         </script>         
     </head>

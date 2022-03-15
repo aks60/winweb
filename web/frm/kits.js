@@ -53,8 +53,37 @@ kits.load_table1 = function (table) {
 }
 //------------------------------------------------------------------------------
 kits.color_to_kits = function (btnSrc) {
-    color.parent = 'kits'; 
-    $('#dialog-dic').load('frm/dialog/color.jsp');
-    //$('#dialog-dic').load('frm/dialog/dealer.jsp');
+    let groupSet = new Set();
+    let colorSet = new Set();
+    try {
+        //Все текстуры артикула элемента конструкции
+        for (let rec of dbset.artdetList) {
+            if (rec[ARTDET.artikl_id] == kits.rec_tab2_kitcard[ARTDET.artikl_id]) {
+                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+
+                    dbset.colorList.forEach(colorRec => {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+
+                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            colorSet.add(colorRec);
+                        }
+                    });
+                } else { //текстура color_fk 
+                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    colorSet.add(color2Rec);
+                }
+            }
+        }
+        color.parent = 'kits';
+        kits.groupSet = groupSet;
+        kits.colorArr = Array.from(colorSet);
+        kits.buttonSrc = btnSrc;
+        
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+
+    } catch (e) {
+        console.error("Ошибка: kits.color_to_kits() " + e.message);
+    }
 }
 //------------------------------------------------------------------------------
