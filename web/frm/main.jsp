@@ -75,7 +75,12 @@
                     product.resize();
                 }
             };
-
+            
+            function loadBody(url) {
+                $('#outbody').load(url, function () {
+                    //upBody();
+                });
+            }
         </script>         
     </head>
     <body>
