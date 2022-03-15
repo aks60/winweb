@@ -8,7 +8,7 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic").width());
                     $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic").height() - 24);
                 });

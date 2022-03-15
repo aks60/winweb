@@ -15,7 +15,7 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     color.resize();
                 });
                 color.init_dialog($("#tab1-color"), $("#tab2-color"));
@@ -25,7 +25,7 @@
 //------------------------------------------------------------------------------
             color.init_dialog = function (table1, table2) {
                 $("#dialog-dic").dialog({
-                    title: "Справочник текстур*",
+                    title: "Справочник текстур",
                     width: 400,
                     height: 500,
                     modal: true,

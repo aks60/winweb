@@ -24,13 +24,12 @@
                 kitk.load_table($("#tab1-kitcard"), $("#tab2-kitcard"))
 
                 taq_deploy(['#pan1']);
-                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                $("#dialog-card").unbind().bind("dialogresize", function (event, ui) {
                     kitk.resize();
                 });
             });
 //------------------------------------------------------------------------------
             kitk.init_dialog = function (table1, table2) {
-
                 $("#dialog-card").dialog({
                     title: "Справочник текстур*",
                     width: 800,

@@ -37,8 +37,7 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind();
-                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     systree.resize();
                 });
                 let tab_sysprod = document.getElementById('tab2-systree');

@@ -13,7 +13,7 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").bind("dialogresize", function (event, ui) {
+                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     params.resize();
                 });
                 params.init_dialog($("#tab-param"));
