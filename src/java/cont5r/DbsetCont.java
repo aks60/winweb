@@ -106,6 +106,10 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.insertOrder(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
+            } else if (action.equalsIgnoreCase("insertKits")) {
+                JSONObject output = Dbset.insertKits(request, response);
+                out.write(JSONObject.toJSONString(output));
+                
             } else if (action.equalsIgnoreCase("deleteProject")) {
                 JSONObject output = Dbset.deleteProject(request, response);
                 out.write(JSONObject.toJSONString(output));

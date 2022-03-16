@@ -154,6 +154,29 @@ public class Dbset {
         return output;
     }
 
+    public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
+
+        Query qProkit = new Query(eProkit.values());
+        Record record = eProkit.up.newRecord("INS");
+        record.set(eProkit.id, Conn.genId(eProkit.up));
+        record.set(eProkit.numb, obj.get(eProkit.numb.name()));
+        record.set(eProkit.width, obj.get(eProkit.width.name()));
+        record.set(eProkit.height, obj.get(eProkit.height.name()));
+        record.set(eProkit.color1_id, obj.get(eProkit.color1_id.name()));
+        record.set(eProkit.color2_id, obj.get(eProkit.color2_id.name()));
+        record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
+        record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
+        record.set(eProkit.artikl_id, obj.get(eProkit.artikl_id.name()));
+        record.set(eProkit.proprod_id, obj.get(eProkit.proprod_id.name()));
+        qProkit.insert(record);
+        output.put("result", "ok");
+        output.put("id", record.getInt(eProkit.id));
+        return output;
+    }
+
     public static JSONObject insertProprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");

@@ -97,10 +97,6 @@
                         {name: 'unit', width: 10},
                         {name: 'flag', width: 10}
                     ],
-                    ondblClickRow: function (rowId) {
-                        kitkard.rec_dialog_save(table2);
-                        $("#dialog-card").dialog("close");
-                    },
                     onSelectRow: function (rowid) {
                         let row_tab2_kitcard = table2.jqGrid('getRowData', rowid);
                         kits.rec_tab2_kitcard = findef(dbset.artdetList.find(rec => row_tab2_kitcard.id == rec[ARTDET.artikl_id]), dbset.artdetList);
@@ -124,7 +120,6 @@
 //------------------------------------------------------------------------------
             kitkard.rec_dialog_save = function (table2) {
                 //try {
-                let m = kits.rec_tab2_kitcard[KITDET.artikl_id];
                 //Запишем заказ в серверную базу данных
                 $.ajax({
                     url: 'dbset?action=insertKits',
@@ -141,11 +136,12 @@
                         })
                     },
                     success: (data) => {
-
+                        debugger;
                         if (data.result == 'ok') {
                             let record = new Array(13);
                             record[0] = 'SEL';
                             record[PROKIT.id] = data.id;
+                            record[PROKIT.numb] = $("#n21").val();
                             record[PROKIT.width] = $("#n23").val();
                             record[PROKIT.height] = $("#n25").val();
                             record[PROKIT.color1_id] = kits.rec_tab2_kitcard[KITDET.color1_id];
