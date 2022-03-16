@@ -19,8 +19,8 @@
                     kits.resize();
                 }).trigger('resize');
 
-                kits.init_table1($("#table1"));
-                kits.load_table1($("#table1"));
+                kits.init_table($("#table1"));
+                kits.load_table($("#table1"));
                 $("button").button();
                 prepareToolBar();
             });

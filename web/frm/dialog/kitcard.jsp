@@ -149,7 +149,7 @@
                             record[PROKIT.color3_id] = kits.rec_tab2_kitcard[KITDET.color3_id];
                             record[PROKIT.artikl_id] = kits.rec_tab2_kitcard[KITDET.artikl_id];
                             record[PROKIT.proprod_id] = order.rec_table2[PROPROD.id];
-                            dbset.prokitList.push(record);
+                            kits.prokitList.push(record);
                             kits.load_table($("#table1"));
                         } else {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

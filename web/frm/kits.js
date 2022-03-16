@@ -1,13 +1,12 @@
 //------------------------------------------------------------------------------
-kits.init_table1 = function (table) {
+kits.init_table = function (table) {
     table.jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Основная',
-            'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во', 'Угол1', 'Угол2'],
+        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 80, sorttype: "text"},
@@ -17,14 +16,12 @@ kits.init_table1 = function (table) {
             {name: 'color3_id', width: 80, sorttype: "text"},
             {name: 'width', width: 60, sorttype: "text"},
             {name: 'height', width: 60, sorttype: "text"},
-            {name: 'numb', width: 60, sorttype: "text"},
-            {name: 'angl1', width: 60, sorttype: "text"},
-            {name: 'angl2', width: 60, sorttype: "text"}
+            {name: 'numb', width: 60, sorttype: "text"}
         ]
     });
 }
 //------------------------------------------------------------------------------
-kits.load_table1 = function (table) {
+kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'dbset?action=prokitList',
@@ -42,9 +39,7 @@ kits.load_table1 = function (table) {
                     color3_id: findef(dbset.colorList.find(rec => tr[KITS.color3_id] == rec[KITS.id]), dbset.colorList)[COLOR.name],
                     width: tr[KITS.width],
                     height: tr[KITS.height],
-                    numb: tr[KITS.numb],
-                    angl1: tr[KITS.angl1],
-                    angl2: tr[KITS.angl2]
+                    numb: tr[KITS.numb]
                 });
             }
             kits.resize();
