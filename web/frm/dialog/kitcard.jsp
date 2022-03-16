@@ -126,9 +126,9 @@
                     data: {
                         param: JSON.stringify({
                             numb: $("#n21").val(),
-                            color1_id: kits.rec_tab2_kitcard[KITDET.color1_id],
-                            color2_id: kits.rec_tab2_kitcard[KITDET.color2_id],
-                            color3_id: kits.rec_tab2_kitcard[KITDET.color3_id],
+                            color1_id: color.color1ID,
+                            color2_id: color.color2ID,
+                            color3_id: color.color3ID,
                             width: $("#n23").val(),
                             height: $("#n25").val(),
                             artikl_id: kits.rec_tab2_kitcard[KITDET.artikl_id],
@@ -144,9 +144,9 @@
                             record[PROKIT.numb] = $("#n21").val();
                             record[PROKIT.width] = $("#n23").val();
                             record[PROKIT.height] = $("#n25").val();
-                            record[PROKIT.color1_id] = kits.rec_tab2_kitcard[KITDET.color1_id];
-                            record[PROKIT.color2_id] = kits.rec_tab2_kitcard[KITDET.color2_id];
-                            record[PROKIT.color3_id] = kits.rec_tab2_kitcard[KITDET.color3_id];
+                            record[PROKIT.color1_id] = color.color1ID;
+                            record[PROKIT.color2_id] = color.color2ID;
+                            record[PROKIT.color3_id] = color.color3ID;
                             record[PROKIT.artikl_id] = kits.rec_tab2_kitcard[KITDET.artikl_id];
                             record[PROKIT.proprod_id] = order.rec_table2[PROPROD.id];
                             kits.prokitList.push(record);
