@@ -32,8 +32,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
             systree.resize = function () {
-                $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #centr").width());
-                $("#tab1-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #centr").height() - 26);
+                $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
+                $("#tab1-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -195,11 +195,11 @@
     <body> 
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
-            <div id="centr" style="height: 99.6%; width: 99%;">
+            <div id="pan1-systree" style="height: 99.6%; width: 99%;">
                 <table id="tab1-systree"  class="ui-jqgrid-btable"></table> 
             </div>
 
-            <div id="east" style="position: absolute; overflow-y: auto;  height: 99.6%; width: 290px; top: 0; right: -300px;">
+            <div id="pan2-systree" style="position: absolute; overflow-y: auto;  height: 99.6%; width: 290px; top: 0; right: -300px;">
                 <table id="tab2-systree" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                     <tr style="height: 22px; background-color: #e7f4f9">
                         <th></th><th>Наименование</th><th>Изображение</th></tr>

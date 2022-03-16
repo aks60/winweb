@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             artikl.resize = function () {
-                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #pan-artikl").width());
+                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #pan-artikl").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -176,7 +176,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+        <div id="pan-artikl" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-artikl"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="dialog-mes" title="Сообщение"></div>

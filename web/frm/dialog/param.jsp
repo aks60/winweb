@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
             params.resize = function () {
-                $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #pan-param").width());
+                $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #pan-param").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -100,7 +100,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+        <div id="pan-param" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-param"  class="ui-jqgrid-btable"></table> 
             <div id="dialog-mes" title="Сообщение"></div>
         </div>

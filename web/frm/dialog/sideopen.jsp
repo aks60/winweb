@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             sideopen.resize = function () {
-                $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #pan-sideopen").width());
+                $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic #pan-sideopen").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -106,7 +106,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+        <div id="pan-sideopen" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-sideopen"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="dialog-mes" title="Сообщение"></div>

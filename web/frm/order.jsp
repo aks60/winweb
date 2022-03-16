@@ -58,8 +58,6 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-                let mm = dbset.kitdetList;
-                debugger;
             }
         </script>
     </head>

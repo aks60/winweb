@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             dealer.resize = function () {
-                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
+                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -75,7 +75,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+        <div id="pan-dealer" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-dealer"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="dialog-mes" title="Сообщение"></div>

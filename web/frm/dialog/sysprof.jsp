@@ -8,8 +8,8 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             sysprof.resize = function () {
-                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #centr").width());
-                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #centr").height() - 24);
+                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());
+                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #pan-sysprof").height() - 24);
             }            
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -128,7 +128,7 @@
         </script>        
     </head>
     <body>
-        <div id="centr" style="height: calc(100% - 4px); width: calc(100% - 4px);">
+        <div id="pan-sysprof" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-sysprof"  class="ui-jqgrid-btable"></table> 
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
