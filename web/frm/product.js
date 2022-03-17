@@ -18,7 +18,7 @@ product.init_table = function (table1) {
             $('#dialog-dic').load('frm/dialog/param.jsp');
         }, onSelectRow: function (rowid) {
             let syspar1Row = table1.jqGrid('getRowData', rowid);
-            product.group_param = findef(dbset.syspar1List.find(rec => syspar1Row.id == rec[SYSPAR1.id]), dbset.syspar1List)[SYSPAR1.params_id];
+            product.groupParam = findef(dbset.syspar1List.find(rec => syspar1Row.id == rec[SYSPAR1.id]), dbset.syspar1List)[SYSPAR1.params_id];
         }
     });
 }
@@ -26,7 +26,7 @@ product.init_table = function (table1) {
 product.load_table = function (table1) {
     let syspar1List2 = [];
     table1.jqGrid('clearGridData', true);
-    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let winc = order.wincalcMap.get(order.prorodRec[PROPROD.id]);
     for (let val of winc.root.pardefMap.values()) {
         syspar1List2.push(val);
     }
@@ -49,7 +49,7 @@ product.load_table = function (table1) {
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
     let arr = new Array();
-    let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+    let winc = order.wincalcMap.get(order.prorodRec[PROPROD.id]);
     let root = winc.root;
     if (root.type == 'RECTANGL')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
@@ -110,15 +110,15 @@ product.elements = function (com, arr) {
 //-------------------  Загрузка свойств конструкции  ---------------------------
 product.server_to_fields = function () {
     try {
-        if (order.rec_table2 != undefined) {
-            let proprodID = order.rec_table2[PROPROD.id];
+        if (order.prorodRec != undefined) {
+            let proprodID = order.prorodRec[PROPROD.id];
             if (proprodID != undefined) {
                 $.ajax({
                     url: 'dbset?action=stvFields',
                     data: {'proprodID': proprodID},
                     success: function (data) {
                         product.stvFields = data.stvFields;
-                        let id = order.rec_table2[PROPROD.id];
+                        let id = order.prorodRec[PROPROD.id];
                         let winc = order.wincalcMap.get(id);
                         for (let el of winc.elemList) {
                             if (el.type == 'STVORKA') {
@@ -159,7 +159,7 @@ product.local_to_fields = function (nodeID) {
         return;
     }
     let elem = {};
-    let id = order.rec_table2[PROPROD.id];
+    let id = order.prorodRec[PROPROD.id];
     let winc = order.wincalcMap.get(id);
     if (nodeID == -1) {
         elem = {type: 'DEF_PARAM'};
@@ -230,7 +230,7 @@ product.local_to_fields = function (nodeID) {
 //-------------------  Текстура изделия  ---------------------------------------
 product.color_to_windows = function (btnSrc) {
     try {
-        let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+        let winc = order.wincalcMap.get(order.prorodRec[PROPROD.id]);
         let groupSet = new Set();
         let colorSet = new Set();
 
@@ -303,7 +303,7 @@ product.color_to_windows = function (btnSrc) {
 product.sysprof_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = order.rec_table2[PROPROD.id];
+        let proprodID = order.prorodRec[PROPROD.id];
         let winc = order.wincalcMap.get(proprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
         let sysprofSet = new Set();
@@ -349,7 +349,7 @@ product.artikl_to_stvorka = function (btnSrc) {
 product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = order.rec_table2[PROPROD.id];
+        let proprodID = order.prorodRec[PROPROD.id];
         let winc = order.wincalcMap.get(proprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
         let groupSet = new Set();
@@ -404,7 +404,7 @@ product.color_to_element = function (btnSrc) {
 product.artikl_to_glass = function (btnSrc) {
     //try {
     let nodeID = $("#tree-winc").jstree("get_selected")[0];
-    let proprodID = order.rec_table2[PROPROD.id];
+    let proprodID = order.prorodRec[PROPROD.id];
     let winc = order.wincalcMap.get(proprodID);
     let elem = winc.elemList.find(it => it.id == nodeID);
 

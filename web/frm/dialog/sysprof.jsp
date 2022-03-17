@@ -60,7 +60,7 @@
             sysprof.load_table = function (table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = order.rec_table2[SYSPROF.id];
+                let id = order.prorodRec[SYSPROF.id];
                 let winc = order.wincalcMap.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
@@ -81,7 +81,7 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+                let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
 
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);

@@ -18,8 +18,8 @@
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    if (order.rec_table2 != undefined)
-                        win.build(cvs, order.rec_table2[PROPROD.script]);
+                    if (order.prorodRec != undefined)
+                        win.build(cvs, order.prorodRec[PROPROD.script]);
                 }
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
@@ -39,7 +39,7 @@
                 }).trigger('resize');
 
                 product.init_table($('#table1'));
-                if (order.rec_table2 != undefined)
+                if (order.prorodRec != undefined)
                     product.load_tree($('#tree-winc'));
                 $("button").button();
                 prepareToolBar();
