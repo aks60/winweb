@@ -61,7 +61,7 @@
             //Глобальные объекты
             var utils = {}, win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, login = {que_requests: 2}, furndet = {},
                     users = {}, order = {rowid_table1: 1, row_table2: null, wincalcMap: new Map()}, artikl = {dialogType: 0}, 
-                    product = {}, dialog = {}, systree = {}, kits = {}, kitkard = {}, group = {}, color = {}, sysprof = {}, params = {}, 
+                    product = {}, dialog = {}, systree = {}, kits = {}, kitcard = {}, group = {}, color = {}, sysprof = {}, params = {}, 
                     furniture = {}, sideopen = {}, dealer = {};
 
             $(document).ready(function () {
@@ -94,21 +94,18 @@
         <script type="module">
             import {
             systreeList, sysprodList, colorList,
-                    artiklList, artdetList, furnitureList,
-                    furndetList, proprodList, sysfurnList,
-                    sysprofList, syspar1List, paramsList,
-                    groupList, orderList, dealerList, kitsList, kitdetList
+                    artiklList, artdetList, furnitureList, furndetList, proprodList, sysfurnList,
+                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList, 
+                    kitsList, kitdetList, prokitList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
-                        systreeList(), sysprodList(), colorList(),
-                        artiklList(), artdetList(), furnitureList(),
-                        furndetList(), proprodList(), sysfurnList(),
-                        sysprofList(), syspar1List(), paramsList(),
-                        groupList(), orderList(), dealerList(), kitsList(), kitdetList()
+                        systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
+                        furndetList(), proprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
+                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prokitList()
 
-                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH) => { //загрузка базы данных 
+                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI) => { //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
@@ -126,6 +123,7 @@
                     dbset.dealerList = pF[0].dealerList;
                     dbset.kitsList = pG[0].kitsList;
                     dbset.kitdetList = pH[0].kitdetList;
+                    dbset.prokitList = pI[0].prokitList;
 
                     login.init_login();
 
