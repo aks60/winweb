@@ -123,7 +123,7 @@
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                         let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
-                        let winc = order.wincalcMap.get(proprodID);
+                        let winc = dbrec.wincalcMap.get(proprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
                         let param = elem.obj.param;
                         if (elem.obj.param == undefined) {
@@ -166,7 +166,7 @@
                         let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                         proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                         let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
-                        order.wincalcMap.set(proprodID, winc2); //новый экз.
+                        dbrec.wincalcMap.set(proprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({

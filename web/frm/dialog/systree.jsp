@@ -66,11 +66,11 @@
                                 $.ajax({
                                     url: 'dbset?action=insertProprod',
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
-                                            projectID: order.orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
+                                            projectID: dbrec.orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
                                     success: (data) => {
                                         if (data.result == 'ok') {
                                             let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
-                                                sysprodRec[SYSPROD.script], order.orderRow.id, sysprodRec[SYSPROD.systree_id]];
+                                                sysprodRec[SYSPROD.script], dbrec.orderRow.id, sysprodRec[SYSPROD.systree_id]];
                                             dbset.proprodList.push(record);
                                             order.add_proprodClone(document.getElementById('table2'), record);
                                         } else

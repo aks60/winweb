@@ -35,7 +35,7 @@
                             let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
                             let paramDef = paramsRow.id;                            
                             let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
-                            let winc = order.wincalcMap.get(dbrec.prorodRec[PROPROD.id]);
+                            let winc = dbrec.wincalcMap.get(dbrec.prorodRec[PROPROD.id]);
                             let titleID1 = paramsRec[PARAMS.params_id];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;

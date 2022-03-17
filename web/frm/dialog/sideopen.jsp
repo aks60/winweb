@@ -80,14 +80,14 @@
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
 
-                let winc = order.wincalcMap.get(proprodID);
+                let winc = dbrec.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
                 elem.obj.param.typeOpen = tableRec.id; //запишем тип открывания
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                 proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+                dbrec.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных
                     url: 'dbset?action=updateScript',

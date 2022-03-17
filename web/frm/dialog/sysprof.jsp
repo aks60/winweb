@@ -61,7 +61,7 @@
 
                 table.jqGrid('clearGridData', true);
                 let id = dbrec.prorodRec[SYSPROF.id];
-                let winc = order.wincalcMap.get(id);
+                let winc = dbrec.wincalcMap.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
@@ -83,7 +83,7 @@
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
 
-                let winc = order.wincalcMap.get(proprodID);
+                let winc = dbrec.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 if (elem.obj.param == undefined) {
                     elem.obj.param = {};
@@ -100,7 +100,7 @@
                 let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
                 proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-                order.wincalcMap.set(proprodID, iwincalc); //новый экз.
+                dbrec.wincalcMap.set(proprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({

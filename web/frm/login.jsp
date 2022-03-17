@@ -8,13 +8,11 @@
 
         <script type="text/javascript">
             //системные свойства               
-            $.ajax({
-                url: 'login?action=property',
-                success: function (data) {
-                    utils.param = data.param;
-//                    utils.dateNow = format_date2(new Date());
-                }
-            });
+//            $.ajax({
+//                url: 'login?action=property',
+//                success: function (data) {
+//                }
+//            });
 
             login.resize = function () {
                 var height = window.innerHeight;

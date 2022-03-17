@@ -18,10 +18,10 @@ order.init_table = function (table1, table2) {
         ],
         onSelectRow: function (rowid) {
             //==================================================================
-            order.orderRow = table1.jqGrid('getRowData', rowid); 
+            dbrec.orderRow = table1.jqGrid('getRowData', rowid); 
             dbrec.prorodRec = null;
             //==================================================================
-            order.wincalcMap.clear()
+            dbrec.wincalcMap.clear()
             let j = 1;
             let rc = table2.rows.length;
             for (let i = j; i < rc; i++) {
@@ -31,7 +31,7 @@ order.init_table = function (table1, table2) {
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let proprodRec = dbset.proprodList[i];
 
-                if (order.orderRow.id == proprodRec[PROPROD.project_id]) {
+                if (dbrec.orderRow.id == proprodRec[PROPROD.project_id]) {
                     order.add_proprodClone(table2, proprodRec);
                     if (proprodID == null) {
                         proprodID = proprodRec[PROPROD.id];
@@ -58,7 +58,7 @@ order.load_table = function (table1, table2) {
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
-        if (order.orderRow != undefined && tr[ORDER.id] == order.orderRowd) {
+        if (dbrec.orderRow != undefined && tr[ORDER.id] == order.orderRowd) {
             order.rowid_table1 = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
@@ -88,7 +88,7 @@ order.delete_table1 = function (table1) {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProject',
-                    data: {param: JSON.stringify({id: order.orderRow.id})},
+                    data: {param: JSON.stringify({id: dbrec.orderRow.id})},
                     success: (data) => {
                         if (data.result == 'ok') {
                             let rowid = table1.jqGrid('getGridParam', "selrow");
@@ -160,7 +160,7 @@ order.add_proprodClone = function (table2, proprodRec) {
     let iwincalc = win.build(canvas, script);
 
     //Массив объектов winc
-    order.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);
+    dbrec.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');

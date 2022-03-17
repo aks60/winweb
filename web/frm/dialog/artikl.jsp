@@ -64,7 +64,7 @@
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
-                let winc = order.wincalcMap.get(proprodID);
+                let winc = dbrec.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
                     if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
@@ -121,7 +121,7 @@
                     let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
 
-                    let winc = order.wincalcMap.get(proprodID);
+                    let winc = dbrec.wincalcMap.get(proprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
 
@@ -153,7 +153,7 @@
                     //Запишем скрипт в локальн. бд 
                     proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                     let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
-                    order.wincalcMap.set(proprodID, winc2); //новый экз.
+                    dbrec.wincalcMap.set(proprodID, winc2); //новый экз.
 
                     //Запишем скрипт в серверную базу данных
                     $.ajax({
