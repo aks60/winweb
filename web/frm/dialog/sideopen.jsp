@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            sideopen.resize = function () {
+            function resize() {
                 $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #pan-sideopen").width());
                 $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic #pan-sideopen").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    sideopen.resize();
+                    resize2();
                 });
-                sideopen.init_dialog($("#tab-sideopen"));
-                sideopen.init_table($("#tab-sideopen"));
-                sideopen.load_table($("#tab-sideopen"));
-                sideopen.resize();
+                init_dialog($("#tab-sideopen"));
+                init_table($("#tab-sideopen"));
+                load_table($("#tab-sideopen"));
+                resize2();
             });
 //------------------------------------------------------------------------------
-            sideopen.init_dialog = function (table) {
+            function init_dialog(table) {
                 $("#dialog-dic").dialog({
                     title: "Направление открывания",
                     width: 400,
@@ -30,7 +30,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            sideopen.rec_dialog_save(table);
+                            rec_dialog_save(table);
                             $(this).dialog("close");
                         },
 
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            sideopen.init_table = function (table) {
+            function init_table(table) {
                 table.jqGrid({
                     datatype: "local",
                     gridview: true,
@@ -52,13 +52,13 @@
                         {name: 'id', hidden: true, key: true},
                         {name: 'name', width: 400, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        sideopen.rec_dialog_save(table);
+                        rec_dialog_save(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            sideopen.load_table = function (table) {
+            function load_table(table) {
 
                 let typeOpen = [TypeOpen.LEFT, TypeOpen.LEFTUP, TypeOpen.LEFTMOV,
                     TypeOpen.RIGHT, TypeOpen.RIGHTUP, TypeOpen.RIGHTMOV, TypeOpen.UPPER, TypeOpen.FIXED];
@@ -73,12 +73,12 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            sideopen.rec_dialog_save = function (table) {
+            function rec_dialog_save(table) {
 
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
+                let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
 
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);

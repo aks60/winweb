@@ -6,7 +6,7 @@
         <title>KITCARD</title>
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            kitcard.resize = function () {
+            function resize2() {
                 $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan1-kitcard").width() - 4);
                 $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan1-kitcard").height() - 24);
                 $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan2-kitcard").width() - 4);
@@ -14,17 +14,17 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                kitcard.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitcard.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitcard.load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
 
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    kitcard.resize();
+                    resize2();
                 });
-                kitcard.resize();
+                resize2();
             });
 //------------------------------------------------------------------------------
-            kitcard.init_dialog = function (table1, table2) {
+            function init_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник  комплектов",
                     width: 500,
@@ -32,7 +32,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            kitcard.rec_dialog_save(table2);
+                            rec_dialog_save(table2);
                             kits.load_table($("#table1"));
                             $(this).dialog("close");
                         },
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            kitcard.init_table = function (table1, table2) {
+            function init_table(table1, table2) {
                 table1.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория', 'Название компдекта'],
@@ -55,10 +55,10 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        kitcard.kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
-                        if (kitcard.kitdetList != undefined) {
-                            for (let i = 0; i < kitcard.kitdetList.length; ++i) {
-                                let tr = kitcard.kitdetList[i];
+                        dbset.kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
+                        if (dbset.kitdetList != undefined) {
+                            for (let i = 0; i < dbset.kitdetList.length; ++i) {
+                                let tr = dbset.kitdetList[i];
                                 let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
@@ -85,7 +85,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            kitcard.load_table = function (table1, table2) {
+            function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
@@ -99,9 +99,9 @@
                 table1.jqGrid("setSelection", 1);
             };
 //------------------------------------------------------------------------------
-            kitcard.rec_dialog_save = function (table2) {
+            function rec_dialog_save(table2) {
                 //try {
-                for (let kitdetRec of kitcard.kitdetList) {
+                for (let kitdetRec of dbset.kitdetList) {
                     //Запишем заказ в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=insertKits',
@@ -111,7 +111,7 @@
                                 color2_id: kitdetRec[KITDET.color2_id],
                                 color3_id: kitdetRec[KITDET.color3_id],
                                 artikl_id: kitdetRec[KITDET.artikl_id],
-                                proprod_id: order.prorodRec[PROPROD.id]
+                                proprod_id: dbrec.prorodRec[PROPROD.id]
                             })
                         },
                         success: (data) => {

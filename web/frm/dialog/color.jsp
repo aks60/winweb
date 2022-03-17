@@ -7,7 +7,7 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            color.resize = function () {
+            function resize2() {
                 $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
                 $("#tab1-color").jqGrid('setGridHeight', $("#dialog-dic #pan1-color").height() - 20);
                 $("#tab2-color").jqGrid('setGridWidth', $("#dialog-dic #pan2-color").width());
@@ -16,14 +16,14 @@
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    color.resize();
+                    resize2();
                 });
-                color.init_dialog($("#tab1-color"), $("#tab2-color"));
-                color.init_table($("#tab1-color"), $("#tab2-color"));
-                color.load_table($("#tab1-color"), $("#tab2-color"))
+                init_dialog($("#tab1-color"), $("#tab2-color"));
+                init_table($("#tab1-color"), $("#tab2-color"));
+                load_table($("#tab1-color"), $("#tab2-color"))
             });
 //------------------------------------------------------------------------------
-            color.init_dialog = function (table1, table2) {
+            function init_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник текстур",
                     width: 400,
@@ -31,7 +31,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            color.rec_dialog_save(table2);
+                            rec_dialog_save(table2);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            color.init_table = function (table1, table2) {
+            function init_table(table1, table2) {
 
                 table1.jqGrid({
                     datatype: "local",
@@ -53,7 +53,7 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let colgrpRow = table1.jqGrid('getRowData', rowid);
-                        let base = (color.parent != 'kits') ? product : kits;
+                        let base = (dbrec.parent != 'kits') ? product : kits;
                         if (base.colorArr.length == 0) {
 
                             let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
@@ -79,7 +79,7 @@
                             }
                         }
                         table2.jqGrid("setSelection", 1);
-                        color.resize();
+                        resize2();
                     }
                 });
                 table2.jqGrid({
@@ -90,16 +90,16 @@
                         {name: 'name', width: 340}
                     ],
                     ondblClickRow: function (rowId) {
-                        color.rec_dialog_save(table2);
+                        rec_dialog_save(table2);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             };
 //------------------------------------------------------------------------------
-            color.load_table = function (table1, table2) {
+            function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
-                let base = (color.parent != 'kits') ? product : kits;
+                let base = (dbrec.parent != 'kits') ? product : kits;
                 if (base.groupSet.size > 0) {
 
                     let groupList = dbset.groupList.filter(rec => base.groupSet.has(rec[GROUP.id]));
@@ -112,17 +112,17 @@
                     }
                 }
                 table1.jqGrid("setSelection", 1);
-                color.resize();
+                resize2();
             };
 //------------------------------------------------------------------------------
-            color.rec_dialog_save = function (table2) {
+            function rec_dialog_save(table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = table2.jqGrid('getRowData', rowid); //record справочника
-                    if (color.parent != 'kits') {
+                    if (dbrec.parent != 'kits') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
+                        let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
                         let winc = order.wincalcMap.get(proprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
                         let param = elem.obj.param;
@@ -204,21 +204,21 @@
                     } else {
                         if (kits.buttonSrc == 'n22') {
                             $("#n22").val(colorRow.name);
-                            color.color1ID = colorRow.id;
+                            dbrec.color1ID = colorRow.id;
                             $("#n24").val(colorRow.name);
-                            color.color2ID = colorRow.id;
+                            dbrec.color2ID = colorRow.id;
                             $("#n26").val(colorRow.name);
-                            color.color3ID = colorRow.id;
+                            dbrec.color3ID = colorRow.id;
 
                         } else if (kits.buttonSrc == 'n24') {
                             $("#n24").val(colorRow.name);
-                            color.color2ID = colorRow.id;
+                            dbrec.color2ID = colorRow.id;
                             $("#n26").val(colorRow.name);
-                            color.color3ID = colorRow.id;
+                            dbrec.color3ID = colorRow.id;
 
                         } else if (kits.buttonSrc == 'n26') {
                             $("#n26").val(colorRow.name);
-                            color.color3ID = colorRow.id;
+                            dbrec.color3ID = colorRow.id;
                         }
                     }
                 } catch (e) {

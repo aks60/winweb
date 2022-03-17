@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
-            params.resize = function () {
+            function resize() {
                 $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #pan-param").width());
                 $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #pan-param").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    params.resize();
+                    resize2();
                 });
-                params.init_dialog($("#tab-param"));
-                params.init_table($("#tab-param"));
-                params.load_table($("#tab-param"));
-                params.resize();
+                init_dialog($("#tab-param"));
+                init_table($("#tab-param"));
+                load_table($("#tab-param"));
+                resize2();
             });
 //------------------------------------------------------------------------------            
-            params.init_dialog = function (table) {
+            function init_dialog(table) {
                 $("#dialog-dic").dialog({
                     title: "Справочник параметров",
                     width: 400,
@@ -34,8 +34,8 @@
                             let paramsRow = table.jqGrid('getRowData', rowid);
                             let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
                             let paramDef = paramsRow.id;                            
-                            let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
-                            let winc = order.wincalcMap.get(order.prorodRec[PROPROD.id]);
+                            let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
+                            let winc = order.wincalcMap.get(dbrec.prorodRec[PROPROD.id]);
                             let titleID1 = paramsRec[PARAMS.params_id];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;
@@ -70,7 +70,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            params.init_table = function (table) {
+            function init_table(table) {
                 table.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Значение параметра'],
@@ -83,7 +83,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            params.load_table = function (table) {
+            function load_table(table) {
                 table.jqGrid('clearGridData', true);
                 let params2List = dbset.paramsList.filter(rec => product.groupParam == rec[PARAMS.params_id] && rec[PARAMS.id] != rec[PARAMS.params_id]);
                 for (let i = 0; i < params2List.length; i++) {

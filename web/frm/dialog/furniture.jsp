@@ -7,23 +7,23 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            furniture.resize = function () {
+            function resize2() {
                 $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #pan-furniture").width());
                 $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-dic #pan-furniture").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    furniture.resize();
+                    resize2();
                 });
-                furniture.init_dialog($("#tab-furniture"));
-                furniture.init_table($("#tab-furniture"))
-                furniture.load_table($("#tab-furniture"))
-                furniture.resize(); //баг!
-                furniture.resize();
+                init_dialog($("#tab-furniture"));
+                init_table($("#tab-furniture"))
+                load_table($("#tab-furniture"))
+                resize2(); //баг!
+                resize2();
             });
 //------------------------------------------------------------------------------
-            furniture.init_dialog = function (table) {
+            function init_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Фурнитура системы",
@@ -32,7 +32,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            furniture.rec_dialog_save(table);
+                            rec_dialog_save(table);
                             $(this).dialog("close");
                         },
 
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            furniture.init_table = function (table) {
+            function init_table(table) {
                 table.jqGrid({
                     datatype: "local",
 //                    gridview: true,
@@ -54,16 +54,16 @@
                         {name: 'id', hidden: true, key: true},
                         {name: 'name', width: 360, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        furniture.rec_dialog_save(table);
+                        rec_dialog_save(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            furniture.load_table = function (table) {
+            function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = order.prorodRec[SYSPROF.id];
+                let id = dbrec.prorodRec[SYSPROF.id];
                 let winc = order.wincalcMap.get(id);
                 let furnitureList = [];
                 for (let furnitureRec of dbset.furnitureList) {
@@ -84,12 +84,12 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            furniture.rec_dialog_save = function (table) {
+            function rec_dialog_save(table) {
 
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
+                let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
 
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);

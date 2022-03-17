@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            artikl.resize = function () {
+            function resize2() {
                 $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #pan-artikl").width());
                 $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #pan-artikl").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    artikl.resize();
+                   resize2();
                 });
-                artikl.init_dialog($("#tab-artikl"));
-                artikl.init_table($("#tab-artikl"))
-                artikl.load_table($("#tab-artikl"))
-                artikl.resize();
+                init_dialog($("#tab-artikl"));
+                init_table($("#tab-artikl"))
+                load_table($("#tab-artikl"))
+                resize2();
             });
 //------------------------------------------------------------------------------
-            artikl.init_dialog = function (table) {
+            function  init_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник артикулов",
@@ -31,7 +31,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            artikl.rec_dialog_save(table);
+                            rec_dialog_save(table);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            artikl.init_table = function (table) {
+            function init_table(table) {
 
                 table.jqGrid({
                     datatype: "local",
@@ -52,18 +52,18 @@
                         {name: 'name', width: 400, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        artikl.rec_dialog_save(table);
+                        rec_dialog_save(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            artikl.load = function (level_1, level_2) {
+            function  load(level_1, level_2) {
 
                 let pkSet = new Set();
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
+                let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
                 let winc = order.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
@@ -89,7 +89,7 @@
                 }
             }
 //------------------------------------------------------------------------------ 
-            artikl.load_table = function (table) {
+            function load_table(table) {
                 table.jqGrid('clearGridData', true);
                 //Стеклопакет
                 if (product.buttonSrc == 'n51') {
@@ -99,26 +99,26 @@
                     }
                     //Ручка
                 } else if (product.buttonSrc == 'n45') {
-                    artikl.load(2, 11);
+                    load(2, 11);
 
                     //Подвес
                 } else if (product.buttonSrc == 'n49') {
-                    artikl.load(2, 12);
+                    load(2, 12);
 
                     //Замок
                 } else if (product.buttonSrc == 'n4B') {
-                    artikl.load(2, 9);
+                    load(2, 9);
 
                 }
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            artikl.rec_dialog_save = function (table) {
+            function rec_dialog_save(table) {
                 try {
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = order.prorodRec[PROPROD.id]; //id proprod заказа
+                    let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
 
                     let winc = order.wincalcMap.get(proprodID);

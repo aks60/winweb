@@ -30,26 +30,28 @@
         </style>
 
         <script type="text/javascript">
+//------------------------------------------------------------------------------
+            let sysprodID = -1;            
 //------------------------------------------------------------------------------            
-            systree.resize = function () {
+            function resize2() {
                 $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
                 $("#tab1-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    systree.resize();
+                    resize2();
                 });
                 let tab_sysprod = document.getElementById('tab2-systree');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
-                tab_sysprod.addEventListener('click', systree.event_clicked);
-                systree.init_dialog($("#dialog-dic"));
-                systree.init_table($("#tab1-systree"), tab_sysprod);
-                systree.load_table($("#tab1-systree"), tab_sysprod);
-                systree.resize();
+                tab_sysprod.addEventListener('click', event_clicked);
+                init_dialog($("#dialog-dic"));
+                init_table($("#tab1-systree"), tab_sysprod);
+                load_table($("#tab1-systree"), tab_sysprod);
+                resize2();
             });
 //------------------------------------------------------------------------------
-            systree.init_dialog = function (dialogTaq) {
+            function init_dialog(dialogTaq) {
 
                 dialogTaq.dialog({
                     title: "Конструкции систем профилей",
@@ -58,7 +60,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let sysprodRec = dbset.sysprodList.find(rec => systree.sysprodID == rec[SYSPROD.id]);
+                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {
                                 //Запишем скрипт в серверную базу данных
                                 $.ajax({
@@ -88,7 +90,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            systree.init_table = function (table1, table2) {
+            function init_table(table1, table2) {
 
                 table1.jqGrid({
                     datatype: "local",
@@ -117,7 +119,7 @@
                                 let sysprodRec = dbset.sysprodList[i];
 
                                 if (sysprodRec != undefined && systreeRec.id == sysprodRec[SYSPROD.systree_id]) {
-                                    systree.add_sysprodClone(table2, sysprodRec);
+                                    add_sysprodClone(table2, sysprodRec);
                                 }
                             }
                         }
@@ -126,7 +128,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            systree.load_table = function (table1, table2) {
+            function load_table(table1, table2) {
 
                 table1.jqGrid('clearGridData', true);
                 $.ajax({
@@ -143,7 +145,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            systree.add_sysprodClone = function (table, sysprodRec) {
+            function add_sysprodClone(table, sysprodRec) {
 
                 let id = document.createTextNode(sysprodRec[SYSPROD.id]);
                 let name = document.createTextNode(sysprodRec[SYSPROD.name]);
@@ -171,21 +173,20 @@
                 win.build(canvas, script);
             }
 //------------------------------------------------------------------------------
-            systree.parentTag = function (node, tag) {
+            function parentTag(node, tag) {
                 if (node)
-                    return (node.tagName == tag) ? node : systree.parentTag(node.parentElement, tag);
+                    return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
                 return null;
             }
 //------------------------------------------------------------------------------
-            systree.event_clicked = function (e) {
-                let row = systree.parentTag(e.target, 'TR');
+            function event_clicked(e) {
+                let row = parentTag(e.target, 'TR');
                 if (row) {
                     let table = this, idx = table.getAttribute('activeRowIndex');
                     table.rows[idx].classList.remove('activeRow');
                     row.classList.add('activeRow');
                     table.setAttribute('activeRowIndex', row.rowIndex);
-                    systree.sysprodID = row.cells[0].innerHTML;
-                    //alert('info = ' + systree.sysprodID);
+                    sysprodID = row.cells[0].innerHTML;
                 }
             }
 //------------------------------------------------------------------------------

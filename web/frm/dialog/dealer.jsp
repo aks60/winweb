@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            dealer.resize = function () {
+            function resize2() {
                 $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
                 $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    dealer.resize();
+                    resize2();
                 });
-                dealer.init_dialog($("#tab-dealer"));
-                dealer.init_table($("#tab-dealer"));
-                dealer.load_table($("#tab-dealer"));
-                dealer.resize();
+                init_dialog($("#tab-dealer"));
+                init_table($("#tab-dealer"));
+                load_table($("#tab-dealer"));
+                resize2();
             });
 //------------------------------------------------------------------------------
-            dealer.init_dialog = function (table) {
+            function init_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник-",
@@ -32,8 +32,8 @@
                     buttons: {
                         "Выбрать": function () {
                             let rowid = table.jqGrid('getGridParam', "selrow");
-                            dealer.dealerRow = table.jqGrid('getRowData', rowid);
-                            $('#n25').val(dealer.dealerRow.partner);
+                            dbrec.dealerRow = table.jqGrid('getRowData', rowid);
+                            $('#n25').val(dbrec.dealerRow.partner);
                             $("#dialog-dic").dialog("close");
                         },
                         "Закрыть": function () {
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            dealer.init_table = function (table) {
+            function init_table(table) {
 
                 table.jqGrid({
                     datatype: "local",
@@ -54,14 +54,14 @@
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        dealer.dealerRow = table.jqGrid('getRowData', rowid);
-                        $('#n25').val(dealer.dealerRow.partner);
+                        dbrec.dealerRow = table.jqGrid('getRowData', rowid);
+                        $('#n25').val(dbrec.dealerRow.partner);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------ 
-            dealer.load_table = function (table) {
+            function load_table(table) {
                 for (let i = 0; i < dbset.dealerList.length; i++) {
                     let tr = dbset.dealerList[i];
                     table.jqGrid('addRowData', i + 1, {

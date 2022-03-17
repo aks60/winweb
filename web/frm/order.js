@@ -19,7 +19,7 @@ order.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             //==================================================================
             order.orderRow = table1.jqGrid('getRowData', rowid); 
-            order.prorodRec = null;
+            dbrec.prorodRec = null;
             //==================================================================
             order.wincalcMap.clear()
             let j = 1;
@@ -38,8 +38,8 @@ order.init_table = function (table1, table2) {
                     }
                 }
             }
-            if (proprodID != null && order.prorodRec != undefined) {
-                let id = 'cnv' + order.prorodRec[PROPROD.id];
+            if (proprodID != null && dbrec.prorodRec != undefined) {
+                let id = 'cnv' + dbrec.prorodRec[PROPROD.id];
                 document.getElementById(id).click();
 
             } else if (proprodID != null) {
@@ -124,10 +124,10 @@ order.delete_table2 = function () {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProprod',
-                    data: {param: JSON.stringify({id: order.prorodRec[PROPROD.id]})},
+                    data: {param: JSON.stringify({id: dbrec.prorodRec[PROPROD.id]})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let id = 'tr' + order.prorodRec[PROPROD.id];
+                            let id = 'tr' + dbrec.prorodRec[PROPROD.id];
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
@@ -195,9 +195,9 @@ order.click_table2 = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
         let proprodID = row.cells[0].innerHTML;  
         //======================================================================
-        order.prorodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));  
+        dbrec.prorodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));  
         //======================================================================
-        let script = order.prorodRec[PROPROD.script];
+        let script = dbrec.prorodRec[PROPROD.script];
     }
 }
 //------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ order.card_deploy = function (taq, type) {
                     $.ajax({
                         url: 'dbset?action=insertOrder',
                         data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.dealerRow.id})},
+                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dbrec.dealerRow.id})},
                         success: (data) => {
 
                             if (data.result == 'ok') {
@@ -232,7 +232,7 @@ order.card_deploy = function (taq, type) {
                                 record[ORDER.date4] = $("#n23").val();
                                 record[ORDER.date6] = $("#n24").val();
                                 record[ORDER.owner] = login.data.user_name;
-                                record[ORDER.propart_id] = dealer.dealerRow.id;
+                                record[ORDER.propart_id] = dbrec.dealerRow.id;
                                 dbset.orderList.push(record);
                                 order.load_table($("#table1"));
                             } else
