@@ -100,4 +100,10 @@ export function kitdetList() {
         url: 'dbset?action=kitdetList',
     });
 }
+//----------------------------  PROKIT  ---------------------------------------
+export function prokitList() {
+    return  $.ajax({
+        url: 'dbset?action=prokitList',
+    });
+}
 //------------------------------------------------------------------------------

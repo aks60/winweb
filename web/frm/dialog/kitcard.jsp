@@ -6,40 +6,34 @@
         <title>KITCARD</title>
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            kitkard.resize = function () {
-                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-card #pan1-kitcard").width() - 4);
-                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-card #pan1-kitcard").height() - 24);
-                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-card #pan2-kitcard").width() - 4);
-                $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-card #pan2-kitcard").height() - 24);
-                var width = $('#pan1').width();
-                $("#pan1 .field[dx]").each(function (index) {
-                    var dx = $(this).attr('dx');
-                    $(this).width((width - dx) + 'px');
-                });
+            kitcard.resize = function () {
+                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan1-kitcard").width() - 4);
+                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan1-kitcard").height() - 24);
+                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan2-kitcard").width() - 4);
+                $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan2-kitcard").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                kitkard.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitkard.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
-                kitkard.load_table($("#tab1-kitcard"), $("#tab2-kitcard"))
+                kitcard.init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitcard.init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                kitcard.load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
 
-                taq_deploy(['#pan1']);
-                $("#dialog-card").unbind().bind("dialogresize", function (event, ui) {
-                    kitkard.resize();
+                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                    kitcard.resize();
                 });
-                kitkard.resize(); //баг?
-                kitkard.resize();
+                kitcard.resize();
             });
 //------------------------------------------------------------------------------
-            kitkard.init_dialog = function (table1, table2) {
-                $("#dialog-card").dialog({
-                    title: "Справочник текстур*",
-                    width: 800,
+            kitcard.init_dialog = function (table1, table2) {
+                $("#dialog-dic").dialog({
+                    title: "Справочник  комплектов",
+                    width: 500,
                     height: 500,
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            kitkard.rec_dialog_save(table2);
+                            kitcard.rec_dialog_save(table2);
+                            kits.load_table($("#table1"));
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -49,8 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            kitkard.init_table = function (table1, table2) {
-
+            kitcard.init_table = function (table1, table2) {
                 table1.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория', 'Название компдекта'],
@@ -62,20 +55,17 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let row_table1 = table1.jqGrid('getRowData', rowid);
-                        let kitdetList = dbset.kitdetList.filter(rec => row_table1.id == rec[KITDET.kits_id]);
-                        if (kitdetList != undefined) {
-                            for (let i = 0; i < kitdetList.length; ++i) {
-                                let tr = kitdetList[i];
+                        kitcard.kitdetList = dbset.kitdetList.filter(rec => row_table1.id == rec[KITDET.kits_id]);
+                        if (kitcard.kitdetList != undefined) {
+                            for (let i = 0; i < kitcard.kitdetList.length; ++i) {
+                                let tr = kitcard.kitdetList[i];
                                 let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
                                     code: artiklRec[ARTIKL.code],
                                     name: artiklRec[ARTIKL.name],
                                     color1_id: findef(dbset.colorList.find(rec => tr[KITDET.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-                                    color2_id: findef(dbset.colorList.find(rec => tr[KITDET.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-                                    color3_id: findef(dbset.colorList.find(rec => tr[KITDET.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-                                    unit: tr[KITDET.unit],
-                                    flag: tr[KITDET.flag]
+                                    unit: tr[KITDET.unit]
                                 });
                             }
                         }
@@ -84,26 +74,18 @@
                 });
                 table2.jqGrid({
                     datatype: "local",
-                    colNames: ['id', 'Артикул', 'Название', 'Основная текстура',
-                        'Внутренняя текстура', 'Внешняя текстура', 'Ед.изм.', 'Основн.элемент'],
+                    colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Ед.изм.'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'code', width: 20},
-                        {name: 'name', width: 120},
-                        {name: 'color1_id', width: 60},
-                        {name: 'color2_id', width: 60},
-                        {name: 'color3_id', width: 60},
-                        {name: 'unit', width: 10},
-                        {name: 'flag', width: 10}
-                    ],
-                    onSelectRow: function (rowid) {
-                        let row_tab2_kitcard = table2.jqGrid('getRowData', rowid);
-                        kits.rec_tab2_kitcard = findef(dbset.artdetList.find(rec => row_tab2_kitcard.id == rec[ARTDET.artikl_id]), dbset.artdetList);
-                    }
+                        {name: 'code', width: 60},
+                        {name: 'name', width: 180},
+                        {name: 'color1_id', width: 80},
+                        {name: 'unit', width: 40}
+                    ]
                 });
             }
 //------------------------------------------------------------------------------
-            kitkard.load_table = function (table1, table2) {
+            kitcard.load_table = function (table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
@@ -117,70 +99,57 @@
                 table1.jqGrid("setSelection", 1);
             };
 //------------------------------------------------------------------------------
-            kitkard.rec_dialog_save = function (table2) {
+            kitcard.rec_dialog_save = function (table2) {
                 //try {
-                //Запишем заказ в серверную базу данных
-                $.ajax({
-                    url: 'dbset?action=insertKits',
-                    data: {
-                        param: JSON.stringify({
-                            numb: $("#n21").val(),
-                            color1_id: color.color1ID,
-                            color2_id: color.color2ID,
-                            color3_id: color.color3ID,
-                            width: $("#n23").val(),
-                            height: $("#n25").val(),
-                            artikl_id: kits.rec_tab2_kitcard[KITDET.artikl_id],
-                            proprod_id: order.rec_table2[PROPROD.id]
-                        })
-                    },
-                    success: (data) => {
-                        debugger;
-                        if (data.result == 'ok') {
-                            let record = new Array(13);
-                            record[0] = 'SEL';
-                            record[PROKIT.id] = data.id;
-                            record[PROKIT.numb] = $("#n21").val();
-                            record[PROKIT.width] = $("#n23").val();
-                            record[PROKIT.height] = $("#n25").val();
-                            record[PROKIT.color1_id] = color.color1ID;
-                            record[PROKIT.color2_id] = color.color2ID;
-                            record[PROKIT.color3_id] = color.color3ID;
-                            record[PROKIT.artikl_id] = kits.rec_tab2_kitcard[KITDET.artikl_id];
-                            record[PROKIT.proprod_id] = order.rec_table2[PROPROD.id];
-                            kits.prokitList.push(record);
-                            kits.load_table($("#table1"));
-                        } else {
+                for (let kitdetRec of kitcard.kitdetList) {
+                    //Запишем заказ в серверную базу данных
+                    $.ajax({
+                        url: 'dbset?action=insertKits',
+                        data: {
+                            param: JSON.stringify({
+                                color1_id: kitdetRec[KITDET.color1_id],
+                                color2_id: kitdetRec[KITDET.color2_id],
+                                color3_id: kitdetRec[KITDET.color3_id],
+                                artikl_id: kitdetRec[KITDET.artikl_id],
+                                proprod_id: order.rec_table2[PROPROD.id]
+                            })
+                        },
+                        success: (data) => {
+                            if (data.result == 'ok') {
+                                let record = new Array(13);
+                                record[0] = 'SEL';
+                                record[PROKIT.id] = data.prokitRec[PROKIT.id];
+                                record[PROKIT.numb] = data.prokitRec[PROKIT.numb];
+                                record[PROKIT.width] = data.prokitRec[PROKIT.width];
+                                record[PROKIT.height] = data.prokitRec[PROKIT.height];
+                                record[PROKIT.color1_id] = data.prokitRec[PROKIT.color1_id];
+                                record[PROKIT.color2_id] = data.prokitRec[PROKIT.color2_id];
+                                record[PROKIT.color3_id] = data.prokitRec[PROKIT.color3_id];
+                                record[PROKIT.artikl_id] = data.prokitRec[KITDET.artikl_id];
+                                record[PROKIT.proprod_id] = data.prokitRec[PROPROD.id];
+                                kits.prokitList.push(record);
+                            } else {
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            }
+                        },
+                        error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                         }
-                    },
-                    error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                    }
-                });
+                    });
+                }
                 //} catch (e) {
-                //    console.error("Ошибка:kitkard.rec_dialog_save() " + e.message);
-                //}
+                //    console.error("Ошибка:kitcard.rec_dialog_save() " + e.message);
+                //}                
             }
 //------------------------------------------------------------------------------
         </script>         
     </head>
-    <body>
-        <div id="pan1" style="height: 84px; width: calc(100% - 4px);"> 
-            <jst id="n21" type='txt' label='Кол.компл.' width='80' width2="40"></jst>
-            <jst id="n22" type='btn' label='Основная текстура' width='130' dx="400" click="kits.color_to_kits('n22')"></jst><br>
-            <jst id="n23" type='txt' label='Длина' width='80' width2="40"></jst>
-            <jst id="n24" type='btn' label='Внутренняя текстура' width='130' dx="400" click="kits.color_to_kits('n24')"></jst><br>
-            <jst id="n25" type='txt' label='Ширина' width='80' width2="40"></jst>
-            <jst id="n26" type='btn' label='Внешняя текстура' width='130' dx="400" click="kits.color_to_kits('n26')"></jst><br>
-        </div>        
-        <div id="pan2" style="height: calc(100% - 86px); width: calc(100% - 4px);"> 
-            <div id="pan1-kitcard" style="height: 60%; width: 100%;">
-                <table id="tab1-kitcard"  class="ui-jqgrid-btable"></table>  
-            </div>
-            <div id="pan2-kitcard" style="height: 40%; width: 100%;"> 
-                <table id="tab2-kitcard"  class="ui-jqgrid-btable"></table>
-            </div>
+    <body>       
+        <div id="pan1-kitcard" style="height: calc(40% - 8px); width: calc(100% - 4px);">
+            <table id="tab1-kitcard"  class="ui-jqgrid-btable"></table>  
+        </div>
+        <div id="pan2-kitcard" style="height: 60%; width: calc(100% - 4px)"> 
+            <table id="tab2-kitcard"  class="ui-jqgrid-btable"></table>
         </div>
         <div id="dialog-mes" title="Сообщение"></div>
     </body>

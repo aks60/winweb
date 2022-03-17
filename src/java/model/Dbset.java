@@ -155,25 +155,23 @@ public class Dbset {
     }
 
     public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-
+        Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(eProkit.artikl_id.name()).toString()), true);        
         Query qProkit = new Query(eProkit.values());
         Record record = eProkit.up.newRecord("INS");
         record.set(eProkit.id, Conn.genId(eProkit.up));
-        record.set(eProkit.numb, obj.get(eProkit.numb.name()));
-        record.set(eProkit.width, obj.get(eProkit.width.name()));
-        record.set(eProkit.height, obj.get(eProkit.height.name()));
+        record.set(eProkit.numb, 1);
+        record.set(eProkit.width, artiklRec.get(eArtikl.len_unit));
+        record.set(eProkit.height, artiklRec.get(eArtikl.height));
         record.set(eProkit.color1_id, obj.get(eProkit.color1_id.name()));
         record.set(eProkit.color2_id, obj.get(eProkit.color2_id.name()));
         record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
         record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
-        record.set(eProkit.artikl_id, obj.get(eProkit.artikl_id.name()));
+        record.set(eProkit.artikl_id, artiklRec.get(eArtikl.id));
         record.set(eProkit.proprod_id, obj.get(eProkit.proprod_id.name()));
-        qProkit.insert(record);
-        output.put("result", "ok");
-        output.put("id", record.getInt(eProkit.id));
+         qProkit.insert(record);
+        JSONObject output = new JSONObject(App.asMap("result", "ok", "prokitRec", record));
         return output;
     }
 
@@ -268,7 +266,7 @@ public class Dbset {
     }    
 
     public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
-        Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.id);
+        Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.categ);
         return new JSONObject(App.asMap("kitsList", qKits));
     }    
 
