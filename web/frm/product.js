@@ -229,7 +229,7 @@ product.local_to_fields = function (nodeID) {
 }
 //-------------------  Текстура изделия  ---------------------------------------
 product.color_to_windows = function (btnSrc) {
-    try {
+    //try {
         let winc = dbrec.wincalcMap.get(dbrec.prorodRec[PROPROD.id]);
         let groupSet = new Set();
         let colorSet = new Set();
@@ -289,15 +289,15 @@ product.color_to_windows = function (btnSrc) {
                 }
             }
         }
-        color.parent = 'winc';
+        dbrec.parent = 'winc';
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
         product.buttonSrc = btnSrc;
         $('#dialog-dic').load('frm/dialog/color.jsp');
 
-    } catch (e) {
-        console.error("Ошибка: product.color_to_windows(): " + e.message);
-    }
+    //} catch (e) {
+    //    console.error("Ошибка: product.color_to_windows(): " + e.message);
+    //}
 }
 //--------------------  Сторона коробки  ---------------------------------------
 product.sysprof_to_frame = function (btnSrc) {
@@ -390,7 +390,7 @@ product.color_to_element = function (btnSrc) {
                 }
             }
         }
-        color.parent = 'elem';
+        dbrec.parent = 'elem';
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
         product.buttonSrc = btnSrc;
