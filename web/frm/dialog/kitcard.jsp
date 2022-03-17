@@ -4,7 +4,6 @@
     <head style="margin: 0; padding: 0;">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>KITCARD</title>
-
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             kitkard.resize = function () {
