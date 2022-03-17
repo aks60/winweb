@@ -34,8 +34,8 @@
                             let paramsRow = table.jqGrid('getRowData', rowid);
                             let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
                             let paramDef = paramsRow.id;                            
-                            let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
-                            let winc = order.wincalcMap.get(order.rec_table2[PROPROD.id]);
+                            let proprodID = order.prprodRec[PROPROD.id]; //id proprod заказа
+                            let winc = order.wincalcMap.get(order.prprodRec[PROPROD.id]);
                             let titleID1 = paramsRec[PARAMS.params_id];
                             winc.obj.param = (winc.obj.param == undefined) ? {} : winc.obj.param;
                             winc.obj.param.ioknaParam = (winc.obj.param.ioknaParam == undefined) ? [] : winc.obj.param.ioknaParam;

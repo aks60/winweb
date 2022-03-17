@@ -54,8 +54,8 @@
                     ],
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
-                        let row_table1 = table1.jqGrid('getRowData', rowid);
-                        kitcard.kitdetList = dbset.kitdetList.filter(rec => row_table1.id == rec[KITDET.kits_id]);
+                        let kitsRow = table1.jqGrid('getRowData', rowid);
+                        kitcard.kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
                         if (kitcard.kitdetList != undefined) {
                             for (let i = 0; i < kitcard.kitdetList.length; ++i) {
                                 let tr = kitcard.kitdetList[i];
@@ -111,7 +111,7 @@
                                 color2_id: kitdetRec[KITDET.color2_id],
                                 color3_id: kitdetRec[KITDET.color3_id],
                                 artikl_id: kitdetRec[KITDET.artikl_id],
-                                proprod_id: order.rec_table2[PROPROD.id]
+                                proprod_id: order.prprodRec[PROPROD.id]
                             })
                         },
                         success: (data) => {

@@ -17,7 +17,7 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
-            order.row_table1 = table1.jqGrid('getRowData', rowid);
+            order.orderRow = table1.jqGrid('getRowData', rowid);
             order.wincalcMap.clear()
             let j = 1;
             let rc = table2.rows.length;
@@ -28,15 +28,15 @@ order.init_table = function (table1, table2) {
             for (let i = 0; i < dbset.proprodList.length; i++) {
                 let proprodRec = dbset.proprodList[i];
 
-                if (order.row_table1.id == proprodRec[PROPROD.project_id]) {
+                if (order.orderRow.id == proprodRec[PROPROD.project_id]) {
                     order.add_proprodClone(table2, proprodRec);
                     if (proprodID == null) {
                         proprodID = proprodRec[PROPROD.id];
                     }
                 }
             }
-            if (proprodID != null && order.rec_table2 != undefined) {
-                let id = 'cnv' + order.rec_table2[PROPROD.id];
+            if (proprodID != null && order.prprodRec != undefined) {
+                let id = 'cnv' + order.prprodRec[PROPROD.id];
                 document.getElementById(id).click();
 
             } else if (proprodID != null) {
@@ -55,7 +55,7 @@ order.load_table = function (table1, table2) {
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
-        if (order.row_table1 != undefined && tr[ORDER.id] == order.row_table1.id) {
+        if (order.orderRow != undefined && tr[ORDER.id] == order.orderRowd) {
             order.rowid_table1 = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
@@ -85,7 +85,7 @@ order.delete_table1 = function (table1) {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProject',
-                    data: {param: JSON.stringify({id: order.row_table1.id})},
+                    data: {param: JSON.stringify({id: order.orderRow.id})},
                     success: (data) => {
                         if (data.result == 'ok') {
                             let rowid = table1.jqGrid('getGridParam', "selrow");
@@ -121,10 +121,10 @@ order.delete_table2 = function () {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProprod',
-                    data: {param: JSON.stringify({id: order.rec_table2[PROPROD.id]})},
+                    data: {param: JSON.stringify({id: order.prprodRec[PROPROD.id]})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let id = 'tr' + order.rec_table2[PROPROD.id];
+                            let id = 'tr' + order.prprodRec[PROPROD.id];
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
@@ -192,8 +192,8 @@ order.click_table2 = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
 
         let proprodID = row.cells[0].innerHTML;
-        order.rec_table2 = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));
-        let script = order.rec_table2[PROPROD.script];
+        order.prprodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));
+        let script = order.prprodRec[PROPROD.script];
     }
 }
 //------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ order.card_deploy = function (taq, type) {
                     $.ajax({
                         url: 'dbset?action=insertOrder',
                         data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.row_tab1dic.id})},
+                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dealer.dealerRow.id})},
                         success: (data) => {
 
                             if (data.result == 'ok') {
@@ -228,7 +228,7 @@ order.card_deploy = function (taq, type) {
                                 record[ORDER.date4] = $("#n23").val();
                                 record[ORDER.date6] = $("#n24").val();
                                 record[ORDER.owner] = login.data.user_name;
-                                record[ORDER.propart_id] = dealer.row_tab1dic.id;
+                                record[ORDER.propart_id] = dealer.dealerRow.id;
                                 dbset.orderList.push(record);
                                 order.load_table($("#table1"));
                             } else

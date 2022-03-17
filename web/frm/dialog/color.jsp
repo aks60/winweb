@@ -118,11 +118,11 @@
             color.rec_dialog_save = function (table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                    let row_table2 = table2.jqGrid('getRowData', rowid); //record справочника
+                    let colorRow = table2.jqGrid('getRowData', rowid); //record справочника
                     if (color.parent != 'kits') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let proprodID = order.rec_table2[PROPROD.id]; //id proprod заказа
+                        let proprodID = order.prprodRec[PROPROD.id]; //id proprod заказа
                         let winc = order.wincalcMap.get(proprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
                         let param = elem.obj.param;
@@ -142,25 +142,25 @@
 
                         //Запишем текстуру в параметр
                         if (product.buttonSrc == 'n14')
-                            winc.obj.color1 = row_table2.id;
+                            winc.obj.color1 = colorRow.id;
                         else if (product.buttonSrc == 'n15')
-                            winc.obj.color2 = row_table2.id;
+                            winc.obj.color2 = colorRow.id;
                         else if (product.buttonSrc == 'n16')
-                            winc.obj.color3 = row_table2.id;
+                            winc.obj.color3 = colorRow.id;
                         else if (product.buttonSrc == 'n33')
-                            param.colorID1 = row_table2.id;
+                            param.colorID1 = colorRow.id;
                         else if (product.buttonSrc == 'n34')
-                            param.colorID2 = row_table2.id;
+                            param.colorID2 = colorRow.id;
                         else if (product.buttonSrc == 'n35')
-                            param.colorID3 = row_table2.id;
+                            param.colorID3 = colorRow.id;
                         else if (product.buttonSrc == 'n46')
-                            elem.obj.param.colorHandl = row_table2.id;
+                            elem.obj.param.colorHandl = colorRow.id;
                         else if (product.buttonSrc == 'n4A')
-                            elem.obj.param.colorLoop = row_table2.id;
+                            elem.obj.param.colorLoop = colorRow.id;
                         else if (product.buttonSrc == 'n4C')
-                            elem.obj.param.colorLock = row_table2.id;
+                            elem.obj.param.colorLock = colorRow.id;
                         else if (product.buttonSrc == 'n53')
-                            elem.obj.param.colorGlass = row_table2.id;
+                            elem.obj.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
                         let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
@@ -176,25 +176,25 @@
                                 if (data.result == 'ok') {
                                     //Запишем выбранную запись в тег страницы
                                     if (product.buttonSrc == 'n14')
-                                        $("#n14").val(row_table2.name);
+                                        $("#n14").val(colorRow.name);
                                     else if (product.buttonSrc == 'n15')
-                                        $("#n15").val(row_table2.name);
+                                        $("#n15").val(colorRow.name);
                                     else if (product.buttonSrc == 'n16')
-                                        $("#n16").val(row_table2.name);
+                                        $("#n16").val(colorRow.name);
                                     else if (product.buttonSrc == 'n33')
-                                        $("#n33").val(row_table2.name);
+                                        $("#n33").val(colorRow.name);
                                     else if (product.buttonSrc == 'n34')
-                                        $("#n34").val(row_table2.name);
+                                        $("#n34").val(colorRow.name);
                                     else if (product.buttonSrc == 'n35')
-                                        $("#n35").val(row_table2.name);
+                                        $("#n35").val(colorRow.name);
                                     else if (product.buttonSrc == 'n46')
-                                        $("#n46").val(row_table2.name);
+                                        $("#n46").val(colorRow.name);
                                     else if (product.buttonSrc == 'n4A')
-                                        $("#n4A").val(row_table2.name);
+                                        $("#n4A").val(colorRow.name);
                                     else if (product.buttonSrc == 'n4C')
-                                        $("#n4C").val(row_table2.name);
+                                        $("#n4C").val(colorRow.name);
                                     else if (product.buttonSrc == 'n53')
-                                        $("#n53").val(row_table2.name);
+                                        $("#n53").val(colorRow.name);
                                 }
                             },
                             error: function () {
@@ -203,22 +203,22 @@
                         });
                     } else {
                         if (kits.buttonSrc == 'n22') {
-                            $("#n22").val(row_table2.name);
-                            color.color1ID = row_table2.id;
-                            $("#n24").val(row_table2.name);
-                            color.color2ID = row_table2.id;
-                            $("#n26").val(row_table2.name);
-                            color.color3ID = row_table2.id;
+                            $("#n22").val(colorRow.name);
+                            color.color1ID = colorRow.id;
+                            $("#n24").val(colorRow.name);
+                            color.color2ID = colorRow.id;
+                            $("#n26").val(colorRow.name);
+                            color.color3ID = colorRow.id;
 
                         } else if (kits.buttonSrc == 'n24') {
-                            $("#n24").val(row_table2.name);
-                            color.color2ID = row_table2.id;
-                            $("#n26").val(row_table2.name);
-                            color.color3ID = row_table2.id;
+                            $("#n24").val(colorRow.name);
+                            color.color2ID = colorRow.id;
+                            $("#n26").val(colorRow.name);
+                            color.color3ID = colorRow.id;
 
                         } else if (kits.buttonSrc == 'n26') {
-                            $("#n26").val(row_table2.name);
-                            color.color3ID = row_table2.id;
+                            $("#n26").val(colorRow.name);
+                            color.color3ID = colorRow.id;
                         }
                     }
                 } catch (e) {
