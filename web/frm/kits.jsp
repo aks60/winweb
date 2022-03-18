@@ -34,8 +34,10 @@
             <button id="btnKit3" style="width: 160px" onClick="">Изменить запись</button>
             <button id="btnKit4" style="width: 160px" onClick="kits.delete_record($('#table1'));">Удалить запись</button>            
         </div> 
-        <div id = "context">              
-            <div id="centr" style="height: 100%">
+        <div id = "context">   
+            <div id="title" style="height: 40px">               
+            </div>
+            <div id="centr" style="height: calc(100% - 40px)">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>          
         </div>
