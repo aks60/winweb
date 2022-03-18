@@ -22,7 +22,6 @@
         <script type="module" src="frm/builder/wincalc.js"></script>
 
         <script type="text/javascript">
-
             //Поля таблиц
             var SYSTREE = {id: 1, name: 2, glas: 3, depth: 4, col1: 5, col2: 6, col3: 7, cgrp: 8, types: 12, parent_id: 13},
                     GROUP = {id: 1, grp: 2, name: 4, val: 5},
