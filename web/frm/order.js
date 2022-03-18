@@ -19,7 +19,7 @@ order.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             //==================================================================
             dbrec.orderRow = table1.jqGrid('getRowData', rowid); 
-            dbrec.prorodRec = null;
+            dbrec.proprodRec = null;
             //==================================================================
             dbrec.wincalcMap.clear()
             let j = 1;
@@ -38,8 +38,8 @@ order.init_table = function (table1, table2) {
                     }
                 }
             }
-            if (proprodID != null && dbrec.prorodRec != undefined) {
-                let id = 'cnv' + dbrec.prorodRec[PROPROD.id];
+            if (proprodID != null && dbrec.proprodRec != undefined) {
+                let id = 'cnv' + dbrec.proprodRec[PROPROD.id];
                 document.getElementById(id).click();
 
             } else if (proprodID != null) {
@@ -124,10 +124,10 @@ order.delete_table2 = function () {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProprod',
-                    data: {param: JSON.stringify({id: dbrec.prorodRec[PROPROD.id]})},
+                    data: {param: JSON.stringify({id: dbrec.proprodRec[PROPROD.id]})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let id = 'tr' + dbrec.prorodRec[PROPROD.id];
+                            let id = 'tr' + dbrec.proprodRec[PROPROD.id];
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
@@ -195,9 +195,9 @@ order.click_table2 = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
         let proprodID = row.cells[0].innerHTML;  
         //======================================================================
-        dbrec.prorodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));  
+        dbrec.proprodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));  
         //======================================================================
-        let script = dbrec.prorodRec[PROPROD.script];
+        let script = dbrec.proprodRec[PROPROD.script];
     }
 }
 //------------------------------------------------------------------------------

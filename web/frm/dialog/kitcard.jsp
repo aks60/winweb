@@ -111,7 +111,7 @@
                                 color2_id: kitdetRec[KITDET.color2_id],
                                 color3_id: kitdetRec[KITDET.color3_id],
                                 artikl_id: kitdetRec[KITDET.artikl_id],
-                                proprod_id: dbrec.prorodRec[PROPROD.id]
+                                proprod_id: dbrec.proprodRec[PROPROD.id]
                             })
                         },
                         success: (data) => {

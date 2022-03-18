@@ -78,7 +78,7 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
+                let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
 
                 let winc = dbrec.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);

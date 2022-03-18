@@ -63,7 +63,7 @@
                 let pkSet = new Set();
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
+                let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
                 let winc = dbrec.wincalcMap.get(proprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
@@ -118,7 +118,7 @@
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = dbrec.prorodRec[PROPROD.id]; //id proprod заказа
+                    let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
                     let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
 
                     let winc = dbrec.wincalcMap.get(proprodID);
