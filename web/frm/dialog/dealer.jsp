@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            function resize2() {
+            function resize() {
                 $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
                 $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize2();
+                    resize();
                 });
-                init2_dialog($("#tab-dealer"));
-                init2_table($("#tab-dealer"));
-                load2_table($("#tab-dealer"));
-                resize2();
+                init_dialog($("#tab-dealer"));
+                init_table($("#tab-dealer"));
+                load_table($("#tab-dealer"));
+                resize();
             });
 //------------------------------------------------------------------------------
-            function init2_dialog(table) {
+            function init_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник-",
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table) {
+            function init_table(table) {
 
                 table.jqGrid({
                     datatype: "local",
@@ -61,7 +61,7 @@
                 });
             }
 //------------------------------------------------------------------------------ 
-            function load2_table(table) {
+            function load_table(table) {
                 for (let i = 0; i < dbset.dealerList.length; i++) {
                     let tr = dbset.dealerList[i];
                     table.jqGrid('addRowData', i + 1, {

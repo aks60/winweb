@@ -7,7 +7,7 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            function resize2() {
+            function resize() {
                 $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
                 $("#tab1-color").jqGrid('setGridHeight', $("#dialog-dic #pan1-color").height() - 20);
                 $("#tab2-color").jqGrid('setGridWidth', $("#dialog-dic #pan2-color").width());
@@ -16,14 +16,14 @@
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize2();
+                    resize();
                 });
-                init2_dialog($("#tab1-color"), $("#tab2-color"));
-                init2_table($("#tab1-color"), $("#tab2-color"));
-                load2_table($("#tab1-color"), $("#tab2-color"))
+                init_dialog($("#tab1-color"), $("#tab2-color"));
+                init_table($("#tab1-color"), $("#tab2-color"));
+                load_table($("#tab1-color"), $("#tab2-color"))
             });
 //------------------------------------------------------------------------------
-            function init2_dialog(table1, table2) {
+            function init_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник текстур",
                     width: 400,
@@ -31,7 +31,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save2_table(table2);
+                            save_table(table2);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table1, table2) {
+            function init_table(table1, table2) {
 
                 table1.jqGrid({
                     datatype: "local",
@@ -79,7 +79,7 @@
                             }
                         }
                         table2.jqGrid("setSelection", 1);
-                        resize2();
+                        resize();
                     }
                 });
                 table2.jqGrid({
@@ -90,13 +90,13 @@
                         {name: 'name', width: 340}
                     ],
                     ondblClickRow: function (rowId) {
-                        save2_table(table2);
+                        save_table(table2);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             };
 //------------------------------------------------------------------------------
-            function load2_table(table1, table2) {
+            function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 let base = (dbrec.parent != 'kits') ? product : kits;
@@ -112,10 +112,10 @@
                     }
                 }
                 table1.jqGrid("setSelection", 1);
-                resize2();
+                resize();
             };
 //------------------------------------------------------------------------------
-            function save2_table(table2) {
+            function save_table(table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = table2.jqGrid('getRowData', rowid); //record справочника

@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            function resize2() {
+            function resize() {
                 $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());
                 $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #pan-sysprof").height() - 24);
             }            
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize2();
+                    resize();
                 });
-                init2_dialog($("#tab-sysprof"));
-                init2_table($("#tab-sysprof"))
-                load2_table($("#tab-sysprof"))
-                resize2();
+                init_dialog($("#tab-sysprof"));
+                init_table($("#tab-sysprof"))
+                load_table($("#tab-sysprof"))
+                resize();
             });
 //------------------------------------------------------------------------------
-            function init2_dialog(table) {
+            function init_dialog(table) {
                 $("#dialog-dic").dialog({
                     title: "Профили системы",
                     width: 450,
@@ -30,7 +30,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save2_table(table);
+                            save_table(table);
                             $(this).dialog("close");
                         },
 
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table) {
+            function init_table(table) {
                 table.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
@@ -51,13 +51,13 @@
                         {name: 'code', width: 140, sorttype: "text"},
                         {name: 'name', width: 340, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        save2_table(table);
+                        save_table(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            function load2_table(table) {
+            function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
                 let id = dbrec.proprodRec[SYSPROF.id];
@@ -68,7 +68,7 @@
                     let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec[ARTIKL.id]);
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[SYSPROF.id],
-                        side: use2_name(tr[SYSPROF.use_side]),
+                        side: use_name(tr[SYSPROF.use_side]),
                         code: artRec[ARTIKL.code],
                         name: artRec[ARTIKL.name]
                     });
@@ -76,7 +76,7 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            function save2_table(table) {
+            function save_table(table) {
 
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
@@ -118,7 +118,7 @@
                 });
             }            
 //------------------------------------------------------------------------------
-            let use2_name = (v) => {
+            let use_name = (v) => {
                 for (let k in UseSide) {
                     if (v == UseSide[k][0])
                         return UseSide[k][1];

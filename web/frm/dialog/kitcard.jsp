@@ -6,7 +6,9 @@
         <title>KITCARD</title>
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            function resize2() {
+            let kitdet2List = null;
+//------------------------------------------------------------------------------
+            function resize() {
                 $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan1-kitcard").width() - 4);
                 $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan1-kitcard").height() - 24);
                 $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan2-kitcard").width() - 4);
@@ -14,17 +16,17 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                init2_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
-                init2_table($("#tab1-kitcard"), $("#tab2-kitcard"));
-                load2_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
 
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize2();
+                    resize();
                 });
-                resize2();
+                resize();
             });
 //------------------------------------------------------------------------------
-            function init2_dialog(table1, table2) {
+            function init_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник  комплектов",
                     width: 500,
@@ -32,8 +34,9 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save2_table(table2);
-                            load2_table(table1, table2);
+                            save_table(table2);
+                            let rowid = table1.jqGrid('getGridParam', "selrow");
+                            table1.jqGrid("setSelection", rowid);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -43,7 +46,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table1, table2) {
+            function init_table(table1, table2) {
                 table1.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория', 'Название компдекта'],
@@ -55,10 +58,10 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        dbset.kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
-                        if (dbset.kitdetList != undefined) {
-                            for (let i = 0; i < dbset.kitdetList.length; ++i) {
-                                let tr = dbset.kitdetList[i];
+                        kitdet2List = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
+                        if (kitdet2List != undefined) {
+                            for (let i = 0; i < kitdet2List.length; ++i) {
+                                let tr = kitdet2List[i];
                                 let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
@@ -85,7 +88,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function load2_table(table1, table2) {
+            function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
@@ -99,9 +102,9 @@
                 table1.jqGrid("setSelection", 1);
             };
 //------------------------------------------------------------------------------
-            function save2_table(table2) {
+            function save_table(table2) {
                 //try {
-                for (let kitdetRec of dbset.kitdetList) {
+                for (let kitdetRec of kitdet2List) {
                     //Запишем заказ в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=insertKits',

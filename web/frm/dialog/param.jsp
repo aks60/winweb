@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------            
-            function resize2() {
+            function resize() {
                 $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #pan-param").width());
                 $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #pan-param").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize2();
+                    resize();
                 });
-                init2_dialog($("#tab-param"));
-                init2_table($("#tab-param"));
-                load2_table($("#tab-param"));
-                resize2();
+                init_dialog($("#tab-param"));
+                init_table($("#tab-param"));
+                load_table($("#tab-param"));
+                resize();
             });
 //------------------------------------------------------------------------------            
-            function init2_dialog(table) {
+            function init_dialog(table) {
                 $("#dialog-dic").dialog({
                     title: "Справочник параметров",
                     width: 400,
@@ -70,7 +70,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table) {
+            function init_table(table) {
                 table.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Значение параметра'],
@@ -83,7 +83,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function load2_table(table) {
+            function load_table(table) {
                 table.jqGrid('clearGridData', true);
                 let params2List = dbset.paramsList.filter(rec => product.groupParam == rec[PARAMS.params_id] && rec[PARAMS.id] != rec[PARAMS.params_id]);
                 for (let i = 0; i < params2List.length; i++) {

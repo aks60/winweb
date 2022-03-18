@@ -7,22 +7,22 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            function resize2() {
+            function resize() {
                 $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #pan-artikl").width());
                 $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #pan-artikl").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                   resize2();
+                   resize();
                 });
-                init2_dialog($("#tab-artikl"));
-                init2_table($("#tab-artikl"))
-                load2_table($("#tab-artikl"))
-                resize2();
+                init_dialog($("#tab-artikl"));
+                init_table($("#tab-artikl"))
+                load_table($("#tab-artikl"))
+                resize();
             });
 //------------------------------------------------------------------------------
-            function  init2_dialog(table) {
+            function  init_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник артикулов",
@@ -31,7 +31,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save2_table(table);
+                            save_table(table);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init2_table(table) {
+            function init_table(table) {
 
                 table.jqGrid({
                     datatype: "local",
@@ -52,13 +52,13 @@
                         {name: 'name', width: 400, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        save2_table(table);
+                        save_table(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            function  load2_table(level_1, level_2) {
+            function  load_table(level_1, level_2) {
 
                 let pkSet = new Set();
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
@@ -99,21 +99,21 @@
                     }
                     //Ручка
                 } else if (product.buttonSrc == 'n45') {
-                    load2_table(2, 11);
+                    load_table(2, 11);
 
                     //Подвес
                 } else if (product.buttonSrc == 'n49') {
-                    load2_table(2, 12);
+                    load_table(2, 12);
 
                     //Замок
                 } else if (product.buttonSrc == 'n4B') {
-                    load2_table(2, 9);
+                    load_table(2, 9);
 
                 }
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            function save2_table(table) {
+            function save_table(table) {
                 try {
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
