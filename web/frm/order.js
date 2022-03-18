@@ -19,7 +19,7 @@ order.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             //==================================================================
             dbrec.orderRow = table1.jqGrid('getRowData', rowid); 
-            dbrec.proprodRec = null;
+            dbrec.prjprodRec = null;
             //==================================================================
             dbrec.wincalcMap.clear()
             let j = 1;
@@ -27,23 +27,23 @@ order.init_table = function (table1, table2) {
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
-            let proprodID = null;
-            for (let i = 0; i < dbset.proprodList.length; i++) {
-                let proprodRec = dbset.proprodList[i];
+            let prjprodID = null;
+            for (let i = 0; i < dbset.prjprodList.length; i++) {
+                let prjprodRec = dbset.prjprodList[i];
 
-                if (dbrec.orderRow.id == proprodRec[PROPROD.project_id]) {
-                    order.add_proprodClone(table2, proprodRec);
-                    if (proprodID == null) {
-                        proprodID = proprodRec[PROPROD.id];
+                if (dbrec.orderRow.id == prjprodRec[PRJPROD.project_id]) {
+                    order.add_prjprodClone(table2, prjprodRec);
+                    if (prjprodID == null) {
+                        prjprodID = prjprodRec[PRJPROD.id];
                     }
                 }
             }
-            if (proprodID != null && dbrec.proprodRec != undefined) {
-                let id = 'cnv' + dbrec.proprodRec[PROPROD.id];
+            if (prjprodID != null && dbrec.prjprodRec != undefined) {
+                let id = 'cnv' + dbrec.prjprodRec[PRJPROD.id];
                 document.getElementById(id).click();
 
-            } else if (proprodID != null) {
-                let id = 'cnv' + proprodID;
+            } else if (prjprodID != null) {
+                let id = 'cnv' + prjprodID;
                 document.getElementById(id).click();
             }
             $('#table2 tr > *:nth-child(1)').hide();
@@ -123,11 +123,11 @@ order.delete_table2 = function () {
         buttons: {
             "Да": function () {
                 $.ajax({
-                    url: 'dbset?action=deleteProprod',
-                    data: {param: JSON.stringify({id: dbrec.proprodRec[PROPROD.id]})},
+                    url: 'dbset?action=deletePrjprod',
+                    data: {param: JSON.stringify({id: dbrec.prjprodRec[PRJPROD.id]})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let id = 'tr' + dbrec.proprodRec[PROPROD.id];
+                            let id = 'tr' + dbrec.prjprodRec[PRJPROD.id];
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
@@ -146,27 +146,27 @@ order.delete_table2 = function () {
     });
 }
 //------------------------------------------------------------------------------
-order.add_proprodClone = function (table2, proprodRec) {
+order.add_prjprodClone = function (table2, prjprodRec) {
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
-    canvas.id = 'cnv' + proprodRec[PROPROD.id];
+    canvas.id = 'cnv' + prjprodRec[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
 
-    let id = document.createTextNode(proprodRec[PROPROD.id]);
-    let name = document.createTextNode(proprodRec[PROPROD.name]);
-    let script = proprodRec[PROPROD.script];
+    let id = document.createTextNode(prjprodRec[PRJPROD.id]);
+    let name = document.createTextNode(prjprodRec[PRJPROD.name]);
+    let script = prjprodRec[PRJPROD.script];
     let iwincalc = win.build(canvas, script);
 
     //Массив объектов winc
-    dbrec.wincalcMap.set(proprodRec[PROPROD.id], iwincalc);
+    dbrec.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
     let tr = document.createElement('tr');
-    tr.id = 'tr' + proprodRec[PROPROD.id];
+    tr.id = 'tr' + prjprodRec[PRJPROD.id];
 
     td1.appendChild(id);
     td2.appendChild(name);
@@ -193,11 +193,11 @@ order.click_table2 = function (e) {
         table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
-        let proprodID = row.cells[0].innerHTML;  
+        let prjprodID = row.cells[0].innerHTML;  
         //======================================================================
-        dbrec.proprodRec = findef(dbset.proprodList.find(rec => proprodID == rec[PROPROD.id], dbset.proprodList));  
+        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));  
         //======================================================================
-        let script = dbrec.proprodRec[PROPROD.script];
+        let script = dbrec.prjprodRec[PRJPROD.script];
     }
 }
 //------------------------------------------------------------------------------

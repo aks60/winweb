@@ -26,7 +26,7 @@ product.init_table = function (table1) {
 product.load_table = function (table1) {
     let syspar1List2 = [];
     table1.jqGrid('clearGridData', true);
-    let winc = dbrec.wincalcMap.get(dbrec.proprodRec[PROPROD.id]);
+    let winc = dbrec.wincalcMap.get(dbrec.prjprodRec[PRJPROD.id]);
     for (let val of winc.root.pardefMap.values()) {
         syspar1List2.push(val);
     }
@@ -49,7 +49,7 @@ product.load_table = function (table1) {
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
     let arr = new Array();
-    let winc = dbrec.wincalcMap.get(dbrec.proprodRec[PROPROD.id]);
+    let winc = dbrec.wincalcMap.get(dbrec.prjprodRec[PRJPROD.id]);
     let root = winc.root;
     if (root.type == 'RECTANGL')
         arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
@@ -110,15 +110,15 @@ product.elements = function (com, arr) {
 //-------------------  Загрузка свойств конструкции  ---------------------------
 product.server_to_fields = function () {
     try {
-        if (dbrec.proprodRec != undefined) {
-            let proprodID = dbrec.proprodRec[PROPROD.id];
-            if (proprodID != undefined) {
+        if (dbrec.prjprodRec != undefined) {
+            let prjprodID = dbrec.prjprodRec[PRJPROD.id];
+            if (prjprodID != undefined) {
                 $.ajax({
                     url: 'dbset?action=stvFields',
-                    data: {'proprodID': proprodID},
+                    data: {'prjprodID': prjprodID},
                     success: function (data) {
                         product.stvFields = data.stvFields;
-                        let id = dbrec.proprodRec[PROPROD.id];
+                        let id = dbrec.prjprodRec[PRJPROD.id];
                         let winc = dbrec.wincalcMap.get(id);
                         for (let el of winc.elemList) {
                             if (el.type == 'STVORKA') {
@@ -159,7 +159,7 @@ product.local_to_fields = function (nodeID) {
         return;
     }
     let elem = {};
-    let id = dbrec.proprodRec[PROPROD.id];
+    let id = dbrec.prjprodRec[PRJPROD.id];
     let winc = dbrec.wincalcMap.get(id);
     if (nodeID == -1) {
         elem = {type: 'DEF_PARAM'};
@@ -230,7 +230,7 @@ product.local_to_fields = function (nodeID) {
 //-------------------  Текстура изделия  ---------------------------------------
 product.color_to_windows = function (btnSrc) {
     //try {
-        let winc = dbrec.wincalcMap.get(dbrec.proprodRec[PROPROD.id]);
+        let winc = dbrec.wincalcMap.get(dbrec.prjprodRec[PRJPROD.id]);
         let groupSet = new Set();
         let colorSet = new Set();
 
@@ -303,8 +303,8 @@ product.color_to_windows = function (btnSrc) {
 product.sysprof_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = dbrec.proprodRec[PROPROD.id];
-        let winc = dbrec.wincalcMap.get(proprodID);
+        let prjprodID = dbrec.prjprodRec[PRJPROD.id];
+        let winc = dbrec.wincalcMap.get(prjprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
         let sysprofSet = new Set();
 
@@ -349,8 +349,8 @@ product.artikl_to_stvorka = function (btnSrc) {
 product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let proprodID = dbrec.proprodRec[PROPROD.id];
-        let winc = dbrec.wincalcMap.get(proprodID);
+        let prjprodID = dbrec.prjprodRec[PRJPROD.id];
+        let winc = dbrec.wincalcMap.get(prjprodID);
         let elem = winc.elemList.find(it => it.id == nodeID);
         let groupSet = new Set();
         let colorSet = new Set();
@@ -404,8 +404,8 @@ product.color_to_element = function (btnSrc) {
 product.artikl_to_glass = function (btnSrc) {
     //try {
     let nodeID = $("#tree-winc").jstree("get_selected")[0];
-    let proprodID = dbrec.proprodRec[PROPROD.id];
-    let winc = dbrec.wincalcMap.get(proprodID);
+    let prjprodID = dbrec.prjprodRec[PRJPROD.id];
+    let winc = dbrec.wincalcMap.get(prjprodID);
     let elem = winc.elemList.find(it => it.id == nodeID);
 
     //Список доступных толщин в ветке системы например 4;5;8

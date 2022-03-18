@@ -47,9 +47,9 @@ export function furndetList() {
     });
 }
 //---------------------------  PROPROD  ----------------------------------------
-export function proprodList() {
+export function prjprodList() {
     return  $.ajax({
-        url: 'dbset?action=proprodList',
+        url: 'dbset?action=prjprodList',
     });
 }
 //----------------------------  SYSFURN  ---------------------------------------
@@ -101,9 +101,9 @@ export function kitdetList() {
     });
 }
 //----------------------------  PROKIT  ---------------------------------------
-export function prokitList() {
+export function prjkitList() {
     return  $.ajax({
-        url: 'dbset?action=prokitList',
+        url: 'dbset?action=prjkitList',
     });
 }
 //------------------------------------------------------------------------------

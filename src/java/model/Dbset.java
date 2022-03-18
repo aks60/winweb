@@ -17,9 +17,9 @@ import domain.eKitdet;
 import domain.eKits;
 import domain.eParams;
 import domain.eProject;
-import domain.eProkit;
-import domain.ePropart;
-import domain.eProprod;
+import domain.ePrjkit;
+import domain.ePrjpart;
+import domain.ePrjprod;
 import domain.eSysfurn;
 import domain.eSyspar1;
 import domain.eSysprod;
@@ -91,9 +91,9 @@ public class Dbset {
         return new JSONObject(App.asMap("furnitureList", qFurniture));
     }
 
-    public static JSONObject proprodList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProprod = new Query(eProprod.values()).select(eProprod.up);
-        return new JSONObject(App.asMap("proprodList", qProprod));
+    public static JSONObject prjprodList(HttpServletRequest request, HttpServletResponse response) {
+        Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up);
+        return new JSONObject(App.asMap("prjprodList", qPrjprod));
     }
 
     public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
@@ -123,7 +123,7 @@ public class Dbset {
 
         try (Connection connection = Conn.connection()) {
             Statement statement = statement = connection.createStatement();
-            String sql = "update proprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
+            String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
             output.put("result", "ok");
             connection.close();
@@ -147,7 +147,7 @@ public class Dbset {
         record.set(eProject.manager, obj.get(eProject.manager.name()));
         record.set(eProject.date4, obj.get(eProject.date4.name()));
         record.set(eProject.date6, obj.get(eProject.date6.name()));
-        record.set(eProject.propart_id, obj.get(eProject.propart_id.name()));
+        record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.name()));
         qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
@@ -157,41 +157,41 @@ public class Dbset {
     public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(eProkit.artikl_id.name()).toString()), true);        
-        Query qProkit = new Query(eProkit.values());
-        Record record = eProkit.up.newRecord("INS");
-        record.set(eProkit.id, Conn.genId(eProkit.up));
-        record.set(eProkit.numb, 1);
-        record.set(eProkit.width, artiklRec.get(eArtikl.len_unit));
-        record.set(eProkit.height, artiklRec.get(eArtikl.height));
-        record.set(eProkit.color1_id, obj.get(eProkit.color1_id.name()));
-        record.set(eProkit.color2_id, obj.get(eProkit.color2_id.name()));
-        record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
-        record.set(eProkit.color3_id, obj.get(eProkit.color3_id.name()));
-        record.set(eProkit.artikl_id, artiklRec.get(eArtikl.id));
-        record.set(eProkit.proprod_id, obj.get(eProkit.proprod_id.name()));
-         qProkit.insert(record);
-        JSONObject output = new JSONObject(App.asMap("result", "ok", "prokitRec", record));
+        Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);        
+        Query qPrjkit = new Query(ePrjkit.values());
+        Record record = ePrjkit.up.newRecord("INS");
+        record.set(ePrjkit.id, Conn.genId(ePrjkit.up));
+        record.set(ePrjkit.numb, 1);
+        record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
+        record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
+        record.set(ePrjkit.color1_id, obj.get(ePrjkit.color1_id.name()));
+        record.set(ePrjkit.color2_id, obj.get(ePrjkit.color2_id.name()));
+        record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
+        record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
+        record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
+        record.set(ePrjkit.prjprod_id, obj.get(ePrjkit.prjprod_id.name()));
+         qPrjkit.insert(record);
+        JSONObject output = new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
         return output;
     }
 
-    public static JSONObject insertProprod(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject insertPrjprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        Query qProprod = new Query(eProprod.values());
+        Query qPrjprod = new Query(ePrjprod.values());
         Record record = new Record();
         record.add("INS");
-        record.add(Conn.genId(eProprod.up));
+        record.add(Conn.genId(ePrjprod.up));
         record.add(0);
         record.add(obj.get("name"));
         record.add(obj.get("script"));
         record.add(obj.get("projectID"));
         record.add(obj.get("systreeID"));
-        qProprod.insert(record);
+        qPrjprod.insert(record);
         output.put("result", "ok");
-        output.put("id", record.getInt(eProprod.id));
+        output.put("id", record.getInt(ePrjprod.id));
         return output;
     }
 
@@ -207,29 +207,29 @@ public class Dbset {
         return output;
     }
 
-    public static JSONObject deleteProprod(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject deletePrjprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Query qProprod = new Query(eProprod.values());
-        Record record = eProprod.up.newRecord("DEL");
-        record.set(eProprod.id, obj.get("id"));
-        qProprod.delete(record);
+        Query qPrjprod = new Query(ePrjprod.values());
+        Record record = ePrjprod.up.newRecord("DEL");
+        record.set(ePrjprod.id, obj.get("id"));
+        qPrjprod.delete(record);
         output.put("result", "ok");
         return output;
     }
 
-    public static JSONObject prokitList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProkit = new Query(eProkit.values()).select(eProkit.up);
-        JSONObject output = new JSONObject(App.asMap("prokitList", qProkit));
+    public static JSONObject prjkitList(HttpServletRequest request, HttpServletResponse response) {
+        Query qPrjkit = new Query(ePrjkit.values()).select(ePrjkit.up);
+        JSONObject output = new JSONObject(App.asMap("prjkitList", qPrjkit));
         return output;
     }
 
     public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
         HashMap<Integer, HashMap> hm = new HashMap();
-        String proprodID = request.getParameter("proprodID");
-        Query qProprod = new Query(eProprod.values()).select(eProprod.up, "where", eProprod.id, "=", proprodID);
-        String script = qProprod.getAs(0, eProprod.script);
+        String prjprodID = request.getParameter("prjprodID");
+        Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+        String script = qPrjprod.getAs(0, ePrjprod.script);
         Wincalc winc = new Wincalc(script);
         new Furniture(winc, true);
         LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listSortAr, Type.STVORKA);
@@ -250,7 +250,7 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {        
-        Query qProject = new Query(eProject.values()).select("select a.* from project a, propart b where a.propart_id = b.id and b.category = 'дилер' order by a.id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format(rec.get(eProject.date5)));
@@ -261,8 +261,8 @@ public class Dbset {
     }
 
     public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
-        Query qPropart = new Query(ePropart.values()).select(ePropart.up, "where", ePropart.category, "= 'дилер'", "order by", ePropart.manager);
-        return new JSONObject(App.asMap("dealerList", qPropart));
+        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.manager);
+        return new JSONObject(App.asMap("dealerList", qPrjpart));
     }    
 
     public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {

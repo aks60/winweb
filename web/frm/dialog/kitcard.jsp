@@ -6,7 +6,7 @@
         <title>KITCARD</title>
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            let kitdet2List = null;
+            var kitdetList = null;
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan1-kitcard").width() - 4);
@@ -34,13 +34,12 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save_table(table2);
-                            let rowid = table1.jqGrid('getGridParam', "selrow");
-                            table1.jqGrid("setSelection", rowid);
-                            $(this).dialog("close");
+                            save_table(table2);                            
+                            //$(this).dialog("close");
                         },
                         "Закрыть": function () {
-                            $(this).dialog("close");
+                            kits.load_table($("#table1"));
+                            //$(this).dialog("close");
                         }
                     }
                 });
@@ -58,10 +57,10 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        kitdet2List = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
-                        if (kitdet2List != undefined) {
-                            for (let i = 0; i < kitdet2List.length; ++i) {
-                                let tr = kitdet2List[i];
+                        kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec[KITDET.kits_id]);
+                        if (kitdetList != undefined) {
+                            for (let i = 0; i < kitdetList.length; ++i) {
+                                let tr = kitdetList[i];
                                 let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
@@ -104,7 +103,7 @@
 //------------------------------------------------------------------------------
             function save_table(table2) {
                 //try {
-                for (let kitdetRec of kitdet2List) {
+                for (let kitdetRec of kitdetList) {
                     //Запишем заказ в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=insertKits',
@@ -114,26 +113,29 @@
                                 color2_id: kitdetRec[KITDET.color2_id],
                                 color3_id: kitdetRec[KITDET.color3_id],
                                 artikl_id: kitdetRec[KITDET.artikl_id],
-                                proprod_id: dbrec.proprodRec[PROPROD.id]
+                                prjprod_id: dbrec.prjprodRec[PRJPROD.id]
                             })
                         },
                         success: (data) => {
                             if (data.result == 'ok') {
                                 let record = new Array(13);
                                 record[0] = 'SEL';
-                                record[PROKIT.id] = data.prokitRec[PROKIT.id];
-                                record[PROKIT.numb] = data.prokitRec[PROKIT.numb];
-                                record[PROKIT.width] = data.prokitRec[PROKIT.width];
-                                record[PROKIT.height] = data.prokitRec[PROKIT.height];
-                                record[PROKIT.color1_id] = data.prokitRec[PROKIT.color1_id];
-                                record[PROKIT.color2_id] = data.prokitRec[PROKIT.color2_id];
-                                record[PROKIT.color3_id] = data.prokitRec[PROKIT.color3_id];
-                                record[PROKIT.artikl_id] = data.prokitRec[KITDET.artikl_id];
-                                record[PROKIT.proprod_id] = data.prokitRec[PROPROD.id];
-                                kits.prokitList.push(record);
+                                record[PRJKIT.id] = data.prjkitRec[PRJKIT.id];
+                                record[PRJKIT.numb] = data.prjkitRec[PRJKIT.numb];
+                                record[PRJKIT.width] = data.prjkitRec[PRJKIT.width];
+                                record[PRJKIT.height] = data.prjkitRec[PRJKIT.height];
+                                record[PRJKIT.color1_id] = data.prjkitRec[PRJKIT.color1_id];
+                                record[PRJKIT.color2_id] = data.prjkitRec[PRJKIT.color2_id];
+                                record[PRJKIT.color3_id] = data.prjkitRec[PRJKIT.color3_id];
+                                record[PRJKIT.artikl_id] = data.prjkitRec[PRJKIT.artikl_id];
+                                record[PRJKIT.prjprod_id] = data.prjkitRec[PRJPROD.id];
+                                dbset.prjkitList.push(record);
+                                console.log(record);
+                                debugger;
                             } else {
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                             }
+                            kits.load_table($("#table1"));
                         },
                         error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

@@ -122,8 +122,8 @@
                     if (dbrec.parent != 'kits') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
-                        let winc = dbrec.wincalcMap.get(proprodID);
+                        let prjprodID = dbrec.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                        let winc = dbrec.wincalcMap.get(prjprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
                         let param = elem.obj.param;
                         if (elem.obj.param == undefined) {
@@ -163,16 +163,16 @@
                             elem.obj.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
-                        let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
-                        proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
-                        let winc2 = win.build(document.querySelector("#cnv2"), proprodRec[PROPROD.script]);
-                        dbrec.wincalcMap.set(proprodID, winc2); //новый экз.
+                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
+                        let winc2 = win.build(document.querySelector("#cnv2"), prjprodRec[PRJPROD.script]);
+                        dbrec.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify({id: proprodID, script: proprodRec[PROPROD.script]})},
-                            success: function (data) {
+                            data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[PRJPROD.script]})},
+                            success: function (data) {PROPROD
                                 if (data.result == 'ok') {
                                     //Запишем выбранную запись в тег страницы
                                     if (product.buttonSrc == 'n14')

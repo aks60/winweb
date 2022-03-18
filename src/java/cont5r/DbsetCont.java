@@ -74,8 +74,8 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.furndetList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
-            } else if (action.equalsIgnoreCase("proprodList")) {
-                JSONObject output = Dbset.proprodList(request, response);
+            } else if (action.equalsIgnoreCase("prjprodList")) {
+                JSONObject output = Dbset.prjprodList(request, response);
                 out.write(JSONObject.toJSONString(output));
 
             } else if (action.equalsIgnoreCase("sysfurnList")) {
@@ -98,8 +98,8 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.updateScript(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
-            } else if (action.equalsIgnoreCase("insertProprod")) {
-                JSONObject output = Dbset.insertProprod(request, response);
+            } else if (action.equalsIgnoreCase("insertPrjprod")) {
+                JSONObject output = Dbset.insertPrjprod(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
             } else if (action.equalsIgnoreCase("insertOrder")) {
@@ -114,12 +114,12 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.deleteProject(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
-            } else if (action.equalsIgnoreCase("deleteProprod")) {
-                JSONObject output = Dbset.deleteProprod(request, response);
+            } else if (action.equalsIgnoreCase("deletePrjprod")) {
+                JSONObject output = Dbset.deletePrjprod(request, response);
                 out.write(JSONObject.toJSONString(output));
 
-            } else if (action.equalsIgnoreCase("prokitList")) {
-                JSONObject output = Dbset.prokitList(request, response);
+            } else if (action.equalsIgnoreCase("prjkitList")) {
+                JSONObject output = Dbset.prjkitList(request, response);
                 out.write(JSONObject.toJSONString(output)); 
                 
             } else if (action.equalsIgnoreCase("userList")) {

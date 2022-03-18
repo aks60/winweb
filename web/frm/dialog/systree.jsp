@@ -64,15 +64,15 @@
                             if (sysprodRec != undefined) {
                                 //Запишем скрипт в серверную базу данных
                                 $.ajax({
-                                    url: 'dbset?action=insertProprod',
+                                    url: 'dbset?action=insertPrjprod',
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
                                             projectID: dbrec.orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
                                     success: (data) => {
                                         if (data.result == 'ok') {
                                             let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
                                                 sysprodRec[SYSPROD.script], dbrec.orderRow.id, sysprodRec[SYSPROD.systree_id]];
-                                            dbset.proprodList.push(record);
-                                            order.add_proprodClone(document.getElementById('table2'), record);
+                                            dbset.prjprodList.push(record);
+                                            order.add_prjprodClone(document.getElementById('table2'), record);
                                         } else
                                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                     },

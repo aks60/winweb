@@ -22,21 +22,22 @@ kits.init_table = function (table) {
 }
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
+    console.log("kits.load_table()");
     table.jqGrid('clearGridData', true);
-    kits.prokitList = dbset.prokitList.filter(rec => dbrec.proprodRec[PROPROD.id] == rec[PROKIT.proprod_id]);
-    for (let i = 0; i < kits.prokitList.length; i++) {
-        let tr = kits.prokitList[i];
-        let artiklRec = findef(dbset.artiklList.find(rec => tr[KITS.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+    kits.prjkitList = dbset.prjkitList.filter(rec => dbrec.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
+    for (let i = 0; i < kits.prjkitList.length; i++) {
+        let tr = kits.prjkitList[i];
+        let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
         table.jqGrid('addRowData', i + 1, {
             id: tr[KITS.id],
             code: artiklRec[ARTIKL.code],
             name: artiklRec[ARTIKL.name],
-            color1_id: findef(dbset.colorList.find(rec => tr[KITS.color1_id] == rec[KITS.id]), dbset.colorList)[COLOR.name],
-            color2_id: findef(dbset.colorList.find(rec => tr[KITS.color2_id] == rec[KITS.id]), dbset.colorList)[COLOR.name],
-            color3_id: findef(dbset.colorList.find(rec => tr[KITS.color3_id] == rec[KITS.id]), dbset.colorList)[COLOR.name],
-            width: tr[KITS.width],
-            height: tr[KITS.height],
-            numb: tr[KITS.numb]
+            color1_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            color2_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            color3_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            width: tr[PRJKIT.width],
+            height: tr[PRJKIT.height],
+            numb: tr[PRJKIT.numb]
         });
     }
     kits.resize();

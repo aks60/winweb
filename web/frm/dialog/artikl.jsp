@@ -63,8 +63,8 @@
                 let pkSet = new Set();
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
-                let winc = dbrec.wincalcMap.get(proprodID);
+                let prjprodID = dbrec.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let winc = dbrec.wincalcMap.get(prjprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
                     if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
@@ -118,10 +118,10 @@
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                     let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                    let proprodID = dbrec.proprodRec[PROPROD.id]; //id proprod заказа
-                    let proprodRec = dbset.proprodList.find(rec => proprodID == rec[PROPROD.id]);
+                    let prjprodID = dbrec.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
 
-                    let winc = dbrec.wincalcMap.get(proprodID);
+                    let winc = dbrec.wincalcMap.get(prjprodID);
                     let elem = winc.elemList.find(it => it.id == elemID);
                     elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
 
@@ -151,14 +151,14 @@
                     }
 
                     //Запишем скрипт в локальн. бд 
-                    proprodRec[PROPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
-                    let winc2 = win.build(winc.cnv, proprodRec[PROPROD.script]);
-                    dbrec.wincalcMap.set(proprodID, winc2); //новый экз.
+                    prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
+                    let winc2 = win.build(winc.cnv, prjprodRec[PRJPROD.script]);
+                    dbrec.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                     //Запишем скрипт в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=updateScript',
-                        data: {param: JSON.stringify({id: proprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
+                        data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                         success: (data) => {
                             if (data.result != 'ok')
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

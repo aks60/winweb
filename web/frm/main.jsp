@@ -34,8 +34,8 @@
                     SYSPROF = {id: 1, prio: 2, use_type: 3, use_side: 4, artikl_id: 5, systree_id: 6},
                     SYSFURN = {id: 1, side_open: 4, hand_pos: 5, furniture_id: 6, artikl_id1: 7, artikl_id2: 8, systree_id: 9},
                     SYSPROD = {id: 1, name: 2, script: 3, systree_id: 4},
-                    PROPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
-                    PROKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, proprod_id: 12},                    
+                    PRJPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
+                    PRJKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, prjprod_id: 12},                    
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
                     ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, owner: 25, propart_id: 27},
@@ -59,8 +59,8 @@
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
 
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {wincalcMap: new Map(), orderRow: null, proprodRec: null, dealerRow: null} 
-                    login = {que_requests: 2}, users = {}, order = {rowid_table1: 1},  product = {}, kits = {};
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {wincalcMap: new Map(), orderRow: null, prjprodRec: null, dealerRow: null} 
+                    login = {que_requests: 2}, users = {}, order = {rowid_table1: 1},  product = {}, kits = {};proprodRec:
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
@@ -92,16 +92,16 @@
         <script type="module">
             import {
             systreeList, sysprodList, colorList,
-                    artiklList, artdetList, furnitureList, furndetList, proprodList, sysfurnList,
+                    artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList, 
-                    kitsList, kitdetList, prokitList
+                    kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
 
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
-                        furndetList(), proprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
-                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prokitList()
+                        furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
+                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
 
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI) => { //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
@@ -111,7 +111,7 @@
                     dbset.artdetList = p5[0].artdetList;
                     dbset.furnitureList = p6[0].furnitureList;
                     dbset.furndetList = p7[0].furndetList;
-                    dbset.proprodList = p8[0].proprodList;
+                    dbset.prjprodList = p8[0].prjprodList;
                     dbset.sysfurnList = p9[0].sysfurnList;
                     dbset.sysprofList = pA[0].sysprofList;
                     dbset.syspar1List = pB[0].syspar1List;
@@ -121,7 +121,7 @@
                     dbset.dealerList = pF[0].dealerList;
                     dbset.kitsList = pG[0].kitsList;
                     dbset.kitdetList = pH[0].kitdetList;
-                    dbset.prokitList = pI[0].prokitList;
+                    dbset.prjkitList = pI[0].prjkitList;
 
                     login.init_login();
 
