@@ -281,7 +281,6 @@ order.card_deploy = function (taq, type) {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                         }
                     });
-
                 }
                 $(this).dialog("close");
             },
