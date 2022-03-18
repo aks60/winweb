@@ -16,14 +16,14 @@
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     resize2();
                 });
-                init_dialog($("#tab-furniture"));
-                init_table($("#tab-furniture"))
-                load_table($("#tab-furniture"))
+                init2_dialog($("#tab-furniture"));
+                init2_table($("#tab-furniture"))
+                load2_table($("#tab-furniture"))
                 resize2(); //баг!
                 resize2();
             });
 //------------------------------------------------------------------------------
-            function init_dialog(table) {
+            function init2_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Фурнитура системы",
@@ -32,7 +32,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            rec_dialog_save(table);
+                            save2_table(table);
                             $(this).dialog("close");
                         },
 
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init_table(table) {
+            function init2_table(table) {
                 table.jqGrid({
                     datatype: "local",
 //                    gridview: true,
@@ -54,13 +54,13 @@
                         {name: 'id', hidden: true, key: true},
                         {name: 'name', width: 360, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        rec_dialog_save(table);
+                        save2_table(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            function load_table(table) {
+            function load2_table(table) {
 
                 table.jqGrid('clearGridData', true);
                 let id = dbrec.proprodRec[SYSPROF.id];
@@ -84,7 +84,7 @@
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            function rec_dialog_save(table) {
+            function save2_table(table) {
 
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника

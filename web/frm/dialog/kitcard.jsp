@@ -14,9 +14,9 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
-                init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
-                load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init2_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
+                init2_table($("#tab1-kitcard"), $("#tab2-kitcard"));
+                load2_table($("#tab1-kitcard"), $("#tab2-kitcard"));
 
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     resize2();
@@ -24,7 +24,7 @@
                 resize2();
             });
 //------------------------------------------------------------------------------
-            function init_dialog(table1, table2) {
+            function init2_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник  комплектов",
                     width: 500,
@@ -32,8 +32,8 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            rec_dialog_save(table2);
-                            kits.load_table($("#table1"));
+                            save2_table(table2);
+                            load2_table(table1, table2);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -43,7 +43,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init_table(table1, table2) {
+            function init2_table(table1, table2) {
                 table1.jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория', 'Название компдекта'],
@@ -85,7 +85,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function load_table(table1, table2) {
+            function load2_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
@@ -99,7 +99,7 @@
                 table1.jqGrid("setSelection", 1);
             };
 //------------------------------------------------------------------------------
-            function rec_dialog_save(table2) {
+            function save2_table(table2) {
                 //try {
                 for (let kitdetRec of dbset.kitdetList) {
                     //Запишем заказ в серверную базу данных

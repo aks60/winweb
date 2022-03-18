@@ -16,13 +16,13 @@
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                    resize2();
                 });
-                init_dialog($("#tab-artikl"));
-                init_table($("#tab-artikl"))
-                load_table($("#tab-artikl"))
+                init2_dialog($("#tab-artikl"));
+                init2_table($("#tab-artikl"))
+                load2_table($("#tab-artikl"))
                 resize2();
             });
 //------------------------------------------------------------------------------
-            function  init_dialog(table) {
+            function  init2_dialog(table) {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник артикулов",
@@ -31,7 +31,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            rec_dialog_save(table);
+                            save2_table(table);
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -41,7 +41,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init_table(table) {
+            function init2_table(table) {
 
                 table.jqGrid({
                     datatype: "local",
@@ -52,13 +52,13 @@
                         {name: 'name', width: 400, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        rec_dialog_save(table);
+                        save2_table(table);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 //------------------------------------------------------------------------------
-            function  load(level_1, level_2) {
+            function  load2_table(level_1, level_2) {
 
                 let pkSet = new Set();
                 let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
@@ -99,21 +99,21 @@
                     }
                     //Ручка
                 } else if (product.buttonSrc == 'n45') {
-                    load(2, 11);
+                    load2_table(2, 11);
 
                     //Подвес
                 } else if (product.buttonSrc == 'n49') {
-                    load(2, 12);
+                    load2_table(2, 12);
 
                     //Замок
                 } else if (product.buttonSrc == 'n4B') {
-                    load(2, 9);
+                    load2_table(2, 9);
 
                 }
                 table.jqGrid("setSelection", 1);
             }
 //------------------------------------------------------------------------------
-            function rec_dialog_save(table) {
+            function save2_table(table) {
                 try {
                     let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let tableRow = table.jqGrid('getRowData', rowid);  //record справочника

@@ -44,14 +44,14 @@
                 });
                 let tab_sysprod = document.getElementById('tab2-systree');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
-                tab_sysprod.addEventListener('click', event_clicked);
-                init_dialog($("#dialog-dic"));
-                init_table($("#tab1-systree"), tab_sysprod);
-                load_table($("#tab1-systree"), tab_sysprod);
+                tab_sysprod.addEventListener('click', event2_clicked);
+                init2_dialog($("#dialog-dic"));
+                init2_table($("#tab1-systree"), tab_sysprod);
+                load2_table($("#tab1-systree"), tab_sysprod);
                 resize2();
             });
 //------------------------------------------------------------------------------
-            function init_dialog(dialogTaq) {
+            function init2_dialog(dialogTaq) {
 
                 dialogTaq.dialog({
                     title: "Конструкции систем профилей",
@@ -90,7 +90,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function init_table(table1, table2) {
+            function init2_table(table1, table2) {
 
                 table1.jqGrid({
                     datatype: "local",
@@ -119,7 +119,7 @@
                                 let sysprodRec = dbset.sysprodList[i];
 
                                 if (sysprodRec != undefined && systreeRec.id == sysprodRec[SYSPROD.systree_id]) {
-                                    add_sysprodClone(table2, sysprodRec);
+                                    add2_sysprodClone(table2, sysprodRec);
                                 }
                             }
                         }
@@ -128,7 +128,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function load_table(table1, table2) {
+            function load2_table(table1, table2) {
 
                 table1.jqGrid('clearGridData', true);
                 $.ajax({
@@ -145,7 +145,7 @@
                 });
             }
 //------------------------------------------------------------------------------
-            function add_sysprodClone(table, sysprodRec) {
+            function add2_sysprodClone(table, sysprodRec) {
 
                 let id = document.createTextNode(sysprodRec[SYSPROD.id]);
                 let name = document.createTextNode(sysprodRec[SYSPROD.name]);
@@ -173,14 +173,14 @@
                 win.build(canvas, script);
             }
 //------------------------------------------------------------------------------
-            function parentTag(node, tag) {
+            function parent2Tag(node, tag) {
                 if (node)
-                    return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
+                    return (node.tagName == tag) ? node : parent2Tag(node.parentElement, tag);
                 return null;
             }
 //------------------------------------------------------------------------------
-            function event_clicked(e) {
-                let row = parentTag(e.target, 'TR');
+            function event2_clicked(e) {
+                let row = parent2Tag(e.target, 'TR');
                 if (row) {
                     let table = this, idx = table.getAttribute('activeRowIndex');
                     table.rows[idx].classList.remove('activeRow');
