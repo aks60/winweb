@@ -37,6 +37,7 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -151,6 +152,26 @@ public class Dbset {
         qProject.insert(record);
         output.put("result", "ok");
         output.put("id", record.getInt(eProject.id));
+        return output;
+    }
+
+    public static JSONObject updateOrder(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONArray obj = (JSONArray) JSONValue.parse(param);
+
+        int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());       
+        Record record = eProject.find(id);
+        record.set(eProject.up, "UPD");
+        record.set(eProject.num_ord, obj.get(eProject.num_ord.ordinal()));
+        record.set(eProject.num_acc, obj.get(eProject.num_acc.ordinal()));
+        record.set(eProject.manager, obj.get(eProject.manager.ordinal()));
+        record.set(eProject.date4, obj.get(eProject.date4.ordinal()));
+        record.set(eProject.date6, obj.get(eProject.date6.ordinal()));
+        record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.ordinal()));
+        Query qProject = new Query(eProject.values());
+        qProject.update(record);
+        output.put("result", "ok");
         return output;
     }
 

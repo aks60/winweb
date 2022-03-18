@@ -32,8 +32,9 @@
                     buttons: {
                         "Выбрать": function () {
                             let rowid = table.jqGrid('getGridParam', "selrow");
-                            dbrec.dealerRow = table.jqGrid('getRowData', rowid);
-                            $('#n25').val(dbrec.dealerRow.partner);
+                            let dealerRow = table.jqGrid('getRowData', rowid);
+                            dbrec.dealerRec = dbset.dealerList.find(rec => dealerRow.id == rec[DEALER.id]);
+                            $('#n25').val(dbrec.dealerRec[DEALER.partner]);
                             $("#dialog-dic").dialog("close");
                         },
                         "Закрыть": function () {
@@ -54,8 +55,9 @@
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        dbrec.dealerRow = table.jqGrid('getRowData', rowid);
-                        $('#n25').val(dbrec.dealerRow.partner);
+                            let dealerRow = table.jqGrid('getRowData', rowid);
+                            dbrec.dealerRec = dbset.dealerList.find(rec => dealerRow.id == rec[DEALER.id]);
+                        $('#n25').val(dbrec.dealerRec[DEALER.partner]);
                         $("#dialog-dic").dialog("close");
                     }
                 });

@@ -46,7 +46,7 @@ export function furndetList() {
         url: 'dbset?action=furndetList',
     });
 }
-//---------------------------  PROPROD  ----------------------------------------
+//---------------------------  PRJPROD  ----------------------------------------
 export function prjprodList() {
     return  $.ajax({
         url: 'dbset?action=prjprodList',
@@ -100,7 +100,7 @@ export function kitdetList() {
         url: 'dbset?action=kitdetList',
     });
 }
-//----------------------------  PROKIT  ---------------------------------------
+//----------------------------  PRJKIT  ---------------------------------------
 export function prjkitList() {
     return  $.ajax({
         url: 'dbset?action=prjkitList',

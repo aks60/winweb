@@ -71,8 +71,8 @@
         </div>     
         <div id = "context">     
             <div id="dialog-card" card_title="Карточка ввода нового заказа" card_width="416" card_height="230" style="display: none;">
-                <jst id="n21" type='txt' label='Номер заказа' width='80' width2="80"></jst><br>
-                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="80"></jst><br>
+                <jst id="n21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>
+                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
                 <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
                 <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" click="$('#dialog-dic').load('frm/dialog/dealer.jsp');"></jst><br>

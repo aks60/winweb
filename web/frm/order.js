@@ -18,7 +18,7 @@ order.init_table = function (table1, table2) {
         ],
         onSelectRow: function (rowid) {
             //==================================================================
-            dbrec.orderRow = table1.jqGrid('getRowData', rowid); 
+            dbrec.orderRow = table1.jqGrid('getRowData', rowid);
             dbrec.prjprodRec = null;
             //==================================================================
             dbrec.wincalcMap.clear()
@@ -67,7 +67,7 @@ order.load_table = function (table1, table2) {
             num_acc: tr[ORDER.num_acc],
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
-            partner: findef(dbset.dealerList.find(rec => tr[ORDER.propart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
             manager: tr[ORDER.manager]
         });
     }
@@ -193,9 +193,9 @@ order.click_table2 = function (e) {
         table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
-        let prjprodID = row.cells[0].innerHTML;  
+        let prjprodID = row.cells[0].innerHTML;
         //======================================================================
-        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));  
+        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
         //======================================================================
         let script = dbrec.prjprodRec[PRJPROD.script];
     }
@@ -203,23 +203,31 @@ order.click_table2 = function (e) {
 //------------------------------------------------------------------------------
 //Карточка ввода заказов
 order.card_deploy = function (taq, type) {
-    //debugger;
 
-    if (type == 'INS') {
-        //Открытие диалога insert
-        $(taq).dialog({
-            title: $(taq).attr('card_title'),
-            width: $(taq).attr('card_width'),
-            height: $(taq).attr('card_height'),
-            modal: true,
-            resizable: false,
-            buttons: {
-                "Применить": function () {
+    let orderRec = dbset.orderList.find(rec => dbrec.orderRow.id = rec[ORDER.id]);
+    dbrec.dealerRec = dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]);
+
+    $("#n21").val(dbrec.orderRow.num_ord);
+    $("#n22").val(dbrec.orderRow.num_acc);
+    $("#n23").val(dbrec.orderRow.date4);
+    $("#n24").val(dbrec.orderRow.date6);
+    $("#n25").val(dbrec.dealerRec[DEALER.partner]);
+
+    //Открытие диалога insert
+    $(taq).dialog({
+        title: $(taq).attr('card_title'),
+        width: $(taq).attr('card_width'),
+        height: $(taq).attr('card_height'),
+        modal: true,
+        resizable: false,
+        buttons: {
+            "Применить": function () {
+                if (type == 'INS') {
                     //Запишем заказ в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=insertOrder',
                         data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: dbrec.dealerRow.id})},
+                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: dbrec.dealerRec[DEALER.id]})},
                         success: (data) => {
 
                             if (data.result == 'ok') {
@@ -232,7 +240,7 @@ order.card_deploy = function (taq, type) {
                                 record[ORDER.date4] = $("#n23").val();
                                 record[ORDER.date6] = $("#n24").val();
                                 record[ORDER.owner] = login.data.user_name;
-                                record[ORDER.propart_id] = dbrec.dealerRow.id;
+                                record[ORDER.prjpart_id] = dbrec.dealerRec[DEALER.id];
                                 dbset.orderList.push(record);
                                 order.load_table($("#table1"));
                             } else
@@ -242,14 +250,46 @@ order.card_deploy = function (taq, type) {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                         }
                     });
-                    $(this).dialog("close");
-                },
-                "Отменить": function () {
-                    $(this).dialog("close");
+                } else if (type == 'UPD') {
+                    orderRec[0] = 'SEL';
+                    orderRec[ORDER.num_ord] = $("#n21").val();
+                    orderRec[ORDER.num_acc] = $("#n22").val();
+                    orderRec[ORDER.manager] = login.data.user_fio;
+                    orderRec[ORDER.date4] = $("#n23").val();
+                    orderRec[ORDER.date6] = $("#n24").val();
+                    orderRec[ORDER.owner] = login.data.user_name;
+                    orderRec[ORDER.prjpart_id] = dbrec.dealerRec[DEALER.id];
+                    $.ajax({
+                        url: 'dbset?action=updateOrder',
+                        data: {param: JSON.stringify(orderRec)},
+                        success: (data) => {
+                            if (data.result == 'ok') {
+                                let rowid = $('#table1').jqGrid('getGridParam', "selrow");
+                                $('#table1').jqGrid('setRowData', rowid, {
+                                    id: orderRec[ORDER.id],
+                                    num_ord: orderRec[ORDER.num_ord],
+                                    num_acc: orderRec[ORDER.num_acc],
+                                    date4: orderRec[ORDER.date4],
+                                    date6: orderRec[ORDER.date6],
+                                    partner: dbrec.dealerRec[DEALER.partner],
+                                    manager: orderRec[ORDER.manager]
+                                });
+                            } else
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        }
+                    });
+
                 }
+                $(this).dialog("close");
+            },
+            "Отменить": function () {
+                $(this).dialog("close");
             }
-        });
-    }
+        }
+    });
 }
 //------------------------------------------------------------------------------
 

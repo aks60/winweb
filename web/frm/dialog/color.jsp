@@ -172,7 +172,7 @@
                         $.ajax({
                             url: 'dbset?action=updateScript',
                             data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[PRJPROD.script]})},
-                            success: function (data) {PROPROD
+                            success: function (data) {
                                 if (data.result == 'ok') {
                                     //Запишем выбранную запись в тег страницы
                                     if (product.buttonSrc == 'n14')
