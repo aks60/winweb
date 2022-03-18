@@ -214,12 +214,12 @@ order.card_deploy = function (taq, type) {
             modal: true,
             resizable: false,
             buttons: {
-                "Добавить": function () {
+                "Применить": function () {
                     //Запишем заказ в серверную базу данных
                     $.ajax({
                         url: 'dbset?action=insertOrder',
                         data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), propart_id: dbrec.dealerRow.id})},
+                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: dbrec.dealerRow.id})},
                         success: (data) => {
 
                             if (data.result == 'ok') {

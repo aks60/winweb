@@ -31,7 +31,7 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            let sysprodID = -1;            
+            var sysprodID = -1;            
 //------------------------------------------------------------------------------            
             function resize() {
                 $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
