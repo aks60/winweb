@@ -34,12 +34,11 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save_table(table2);                            
-                            //$(this).dialog("close");
+                            save_table(table2);
+                            $(this).dialog("close");
                         },
                         "Закрыть": function () {
-                            kits.load_table($("#table1"));
-                            //$(this).dialog("close");
+                            $(this).dialog("close");
                         }
                     }
                 });
@@ -99,52 +98,51 @@
                     });
                 }
                 table1.jqGrid("setSelection", 1);
-            };
+            }
+            ;
 //------------------------------------------------------------------------------
             function save_table(table2) {
-                //try {
-                for (let kitdetRec of kitdetList) {
-                    //Запишем заказ в серверную базу данных
-                    $.ajax({
-                        url: 'dbset?action=insertKits',
-                        data: {
-                            param: JSON.stringify({
-                                color1_id: kitdetRec[KITDET.color1_id],
-                                color2_id: kitdetRec[KITDET.color2_id],
-                                color3_id: kitdetRec[KITDET.color3_id],
-                                artikl_id: kitdetRec[KITDET.artikl_id],
-                                prjprod_id: dbrec.prjprodRec[PRJPROD.id]
-                            })
-                        },
-                        success: (data) => {
-                            if (data.result == 'ok') {
-                                let record = new Array(13);
-                                record[0] = 'SEL';
-                                record[PRJKIT.id] = data.prjkitRec[PRJKIT.id];
-                                record[PRJKIT.numb] = data.prjkitRec[PRJKIT.numb];
-                                record[PRJKIT.width] = data.prjkitRec[PRJKIT.width];
-                                record[PRJKIT.height] = data.prjkitRec[PRJKIT.height];
-                                record[PRJKIT.color1_id] = data.prjkitRec[PRJKIT.color1_id];
-                                record[PRJKIT.color2_id] = data.prjkitRec[PRJKIT.color2_id];
-                                record[PRJKIT.color3_id] = data.prjkitRec[PRJKIT.color3_id];
-                                record[PRJKIT.artikl_id] = data.prjkitRec[PRJKIT.artikl_id];
-                                record[PRJKIT.prjprod_id] = data.prjkitRec[PRJPROD.id];
-                                dbset.prjkitList.push(record);
-                                console.log(record);
-                                debugger;
-                            } else {
+                try {
+                    for (let kitdetRec of kitdetList) {
+                        //Запишем заказ в серверную базу данных
+                        $.ajax({
+                            url: 'dbset?action=insertKits',
+                            data: {
+                                param: JSON.stringify({
+                                    color1_id: kitdetRec[KITDET.color1_id],
+                                    color2_id: kitdetRec[KITDET.color2_id],
+                                    color3_id: kitdetRec[KITDET.color3_id],
+                                    artikl_id: kitdetRec[KITDET.artikl_id],
+                                    prjprod_id: dbrec.prjprodRec[PRJPROD.id]
+                                })
+                            },
+                            success: (data) => {
+                                if (data.result == 'ok') {
+                                    let record = new Array(13);
+                                    record[0] = 'SEL';
+                                    record[PRJKIT.id] = data.prjkitRec[PRJKIT.id];
+                                    record[PRJKIT.numb] = data.prjkitRec[PRJKIT.numb];
+                                    record[PRJKIT.width] = data.prjkitRec[PRJKIT.width];
+                                    record[PRJKIT.height] = data.prjkitRec[PRJKIT.height];
+                                    record[PRJKIT.color1_id] = data.prjkitRec[PRJKIT.color1_id];
+                                    record[PRJKIT.color2_id] = data.prjkitRec[PRJKIT.color2_id];
+                                    record[PRJKIT.color3_id] = data.prjkitRec[PRJKIT.color3_id];
+                                    record[PRJKIT.artikl_id] = data.prjkitRec[PRJKIT.artikl_id];
+                                    record[PRJKIT.prjprod_id] = data.prjkitRec[PRJKIT.prjprod_id];
+                                    dbset.prjkitList.push(record);
+                                } else {
+                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                }
+                                kits.load_table($("#table1"));
+                            },
+                            error: () => {
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                             }
-                            kits.load_table($("#table1"));
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        }
-                    });
+                        });
+                    }
+                } catch (e) {
+                    console.error("Ошибка:kitcard.save_table() " + e.message);
                 }
-                //} catch (e) {
-                //    console.error("Ошибка:kitcard.rec_dialog_save() " + e.message);
-                //}                
             }
 //------------------------------------------------------------------------------
         </script>         

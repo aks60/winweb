@@ -22,7 +22,6 @@ kits.init_table = function (table) {
 }
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
-    console.log("kits.load_table()");
     table.jqGrid('clearGridData', true);
     kits.prjkitList = dbset.prjkitList.filter(rec => dbrec.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
     for (let i = 0; i < kits.prjkitList.length; i++) {
@@ -41,5 +40,47 @@ kits.load_table = function (table) {
         });
     }
     kits.resize();
+}
+//------------------------------------------------------------------------------
+kits.delete_record = function (table) {
+
+    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущую запись?");
+    $("#dialog-mes").dialog({
+        title: "Подтверждение",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Да": function () {
+                let rowid = table.jqGrid('getGridParam', "selrow");
+                let prjkitID = table.jqGrid('getRowData', rowid).id;
+                $.ajax({
+                    url: 'dbset?action=deletePrjkit',
+                    data: {param: JSON.stringify({id: prjkitID})},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            table.jqGrid("delRowData", rowid);
+                            for(let i = 0; i < dbset.prjkitList.length; ++i) {
+                                if(prjkitID == dbset.prjkitList[i][PRJKIT.id]) {
+                                   dbset.prjkitList.splise(i, 1); 
+                                }
+                            }
+                            
+                        } else
+                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            Нет: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 }
 //------------------------------------------------------------------------------

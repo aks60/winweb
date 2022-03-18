@@ -32,7 +32,7 @@
             <button id="btnKit1" style="width: 160px" onClick="$('#dialog-dic').load('frm/dialog/kitcard.jsp');">Добавить комплект</button>
             <button id="btnKit2" style="width: 160px" onClick="">Добавить артикул</button>
             <button id="btnKit3" style="width: 160px" onClick="">Изменить запись</button>
-            <button id="btnKit4" style="width: 160px" onClick="">Удалить запись</button>            
+            <button id="btnKit4" style="width: 160px" onClick="kits.delete_record($('#table1'));">Удалить запись</button>            
         </div> 
         <div id = "context">              
             <div id="centr" style="height: 100%">

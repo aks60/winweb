@@ -207,6 +207,18 @@ public class Dbset {
         return output;
     }
 
+    public static JSONObject deletePrjkit(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject output = new JSONObject();
+        String param = request.getParameter("param");
+        JSONObject obj = (JSONObject) JSONValue.parse(param);
+        Query qPrjkit = new Query(ePrjkit.values());
+        Record record = ePrjkit.up.newRecord("DEL");
+        record.set(ePrjkit.id, obj.get("id"));
+        qPrjkit.delete(record);
+        output.put("result", "ok");
+        return output;
+    }
+
     public static JSONObject deletePrjprod(HttpServletRequest request, HttpServletResponse response) {
         JSONObject output = new JSONObject();
         String param = request.getParameter("param");
