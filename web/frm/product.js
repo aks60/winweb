@@ -43,7 +43,7 @@ product.load_table = function (table1) {
             fixed: syspar1Rec[SYSPAR1.fixed]
         });
     }
-    table1.jqGrid("setSelection", product.rowid_table1);
+    table1.jqGrid("setSelection", 1);
     product.resize();
 }
 //------------------------------------------------------------------------------

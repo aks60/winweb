@@ -6,7 +6,7 @@ order.init_table = function (table1, table2) {
         rownumbers: true,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User'],
+        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User', 'prjpart_id'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
@@ -14,12 +14,12 @@ order.init_table = function (table1, table2) {
             {name: 'date4', width: 80, sorttype: "text"},
             {name: 'date6', width: 80, sorttype: "text"},
             {name: 'partner', width: 220, sorttype: "text"},
-            {name: 'manager', width: 120, sorttype: "text"}
+            {name: 'manager', width: 120, sorttype: "text"},
+            {name: 'prjpart_id', hidden: true}
         ],
         onSelectRow: function (rowid) {
             //==================================================================
             dbrec.orderRow = table1.jqGrid('getRowData', rowid);
-            dbrec.prjprodRec = null;
             //==================================================================
             dbrec.wincalcMap.clear()
             let j = 1;
@@ -54,12 +54,13 @@ order.init_table = function (table1, table2) {
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
 
+    let rowID = 1;
     table1.jqGrid('clearGridData', true);
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
-        if (dbrec.orderRow != undefined && tr[ORDER.id] == order.orderRowd) {
-            order.rowid_table1 = i + 1;
+        if (tr[ORDER.id] == order.orderID) {
+            rowID  = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
@@ -68,14 +69,16 @@ order.load_table = function (table1, table2) {
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
             partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-            manager: tr[ORDER.manager]
+            manager: tr[ORDER.manager],
+            prjpart_id: tr[ORDER.prjpart_id]
         });
     }
-    table1.jqGrid("setSelection", order.rowid_table1);
+    table1.jqGrid("setSelection", rowID);
     order.resize();
 }
 //------------------------------------------------------------------------------
-order.delete_table1 = function (table1) {
+order.delete_table1 = function (table1) {    
+    let orderRow = getSelectedRow(table); 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущий заказ?");
     $("#dialog-mes").dialog({
@@ -88,10 +91,10 @@ order.delete_table1 = function (table1) {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deleteProject',
-                    data: {param: JSON.stringify({id: dbrec.orderRow.id})},
+                    data: {param: JSON.stringify({id: orderRow.id})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let rowid = table1.jqGrid('getGridParam', "selrow");
+                            
                             if (rowid != null)
                                 table1.jqGrid('delRowData', rowid);
                         } else

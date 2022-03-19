@@ -188,7 +188,7 @@ function prepareToolBar() {
     $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
     $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
-    
+
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
 //------------------------------------------------------------------------------
@@ -337,5 +337,10 @@ function findef(find, def) {
             return new Array(def[0].length);
         }
     }
+}
+//------------------------------------------------------------------------------    
+function getSelectedRow(table) {
+    let rowid = table.jqGrid('getGridParam', "selrow");
+    return table.jqGrid('getRowData', rowid);
 }
 //------------------------------------------------------------------------------            

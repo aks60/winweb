@@ -75,7 +75,7 @@
                 <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
                 <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
-                <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" click="$('#dialog-dic').load('frm/dialog/dealer.jsp');"></jst><br>
+                <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fr="-3" click="$('#dialog-dic').load('frm/dialog/dealer.jsp');"></jst><br>
             </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%"> 
 
