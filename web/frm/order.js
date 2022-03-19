@@ -22,7 +22,7 @@ order.init_table = function (table1, table2) {
         onSelectRow: function (rowid) {
             let orderRow = table1.jqGrid('getRowData', rowid);
             order.orderID = orderRow.id
-            dbrec.wincalcMap.clear()
+            order.wincalcMap.clear()
             //Очистим таблицу конструкций
             let j = 1;
             let rc = table2.rows.length;
@@ -39,7 +39,7 @@ order.init_table = function (table1, table2) {
                     order.add_prjprodRec(table2, rec);
 
                     //Выделение строки табл. конструкций
-                    if (dbrec.prjprodRec != null && dbrec.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
+                    if (order.prjprodRec != null && order.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
                         prjprodID = rec[PRJPROD.id];
                         
                     } else if (prjprodID == null) {
@@ -69,7 +69,7 @@ order.click_table2 = function (e) {
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
         
-        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
+        order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
 }
 //------------------------------------------------------------------------------
@@ -148,10 +148,10 @@ order.delete_table2 = function () {
             "Да": function () {
                 $.ajax({
                     url: 'dbset?action=deletePrjprod',
-                    data: {param: JSON.stringify({id: dbrec.prjprodRec[PRJPROD.id]})},
+                    data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let id = 'tr' + dbrec.prjprodRec[PRJPROD.id];
+                            let id = 'tr' + order.prjprodRec[PRJPROD.id];
                             var trow = document.getElementById(id);
                             trow.remove();
                         } else
@@ -184,7 +184,7 @@ order.add_prjprodRec = function (table2, prjprodRec) {
     let iwincalc = win.build(canvas, script);
 
     //Массив объектов winc
-    dbrec.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
+    order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');

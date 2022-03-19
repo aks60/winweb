@@ -122,8 +122,8 @@
                     if (dbrec.parent != 'kits') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = dbrec.prjprodRec[PRJPROD.id]; //id prjprod заказа
-                        let winc = dbrec.wincalcMap.get(prjprodID);
+                        let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                        let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
                         let param = elem.obj.param;
                         if (elem.obj.param == undefined) {
@@ -166,7 +166,7 @@
                         let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
                         prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                         let winc2 = win.build(document.querySelector("#cnv2"), prjprodRec[PRJPROD.script]);
-                        dbrec.wincalcMap.set(prjprodID, winc2); //новый экз.
+                        order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({

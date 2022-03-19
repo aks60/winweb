@@ -18,8 +18,8 @@
                 if (cvs != undefined) {
                     cvs.width = $("#centr").width() - 4;
                     cvs.height = $("#centr").height() - 4;
-                    if (dbrec.prjprodRec != null)
-                        win.build(cvs, dbrec.prjprodRec[PRJPROD.script]);
+                    if (order.prjprodRec != null)
+                        win.build(cvs, order.prjprodRec[PRJPROD.script]);
                 }
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
@@ -39,7 +39,7 @@
                 }).trigger('resize');
 
                 product.init_table($('#table1'));
-                if (dbrec.prjprodRec != null)
+                if (order.prjprodRec != null)
                     product.load_tree($('#tree-winc'));
                 $("button").button();
                 prepareToolBar();

@@ -23,7 +23,7 @@ kits.init_table = function (table) {
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
-    kits.prjkitList = dbset.prjkitList.filter(rec => dbrec.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
+    kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
     for (let i = 0; i < kits.prjkitList.length; i++) {
         let tr = kits.prjkitList[i];
         let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);

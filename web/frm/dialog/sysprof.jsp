@@ -60,8 +60,8 @@
             function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = dbrec.prjprodRec[SYSPROF.id];
-                let winc = dbrec.wincalcMap.get(id);
+                let id = order.prjprodRec[SYSPROF.id];
+                let winc = order.wincalcMap.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
@@ -81,9 +81,9 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = dbrec.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
 
-                let winc = dbrec.wincalcMap.get(prjprodID);
+                let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 if (elem.obj.param == undefined) {
                     elem.obj.param = {};
@@ -100,7 +100,7 @@
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
                 prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
-                dbrec.wincalcMap.set(prjprodID, iwincalc); //новый экз.
+                order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({
