@@ -58,7 +58,7 @@
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
 
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {wincalcMap: new Map(), orderRow: null, prjprodRec: null} 
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {wincalcMap: new Map(), prjprodRec: null} 
                     login = {que_requests: 2}, users = {}, order = {orderID: 16767},  product = {}, kits = {};
 
             $(document).ready(function () {

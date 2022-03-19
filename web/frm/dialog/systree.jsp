@@ -60,17 +60,18 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
+                            let orderRow = getSelectedRow($("#table1"));
                             let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {
                                 //Запишем скрипт в серверную базу данных
                                 $.ajax({
                                     url: 'dbset?action=insertPrjprod',
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
-                                            projectID: dbrec.orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
+                                            projectID: orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
                                     success: (data) => {
                                         if (data.result == 'ok') {
                                             let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
-                                                sysprodRec[SYSPROD.script], dbrec.orderRow.id, sysprodRec[SYSPROD.systree_id]];
+                                                sysprodRec[SYSPROD.script], orderRow.id, sysprodRec[SYSPROD.systree_id]];
                                             dbset.prjprodList.push(record);
                                             order.add_prjprodClone(document.getElementById('table2'), record);
                                         } else

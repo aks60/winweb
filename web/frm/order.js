@@ -17,30 +17,37 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"},
             {name: 'prjpart_id', hidden: true}
         ],
+
+        //Загрузка таблицы 2
         onSelectRow: function (rowid) {
-            //==================================================================
-            dbrec.orderRow = table1.jqGrid('getRowData', rowid);
-            //==================================================================
+            let orderRow = table1.jqGrid('getRowData', rowid);
             dbrec.wincalcMap.clear()
+            //Очистим таблицу конструкций
             let j = 1;
             let rc = table2.rows.length;
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
+            //Заполним табл. конструкций
             let prjprodID = null;
             for (let i = 0; i < dbset.prjprodList.length; i++) {
-                let prjprodRec = dbset.prjprodList[i];
 
-                if (dbrec.orderRow.id == prjprodRec[PRJPROD.project_id]) {
-                    order.add_prjprodClone(table2, prjprodRec);
-                    if (prjprodID == null) {
+                let prjprodRec = dbset.prjprodList[i];
+                //Фильтр конструкций заказа по ключу orderRow.id
+                if (orderRow.id == prjprodRec[PRJPROD.project_id]) {
+
+                    //Новая запись в таблице конструкций
+                    order.add_prjprodRec(table2, prjprodRec);
+
+                    if (prjprodID == null) { //ID первой строки табл. конструкций
                         prjprodID = prjprodRec[PRJPROD.id];
                     }
                 }
             }
-            if (prjprodID != null && dbrec.prjprodRec != undefined) {
+            //Выделение строки табл. конструкций
+            if (dbrec.prjprodRec != undefined) {
                 let id = 'cnv' + dbrec.prjprodRec[PRJPROD.id];
-                document.getElementById(id).click();
+                document.getElementById(id).click(); //
 
             } else if (prjprodID != null) {
                 let id = 'cnv' + prjprodID;
@@ -51,6 +58,20 @@ order.init_table = function (table1, table2) {
     });
     order.resize();
 }
+order.click_table2 = function (e) {
+    let row = (e.target.tagName == 'TR') ? e.target : order.taq_parent(e.target.parentElement, 'TR');
+    if (row) {
+        let table = this;
+        let idx = table.getAttribute('activeRowIndex');
+        table.rows[idx].classList.remove('activeRow');
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', row.rowIndex);
+        let prjprodID = row.cells[0].innerHTML;
+
+        //Выделенная строка заказа
+        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
+    }
+}
 //------------------------------------------------------------------------------
 order.load_table = function (table1, table2) {
 
@@ -60,7 +81,7 @@ order.load_table = function (table1, table2) {
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
         if (tr[ORDER.id] == order.orderID) {
-            rowID  = i + 1;
+            rowID = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
@@ -77,8 +98,8 @@ order.load_table = function (table1, table2) {
     order.resize();
 }
 //------------------------------------------------------------------------------
-order.delete_table1 = function (table1) {    
-    let orderRow = getSelectedRow(table); 
+order.delete_table1 = function (table1) {
+    let orderRow = getSelectedRow(table);
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущий заказ?");
     $("#dialog-mes").dialog({
@@ -94,7 +115,7 @@ order.delete_table1 = function (table1) {
                     data: {param: JSON.stringify({id: orderRow.id})},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            
+
                             if (rowid != null)
                                 table1.jqGrid('delRowData', rowid);
                         } else
@@ -149,7 +170,7 @@ order.delete_table2 = function () {
     });
 }
 //------------------------------------------------------------------------------
-order.add_prjprodClone = function (table2, prjprodRec) {
+order.add_prjprodRec = function (table2, prjprodRec) {
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
@@ -182,39 +203,18 @@ order.add_prjprodClone = function (table2, prjprodRec) {
 
 }
 //------------------------------------------------------------------------------
-order.taq_parent = function (node, tag) {
-    if (node)
-        return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
-    return null;
-}
-order.click_table2 = function (e) {
-
-    let row = order.taq_parent(e.target, 'TR');
-    if (row) {
-        let table = this;
-        let idx = table.getAttribute('activeRowIndex');
-        table.rows[idx].classList.remove('activeRow');
-        row.classList.add('activeRow');
-        table.setAttribute('activeRowIndex', row.rowIndex);
-        let prjprodID = row.cells[0].innerHTML;
-        //======================================================================
-        dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
-        //======================================================================
-        let script = dbrec.prjprodRec[PRJPROD.script];
-    }
-}
-//------------------------------------------------------------------------------
 //Карточка ввода заказов
 order.card_deploy = function (taq, type) {
 
-    let orderRec = dbset.orderList.find(rec => dbrec.orderRow.id = rec[ORDER.id]);
-    dbrec.dealerRec = dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]);
+    let orderRow = getSelectedRow($("#table1"));
+    let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
 
-    $("#n21").val(dbrec.orderRow.num_ord);
-    $("#n22").val(dbrec.orderRow.num_acc);
-    $("#n23").val(dbrec.orderRow.date4);
-    $("#n24").val(dbrec.orderRow.date6);
-    $("#n25").val(dbrec.dealerRec[DEALER.partner]);
+    $("#n21").val(orderRow.num_ord);
+    $("#n22").val(orderRow.num_acc);
+    $("#n23").val(orderRow.date4);
+    $("#n24").val(orderRow.date6);
+    $("#n25").val(orderRow.partner);
+    $("#n25").attr("fk", orderRow.prjpart_id);
 
     //Открытие диалога insert
     $(taq).dialog({
@@ -230,7 +230,7 @@ order.card_deploy = function (taq, type) {
                     $.ajax({
                         url: 'dbset?action=insertOrder',
                         data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: dbrec.dealerRec[DEALER.id]})},
+                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: $("#n25").attr("fk")})},
                         success: (data) => {
 
                             if (data.result == 'ok') {
@@ -243,7 +243,7 @@ order.card_deploy = function (taq, type) {
                                 record[ORDER.date4] = $("#n23").val();
                                 record[ORDER.date6] = $("#n24").val();
                                 record[ORDER.owner] = login.data.user_name;
-                                record[ORDER.prjpart_id] = dbrec.dealerRec[DEALER.id];
+                                record[ORDER.prjpart_id] = $("#n25").attr("fk");
                                 dbset.orderList.push(record);
                                 order.load_table($("#table1"));
                             } else
@@ -261,7 +261,7 @@ order.card_deploy = function (taq, type) {
                     orderRec[ORDER.date4] = $("#n23").val();
                     orderRec[ORDER.date6] = $("#n24").val();
                     orderRec[ORDER.owner] = login.data.user_name;
-                    orderRec[ORDER.prjpart_id] = dbrec.dealerRec[DEALER.id];
+                    orderRec[ORDER.prjpart_id] = $("#n24").attr("fk");
                     $.ajax({
                         url: 'dbset?action=updateOrder',
                         data: {param: JSON.stringify(orderRec)},
@@ -274,7 +274,7 @@ order.card_deploy = function (taq, type) {
                                     num_acc: orderRec[ORDER.num_acc],
                                     date4: orderRec[ORDER.date4],
                                     date6: orderRec[ORDER.date6],
-                                    partner: dbrec.dealerRec[DEALER.partner],
+                                    partner: orderRec.prjpart_id,
                                     manager: orderRec[ORDER.manager]
                                 });
                             } else
