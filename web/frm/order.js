@@ -21,6 +21,7 @@ order.init_table = function (table1, table2) {
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
             let orderRow = table1.jqGrid('getRowData', rowid);
+            order.orderID = orderRow.id
             dbrec.wincalcMap.clear()
             //Очистим таблицу конструкций
             let j = 1;
@@ -28,38 +29,38 @@ order.init_table = function (table1, table2) {
             for (let i = j; i < rc; i++) {
                 table2.deleteRow(j);
             }
-            //Заполним табл. конструкций
-            let prjprodID = null;
-            for (let i = 0; i < dbset.prjprodList.length; i++) {
-
-                let prjprodRec = dbset.prjprodList[i];
-                //Фильтр конструкций заказа по ключу orderRow.id
-                if (orderRow.id == prjprodRec[PRJPROD.project_id]) {
-
+            //Заполним табл. конструкций            
+            let prjprodList = dbset.prjprodList.filter(rec => orderRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
+            if (prjprodList != undefined) {
+                let prjprodID = null;
+                for (let rec of prjprodList) {
+                    
                     //Новая запись в таблице конструкций
-                    order.add_prjprodRec(table2, prjprodRec);
+                    order.add_prjprodRec(table2, rec);
 
-                    if (prjprodID == null) { //ID первой строки табл. конструкций
-                        prjprodID = prjprodRec[PRJPROD.id];
+                    //Выделение строки табл. конструкций
+                    if (dbrec.prjprodRec != null && dbrec.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
+                        prjprodID = rec[PRJPROD.id];
+                        
+                    } else if (prjprodID == null) {
+                        prjprodID = rec[PRJPROD.id]; //первая конструкция
                     }
                 }
-            }
-            //Выделение строки табл. конструкций
-            if (dbrec.prjprodRec != undefined) {
-                let id = 'cnv' + dbrec.prjprodRec[PRJPROD.id];
-                document.getElementById(id).click(); //
-
-            } else if (prjprodID != null) {
-                let id = 'cnv' + prjprodID;
-                document.getElementById(id).click();
+                document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
             }
             $('#table2 tr > *:nth-child(1)').hide();
         }
     });
     order.resize();
 }
+order.taq_parent = function (node, tag) { //рекурсия
+    if (node)
+        return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
+    return null;
+}
 order.click_table2 = function (e) {
-    let row = (e.target.tagName == 'TR') ? e.target : order.taq_parent(e.target.parentElement, 'TR');
+
+    let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
         let idx = table.getAttribute('activeRowIndex');
@@ -67,8 +68,7 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-
-        //Выделенная строка заказа
+        
         dbrec.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
 }

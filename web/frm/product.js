@@ -110,7 +110,7 @@ product.elements = function (com, arr) {
 //-------------------  Загрузка свойств конструкции  ---------------------------
 product.server_to_fields = function () {
     try {
-        if (dbrec.prjprodRec != undefined) {
+        if (dbrec.prjprodRec != null) {
             let prjprodID = dbrec.prjprodRec[PRJPROD.id];
             if (prjprodID != undefined) {
                 $.ajax({
