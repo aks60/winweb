@@ -142,7 +142,6 @@ order.delete_table1 = function (table) {
 //------------------------------------------------------------------------------
 //Удаление строки таблицы
 order.delete_table2 = function () {
-    debugger;
     if (order.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -291,8 +290,8 @@ order.insert_table1 = function (taq) {
 order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
-console.log(orderRec);
+    let orderRec = dbset.orderList.find(rec => orderRow.id == rec[ORDER.id]);
+
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
@@ -309,7 +308,7 @@ console.log(orderRec);
         buttons: {
             "Применить": function () {
 
-                orderRec[0] = 'SEL';
+                orderRec[0] = 'UPD';
                 orderRec[ORDER.num_ord] = $("#n21").val();
                 orderRec[ORDER.num_acc] = $("#n22").val();
                 orderRec[ORDER.manager] = login.data.user_fio;
@@ -317,7 +316,6 @@ console.log(orderRec);
                 orderRec[ORDER.date6] = $("#n24").val();
                 orderRec[ORDER.owner] = login.data.user_name;
                 orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
-                console.log(orderRec);
                 $.ajax({
                     url: 'dbset?action=updateOrder',
                     data: {param: JSON.stringify(orderRec)},

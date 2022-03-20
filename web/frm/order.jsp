@@ -57,7 +57,7 @@
                 $('#n24').datepicker();
             });
 //------------------------------------------------------------------------------            
-            function test() {                
+            function test() {
             }
         </script>
     </head>
@@ -68,7 +68,7 @@
             <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frm/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>                        
-            <button id="btnProd3" style="width: 128px" onClick="alert($('#table2 tr.activeRow').attr('id').slice(2));">TEST</button>                        
+            <button id="btnProd3" style="width: 128px" onClick="test();">TEST</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card" card_title="Карточка ввода нового заказа" card_width="416" card_height="230" style="display: none;">
