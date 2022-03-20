@@ -1,4 +1,5 @@
 //------------------------------------------------------------------------------
+//Инициализация таблицы
 order.init_table = function (table1, table2) {
     table1.jqGrid({
         datatype: "local",
@@ -34,14 +35,13 @@ order.init_table = function (table1, table2) {
             if (prjprodList != undefined) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
-                    
-                    //Новая запись в таблице конструкций
-                    order.add_prjprodRec(table2, rec);
 
+                    //Новая запись в таблице конструкций
+                    order.add_prjprod(table2, rec);
                     //Выделение строки табл. конструкций
                     if (order.prjprodRec != null && order.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
                         prjprodID = rec[PRJPROD.id];
-                        
+
                     } else if (prjprodID == null) {
                         prjprodID = rec[PRJPROD.id]; //первая конструкция
                     }
@@ -59,7 +59,6 @@ order.taq_parent = function (node, tag) { //рекурсия
     return null;
 }
 order.click_table2 = function (e) {
-
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
@@ -68,11 +67,15 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        
+
         order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
 }
+order.getSelectedRow = function () {
+    
+}
 //------------------------------------------------------------------------------
+//Загрузка данных в таблицу
 order.load_table = function (table1, table2) {
 
     let rowID = 1;
@@ -98,79 +101,95 @@ order.load_table = function (table1, table2) {
     order.resize();
 }
 //------------------------------------------------------------------------------
-order.delete_table1 = function (table1) {
+//Удаление строки таблицы
+order.delete_table1 = function (table) {
     let orderRow = getSelectedRow(table);
-    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    if (orderRow != null) {
+        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущий заказ?");
-    $("#dialog-mes").dialog({
-        title: "Подтверждение",
-        resizable: false,
-        height: "auto",
-        width: 400,
-        modal: true,
-        buttons: {
-            "Да": function () {
-                $.ajax({
-                    url: 'dbset?action=deleteProject',
-                    data: {param: JSON.stringify({id: orderRow.id})},
-                    success: (data) => {
-                        if (data.result == 'ok') {
-
-                            if (rowid != null)
-                                table1.jqGrid('delRowData', rowid);
-                        } else
+        $("#dialog-mes").dialog({
+            title: "Подтверждение",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Да": function () {
+                    $.ajax({
+                        url: 'dbset?action=deleteProject',
+                        data: {param: JSON.stringify({id: orderRow.id})},
+                        success: (data) => {
+                            if (data.result == 'ok') {
+                                table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
+                                for (let i = 0; i < dbset.orderList.length; ++i) {
+                                    if (orderRow.id == dbset.orderList[i][ORDER.id]) {
+                                        dbset.orderList.splice(i, 1);
+                                    }
+                                }
+                            } else
+                                dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                        },
+                        error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
-                    },
-                    error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
-                    }
-                });
-                $(this).dialog("close");
-            },
-            Нет: function () {
-                $(this).dialog("close");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Нет: function () {
+                    $(this).dialog("close");
+                }
             }
-        }
-    });
+        });
+    }
 }
 //------------------------------------------------------------------------------
+//Удаление строки таблицы
 order.delete_table2 = function () {
-
-    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    debugger;
+    if (order.prjprodRec != null) {
+        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
-    $("#dialog-mes").dialog({
-        title: "Подтверждение",
-        resizable: false,
-        height: "auto",
-        width: 400,
-        modal: true,
-        buttons: {
-            "Да": function () {
-                $.ajax({
-                    url: 'dbset?action=deletePrjprod',
-                    data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
-                    success: (data) => {
-                        if (data.result == 'ok') {
-                            let id = 'tr' + order.prjprodRec[PRJPROD.id];
-                            var trow = document.getElementById(id);
-                            trow.remove();
-                        } else
-                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
-                    },
-                    error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
-                    }
-                });
-                $(this).dialog("close");
-            },
-            Нет: function () {
-                $(this).dialog("close");
+        $("#dialog-mes").dialog({
+            title: "Подтверждение",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Да": function () {
+                    $.ajax({
+                        url: 'dbset?action=deletePrjprod',
+                        data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
+                        success: (data) => {
+                            debugger;
+                            if (data.result == 'ok') {
+                                let id = 'tr' + order.prjprodRec[PRJPROD.id];
+                                var trow = document.getElementById(id);
+                                trow.remove();
+                                for (let i = 0; i < dbset.prjprodList.length; ++i) {
+                                    if (order.prjprodRec[PRJPROD.id] == dbset.prjprodList[i][PRJPROD.id]) {
+                                        dbset.prjprodList.splice(i, 1);
+                                    }
+                                }
+                            } else
+                                dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Нет: function () {
+                    $(this).dialog("close");
+                }
             }
-        }
-    });
+        });
+    }
 }
 //------------------------------------------------------------------------------
-order.add_prjprodRec = function (table2, prjprodRec) {
+//Добавить контрукцию в таблицу
+order.add_prjprod = function (table2, prjprodRec) {
 
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
@@ -203,8 +222,77 @@ order.add_prjprodRec = function (table2, prjprodRec) {
 
 }
 //------------------------------------------------------------------------------
-//Карточка ввода заказов
-order.card_deploy = function (taq, type) {
+//Вставка строки в таблицу
+order.insert_table1 = function (taq) {
+    let orderRow = getSelectedRow($("#table1"));
+    let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
+
+    $.ajax({//генерации ключа на сервере
+        url: 'dbset?action=genidOrder',
+        data: {param: JSON.stringify({})},
+        success: (dat) => {
+            if (dat.result == 'ok') {
+                $("#n21").val(dat.id);
+                $("#n22").val('');
+                $("#n23").val('');
+                $("#n24").val('');
+                $("#n25").val('');
+                $("#n25").attr("fk", '-3');
+                //Открытие диалога insert
+                $(taq).dialog({
+                    title: $(taq).attr('card_title'),
+                    width: $(taq).attr('card_width'),
+                    height: $(taq).attr('card_height'),
+                    modal: true,
+                    resizable: false,
+                    buttons: {
+                        "Применить": function () {
+                            $.ajax({//запишем заказ в серверную базу данных
+                                url: 'dbset?action=insertOrder',
+                                data: {param: JSON.stringify({id: dat.id, num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
+                                        date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: $("#n25").attr("fk")})},
+                                success: (data) => {
+
+                                    if (data.result == 'ok') {
+                                        let record = new Array(41);
+                                        record[0] = 'SEL';
+                                        record[ORDER.id] = dat.id;
+                                        record[ORDER.num_ord] = $("#n21").val();
+                                        record[ORDER.num_acc] = $("#n22").val();
+                                        record[ORDER.manager] = login.data.user_fio;
+                                        record[ORDER.date4] = $("#n23").val();
+                                        record[ORDER.date6] = $("#n24").val();
+                                        record[ORDER.owner] = login.data.user_name;
+                                        record[ORDER.prjpart_id] = $("#n25").attr("fk");
+                                        dbset.orderList.push(record);
+                                        order.load_table($("#table1"));
+                                    } else
+                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                },
+                                error: () => {
+                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                }
+                            });
+
+                            $(this).dialog("close");
+                        },
+                        "Отменить": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+            } else
+                dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
+        },
+        error: () => {
+            dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
+        }
+    });
+}
+//------------------------------------------------------------------------------
+//Редактирования строки таблицы
+order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
@@ -216,8 +304,7 @@ order.card_deploy = function (taq, type) {
     $("#n25").val(orderRow.partner);
     $("#n25").attr("fk", orderRow.prjpart_id);
 
-    //Открытие диалога insert
-    $(taq).dialog({
+    $(taq).dialog({//открытие диалога insert
         title: $(taq).attr('card_title'),
         width: $(taq).attr('card_width'),
         height: $(taq).attr('card_height'),
@@ -225,66 +312,37 @@ order.card_deploy = function (taq, type) {
         resizable: false,
         buttons: {
             "Применить": function () {
-                if (type == 'INS') {
-                    //Запишем заказ в серверную базу данных
-                    $.ajax({
-                        url: 'dbset?action=insertOrder',
-                        data: {param: JSON.stringify({num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: $("#n25").attr("fk")})},
-                        success: (data) => {
 
-                            if (data.result == 'ok') {
-                                let record = new Array(41);
-                                record[0] = 'SEL';
-                                record[ORDER.id] = data.id;
-                                record[ORDER.num_ord] = $("#n21").val();
-                                record[ORDER.num_acc] = $("#n22").val();
-                                record[ORDER.manager] = login.data.user_fio;
-                                record[ORDER.date4] = $("#n23").val();
-                                record[ORDER.date6] = $("#n24").val();
-                                record[ORDER.owner] = login.data.user_name;
-                                record[ORDER.prjpart_id] = $("#n25").attr("fk");
-                                dbset.orderList.push(record);
-                                order.load_table($("#table1"));
-                            } else
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        },
-                        error: () => {
+                orderRec[0] = 'SEL';
+                orderRec[ORDER.num_ord] = $("#n21").val();
+                orderRec[ORDER.num_acc] = $("#n22").val();
+                orderRec[ORDER.manager] = login.data.user_fio;
+                orderRec[ORDER.date4] = $("#n23").val();
+                orderRec[ORDER.date6] = $("#n24").val();
+                orderRec[ORDER.owner] = login.data.user_name;
+                orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
+                $.ajax({
+                    url: 'dbset?action=updateOrder',
+                    data: {param: JSON.stringify(orderRec)},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            let rowid = $('#table1').jqGrid('getGridParam', "selrow");
+                            $('#table1').jqGrid('setRowData', rowid, {
+                                id: orderRec[ORDER.id],
+                                num_ord: orderRec[ORDER.num_ord],
+                                num_acc: orderRec[ORDER.num_acc],
+                                date4: orderRec[ORDER.date4],
+                                date6: orderRec[ORDER.date6],
+                                partner: findef(dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+                                manager: orderRec[ORDER.manager]
+                            });
+                        } else
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        }
-                    });
-                } else if (type == 'UPD') {
-                    orderRec[0] = 'SEL';
-                    orderRec[ORDER.num_ord] = $("#n21").val();
-                    orderRec[ORDER.num_acc] = $("#n22").val();
-                    orderRec[ORDER.manager] = login.data.user_fio;
-                    orderRec[ORDER.date4] = $("#n23").val();
-                    orderRec[ORDER.date6] = $("#n24").val();
-                    orderRec[ORDER.owner] = login.data.user_name;
-                    orderRec[ORDER.prjpart_id] = $("#n24").attr("fk");
-                    $.ajax({
-                        url: 'dbset?action=updateOrder',
-                        data: {param: JSON.stringify(orderRec)},
-                        success: (data) => {
-                            if (data.result == 'ok') {
-                                let rowid = $('#table1').jqGrid('getGridParam', "selrow");
-                                $('#table1').jqGrid('setRowData', rowid, {
-                                    id: orderRec[ORDER.id],
-                                    num_ord: orderRec[ORDER.num_ord],
-                                    num_acc: orderRec[ORDER.num_acc],
-                                    date4: orderRec[ORDER.date4],
-                                    date6: orderRec[ORDER.date6],
-                                    partner: orderRec.prjpart_id,
-                                    manager: orderRec[ORDER.manager]
-                                });
-                            } else
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                        }
-                    });
-                }
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
                 $(this).dialog("close");
             },
             "Отменить": function () {

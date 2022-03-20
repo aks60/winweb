@@ -1,5 +1,7 @@
 package cont5r;
 
+import dataset.Conn;
+import domain.eProject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Dbset;
+import model.sys.App;
 import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
@@ -102,11 +105,14 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.insertPrjprod(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
+            } else if (action.equalsIgnoreCase("genidOrder")) {
+                out.write(JSONObject.toJSONString(
+                        new JSONObject(App.asMap("result", "ok", "id", Conn.genId(eProject.up)))));
+                
             } else if (action.equalsIgnoreCase("insertOrder")) {
                 JSONObject output = Dbset.insertOrder(request, response);
                 out.write(JSONObject.toJSONString(output));
-                
-                
+                               
             } else if (action.equalsIgnoreCase("updateOrder")) {
                 JSONObject output = Dbset.updateOrder(request, response);
                 out.write(JSONObject.toJSONString(output));

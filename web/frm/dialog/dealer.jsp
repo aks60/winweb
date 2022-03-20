@@ -31,10 +31,9 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            debugger;
                             let dealerRow = getSelectedRow($("#tab-dealer"));
-                            $('#n25').attr("fk", dealerRow.id);
                             $('#n25').val(dealerRow.partner);
+                            $('#n25').attr("fk", dealerRow.id);
                             $("#dialog-dic").dialog("close");
                         },
                         "Закрыть": function () {

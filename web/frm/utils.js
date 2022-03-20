@@ -341,6 +341,15 @@ function findef(find, def) {
 //------------------------------------------------------------------------------    
 function getSelectedRow(table) {
     let rowid = table.jqGrid('getGridParam', "selrow");
-    return table.jqGrid('getRowData', rowid);
+    if (rowid)
+        return table.jqGrid('getRowData', rowid);
+    else
+        return null;
 }
+//------------------------------------------------------------------------------
+//function getSelectedRec(table) {
+//     let tr = $("#table2 tr.activeRow").attr('id');
+//     if(tr)
+//        return obj.slice(2));
+//}            
 //------------------------------------------------------------------------------            

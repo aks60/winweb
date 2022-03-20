@@ -142,7 +142,7 @@ public class Dbset {
 
         Query qProject = new Query(eProject.values());
         Record record = eProject.up.newRecord("INS");
-        record.set(eProject.id, Conn.genId(eProject.up));
+        record.set(eProject.id, obj.get(eProject.id.name()));
         record.set(eProject.num_ord, obj.get(eProject.num_ord.name()));
         record.set(eProject.num_acc, obj.get(eProject.num_acc.name()));
         record.set(eProject.manager, obj.get(eProject.manager.name()));
@@ -151,7 +151,6 @@ public class Dbset {
         record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.name()));
         qProject.insert(record);
         output.put("result", "ok");
-        output.put("id", record.getInt(eProject.id));
         return output;
     }
 
