@@ -156,7 +156,7 @@ order.delete_table2 = function () {
                     $.ajax({
                         url: 'dbset?action=deletePrjprod',
                         data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
-                        success: (data) => {                            
+                        success: (data) => {
                             if (data.result == 'ok') {
                                 let id = 'tr' + order.prjprodRec[PRJPROD.id];
                                 var trow = document.getElementById(id);
@@ -235,7 +235,7 @@ order.insert_table1 = function (taq) {
                 $("#n25").attr("fk", '-3');
                 //Открытие диалога insert
                 $(taq).dialog({
-                    title: $(taq).attr('card_title'),
+                    title: "Карточка ввода нового заказа",
                     width: $(taq).attr('card_width'),
                     height: $(taq).attr('card_height'),
                     modal: true,
@@ -300,7 +300,7 @@ order.update_table1 = function (taq) {
     $("#n25").attr("fk", orderRow.prjpart_id);
 
     $(taq).dialog({//открытие диалога insert
-        title: $(taq).attr('card_title'),
+        title: "Карточка редактирования заказа",
         width: $(taq).attr('card_width'),
         height: $(taq).attr('card_height'),
         modal: true,

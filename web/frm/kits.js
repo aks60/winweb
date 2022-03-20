@@ -84,3 +84,64 @@ kits.delete_record = function (table) {
     });
 }
 //------------------------------------------------------------------------------
+//Редактирования строки таблицы
+kits.update_table1 = function (taq) {
+
+    let prjkitRow = getSelectedRow($("#table1"));
+    let orderRec = dbset.prjkitList.find(rec => prjkitRow.id = rec[PRJKIT.id]);
+
+//    $("#n21").val(orderRow.num_ord);
+//    $("#n22").val(orderRow.num_acc);
+//    $("#n23").val(orderRow.date4);
+//    $("#n24").val(orderRow.date6);
+//    $("#n25").val(orderRow.partner);
+//    $("#n25").attr("fk", orderRow.prjpart_id);
+
+    $(taq).dialog({//открытие диалога insert
+        title: "Карточка редактирования артикула",
+        width: $(taq).attr('card_width'),
+        height: $(taq).attr('card_height'),
+        modal: true,
+        resizable: false,
+        buttons: {
+            "Применить": function () {
+//
+//                orderRec[0] = 'UPD';
+//                orderRec[ORDER.num_ord] = $("#n21").val();
+//                orderRec[ORDER.num_acc] = $("#n22").val();
+//                orderRec[ORDER.manager] = login.data.user_fio;
+//                orderRec[ORDER.date4] = $("#n23").val();
+//                orderRec[ORDER.date6] = $("#n24").val();
+//                orderRec[ORDER.owner] = login.data.user_name;
+//                orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
+//                $.ajax({
+//                    url: 'dbset?action=updateOrder',
+//                    data: {param: JSON.stringify(orderRec)},
+//                    success: (data) => {
+//                        if (data.result == 'ok') {
+//                            let rowid = $('#table1').jqGrid('getGridParam', "selrow");
+//                            $('#table1').jqGrid('setRowData', rowid, {
+//                                id: orderRec[ORDER.id],
+//                                num_ord: orderRec[ORDER.num_ord],
+//                                num_acc: orderRec[ORDER.num_acc],
+//                                date4: orderRec[ORDER.date4],
+//                                date6: orderRec[ORDER.date6],
+//                                partner: findef(dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+//                                manager: orderRec[ORDER.manager]
+//                            });
+//                        } else
+//                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+//                    },
+//                    error: () => {
+//                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+//                    }
+//                });
+                $(this).dialog("close");
+            },
+            "Отменить": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+//------------------------------------------------------------------------------
