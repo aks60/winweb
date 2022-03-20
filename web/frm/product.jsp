@@ -54,9 +54,7 @@
         </script>
     </head>
     <body>
-        <div id="north">
-            <button id="btnProd3" style="width: 128px" onClick="alert($('#table2 tr.activeRow').attr('id').slice(2));">TEST</button>  
-        </div> 
+        <div id="north"></div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%;">

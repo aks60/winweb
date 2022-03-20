@@ -345,11 +345,5 @@ function getSelectedRow(table) {
         return table.jqGrid('getRowData', rowid);
     else
         return null;
-}
-//------------------------------------------------------------------------------
-//function getSelectedRec(table) {
-//     let tr = $("#table2 tr.activeRow").attr('id');
-//     if(tr)
-//        return obj.slice(2));
-//}            
+}          
 //------------------------------------------------------------------------------            

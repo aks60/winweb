@@ -32,7 +32,7 @@ order.init_table = function (table1, table2) {
             }
             //Заполним табл. конструкций            
             let prjprodList = dbset.prjprodList.filter(rec => orderRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
-            if (prjprodList != undefined) {
+            if (prjprodList.length > 0) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
 
@@ -70,9 +70,6 @@ order.click_table2 = function (e) {
 
         order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
-}
-order.getSelectedRow = function () {
-    
 }
 //------------------------------------------------------------------------------
 //Загрузка данных в таблицу
@@ -116,7 +113,7 @@ order.delete_table1 = function (table) {
             buttons: {
                 "Да": function () {
                     $.ajax({
-                        url: 'dbset?action=deleteProject',
+                        url: 'dbset?action=deleteOrder',
                         data: {param: JSON.stringify({id: orderRow.id})},
                         success: (data) => {
                             if (data.result == 'ok') {
@@ -150,7 +147,7 @@ order.delete_table2 = function () {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
         $("#dialog-mes").dialog({
-            title: "Подтверждение",
+            title: "Подтверждение=",
             resizable: false,
             height: "auto",
             width: 400,
@@ -160,8 +157,7 @@ order.delete_table2 = function () {
                     $.ajax({
                         url: 'dbset?action=deletePrjprod',
                         data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
-                        success: (data) => {
-                            debugger;
+                        success: (data) => {                            
                             if (data.result == 'ok') {
                                 let id = 'tr' + order.prjprodRec[PRJPROD.id];
                                 var trow = document.getElementById(id);
@@ -296,7 +292,7 @@ order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
-
+console.log(orderRec);
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
@@ -321,6 +317,7 @@ order.update_table1 = function (taq) {
                 orderRec[ORDER.date6] = $("#n24").val();
                 orderRec[ORDER.owner] = login.data.user_name;
                 orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
+                console.log(orderRec);
                 $.ajax({
                     url: 'dbset?action=updateOrder',
                     data: {param: JSON.stringify(orderRec)},

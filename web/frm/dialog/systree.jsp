@@ -10,28 +10,29 @@
                 background:#E2EEFF;
             }
             #tab2-systree .activeRow, #tab2-systree .activeRow:hover {
-                background:#efeffb;
+                background:#6598C7;
                 color:#fff;
             }
-
             #tab2-systree tr {
                 height: 68px;
             }
-            ;
-            #tab2-systree tr  > *:nth-child(1) {
+            #tab2-systree tr > *:nth-child(1) {
                 display: none !important;
             }
             #tab2-systree tr > *:nth-child(2) {
-                width: 212px !important;
+                width: 390px !important;
             }
             #tab2-systree tr > *:nth-child(3) {
                 width: 68px !important;
             }
-        </style>
+            #tab2-systree tr > *:nth-child(4) {
+                display: none !important;
+            }
+        </style> 
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            var sysprodID = -1;            
+            var sysprodID = -1;
 //------------------------------------------------------------------------------            
             function resize() {
                 $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
@@ -63,8 +64,8 @@
                             let orderRow = getSelectedRow($("#table1"));
                             let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {
-                                //Запишем скрипт в серверную базу данных
-                                $.ajax({
+                                
+                                $.ajax({ //Запишем скрипт в серверную базу данных
                                     url: 'dbset?action=insertPrjprod',
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
                                             projectID: orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
@@ -73,7 +74,7 @@
                                             let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
                                                 sysprodRec[SYSPROD.script], orderRow.id, sysprodRec[SYSPROD.systree_id]];
                                             dbset.prjprodList.push(record);
-                                            order.add_prjprodClone(document.getElementById('table2'), record);
+                                            order.add_prjprod(document.getElementById('table2'), record);
                                         } else
                                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                     },
@@ -109,19 +110,30 @@
                     ExpandColumn: 'name',
                     ExpandColClick: true,
                     onSelectRow: function (rowid) {
+                        //Очистим таблицу конструкций
                         let j = 1;
                         let rc = table2.rows.length;
                         for (let i = j; i < rc; i++) {
                             table2.deleteRow(j);
                         }
+                        //Заполним табл. конструкций 
                         let systreeRec = table1.jqGrid('getRowData', rowid);
                         if (systreeRec.isLeaf == 'true') {
-                            for (let i = 0; i < dbset.sysprodList.length; i++) {
-                                let sysprodRec = dbset.sysprodList[i];
+                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec[SYSPROD.systree_id]);
+                            if (sysprodList.length > 0) {
+                                prjprodID = null;
+                                for (let rec of sysprodList) {
 
-                                if (sysprodRec != undefined && systreeRec.id == sysprodRec[SYSPROD.systree_id]) {
-                                    add_clone(table2, sysprodRec);
+                                    //Новая запись в таблице конструкций
+                                    add_clone(table2, rec);
+                                    
+                                    //Первая конструкция
+                                    if (prjprodID == null) {
+                                        prjprodID = rec[SYSPROD.id]; 
+                                    }
                                 }
+                                //Программный клик на первой конструкции
+                                document.getElementById('cnv' + prjprodID).click();
                             }
                         }
                         $('#tab2-systree tr > *:nth-child(1)').hide();
@@ -189,7 +201,7 @@
                 if (node)
                     return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
                 return null;
-            }            
+            }
 //------------------------------------------------------------------------------
         </script> 
     </head> 
