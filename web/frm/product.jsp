@@ -32,7 +32,7 @@
             
             $(document).ready(function () {
 
-                taq_deploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
+                taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
 
                 $(window).bind('resize', function () {
                     product.resize();

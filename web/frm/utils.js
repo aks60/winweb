@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-function taq_deploy(selectors) {
+function taqDeploy(selectors) {
 //debugger;    
     let mapobj = this;
     for (let selector of selectors) {

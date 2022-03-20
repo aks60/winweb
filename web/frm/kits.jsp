@@ -22,7 +22,7 @@
                 kits.init_table($("#table1"));
                 kits.load_table($("#table1"));
                 $("button").button();
-                taq_deploy(['#dialog-card']);
+                taqDeploy(['#dialog-card']);
                 prepareToolBar();
             });
         </script>         

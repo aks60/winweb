@@ -52,7 +52,7 @@
 
                 $("button").button();
                 prepareToolBar();
-                taq_deploy(['#dialog-card']);
+                taqDeploy(['#dialog-card']);
                 $('#n23').datepicker();
                 $('#n24').datepicker();
             });
