@@ -21,6 +21,7 @@
 
                 kits.init_table($("#table1"));
                 kits.load_table($("#table1"));
+                kits.resize();
                 $("button").button();
                 taqDeploy(['#dialog-card']);
                 prepareToolBar();
@@ -31,16 +32,19 @@
         <div id="north">   
             <button id="btnKit1" style="width: 160px" onClick="kits.insert_table($('#table1'));">Добавить комплект</button>
             <button id="btnKit2" style="width: 160px" onClick="kits.insert2_table($('#table1'));">Добавить артикул</button>
-            <button id="btnKit3" style="width: 160px" onClick="kits.update_table($('#table1'));">Изменить артикул</button>
+            <button id="btnKit3" style="width: 160px" onClick="kits.update_table('#dialog-card');">Изменить артикул</button>
             <button id="btnKit4" style="width: 160px" onClick="kits.delete_table($('#table1'));">Удалить артикул</button>            
         </div> 
         <div id = "context">               
-            <div id="dialog-card" card_width="416" card_height="230" style="display: none;">
-                <jst id="n21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>
-                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst><br>
-                <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
-                <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
-                <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-dic').load('frm/dialog/dealer.jsp');"></jst><br>
+            <div id="dialog-card" card_width="476" card_height="280" style="display: none;">
+                <jst id="n51" type='btn' label='Артикул' width='126' width2="120" fk="-3" click=""></jst><br>
+                <jst id="n52" type='btn' label='Название' width='126' width2="280" fk="-3" click=""></jst><br>
+                <jst id="n53" type='btn' label='Основная текстура' width='126' width2="280" fk="-3" click=""></jst><br>
+                <jst id="n54" type='btn' label='Внутренняя текстура' width='126' width2="280" fk="-3" click=""></jst><br>
+                <jst id="n55" type='btn' label='Внешняя текстура' width='126' width2="280" fk="-3" click=""></jst><br>
+                <jst id="n56" type='txt' label='Длина' width='126' width2="80"></jst><br>
+                <jst id="n57" type='txt' label='Ширина' width='126' width2="80"></jst><br>
+                <jst id="n58" type='txt' label='Количество' width='126' width2="80"></jst><br>
             </div>            
             <div id="centr" style="height: 100%; margin-top: 2px;">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 

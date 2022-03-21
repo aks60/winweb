@@ -5,6 +5,7 @@ import builder.making.Furniture;
 import builder.model.AreaStvorka;
 import common.UCom;
 import dataset.Conn;
+import dataset.Field;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
@@ -45,13 +46,23 @@ public class Dbset {
 
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
 
-    private static String format(Object date) {
+    private static String format2(Object date) {
         if (date instanceof Date) {
             return fd.format(date);
         }
         return null;
     }
-
+    
+    private static Object format3(JSONArray arr, Field field) {
+        Object obj = arr.get(field.ordinal());
+        return (obj.equals(""))? null :obj;
+    }
+    
+    private static Object format4(JSONObject obj, Field field) {
+        Object ob2 = obj.get(field.name());
+        return (ob2.equals(""))? null :ob2;
+    }
+    
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
         return new JSONObject(App.asMap("systreeList", qSystree));
@@ -135,18 +146,17 @@ public class Dbset {
 
     public static JSONObject insertOrder(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
             Query qProject = new Query(eProject.values());
             Record record = eProject.up.newRecord("INS");
-            record.set(eProject.id, obj.get(eProject.id.name()));
-            record.set(eProject.num_ord, obj.get(eProject.num_ord.name()));
-            record.set(eProject.num_acc, obj.get(eProject.num_acc.name()));
-            record.set(eProject.manager, obj.get(eProject.manager.name()));
+            record.set(eProject.id, format4(obj, eProject.id));
+            record.set(eProject.num_ord, format4(obj, eProject.num_ord));
+            record.set(eProject.num_acc, format4(obj, eProject.num_acc));
+            record.set(eProject.manager, format4(obj, eProject.manager));
             record.set(eProject.date4, (obj.get(eProject.date4.name()).equals("")) ? null :obj.get(eProject.date4.name()));
             record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null :obj.get(eProject.date6.name()));
-            record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.name()));
+            record.set(eProject.prjpart_id, format4(obj, eProject.prjpart_id));
             qProject.insert2(record);
             return new JSONObject(App.asMap("result", "ok"));
             
@@ -157,19 +167,18 @@ public class Dbset {
 
     public static JSONObject updateOrder(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
-            JSONArray obj = (JSONArray) JSONValue.parse(param);
+            JSONArray arr = (JSONArray) JSONValue.parse(param);
 
-            int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());
+            int id = Integer.valueOf(arr.get(eProject.id.ordinal()).toString());
             Record record = eProject.find(id);
             record.set(eProject.up, "UPD");
-            record.set(eProject.num_ord, obj.get(eProject.num_ord.ordinal()));
-            record.set(eProject.num_acc, obj.get(eProject.num_acc.ordinal()));
-            record.set(eProject.manager, obj.get(eProject.manager.ordinal()));
-            record.set(eProject.date4, obj.get(eProject.date4.ordinal()));
-            record.set(eProject.date6, obj.get(eProject.date6.ordinal()));
-            record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.ordinal()));
+            record.set(eProject.num_ord, format3(arr, eProject.num_ord));
+            record.set(eProject.num_acc, format3(arr, eProject.num_acc));
+            record.set(eProject.manager, format3(arr, eProject.manager));
+            record.set(eProject.date4, (arr.get(eProject.date4.ordinal()).equals("")) ? null :arr.get(eProject.date4.ordinal()));
+            record.set(eProject.date6, (arr.get(eProject.date6.ordinal()).equals("")) ? null :arr.get(eProject.date6.ordinal()));
+            record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
             Query qProject = new Query(eProject.values());
             qProject.update2(record);
             return new JSONObject(App.asMap("result", "ok"));
@@ -190,12 +199,12 @@ public class Dbset {
             record.set(ePrjkit.numb, 1);
             record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
             record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
-            record.set(ePrjkit.color1_id, obj.get(ePrjkit.color1_id.name()));
-            record.set(ePrjkit.color2_id, obj.get(ePrjkit.color2_id.name()));
-            record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
-            record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
+            record.set(ePrjkit.color1_id, format4(obj, ePrjkit.color1_id));
+            record.set(ePrjkit.color2_id, format4(obj, ePrjkit.color2_id));
+            record.set(ePrjkit.color3_id, format4(obj, ePrjkit.color3_id));
+            record.set(ePrjkit.color3_id, format4(obj, ePrjkit.color3_id));
             record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
-            record.set(ePrjkit.prjprod_id, obj.get(ePrjkit.prjprod_id.name()));
+            record.set(ePrjkit.prjprod_id, format4(obj, ePrjkit.prjprod_id));
             qPrjkit.insert2(record);
             return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
             
@@ -206,7 +215,6 @@ public class Dbset {
 
     public static JSONObject insertPrjprod(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
 
@@ -229,7 +237,6 @@ public class Dbset {
 
     public static JSONObject deleteOrder(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
             Query qProject = new Query(eProject.values());
@@ -245,7 +252,6 @@ public class Dbset {
 
     public static JSONObject deletePrjkit(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
             Query qPrjkit = new Query(ePrjkit.values());
@@ -259,9 +265,32 @@ public class Dbset {
         }
     }
 
+    public static JSONObject updatePrjkit(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String param = request.getParameter("param");
+            JSONArray arr = (JSONArray) JSONValue.parse(param);
+            int id = Integer.valueOf(arr.get(ePrjkit.id.ordinal()).toString());
+            Record record = ePrjkit.find(id);
+            record.set(ePrjkit.up, "UPD");
+            record.set(ePrjkit.numb, format3(arr, ePrjkit.numb));
+            record.set(ePrjkit.width, format3(arr, ePrjkit.width));
+            record.set(ePrjkit.height, format3(arr, ePrjkit.height));
+            record.set(ePrjkit.color1_id, format3(arr, ePrjkit.color1_id));
+            record.set(ePrjkit.color2_id, format3(arr, ePrjkit.color2_id));
+            record.set(ePrjkit.color3_id, format3(arr, ePrjkit.color3_id));
+            record.set(ePrjkit.artikl_id, format3(arr, ePrjkit.artikl_id));
+            record.set(ePrjkit.prjprod_id, format3(arr, ePrjkit.prjprod_id));
+            Query qPrjkit = new Query(ePrjkit.values());
+            qPrjkit.update2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
+    
     public static JSONObject deletePrjprod(HttpServletRequest request, HttpServletResponse response) {
         try {
-            JSONObject output = new JSONObject();
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
             Query qPrjprod = new Query(ePrjprod.values());
@@ -277,8 +306,7 @@ public class Dbset {
 
     public static JSONObject prjkitList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjkit = new Query(ePrjkit.values()).select(ePrjkit.up);
-        JSONObject output = new JSONObject(App.asMap("prjkitList", qPrjkit));
-        return output;
+        return new JSONObject(App.asMap("prjkitList", qPrjkit));
     }
 
     public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
@@ -295,25 +323,22 @@ public class Dbset {
                     "loopRec", areaStv.loopRec, "loopColor", areaStv.loopColor,
                     "lockRec", areaStv.lockRec, "lockColor", areaStv.lockColor));
         }
-        JSONObject output = new JSONObject(App.asMap("stvFields", hm));
-        return output;
+        return new JSONObject(App.asMap("stvFields", hm));
     }
 
     public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        JSONObject output = new JSONObject(App.asMap("userList", qSysuser));
-        return output;
+        return new JSONObject(App.asMap("userList", qSysuser));
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
-            rec.setNo(eProject.date4, format(rec.get(eProject.date4)));
-            rec.setNo(eProject.date5, format(rec.get(eProject.date5)));
-            rec.setNo(eProject.date6, format(rec.get(eProject.date6)));
+            rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
+            rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
+            rec.setNo(eProject.date6, format2(rec.get(eProject.date6)));
         }
-        JSONObject output = new JSONObject(App.asMap("orderList", qProject));
-        return output;
+        return new JSONObject(App.asMap("orderList", qProject));
     }
 
     public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {

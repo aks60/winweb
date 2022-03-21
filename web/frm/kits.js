@@ -6,74 +6,94 @@ kits.init_table = function (table) {
         rownumbers: true,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],
+        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя',
+            'Длина', 'Ширина', 'Кол-во', 'artikl_id', 'color1_id', 'color2_id', 'color3_id'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 80, sorttype: "text"},
             {name: 'name', width: 200, sorttype: "text"},
-            {name: 'color1_id', width: 80, sorttype: "text"},
-            {name: 'color2_id', width: 80, sorttype: "text"},
-            {name: 'color3_id', width: 80, sorttype: "text"},
+            {name: 'color1', width: 80, sorttype: "text"},
+            {name: 'color2', width: 80, sorttype: "text"},
+            {name: 'color3', width: 80, sorttype: "text"},
             {name: 'width', width: 60, sorttype: "text"},
             {name: 'height', width: 60, sorttype: "text"},
-            {name: 'numb', width: 60, sorttype: "text"}
+            {name: 'numb', width: 60, sorttype: "text"},
+            {name: 'artikl_id', width: 80},
+            {name: 'color1_id', width: 80},
+            {name: 'color2_id', width: 80},
+            {name: 'color3_id', width: 80}
         ]
     });
 }
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
-    kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
-    for (let i = 0; i < kits.prjkitList.length; i++) {
-        let tr = kits.prjkitList[i];
-        let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
-        table.jqGrid('addRowData', i + 1, {
-            id: tr[KITS.id],
-            code: artiklRec[ARTIKL.code],
-            name: artiklRec[ARTIKL.name],
-            color1_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-            color2_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-            color3_id: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-            width: tr[PRJKIT.width],
-            height: tr[PRJKIT.height],
-            numb: tr[PRJKIT.numb]
-        });
+    if (order.wincalcMap.size != 0) {
+        kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
+        for (let i = 0; i < kits.prjkitList.length; i++) {
+            let tr = kits.prjkitList[i];
+            let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+            table.jqGrid('addRowData', i + 1, {
+                id: tr[KITS.id],
+                code: artiklRec[ARTIKL.code],
+                name: artiklRec[ARTIKL.name],
+                color1: findef(dbset.colorList.find(rec => tr[PRJKIT.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                color2: findef(dbset.colorList.find(rec => tr[PRJKIT.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                color3: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                width: tr[PRJKIT.width],
+                height: tr[PRJKIT.height],
+                numb: tr[PRJKIT.numb],
+                artikl_id: tr[PRJKIT.artikl_id],
+                color1_id: tr[PRJKIT.color1_id],
+                color2_id: tr[PRJKIT.color2_id],
+                color3_id: tr[PRJKIT.color3_id],
+            });
+        }
+        table.jqGrid("setSelection", 1);        
     }
-    kits.resize();
 }
 //------------------------------------------------------------------------------
 kits.insert_table = function (table) {
-    
+
     if (order.wincalcMap.size == 0) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
-        
+
     } else {
         $('#dialog-dic').load('frm/dialog/kitcard.jsp');
     }
 }
 //------------------------------------------------------------------------------
 kits.insert2_table = function (table) {
-    
+
     if (order.wincalcMap.size == 0) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
-        
+
     } else {
         $('#dialog-dic').load('frm/dialog/kitcard.jsp');
     }
 }
 //------------------------------------------------------------------------------
 //Редактирования строки таблицы
-kits.update_table = function (table) {
+kits.update_table = function (taq) {
 
-    let prjkitRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.prjkitList.find(rec => prjkitRow.id = rec[PRJKIT.id]);
+    let prjkitRow = getSelectedRow($("#table1"));    
 
-//    $("#n21").val(orderRow.num_ord);
-//    $("#n22").val(orderRow.num_acc);
-//    $("#n23").val(orderRow.date4);
-//    $("#n24").val(orderRow.date6);
-//    $("#n25").val(orderRow.partner);
-//    $("#n25").attr("fk", orderRow.prjpart_id);
+    $("#n51").val(prjkitRow.code);
+    $("#n52").val(prjkitRow.name);
+    $("#n53").val(prjkitRow.color1);
+    $("#n54").val(prjkitRow.color2);
+    $("#n55").val(prjkitRow.color3);
+    $("#n56").val(prjkitRow.width);
+    $("#n57").val(prjkitRow.height);
+    $("#n58").val(prjkitRow.numb);
+
+    $("#n51").attr("fk", prjkitRow.artikl_id);
+    $("#n52").attr("fk", prjkitRow.artikl_id);
+    $("#n53").attr("fk", prjkitRow.color1_id);
+    $("#n54").attr("fk", prjkitRow.color2_id);
+    $("#n55").attr("fk", prjkitRow.color3_id);
+    
+    console.log(prjkitRow);
 
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования артикула",
@@ -83,37 +103,38 @@ kits.update_table = function (table) {
         resizable: false,
         buttons: {
             "Применить": function () {
-//
-//                orderRec[0] = 'UPD';
-//                orderRec[ORDER.num_ord] = $("#n21").val();
-//                orderRec[ORDER.num_acc] = $("#n22").val();
-//                orderRec[ORDER.manager] = login.data.user_fio;
-//                orderRec[ORDER.date4] = $("#n23").val();
-//                orderRec[ORDER.date6] = $("#n24").val();
-//                orderRec[ORDER.owner] = login.data.user_name;
-//                orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
-//                $.ajax({
-//                    url: 'dbset?action=updateOrder',
-//                    data: {param: JSON.stringify(orderRec)},
-//                    success: (data) => {
-//                        if (data.result == 'ok') {
+                let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
+                prjkitRec[0] = 'UPD';
+                prjkitRec[PRJKIT.numb] = $("#n58").val();
+                prjkitRec[PRJKIT.width] = $("#n56").val();
+                prjkitRec[PRJKIT.height] = $("#n57").val();
+                prjkitRec[PRJKIT.color1_id] = $("#n53").attr("fk");
+                prjkitRec[PRJKIT.color2_id] = $("#n54").attr("fk");
+                prjkitRec[PRJKIT.color3_id] = $("#n55").attr("fk");
+                prjkitRec[PRJKIT.artikl_id] = $("#n51").attr("fk");                
+                $.ajax({
+                    url: 'dbset?action=updatePrjkit',
+                    data: {param: JSON.stringify(prjkitRec)},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            alert();
 //                            let rowid = $('#table1').jqGrid('getGridParam', "selrow");
-//                            $('#table1').jqGrid('setRowData', rowid, {
-//                                id: orderRec[ORDER.id],
-//                                num_ord: orderRec[ORDER.num_ord],
-//                                num_acc: orderRec[ORDER.num_acc],
-//                                date4: orderRec[ORDER.date4],
-//                                date6: orderRec[ORDER.date6],
-//                                partner: findef(dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-//                                manager: orderRec[ORDER.manager]
+//                            $('#table1').jqGrid('setRowData', rowid, {        
+//                                id: prjkitRec[PRJKIT.id],
+//                                num_ord: prjkitRec[PRJKIT.num_ord],
+//                                num_acc: prjkitRec[PRJKIT.num_acc],
+//                                date4: prjkitRec[PRJKIT.date4],
+//                                date6: prjkitRec[PRJKIT.date6],
+//                                partner: findef(dbset.dealerList.find(rec => prjkitRec[PRJKIT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+//                                manager: prjkitRec[PRJKIT.manager]
 //                            });
-//                        } else
-//                            dialogMes('Сообщение', "<p>" + data.result);
-//                    },
-//                    error: () => {
-//                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-//                    }
-//                });
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
                 $(this).dialog("close");
             },
             "Отменить": function () {
