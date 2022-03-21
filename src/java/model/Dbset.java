@@ -169,7 +169,6 @@ public class Dbset {
         try {
             String param = request.getParameter("param");
             JSONArray arr = (JSONArray) JSONValue.parse(param);
-
             int id = Integer.valueOf(arr.get(eProject.id.ordinal()).toString());
             Record record = eProject.find(id);
             record.set(eProject.up, "UPD");
