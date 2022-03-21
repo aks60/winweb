@@ -110,7 +110,8 @@
                         if (data.result == 'ok') {
                             $("#n31").val(tableRec.code);
                             $("#n32").val(tableRec.name);
-                        }
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
                     },
                     error: function () {
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

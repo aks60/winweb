@@ -58,6 +58,7 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
+                alert(formatDate2(new Date()));
             }
         </script>
     </head>
@@ -80,7 +81,7 @@
             </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%"> 
 
-                <div id="centr" style="height: 100%; width: 100%;">
+                <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
                 <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">

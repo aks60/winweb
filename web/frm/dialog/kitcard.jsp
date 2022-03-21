@@ -131,7 +131,7 @@
                                     record[PRJKIT.prjprod_id] = data.prjkitRec[PRJKIT.prjprod_id];
                                     dbset.prjkitList.push(record);
                                 } else {
-                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                    dialogMes('Сообщение', "<p>" + data.result);
                                 }
                                 kits.load_table($("#table1"));
                             },

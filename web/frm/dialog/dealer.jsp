@@ -54,9 +54,10 @@
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        let dealerRow = table.jqGrid('getRowData', rowid);
-                        $('#n25').attr("fk", dealerRow.id);
+                        let dealerRow = getSelectedRow($("#tab-dealer"));
                         $('#n25').val(dealerRow.partner);
+                        $('#n25').attr("fk", dealerRow.id);
+                        $("#dialog-dic").dialog("close");
                     }
                 });
             }

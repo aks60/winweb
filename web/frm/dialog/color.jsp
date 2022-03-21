@@ -195,6 +195,9 @@
                                         $("#n4C").val(colorRow.name);
                                     else if (product.buttonSrc == 'n53')
                                         $("#n53").val(colorRow.name);
+                                    
+                                } else {
+                                    dialogMes('Сообщение', "<p>" + data.result);
                                 }
                             },
                             error: function () {

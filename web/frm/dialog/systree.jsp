@@ -76,7 +76,7 @@
                                             dbset.prjprodList.push(record);
                                             order.add_prjprod(document.getElementById('table2'), record);
                                         } else
-                                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                            dialogMes('Сообщение', "<p>" + data.result);
                                     },
                                     error: () => {
                                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

@@ -124,7 +124,7 @@ order.delete_table1 = function (table) {
                                     }
                                 }
                             } else
-                                dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                                dialogMes('Сообщение', "<p>" + data.result);
                         },
                         error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
@@ -167,7 +167,7 @@ order.delete_table2 = function () {
                                     }
                                 }
                             } else
-                                dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
+                                dialogMes('Сообщение', "<p>" + data.result);
                         },
                         error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
@@ -229,7 +229,7 @@ order.insert_table1 = function (taq) {
             if (dat.result == 'ok') {
                 $("#n21").val(dat.id);
                 $("#n22").val('');
-                $("#n23").val('');
+                $("#n23").val(formatDate2(new Date()));
                 $("#n24").val('');
                 $("#n25").val('');
                 $("#n25").attr("fk", '-3');
@@ -242,6 +242,10 @@ order.insert_table1 = function (taq) {
                     resizable: false,
                     buttons: {
                         "Применить": function () {
+                            if ($("#n25").attr("fk") == -3) {
+                                dialogMes('Сообщение', "<p>Контрагент не установлен");
+                                return;
+                            }
                             $.ajax({//запишем заказ в серверную базу данных
                                 url: 'dbset?action=insertOrder',
                                 data: {param: JSON.stringify({id: dat.id, num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
@@ -262,7 +266,7 @@ order.insert_table1 = function (taq) {
                                         dbset.orderList.push(record);
                                         order.load_table($("#table1"));
                                     } else
-                                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                        dialogMes('Сообщение', "<p>" + data.result);
                                 },
                                 error: () => {
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
@@ -332,7 +336,7 @@ order.update_table1 = function (taq) {
                                 manager: orderRec[ORDER.manager]
                             });
                         } else
-                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            dialogMes('Сообщение', "<p>" + data.result);
                     },
                     error: () => {
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

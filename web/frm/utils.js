@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 function taqDeploy(selectors) {
-//debugger;    
+   
     let mapobj = this;
     for (let selector of selectors) {
         $(selector + ' jst').each(function (index, elem) {
-//debugger;
+
             let  width = $(elem).attr('width'), width2 = $(elem).attr('width2'),
                     label = $(elem).attr('label'), num = $(elem).attr('id'), type = $(elem).attr('type');
             if (typeof (num) == 'undefined') {

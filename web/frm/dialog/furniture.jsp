@@ -107,13 +107,14 @@
                     success: function (data) {
                         if (data.result == 'ok') {
                             $("#n43").val(tableRec.name);
-                        }
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
                     },
                     error: function () {
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                     }
                 });
-            }            
+            }
 //------------------------------------------------------------------------------
         </script>        
     </head>

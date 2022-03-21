@@ -118,7 +118,6 @@ public class Dbset {
     }
 
     public static JSONObject updateScript(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
@@ -126,126 +125,154 @@ public class Dbset {
             Statement statement = statement = connection.createStatement();
             String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
-            output.put("result", "ok");
             connection.close();
-            return output;
-
+            return new JSONObject(App.asMap("result", "ok"));
+            
         } catch (SQLException e) {
-            return output;
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
 
     public static JSONObject insertOrder(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-
-        Query qProject = new Query(eProject.values());
-        Record record = eProject.up.newRecord("INS");
-        record.set(eProject.id, obj.get(eProject.id.name()));
-        record.set(eProject.num_ord, obj.get(eProject.num_ord.name()));
-        record.set(eProject.num_acc, obj.get(eProject.num_acc.name()));
-        record.set(eProject.manager, obj.get(eProject.manager.name()));
-        record.set(eProject.date4, obj.get(eProject.date4.name()));
-        record.set(eProject.date6, obj.get(eProject.date6.name()));
-        record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.name()));
-        qProject.insert(record);
-        output.put("result", "ok");
-        return output;
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Query qProject = new Query(eProject.values());
+            Record record = eProject.up.newRecord("INS");
+            record.set(eProject.id, obj.get(eProject.id.name()));
+            record.set(eProject.num_ord, obj.get(eProject.num_ord.name()));
+            record.set(eProject.num_acc, obj.get(eProject.num_acc.name()));
+            record.set(eProject.manager, obj.get(eProject.manager.name()));
+            record.set(eProject.date4, (obj.get(eProject.date4.name()).equals("")) ? null :obj.get(eProject.date4.name()));
+            record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null :obj.get(eProject.date6.name()));
+            record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.name()));
+            qProject.insert2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject updateOrder(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONArray obj = (JSONArray) JSONValue.parse(param);
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONArray obj = (JSONArray) JSONValue.parse(param);
 
-        int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());
-        Record record = eProject.find(id);
-        record.set(eProject.up, "UPD");
-        record.set(eProject.num_ord, obj.get(eProject.num_ord.ordinal()));
-        record.set(eProject.num_acc, obj.get(eProject.num_acc.ordinal()));
-        record.set(eProject.manager, obj.get(eProject.manager.ordinal()));
-        record.set(eProject.date4, obj.get(eProject.date4.ordinal()));
-        record.set(eProject.date6, obj.get(eProject.date6.ordinal()));
-        record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.ordinal()));
-        Query qProject = new Query(eProject.values());
-        qProject.update(record);
-        output.put("result", "ok");
-        return output;
+            int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());
+            Record record = eProject.find(id);
+            record.set(eProject.up, "UPD");
+            record.set(eProject.num_ord, obj.get(eProject.num_ord.ordinal()));
+            record.set(eProject.num_acc, obj.get(eProject.num_acc.ordinal()));
+            record.set(eProject.manager, obj.get(eProject.manager.ordinal()));
+            record.set(eProject.date4, obj.get(eProject.date4.ordinal()));
+            record.set(eProject.date6, obj.get(eProject.date6.ordinal()));
+            record.set(eProject.prjpart_id, obj.get(eProject.prjpart_id.ordinal()));
+            Query qProject = new Query(eProject.values());
+            qProject.update2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);
-        Query qPrjkit = new Query(ePrjkit.values());
-        Record record = ePrjkit.up.newRecord("INS");
-        record.set(ePrjkit.id, Conn.genId(ePrjkit.up));
-        record.set(ePrjkit.numb, 1);
-        record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
-        record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
-        record.set(ePrjkit.color1_id, obj.get(ePrjkit.color1_id.name()));
-        record.set(ePrjkit.color2_id, obj.get(ePrjkit.color2_id.name()));
-        record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
-        record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
-        record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
-        record.set(ePrjkit.prjprod_id, obj.get(ePrjkit.prjprod_id.name()));
-        qPrjkit.insert(record);
-        JSONObject output = new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
-        return output;
+        try {
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);
+            Query qPrjkit = new Query(ePrjkit.values());
+            Record record = ePrjkit.up.newRecord("INS");
+            record.set(ePrjkit.id, Conn.genId(ePrjkit.up));
+            record.set(ePrjkit.numb, 1);
+            record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
+            record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
+            record.set(ePrjkit.color1_id, obj.get(ePrjkit.color1_id.name()));
+            record.set(ePrjkit.color2_id, obj.get(ePrjkit.color2_id.name()));
+            record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
+            record.set(ePrjkit.color3_id, obj.get(ePrjkit.color3_id.name()));
+            record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
+            record.set(ePrjkit.prjprod_id, obj.get(ePrjkit.prjprod_id.name()));
+            qPrjkit.insert2(record);
+            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject insertPrjprod(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        Query qPrjprod = new Query(ePrjprod.values());
-        Record record = new Record();
-        record.add("INS");
-        record.add(Conn.genId(ePrjprod.up));
-        record.add(0);
-        record.add(obj.get("name"));
-        record.add(obj.get("script"));
-        record.add(obj.get("projectID"));
-        record.add(obj.get("systreeID"));
-        qPrjprod.insert(record);
-        output.put("result", "ok");
-        output.put("id", record.getInt(ePrjprod.id));
-        return output;
+            Query qPrjprod = new Query(ePrjprod.values());
+            Record record = new Record();
+            record.add("INS");
+            record.add(Conn.genId(ePrjprod.up));
+            record.add(0);
+            record.add(obj.get("name"));
+            record.add(obj.get("script"));
+            record.add(obj.get("projectID"));
+            record.add(obj.get("systreeID"));
+            qPrjprod.insert2(record);
+            return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject deleteOrder(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Query qProject = new Query(eProject.values());
-        Record record = eProject.up.newRecord("DEL");
-        record.set(eProject.id, obj.get("id"));
-        String str = (qProject.delete(record)) ? "ok" : "no";
-        return new JSONObject(App.asMap("result", str));
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Query qProject = new Query(eProject.values());
+            Record record = eProject.up.newRecord("DEL");
+            record.set(eProject.id, obj.get("id"));
+            qProject.delete2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject deletePrjkit(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Query qPrjkit = new Query(ePrjkit.values());
-        Record record = ePrjkit.up.newRecord("DEL");
-        record.set(ePrjkit.id, obj.get("id"));
-        String str = (qPrjkit.delete(record)) ? "ok" : "no";
-        return new JSONObject(App.asMap("result", str));
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Query qPrjkit = new Query(ePrjkit.values());
+            Record record = ePrjkit.up.newRecord("DEL");
+            record.set(ePrjkit.id, obj.get("id"));
+            qPrjkit.delete2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject deletePrjprod(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject output = new JSONObject();
-        String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-        Query qPrjprod = new Query(ePrjprod.values());
-        Record record = ePrjprod.up.newRecord("DEL");
-        record.set(ePrjprod.id, obj.get("id"));
-        String str = (qPrjprod.delete(record)) ? "ok" : "no";
-        return new JSONObject(App.asMap("result", str));
+        try {
+            JSONObject output = new JSONObject();
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Query qPrjprod = new Query(ePrjprod.values());
+            Record record = ePrjprod.up.newRecord("DEL");
+            record.set(ePrjprod.id, obj.get("id"));
+            qPrjprod.delete2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+            
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 
     public static JSONObject prjkitList(HttpServletRequest request, HttpServletResponse response) {

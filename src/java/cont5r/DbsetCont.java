@@ -106,10 +106,6 @@ public class DbsetCont extends HttpServlet {
                 JSONObject output = Dbset.insertPrjprod(request, response);
                 out.write(JSONObject.toJSONString(output));
                 
-//            } else if (action.equalsIgnoreCase("genidPrjkit")) {
-//                out.write(JSONObject.toJSONString(
-//                        new JSONObject(App.asMap("result", "ok", "id", Conn.genId(ePrjkit.up)))));
-                
             } else if (action.equalsIgnoreCase("genidOrder")) {
                 out.write(JSONObject.toJSONString(
                         new JSONObject(App.asMap("result", "ok", "id", Conn.genId(eProject.up)))));

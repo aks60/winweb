@@ -57,7 +57,7 @@
         <div id="north"></div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
-                <div id="centr" style="height: 100%; width: 100%;">
+                <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
                     <canvas id="cnv2"></canvas>
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">

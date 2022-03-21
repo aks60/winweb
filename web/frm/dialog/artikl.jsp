@@ -161,7 +161,7 @@
                         data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.obj, (k, v) => isEmpty(v))})},
                         success: (data) => {
                             if (data.result != 'ok')
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                                dialogMes('Сообщение', "<p>" + data.result);
                         },
                         error: () => {
                             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

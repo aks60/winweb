@@ -42,50 +42,28 @@ kits.load_table = function (table) {
     kits.resize();
 }
 //------------------------------------------------------------------------------
-kits.delete_record = function (table) {
-
-    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
-    </span> Вы действительно хотите удалить текущую запись?");
-    $("#dialog-mes").dialog({
-        title: "Подтверждение",
-        resizable: false,
-        height: "auto",
-        width: 400,
-        modal: true,
-        buttons: {
-            "Да": function () {
-                let rowid = table.jqGrid('getGridParam', "selrow");
-                let prjkitID = table.jqGrid('getRowData', rowid).id;
-                $.ajax({
-                    url: 'dbset?action=deletePrjkit',
-                    data: {param: JSON.stringify({id: prjkitID})},
-                    success: (data) => {
-                        if (data.result == 'ok') {
-                            table.jqGrid("delRowData", rowid);
-                            for(let i = 0; i < dbset.prjkitList.length; ++i) {
-                                if(prjkitID == dbset.prjkitList[i][PRJKIT.id]) {
-                                   dbset.prjkitList.splise(i, 1); 
-                                }
-                            }
-                            
-                        } else
-                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
-                    },
-                    error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
-                    }
-                });
-                $(this).dialog("close");
-            },
-            Нет: function () {
-                $(this).dialog("close");
-            }
-        }
-    });
+kits.insert_table = function (table) {
+    
+    if (order.wincalcMap.size == 0) {
+        dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
+        
+    } else {
+        $('#dialog-dic').load('frm/dialog/kitcard.jsp');
+    }
+}
+//------------------------------------------------------------------------------
+kits.insert2_table = function (table) {
+    
+    if (order.wincalcMap.size == 0) {
+        dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
+        
+    } else {
+        $('#dialog-dic').load('frm/dialog/kitcard.jsp');
+    }
 }
 //------------------------------------------------------------------------------
 //Редактирования строки таблицы
-kits.update_table1 = function (taq) {
+kits.update_table = function (table) {
 
     let prjkitRow = getSelectedRow($("#table1"));
     let orderRec = dbset.prjkitList.find(rec => prjkitRow.id = rec[PRJKIT.id]);
@@ -130,7 +108,7 @@ kits.update_table1 = function (taq) {
 //                                manager: orderRec[ORDER.manager]
 //                            });
 //                        } else
-//                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+//                            dialogMes('Сообщение', "<p>" + data.result);
 //                    },
 //                    error: () => {
 //                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
@@ -139,6 +117,48 @@ kits.update_table1 = function (taq) {
                 $(this).dialog("close");
             },
             "Отменить": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+//------------------------------------------------------------------------------
+kits.delete_table = function (table) {
+
+    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущую запись?");
+    $("#dialog-mes").dialog({
+        title: "Подтверждение",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Да": function () {
+                let rowid = table.jqGrid('getGridParam', "selrow");
+                let prjkitID = table.jqGrid('getRowData', rowid).id;
+                $.ajax({
+                    url: 'dbset?action=deletePrjkit',
+                    data: {param: JSON.stringify({id: prjkitID})},
+                    success: (data) => {
+                        if (data.result == 'ok') {
+                            table.jqGrid("delRowData", rowid);
+                            for (let i = 0; i < dbset.prjkitList.length; ++i) {
+                                if (prjkitID == dbset.prjkitList[i][PRJKIT.id]) {
+                                    dbset.prjkitList.splise(i, 1);
+                                }
+                            }
+
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            Нет: function () {
                 $(this).dialog("close");
             }
         }
