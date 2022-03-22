@@ -70,17 +70,12 @@ kits.update_table = function (taq) {
     let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
     let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
 
-    $("#n51").val(prjkitRow.code);
-    $("#n52").val(prjkitRow.name);
     $("#n53").val(prjkitRow.color1);
     $("#n54").val(prjkitRow.color2);
     $("#n55").val(prjkitRow.color3);
     $("#n56").val(prjkitRow.width);
     $("#n57").val(prjkitRow.height);
     $("#n58").val(prjkitRow.numb);
-
-    $("#n51").attr("fk", prjkitRec[PRJKIT.artikl_id]);
-    $("#n52").attr("fk", prjkitRec[PRJKIT.artikl_id]);
     $("#n53").attr("fk", prjkitRec[PRJKIT.color1_id]);
     $("#n54").attr("fk", prjkitRec[PRJKIT.color2_id]);
     $("#n55").attr("fk", prjkitRec[PRJKIT.color3_id]);
@@ -101,17 +96,13 @@ kits.update_table = function (taq) {
                 prjkitRec[PRJKIT.color1_id] = $("#n53").attr("fk");
                 prjkitRec[PRJKIT.color2_id] = $("#n54").attr("fk");
                 prjkitRec[PRJKIT.color3_id] = $("#n55").attr("fk");
-                prjkitRec[PRJKIT.artikl_id] = $("#n51").attr("fk");
 
                 $.ajax({
                     url: 'dbset?action=updatePrjkit',
                     data: {param: JSON.stringify(prjkitRec)},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            let artiklRec = dbset.artiklList.find(rec => prjkitRec[PRJKIT.artikl_id] == rec[ARTIKL.id]);
                             $('#table1').jqGrid('setRowData', rowid, {
-                                code: artiklRec[ARTIKL.code],
-                                name: artiklRec[ARTIKL.name],
                                 color1: $("#n53").val(),
                                 color2: $("#n54").val(),
                                 color3: $("#n55").val(),
@@ -243,9 +234,9 @@ kits.color_to_kit = function (btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();        
         let prjkitRow = getSelectedRow($('#table1'));
-        
+        let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
         for (let rec of dbset.artdetList) {
-            if (rec[ARTDET.artikl_id] == prjkitRow.artikl_id) {
+            if (rec[ARTDET.artikl_id] == prjkitRec[PRJKIT.artikl_id]) {
                 if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
 
                     dbset.colorList.forEach(colorRec => {
