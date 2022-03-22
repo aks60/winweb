@@ -55,7 +55,7 @@ public class Dbset {
     
     private static Object format3(JSONArray arr, Field field) {
         Object obj = arr.get(field.ordinal());
-        return (obj.equals(""))? null :obj;
+        return ("".equals(obj))? null :obj;
     }
     
     private static Object format4(JSONObject obj, Field field) {
@@ -277,7 +277,6 @@ public class Dbset {
             record.set(ePrjkit.color1_id, format3(arr, ePrjkit.color1_id));
             record.set(ePrjkit.color2_id, format3(arr, ePrjkit.color2_id));
             record.set(ePrjkit.color3_id, format3(arr, ePrjkit.color3_id));
-            record.set(ePrjkit.artikl_id, format3(arr, ePrjkit.artikl_id));
             record.set(ePrjkit.prjprod_id, format3(arr, ePrjkit.prjprod_id));
             Query qPrjkit = new Query(ePrjkit.values());
             qPrjkit.update2(record);
