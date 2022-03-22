@@ -64,12 +64,32 @@ kits.insert_table = function (table) {
 }
 //------------------------------------------------------------------------------
 kits.insert2_table = function (table) {
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let prjprodID = order.prjprodRec[PRJPROD.id];
+        let winc = order.wincalcMap.get(prjprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
+        let sysprofSet = new Set();
 
-    if (order.wincalcMap.size == 0) {
-        dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
+        //Цикл по профилям ветки 
+        for (let sysprofRec of dbset.sysprofList) {
+            //Отфильтруем подходящие по параметрам
+            if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
+                let use_side_ID = sysprofRec[SYSPROF.use_side];
+                if (use_side_ID == Layout[elem.layout][0]
+                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
+                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
+                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
 
-    } else {
-        $('#dialog-dic').load('frm/dialog/kitcard.jsp');
+                    sysprofSet.add(sysprofRec);
+                }
+            }
+        }
+        //artikl.sysprofArr = dbset.artiklList;
+        $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
+    } catch (e) {
+        console.error("Ошибка: product.sysprof_to_frame() " + e.message);
     }
 }
 //------------------------------------------------------------------------------

@@ -230,70 +230,70 @@ product.local_to_fields = function (nodeID) {
 //-------------------  Текстура изделия  ---------------------------------------
 product.color_to_windows = function (btnSrc) {
     //try {
-        let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
-        let groupSet = new Set();
-        let colorSet = new Set();
+    let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
+    let groupSet = new Set();
+    let colorSet = new Set();
 
-        let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
-        let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-        let colorTxt = (btnSrc == 'n14') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-                : (btnSrc == 'n15') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
-                : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
-        let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
+    let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
+    let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
+    let colorTxt = (btnSrc == 'n14') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
+            : (btnSrc == 'n15') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
+            : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
+    let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
 
-        //Поле группы текстур заполнено
-        if (groupArr != null) {
-            for (let s1 of groupArr) { //группы
-                let groupSet2 = new Set();
-                let colorSet2 = new Set();
-                let b = false;
-                for (let rec of dbset.colorList) {
-                    if (rec[COLOR.colgrp_id] == s1) {
-                        groupSet2.add(rec[COLOR.colgrp_id]); //группы
-                        colorSet2.add(rec); //текстуры
-                        for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                            if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                                b = true;
-                            }
-                        }
-                    }
-                }
-                if (b == false) { //если небыло пападаний то добавляем всю группу
-                    groupSet.add(groupSet2);
-                    colorSet.add(colorSet2);
-                }
-            }
-        }
-        //Поле текстур заполнено
-        if (colorArr.length != 0) {
+    //Поле группы текстур заполнено
+    if (groupArr != null) {
+        for (let s1 of groupArr) { //группы
+            let groupSet2 = new Set();
+            let colorSet2 = new Set();
+            let b = false;
             for (let rec of dbset.colorList) {
-                if (groupArr != null) {
-
-                    for (let s1 of groupArr) { //группы
-                        if (rec[COLOR.colgrp_id] == s1) {
-                            for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
-                                if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                                    groupSet.add(rec[COLOR.colgrp_id]);
-                                    colorSet.add(rec);
-                                }
-                            }
-                        }
-                    }
-                } else {
+                if (rec[COLOR.colgrp_id] == s1) {
+                    groupSet2.add(rec[COLOR.colgrp_id]); //группы
+                    colorSet2.add(rec); //текстуры
                     for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
                         if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
-                            groupSet.add(rec[COLOR.colgrp_id]);
-                            colorSet.add(rec);
+                            b = true;
                         }
                     }
                 }
             }
+            if (b == false) { //если небыло пападаний то добавляем всю группу
+                groupSet.add(groupSet2);
+                colorSet.add(colorSet2);
+            }
         }
-        dbrec.parent = 'winc';
-        product.groupSet = groupSet;
-        product.colorArr = Array.from(colorSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/color.jsp');
+    }
+    //Поле текстур заполнено
+    if (colorArr.length != 0) {
+        for (let rec of dbset.colorList) {
+            if (groupArr != null) {
+
+                for (let s1 of groupArr) { //группы
+                    if (rec[COLOR.colgrp_id] == s1) {
+                        for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                            if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                                groupSet.add(rec[COLOR.colgrp_id]);
+                                colorSet.add(rec);
+                            }
+                        }
+                    }
+                }
+            } else {
+                for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                    if (rec[COLOR.id] >= colorArr[i] && rec[COLOR.id] <= colorArr[i + 1]) {
+                        groupSet.add(rec[COLOR.colgrp_id]);
+                        colorSet.add(rec);
+                    }
+                }
+            }
+        }
+    }
+    dbrec.parent = 'winc';
+    product.groupSet = groupSet;
+    product.colorArr = Array.from(colorSet);
+    product.buttonSrc = btnSrc;
+    $('#dialog-dic').load('frm/dialog/color.jsp');
 
     //} catch (e) {
     //    console.error("Ошибка: product.color_to_windows(): " + e.message);
@@ -402,31 +402,31 @@ product.color_to_element = function (btnSrc) {
 }
 //-----------------------  Заполнение  -----------------------------------------
 product.artikl_to_glass = function (btnSrc) {
-    //try {
-    let nodeID = $("#tree-winc").jstree("get_selected")[0];
-    let prjprodID = order.prjprodRec[PRJPROD.id];
-    let winc = order.wincalcMap.get(prjprodID);
-    let elem = winc.elemList.find(it => it.id == nodeID);
+    try {
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let prjprodID = order.prjprodRec[PRJPROD.id];
+        let winc = order.wincalcMap.get(prjprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
 
-    //Список доступных толщин в ветке системы например 4;5;8
-    let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
-    if (systreeRec != undefined) {
-        let depth = systreeRec[SYSTREE.depth];
-        depth = depth.replace(/;/g, ',');
-        if (depth.charAt(depth.length - 1) == ',') {
-            depth = depth.substring(0, depth.length - 1);
+        //Список доступных толщин в ветке системы например 4;5;8
+        let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
+        if (systreeRec != undefined) {
+            let depth = systreeRec[SYSTREE.depth];
+            depth = depth.replace(/;/g, ',');
+            if (depth.charAt(depth.length - 1) == ',') {
+                depth = depth.substring(0, depth.length - 1);
+            }
+            depth = depth.split(',');
+            let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
+                        && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
+
+            product.artiklArr = artiklList;
+            product.buttonSrc = btnSrc;
+            $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
         }
-        depth = depth.split(',');
-        let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
-                    && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
-
-        product.artiklArr = artiklList;
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/artikl.jsp');
-
+    } catch (e) {
+        console.error("Ошибка: product.artikl_to_glass() " + e.message);
     }
-    //} catch (e) {
-    //    console.error("Ошибка: product.artikl_to_glass() " + e.message);
-    //}
 }
 //------------------------------------------------------------------------------
