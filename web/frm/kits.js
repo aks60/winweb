@@ -6,8 +6,7 @@ kits.init_table = function (table) {
         rownumbers: true,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя',
-            'Длина', 'Ширина', 'Кол-во', 'artikl_id', 'color1_id', 'color2_id', 'color3_id'],
+        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 80, sorttype: "text"},
@@ -17,11 +16,7 @@ kits.init_table = function (table) {
             {name: 'color3', width: 80, sorttype: "text"},
             {name: 'width', width: 60, sorttype: "text"},
             {name: 'height', width: 60, sorttype: "text"},
-            {name: 'numb', width: 60, sorttype: "text"},
-            {name: 'artikl_id', width: 80},
-            {name: 'color1_id', width: 80},
-            {name: 'color2_id', width: 80},
-            {name: 'color3_id', width: 80}
+            {name: 'numb', width: 60, sorttype: "text"}
         ]
     });
 }
@@ -42,14 +37,10 @@ kits.load_table = function (table) {
                 color3: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
                 width: tr[PRJKIT.width],
                 height: tr[PRJKIT.height],
-                numb: tr[PRJKIT.numb],
-                artikl_id: tr[PRJKIT.artikl_id],
-                color1_id: tr[PRJKIT.color1_id],
-                color2_id: tr[PRJKIT.color2_id],
-                color3_id: tr[PRJKIT.color3_id],
+                numb: tr[PRJKIT.numb]
             });
         }
-        table.jqGrid("setSelection", 1);        
+        table.jqGrid("setSelection", 1);
     }
 }
 //------------------------------------------------------------------------------
@@ -65,38 +56,19 @@ kits.insert_table = function (table) {
 //------------------------------------------------------------------------------
 kits.insert2_table = function (table) {
     try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let prjprodID = order.prjprodRec[PRJPROD.id];
-        let winc = order.wincalcMap.get(prjprodID);
-        let elem = winc.elemList.find(it => it.id == nodeID);
-        let sysprofSet = new Set();
-
-        //Цикл по профилям ветки 
-        for (let sysprofRec of dbset.sysprofList) {
-            //Отфильтруем подходящие по параметрам
-            if (winc.nuni == sysprofRec[SYSPROF.systree_id] && Type[elem.type][1] == sysprofRec[SYSPROF.use_type]) {
-                let use_side_ID = sysprofRec[SYSPROF.use_side];
-                if (use_side_ID == Layout[elem.layout][0]
-                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
-                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
-                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
-
-                    sysprofSet.add(sysprofRec);
-                }
-            }
-        }
-        //artikl.sysprofArr = dbset.artiklList;
         $('#dialog-dic').load('frm/dialog/artikl.jsp');
 
     } catch (e) {
-        console.error("Ошибка: product.sysprof_to_frame() " + e.message);
+        console.error("Ошибка: kits.insert2_table() " + e.message);
     }
 }
 //------------------------------------------------------------------------------
 //Редактирования строки таблицы
 kits.update_table = function (taq) {
 
-    let prjkitRow = getSelectedRow($("#table1"));    
+    let rowid = $("#table1").jqGrid('getGridParam', "selrow");
+    let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
+    let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
 
     $("#n51").val(prjkitRow.code);
     $("#n52").val(prjkitRow.name);
@@ -107,13 +79,11 @@ kits.update_table = function (taq) {
     $("#n57").val(prjkitRow.height);
     $("#n58").val(prjkitRow.numb);
 
-    $("#n51").attr("fk", prjkitRow.artikl_id);
-    $("#n52").attr("fk", prjkitRow.artikl_id);
-    $("#n53").attr("fk", prjkitRow.color1_id);
-    $("#n54").attr("fk", prjkitRow.color2_id);
-    $("#n55").attr("fk", prjkitRow.color3_id);
-    
-    console.log(prjkitRow);
+    $("#n51").attr("fk", prjkitRec[PRJKIT.artikl_id]);
+    $("#n52").attr("fk", prjkitRec[PRJKIT.artikl_id]);
+    $("#n53").attr("fk", prjkitRec[PRJKIT.color1_id]);
+    $("#n54").attr("fk", prjkitRec[PRJKIT.color2_id]);
+    $("#n55").attr("fk", prjkitRec[PRJKIT.color3_id]);
 
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования артикула",
@@ -123,7 +93,7 @@ kits.update_table = function (taq) {
         resizable: false,
         buttons: {
             "Применить": function () {
-                let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
+
                 prjkitRec[0] = 'UPD';
                 prjkitRec[PRJKIT.numb] = $("#n58").val();
                 prjkitRec[PRJKIT.width] = $("#n56").val();
@@ -131,23 +101,24 @@ kits.update_table = function (taq) {
                 prjkitRec[PRJKIT.color1_id] = $("#n53").attr("fk");
                 prjkitRec[PRJKIT.color2_id] = $("#n54").attr("fk");
                 prjkitRec[PRJKIT.color3_id] = $("#n55").attr("fk");
-                prjkitRec[PRJKIT.artikl_id] = $("#n51").attr("fk");                
+                prjkitRec[PRJKIT.artikl_id] = $("#n51").attr("fk");
+
                 $.ajax({
                     url: 'dbset?action=updatePrjkit',
                     data: {param: JSON.stringify(prjkitRec)},
                     success: (data) => {
                         if (data.result == 'ok') {
-                            alert();
-//                            let rowid = $('#table1').jqGrid('getGridParam', "selrow");
-//                            $('#table1').jqGrid('setRowData', rowid, {        
-//                                id: prjkitRec[PRJKIT.id],
-//                                num_ord: prjkitRec[PRJKIT.num_ord],
-//                                num_acc: prjkitRec[PRJKIT.num_acc],
-//                                date4: prjkitRec[PRJKIT.date4],
-//                                date6: prjkitRec[PRJKIT.date6],
-//                                partner: findef(dbset.dealerList.find(rec => prjkitRec[PRJKIT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-//                                manager: prjkitRec[PRJKIT.manager]
-//                            });
+                            let artiklRec = dbset.artiklList.find(rec => prjkitRec[PRJKIT.artikl_id] == rec[ARTIKL.id]);
+                            $('#table1').jqGrid('setRowData', rowid, {
+                                code: artiklRec[ARTIKL.code],
+                                name: artiklRec[ARTIKL.name],
+                                color1: $("#n53").val(),
+                                color2: $("#n54").val(),
+                                color3: $("#n55").val(),
+                                width: $("#n56").val(),
+                                height: $("#n57").val(),
+                                numb: $("#n58").val(),
+                            });
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -204,5 +175,100 @@ kits.delete_table = function (table) {
             }
         }
     });
+}
+//------------------------------------------------------------------------------
+kits.artikl_to_kit = function (btnSrc) {
+    try {
+        kits.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/artikl.jsp');
+
+    } catch (e) {
+        console.error("Ошибка: kits.artikl_to_kit() " + e.message);
+    }
+}
+//-----------------------  Заполнение  -----------------------------------------
+kits.color_to_kit = function (btnSrc) {
+/*    try {
+        
+
+        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let prjprodID = order.prjprodRec[PRJPROD.id];
+        let winc = order.wincalcMap.get(prjprodID);
+        let elem = winc.elemList.find(it => it.id == nodeID);
+        let groupSet = new Set();
+        let colorSet = new Set();
+        let artiklElem = null;
+
+        if (btnSrc == 'n33')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n34')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n35')
+            artiklElem = elem.artiklRec;
+        else if (btnSrc == 'n46')
+            artiklElem = elem.handleRec;
+        else if (btnSrc == 'n4A')
+            artiklElem = elem.loopRec;
+        else if (btnSrc == 'n4C')
+            artiklElem = elem.lockRec;
+        else if (btnSrc == 'n53')
+            artiklElem = elem.artiklRec;
+
+        //Все текстуры артикула элемента конструкции
+        for (let rec of dbset.artdetList) {
+            if (rec[ARTDET.artikl_id] == artiklElem[ARTIKL.id]) {
+                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+
+                    dbset.colorList.forEach(colorRec => {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+
+                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            colorSet.add(colorRec);
+                        }
+                    });
+                } else { //текстура color_fk 
+                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    colorSet.add(color2Rec);
+                }
+            }
+        }
+        dbrec.parent = 'elem';
+        product.groupSet = groupSet;
+        product.colorArr = Array.from(colorSet);
+        product.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+       */ 
+    try {
+        let groupSet = new Set();
+        let colorSet = new Set();        
+        let prjkitRow = getSelectedRow($('#table1'));
+        
+        for (let rec of dbset.artdetList) {
+            if (rec[ARTDET.artikl_id] == prjkitRow.artikl_id) {
+                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+
+                    dbset.colorList.forEach(colorRec => {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+
+                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            colorSet.add(colorRec);
+                        }
+                    });
+                } else { //текстура color_fk 
+                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    colorSet.add(color2Rec);
+                }
+            }
+        }  
+        kits.groupSet = groupSet;
+        kits.colorArr = Array.from(colorSet);        
+        kits.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frm/dialog/color.jsp');
+
+    } catch (e) {
+        console.error("Ошибка: kits.color_to_kit() " + e.message);
+    }
 }
 //------------------------------------------------------------------------------

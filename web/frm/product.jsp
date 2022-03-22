@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="frm/product.js"></script>
-        <title>Product</title>
+        <title>PRODUCT</title>
 
         <script type="text/javascript">
 
@@ -64,7 +64,7 @@
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
 
                         <div id="tabs-1" style="padding: 0px;">  
-                            <p id="a123" class="pantitle">Основные размеры*</p> 
+                            <p class="pantitle">Основные размеры*</p> 
                             <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
                             <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
                             <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  

@@ -64,7 +64,6 @@ login.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('pan2 .login.last').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль адмистратора', 'Не введён логин пользователя'];
-    console.log(att);
     for (let i = 0; i < 3; i++) {
         if (att[i] == '') {
             dialogMes('Сообщение', mes[i]);

@@ -53,7 +53,7 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let colgrpRow = table1.jqGrid('getRowData', rowid);
-                        let base = (dbrec.parent != 'kits') ? product : kits;
+                        let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                         if (base.colorArr.length == 0) {
 
                             let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
@@ -94,12 +94,12 @@
                         $("#dialog-dic").dialog("close");
                     }
                 });
-            };
+            }
 //------------------------------------------------------------------------------
             function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
-                let base = (dbrec.parent != 'kits') ? product : kits;
+                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                 if (base.groupSet.size > 0) {
 
                     let groupList = dbset.groupList.filter(rec => base.groupSet.has(rec[GROUP.id]));
@@ -113,13 +113,14 @@
                 }
                 table1.jqGrid("setSelection", 1);
                 resize();
-            };
+            }
 //------------------------------------------------------------------------------
             function save_table(table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = table2.jqGrid('getRowData', rowid); //record справочника
-                    if (dbrec.parent != 'kits') {
+                    
+                    if ($('#outbody title').text() == 'PRODUCT') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                         let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
@@ -195,7 +196,7 @@
                                         $("#n4C").val(colorRow.name);
                                     else if (product.buttonSrc == 'n53')
                                         $("#n53").val(colorRow.name);
-                                    
+
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -204,24 +205,20 @@
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                             }
                         });
-                    } else {
-                        if (kits.buttonSrc == 'n22') {
-                            $("#n22").val(colorRow.name);
-                            dbrec.color1ID = colorRow.id;
-                            $("#n24").val(colorRow.name);
-                            dbrec.color2ID = colorRow.id;
-                            $("#n26").val(colorRow.name);
-                            dbrec.color3ID = colorRow.id;
+                        
+                        
+                    } else if($('#outbody title').text() == 'KITS') {
+                        if (kits.buttonSrc == 'n53') {
+                            $("#n53").val(colorRow.name);
+                            $("#n53").attr("fk", colorRow.id);
 
-                        } else if (kits.buttonSrc == 'n24') {
-                            $("#n24").val(colorRow.name);
-                            dbrec.color2ID = colorRow.id;
-                            $("#n26").val(colorRow.name);
-                            dbrec.color3ID = colorRow.id;
+                        } else if (kits.buttonSrc == 'n54') {
+                            $("#n54").val(colorRow.name);
+                            $("#n54").attr("fk", colorRow.id);
 
-                        } else if (kits.buttonSrc == 'n26') {
-                            $("#n26").val(colorRow.name);
-                            dbrec.color3ID = colorRow.id;
+                        } else if (kits.buttonSrc == 'n55') {
+                            $("#n55").val(colorRow.name);
+                            $("#n55").attr("fk", colorRow.id);
                         }
                     }
                 } catch (e) {

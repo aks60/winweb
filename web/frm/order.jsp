@@ -4,7 +4,7 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <script type="text/javascript" src="frm/order.js"></script> 
-        <title>Order</title>
+        <title>ORDER</title>
 
         <style>
             #table2 tr:hover {
@@ -58,7 +58,7 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-                alert(formatDate2(new Date()));
+                alert($('#outbody title').text());
             }
         </script>
     </head>

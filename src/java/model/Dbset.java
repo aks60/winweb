@@ -60,7 +60,7 @@ public class Dbset {
     
     private static Object format4(JSONObject obj, Field field) {
         Object ob2 = obj.get(field.name());
-        return (ob2.equals(""))? null :ob2;
+        return (ob2 == null || ob2.equals(""))? null :ob2;
     }
     
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
@@ -84,7 +84,7 @@ public class Dbset {
     }
 
     public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
-        Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up);
+        Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "order by ", eArtikl.level1);
         return new JSONObject(App.asMap("artiklList", qArtikl));
     }
 

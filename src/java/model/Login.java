@@ -25,11 +25,9 @@ import java.security.Security;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.crypto.NoSuchPaddingException;
-
 import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
 import org.bouncycastle.crypto.params.ECDomainParameters;

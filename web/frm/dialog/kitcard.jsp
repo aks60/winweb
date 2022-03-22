@@ -103,9 +103,8 @@
 //------------------------------------------------------------------------------
             function save_table(table2) {
                 try {
-                    for (let kitdetRec of kitdetList) {
-                        //Запишем заказ в серверную базу данных
-                        $.ajax({
+                    for (let kitdetRec of kitdetList) {                       
+                        $.ajax({ //запишем комплект в серверную базу данных
                             url: 'dbset?action=insertKits',
                             data: {
                                 param: JSON.stringify({

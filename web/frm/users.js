@@ -100,7 +100,6 @@ users.logim_create = function () {
 
     var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
     var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
-    //console.log(att);
     for (let i = 0; i < 4; i++) {
         if (att[i] == '') {
             alert(mes[i]);
