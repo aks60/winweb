@@ -36,7 +36,7 @@
             <button id="btnKit4" style="width: 160px" onClick="kits.delete_table($('#table1'));">Удалить артикул</button>            
         </div> 
         <div id = "context">               
-            <div id="dialog-card" card_width="476" card_height="232" style="display: none;">
+            <div id="dialog-card" card_width="490" card_height="260" style="display: none;">
                 <jst id="n53" type='btn' label='Основная текстура' width='126' width2="280" fk="-3" click="kits.color_to_kit('n53')"></jst><br>
                 <jst id="n54" type='btn' label='Внутренняя текстура' width='126' width2="280" fk="-3" click="kits.color_to_kit('n54')"></jst><br>
                 <jst id="n55" type='btn' label='Внешняя текстура' width='126' width2="280" fk="-3" click="kits.color_to_kit('n55')"></jst><br>
