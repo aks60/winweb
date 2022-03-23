@@ -1,5 +1,5 @@
 //==============================================================================
-import {draw_line, draw_stroke_polygon, draw_full_polygon} from './drawing.js';
+import {draw_line, draw_stroke_polygon, draw_stroke_arc, draw_full_polygon} from './drawing.js';
 //============================  BASE  ==========================================
 export class Com5t {
 
@@ -91,6 +91,13 @@ export class Root extends Area {
         super(obj, owner, winc);
         this.frames = new Map(); //рамы конструкции 
         this.pardefMap = new Map(); //параметры по умолчанию   
+
+        if (this.type == "ARCH") {
+            let dh = win.dh_frm;
+            let h = winc.height - winc.heightAdd;
+            let w = winc.width;
+            this.radiusArch = (Math.pow(w / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки        
+        }
 
         for (let syspar1Rec of dbset.syspar1List) {
             if (winc.nuni == syspar1Rec[SYSPAR1.systree_id]) {
@@ -364,9 +371,9 @@ export class Frame extends Com5t {
             } else if ("BOTT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
+                this.dimension(owner.x2 - win.dh_frm, owner.y2 - this.winc.heightAdd, owner.x2, owner.y2);
             } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
+                this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
             }
 
         } else {
@@ -422,17 +429,39 @@ export class Frame extends Com5t {
 
     paint() {
         let dh = win.dh_frm;
+        let dz = 4
         if (this.owner.type == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
+            let r = this.winc.root.radiusArch;
             if ("TOP" == this.layout) {
                 //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+                let ang1 = 90 - Math.asin(this.winc.width / (r * 2)) / (Math.PI / 180);
+                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
+                draw_stroke_arc(this.winc, this.winc.width / 2, r + (dh / 2), r, Math.PI, 0, this.color2Rec);  
+                
+                //draw_stroke_arc(this.winc, this.winc.width / 2 - r + dh / 2, dh / 2 - 2, (r - dh / 2) * 2, (r - dh / 2) * 2, ang2, (90 - ang2) * 2 + 1, this.color2Rec);
+                //Draw.strokeArc(iwin, owner.width() / 2 - r, -4, r * 2, r * 2, ang1, (90 - ang1) * 2 + 1, 0, 4);
+                //Draw.strokeArc(iwin, owner.width() / 2 - r + dh, dh - 2, (r - dh) * 2, (r - dh) * 2, ang2, (90 - ang2) * 2 + 1, 0, 4);    
+                
             } else if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+                
             } else if ("RIGHT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2, this.y2 - dh, this.color2Rec);
-            } else if ("LEFT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, Y1, Y1, this.y2 - dh, this.y2, this.color2Rec);
+                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
+                let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, (r - a), this.y1, this.y2, this.y2 - dh, this.color2Rec);
+
+            } else if ("LEFT" == this.layout) {                
+                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
+                let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, (r - a), this.y2 - dh, this.y2, this.color2Rec);
+
             }
+            //draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
+            //draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
+            //draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
+            //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
+
         } else {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
@@ -443,7 +472,6 @@ export class Frame extends Com5t {
             } else if ("LEFT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh, this.y2 - dh, this.y2, this.color2Rec);
             }
-            let dz = 4
             draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
             draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
             draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
