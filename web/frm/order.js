@@ -1,5 +1,4 @@
-//------------------------------------------------------------------------------
-//Инициализация таблицы
+//-----------------  Инициализация таблицы  ------------------------------------
 order.init_table = function (table1, table2) {
     table1.jqGrid({
         datatype: "local",
@@ -72,8 +71,7 @@ order.click_table2 = function (e) {
         order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
 }
-//------------------------------------------------------------------------------
-//Загрузка данных в таблицу
+//----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
 
     let rowID = 1;
@@ -98,8 +96,7 @@ order.load_table = function (table1, table2) {
     table1.jqGrid("setSelection", rowID);
     order.resize();
 }
-//------------------------------------------------------------------------------
-//Удаление строки таблицы
+//---------------  Удаление строки таблицы  ------------------------------------
 order.delete_table1 = function (table) {
     let orderRow = getSelectedRow(table);
     if (orderRow != null) {
@@ -140,8 +137,7 @@ order.delete_table1 = function (table) {
         });
     }
 }
-//------------------------------------------------------------------------------
-//Удаление строки таблицы
+//-----------------  Удаление строки таблицы  ----------------------------------
 order.delete_table2 = function () {
     if (order.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
@@ -187,8 +183,7 @@ order.delete_table2 = function () {
         });
     }
 }
-//------------------------------------------------------------------------------
-//Добавить контрукцию в таблицу
+//-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.add_prjprod = function (table2, prjprodRec) {
 
     let canvas = document.createElement("canvas");
@@ -221,8 +216,7 @@ order.add_prjprod = function (table2, prjprodRec) {
     table2.appendChild(tr);
 
 }
-//------------------------------------------------------------------------------
-//Вставка строки в таблицу
+//----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
@@ -294,8 +288,7 @@ order.insert_table1 = function (taq) {
         }
     });
 }
-//------------------------------------------------------------------------------
-//Редактирования строки таблицы
+//----------------  Редактирования строки таблицы  -----------------------------
 order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));

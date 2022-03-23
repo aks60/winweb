@@ -59,8 +59,7 @@ users.load_table1 = function (table) {
         }
     });
 }
-//------------------------------------------------------------------------------
-//проверка корректности ввода учётной записи
+//-------------  Проверка корректности ввода учётной записи  -------------------
 users.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('#pan2 .login:last').val()];
@@ -94,8 +93,7 @@ users.token_check = function () {
         }
     });
 }
-//------------------------------------------------------------------------------
-//создание учётной записи логин-пароль пользователя на сервере
+//---- Создание учётной записи логин-пароль пользователя на сервере  -----------
 users.logim_create = function () {
 
     var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
@@ -135,8 +133,7 @@ users.logim_create = function () {
         }
     });
 }
-//------------------------------------------------------------------------------
-//удаление учётной записи логин-пароль пользователя на сервере
+//-----  Удаление учётной записи логин-пароль пользователя на сервере  ---------
 users.login_delete = function () {
     var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
     var id = $('#table1').jqGrid('getCell', rowId, 'id');
@@ -158,8 +155,7 @@ users.login_delete = function () {
         });
     }
 }
-//------------------------------------------------------------------------------
-//создание учётной записи пользователя на сервере
+//----  Создание учётной записи пользователя на сервере  -----------------------
 users.token_create = function (login) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
@@ -202,8 +198,7 @@ users.token_create = function (login) {
         });
     }
 }
-//------------------------------------------------------------------------------
-//отправим учётку, получим случайное сообщение
+//-----  Отправим учётку, получим случайное сообщение  -------------------------
 users.token_random = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
@@ -221,8 +216,7 @@ users.token_random = function () {
         });
     }
 }
-//------------------------------------------------------------------------------
-//подписание сообщения сервера закрытым ключём токена
+//-----  Подписание сообщения сервера закрытым ключём токена  ------------------
 users.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
@@ -250,8 +244,7 @@ users.token_sign = function (random) {
         }
     }
 }
-//------------------------------------------------------------------------------
-//удаление логина из токена
+//-------  Удаление логина из токена  ------------------------------------------
 users.token_delete = function () {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
@@ -269,8 +262,7 @@ users.token_delete = function () {
         }
     }
 }
-//------------------------------------------------------------------------------
-//подучение списка учёных записей токена
+//------------  Подучение списка учёных записей токена  ------------------------
 users.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");

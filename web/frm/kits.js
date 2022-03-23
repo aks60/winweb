@@ -62,8 +62,7 @@ kits.insert2_table = function (table) {
         console.error("Ошибка: kits.insert2_table() " + e.message);
     }
 }
-//------------------------------------------------------------------------------
-//Редактирования строки таблицы
+//------------  Редактирования строки таблицы  ---------------------------------
 kits.update_table = function (taq) {
 
     let rowid = $("#table1").jqGrid('getGridParam', "selrow");
@@ -179,57 +178,6 @@ kits.artikl_to_kit = function (btnSrc) {
 }
 //-----------------------  Заполнение  -----------------------------------------
 kits.color_to_kit = function (btnSrc) {
-/*    try {
-        
-
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let prjprodID = order.prjprodRec[PRJPROD.id];
-        let winc = order.wincalcMap.get(prjprodID);
-        let elem = winc.elemList.find(it => it.id == nodeID);
-        let groupSet = new Set();
-        let colorSet = new Set();
-        let artiklElem = null;
-
-        if (btnSrc == 'n33')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n34')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n35')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n46')
-            artiklElem = elem.handleRec;
-        else if (btnSrc == 'n4A')
-            artiklElem = elem.loopRec;
-        else if (btnSrc == 'n4C')
-            artiklElem = elem.lockRec;
-        else if (btnSrc == 'n53')
-            artiklElem = elem.artiklRec;
-
-        //Все текстуры артикула элемента конструкции
-        for (let rec of dbset.artdetList) {
-            if (rec[ARTDET.artikl_id] == artiklElem[ARTIKL.id]) {
-                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
-
-                    dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
-
-                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
-                            colorSet.add(colorRec);
-                        }
-                    });
-                } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
-                    groupSet.add(color2Rec[COLOR.colgrp_id]);
-                    colorSet.add(color2Rec);
-                }
-            }
-        }
-        dbrec.parent = 'elem';
-        product.groupSet = groupSet;
-        product.colorArr = Array.from(colorSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frm/dialog/color.jsp');
-       */ 
     try {
         let groupSet = new Set();
         let colorSet = new Set();        
