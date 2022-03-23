@@ -438,9 +438,11 @@ export class Frame extends Com5t {
             let r = this.winc.root.radiusArch;
             if ("TOP" == this.layout) {
                 //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-                let ang1 = 90 - Math.asin(this.winc.width / (r * 2)) / (Math.PI / 180);
-                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
-                draw_stroke_arc(this.winc, this.winc.width / 2, r + (dh / 2), r, Math.PI, 0, this.color2Rec);
+                //радианах = Угол в градусах x PI / 180
+                let ang = Math.PI + (Math.PI / 2) - Math.asin(this.winc.width / (r * 2));
+                let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
+                let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
+                draw_stroke_arc(this.winc, this.winc.width / 2, r + (dh / 2), r, ang1, ang2, this.color2Rec);
 
                 //draw_stroke_arc(this.winc, this.winc.width / 2 - r + dh / 2, dh / 2 - 2, (r - dh / 2) * 2, (r - dh / 2) * 2, ang2, (90 - ang2) * 2 + 1, this.color2Rec);
                 //Draw.strokeArc(iwin, owner.width() / 2 - r, -4, r * 2, r * 2, ang1, (90 - ang1) * 2 + 1, 0, 4);
