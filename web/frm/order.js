@@ -59,7 +59,6 @@ order.taq_parent = function (node, tag) { //рекурсия
     return null;
 }
 order.click_table2 = function (e) {
-debugger;
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
@@ -170,7 +169,6 @@ order.delete_table2 = function () {
                                 }
                                 //Перезагрузка таблицы конструкций
                                 let rowid = $("#table1").jqGrid('getGridParam', "selrow");
-                                $("#table1").removeClass('activeRow');
                                 $("#table1").jqGrid("setSelection", rowid);
 
                             } else

@@ -60,12 +60,12 @@
                     height: 500,
                     modal: true,
                     buttons: {
-                        "Выбрать": function () {
+                        "Выбрать+": function () {
                             let orderRow = getSelectedRow($("#table1"));
                             let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {
-                                
-                                $.ajax({ //Запишем скрипт в серверную базу данных
+
+                                $.ajax({//Запишем скрипт в серверную базу данных
                                     url: 'dbset?action=insertPrjprod',
                                     data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
                                             projectID: orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
@@ -75,6 +75,7 @@
                                                 sysprodRec[SYSPROD.script], orderRow.id, sysprodRec[SYSPROD.systree_id]];
                                             dbset.prjprodList.push(record);
                                             order.add_prjprod(document.getElementById('table2'), record);
+
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);
                                     },
@@ -126,10 +127,9 @@
 
                                     //Новая запись в таблице конструкций
                                     add_clone(table2, rec);
-                                    
                                     //Первая конструкция
                                     if (prjprodID == null) {
-                                        prjprodID = rec[SYSPROD.id]; 
+                                        prjprodID = rec[SYSPROD.id];
                                     }
                                 }
                                 //Программный клик на первой конструкции
