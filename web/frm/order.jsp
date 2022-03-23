@@ -58,7 +58,7 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-                alert($('#outbody title').text());
+               $("#table1").removeClass('activeRow');
             }
         </script>
     </head>

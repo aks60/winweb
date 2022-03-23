@@ -59,11 +59,13 @@ order.taq_parent = function (node, tag) { //рекурсия
     return null;
 }
 order.click_table2 = function (e) {
+debugger;
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
         let idx = table.getAttribute('activeRowIndex');
-        table.rows[idx].classList.remove('activeRow');
+        if (idx < table.rows.length)
+            table.rows[idx].classList.remove('activeRow');
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
@@ -162,10 +164,15 @@ order.delete_table2 = function () {
                                 var trow = document.getElementById(id);
                                 trow.remove();
                                 for (let i = 0; i < dbset.prjprodList.length; ++i) {
-                                    if (order.prjprodRec[PRJPROD.id] == dbset.prjprodList[i][PRJPROD.id]) {
+                                    if (dbset.prjprodList[i][PRJPROD.id] == order.prjprodRec[PRJPROD.id]) {
                                         dbset.prjprodList.splice(i, 1);
                                     }
                                 }
+                                //Перезагрузка таблицы конструкций
+                                let rowid = $("#table1").jqGrid('getGridParam', "selrow");
+                                $("#table1").removeClass('activeRow');
+                                $("#table1").jqGrid("setSelection", rowid);
+
                             } else
                                 dialogMes('Сообщение', "<p>" + data.result);
                         },
