@@ -1,6 +1,6 @@
-//==============================================================================
+//------------------------------------------------------------------------------
 import {draw_line, draw_stroke_polygon, draw_stroke_arc, draw_full_polygon} from './drawing.js';
-//============================  BASE  ==========================================
+//------------------------------------------------------------------------------
 export class Com5t {
 
     constructor(obj, owner, winc) {
@@ -41,7 +41,7 @@ export class Com5t {
         return ((this.x2 >= X) && (this.y2 >= Y));
     }
 }
-//=================================  AREA  =====================================
+//------------------------------------------------------------------------------
 export class Area extends Com5t {
 
     constructor(obj, owner, winc) {
@@ -84,7 +84,7 @@ export class Area extends Com5t {
         }
     }
 }
-//==============================  ROOT  ========================================
+//------------------------------------------------------------------------------
 export class Root extends Area {
 
     constructor(obj, owner, winc) {
@@ -121,7 +121,7 @@ export class Root extends Area {
         }
     }
 }
-//==============================  STVORKA  =====================================
+//------------------------------------------------------------------------------
 export class Stvorka extends Area {
 
     constructor(obj, owner, winc) {
@@ -282,14 +282,17 @@ export class Stvorka extends Area {
         }
     }
 }
-//==================================  CROSS  ===================================
+//------------------------------------------------------------------------------
 export class Cross extends Com5t {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
         this.layout = (owner.layout == 'VERT') ? 'HORIZ' : 'VERT';
 
-        if ("ARCH" == owner.type && owner.childs.length == 1) {
+        //Коррекция положения импоста арки (подкдадка ареа над импостом)
+        if ("ARCH" == owner.type && owner.childs.length == 1) {            
+            let prevArea = owner.childs[0];
+            prevArea.y2 = prevArea.y2 + win.dh_frm / 2;
 
         } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
 
@@ -354,7 +357,7 @@ export class Cross extends Com5t {
         }
     }
 }
-//================================  FRAME  =====================================
+//------------------------------------------------------------------------------
 export class Frame extends Com5t {
 
     constructor(obj, owner, winc, param, id, layout, type) {
@@ -437,21 +440,21 @@ export class Frame extends Com5t {
                 //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
                 let ang1 = 90 - Math.asin(this.winc.width / (r * 2)) / (Math.PI / 180);
                 let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
-                draw_stroke_arc(this.winc, this.winc.width / 2, r + (dh / 2), r, Math.PI, 0, this.color2Rec);  
-                
+                draw_stroke_arc(this.winc, this.winc.width / 2, r + (dh / 2), r, Math.PI, 0, this.color2Rec);
+
                 //draw_stroke_arc(this.winc, this.winc.width / 2 - r + dh / 2, dh / 2 - 2, (r - dh / 2) * 2, (r - dh / 2) * 2, ang2, (90 - ang2) * 2 + 1, this.color2Rec);
                 //Draw.strokeArc(iwin, owner.width() / 2 - r, -4, r * 2, r * 2, ang1, (90 - ang1) * 2 + 1, 0, 4);
                 //Draw.strokeArc(iwin, owner.width() / 2 - r + dh, dh - 2, (r - dh) * 2, (r - dh) * 2, ang2, (90 - ang2) * 2 + 1, 0, 4);    
-                
+
             } else if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-                
+
             } else if ("RIGHT" == this.layout) {
                 let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
                 let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, (r - a), this.y1, this.y2, this.y2 - dh, this.color2Rec);
 
-            } else if ("LEFT" == this.layout) {                
+            } else if ("LEFT" == this.layout) {
                 let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
                 let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, (r - a), this.y2 - dh, this.y2, this.color2Rec);
@@ -479,7 +482,7 @@ export class Frame extends Com5t {
         }
     }
 }
-//================================  GLASS  =====================================
+//------------------------------------------------------------------------------
 export class Glass extends Com5t {
 
     constructor(obj, owner, winc) {
@@ -515,5 +518,5 @@ export class Glass extends Com5t {
         }
     }
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 
