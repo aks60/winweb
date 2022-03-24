@@ -60,7 +60,7 @@
                     height: 500,
                     modal: true,
                     buttons: {
-                        "Выбрать+": function () {
+                        "Выбрать": function () {
                             let orderRow = getSelectedRow($("#table1"));
                             let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
                             if (sysprodRec != undefined) {

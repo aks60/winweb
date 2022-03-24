@@ -48,14 +48,20 @@ export class Area extends Com5t {
         super(obj, owner, winc);
         this.childs = new Array(0); //список детей 
 
+        //Коробка
         if (obj.length == undefined && (owner == null || owner == winc.root)) {
             this.dimension(0, 0, winc.width, winc.height);
+        
+        //Створка
+        } else if (this.type == 'STVORKA') {
+            this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
+        //Алеа
         } else {
             let height = (owner.layout == "VERT") ? obj.length : owner.height();
             let width = (owner.layout == "HORIZ") ? obj.length : owner.width();
 
-            if (owner.childs.length == 0) {
+            if (owner.childs.length == 0) { //если owner.childs.length == 0 то prevArea искать нет смысла
                 if (owner.layout == "VERT") { //сверху вниз
                     let Y2 = (owner.y1 + height > owner.y2) ? owner.y2 : owner.y1 + height;
                     this.dimension(owner.x1, owner.y1, owner.x2, Y2);
@@ -92,6 +98,7 @@ export class Root extends Area {
         this.frames = new Map(); //рамы конструкции 
         this.pardefMap = new Map(); //параметры по умолчанию   
 
+        //Радиус
         if (this.type == "ARCH") {
             let dh = win.dh_frm;
             let h = winc.height - winc.heightAdd;
@@ -99,6 +106,7 @@ export class Root extends Area {
             this.radiusArch = (Math.pow(w / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки        
         }
 
+        //Параметр
         for (let syspar1Rec of dbset.syspar1List) {
             if (winc.nuni == syspar1Rec[SYSPAR1.systree_id]) {
                 this.pardefMap.set(syspar1Rec[SYSPAR1.params_id], syspar1Rec);
@@ -107,6 +115,7 @@ export class Root extends Area {
         this.init_pardef_map();
     }
 
+    //Параметр
     init_pardef_map() {
         if (this.obj.param != undefined) {
             if (this.obj.param.ioknaParam != undefined) {
@@ -130,7 +139,7 @@ export class Stvorka extends Area {
 
         //Коррекция area створки с учётом ширины рамы и нахлёста
         this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
-                owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("TOP") - win.naxl));
+                owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("BOTT") - win.naxl));
 
         this.frames.set("BOTT", new Frame(obj, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
         this.frames.set("RIGHT", new Frame(obj, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
@@ -290,9 +299,9 @@ export class Cross extends Com5t {
         this.layout = (owner.layout == 'VERT') ? 'HORIZ' : 'VERT';
 
         //Коррекция положения импоста арки (подкдадка ареа над импостом)
-        if ("ARCH" == owner.type && owner.childs.length == 1) {            
+        if ("ARCH" == owner.type && owner.childs.length == 1) {
             let prevArea = owner.childs[0];
-            prevArea.y2 = prevArea.y2 + win.dh_frm / 2;
+            prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
 
         } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
 
@@ -404,7 +413,7 @@ export class Frame extends Com5t {
 
         else { //профиль по умолчанию
             if ('BOTT' == this.layout)
-                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
+                this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOTT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
             else if ('RIGHT' == this.layout)
                 this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['RIGHT'][0], UseSide['VERT'][0])[SYSPROF.id];
             else if ('TOP' == this.layout)
@@ -436,9 +445,9 @@ export class Frame extends Com5t {
         if (this.owner.type == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
             let r = this.winc.root.radiusArch;
+
             if ("TOP" == this.layout) {
-                //draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh, this.x1 + dh, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-                let r2 = r  - win.dh_frm / 2;
+                let r2 = r - win.dh_frm / 2;
                 let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
                 let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
                 draw_stroke_arc(this.winc, this.winc.width / 2, r, r2, ang1, ang2, this.color2Rec);
