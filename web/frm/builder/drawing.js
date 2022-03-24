@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-export  function draw_line(winc, x1, y1, x2, y2, rgb) {   
+export  function draw_line(winc, x1, y1, x2, y2, rgb) {
     let ctx = winc.ctx;
     ctx.save();
     ctx.strokeStyle = (rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
@@ -28,15 +28,16 @@ export  function draw_stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) 
     ctx.restore();
 }
 //------------------------------------------------------------------------------
-export function draw_stroke_arc(winc, x, y, r, ang1, ang2, rgb) {
+export function draw_stroke_arc(winc, x, y, r, ang1, ang2, rgb, fill) {
     let ctx = winc.ctx;
     ctx.save();
-    ctx.strokeStyle = '#' + rgb[COLOR.rgb].toString(16);
-    //ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
-    ctx.lineWidth = win.dh_frm;
+    //ctx.strokeStyle = '#' + rgb[COLOR.rgb].toString(16);
+    ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
+    //ctx.lineWidth = win.dh_frm;
     ctx.beginPath();
     ctx.arc(x, y, r, ang1, ang2);
-    //ctx.fill();
+    if (fill)
+        ctx.fill();
     ctx.stroke();
     ctx.restore();
 }
@@ -57,13 +58,13 @@ export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
     ctx.restore();
 }
 //------------------------------------------------------------------------------
-export function draw_full_circle(winc) {
-
-    let ctx = winc.ctx;
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    ctx.stroke();
-}
+//export function draw_full_circle(winc) {
+//
+//    let ctx = winc.ctx;
+//    ctx.beginPath();
+//    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+//    ctx.stroke();
+//}
 //------------------------------------------------------------------------------
 export function draw_text(winc) {
 

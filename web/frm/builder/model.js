@@ -48,15 +48,23 @@ export class Area extends Com5t {
         super(obj, owner, winc);
         this.childs = new Array(0); //список детей 
 
+        //Всё нестандартное АРЕА сверху, пока примитивно
+        //Переписываю тип чтобы можно было отловить    
+        if (owner != null && (owner.type == 'ARCH' || owner.type == 'TRAPEZE')) {
+            if (owner.childs.length == 0) {
+                this.type = owner.type;
+            }
+        }
+
         //Коробка
         if (obj.length == undefined && (owner == null || owner == winc.root)) {
             this.dimension(0, 0, winc.width, winc.height);
-        
-        //Створка
+
+            //Створка
         } else if (this.type == 'STVORKA') {
             this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
-        //Алеа
+            //Алеа
         } else {
             let height = (owner.layout == "VERT") ? obj.length : owner.height();
             let width = (owner.layout == "HORIZ") ? obj.length : owner.width();
@@ -447,7 +455,7 @@ export class Frame extends Com5t {
             let r = this.winc.root.radiusArch;
 
             if ("TOP" == this.layout) {
-                let r2 = r - win.dh_frm / 2;
+                let r2 = r - win.dh_frm;
                 let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
                 let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
                 draw_stroke_arc(this.winc, this.winc.width / 2, r, r2, ang1, ang2, this.color2Rec);
@@ -517,10 +525,13 @@ export class Glass extends Com5t {
 
     paint() {
         if (this.owner.type == "ARCH") {
-
+            let r = this.winc.root.radiusArch;
+            let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
+            let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
+            draw_stroke_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, this.color2Rec, true);
         } else {
-            draw_full_polygon(this.winc, this.owner.x1, this.owner.x2, this.owner.x2,
-                    this.owner.x1, this.owner.y1, this.owner.y1, this.owner.y2, this.owner.y2, this.color1Rec);
+            draw_full_polygon(this.winc, this.x1, this.x2, this.x2,
+                    this.x1, this.y1, this.y1, this.y2, this.y2, this.color1Rec);
         }
     }
 }
