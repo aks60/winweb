@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-import {draw_line, draw_stroke_polygon, draw_stroke_arc, draw_full_polygon} from './drawing.js';
+import {draw_line, draw_stroke_polygon, draw_stroke_arc, draw_full_polygon, draw_full_arc} from './drawing.js';
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -458,7 +458,9 @@ export class Frame extends Com5t {
                 let r2 = r - win.dh_frm;
                 let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
                 let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
-                draw_stroke_arc(this.winc, this.winc.width / 2, r, r2, ang1, ang2, this.color2Rec);
+                draw_full_arc(this.winc, this.winc.width / 2, r, r - win.dh_frm / 2, ang1, ang2, win.dh_frm, this.color2Rec);
+                draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 5);
+                draw_full_arc(this.winc, this.winc.width / 2, r, r - win.dh_frm, ang1, ang2, 5);
 
             } else if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
@@ -528,7 +530,8 @@ export class Glass extends Com5t {
             let r = this.winc.root.radiusArch;
             let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
             let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
-            draw_stroke_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, this.color2Rec, true);
+            draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
+            
         } else {
             draw_full_polygon(this.winc, this.x1, this.x2, this.x2,
                     this.x1, this.y1, this.y1, this.y2, this.y2, this.color1Rec);

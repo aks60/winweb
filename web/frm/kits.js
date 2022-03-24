@@ -147,10 +147,9 @@ kits.delete_table = function (table) {
                             table.jqGrid("delRowData", rowid);
                             for (let i = 0; i < dbset.prjkitList.length; ++i) {
                                 if (prjkitID == dbset.prjkitList[i][PRJKIT.id]) {
-                                    dbset.prjkitList.splise(i, 1);
+                                    dbset.prjkitList.splice(i, 1);
                                 }
                             }
-
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
