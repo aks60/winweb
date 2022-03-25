@@ -485,7 +485,7 @@ export class Frame extends Com5t {
         } else if (this.owner.type == '+TRAPEZE') {
             if ('BOTT' == this.layout) {
                 //draw_stroke_polygon(this.winc, this.x1 + win.dh_frm, this.x2 - win.dh_frm, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, rgb)
-                //Draw.strokePolygon(iwin, x1 + win.dh_frm, x2 - dh1, x2, x1, y1, y1, y2, y2, rgb, borderColor);
+                //Draw.strokePolygon(iwin, x1 + dh0, x2 - dh1, x2, x1, y1, y1, y2, y2, rgb, borderColor);
 
             } else if ('RIGHT' == this.layout) {
 //                let angl = (this.winc.form == 2) ? Math.toRadians(90 - anglCut[1]) : Math.toRadians(90 - anglCut[0]);
