@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-import {draw_line, draw_stroke_polygon, draw_stroke_arc, draw_full_polygon, draw_full_arc} from './drawing.js';
+import {draw_line, draw_stroke_polygon, draw_full_polygon, draw_full_arc} from './drawing.js';
 //------------------------------------------------------------------------------
 export class Com5t {
 
@@ -480,7 +480,33 @@ export class Frame extends Com5t {
             //draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
             //draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
             //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
+            
+            
+        } else if (this.owner.type == '+TRAPEZE') {
+            if ('BOTT' == this.layout) {
+                //draw_stroke_polygon(this.winc, this.x1 + win.dh_frm, this.x2 - win.dh_frm, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, rgb)
+                //Draw.strokePolygon(iwin, x1 + win.dh_frm, x2 - dh1, x2, x1, y1, y1, y2, y2, rgb, borderColor);
 
+            } else if ('RIGHT' == this.layout) {
+//                let angl = (this.winc.form == 2) ? Math.toRadians(90 - anglCut[1]) : Math.toRadians(90 - anglCut[0]);
+//                let dh2 = (float)(dh * Math.tan(angl));
+//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1 + dh2, y1, y2, y2 - dh0, rgb, borderColor);
+
+            } else if ('LEFT' == this.layout) {
+//                let angl = Math.toRadians(90 - anglCut[0]);
+//                let dh2 = (float)(dh * Math.tan(angl));
+//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y1 + dh2, y2 - dh1, y2, rgb, borderColor);
+
+            } else if ('TOP' == this.layout) {
+//                let ang1 = Math.toRadians(90 - anglCut[0]);
+//                let dh2 = (float)(dh * Math.tan(ang1));
+//                let ang2 = Math.toRadians(90 - anglCut[1]);
+//                let dh3 = (float)(dh * Math.tan(ang2));
+//                let dy = (float)(artiklRecAn.getDbl(eArtikl.height) / UCom.sin(anglHoriz - 90));
+//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y2, y2 + dy, y1 + dy, rgb, borderColor);
+            }
+            
+            
         } else {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
@@ -531,7 +557,14 @@ export class Glass extends Com5t {
             let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
             let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
             draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
-            
+
+        } else if (this.owner.type == "TRAPEZE" && this.y1 == 0) {
+            if (this.winc.form == 2) {
+                draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height - this.winc.heightAdd, this.y2, this.y2, this.color1Rec);
+
+            } else if (this.winc.form == 4) {
+                draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.winc.height - this.winc.heightAdd, this.y1, this.y2, this.y2, this.color1Rec);
+            }
         } else {
             draw_full_polygon(this.winc, this.x1, this.x2, this.x2,
                     this.x1, this.y1, this.y1, this.y2, this.y2, this.color1Rec);

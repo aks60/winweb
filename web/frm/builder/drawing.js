@@ -44,20 +44,6 @@ export  function draw_full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
     ctx.restore();
 }
 //------------------------------------------------------------------------------
-export function draw_stroke_arc(winc, x, y, r, ang1, ang2, rgb, fill) {
-    let ctx = winc.ctx;
-    ctx.save();
-    //ctx.strokeStyle = '#' + rgb[COLOR.rgb].toString(16);
-    ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
-    //ctx.lineWidth = win.dh_frm;
-    ctx.beginPath();
-    ctx.arc(x, y, r, ang1, ang2);
-    if (fill)
-        ctx.fill();
-    ctx.stroke();
-    ctx.restore();
-}
-//------------------------------------------------------------------------------
 export function draw_full_arc(winc, x, y, r, ang1, ang2, lineWidth, strokeStyle, fillStyle, fill) {
     let ctx = winc.ctx;
     ctx.save();

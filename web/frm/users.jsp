@@ -51,7 +51,7 @@
                             <table height="180" width="440">
                                 <tr>
                                     <td>Логин администратора:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='admin' type='text' size='16'></td>
+                                    <td><input class="login" placeholder='Введите логин' value='sysdba' type='text' size='16'></td>
                                 </tr> 
                                 <tr>
                                     <td>Пароль администратора:</td>
