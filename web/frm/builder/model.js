@@ -335,14 +335,20 @@ export class Cross extends Com5t {
         }
     }
 
-  set_location(obj, owner, winc) {
+    set_location(obj, owner, winc) {
+        
         //Коррекция положения импоста арки (подкдадка ареа над импостом)
         if ("ARCH" == owner.type && owner.childs.length == 1) {
             let prevArea = owner.childs[0];
             prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
 
         } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
-
+            let prevArea = owner.childs[0];
+            if(winc.form == '2') {
+               let angl = winc.root.frames.get('RIGHT').anglCut[1];
+               var dy = win.dh_frm * Math.tan(Math.toRadians(90 - angl));
+            }
+            prevArea.dimension(prevArea.x1, prevArea.y1, prevArea.x2, prevArea.y2 + (win.dh_crss / 2) + dy);
         }
         for (let index = owner.childs.length - 1; index >= 0; --index) {
             if (owner.childs[index] instanceof Area) {
@@ -357,8 +363,8 @@ export class Cross extends Com5t {
                 break;
             }
         }
-  }
-  
+    }
+
     find_first(nuni, typ, us1) {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id]
                     && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
@@ -432,29 +438,39 @@ export class Frame extends Com5t {
             } else if ("LEFT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
             }
-            
+
         } else if (owner.type == "TRAPEZE") {
             let H = winc.height - winc.heightAdd;
             let W = winc.width;
+
             if ('BOTT' == this.layout) {
                 this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
+
             } else if ('RIGHT' == this.layout) {
                 if (winc.form == 2) {
                     this.dimension(owner.x2 - win.dh_frm, owner.y2 - winc.heightAdd, owner.x2, owner.y2);
+                    this.anglCut[1] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                 } else {
                     this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
+                    this.anglCut[0] = Math.toDegrees(Math.atan(W / H)) / 2;
                 }
             } else if ('TOP' == this.layout) {
                 if (winc.form == 2) {
                     this.dimension(owner.x1, owner.y1, owner.x2, owner.y2 - winc.heightAdd - win.dh_crss);
+                    this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
+                    this.anglCut[1] = Math.toDegrees(Math.atan(W / H)) / 2;
                 } else {
                     this.dimension(owner.x1, owner.y2 - winc.heightAdd, owner.x2, owner.y1);
+                    this.anglCut[1] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
+                    this.anglCut[0] = Math.toDegrees(Math.atan(W / H)) / 2;
                 }
             } else if ('LEFT' == this.layout) {
                 if (winc.form == 4) {
                     this.dimension(owner.x1, owner.y2 - winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
+                    this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                 } else {
                     this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
+                    this.anglCut[0] = (Math.toDegrees(Math.atan(W / H))) / 2;
                 }
             }
         } else {
@@ -498,13 +514,13 @@ export class Frame extends Com5t {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
 
             } else if ("RIGHT" == this.layout) {
-                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
-                let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
+                let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)));
+                let a = (r - dh) * Math.sin(Math.toRadians(ang2));
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, (r - a), this.y1, this.y2, this.y2 - dh, this.color2Rec);
 
             } else if ("LEFT" == this.layout) {
-                let ang2 = 90 - Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)) / (Math.PI / 180);
-                let a = (r - dh) * Math.sin(ang2 * (Math.PI / 180));
+                let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width - 2 * dh) / ((r - dh) * 2)));
+                let a = (r - dh) * Math.sin(Math.toRadians(ang2));
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, (r - a), this.y2 - dh, this.y2, this.color2Rec);
 
             }

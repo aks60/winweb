@@ -58,7 +58,7 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-               $("#table1").removeClass('activeRow');
+               alert(Math.toRadians(47));
             }
         </script>
     </head>

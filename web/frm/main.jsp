@@ -34,14 +34,14 @@
                     SYSFURN = {id: 1, side_open: 4, hand_pos: 5, furniture_id: 6, artikl_id1: 7, artikl_id2: 8, systree_id: 9},
                     SYSPROD = {id: 1, name: 2, script: 3, systree_id: 4},
                     PRJPROD = {id: 1, name: 3, script: 4, project_id: 5, systree_id: 6},
-                    PRJKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, prjprod_id: 12},                    
+                    PRJKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, prjprod_id: 12},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
                     ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 22, date5: 23, date6: 24, owner: 25, prjpart_id: 27},
                     USER = {id: 1, fio: 2, desc: 3, role: 4, login: 5},
                     KITS = {id: 1, name: 2, types: 3, categ: 4},
                     KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7};
-                    DEALER = {id: 1, partner: 2, manager: 3};
+            DEALER = {id: 1, partner: 2, manager: 3};
 
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
@@ -58,14 +58,22 @@
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
 
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {} 
-                    login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null},  product = {}, kits = {};
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {}
+            login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
-                $.jstree.defaults.core.themes.variant = "large";                
+                $.jstree.defaults.core.themes.variant = "large";
+                
+                //Для совместимости java и JavaScript
+                Math.toDegrees = function (x) {
+                    return 180 / Math.PI * x;
+                }
+                Math.toRadians = function (x) {
+                   return x / 180 * Math.PI; 
+                }
             });
 
             window.onload = function () {
@@ -73,7 +81,7 @@
                     product.resize();
                 }
             };
-            
+
             function loadBody(url) {
                 $('#outbody').load(url, function () {
                     //upBody();
@@ -92,7 +100,7 @@
             import {
             systreeList, sysprodList, colorList,
                     artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
-                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList, 
+                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
 
