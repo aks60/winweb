@@ -99,10 +99,17 @@ export function draw_elements(winc) {
 
 
     //Прорисовка рам
-    winc.root.frames.get('TOP').paint();
-    winc.root.frames.get('BOTT').paint();
-    winc.root.frames.get('LEFT').paint();
-    winc.root.frames.get('RIGHT').paint();
+    if (winc.root.type == '+TRAPEZE') {
+        winc.root.frames.get('BOTT').paint();
+        winc.root.frames.get('LEFT').paint();
+        winc.root.frames.get('RIGHT').paint();
+        winc.root.frames.get('TOP').paint();
+    } else {
+        winc.root.frames.get('TOP').paint();
+        winc.root.frames.get('BOTT').paint();
+        winc.root.frames.get('LEFT').paint();
+        winc.root.frames.get('RIGHT').paint();
+    }
 
     //Прорисовка створок
     let stv = arr.filter((v, i, arr) => v.type == "STVORKA");

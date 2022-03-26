@@ -305,30 +305,10 @@ export class Cross extends Com5t {
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
         this.layout = (owner.layout == 'VERT') ? 'HORIZ' : 'VERT';
-
-        //Коррекция положения импоста арки (подкдадка ареа над импостом)
-        if ("ARCH" == owner.type && owner.childs.length == 1) {
-            let prevArea = owner.childs[0];
-            prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
-
-        } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
-
-        }
-        for (let index = owner.childs.length - 1; index >= 0; --index) {
-            if (owner.childs[index] instanceof Area) {
-                let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
-
-                if ("VERT" == owner.layout) { //сверху вниз
-                    this.dimension(prevArea.x1, prevArea.y2 - win.dh_crss / 2, prevArea.x2, prevArea.y2 + win.dh_crss / 2);
-
-                } else if ("HORIZ" == owner.layout) { //слева направо
-                    this.dimension(prevArea.x2 - win.dh_crss / 2, prevArea.y1, prevArea.x2 + win.dh_crss / 2, prevArea.y2);
-                }
-                break;
-            }
-        }
+        this.anglCut = [90, 90]; //угол реза
 
         this.init_constructiv(this.obj.param);
+        this.set_location(obj, owner, winc);
     }
 
     init_constructiv(param) {
@@ -355,6 +335,30 @@ export class Cross extends Com5t {
         }
     }
 
+  set_location(obj, owner, winc) {
+        //Коррекция положения импоста арки (подкдадка ареа над импостом)
+        if ("ARCH" == owner.type && owner.childs.length == 1) {
+            let prevArea = owner.childs[0];
+            prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
+
+        } else if ("TRAPEZE" == owner.type && owner.childs.length == 1) {
+
+        }
+        for (let index = owner.childs.length - 1; index >= 0; --index) {
+            if (owner.childs[index] instanceof Area) {
+                let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
+
+                if ("VERT" == owner.layout) { //сверху вниз
+                    this.dimension(prevArea.x1, prevArea.y2 - win.dh_crss / 2, prevArea.x2, prevArea.y2 + win.dh_crss / 2);
+
+                } else if ("HORIZ" == owner.layout) { //слева направо
+                    this.dimension(prevArea.x2 - win.dh_crss / 2, prevArea.y1, prevArea.x2 + win.dh_crss / 2, prevArea.y2);
+                }
+                break;
+            }
+        }
+  }
+  
     find_first(nuni, typ, us1) {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id]
                     && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
@@ -379,36 +383,15 @@ export class Frame extends Com5t {
 
     constructor(obj, owner, winc, param, id, layout, type) {
         super(obj, owner, winc);
+        this.anglCut = [45, 45]; //угол реза
         if (id != undefined) { //если сторона створки
             this.id = id;      //дополнительные параметры
             this.layout = layout;
             this.type = type;
         }
 
-        if (owner.type == "ARCH") {
-            if ("TOP" == this.layout) {
-                //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);            
-            } else if ("BOTT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
-            } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - win.dh_frm, owner.y2 - this.winc.heightAdd, owner.x2, owner.y2);
-            } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
-            }
-
-        } else {
-            if ("BOTT" == this.layout) {
-                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
-            } else if ("RIGHT" == this.layout) {
-                this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
-            } else if ("TOP" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);
-            } else if ("LEFT" == this.layout) {
-                this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
-            }
-        }
-
         this.init_constructiv(param);
+        this.set_location(obj, owner, winc, param, id, layout, type);
     }
 
     init_constructiv(param) {
@@ -435,6 +418,55 @@ export class Frame extends Com5t {
         this.artiklAn = findef(dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]), dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
+        }
+    }
+
+    set_location(obj, owner, winc) {
+        if (owner.type == "ARCH") {
+            if ("TOP" == this.layout) {
+                //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);            
+            } else if ("BOTT" == this.layout) {
+                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
+            } else if ("RIGHT" == this.layout) {
+                this.dimension(owner.x2 - win.dh_frm, owner.y2 - this.winc.heightAdd, owner.x2, owner.y2);
+            } else if ("LEFT" == this.layout) {
+                this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
+            }
+            
+        } else if (owner.type == "TRAPEZE") {
+            let H = winc.height - winc.heightAdd;
+            let W = winc.width;
+            if ('BOTT' == this.layout) {
+                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
+            } else if ('RIGHT' == this.layout) {
+                if (winc.form == 2) {
+                    this.dimension(owner.x2 - win.dh_frm, owner.y2 - winc.heightAdd, owner.x2, owner.y2);
+                } else {
+                    this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
+                }
+            } else if ('TOP' == this.layout) {
+                if (winc.form == 2) {
+                    this.dimension(owner.x1, owner.y1, owner.x2, owner.y2 - winc.heightAdd - win.dh_crss);
+                } else {
+                    this.dimension(owner.x1, owner.y2 - winc.heightAdd, owner.x2, owner.y1);
+                }
+            } else if ('LEFT' == this.layout) {
+                if (winc.form == 4) {
+                    this.dimension(owner.x1, owner.y2 - winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
+                } else {
+                    this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
+                }
+            }
+        } else {
+            if ("BOTT" == this.layout) {
+                this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
+            } else if ("RIGHT" == this.layout) {
+                this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
+            } else if ("TOP" == this.layout) {
+                this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);
+            } else if ("LEFT" == this.layout) {
+                this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
+            }
         }
     }
 
@@ -480,33 +512,35 @@ export class Frame extends Com5t {
             //draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
             //draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
             //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
-            
-            
-        } else if (this.owner.type == '+TRAPEZE') {
+
+
+        } else if (this.owner.type == 'TRAPEZE') {
             if ('BOTT' == this.layout) {
-                //draw_stroke_polygon(this.winc, this.x1 + win.dh_frm, this.x2 - win.dh_frm, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, rgb)
+                draw_stroke_polygon(this.winc, this.x1 + win.dh_frm, this.x2 - win.dh_frm, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
                 //Draw.strokePolygon(iwin, x1 + dh0, x2 - dh1, x2, x1, y1, y1, y2, y2, rgb, borderColor);
 
             } else if ('RIGHT' == this.layout) {
-//                let angl = (this.winc.form == 2) ? Math.toRadians(90 - anglCut[1]) : Math.toRadians(90 - anglCut[0]);
-//                let dh2 = (float)(dh * Math.tan(angl));
-//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1 + dh2, y1, y2, y2 - dh0, rgb, borderColor);
+                //let angl = (this.winc.form == 2) ? (90 - anglCut[1]) / 180 * Math.PI : (90 - anglCut[0]) / 180 * Math.PI;
+                //let dh2 = win.dh_frm * Math.tan(angl);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + win.dh_frm, this.y1, this.y2, this.y2 - win.dh_frm, this.color2Rec);
+                //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1 + dh2, y1, y2, y2 - dh0, rgb, borderColor);
 
             } else if ('LEFT' == this.layout) {
-//                let angl = Math.toRadians(90 - anglCut[0]);
-//                let dh2 = (float)(dh * Math.tan(angl));
-//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y1 + dh2, y2 - dh1, y2, rgb, borderColor);
+                //let angl = (90 - anglCut[0]) / 180 * Math.PI;
+                //let dh2 = (float)(dh * Math.tan(angl));
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + win.dh_frm, this.y2 - win.dh_frm, this.y2, this.color2Rec);
+                //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y1 + dh2, y2 - dh1, y2, rgb, borderColor);
 
             } else if ('TOP' == this.layout) {
-//                let ang1 = Math.toRadians(90 - anglCut[0]);
-//                let dh2 = (float)(dh * Math.tan(ang1));
-//                let ang2 = Math.toRadians(90 - anglCut[1]);
-//                let dh3 = (float)(dh * Math.tan(ang2));
-//                let dy = (float)(artiklRecAn.getDbl(eArtikl.height) / UCom.sin(anglHoriz - 90));
-//                Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y2, y2 + dy, y1 + dy, rgb, borderColor);
+//                let ang1 = (90 - anglCut[0]) / 180 * Math.PI;
+//                let dh2 = win.dh_frm * Math.tan(ang1);
+//                let ang2 = (90 - anglCut[1]) / 180 / Math.PI;
+//                let dh3 = (win.dh_frm * Math.tan(ang2));
+//                let dy = (win.dh_frm / UCom.sin(anglHoriz - 90));
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y2, this.y2 + win.dh_frm, this.y1 + win.dh_frm, this.color2Rec);
+                //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y2, y2 + dy, y1 + dy, rgb, borderColor);
             }
-            
-            
+
         } else {
             if ("BOTT" == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh, this.x2 - dh, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
