@@ -456,7 +456,7 @@ export class Frame extends Com5t {
                 }
             } else if ('TOP' == this.layout) {
                 if (winc.form == 2) {
-                    this.dimension(owner.x1, owner.y1, owner.x2, owner.y2 - winc.heightAdd - win.dh_crss);
+                    this.dimension(owner.x1, owner.y1, owner.x2, owner.y2 - winc.heightAdd);
                     this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                     this.anglCut[1] = Math.toDegrees(Math.atan(W / H)) / 2;
                 } else {
@@ -542,19 +542,16 @@ export class Frame extends Com5t {
                 //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1 + dh2, y1, y2, y2 - dh0, rgb, borderColor);
 
             } else if ('LEFT' == this.layout) {
-                //let angl = (90 - anglCut[0]) / 180 * Math.PI;
-                //let dh2 = (float)(dh * Math.tan(angl));
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + win.dh_frm, this.y2 - win.dh_frm, this.y2, this.color2Rec);
+                let angl = Math.toDegrees(90 - this.anglCut[0]);
+                let dh2 = dh * Math.tan(angl);
+                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh2, this.y2 - win.dh_frm, this.y2, this.color2Rec);
                 //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y1 + dh2, y2 - dh1, y2, rgb, borderColor);
 
             } else if ('TOP' == this.layout) {
-//                let ang1 = (90 - anglCut[0]) / 180 * Math.PI;
-//                let dh2 = win.dh_frm * Math.tan(ang1);
-//                let ang2 = (90 - anglCut[1]) / 180 / Math.PI;
-//                let dh3 = (win.dh_frm * Math.tan(ang2));
 //                let dy = (win.dh_frm / UCom.sin(anglHoriz - 90));
                 draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y2, this.y2 + win.dh_frm, this.y1 + win.dh_frm, this.color2Rec);
-                //Draw.strokePolygon(iwin, x1, x2, x2, x1, y1, y2, y2 + dy, y1 + dy, rgb, borderColor);
+                 //let dy = (float) (artiklRecAn.getDbl(eArtikl.height) / UCom.sin(anglHoriz - 90));
+                 //Draw.strokePolygon(winc, x1, x2, x2, x1, y1, y2, y2 + dy, y1 + dy, rgb, borderColor);                
             }
 
         } else {
