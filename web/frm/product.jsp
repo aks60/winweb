@@ -6,7 +6,18 @@
         <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
-
+        <style>
+            #scale1, #scale2, #scale3 {
+                display: inline-block;
+                border: 1px solid #ccc;
+                vertical-align: top;
+                height: calc(100% - 28px);
+            }
+            .btn {
+                font-weight: bold;
+                font-size: 16px;
+            }
+        </style> 
         <script type="text/javascript">
 
             product.server_to_fields();
@@ -29,7 +40,7 @@
                 $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
             }
-            
+
             $(document).ready(function () {
 
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
@@ -41,7 +52,7 @@
                 product.init_table($('#table1'));
                 if (order.prjprodRec != null)
                     product.load_tree($('#tree-winc'));
-                $("button").button();
+//                $("button").button();
                 prepareToolBar();
 
             });
@@ -58,7 +69,18 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <canvas id="cnv2"></canvas>
+
+                    <div id="scale1" style="width: 24px;">
+                        <button class="btn">+</button>  
+                    </div> 
+                    <div id="scale2" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
+                        <canvas id="cnv2"></canvas>
+                    </div> 
+                    <div id="scale3" style="height: 24px; width: calc(100% - 2px);">
+                        <button class="btn">-</button>
+                        <button class="btn" style="float: right">+</button>
+                    </div>                     
+
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
@@ -119,5 +141,6 @@
             <div id="south">
                 Итого:
             </div> 
+        </div> 
     </body>
 </html>
