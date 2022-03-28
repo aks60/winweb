@@ -7,15 +7,18 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #scale1, #scale2, #scale3 {
+            #s1, #s2, #s3, #s4 {
                 display: inline-block;
-                border: 1px solid #ccc;
+                /*border: 1px solid #ccc;*/
                 vertical-align: top;
-                height: calc(100% - 28px);
+            }
+            #s2, #s3 {
+                height: calc(100% - 50px);
             }
             .btn {
                 font-weight: bold;
                 font-size: 16px;
+                width: 26px;
             }
         </style> 
         <script type="text/javascript">
@@ -27,8 +30,8 @@
                 $("#context").css("height", height - 80);
                 let cvs = document.querySelector("#cnv2");
                 if (cvs != undefined) {
-                    cvs.width = $("#centr").width() - 4;
-                    cvs.height = $("#centr").height() - 4;
+                    cvs.width = $("#s3").width() - 4;
+                    cvs.height = $("#s3").height() - 4;
                     if (order.prjprodRec != null)
                         win.build(cvs, order.prjprodRec[PRJPROD.script]);
                 }
@@ -52,7 +55,6 @@
                 product.init_table($('#table1'));
                 if (order.prjprodRec != null)
                     product.load_tree($('#tree-winc'));
-//                $("button").button();
                 prepareToolBar();
 
             });
@@ -69,18 +71,17 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-
-                    <div id="scale1" style="width: 24px;">
-                        <button class="btn">+</button>  
-                    </div> 
-                    <div id="scale2" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
+                    <div id="s1" style="height: 24px; width: calc(100% - 2px);"> 
+                        <button class="btn">+</button>
+                    </div>                    
+                    <div id="s2" style="width: 24px;"></div> 
+                    <div id="s3" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
                         <canvas id="cnv2"></canvas>
-                    </div> 
-                    <div id="scale3" style="height: 24px; width: calc(100% - 2px);">
+                    </div>                     
+                    <div id="s4" style="height: 24px; width: calc(100% - 2px);">
                         <button class="btn">-</button>
                         <button class="btn" style="float: right">+</button>
                     </div>                     
-
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
