@@ -20,6 +20,13 @@
                 font-size: 16px;
                 width: 26px;
             }
+            #s2 input[type="text"] {
+                transform: rotate(-90deg);
+                transform-origin: left 0;
+                position: absolute;
+                bottom: 20px;
+                /*transform: translateX(8px);*/
+            }
         </style> 
         <script type="text/javascript">
 
@@ -74,12 +81,15 @@
                     <div id="s1" style="height: 24px; width: calc(100% - 2px);"> 
                         <button class="btn">+</button>
                     </div>                    
-                    <div id="s2" style="width: 24px;"></div> 
+                    <div id="s2" style="width: 24px;">
+                        <input id="inp1" value='888'  type='text' size='46'" style="text-align: center;">
+                    </div> 
                     <div id="s3" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
                         <canvas id="cnv2"></canvas>
                     </div>                     
                     <div id="s4" style="height: 24px; width: calc(100% - 2px);">
                         <button class="btn">-</button>
+                        <input id="inp2" value='888'  type='text' size='46' style="text-align: center;">
                         <button class="btn" style="float: right">+</button>
                     </div>                     
                 </div>
