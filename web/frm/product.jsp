@@ -7,41 +7,53 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #s1, #s2, #s3, #s4 {
+            #sc1, #sc2, #sc3, #sc4 {
                 display: inline-block;
-                /*border: 1px solid #ccc;*/
+                border: 1px solid #ccc;
                 vertical-align: top;
             }
-            #s2, #s3 {
-                height: calc(100% - 50px);
+            #sc2, #sc3 {
+                height: calc(100% - 52px);
             }
             .btn {
                 font-weight: bold;
                 font-size: 16px;
                 width: 26px;
             }
-            #s2 input[type="text"] {
+            #sc2 input[type="text"] {
                 transform: rotate(-90deg);
                 transform-origin: left 0;
                 position: absolute;
                 bottom: 20px;
-                /*transform: translateX(8px);*/
+            }
+            .inp-hor, .inp-vert {
+                display: inline-block;
+                align-content: center;
+                border: 0;
+                border-right: 4px solid #00f;
+            }
+            .inp-hor input, .inp-vert input {
+                font-weight: bold;
+                font-size: 14px;
+                margin: auto;
             }
         </style> 
         <script type="text/javascript">
 
+            var winCalc = null; //выбранная конструкция
             product.server_to_fields();
 
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                let cvs = document.querySelector("#cnv2");
+                let cvs = document.querySelector("#cnv");
                 if (cvs != undefined) {
-                    cvs.width = $("#s3").width() - 4;
-                    cvs.height = $("#s3").height() - 4;
-                    if (order.prjprodRec != null)
-                        win.build(cvs, order.prjprodRec[PRJPROD.script]);
+                    cvs.width = $("#sc3").width();
+                    cvs.height = $("#sc3").height();
+                    if (order.prjprodRec != null) //прорисовка конструкции !
+                        winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
                 }
+
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
                     var width = $(this).attr('dx');
@@ -54,42 +66,48 @@
             $(document).ready(function () {
 
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-
-                $(window).bind('resize', function () {
-                    product.resize();
-                }).trigger('resize');
-
+                $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
-                if (order.prjprodRec != null)
-                    product.load_tree($('#tree-winc'));
+                product.load_tree($('#tree-winc'));
                 prepareToolBar();
 
             });
+
             function test() {
-                for (let rec of dbset.artiklList) {
-                    if (rec[1] == -3)
-                        alert(rec);
-                }
+                let elemListVert = winCalc.root.lineArea(winCalc, 'VERT');
+                let elemListHor = winCalc.root.lineArea(winCalc, 'HORIZ');
+                var scaleHor = $('#sc4 input');
+                $(scaleHor).each((i, el) => el.remove());
+                elemListHor.forEach((el, i) => {
+                    let inp = document.createElement('input');
+                    inp.className = "inp-hor";
+                    $(inp).val(i);
+                    $(inp).attr('size', 800 * winCalc.scale / 8);
+                    //alert(800 * winCalc.scale);
+                    $('#sc4').append(inp);
+                });
             }
         </script>
     </head>
     <body>
-        <div id="north"></div> 
+        <div id="north">
+            <button id="btnProd3" style="width: 128px" onClick="test();">TEST</button>
+        </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <div id="s1" style="height: 24px; width: calc(100% - 2px);"> 
+                    <div id="sc1" style="height: 24px; width: calc(100% - 2px);"> 
                         <button class="btn">+</button>
                     </div>                    
-                    <div id="s2" style="width: 24px;">
-                        <input id="inp1" value='888'  type='text' size='46'" style="text-align: center;">
+                    <div id="sc2" style="width: 24px;">
+                        <div class="inp-vert"><input value='888'  type='text' size='12'"></div>
                     </div> 
-                    <div id="s3" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
-                        <canvas id="cnv2"></canvas>
+                    <div id="sc3" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
+                        <canvas id="cnv"></canvas>
                     </div>                     
-                    <div id="s4" style="height: 24px; width: calc(100% - 2px);">
-                        <button class="btn">-</button>
-                        <input id="inp2" value='888'  type='text' size='46' style="text-align: center;">
+                    <div id="sc4" style="height: 24px; width: calc(100% - 2px);">
+                        <button id="m7" class="btn">-</button>
+                        <div class="inp-hor" style="width: 400px; "><input value='999'  type='text'" size="6"></div>
                         <button class="btn" style="float: right">+</button>
                     </div>                     
                 </div>

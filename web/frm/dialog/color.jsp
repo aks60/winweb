@@ -166,7 +166,7 @@
                         //Запишем скрипт в локальн. бд
                         let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
                         prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v));
-                        let winc2 = win.build(document.querySelector("#cnv2"), prjprodRec[PRJPROD.script]);
+                        let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[PRJPROD.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных

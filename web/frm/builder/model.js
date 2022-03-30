@@ -156,7 +156,7 @@ export class Area extends Com5t {
         } else if (this.type == 'STVORKA') {
             this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
-            //Алеа
+            //Аrеа
         } else {
             let height = (owner.layout == "VERT") ? obj.length : owner.height();
             let width = (owner.layout == "HORIZ") ? obj.length : owner.width();
@@ -187,6 +187,38 @@ export class Area extends Com5t {
                     }
                 }
             }
+        }
+    }
+
+    lineArea(winc, layout) {
+        let set1 = new Set(), set2 = new Set(), setOut = new Set();
+        this.lineArea2(set1, this, layout);
+        for (let elem of set1.values()) {
+
+            set2.clear();
+            this.lineArea2(set2, elem, layout);
+
+            if (set2.size == 0) {
+                setOut.add(elem);
+            }
+        }
+        if (setOut.size == 0) {
+            setOut.add(this);
+        }
+        return Array.from(setOut);
+    }
+
+    lineArea2(elemSet, elem, layout) {
+
+        for (let i = 0; i < elem.childs.length; ++i) {
+            let elem2 = elem.childs[i];
+
+            if (elem2.owner.layout == layout && (elem2.type == 'IMPOST' || elem2.type == 'SHTULP' || elem2.type == 'STOIKA')) {
+                elemSet.add(elem.childs[i - 1]);
+                elemSet.add(elem.childs[i + 1]);
+            }
+            if (elem2 instanceof Area)
+                this.lineArea2(elemSet, elem2, layout);
         }
     }
 }
@@ -227,38 +259,6 @@ export class Root extends Area {
                     syspar1Rec[SYSPAR1.text] = paramsRec[PARAMS.text];
                 }
             }
-        }
-    }
-
-    lineArea(winc, layout) {
-        let set1 = new Set(), set2 = new Set(), setOut = new Set();
-
-        lineArea2(set1, this, layout);
-        for (let elem of set1.values()) {
-
-            set2.clear();
-            lineArea2(set2, elem, layout);
-
-            if (set2.size == 0) {
-                setOut.set(elem);
-            }
-        }
-        if (setOut.size == 0) {
-            setOut.set(this);
-        }
-        return new Array.from(setOut);
-    }
-
-    lineArea2(elemSet, elem, layout) {
-        
-        for (let i = 0; i < elem.childs.size(); ++i) {
-            let elem2 = elem.childs[i];
-            
-            if (elem2.owner.layout == layout && (elem2.type == 'IMPOST' || elem2.type == 'SHTULP' || elem2.type == 'STOIKA')) {
-                elemSet.set(elem.childs[i - 1]);
-                elemSet.set(elem.childs[i + 1]);
-            }
-            lineArea2(list, elem2, layout);
         }
     }
 }

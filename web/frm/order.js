@@ -1,3 +1,11 @@
+//----------------- Текущий WINC  ----------------------------------------------
+order.get_winc = function () {
+    if (order.wincalcMap != undefined && order.prjprodRec != undefined) {
+        let prjprodID = order.prjprodRec[PRJPROD.id];
+        return order.wincalcMap.get(prjprodID);
+    }
+    return null;
+}
 //-----------------  Инициализация таблицы  ------------------------------------
 order.init_table = function (table1, table2) {
     table1.jqGrid({
@@ -17,7 +25,6 @@ order.init_table = function (table1, table2) {
             {name: 'manager', width: 120, sorttype: "text"},
             {name: 'prjpart_id', hidden: true}
         ],
-
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
             let orderRow = table1.jqGrid('getRowData', rowid);
@@ -40,7 +47,6 @@ order.init_table = function (table1, table2) {
                     //Выделение строки табл. конструкций
                     if (order.prjprodRec != null && order.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
                         prjprodID = rec[PRJPROD.id];
-
                     } else if (prjprodID == null) {
                         prjprodID = rec[PRJPROD.id]; //первая конструкция
                     }
@@ -67,7 +73,6 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-
         order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
     }
 }
@@ -166,7 +171,6 @@ order.delete_table2 = function () {
                                 //Перезагрузка таблицы конструкций
                                 let rowid = $("#table1").jqGrid('getGridParam', "selrow");
                                 $("#table1").jqGrid("setSelection", rowid);
-
                             } else
                                 dialogMes('Сообщение', "<p>" + data.result);
                         },
@@ -191,36 +195,29 @@ order.add_prjprod = function (table2, prjprodRec) {
     canvas.id = 'cnv' + prjprodRec[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
-
     let id = document.createTextNode(prjprodRec[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec[PRJPROD.name]);
     let script = prjprodRec[PRJPROD.script];
     let iwincalc = win.build(canvas, script);
-
     //Массив объектов winc
     order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
-
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
     let tr = document.createElement('tr');
     tr.id = 'tr' + prjprodRec[PRJPROD.id];
-
     td1.appendChild(id);
     td2.appendChild(name);
     td3.appendChild(canvas);
-
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     table2.appendChild(tr);
-
 }
 //----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = dbset.orderList.find(rec => orderRow.id = rec[ORDER.id]);
-
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
         data: {param: JSON.stringify({})},
@@ -271,7 +268,6 @@ order.insert_table1 = function (taq) {
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                 }
                             });
-
                             $(this).dialog("close");
                         },
                         "Отменить": function () {
@@ -279,7 +275,6 @@ order.insert_table1 = function (taq) {
                         }
                     }
                 });
-
             } else
                 dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
         },
@@ -293,14 +288,12 @@ order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = dbset.orderList.find(rec => orderRow.id == rec[ORDER.id]);
-
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
     $("#n24").val(orderRow.date6);
     $("#n25").val(orderRow.partner);
     $("#n25").attr("fk", orderRow.prjpart_id);
-
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
         width: $(taq).attr('card_width'),

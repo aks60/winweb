@@ -20,9 +20,7 @@
             }
 
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    users.resize();
-                }).trigger('resize');
+                $(window).bind('resize', () => users.resize()).trigger('resize');
 
                 users.init_table1($("#table1"));
                 users.load_table1($("#table1"));

@@ -40,9 +40,7 @@
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    order.resize();
-                }).trigger('resize');
+                $(window).bind('resize', () => order.resize()).trigger('resize');
                 let tab_sysprod = document.getElementById('table2');
                 tab_sysprod.setAttribute('activeRowIndex', 0);
                 tab_sysprod.addEventListener('click', order.click_table2);
@@ -58,7 +56,9 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-               alert(Math.toRadians(47));
+                let winc = order.get_winc();
+                let list = winc.root.lineArea(winc, 'VERT');
+                console.log(list);
             }
         </script>
     </head>
@@ -86,9 +86,7 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">
                     <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px; background: #efeffb">
-
                         <canvas id="cnv" style="border:2px solid black;" width="468" height="154"></canvas>
-
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <table id="table2" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>

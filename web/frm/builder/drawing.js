@@ -67,27 +67,25 @@ export function draw_text(winc) {
 //------------------------------------------------------------------------------
 //Рисуем конструкцию
 export function draw_elements(winc) {
-    //try {
-    let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
+    try {
+        let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
 
-    ctx.save();
-    ctx.fillStyle = '#ffffff';
-    ctx.clearRect(0, 0, cnv.width, cnv.height);
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.clearRect(0, 0, cnv.width, cnv.height);
 
-    //Настроим контекст
-    let scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / (obj.width + 80) : cnv.height / (obj.height + 80);
-    ctx.scale(scale, scale);
-    ctx.translate(80, 0);
-    ctx.lineWidth = 5;
-    //ctx.strokeStyle = "rgb(0,0,0)";
+        //Настроим контекст
+        winc.scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / obj.width : cnv.height / obj.height;
+        ctx.scale(winc.scale, winc.scale);
+        ctx.lineWidth = 4;
 
-    //Прорисовка стеклопакетов
-    let glass = arr.filter((v, i, arr) => v.type == "GLASS");
-    glass.forEach((v, k, map) => v.paint());
+        //Прорисовка стеклопакетов
+        let glass = arr.filter((v, i, arr) => v.type == "GLASS");
+        glass.forEach((v, k, map) => v.paint());
 
-    //Прорисовка импостов
-    let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
-    cross.forEach((v, k, map) => v.paint());
+        //Прорисовка импостов
+        let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
+        cross.forEach((v, k, map) => v.paint());
 
 //        //Прорисовка штульпов
 //        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(winc.listSortEl, Type.SHTULP);
@@ -98,26 +96,20 @@ export function draw_elements(winc) {
 //        elemStoikaList.stream().forEach(el - > el.paint());
 
 
-    //Прорисовка рам
-    if (winc.root.type == '+TRAPEZE') {
-        winc.root.frames.get('BOTT').paint();
-        winc.root.frames.get('LEFT').paint();
-        winc.root.frames.get('RIGHT').paint();
-        winc.root.frames.get('TOP').paint();
-    } else {
+        //Прорисовка рам
         winc.root.frames.get('TOP').paint();
         winc.root.frames.get('BOTT').paint();
         winc.root.frames.get('LEFT').paint();
         winc.root.frames.get('RIGHT').paint();
+
+
+        //Прорисовка створок
+        let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
+        stv.forEach((v, k, map) => v.paint());
+
+        ctx.restore();
+    } catch (e) {
+        console.error('Ошибка: drawing.draw_elements() ' + e.message);
     }
-
-    //Прорисовка створок
-    let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
-    stv.forEach((v, k, map) => v.paint());
-
-    ctx.restore();
-//    } catch (e) {
-//        console.error('Ошибка: ' + e.message);
-//    }
 }
 //------------------------------------------------------------------------------

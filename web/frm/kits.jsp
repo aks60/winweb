@@ -15,9 +15,7 @@
             }
 
             $(document).ready(function () {
-                $(window).bind('resize', function () {
-                    kits.resize();
-                }).trigger('resize');
+                $(window).bind('resize', () => kits.resize()).trigger('resize');
 
                 kits.init_table($("#table1"));
                 kits.load_table($("#table1"));

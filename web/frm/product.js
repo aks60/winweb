@@ -26,7 +26,7 @@ product.init_table = function (table1) {
 product.load_table = function (table1) {
     let syspar1List2 = [];
     table1.jqGrid('clearGridData', true);
-    let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
+    let winc = order.get_winc();
     for (let val of winc.root.pardefMap.values()) {
         syspar1List2.push(val);
     }
@@ -48,36 +48,38 @@ product.load_table = function (table1) {
 }
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
-    let arr = new Array();
-    let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
-    let root = winc.root;
-    if (root.type == 'RECTANGL')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
-    else if (root.type == 'TRAPEZE')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
-    else if (root.type == 'TRIANGL')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
-    else if (root.type == 'ARCH')
-        arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
-    arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
-    arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
-    arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
-    arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
-    arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
-    arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
+    if (order.prjprodRec != null) {
+        let arr = new Array();
+        let winc = order.get_winc();
+        let root = winc.root;
+        if (root.type == 'RECTANGL')
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
+        else if (root.type == 'TRAPEZE')
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
+        else if (root.type == 'TRIANGL')
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
+        else if (root.type == 'ARCH')
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
+        arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
+        arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
+        arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
+        arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
+        arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
+        arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
 
-    product.elements(root, arr); //вход в рекурсию    
+        product.elements(root, arr); //вход в рекурсию    
 
-    tabtree.jstree({'core': {'data': arr}})
-            .bind("loaded.jstree", function (event, data) {
-                $(this).jstree('open_node', $('#0'));
-                $(this).jstree('select_node', 0.0);
-            })
-            .bind("select_node.jstree", function (evt, data) {
-                let node = tabtree.jstree("get_selected")[0];
-                product.local_to_fields(node);
-            });
-    product.resize();
+        tabtree.jstree({'core': {'data': arr}})
+                .bind("loaded.jstree", function (event, data) {
+                    $(this).jstree('open_node', $('#0'));
+                    $(this).jstree('select_node', 0.0);
+                })
+                .bind("select_node.jstree", function (evt, data) {
+                    let node = tabtree.jstree("get_selected")[0];
+                    product.local_to_fields(node);
+                });
+        product.resize();
+    }
 }
 product.elements = function (com, arr) {
 

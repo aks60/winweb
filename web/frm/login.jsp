@@ -23,20 +23,17 @@
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
-            $(document).ready(function () {                
+            $(document).ready(function () {
                 $("#btn2").focus();
-
-                $(window).bind('resize', function () {
-                    login.resize();
-                }).trigger('resize');
+                $(window).bind('resize', () => login.resize()).trigger('resize');
                 $("button").button();
             });
 
 //            $('#pan1 .login').val('admin');
 //            $('#pan1 .password').val('masterkey');
             $('#pan1 .login').val('asd');
-            $('#pan1 .password').val('qwerty');            
-            login.user_connect();            
+            $('#pan1 .password').val('qwerty');
+            login.user_connect();
         </script>         
     </head>
     <body>
