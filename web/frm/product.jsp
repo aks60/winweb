@@ -7,36 +7,51 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #sc1, #sc2, #sc3, #sc4 {
+            #scale1-hor, #scale1-ver, #scale-cnv, #scale2-hor {
                 display: inline-block;
                 border: 1px solid #ccc;
                 vertical-align: top;
             }
-            #sc2, #sc3 {
+
+            #scale1-ver, #scale-cnv {
                 height: calc(100% - 52px);
             }
+
+            .input-hor {
+                display: inline-block;
+                text-align: center;
+                border: 2px solid #00f;
+                height: 12px;
+
+            }
+            .input-ver {
+                border-bottom: 2px solid #00f;
+                width: 12px;
+                /*border: 4px solid #00f;*/
+                /*margin-top: 4px;*/
+            }
+
+            .input-hor input, .input-ver input {
+                font-weight: bold;
+                font-size: 14px;
+            }
+            .input-ver input {
+                position: absolute;
+                top: 50%;
+            }
+
             .btn {
                 font-weight: bold;
                 font-size: 16px;
                 width: 26px;
             }
-            #sc2 input[type="text"] {
-                transform: rotate(-90deg);
-                transform-origin: left 0;
-                position: absolute;
-                bottom: 20px;
-            }
-            .inp-hor, .inp-vert {
-                display: inline-block;
-                align-content: center;
-                border: 0;
-                border-right: 4px solid #00f;
-            }
-            .inp-hor input, .inp-vert input {
-                font-weight: bold;
-                font-size: 14px;
-                margin: auto;
-            }
+
+            /*            #input7[type="text"] {
+                            transform: rotate(-90deg);
+                            transform-origin: left 0;
+                            position: absolute;
+                            bottom: 0;
+                        }            */
         </style> 
         <script type="text/javascript">
 
@@ -48,8 +63,8 @@
                 $("#context").css("height", height - 80);
                 let cvs = document.querySelector("#cnv");
                 if (cvs != undefined) {
-                    cvs.width = $("#sc3").width();
-                    cvs.height = $("#sc3").height();
+                    cvs.width = $("#scale-cnv").width();
+                    cvs.height = $("#scale-cnv").height();
                     if (order.prjprodRec != null) //прорисовка конструкции !
                         winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
                 }
@@ -76,15 +91,15 @@
             function test() {
                 let elemListVert = winCalc.root.lineArea(winCalc, 'VERT');
                 let elemListHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-                var scaleHor = $('#sc4 input');
+                var scaleHor = $('#scale2-hor input');
                 $(scaleHor).each((i, el) => el.remove());
                 elemListHor.forEach((el, i) => {
                     let inp = document.createElement('input');
-                    inp.className = "inp-hor";
+                    inp.className = "input-hor";
                     $(inp).val(i);
-                    $(inp).attr('size', 800 * winCalc.scale / 8);
+                    $(inp).attr('size', 800 * winCalc.scale);
                     //alert(800 * winCalc.scale);
-                    $('#sc4').append(inp);
+                    $('#scale2-hor').append(inp);
                 });
             }
         </script>
@@ -96,18 +111,18 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <div id="sc1" style="height: 24px; width: calc(100% - 2px);"> 
+                    <div id="scale1-hor" style="height: 24px; width: calc(100% - 2px);"> 
                         <button class="btn">+</button>
                     </div>                    
-                    <div id="sc2" style="width: 24px;">
-                        <div class="inp-vert"><input value='888'  type='text' size='12'"></div>
+                    <div id="scale1-ver" style="width: 40px;">
+                        <div class="input-ver"  style="height: 120px;"><input value='888'  type='text' size='1'"></div>
                     </div> 
-                    <div id="sc3" style="width: calc(100% - 30px); margin-left: -3px; border: 0px;">                    
+                    <div id="scale-cnv" style="width: calc(100% - 80px); margin-left: -3px; border: 0px;">                    
                         <canvas id="cnv"></canvas>
                     </div>                     
-                    <div id="sc4" style="height: 24px; width: calc(100% - 2px);">
+                    <div id="scale2-hor" style="height: 24px; width: calc(100% - 2px);">
                         <button id="m7" class="btn">-</button>
-                        <div class="inp-hor" style="width: 400px; "><input value='999'  type='text'" size="6"></div>
+                        <div class="input-hor" style="width: 200px;"><input value='999'  type='text'" size="2"></div>
                         <button class="btn" style="float: right">+</button>
                     </div>                     
                 </div>
