@@ -40,6 +40,98 @@ export class Com5t {
         }
         return ((this.x2 >= X) && (this.y2 >= Y));
     }
+
+    resizUp(list, layout) {
+//        float dx = 1;
+//        GsonElem e2 = null;
+//        for (GsonScale gs : list) {
+//            GsonElem el = find(gs.id);
+//            if (el.length != null) {
+//                if (gs.color == GsonScale.ADJUST) {
+//                    e2 = el;
+//                }
+//                float x = el.length - Math.round(el.length);
+//                if (x != 0 && x < 0) {
+//                    el.length -= x;
+//                    dx += x;
+//                } else {
+//                    el.length -= x;
+//                    dx += x;
+//                }
+//                el.owner.resizAll(layout);
+//            }
+//        }
+//        if (e2 != null && e2.length != null) {
+//            e2.length += dx - 1;
+//            e2.owner.resizAll(layout);
+//        }
+    }
+
+    resizElem(_diff, _list, _layout) {
+
+//        GsonRoot root = (GsonRoot) this;
+//        float changeSum = 0;
+//        for (GsonScale o : _list) {
+//            float v = (_layout == Layout.HORIZ) ? o.width() : o.height();
+//            changeSum += v;
+//        }
+//        // Горизонтальное перераспределение
+//        if (_layout == Layout.HORIZ) {
+//            for (GsonScale gsonScale : _list) {
+//                GsonElem elem = gsonScale.elem();
+//                if (elem.length != null) {
+//                    float k = elem.length / changeSum;
+//                    elem.length = elem.length + _diff * k;
+//                    elem.owner.resizAll(_layout);
+//                } else {
+//                    root.resizAll(_layout);
+//                }
+//            }
+//            root.width = root.width + _diff;
+//
+//            //Вертикальное перераспределение
+//        } else if (_layout == Layout.VERT) {
+//            for (GsonScale gsonScale : _list) {
+//                GsonElem elem = gsonScale.elem();
+//                if (elem.length != null) {
+//                    float k = elem.length / changeSum;
+//                    elem.length = elem.length + _diff * k;
+//                    elem.owner.resizAll(_layout);
+//                } else {
+//                    root.resizAll(_layout);
+//                }
+//            }
+//            root.height = root.height + _diff;
+//            if (root.type == Type.ARCH) {
+//                root.heightAdd = root.height - root.childs.get(4).height();
+//            } else if (root.type == Type.TRAPEZE) {
+//                root.heightAdd = root.height - root.childs.get(4).height();
+//            } else {
+//                root.heightAdd = root.height;
+//            }
+//        }
+    }
+
+    resizAll(_layout) {
+//        if (this.owner != null) {
+//            float sum = 0;
+//            if (_layout == this.layout()) {
+//                for (GsonElem elem : this.childs) {
+//                    if (elem.type == Type.AREA) {
+//                        sum += elem.length;
+//                    }
+//                }
+//            }
+//            if (sum != 0) {
+//                if (this.owner.layout != _layout) {
+//                    this.owner.length = sum;
+//                } else {
+//                    this.length = sum;
+//                }
+//            }
+//            this.owner.resizAll(_layout);
+//        }
+    }
 }
 //------------------------------------------------------------------------------
 export class Area extends Com5t {
@@ -135,6 +227,38 @@ export class Root extends Area {
                     syspar1Rec[SYSPAR1.text] = paramsRec[PARAMS.text];
                 }
             }
+        }
+    }
+
+    lineArea(winc, layout) {
+        let set1 = new Set(), set2 = new Set(), setOut = new Set();
+
+        lineArea2(set1, this, layout);
+        for (let elem of set1.values()) {
+
+            set2.clear();
+            lineArea2(set2, elem, layout);
+
+            if (set2.size == 0) {
+                setOut.set(elem);
+            }
+        }
+        if (setOut.size == 0) {
+            setOut.set(this);
+        }
+        return new Array.from(setOut);
+    }
+
+    lineArea2(elemSet, elem, layout) {
+        
+        for (let i = 0; i < elem.childs.size(); ++i) {
+            let elem2 = elem.childs[i];
+            
+            if (elem2.owner.layout == layout && (elem2.type == 'IMPOST' || elem2.type == 'SHTULP' || elem2.type == 'STOIKA')) {
+                elemSet.set(elem.childs[i - 1]);
+                elemSet.set(elem.childs[i + 1]);
+            }
+            lineArea2(list, elem2, layout);
         }
     }
 }
@@ -428,7 +552,7 @@ export class Frame extends Com5t {
     }
 
     set_location(obj, owner, winc) {
-        
+
         if (owner.type == "ARCH") {
             if ("BOTT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
