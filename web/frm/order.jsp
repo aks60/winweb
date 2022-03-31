@@ -53,6 +53,8 @@
                 taqDeploy(['#dialog-card']);
                 $('#n23').datepicker();
                 $('#n24').datepicker();
+                
+                $('#outbody').load('frm/product.jsp');
             });
 //------------------------------------------------------------------------------            
             function test() {

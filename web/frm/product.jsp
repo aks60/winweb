@@ -9,49 +9,44 @@
         <style>
             #scale1-hor, #scale1-ver, #scale-cnv, #scale2-hor {
                 display: inline-block;
-                border: 1px solid #ccc;
-                vertical-align: top;
+                border: 0;
             }
-
-            #scale1-ver, #scale-cnv {
-                height: calc(100% - 52px);
+            #scale1-hor {
+                width: calc(100% - 2px);
+                height: 24px;
             }
-
-            .input-hor {
-                display: inline-block;
+            #scale2-hor {
+                width: calc(100% - 2px);
+                height: 24px;
+            }
+            #scale1-ver {
+                width: 24px;
+                height: calc(100% - 57px);
+            }
+            #scale-cnv {
+                width: calc(100% - 34px);
+                height: calc(100% - 57px);
+            }
+            #scale2-hor input, #scale1-ver input  {
                 text-align: center;
-                border: 2px solid #00f;
-                height: 12px;
-
-            }
-            .input-ver {
-                border-bottom: 2px solid #00f;
-                width: 12px;
-                /*border: 4px solid #00f;*/
-                /*margin-top: 4px;*/
-            }
-
-            .input-hor input, .input-ver input {
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 16px;
+                border: 0;
+                border-right: 4px solid #00f;
+                height: 12px;
+                margin-top: 8px;
             }
-            .input-ver input {
+            #scale1-ver input[type="text"] {
+                transform: rotate(-90deg);
+                transform-origin: left 0;
                 position: absolute;
-                top: 50%;
+                bottom: 18px;
             }
-
             .btn {
                 font-weight: bold;
                 font-size: 16px;
                 width: 26px;
             }
-
-            /*            #input7[type="text"] {
-                            transform: rotate(-90deg);
-                            transform-origin: left 0;
-                            position: absolute;
-                            bottom: 0;
-                        }            */
         </style> 
         <script type="text/javascript">
 
@@ -89,18 +84,19 @@
             });
 
             function test() {
-                let elemListVert = winCalc.root.lineArea(winCalc, 'VERT');
-                let elemListHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-                var scaleHor = $('#scale2-hor input');
-                $(scaleHor).each((i, el) => el.remove());
-                elemListHor.forEach((el, i) => {
-                    let inp = document.createElement('input');
-                    inp.className = "input-hor";
-                    $(inp).val(i);
-                    $(inp).attr('size', 800 * winCalc.scale);
-                    //alert(800 * winCalc.scale);
-                    $('#scale2-hor').append(inp);
-                });
+                alert(winCalc.scale);
+//                let elemListVert = winCalc.root.lineArea(winCalc, 'VERT');
+//                let elemListHor = winCalc.root.lineArea(winCalc, 'HORIZ');
+//                var scaleHor = $('#scale2-hor input');
+//                $(scaleHor).each((i, el) => el.remove());
+//                elemListHor.forEach((el, i) => {
+//                    let inp = document.createElement('input');
+//                    inp.className = "input-hor";
+//                    $(inp).val(i);
+//                    $(inp).attr('size', 800 * winCalc.scale);
+//                    //alert(800 * winCalc.scale);
+//                    $('#scale2-hor').append(inp);
+//                });
             }
         </script>
     </head>
@@ -111,20 +107,23 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <div id="scale1-hor" style="height: 24px; width: calc(100% - 2px);"> 
+                    <!--=====================================================-->
+                    <div id="scale1-hor"> 
                         <button class="btn">+</button>
                     </div>                    
-                    <div id="scale1-ver" style="width: 40px;">
-                        <div class="input-ver"  style="height: 120px;"><input value='888'  type='text' size='1'"></div>
+                    <div id="scale1-ver">
+                        <input value='888'  type='text' size='2'" style="width: 682px">
                     </div> 
-                    <div id="scale-cnv" style="width: calc(100% - 80px); margin-left: -3px; border: 0px;">                    
+                    <div id="scale-cnv">                    
                         <canvas id="cnv"></canvas>
                     </div>                     
-                    <div id="scale2-hor" style="height: 24px; width: calc(100% - 2px);">
+                    <div id="scale2-hor"">
                         <button id="m7" class="btn">-</button>
-                        <div class="input-hor" style="width: 200px;"><input value='999'  type='text'" size="2"></div>
+                        <input value='800'  type='text'" size="2" style="width: 410px;">
+                        <input value='800'  type='text'" size="2" style="width: 410px;">
                         <button class="btn" style="float: right">+</button>
-                    </div>                     
+                    </div> 
+                    <!--=====================================================-->
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
@@ -183,7 +182,7 @@
                 </div>
             </div> 
             <div id="south">
-                Итого:
+                Итого:              
             </div> 
         </div> 
     </body>
