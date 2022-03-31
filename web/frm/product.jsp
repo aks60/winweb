@@ -7,7 +7,7 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv {
+            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv , #trans{
                 display: inline-block;
                 border: 0;
                 /*border: 1px solid #00f;*/
@@ -58,15 +58,15 @@
             product.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 80);
-                
+
                 //Прорисовка конструкции
                 let cvs = document.querySelector("#cnv");
                 if (cvs != undefined) {
                     cvs.width = $("#scale-cnv").width();
-                    cvs.height = $("#scale-cnv").height();                 
+                    cvs.height = $("#scale-cnv").height();
                     if (order.prjprodRec != null)
                         winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
-                }                                                                
+                }
 
                 //Прорисовка горизонтальных размеров
                 $('#scale2-hor input').each((i, el) => el.remove());
@@ -79,7 +79,7 @@
                 });
 
                 //Прорисовка вертикальных размеров
-                $('#scale1-ver input').each((i, el) => el.remove());
+//                $('#scale1-ver input').each((i, el) => el.remove());
 //                let elemScaleVer = winCalc.root.lineArea(winCalc, 'VERT');
 //                elemScaleVer.forEach((el, i) => {
 //                    let w = el.height() * winCalc.scale - 8;
@@ -121,9 +121,11 @@
                     <!--=====================================================-->
                     <div id="scale1-hor"> 
                         <button class="btn">+</button>
-                    </div>                    
-                    <div id="scale1-ver">
-                        <input value='888'  type='text' size='2'" style="width: 682px">
+                    </div> 
+                    <div id="trans">
+                        <div id="scale1-ver">
+                            <input value='888'  type='text' size='2'" style="width: 282px">
+                        </div> 
                     </div> 
                     <div id="scale-cnv">                    
                         <canvas id="cnv"></canvas>
