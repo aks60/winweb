@@ -109,6 +109,57 @@ product.elements = function (com, arr) {
         }
     }
 }
+//-------------------  RESIZE  -------------------------------------------------
+product.resize = function () {
+    var height = window.innerHeight;
+    $("#context").css("height", height - 80);
+
+    //Прорисовка конструкции
+    let cvs = document.querySelector("#cnv");
+    if (cvs != undefined) {
+        cvs.width = $("#scale-cnv").width();
+        cvs.height = $("#scale-cnv").height();
+        if (order.prjprodRec != null)
+            winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
+    }
+
+    //Прорисовка горизонтальных размеров
+    $('#scale2-hor input').each((i, el) => el.remove());
+    let elemScaleHor = winCalc.root.lineArea(winCalc, 'HORIZ');
+    elemScaleHor.forEach((el, i) => {
+        let inpt = document.createElement('input');
+        $(inpt).val(el.length('x'));
+        $(inpt).width(el.length('x') * winCalc.scale - 8);
+        if (i === 0)
+            $(inpt).css('border-left', '4px solid #00f');
+        $('#scale2-hor').append(inpt);
+    });
+
+    //Прорисовка вертикальных размеров
+    let scale = document.getElementById('scale1-ver');
+    let length = winCalc.height * winCalc.scale;
+    $('#scale1-ver').css('left', -1 * length);
+    $('#scale1-ver input').each((i, el) => el.remove());
+    let elemScaleVer = winCalc.root.lineArea(winCalc, 'VERT');
+    for (let i = elemScaleVer.length; i > 0; --i) {
+        let el = elemScaleVer[i - 1];
+        let inpt = document.createElement('input');
+        $(inpt).val(el.length('y'));
+        $(inpt).width(el.length('y') * winCalc.scale - 8);
+        if (i === 1)
+            $(inpt).css('border-right', '4px solid #00f');
+        $('#scale1-ver').append(inpt);
+    }
+
+    //Прорисовка полей
+    let winWidth = $('#east').width() - 24;
+    $("div .field2[dx]").each(function (index) {
+        var width = $(this).attr('dx');
+        $(this).width(winWidth - width);
+    });
+    $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
+    $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+}
 //-------------------  Загрузка свойств конструкции  ---------------------------
 product.server_to_fields = function () {
     try {

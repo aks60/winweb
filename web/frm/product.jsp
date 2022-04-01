@@ -24,7 +24,6 @@
                 transform: rotate(-90deg);
                 transform-origin: right 0px;
                 position: absolute;
-                /*border-right: 4px solid #00f;*/
             }
             #scale-cnv {
                 width: calc(100% - 60px);
@@ -59,57 +58,6 @@
 
             product.server_to_fields();
 
-            product.resize = function () {
-                var height = window.innerHeight;
-                $("#context").css("height", height - 80);
-
-                //Прорисовка конструкции
-                let cvs = document.querySelector("#cnv");
-                if (cvs != undefined) {
-                    cvs.width = $("#scale-cnv").width();
-                    cvs.height = $("#scale-cnv").height();
-                    if (order.prjprodRec != null)
-                        winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
-                }
-
-                //Прорисовка горизонтальных размеров
-                $('#scale2-hor input').each((i, el) => el.remove());
-                let elemScaleHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-                elemScaleHor.forEach((el, i) => {
-                    let inpt = document.createElement('input');
-                    $(inpt).val(el.width());
-                    $(inpt).width(el.width() * winCalc.scale - 8);
-                    if (i === 0)
-                        $(inpt).css('border-left', '4px solid #00f');
-                    $('#scale2-hor').append(inpt);
-                });
-
-                //Прорисовка вертикальных размеров
-                let scale = document.getElementById('scale1-ver');
-                let length = winCalc.height * winCalc.scale;
-                $('#scale1-ver').css('left', -1 * length);
-                $('#scale1-ver input').each((i, el) => el.remove());
-                let elemScaleVer = winCalc.root.lineArea(winCalc, 'VERT');
-                for (let i = elemScaleVer.length; i > 0; --i) {
-                    let el = elemScaleVer[i - 1];
-                    let inpt = document.createElement('input');
-                    $(inpt).val(el.height());
-                    $(inpt).width(el.height() * winCalc.scale - 8);
-                    if (i === 1)
-                        $(inpt).css('border-right', '4px solid #00f');
-                    $('#scale1-ver').append(inpt);
-                }
-
-                //Прорисовка полей
-                let winWidth = $('#east').width() - 24;
-                $("div .field2[dx]").each(function (index) {
-                    var width = $(this).attr('dx');
-                    $(this).width(winWidth - width);
-                });
-                $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
-                $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
-            };
-
             $(document).ready(function () {
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
@@ -120,14 +68,6 @@
             });
 
             function test() {
-                //debugger;
-                //$('#scale1-ver input').each((i, el) => el.remove());
-                //let scale = document.getElementById('scale1-ver');
-                //scale.width = 600;
-                //scale.heaight = 400;
-                //scale.append();
-                //scale.innerHTML = "<input value='123'  type='text' size='2'' style='width: 200px'> <input value='456'  type='text' size='2'' style='width: 300px'>";
-                //let mmm = 0;
             }
         </script>
     </head>
@@ -138,14 +78,10 @@
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <!--=====================================================-->
                     <div id="scale1-hor"> 
                         <button class="btn">+</button>
                     </div> 
-                    <div id="scale1-ver">
-                        <!--                        <input value='888'  type='text' size='2'" style="width: 282px">
-                                                <input value='999'  type='text' size='2'" style="width: 182px">-->
-                    </div>
+                    <div id="scale1-ver"></div>
                     <div id="scale-cnv">                    
                         <canvas id="cnv"></canvas>
                     </div>                     
@@ -155,7 +91,6 @@
                         <input value='800'  type='text'" size="2" style="width: 382px;">
                         <button class="btn" style="float: right">+</button>
                     </div> 
-                    <!--=====================================================-->
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">

@@ -29,6 +29,14 @@ export class Com5t {
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
+    
+    length(dir) {
+        if(this.id == 0 && dir == 'x') 
+            return this.width(); 
+        if(this.id == 0 && dir == 'y')
+            return this.height(); 
+        return this.obj.length;
+    }
 
     //Точка попадает в контур элемента
     inside(X, Y) {
