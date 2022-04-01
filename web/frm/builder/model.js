@@ -299,11 +299,10 @@ export class Stvorka extends Area {
     }
 
     init_constructiv() {
-
         //Фурнитура створки
         if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined)
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]); //по параметру
-        else if (this.sysfurnRec == undefined)
+        if (this.sysfurnRec == undefined)
             this.sysfurnRec = findef(dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni), dbset.sysfurnList); //ищем первую в системе
 
         //Ручка
