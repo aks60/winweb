@@ -7,7 +7,7 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv , #trans{
+            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
                 /*border: 1px solid #00f;*/
@@ -21,27 +21,31 @@
                 height: 24px;
             }
             #scale1-ver {
-                width: 24px;
-                height: calc(100% - 57px);
+                transform: rotate(-90deg);
+                transform-origin: right 0px;
+                position: absolute;
+                /*border-right: 4px solid #00f;*/
             }
             #scale-cnv {
                 width: calc(100% - 60px);
                 height: calc(100% - 57px);
+                margin-left: 30px;
             }
-            #scale2-hor input, #scale1-ver input  {
+            #scale2-hor input{
+                margin-top: 8px;
+                border: 0;
+                border-right: 4px solid #00f;
+            }
+            #scale1-ver input {
+                margin-bottom: 8px;
+                border: 0;
+                border-left: 4px solid #00f;
+            }
+            #scale2-hor input, #scale1-ver input {
                 text-align: center;
                 font-weight: bold;
                 font-size: 16px;
-                border: 0;
-                border-right: 4px solid #00f;
                 height: 12px;
-                margin-top: 8px;
-            }
-            #scale1-ver input[type="text"] {
-                transform: rotate(-90deg);
-                transform-origin: left 0;
-                position: absolute;
-                bottom: 18px;
             }
             .btn {
                 font-weight: bold;
@@ -75,18 +79,28 @@
                     let inpt = document.createElement('input');
                     $(inpt).val(el.width());
                     $(inpt).width(el.width() * winCalc.scale - 8);
+                    if (i === 0)
+                        $(inpt).css('border-left', '4px solid #00f');
                     $('#scale2-hor').append(inpt);
                 });
 
                 //Прорисовка вертикальных размеров
-//                $('#scale1-ver input').each((i, el) => el.remove());
-//                let elemScaleVer = winCalc.root.lineArea(winCalc, 'VERT');
-//                elemScaleVer.forEach((el, i) => {
-//                    let w = el.height() * winCalc.scale - 8;
-//                    let s = document.getElementById("scale1-ver");
-//                    s.innerHTML += "<input value='" + el.height() + "'  type='text' size='2'' style='width: " + w + "px'>";
-//                });
+                let scale = document.getElementById('scale1-ver');
+                let length = winCalc.height * winCalc.scale;
+                $('#scale1-ver').css('left', -1 * length);
+                $('#scale1-ver input').each((i, el) => el.remove());
+                let elemScaleVer = winCalc.root.lineArea(winCalc, 'VERT');
+                for (let i = elemScaleVer.length; i > 0; --i) {
+                    let el = elemScaleVer[i - 1];
+                    let inpt = document.createElement('input');
+                    $(inpt).val(el.height());
+                    $(inpt).width(el.height() * winCalc.scale - 8);
+                    if (i === 1)
+                        $(inpt).css('border-right', '4px solid #00f');
+                    $('#scale1-ver').append(inpt);
+                }
 
+                //Прорисовка полей
                 let winWidth = $('#east').width() - 24;
                 $("div .field2[dx]").each(function (index) {
                     var width = $(this).attr('dx');
@@ -94,7 +108,7 @@
                 });
                 $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
                 $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
-            }
+            };
 
             $(document).ready(function () {
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
@@ -106,8 +120,14 @@
             });
 
             function test() {
-                var sc = document.getElementById("scale1-ver");
-                sc.innerHTML = "<input value='888'  type='text' size='2'' style='width: 682px'>";
+                //debugger;
+                //$('#scale1-ver input').each((i, el) => el.remove());
+                //let scale = document.getElementById('scale1-ver');
+                //scale.width = 600;
+                //scale.heaight = 400;
+                //scale.append();
+                //scale.innerHTML = "<input value='123'  type='text' size='2'' style='width: 200px'> <input value='456'  type='text' size='2'' style='width: 300px'>";
+                //let mmm = 0;
             }
         </script>
     </head>
@@ -122,11 +142,10 @@
                     <div id="scale1-hor"> 
                         <button class="btn">+</button>
                     </div> 
-                    <div id="trans">
-                        <div id="scale1-ver">
-                            <input value='888'  type='text' size='2'" style="width: 282px">
-                        </div> 
-                    </div> 
+                    <div id="scale1-ver">
+                        <!--                        <input value='888'  type='text' size='2'" style="width: 282px">
+                                                <input value='999'  type='text' size='2'" style="width: 182px">-->
+                    </div>
                     <div id="scale-cnv">                    
                         <canvas id="cnv"></canvas>
                     </div>                     

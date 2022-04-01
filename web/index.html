@@ -5,15 +5,57 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv , #trans{
+                display: inline-block;
+                border: 1px solid #00f;
+            }
+            #scale1-hor {
+                width: calc(100% - 2px);
+                height: 24px;
+            }
+            #scale2-hor {
+                width: calc(100% - 2px);
+                height: 24px;
+            }
+            #scale1-ver {
+                width: 24px;
+                height: calc(100% - 57px);
+            }
+            #scale-cnv {
+                width: calc(100% - 60px);
+                height: calc(100% - 57px);
+            }
+            #scale2-hor input, #scale1-ver input  {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16px;
+                border: 4px solid #00f;
+                height: 12px;
+                margin-top: 8px;
+            }
+            #scale1-ver {
+                transform: rotate(-90deg);
+                transform-origin: right 0px;
+                position: absolute;
+                left: -400px;
+            }
+
+            .btn {
+                font-weight: bold;
+                font-size: 16px;
+                width: 26px;
+            }
             #d33 {
-                transform: translate(90px, 0px) rotate(-90deg);
+                /*transform: translate(90px, 0px) rotate(-90deg);*/
             }
         </style> 
     </head>
     <body>
-        <div>
-            <div id="d33" style="width: 80px; height: 40px; border: solid red; display: inline-block;">XXXXXXXXX</div>
-            <div  style="width: 80px; height: 80px; border: solid blue; display: inline-block;">YYYYYYYYYY</div>
+        <div style="width: 900px; height: 800px; border: 4px solid #00f;">
+            <div id="scale1-ver" style="width: 400px; height: 40px;">
+                <input value='188'  type='text' size='2'" style='width: 200px;'>
+                <input value='299'  type='text' size='2'" style='width: 80px;'>
+            </div>                 
         </div>
     </body>
 </html>
