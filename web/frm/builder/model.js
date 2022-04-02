@@ -29,13 +29,17 @@ export class Com5t {
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
-    
-    length(dir) {
-        if(this.id == 0 && dir == 'x') 
-            return this.width(); 
-        if(this.id == 0 && dir == 'y')
-            return this.height(); 
-        return this.obj.length;
+
+    length(dir, val) {
+        if (val == undefined) {
+            if (this.id == 0 && dir == 'x')
+                return this.width();
+            if (this.id == 0 && dir == 'y')
+                return this.height();
+            return this.obj.length;
+        }
+        this.obj.length = val;
+
     }
 
     //Точка попадает в контур элемента
@@ -50,95 +54,92 @@ export class Com5t {
     }
 
     resizUp(list, layout) {
-//        float dx = 1;
-//        GsonElem e2 = null;
-//        for (GsonScale gs : list) {
-//            GsonElem el = find(gs.id);
-//            if (el.length != null) {
-//                if (gs.color == GsonScale.ADJUST) {
-//                    e2 = el;
-//                }
-//                float x = el.length - Math.round(el.length);
-//                if (x != 0 && x < 0) {
-//                    el.length -= x;
-//                    dx += x;
-//                } else {
-//                    el.length -= x;
-//                    dx += x;
-//                }
-//                el.owner.resizAll(layout);
-//            }
-//        }
-//        if (e2 != null && e2.length != null) {
-//            e2.length += dx - 1;
-//            e2.owner.resizAll(layout);
-//        }
+        let dx = 1, obj2 = null;
+        for (let gs of list) {
+            let obj = find(gs.id);
+            if (obj.length != null) {
+                if (gs.color == 'ADJUST') {
+                    obj2 = obj;
+                }
+                let x = obj.length - Math.round(obj.length);
+                if (x != 0 && x < 0) {
+                    obj.length -= x;
+                    dx += x;
+                } else {
+                    obj.length -= x;
+                    dx += x;
+                }
+                obj.owner.resizAll(layout);
+            }
+        }
+        if (obj2 != null && obj2.length != null) {
+            obj2.length += dx - 1;
+            obj2.owner.resizAll(layout);
+        }
     }
 
-    resizElem(_diff, _list, _layout) {
+    resizElem(dx, list, layout) {
+        debugger;
+        //GsonRoot root = (GsonRoot) this;
+        let changeSum = 0;
+        for (let gsonScale of list) {
+            let v = (layout == 'HORIZ') ? gsonScale.length('x') : gsonScale.length('y');
+            changeSum += v;
+        }
+        // Горизонтальное перераспределение
+        if (layout == 'HORIZ') {
+            for (let gsonScale of list) {
+                if (gsonScale.length('x') != null) {
+                    let k = gsonScale.length('x') / changeSum;
+                    gsonScale.length('x', gsonScale.length('x') + dz * k);
+                    gsonScale.owner.resizAll(layout);
+                } else {
+                    root.resizAll(layout);
+                }
+            }
+            root.width = root.width + dz;
 
-//        GsonRoot root = (GsonRoot) this;
-//        float changeSum = 0;
-//        for (GsonScale o : _list) {
-//            float v = (_layout == Layout.HORIZ) ? o.width() : o.height();
-//            changeSum += v;
-//        }
-//        // Горизонтальное перераспределение
-//        if (_layout == Layout.HORIZ) {
-//            for (GsonScale gsonScale : _list) {
-//                GsonElem elem = gsonScale.elem();
-//                if (elem.length != null) {
-//                    float k = elem.length / changeSum;
-//                    elem.length = elem.length + _diff * k;
-//                    elem.owner.resizAll(_layout);
-//                } else {
-//                    root.resizAll(_layout);
-//                }
-//            }
-//            root.width = root.width + _diff;
-//
-//            //Вертикальное перераспределение
-//        } else if (_layout == Layout.VERT) {
-//            for (GsonScale gsonScale : _list) {
-//                GsonElem elem = gsonScale.elem();
-//                if (elem.length != null) {
-//                    float k = elem.length / changeSum;
-//                    elem.length = elem.length + _diff * k;
-//                    elem.owner.resizAll(_layout);
-//                } else {
-//                    root.resizAll(_layout);
-//                }
-//            }
-//            root.height = root.height + _diff;
-//            if (root.type == Type.ARCH) {
-//                root.heightAdd = root.height - root.childs.get(4).height();
-//            } else if (root.type == Type.TRAPEZE) {
-//                root.heightAdd = root.height - root.childs.get(4).height();
-//            } else {
-//                root.heightAdd = root.height;
-//            }
-//        }
+            //Вертикальное перераспределение
+        } else if (layout == 'VERT') {
+            for (let gsonScale of list) {
+                if (gsonScale.length('x') != null) {
+                    let k = gsonScale.length('x') / changeSum;
+                    gsonScale.length('x', gsonScale.length('x') + dz * k);
+                    gsonScale.owner.resizAll(layout);
+                } else {
+                    root.resizAll(layout);
+                }
+            }
+            root.height = root.height + dz;
+            if (root.type == 'ARCH') {
+                root.heightAdd = root.height - root.childs.get(4).height();
+            } else if (root.type == 'TRAPEZE') {
+                root.heightAdd = root.height - root.childs.get(4).height();
+            } else {
+                root.heightAdd = root.height;
+            }
+        }
     }
 
-    resizAll(_layout) {
-//        if (this.owner != null) {
-//            float sum = 0;
-//            if (_layout == this.layout()) {
-//                for (GsonElem elem : this.childs) {
-//                    if (elem.type == Type.AREA) {
-//                        sum += elem.length;
-//                    }
-//                }
-//            }
-//            if (sum != 0) {
-//                if (this.owner.layout != _layout) {
-//                    this.owner.length = sum;
-//                } else {
-//                    this.length = sum;
-//                }
-//            }
-//            this.owner.resizAll(_layout);
-//        }
+    resizAll(layout) {
+        if (this.owner != null) {
+            let sum = 0;
+            if (layout == this.layout()) {
+                for (let elem of this.childs) {
+                    if (elem.type == 'AREA') {
+                        sum += elem.length;
+                    }
+                }
+            }
+            if (sum != 0) {
+                if (this.owner.layout != layout) {
+                    this.owner.length = sum;
+                } else {
+                    this.length = sum;
+                }
+            }
+            this.owner.resizAll(layout);
+        }
     }
 }
 //------------------------------------------------------------------------------

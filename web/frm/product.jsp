@@ -68,7 +68,10 @@
             });
 
             function test() {
-                
+
+                let list = winCalc.root.lineArea(winCalc, 'HORIZ');
+//                let list = elemScaleHor.filter(el => el.color == 'CHANGE');
+                winCalc.root.resizElem(1, list, "HORIZ");
             }
         </script>
     </head>
