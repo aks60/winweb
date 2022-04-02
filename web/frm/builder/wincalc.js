@@ -30,7 +30,7 @@ class Wincalc {
             this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
             this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
             this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
-            
+           
             this.root = new Root(obj, null, this); //главное окно                      
             this.elements(this.root, obj); //создадим элементы конструкции
 

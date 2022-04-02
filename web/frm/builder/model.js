@@ -33,13 +33,18 @@ export class Com5t {
     length(dir, val) {
         if (val == undefined) {
             if (this.id == 0 && dir == 'x')
-                return this.width();
+                return this.obj.width;
             if (this.id == 0 && dir == 'y')
-                return this.height();
+                return this.obj.height;
             return this.obj.length;
+        } else {
+            if (this.id == 0 && dir == 'x')
+                this.obj.width = val;
+            else if (this.id == 0 && dir == 'y')
+                this.obj.height = val;
+            else
+                this.obj.length = val;
         }
-        this.obj.length = val;
-
     }
 
     //Точка попадает в контур элемента
@@ -78,64 +83,63 @@ export class Com5t {
         }
     }
 
-    resizElem(dx, list, layout) {
-        debugger;
-        //GsonRoot root = (GsonRoot) this;
+    resizElem(dz, list, layout) {
+
         let changeSum = 0;
-        for (let gsonScale of list) {
-            let v = (layout == 'HORIZ') ? gsonScale.length('x') : gsonScale.length('y');
+        for (let area of list) {
+            let v = (layout == 'HORIZ') ? area.length('x') : area.length('y');
             changeSum += v;
         }
         // Горизонтальное перераспределение
         if (layout == 'HORIZ') {
-            for (let gsonScale of list) {
-                if (gsonScale.length('x') != null) {
-                    let k = gsonScale.length('x') / changeSum;
-                    gsonScale.length('x', gsonScale.length('x') + dz * k);
-                    gsonScale.owner.resizAll(layout);
+            for (let area of list) {
+                if (area.length('x') != null) {
+                    let k = area.length('x') / changeSum;
+                    area.length('x', area.length('x') + dz * k);
+                    area.owner.resizAll(layout);
                 } else {
-                    root.resizAll(layout);
+                    this.resizAll(layout);
                 }
             }
-            root.width = root.width + dz;
+            this.winc.obj.width = this.winc.obj.width + dz;
 
             //Вертикальное перераспределение
         } else if (layout == 'VERT') {
-            for (let gsonScale of list) {
-                if (gsonScale.length('x') != null) {
-                    let k = gsonScale.length('x') / changeSum;
-                    gsonScale.length('x', gsonScale.length('x') + dz * k);
-                    gsonScale.owner.resizAll(layout);
+            for (let area of list) {
+                if (area.length('x') != null) {
+                    let k = area.length('x') / changeSum;
+                    area.length('x', area.length('x') + dz * k);
+                    area.owner.resizAll(layout);
                 } else {
-                    root.resizAll(layout);
+                    winc.root.resizAll(layout);
                 }
             }
-            root.height = root.height + dz;
-            if (root.type == 'ARCH') {
-                root.heightAdd = root.height - root.childs.get(4).height();
-            } else if (root.type == 'TRAPEZE') {
-                root.heightAdd = root.height - root.childs.get(4).height();
+            this.winc.obj.height = winc.root.height + dz;
+            if (winc.root.type == 'ARCH') {
+                this.winc.obj.heightAdd = winc.root.height - winc.root.childs.get(4).height();
+            } else if (winc.root.type == 'TRAPEZE') {
+                this.winc.obj.heightAdd = winc.root.height - winc.root.childs.get(4).height();
             } else {
-                root.heightAdd = root.height;
+                this.winc.obj.heightAdd = this.winc.obj.height;
             }
         }
     }
 
     resizAll(layout) {
         if (this.owner != null) {
-            let sum = 0;
-            if (layout == this.layout()) {
+            let sum = 0, dir = (layout == 'HORIZ') ? 'x' : 'y';
+            if (layout == this.layout) {
                 for (let elem of this.childs) {
                     if (elem.type == 'AREA') {
-                        sum += elem.length;
+                        sum += elem.length(dir);
                     }
                 }
             }
             if (sum != 0) {
                 if (this.owner.layout != layout) {
-                    this.owner.length = sum;
+                    this.owner.length(dir, sum);
                 } else {
-                    this.length = sum;
+                    this.length(dir, sum);
                 }
             }
             this.owner.resizAll(layout);

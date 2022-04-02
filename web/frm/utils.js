@@ -60,7 +60,6 @@ function taqDeploy(selectors) {
 }
 
 function card_deploy2(taq, type) {
-    debugger;
     let
             title2 = $(taq).attr('card_title'),
             width2 = $(taq).attr('card_width'),
