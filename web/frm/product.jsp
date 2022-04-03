@@ -55,18 +55,15 @@
         <script type="text/javascript">
 
             var winCalc = null; //выбранная конструкция
-
             product.server_to_fields();
 
-            $(document).ready(function () {
-                //$("#b01").button({icons: {primary: "ui-icon-disk"}});
-                //$("#b02").button({icons: {primary: "ui-icon-disk"}});
+            $(document).ready(function () {               
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
-
+                
             });
 
             function test() {
@@ -90,8 +87,8 @@
                     </div>                     
                     <div id="scale2-hor"">
                         <button class="btn" style="float: left" onclick="product.dec_and_redraw();">-</button>
-                        <input value='800'  type='text'" size="2" style="width: 381px;">
-                        <input value='800'  type='text'" size="2" style="width: 382px;">
+                        <input value='123'  type='text'" size="2" style="width: 381px; color: #000" ondblclick="product.dblclick_scale_color(this)">
+                        <input value='456'  type='text'" size="2" style="width: 382px; color: #000" ondblclick="product.dblclick_scale_color(this)">                        
                         <button class="btn" style="float: right" onclick="product.inc_and_redraw();">+</button>
                     </div> 
                 </div>

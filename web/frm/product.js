@@ -123,17 +123,18 @@ product.resize = function () {
             winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
     }
 
-    //Прорисовка горизонтальных размеров
-    $('#scale2-hor input').each((i, el) => el.remove());
-    let elemScaleHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-    elemScaleHor.forEach((el, i) => {
-        let inpt = document.createElement('input');
-        $(inpt).val(el.length('x'));
-        $(inpt).width(el.length('x') * winCalc.scale - 8);
-        if (i === 0)
-            $(inpt).css('border-left', '4px solid #00f');
-        $('#scale2-hor').append(inpt);
-    });
+//    //Прорисовка горизонтальных размеров
+//    $('#scale2-hor input').each((i, el) => el.remove());
+//    let elemScaleHor = winCalc.root.lineArea(winCalc, 'HORIZ');
+//    elemScaleHor.forEach((el, i) => {
+//        let inpt = document.createElement('input');
+//        $(inpt).val(el.length('x'));
+//        $(inpt).width(el.length('x') * winCalc.scale - 8);
+//        inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt));
+//        if (i === 0)
+//            $(inpt).css('border-left', '4px solid #00f');
+//        $('#scale2-hor').append(inpt);
+//    });
 
     //Прорисовка вертикальных размеров
     let scale = document.getElementById('scale1-ver');
@@ -506,5 +507,18 @@ product.save_and_redraw = function () {
     let winc2 = win.build(cvs, prjprodRec[PRJPROD.script]);
     order.wincalcMap.set(prjprodID, winc2); //новый экз.
     product.resize();
+}
+//------------------------------------------------------------------------------
+product.dblclick_scale_color = function (inpt) {
+
+    if ($(inpt).css('color') == 'rgb(0, 0, 0)') {
+        $(inpt).css('color', 'rgb(0, 155, 0)');
+        
+    } else if ($(inpt).css('color') == 'rgb(0, 155, 0)') {
+        $(inpt).css('color', 'rgb(255, 0, 0)');
+        
+    } else if($(inpt).css('color') == 'rgb(255, 0, 0)') {
+       $(inpt).css('color', 'rgb(0, 0, 0)'); 
+    }
 }
 //------------------------------------------------------------------------------
