@@ -59,6 +59,8 @@
             product.server_to_fields();
 
             $(document).ready(function () {
+                //$("#b01").button({icons: {primary: "ui-icon-disk"}});
+                //$("#b02").button({icons: {primary: "ui-icon-disk"}});
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
@@ -68,20 +70,6 @@
             });
 
             function test() {
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
-                let list = winCalc.root.lineArea(winCalc, 'HORIZ');
-                
-                let cvs = document.querySelector("#cnv");               
-                //this.ctx = cvs.getContext('2d');
-                //ctx.clearRect(0, 0, cnv.width, cnv.height);
-                
-                winCalc.root.resizElem(2, list, "HORIZ");
-                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
-                console.log(prjprodRec[PRJPROD.script]);
-                let winc2 = win.build(cvs, prjprodRec[PRJPROD.script]);
-                order.wincalcMap.set(prjprodID, winc2); //новый экз.
-                product.resize();
             }
         </script>
     </head>
@@ -93,17 +81,18 @@
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
                     <div id="scale1-hor"> 
-                        <button class="btn">+</button>
+                        <button class="btn" onclick="product.inc_and_redraw();">+</button>
+                        <button class="btn" style="float: right" onclick="product.save_and_redraw();">v</button>
                     </div> 
                     <div id="scale1-ver"></div>
                     <div id="scale-cnv">                    
                         <canvas id="cnv"></canvas>
                     </div>                     
                     <div id="scale2-hor"">
-                        <button class="btn" style="float: left">-</button>
+                        <button class="btn" style="float: left" onclick="product.dec_and_redraw();">-</button>
                         <input value='800'  type='text'" size="2" style="width: 381px;">
                         <input value='800'  type='text'" size="2" style="width: 382px;">
-                        <button class="btn" style="float: right">+</button>
+                        <button class="btn" style="float: right" onclick="product.inc_and_redraw();">+</button>
                     </div> 
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">

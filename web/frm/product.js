@@ -483,3 +483,28 @@ product.artikl_to_glass = function (btnSrc) {
     }
 }
 //------------------------------------------------------------------------------
+product.inc_and_redraw = function (dir) {
+
+}
+//------------------------------------------------------------------------------
+product.dec_and_redraw = function () {
+
+}
+//------------------------------------------------------------------------------
+product.save_and_redraw = function () {
+    let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+    let list = winCalc.root.lineArea(winCalc, 'HORIZ');
+
+    let cvs = document.querySelector("#cnv");
+    //this.ctx = cvs.getContext('2d');
+    //ctx.clearRect(0, 0, cnv.width, cnv.height);
+
+    winCalc.root.resizElem(2, list, "HORIZ");
+    prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
+    console.log(prjprodRec[PRJPROD.script]);
+    let winc2 = win.build(cvs, prjprodRec[PRJPROD.script]);
+    order.wincalcMap.set(prjprodID, winc2); //новый экз.
+    product.resize();
+}
+//------------------------------------------------------------------------------
