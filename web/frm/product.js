@@ -109,7 +109,7 @@ product.elements = function (com, arr) {
         }
     }
 }
-//-------------------  RESIZE  -------------------------------------------------
+//  RESIZE  --------------------------------------------------------------------
 product.resize = function () {
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
@@ -160,7 +160,7 @@ product.resize = function () {
     $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
     $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
 }
-//-------------------  Загрузка свойств конструкции  ---------------------------
+//  Загрузка свойств конструкции  -------------------======---------------------
 product.server_to_fields = function () {
     try {
         if (order.prjprodRec != null) {
@@ -204,7 +204,7 @@ product.server_to_fields = function () {
         console.error("Ошибка: product.server_to_fields() " + e.message);
     }
 }
-//-------------------  Загрузка тегов страницы  --------------------------------
+// Загрузка тегов страницы  ----------------------------------------------------
 product.local_to_fields = function (nodeID) {
 
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
@@ -280,7 +280,7 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-5").show();
     }
 }
-//-------------------  Текстура изделия  ---------------------------------------
+//  Текстура изделия  ----------------------------------------------------------
 product.color_to_windows = function (btnSrc) {
     //try {
     let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
@@ -352,7 +352,7 @@ product.color_to_windows = function (btnSrc) {
     //    console.error("Ошибка: product.color_to_windows(): " + e.message);
     //}
 }
-//--------------------  Сторона коробки  ---------------------------------------
+//  Сторона коробки  -----------------------------------------------------------
 product.sysprof_to_frame = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -383,22 +383,22 @@ product.sysprof_to_frame = function (btnSrc) {
         console.error("Ошибка: product.sysprof_to_frame() " + e.message);
     }
 }
-//-------------------  Фурнитура стеклопакета  ---------------------------------
+//  Фурнитура стеклопакета  ----------------------------------------------------
 product.furniture_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frm/dialog/furniture.jsp');
 }
-//--------------------  Сторона открывания  ------------------------------------
+// Сторона открывания  ---------------------------------------------------------
 product.sideopen_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frm/dialog/sideopen.jsp');
 }
-//-------------------  Артикл ручки, подвеса, замка  ---------------------------
+//  Артикл ручки, подвеса, замка  ----------------------------------------------
 product.artikl_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
-//-----------------------  Заполнение  -----------------------------------------
+//  Заполнение  ----------------------------------------------------------------
 product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -453,7 +453,7 @@ product.color_to_element = function (btnSrc) {
         console.error("Ошибка: product.color_to_element() " + e.message);
     }
 }
-//-----------------------  Заполнение  -----------------------------------------
+//  Заполнение  ----------------------------------------------------------------
 product.artikl_to_glass = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -482,15 +482,15 @@ product.artikl_to_glass = function (btnSrc) {
         console.error("Ошибка: product.artikl_to_glass() " + e.message);
     }
 }
-//------------------------------------------------------------------------------
+//  Увеличить размер и перерисовать  -------------------------------------------
 product.inc_and_redraw = function (dir) {
 
 }
-//------------------------------------------------------------------------------
+//  Уменьшить размер и перерисовать  -------------------------------------------
 product.dec_and_redraw = function () {
 
 }
-//------------------------------------------------------------------------------
+//  Сохранить новый размер и перерисовать  -------------------------------------
 product.save_and_redraw = function () {
     let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
     let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
