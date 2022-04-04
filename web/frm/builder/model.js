@@ -40,10 +40,9 @@ export class Com5t {
         } else {
             if (this.id == 0 && dir == 'x')
                 this.obj.width = val;
-            else if (this.id == 0 && dir == 'y') {
+            else if (this.id == 0 && dir == 'y')
                 this.obj.height = val;
-                console.log("====  " + this.obj.height);
-            } else
+            else
                 this.obj.length = val;
         }
     }
@@ -85,48 +84,50 @@ export class Com5t {
     }
 
     resizElem(dz, list, layout) {
-
-        let changeSum = 0;
-        for (let area of list) {
-            let v = (layout == 'HORIZ') ? area.length('x') : area.length('y');
-            changeSum += v;
-        }
-        // Горизонтальное перераспределение
-        if (layout == 'HORIZ') {
+        if (list.length > 0) {
+            let changeSum = 0;
             for (let area of list) {
-                if (area.length('x') != null) {
-                    let k = area.length('x') / changeSum;
-                    area.length('x', area.length('x') + dz * k);
-                    area.owner.resizAll(layout);
-                } else {
-                    this.resizAll(layout);
-                }
+                let v = (layout == 'HORIZ') ? area.length('x') : area.length('y');
+                changeSum += v;
             }
-            this.winc.obj.width = this.winc.obj.width + dz;
+            // Горизонтальное перераспределение
+            if (layout == 'HORIZ') {
+                for (let area of list) {
+                    if (area.length('x') != null) {
+                        let k = area.length('x') / changeSum;
+                        area.length('x', area.length('x') + dz * k);
+                        area.owner.resizAll(layout);
+                    } else {
+                        this.resizAll(layout);
+                    }
+                }
+                this.winc.obj.width = this.winc.obj.width + dz;
 
-            //Вертикальное перераспределение
-        } else if (layout == 'VERT') {
-            for (let area of list) {
-                if (area.length('x') != null) {
-                    let k = area.length('x') / changeSum;
-                    area.length('x', area.length('x') + dz * k);
-                    area.owner.resizAll(layout);
-                } else {
-                    this.resizAll(layout);
+                //Вертикальное перераспределение
+            } else if (layout == 'VERT') {
+                for (let area of list) {
+                    if (area.length('x') != null) {
+                        let k = area.length('x') / changeSum;
+                        area.length('x', area.length('x') + dz * k);
+                        area.owner.resizAll(layout);
+                    } else {
+                        this.resizAll(layout);
+                    }
                 }
-            }
-            this.winc.obj.height = this.winc.obj.height + dz;
-            ////////////console.log("++++ " + this.winc.obj.height);
-            if (this.winc.root.type == 'ARCH') {
-                this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
-            } else if (this.winc.root.type == 'TRAPEZE') {
-                this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
-            } else {
-                this.winc.obj.heightAdd = this.winc.obj.height;
+                this.winc.obj.height = this.winc.obj.height + dz;
+
+
+                if (this.winc.root.type == 'ARCH') {
+                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
+                } else if (this.winc.root.type == 'TRAPEZE') {
+                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
+                } else {
+                    this.winc.obj.heightAdd = this.winc.obj.height;
+                }
             }
         }
     }
-    
+
     resizAll(layout) {
         if (this.owner != null) {
             let sum = 0, dir = (layout == 'HORIZ') ? 'x' : 'y';

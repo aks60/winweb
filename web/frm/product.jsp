@@ -58,7 +58,6 @@
             });
 
             function test() {
-                console.log(winCalc.root.height());
             }
         </script>
     </head>

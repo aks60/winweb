@@ -59,9 +59,6 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
-                let winc = order.get_winc();
-                let list = winc.root.lineArea(winc, 'VERT');
-                console.log(list);
             }
         </script>
     </head>

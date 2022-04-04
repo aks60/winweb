@@ -148,12 +148,9 @@ product.resize = function () {
 
     //Прорисовка вертикальных размеров
     lineArr.length = 0;
-    let scale = document.getElementById('scale-ver');
-    
+    let scale = document.getElementById('scale-ver');    
     let length = winCalc.obj.height * winCalc.scale;
-    $('#scale-ver').css('left', -1 * length);
-    console.log(winCalc.obj.height + " - " + winCalc.scale);
-    
+    $('#scale-ver').css('left', -1 * length);   
     lineArea = winCalc.root.lineArea(winCalc, 'VERT');
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
