@@ -40,9 +40,10 @@ export class Com5t {
         } else {
             if (this.id == 0 && dir == 'x')
                 this.obj.width = val;
-            else if (this.id == 0 && dir == 'y')
+            else if (this.id == 0 && dir == 'y') {
                 this.obj.height = val;
-            else
+                console.log("====  " + this.obj.height);
+            } else
                 this.obj.length = val;
         }
     }
@@ -111,20 +112,21 @@ export class Com5t {
                     area.length('x', area.length('x') + dz * k);
                     area.owner.resizAll(layout);
                 } else {
-                    winc.root.resizAll(layout);
+                    this.resizAll(layout);
                 }
             }
-            this.winc.obj.height = winc.root.height + dz;
-            if (winc.root.type == 'ARCH') {
-                this.winc.obj.heightAdd = winc.root.height - winc.root.childs.get(4).height();
-            } else if (winc.root.type == 'TRAPEZE') {
-                this.winc.obj.heightAdd = winc.root.height - winc.root.childs.get(4).height();
+            this.winc.obj.height = this.winc.obj.height + dz;
+            ////////////console.log("++++ " + this.winc.obj.height);
+            if (this.winc.root.type == 'ARCH') {
+                this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
+            } else if (this.winc.root.type == 'TRAPEZE') {
+                this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
             } else {
                 this.winc.obj.heightAdd = this.winc.obj.height;
             }
         }
     }
-
+    
     resizAll(layout) {
         if (this.owner != null) {
             let sum = 0, dir = (layout == 'HORIZ') ? 'x' : 'y';

@@ -7,49 +7,40 @@
         <script type="text/javascript" src="frm/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #scale1-hor, #scale2-hor, #scale1-ver, #scale-cnv {
+            #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
-                /*border: 1px solid #00f;*/
+                border: 1px solid #00f;
             }
-            #scale1-hor {
-                width: calc(100% - 2px);
+            #scale-hor {
+                width: 100%;
                 height: 24px;
             }
-            #scale2-hor {
-                width: calc(100% - 2px);
-                height: 24px;
-            }
-            #scale1-ver {
+            #scale-ver {
                 transform: rotate(-90deg);
                 transform-origin: right 0px;
                 position: absolute;
             }
             #scale-cnv {
-                width: calc(100% - 60px);
-                height: calc(100% - 57px);
+                width: calc(100% - 32px);
+                height: calc(100% - 34px);
                 margin-left: 30px;
             }
-            #scale2-hor input{
+            #scale-hor input{
                 margin-top: 8px;
                 border: 0;
                 border-right: 4px solid #00f;
             }
-            #scale1-ver input {
+            #scale-ver input {
                 margin-bottom: 8px;
                 border: 0;
                 border-left: 4px solid #00f;
             }
-            #scale2-hor input, #scale1-ver input {
+            #scale-hor input, #scale-ver input {
                 text-align: center;
                 font-weight: bold;
                 font-size: 16px;
                 height: 12px;
-            }
-            .btn {
-                font-weight: bold;
-                font-size: 16px;
-                width: 26px;
             }
         </style> 
         <script type="text/javascript">
@@ -67,31 +58,23 @@
             });
 
             function test() {
-                $("#777").select();
+                console.log(winCalc.root.height());
             }
         </script>
     </head>
     <body>
         <div id="north">
-            <button id="btnProd3" style="width: 128px" onClick="test();">TEST</button>
+            <button id="btnResiz" style="width: 140px" onClick="product.click_winc_resiz();">Изменить размер</button>
+            <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
-                    <div id="scale1-hor"> 
-                        <button class="btn" onclick="product.click_inc_redraw('btn4');">+</button>
-                        <button id="btn3" class="btn" style="float: right" onclick="product.click_to_scale(btn3);">v</button>
-                    </div> 
-                    <div id="scale1-ver"></div>
+                    <div id="scale-ver"></div>
                     <div id="scale-cnv">                    
-                        <canvas id="cnv"></canvas>
+                        <canvas id="cnv" onclick="product.click_scale_color();"></canvas>
                     </div>                     
-                    <div id="scale2-hor">
-                        <button class="btn" style="float: left" onclick="product.click_dec_redraw('btn1');">-</button>
-                        <input value='123'  type='text'" size="2" style="width: 381px; color: #000" ondblclick="product.dblclick_scale_color(this)">
-                        <input value='456'  type='text'" size="2" style="width: 382px; color: #000" ondblclick="product.dblclick_scale_color(this)">                        
-                        <button class="btn" style="float: right" onclick="product.click_inc_redraw('btn2');">+</button>
-                    </div> 
+                    <div id="scale-hor"></div> 
                 </div>
                 <div id="east" style="position: absolute; margin-top: 268px; width: 396px; top: 0; right: -400px; bottom: 0;">
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">

@@ -58,7 +58,6 @@ function taqDeploy(selectors) {
         });
     }
 }
-
 function card_deploy2(taq, type) {
     let
             title2 = $(taq).attr('card_title'),
@@ -151,7 +150,6 @@ function card_deploy2(taq, type) {
         });
     }
 }
-
 //------------------------------------------------------------------------------
 function load_tabs(selector, record, fields) {
 
@@ -160,7 +158,6 @@ function load_tabs(selector, record, fields) {
         $("#" + field).val(value);
     }
 }
-
 //------------------------------------------------------------------------------
 function formatDate2(d) {
 
@@ -174,7 +171,6 @@ function formatDate2(d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
-
 //------------------------------------------------------------------------------
 function prepareToolBar() {
 
@@ -187,6 +183,7 @@ function prepareToolBar() {
     $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
     $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
 
     $("#menu").menu({items: "> :not(.ui-widget-header)"});
 }
