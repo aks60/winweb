@@ -3,6 +3,9 @@ import {draw_line, draw_stroke_polygon, draw_full_polygon, draw_full_arc} from '
 //------------------------------------------------------------------------------
 export class Com5t {
 
+    _lengthX = 0;
+    _lengthY = 0;
+
     constructor(obj, owner, winc) {
         this.obj = obj;
         this.id = obj.id;//идентификатор 
@@ -28,6 +31,28 @@ export class Com5t {
 
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
+    }
+
+    get lengthX() {
+        return (this.id == 0) ? this.obj.width : this.obj.length;
+    }
+
+    get lengthY() {
+        return (this.id == 0) ? this.obj.height : this.obj.length;
+    }
+
+    set lengthX(v) {
+        if (this.id == 0)
+            this.obj.width = v;
+        else
+            this.obj.length = v;
+    }
+
+    set lengthY(v) {
+        if (this.id == 0)
+            this.obj.height = v;
+        else
+            this.obj.length = v;
     }
 
     length(dir, val) {
@@ -157,9 +182,9 @@ export class Area extends Com5t {
 
     static level_scale = 0; //глубина вложения размерной шкалы на канве
 
-    constructor(obj, owner, winc) {        
-        super(obj, owner, winc); 
-       
+    constructor(obj, owner, winc) {
+        super(obj, owner, winc);
+
         this.childs = new Array(0); //список детей 
 
         //Всё нестандартное АРЕА сверху, пока примитивно
