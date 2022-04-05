@@ -41,15 +41,43 @@ export class Com5t {
     set lengthX(v) {
         if (this.id == 0)
             this.obj.width = v;
-        else
+        else {
+            let s = 0;             
+            this.owner.childs.forEach(el => { //определим размер родителя
+                if (el.type == 'AREA')
+                    s += el.obj.length; 
+            });
+            let dx = v - this.obj.length; //дельта изменения
+            let k = dx / s; //коэффициент изменения
+            this.winc.obj.width = this.winc.obj.width + k * this.winc.obj.width; //размер коробки
+            this.winc.areaList.forEach(el => {
+                if (el.layout == 'VERT' && this.owner.id != el.owner.id) {
+                    el.obj.length = el.obj.length + k * el.obj.length; //изменение всех остальных кроме родителя
+                }
+            });
             this.obj.length = v;
+        }
     }
 
     set lengthY(v) {
         if (this.id == 0)
             this.obj.height = v;
-        else
+        else {
+            let s = 0;             
+            this.owner.childs.forEach(el => { //определим размер родителя
+                if (el.type == 'AREA')
+                    s += el.obj.length; 
+            });
+            let dx = v - this.obj.length; //дельта изменения
+            let k = dx / s; //коэффициент изменения
+            this.winc.obj.height = this.winc.obj.height + k * this.winc.obj.height; //размер коробки
+            this.winc.areaList.forEach(el => {
+                if (el.layout == 'HORIZ' && this.owner.id != el.owner.id) {
+                    el.obj.length = el.obj.length + k * el.obj.length; //изменение всех остальных кроме родителя
+                }
+            });
             this.obj.length = v;
+        }
     }
 
     //Точка попадает в контур элемента

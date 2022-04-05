@@ -58,12 +58,30 @@
             });
 
             function test() {
+                //debugger;
+                let area = winCalc.areaList.find(el => el.id == 6);
+                area.lengthX = area.lengthX + 4;
+                let area2 = winCalc.areaList.find(el => el.id == 10);
+                area2.lengthX = area2.lengthX - 4;
+                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                let cvs = document.querySelector("#cnv");
+                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
+
+                winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
+
+                order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
+                product.resize();
+                product.local_to_fields("0");
+            }
+            function test2() {
+                debugger;
             }
         </script>
     </head>
     <body>
         <div id="north">
-            <button id="btnResiz" style="width: 140px" onClick="product.click_winc_resiz();">Изменить размер</button>
+            <button id="btnResiz" style="width: 140px" onClick="test2();">Изменить размер</button>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div> 
         <div id = "context">

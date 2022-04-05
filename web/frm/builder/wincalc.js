@@ -34,8 +34,9 @@ class Wincalc {
             this.root = new Root(obj, null, this); //главное окно                      
             this.elements(this.root, obj); //создадим элементы конструкции
 
+            this.areaList = new Array(); //массив area конструкции  
             this.elemList = new Array(); //массив элементов конструкции  
-            this.arr_of_winc(this.root, this.elemList);
+            this.arr_of_winc(this.root);
             this.elemList.sort((a, b) => a.id - b.id);
             this.scale = 1;
             draw_elements(this); //рисуем конструкцию 
@@ -82,18 +83,19 @@ class Wincalc {
         }
     }
 
-    arr_of_winc(area, arr) {
+    arr_of_winc(area) {
         
         if (area.frames !== undefined) {
-            arr.push(area);
+            this.elemList.push(area);
             for (let frm of area.frames.values())
-                arr.push(frm);
+                this.elemList.push(frm);
         }
         for (let com of area.childs) {
             if (com instanceof Area) {
-                this.arr_of_winc(com, arr);
+                this.areaList.push(com);
+                this.arr_of_winc(com);
             } else {
-                arr.push(com);
+                this.elemList.push(com);
             }
         }
     }
