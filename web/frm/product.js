@@ -278,7 +278,7 @@ product.local_to_fields = function (nodeID) {
             }
         }
         load_tabs('tabs-4', {
-            n41: elem.width(), n42: elem.height(), n43: furnitureRec[FURNITURE.name], n44: type_open,
+            n41: elem.width, n42: elem.height, n43: furnitureRec[FURNITURE.name], n44: type_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
             n46: findef(dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id]), dbset.colorList)[COLOR.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],

@@ -22,11 +22,11 @@ export class Com5t {
         this.y2 = y2;
     }
 
-    width() {
+   get width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
 
-    height() {
+   get height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
 
@@ -125,9 +125,9 @@ export class Com5t {
 
 
                 if (this.winc.root.type == 'ARCH') {
-                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
+                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height;
                 } else if (this.winc.root.type == 'TRAPEZE') {
-                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height();
+                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height;
                 } else {
                     this.winc.obj.heightAdd = this.winc.obj.height;
                 }
@@ -194,8 +194,8 @@ export class Area extends Com5t {
 
             //Аrеа
         } else {
-            let height = (owner.layout == "VERT") ? obj.length : owner.height();
-            let width = (owner.layout == "HORIZ") ? obj.length : owner.width();
+            let height = (owner.layout == "VERT") ? obj.length : owner.height;
+            let width = (owner.layout == "HORIZ") ? obj.length : owner.width;
 
             if (owner.childs.length == 0) { //если owner.childs.length == 0 то prevArea искать нет смысла
                 if (owner.layout == "VERT") { //сверху вниз
@@ -386,21 +386,21 @@ export class Stvorka extends Area {
                 this.handleHeight = this.obj.param.heightHandl;
             } else {
                 this.handleLayout = (this.position == 'MIDL') ? 'MIDL' : 'CONST';
-                this.handleHeight = this.frames.get("LEFT").height() / 2;
+                this.handleHeight = this.frames.get("LEFT").height / 2;
 
             }
         } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 1) {  //MIDL.id
             this.handleLayout = 'MIDL';
-            this.handleHeight = this.frames.get("LEFT").height() / 2;
+            this.handleHeight = this.frames.get("LEFT").height / 2;
         } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 2) {    //CONST.id) {
             this.handleLayout = 'CONST';
-            this.handleHeight = this.frames.get("LEFT").height() / 2;
+            this.handleHeight = this.frames.get("LEFT").height / 2;
         } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 3) {    //VARIAT.id) {
             this.handleLayout = 'VARIAT';
-            this.handleHeight = this.frames.get("LEFT").height() / 2;
+            this.handleHeight = this.frames.get("LEFT").height / 2;
         } else {
             this.handleLayout = 'MIDL'; //по умолчанию
-            this.handleHeight = this.frames.get("LEFT").height() / 2;
+            this.handleHeight = this.frames.get("LEFT").height / 2;
         }
     }
 
