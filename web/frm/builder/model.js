@@ -22,11 +22,11 @@ export class Com5t {
         this.y2 = y2;
     }
 
-   get width() {
+    get width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
 
-   get height() {
+    get height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
 
