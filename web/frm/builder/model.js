@@ -58,6 +58,7 @@ export class Com5t {
         return ((this.x2 >= X) && (this.y2 >= Y));
     }
 
+    //Приведение к целому дробных состовляющих
     resizUp(list, layout) {
         let dx = 1, obj2 = null;
         for (let gs of list) {
@@ -83,6 +84,7 @@ export class Com5t {
         }
     }
 
+    //Увеличение, уменьшение размера
     resizElem(dz, list, layout) {
         if (list.length > 0) {
             let changeSum = 0;
@@ -128,6 +130,7 @@ export class Com5t {
         }
     }
 
+    //Подгонка размера в глубину
     resizAll(layout) {
         if (this.owner != null) {
             let sum = 0, dir = (layout == 'HORIZ') ? 'x' : 'y';
@@ -152,8 +155,11 @@ export class Com5t {
 //------------------------------------------------------------------------------
 export class Area extends Com5t {
 
-    constructor(obj, owner, winc) {
-        super(obj, owner, winc);
+    static level_scale = 0; //глубина вложения размерной шкалы на канве
+
+    constructor(obj, owner, winc) {        
+        super(obj, owner, winc); 
+       
         this.childs = new Array(0); //список детей 
 
         //Всё нестандартное АРЕА сверху, пока примитивно
@@ -207,8 +213,9 @@ export class Area extends Com5t {
     }
 
     lineArea(winc, layout) {
+        Area.level_scale = 0;
         let set1 = new Set(), set2 = new Set(), setOut = new Set();
-        this.lineArea2(set1, this, layout);
+        this.lineArea2(set1, this, layout); //
         for (let elem of set1.values()) {
 
             set2.clear();
@@ -226,16 +233,19 @@ export class Area extends Com5t {
 
     lineArea2(elemSet, elem, layout) {
 
-        for (let i = 0; i < elem.childs.length; ++i) {
-            let elem2 = elem.childs[i];
-
-            if (elem2.owner.layout == layout && (elem2.type == 'IMPOST' || elem2.type == 'SHTULP' || elem2.type == 'STOIKA')) {
+        elem.childs.forEach((el, i) => {
+            if (el.owner.layout == layout && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA')) {
+                elem.childs[i - 1].level_scale = Area.level_scale;
+                elem.childs[i + 1].level_scale = Area.level_scale;
                 elemSet.add(elem.childs[i - 1]);
                 elemSet.add(elem.childs[i + 1]);
             }
-            if (elem2 instanceof Area)
-                this.lineArea2(elemSet, elem2, layout);
-        }
+            if (el.owner.id == 0 && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA')) {
+                ++Area.level_scale;
+            }
+            if (el instanceof Area)
+                this.lineArea2(elemSet, el, layout);
+        });
     }
 }
 //------------------------------------------------------------------------------

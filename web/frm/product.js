@@ -126,7 +126,8 @@ product.resize = function () {
 
     //Прорисовка горизонтальных размеров    
     let lineArr = [];
-    let lineArea = winCalc.root.lineArea(winCalc, 'HORIZ');
+    let lineArea2 = winCalc.root.lineArea(winCalc, 'HORIZ');
+    let lineArea = lineArea2.filter(el => el.level_scale == 1);
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-hor input:eq(' + i + ')').length == 1) {
@@ -522,8 +523,8 @@ product.click_winc_resiz = function (btn) {
             listDec.push(area);
         }
     });
-    product.winc_redraw(1, listInc, 'HORIZ');
-    product.winc_redraw(-1, listDec, 'HORIZ');
+    product.winc_to_redraw(1, listInc, 'HORIZ');
+    product.winc_to_redraw(-1, listDec, 'HORIZ');
 
     //По вертикали
     listInc.length = 0, listDec.length = 0;
@@ -537,12 +538,12 @@ product.click_winc_resiz = function (btn) {
             listDec.push(area);
         }
     });
-    product.winc_redraw(1, listInc, 'VERT');
-    product.winc_redraw(-1, listDec, 'VERT');
+    product.winc_to_redraw(1, listInc, 'VERT');
+    product.winc_to_redraw(-1, listDec, 'VERT');
 }
 //------------------------------------------------------------------------------
 //Перерисовать новый размер
-product.winc_redraw = function (dz, list, dir) {
+product.winc_to_redraw = function (dz, list, dir) {
 
     winCalc.root.resizElem(dz, list, dir);
 
@@ -555,6 +556,7 @@ product.winc_redraw = function (dz, list, dir) {
 
     order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
     product.resize();
+    product.local_to_fields("0");
 }
 //------------------------------------------------------------------------------
 product.dblclick_scale_color = function (inpt, dir) {
