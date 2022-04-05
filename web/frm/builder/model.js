@@ -3,9 +3,6 @@ import {draw_line, draw_stroke_polygon, draw_full_polygon, draw_full_arc} from '
 //------------------------------------------------------------------------------
 export class Com5t {
 
-    _lengthX = 0;
-    _lengthY = 0;
-
     constructor(obj, owner, winc) {
         this.obj = obj;
         this.id = obj.id;//идентификатор 
@@ -55,23 +52,6 @@ export class Com5t {
             this.obj.length = v;
     }
 
-    length(dir, val) {
-        if (val == undefined) {
-            if (this.id == 0 && dir == 'x')
-                return this.obj.width;
-            if (this.id == 0 && dir == 'y')
-                return this.obj.height;
-            return this.obj.length;
-        } else {
-            if (this.id == 0 && dir == 'x')
-                this.obj.width = val;
-            else if (this.id == 0 && dir == 'y')
-                this.obj.height = val;
-            else
-                this.obj.length = val;
-        }
-    }
-
     //Точка попадает в контур элемента
     inside(X, Y) {
         if ((this.x2 | this.y2) < 0) {
@@ -114,15 +94,15 @@ export class Com5t {
         if (list.length > 0) {
             let changeSum = 0;
             for (let area of list) {
-                let v = (layout == 'HORIZ') ? area.length('x') : area.length('y');
+                let v = (layout == 'HORIZ') ? area.lengthX : area.lengthY;
                 changeSum += v;
             }
             // Горизонтальное перераспределение
             if (layout == 'HORIZ') {
                 for (let area of list) {
-                    if (area.length('x') != null) {
-                        let k = area.length('x') / changeSum;
-                        area.length('x', area.length('x') + dz * k);
+                    if (area.lengthX != null) {
+                        let k = area.lengthX / changeSum;
+                        area.lengthX = area.lengthX + dz * k;
                         area.owner.resizAll(layout);
                     } else {
                         this.resizAll(layout);
@@ -133,9 +113,9 @@ export class Com5t {
                 //Вертикальное перераспределение
             } else if (layout == 'VERT') {
                 for (let area of list) {
-                    if (area.length('x') != null) {
-                        let k = area.length('x') / changeSum;
-                        area.length('x', area.length('x') + dz * k);
+                    if (area.lengthX != null) {
+                        let k = area.lengthX / changeSum;
+                        area.lengthX = area.lengthX + dz * k;
                         area.owner.resizAll(layout);
                     } else {
                         this.resizAll(layout);
@@ -162,15 +142,24 @@ export class Com5t {
             if (layout == this.layout) {
                 for (let elem of this.childs) {
                     if (elem.type == 'AREA') {
-                        sum += elem.length(dir);
+                        if (dir == 'x')
+                            sum += elem.lengthX;
+                        else
+                            sum += elem.lengthY;
                     }
                 }
             }
             if (sum != 0) {
                 if (this.owner.layout != layout) {
-                    this.owner.length(dir, sum);
+                    if (dir == 'x')
+                        this.owner.lengthX = sum;
+                    else
+                        this.owner.lengthY = sum;
                 } else {
-                    this.length(dir, sum);
+                    if (dir == 'x')
+                        this.lengthX = sum;
+                    else
+                        this.lengthY = sum;
                 }
             }
             this.owner.resizAll(layout);

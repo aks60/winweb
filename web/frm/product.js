@@ -133,9 +133,9 @@ product.resize = function () {
         if ($('#scale-hor input:eq(' + i + ')').length == 1) {
             $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
         }
-        $(inpt).val(el.length('x').toFixed(1));
+        $(inpt).val(el.lengthX.toFixed(1));
         $(inpt).attr('areaID', el.id);
-        $(inpt).width(el.length('x') * winCalc.scale - 8);
+        $(inpt).width(el.lengthX * winCalc.scale - 8);
         inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
         if (i === 0) {
             $(inpt).css('border-left', '4px solid #00f');
@@ -158,9 +158,9 @@ product.resize = function () {
         if ($('#scale-ver input:eq(' + i + ')').length == 1) {
             $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
         }
-        $(inpt).val(el.length('y').toFixed(1));
+        $(inpt).val(el.lengthY.toFixed(1));
         $(inpt).attr('areaID', el.id);
-        $(inpt).width(el.length('y') * winCalc.scale - 8);
+        $(inpt).width(el.lengthY * winCalc.scale - 8);
         inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
         lineArr.push(inpt);
     });
