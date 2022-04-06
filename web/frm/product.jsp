@@ -48,6 +48,8 @@
             let winCalc = null; //выбранная конструкция
             let levelScaleHor = 0;
             let levelScaleVer = 0;
+            let lineAreaHor = null;
+            let lineAreaVer = null;
             
             product.server_to_fields();
 

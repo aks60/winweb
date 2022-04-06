@@ -126,8 +126,8 @@ product.resize = function () {
 
     //Прорисовка горизонтальных размеров    
     let lineArr = [];
-    let lineArea2 = winCalc.root.lineArea(winCalc, 'HORIZ');
-    let lineArea = lineArea2.filter(el => el.level_scale == 0);
+    lineAreaHor = winCalc.root.lineArea(winCalc, 'HORIZ');
+    let lineArea = lineAreaHor.filter(el => el.level_scale == levelScaleHor);
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-hor input:eq(' + i + ')').length == 1) {
@@ -137,6 +137,7 @@ product.resize = function () {
         $(inpt).attr('areaID', el.id);
         $(inpt).width(el.lengthX * winCalc.scale - 8);
         inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
+        inpt.addEventListener('click', () => product.click_scale_index(inpt, 'HORIZ'));
         if (i === 0) {
             $(inpt).css('border-left', '4px solid #00f');
             $(inpt).css('margin-left', '28px');
@@ -149,10 +150,11 @@ product.resize = function () {
 
     //Прорисовка вертикальных размеров
     lineArr.length = 0;
-    let scale = document.getElementById('scale-ver');    
+    let scale = document.getElementById('scale-ver');
     let length = winCalc.obj.height * winCalc.scale;
-    $('#scale-ver').css('left', -1 * length);   
-    lineArea = winCalc.root.lineArea(winCalc, 'VERT');
+    $('#scale-ver').css('left', -1 * length);
+    lineAreaVer = winCalc.root.lineArea(winCalc, 'VERT');
+    lineArea = lineAreaVer.filter(el => el.level_scale == levelScaleVer);
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-ver input:eq(' + i + ')').length == 1) {
@@ -162,6 +164,7 @@ product.resize = function () {
         $(inpt).attr('areaID', el.id);
         $(inpt).width(el.lengthY * winCalc.scale - 8);
         inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
+        inpt.addEventListener('click', () => product.click_scale_index(inpt, 'VERT'));
         lineArr.push(inpt);
     });
     $('#scale-ver input').each((i, el) => el.remove());
@@ -510,7 +513,7 @@ product.artikl_to_glass = function (btnSrc) {
 //------------------------------------------------------------------------------
 //Изменить размер
 product.click_winc_resiz = function (btn) {
-    
+
     //По горизонтали
     let listInc = new Array(), listDec = new Array();
     $('#scale-hor input').each((index, inpt) => {
@@ -561,12 +564,12 @@ product.winc_to_redraw = function (dz, list, dir) {
 //------------------------------------------------------------------------------
 product.dblclick_scale_color = function (inpt, dir) {
 
-    if(dir == "HORIZ") {
+    if (dir == "HORIZ") {
         $('#scale-ver input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
-    } else if(dir == 'VERT') {
+    } else if (dir == 'VERT') {
         $('#scale-hor input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
     }
-    
+
     if ($(inpt).css('color') == 'rgb(0, 0, 0)') {
         $(inpt).css('color', 'rgb(0, 155, 0)');
 
@@ -585,9 +588,20 @@ product.click_canvas_color = function () {
     $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 }
 //------------------------------------------------------------------------------
-product.click_scale_index = function () {
-
-    $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
-    $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
+product.click_scale_index = function (inpt, dir) {
+    
+    if (dir == 'HORIZ') {       
+        lineAreaVer.forEach(el => set.add(el.level_scale));
+        $('#scale-hor input').each((i, el) => {
+            if (el == inpt && lineAreaVer.find(el => el.level_scale == i) != undefined)
+                levelScaleVer = i;
+        });
+    } else {        
+        $('#scale-ver input').each((i, el) => {
+            if (el == inpt && lineAreaHor.find(el => el.level_scale == i) != undefined)
+                levelScaleHor = i;
+        });
+    }
+    product.resize();
 }
 //------------------------------------------------------------------------------
