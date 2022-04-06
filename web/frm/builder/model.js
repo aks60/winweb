@@ -153,8 +153,15 @@ export class Area extends Com5t {
         }
     }
 
+    lineCross(winc, layout) {
+        winc.elemList.forEach((i, el) => {
+            
+        })
+    }
+    
     lineArea(winc, layout) {
         Area.level_scale = 0;
+        winc.root.level_scale = 0;
         let set1 = new Set(), set2 = new Set(), setOut = new Set(), setCount = new Set();
         this.lineArea2(set1, this, layout); //
         for (let elem of set1.values()) {
@@ -171,6 +178,7 @@ export class Area extends Com5t {
         }
         setOut.forEach(el => setCount.add(el.level_scale));
         setOut.forEach(el => el.level_scale = setCount.size - el.level_scale - 1);
+        
         return Array.from(setOut);
     }
 

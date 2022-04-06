@@ -127,7 +127,7 @@ product.resize = function () {
     //Прорисовка горизонтальных размеров    
     let lineArr = [];
     lineAreaHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-    let lineArea = lineAreaHor.filter(el => el.level_scale == levelScaleHor);
+    let lineArea = lineAreaHor.filter(el => el.level_scale == levelScaleHor); //уровень шкалы
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-hor input:eq(' + i + ')').length == 1) {
@@ -154,7 +154,7 @@ product.resize = function () {
     let length = winCalc.obj.height * winCalc.scale;
     $('#scale-ver').css('left', -1 * length);
     lineAreaVer = winCalc.root.lineArea(winCalc, 'VERT');
-    lineArea = lineAreaVer.filter(el => el.level_scale == levelScaleVer);
+    lineArea = lineAreaVer.filter(el => el.level_scale == levelScaleVer); //уровень шкалы
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-ver input:eq(' + i + ')').length == 1) {
@@ -591,7 +591,6 @@ product.click_canvas_color = function () {
 product.click_scale_index = function (inpt, dir) {
     
     if (dir == 'HORIZ') {       
-        lineAreaVer.forEach(el => set.add(el.level_scale));
         $('#scale-hor input').each((i, el) => {
             if (el == inpt && lineAreaVer.find(el => el.level_scale == i) != undefined)
                 levelScaleVer = i;

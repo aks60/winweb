@@ -45,11 +45,11 @@
         </style> 
         <script type="text/javascript">
 
-            let winCalc = null; //выбранная конструкция
-            let levelScaleHor = 0;
-            let levelScaleVer = 0;
-            let lineAreaHor = null;
-            let lineAreaVer = null;
+            var winCalc = null; //выбранная конструкция
+            var levelScaleHor = 0;
+            var levelScaleVer = 0;
+            var lineAreaHor = null;
+            var lineAreaVer = null;
             
             product.server_to_fields();
 
