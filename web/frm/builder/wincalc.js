@@ -37,6 +37,7 @@ class Wincalc {
             this.areaList = new Array(); //массив area конструкции  
             this.elemList = new Array(); //массив элементов конструкции  
             this.arr_of_winc(this.root);
+            this.areaList.sort((a, b) => a.id - b.id);
             this.elemList.sort((a, b) => a.id - b.id);
             this.scale = 1;
             draw_elements(this); //рисуем конструкцию 

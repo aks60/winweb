@@ -155,7 +155,9 @@ export class Area extends Com5t {
 
     lineCross(winc, layout) {
         winc.elemList.forEach((i, el) => {
-            
+            if(el.layout = latout) {
+                //
+            }
         })
     }
     
