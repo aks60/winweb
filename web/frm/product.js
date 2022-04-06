@@ -110,7 +110,7 @@ product.elements = function (com, arr) {
     }
 }
 //------------------------------------------------------------------------------
-//RESIZE
+//Масштабирование
 product.resize = function () {
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
@@ -127,7 +127,7 @@ product.resize = function () {
     //Прорисовка горизонтальных размеров    
     let lineArr = [];
     let lineArea2 = winCalc.root.lineArea(winCalc, 'HORIZ');
-    let lineArea = lineArea2.filter(el => el.level_scale == 1);
+    let lineArea = lineArea2.filter(el => el.level_scale == 0);
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-hor input:eq(' + i + ')').length == 1) {
@@ -579,7 +579,13 @@ product.dblclick_scale_color = function (inpt, dir) {
     $('#btnResiz').focus();
 }
 //------------------------------------------------------------------------------
-product.click_scale_color = function () {
+product.click_canvas_color = function () {
+
+    $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
+    $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
+}
+//------------------------------------------------------------------------------
+product.click_scale_index = function () {
 
     $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
     $('#scale-ver input').css('color', 'rgb(0, 0, 0)');

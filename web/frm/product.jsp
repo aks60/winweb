@@ -45,7 +45,10 @@
         </style> 
         <script type="text/javascript">
 
-            var winCalc = null; //выбранная конструкция
+            let winCalc = null; //выбранная конструкция
+            let levelScaleHor = 0;
+            let levelScaleVer = 0;
+            
             product.server_to_fields();
 
             $(document).ready(function () {
@@ -61,8 +64,8 @@
                 //debugger;
                 let area = winCalc.areaList.find(el => el.id == 6);
                 area.lengthX = area.lengthX + 4;
-                let area2 = winCalc.areaList.find(el => el.id == 10);
-                area2.lengthX = area2.lengthX - 4;
+                //let area2 = winCalc.areaList.find(el => el.id == 10);
+                //area2.lengthX = area2.lengthX - 4;
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
                 let cvs = document.querySelector("#cnv");
@@ -81,7 +84,7 @@
     </head>
     <body>
         <div id="north">
-            <button id="btnResiz" style="width: 140px" onClick="test2();">Изменить размер</button>
+            <button id="btnResiz" style="width: 80px" onClick="test2();">Размер</button>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div> 
         <div id = "context">
@@ -89,7 +92,7 @@
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
                     <div id="scale-ver"></div>
                     <div id="scale-cnv">                    
-                        <canvas id="cnv" onclick="product.click_scale_color();"></canvas>
+                        <canvas id="cnv" onclick="product.click_canvas_color();"></canvas>
                     </div>                     
                     <div id="scale-hor"></div> 
                 </div>

@@ -184,8 +184,10 @@ function prepareToolBar() {
     $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
     $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
-
-    $("#menu").menu({items: "> :not(.ui-widget-header)"});
+    //$("#menu").menu({items: "> :not(.ui-widget-header)"});
+    //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
+    //$("#tab-2").button({icons: {primary: "ui-icon-star"}});
+    //$("#tab-3").button({icons: {primary: "ui-icon-star"}});
 }
 //------------------------------------------------------------------------------
 //Диалог окна  сообщений

@@ -38,6 +38,7 @@ export class Com5t {
         return (this.id == 0) ? this.obj.height : this.obj.length;
     }
 
+    //Изменение размера
     set lengthX(v) {
         if (this.id == 0)
             this.obj.width = v;
@@ -59,6 +60,7 @@ export class Com5t {
         }
     }
 
+    //Изменение размера
     set lengthY(v) {
         if (this.id == 0)
             this.obj.height = v;
@@ -89,109 +91,6 @@ export class Com5t {
             return false;
         }
         return ((this.x2 >= X) && (this.y2 >= Y));
-    }
-
-    //Приведение к целому дробных состовляющих
-    resizUp(list, layout) {
-        let dx = 1, obj2 = null;
-        for (let gs of list) {
-            let obj = find(gs.id);
-            if (obj.length != null) {
-                if (gs.color == 'ADJUST') {
-                    obj2 = obj;
-                }
-                let x = obj.length - Math.round(obj.length);
-                if (x != 0 && x < 0) {
-                    obj.length -= x;
-                    dx += x;
-                } else {
-                    obj.length -= x;
-                    dx += x;
-                }
-                obj.owner.resizAll(layout);
-            }
-        }
-        if (obj2 != null && obj2.length != null) {
-            obj2.length += dx - 1;
-            obj2.owner.resizAll(layout);
-        }
-    }
-
-    //Увеличение, уменьшение размера
-    resizElem(dz, list, layout) {
-        if (list.length > 0) {
-            let changeSum = 0;
-            for (let area of list) {
-                let v = (layout == 'HORIZ') ? area.lengthX : area.lengthY;
-                changeSum += v;
-            }
-            // Горизонтальное перераспределение
-            if (layout == 'HORIZ') {
-                for (let area of list) {
-                    if (area.lengthX != null) {
-                        let k = area.lengthX / changeSum;
-                        area.lengthX = area.lengthX + dz * k;
-                        area.owner.resizAll(layout);
-                    } else {
-                        this.resizAll(layout);
-                    }
-                }
-                this.winc.obj.width = this.winc.obj.width + dz;
-
-                //Вертикальное перераспределение
-            } else if (layout == 'VERT') {
-                for (let area of list) {
-                    if (area.lengthX != null) {
-                        let k = area.lengthX / changeSum;
-                        area.lengthX = area.lengthX + dz * k;
-                        area.owner.resizAll(layout);
-                    } else {
-                        this.resizAll(layout);
-                    }
-                }
-                this.winc.obj.height = this.winc.obj.height + dz;
-
-
-                if (this.winc.root.type == 'ARCH') {
-                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height;
-                } else if (this.winc.root.type == 'TRAPEZE') {
-                    this.winc.obj.heightAdd = this.winc.root.height - this.winc.root.childs.get(4).height;
-                } else {
-                    this.winc.obj.heightAdd = this.winc.obj.height;
-                }
-            }
-        }
-    }
-
-    //Подгонка размера в глубину
-    resizAll(layout) {
-        if (this.owner != null) {
-            let sum = 0, dir = (layout == 'HORIZ') ? 'x' : 'y';
-            if (layout == this.layout) {
-                for (let elem of this.childs) {
-                    if (elem.type == 'AREA') {
-                        if (dir == 'x')
-                            sum += elem.lengthX;
-                        else
-                            sum += elem.lengthY;
-                    }
-                }
-            }
-            if (sum != 0) {
-                if (this.owner.layout != layout) {
-                    if (dir == 'x')
-                        this.owner.lengthX = sum;
-                    else
-                        this.owner.lengthY = sum;
-                } else {
-                    if (dir == 'x')
-                        this.lengthX = sum;
-                    else
-                        this.lengthY = sum;
-                }
-            }
-            this.owner.resizAll(layout);
-        }
     }
 }
 //------------------------------------------------------------------------------
@@ -256,7 +155,7 @@ export class Area extends Com5t {
 
     lineArea(winc, layout) {
         Area.level_scale = 0;
-        let set1 = new Set(), set2 = new Set(), setOut = new Set();
+        let set1 = new Set(), set2 = new Set(), setOut = new Set(), setCount = new Set();
         this.lineArea2(set1, this, layout); //
         for (let elem of set1.values()) {
 
@@ -270,6 +169,8 @@ export class Area extends Com5t {
         if (setOut.size == 0) {
             setOut.add(this);
         }
+        setOut.forEach(el => setCount.add(el.level_scale));
+        setOut.forEach(el => el.level_scale = setCount.size - el.level_scale - 1);
         return Array.from(setOut);
     }
 
