@@ -122,7 +122,7 @@ product.resize = function () {
    
     if (order.prjprodRec != null)
         winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
-    $('#scale-ver').widget(winCalc.height);
+    $('#scale-ver').width(winCalc.height * winCalc.scale);
     
     //Прорисовка размерных линий
     product.scale_to_line('HORIZ', [winCalc.root]);
@@ -521,7 +521,8 @@ product.winc_to_redraw = function (dz, list, dir) {
 }
 //------------------------------------------------------------------------------
 product.scale_to_line = function (layout, lineArea) {
-    //debugger;   
+
+    
     //Прорисовка горизонтальных размеров 
     if (layout == "VERT") {
         $('#scale-hor input').each((i, el) => el.remove());
@@ -554,7 +555,7 @@ product.scale_to_line = function (layout, lineArea) {
             inpt.addEventListener('click', () => product.click_scale_index(inpt, 'VERT'));
             if (i === 0) {
                 $(inpt).css('border-left', '4px solid #00f');
-                $(inpt).css('margin-left', '28px');
+                $(inpt).css('border-right', '4px solid #00f');
             }
             $('#scale-ver').append(inpt);
         });
