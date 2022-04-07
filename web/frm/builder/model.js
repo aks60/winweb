@@ -43,10 +43,10 @@ export class Com5t {
         if (this.id == 0)
             this.obj.width = v;
         else {
-            let s = 0;             
+            let s = 0;
             this.owner.childs.forEach(el => { //определим размер родителя
                 if (el.type == 'AREA')
-                    s += el.obj.length; 
+                    s += el.obj.length;
             });
             let dx = v - this.obj.length; //дельта изменения
             let k = dx / s; //коэффициент изменения
@@ -65,10 +65,10 @@ export class Com5t {
         if (this.id == 0)
             this.obj.height = v;
         else {
-            let s = 0;             
+            let s = 0;
             this.owner.childs.forEach(el => { //определим размер родителя
                 if (el.type == 'AREA')
-                    s += el.obj.length; 
+                    s += el.obj.length;
             });
             let dx = v - this.obj.length; //дельта изменения
             let k = dx / s; //коэффициент изменения
@@ -154,13 +154,21 @@ export class Area extends Com5t {
     }
 
     lineCross(winc, layout) {
-        winc.elemList.forEach((i, el) => {
-            if(el.layout = latout) {
-                //
+        let set = new Set();
+        let cross = ['IMPOST', 'SHTULP', 'STOIKA'];
+        winc.elemList.forEach((i, e1) => {
+            if (e1.owner.layout = layout && (e1.type == 'IMPOST' || e1.type == 'SHTULP' || e1.type == 'STOIKA')) {
+                e1.owner.childs.forEach((i, e2) => {
+                    if (e2.type == 'IMPOST' || e2.type == 'SHTULP' || e2.type == 'STOIKA') {
+                        set.add(e1.owner.childs[i - 1]);
+                        set.add(e1.owner.childs[i + 1]);
+                    }
+                });
             }
-        })
+        });
+        return Array.from(setOut);
     }
-    
+
     lineArea(winc, layout) {
         Area.level_scale = 0;
         winc.root.level_scale = 0;
@@ -180,7 +188,7 @@ export class Area extends Com5t {
         }
         setOut.forEach(el => setCount.add(el.level_scale));
         setOut.forEach(el => el.level_scale = setCount.size - el.level_scale - 1);
-        
+
         return Array.from(setOut);
     }
 
