@@ -46,6 +46,8 @@
         <script type="text/javascript">
 
             var winCalc = null; //выбранная конструкция
+            var crossScale = null;
+            
             var levelScaleHor = 0;
             var levelScaleVer = 0;
             var lineAreaHor = null;
@@ -59,6 +61,9 @@
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
+                let cvs = document.querySelector("#cnv");
+                cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
+                cvs.addEventListener('click', (e) => product.click_canvas_color());
 
             });
 
@@ -94,7 +99,7 @@
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
                     <div id="scale-ver"></div>
                     <div id="scale-cnv">                    
-                        <canvas id="cnv" onclick="product.click_canvas_color();"></canvas>
+                        <canvas id="cnv"></canvas>
                     </div>                     
                     <div id="scale-hor"></div> 
                 </div>

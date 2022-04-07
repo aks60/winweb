@@ -116,62 +116,17 @@ product.resize = function () {
     $("#context").css("height", height - 80);
 
     //Прорисовка конструкции
-    let cvs = document.querySelector("#cnv");
-    if (cvs != undefined) {
-        cvs.width = $("#scale-cnv").width();
-        cvs.height = $("#scale-cnv").height();
-        if (order.prjprodRec != null)
-            winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
-    }
-    cvs.addEventListener('mousedown', (e) => product.click_canvas_XY(cvs, e));
-
-    //Прорисовка горизонтальных размеров    
-    let lineArr = [];
-    lineAreaHor = winCalc.root.lineArea(winCalc, 'HORIZ');
-    let lineArea = lineAreaHor.filter(el => el.level_scale == levelScaleHor); //уровень шкалы
-    lineArea.forEach((el, i) => {
-        let inpt = document.createElement('input');
-        if ($('#scale-hor input:eq(' + i + ')').length == 1) {
-            $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
-        }
-        $(inpt).val(el.lengthX.toFixed(1));
-        $(inpt).attr('areaID', el.id);
-        $(inpt).width(el.lengthX * winCalc.scale - 8);
-        inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
-        inpt.addEventListener('click', () => product.click_scale_index(inpt, 'HORIZ'));
-        if (i === 0) {
-            $(inpt).css('border-left', '4px solid #00f');
-            $(inpt).css('margin-left', '28px');
-        }
-        lineArr.push(inpt);
-    });
-    $('#scale-hor input').each((i, el) => el.remove());
-    lineArr.forEach((el, i) => $('#scale-hor').append(el));
-
-
-    //Прорисовка вертикальных размеров
-    lineArr.length = 0;
-    let scale = document.getElementById('scale-ver');
-    let length = winCalc.obj.height * winCalc.scale;
-    $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов   
-    lineAreaVer = winCalc.root.lineArea(winCalc, 'VERT');
-    lineArea = lineAreaVer.filter(el => el.level_scale == levelScaleVer); //уровень шкалы
-    //lineArea = winCalc.root.lineCross(winCalc, 'VERT');
-    lineArea.forEach((el, i) => {
-        let inpt = document.createElement('input');
-        if ($('#scale-ver input:eq(' + i + ')').length == 1) {
-            $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
-        }
-        $(inpt).val(el.y1.toFixed(1));
-        $(inpt).attr('areaID', el.id);
-        $(inpt).width(el.x1 * winCalc.scale - 8);
-        inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
-        inpt.addEventListener('click', () => product.click_scale_index(inpt, 'VERT'));
-        //lineArr.push(inpt);
-        $('#scale-ver').append(inpt)
-    });
-    $('#scale-ver input').each((i, el) => el.remove());
-    lineArr.reverse().forEach((el, i) => $('#scale-ver').append(el));
+    let cnv = document.querySelector("#cnv");
+    cnv.width = $("#scale-cnv").width();
+    cnv.height = $("#scale-cnv").height();
+   
+    if (order.prjprodRec != null)
+        winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
+    $('#scale-ver').widget(winCalc.height);
+    
+    //Прорисовка размерных линий
+    product.scale_to_line('HORIZ', [winCalc.root]);
+    product.scale_to_line('VERT', [winCalc.root]);
 
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
@@ -565,6 +520,47 @@ product.winc_to_redraw = function (dz, list, dir) {
     product.local_to_fields("0");
 }
 //------------------------------------------------------------------------------
+product.scale_to_line = function (layout, lineArea) {
+    //debugger;   
+    //Прорисовка горизонтальных размеров 
+    if (layout == "VERT") {
+        $('#scale-hor input').each((i, el) => el.remove());
+        lineArea.forEach((el, i) => {
+            let inpt = document.createElement('input');
+            $(inpt).val(el.lengthX.toFixed(1));
+            $(inpt).attr('areaID', el.id);
+            $(inpt).width(el.lengthX * winCalc.scale - 8);
+            inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
+            inpt.addEventListener('click', () => product.click_scale_index(inpt, 'HORIZ'));
+            if (i === 0) {
+                $(inpt).css('border-left', '4px solid #00f');
+                $(inpt).css('margin-left', '28px');
+            }
+            $('#scale-hor').append(inpt);
+        });
+
+
+        //Прорисовка вертикальных размеров   
+    } else if (layout == "HORIZ") {
+        let length = winCalc.obj.height * winCalc.scale;
+        $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
+        $('#scale-ver input').each((i, el) => el.remove());
+        lineArea.forEach((el, i) => {
+            let inpt = document.createElement('input');
+            $(inpt).val(el.lengthY.toFixed(1));
+            $(inpt).attr('areaID', el.id);
+            $(inpt).width(el.lengthY * winCalc.scale - 8);
+            inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
+            inpt.addEventListener('click', () => product.click_scale_index(inpt, 'VERT'));
+            if (i === 0) {
+                $(inpt).css('border-left', '4px solid #00f');
+                $(inpt).css('margin-left', '28px');
+            }
+            $('#scale-ver').append(inpt);
+        });
+    }
+}
+//------------------------------------------------------------------------------
 product.dblclick_scale_color = function (inpt, dir) {
 
     if (dir == "HORIZ") {
@@ -586,23 +582,19 @@ product.dblclick_scale_color = function (inpt, dir) {
 }
 //------------------------------------------------------------------------------
 product.click_canvas_color = function () {
-
     $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
     $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 }
 //------------------------------------------------------------------------------
-product.click_canvas_XY = function (canvas, event) {
-    console.log("x1: 380 x2: 460 y1: 0 y2: 400");
+product.click_canvas_xy = function (canvas, event) {
+
     const rect = canvas.getBoundingClientRect()
     const x = (event.clientX - rect.left) / winCalc.scale;
     const y = (event.clientY - rect.top) / winCalc.scale;
-    console.log("x: " + x + " y: " + y)
-    
     winCalc.elemList.forEach((e, i) => {
         if (e.type == 'IMPOST' || e.type == 'SHTULP' || e.type == 'STOIKA') {
-            //console.log(e);  
             if (e.inside(x, y)) {
-                console.log(e.id);
+                product.scale_to_line(e.layout, [winCalc.root]);
             }
         }
     });
