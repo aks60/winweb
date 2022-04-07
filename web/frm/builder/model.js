@@ -155,18 +155,25 @@ export class Area extends Com5t {
 
     lineCross(winc, layout) {
         let set = new Set();
-        let cross = ['IMPOST', 'SHTULP', 'STOIKA'];
-        winc.elemList.forEach((i, e1) => {
-            if (e1.owner.layout = layout && (e1.type == 'IMPOST' || e1.type == 'SHTULP' || e1.type == 'STOIKA')) {
-                e1.owner.childs.forEach((i, e2) => {
-                    if (e2.type == 'IMPOST' || e2.type == 'SHTULP' || e2.type == 'STOIKA') {
-                        set.add(e1.owner.childs[i - 1]);
-                        set.add(e1.owner.childs[i + 1]);
-                    }
-                });
-            }
-        });
-        return Array.from(setOut);
+        let crossList = winc.elemList.filter(el => el.layout == layout && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA'));
+        let crossList2 = crossList
+        
+//        crossList.forEach((el, i) => {
+//            for (let k of [-1, 1]) {
+//                el.owner.childs.forEach((it, i) => {
+//                    if (el.id == it.id) {
+//                        set.add(el.owner.childs[i + k])
+//                    }
+//                });
+//            }
+//        });
+//        set.add(winc.root);
+//        let arr = new Array();
+//        set.forEach((value, valueAgain, set) => {
+//            //alert(value);
+//        });
+//        set.forEach(area => arr.push(area));
+        return arr;
     }
 
     lineArea(winc, layout) {

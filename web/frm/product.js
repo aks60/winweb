@@ -123,6 +123,7 @@ product.resize = function () {
         if (order.prjprodRec != null)
             winCalc = win.build(cvs, order.prjprodRec[PRJPROD.script]);
     }
+    cvs.addEventListener('mousedown', (e) => product.click_canvas_XY(cvs, e));
 
     //Прорисовка горизонтальных размеров    
     let lineArr = [];
@@ -152,20 +153,22 @@ product.resize = function () {
     lineArr.length = 0;
     let scale = document.getElementById('scale-ver');
     let length = winCalc.obj.height * winCalc.scale;
-    $('#scale-ver').css('left', -1 * length);
+    $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов   
     lineAreaVer = winCalc.root.lineArea(winCalc, 'VERT');
     lineArea = lineAreaVer.filter(el => el.level_scale == levelScaleVer); //уровень шкалы
+    //lineArea = winCalc.root.lineCross(winCalc, 'VERT');
     lineArea.forEach((el, i) => {
         let inpt = document.createElement('input');
         if ($('#scale-ver input:eq(' + i + ')').length == 1) {
             $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
         }
-        $(inpt).val(el.lengthY.toFixed(1));
+        $(inpt).val(el.y1.toFixed(1));
         $(inpt).attr('areaID', el.id);
-        $(inpt).width(el.lengthY * winCalc.scale - 8);
+        $(inpt).width(el.x1 * winCalc.scale - 8);
         inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
         inpt.addEventListener('click', () => product.click_scale_index(inpt, 'VERT'));
-        lineArr.push(inpt);
+        //lineArr.push(inpt);
+        $('#scale-ver').append(inpt)
     });
     $('#scale-ver input').each((i, el) => el.remove());
     lineArr.reverse().forEach((el, i) => $('#scale-ver').append(el));
@@ -588,14 +591,31 @@ product.click_canvas_color = function () {
     $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 }
 //------------------------------------------------------------------------------
-product.click_scale_index = function (inpt, dir) {
+product.click_canvas_XY = function (canvas, event) {
+    console.log("x1: 380 x2: 460 y1: 0 y2: 400");
+    const rect = canvas.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / winCalc.scale;
+    const y = (event.clientY - rect.top) / winCalc.scale;
+    console.log("x: " + x + " y: " + y)
     
-    if (dir == 'HORIZ') {       
+    winCalc.elemList.forEach((e, i) => {
+        if (e.type == 'IMPOST' || e.type == 'SHTULP' || e.type == 'STOIKA') {
+            //console.log(e);  
+            if (e.inside(x, y)) {
+                console.log(e.id);
+            }
+        }
+    });
+}
+//------------------------------------------------------------------------------
+product.click_scale_index = function (inpt, dir) {
+
+    if (dir == 'HORIZ') {
         $('#scale-hor input').each((i, el) => {
             if (el == inpt && lineAreaVer.find(el => el.level_scale == i) != undefined)
                 levelScaleVer = i;
         });
-    } else {        
+    } else {
         $('#scale-ver input').each((i, el) => {
             if (el == inpt && lineAreaHor.find(el => el.level_scale == i) != undefined)
                 levelScaleHor = i;
