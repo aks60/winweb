@@ -10,7 +10,7 @@
             #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
-                border: 1px solid #00f;
+                /*border: 1px solid #00f;*/
             }
             #scale-hor {
                 width: 100%;
@@ -47,51 +47,29 @@
         <script type="text/javascript">
 
             var winCalc = null; //выбранная конструкция
-            var crossScale = null;
-            
-            var levelScaleHor = 0;
-            var levelScaleVer = 0;
-            var lineAreaHor = null;
-            var lineAreaVer = null;
-            
+            var scaleAreaHor = [];
+            var scaleAreaVer = [];
             product.server_to_fields();
-
             $(document).ready(function () {
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
-                
                 let cvs = document.querySelector("#cnv");
                 cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
             });
 
             function test() {
-                //debugger;
-                let area = winCalc.areaList.find(el => el.id == 6);
-                area.lengthX = area.lengthX + 4;
-                //let area2 = winCalc.areaList.find(el => el.id == 10);
-                //area2.lengthX = area2.lengthX - 4;
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
-                let cvs = document.querySelector("#cnv");
-                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
-
-                winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
-
-                order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
-                product.resize();
-                product.local_to_fields("0");
-            }
-            function test2() {
-                debugger;
+                let arr = [];
+                $('#scale-hor input').each((i, p) => arr.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
+                alert(arr);
             }
         </script>
     </head>
     <body>
         <div id="north">
-            <button id="btnResiz" style="width: 80px" onClick="test2();">Размер</button>
+            <button id="btnResiz" style="width: 80px" onClick="test();">Размер</button>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div> 
         <div id = "context">

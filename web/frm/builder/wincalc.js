@@ -85,8 +85,10 @@ class Wincalc {
     }
 
     arr_of_winc(area) {
-        
-        if (area.frames !== undefined) {
+        if(area.id == 0) {
+            this.areaList.push(this.root);
+            
+        } else if (area.frames !== undefined) {
             this.elemList.push(area);
             for (let frm of area.frames.values())
                 this.elemList.push(frm);
