@@ -51,6 +51,9 @@
             var scaleAreaVer = [];
             product.server_to_fields();
             $(document).ready(function () {
+                
+                //console.log($('#scale-hor input').length);
+                
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
