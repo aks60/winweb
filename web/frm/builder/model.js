@@ -153,26 +153,16 @@ export class Area extends Com5t {
         }
     }
 
-    lineCross(winc, layout) {
-        let set = new Set();
-        let crossList = winc.elemList.filter(el => el.layout == layout && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA'));
-        let crossList2 = crossList
-        
-//        crossList.forEach((el, i) => {
-//            for (let k of [-1, 1]) {
-//                el.owner.childs.forEach((it, i) => {
-//                    if (el.id == it.id) {
-//                        set.add(el.owner.childs[i + k])
-//                    }
-//                });
-//            }
-//        });
-//        set.add(winc.root);
-//        let arr = new Array();
-//        set.forEach((value, valueAgain, set) => {
-//            //alert(value);
-//        });
-//        set.forEach(area => arr.push(area));
+    lineCross(cross) {
+        let arr = [];
+        this.winc.elemList.forEach(e => {
+            if (e.id == cross.id) {
+                e.owner.childs.forEach((e2, i) => {
+                    if (e2.id == cross.id)
+                        arr = [e.owner.childs[i - 1], e.owner.childs[i + 1]];
+                });
+            }
+        });
         return arr;
     }
 

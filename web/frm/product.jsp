@@ -10,7 +10,7 @@
             #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
-                /*border: 1px solid #00f;*/
+                border: 1px solid #00f;
             }
             #scale-hor {
                 width: 100%;
@@ -20,6 +20,7 @@
                 transform: rotate(-90deg);
                 transform-origin: right 0px;
                 position: absolute;
+                margin-top: 2px;
             }
             #scale-cnv {
                 width: calc(100% - 32px);
@@ -61,10 +62,9 @@
                 product.init_table($('#table1'));
                 product.load_tree($('#tree-winc'));
                 prepareToolBar();
+                
                 let cvs = document.querySelector("#cnv");
                 cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
-                cvs.addEventListener('click', (e) => product.click_canvas_color());
-
             });
 
             function test() {
