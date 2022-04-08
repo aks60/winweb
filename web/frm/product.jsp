@@ -20,7 +20,7 @@
                 transform: rotate(-90deg);
                 transform-origin: right 0px;
                 position: absolute;
-                margin-top: 2px;
+                /*margin-top: -2px;*/
             }
             #scale-cnv {
                 width: calc(100% - 32px);
