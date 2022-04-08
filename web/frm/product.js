@@ -449,17 +449,16 @@ product.resize = function () {
     let cnv = document.querySelector("#cnv");
     cnv.width = $("#scale-cnv").width();
     cnv.height = $("#scale-cnv").height();
-
     if (order.prjprodRec != null)
         winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
     $('#scale-ver').width(winCalc.height * winCalc.scale - 2);
 
     //Прорисовка размерных линий
-    let arrHor = [];
+    let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
     $('#scale-hor input').each((i, p) => arrHor.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
     product.scale_add_input('HORIZ', arrHor);
-    let arrVer = [];
-    $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));    
+    let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
+    $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
     product.scale_add_input('VERT', arrVer);
 
     //Прорисовка полей
@@ -470,23 +469,6 @@ product.resize = function () {
     });
     $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
     $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
-}
-//------------------------------------------------------------------------------
-//Перерисовать новый размер
-product.winc_to_redraw = function (dz, list, dir) {
-
-    winCalc.root.resizElem(dz, list, dir);
-
-    let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
-    let cvs = document.querySelector("#cnv");
-    prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
-
-    winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
-
-    order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
-    product.resize();
-    product.local_to_fields("0");
 }
 //------------------------------------------------------------------------------
 //Наполнение инпутами шкал горизонтальных и вертикальных размеров
@@ -590,8 +572,5 @@ product.click_btn_resiz = function (btn) {
         let area = winCalc.areaList.find(el => el.id == $('#scale-ver input:eq(1)').attr('areaID'));
         area.lengthX = area.lengthX - 1;
     }
-
-//    product.winc_to_redraw(1, listInc, 'VERT');
-//    product.winc_to_redraw(-1, listDec, 'VERT');
 }
 //------------------------------------------------------------------------------
