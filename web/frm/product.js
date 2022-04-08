@@ -157,7 +157,6 @@ product.server_to_fields = function () {
 //------------------------------------------------------------------------------
 //Загрузка тегов страницы
 product.local_to_fields = function (nodeID) {
-
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
     if (nodeID == -2) {
         return;
