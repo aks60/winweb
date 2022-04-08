@@ -65,7 +65,7 @@
     </head>
     <body>
         <div id="north">
-            <button id="btnResiz" style="width: 80px" onClick="test();">Размер</button>
+            <button id="btnResiz" style="width: 80px" onClick="product.click_btn_resiz();">Размер</button>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div> 
         <div id = "context">

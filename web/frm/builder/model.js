@@ -52,7 +52,7 @@ export class Com5t {
             let k = dx / s; //коэффициент изменения
             this.winc.obj.width = this.winc.obj.width + k * this.winc.obj.width; //размер коробки
             this.winc.areaList.forEach(el => {
-                if (el.layout == 'VERT' && this.owner.id != el.owner.id) {
+                if (el.layout == 'VERT' && (el.owner != null && this.owner.id != el.owner.id)) {
                     el.obj.length = el.obj.length + k * el.obj.length; //изменение всех остальных кроме родителя
                 }
             });
@@ -74,7 +74,7 @@ export class Com5t {
             let k = dx / s; //коэффициент изменения
             this.winc.obj.height = this.winc.obj.height + k * this.winc.obj.height; //размер коробки
             this.winc.areaList.forEach(el => {
-                if (el.layout == 'HORIZ' && this.owner.id != el.owner.id) {
+                if (el.layout == 'HORIZ' && (el.owner != null && this.owner.id != el.owner.id)) {
                     el.obj.length = el.obj.length + k * el.obj.length; //изменение всех остальных кроме родителя
                 }
             });
@@ -164,46 +164,6 @@ export class Area extends Com5t {
             }
         });
         return arr;
-    }
-
-    lineArea(winc, layout) {
-        Area.level_scale = 0;
-        winc.root.level_scale = 0;
-        let set1 = new Set(), set2 = new Set(), setOut = new Set(), setCount = new Set();
-        this.lineArea2(set1, this, layout); //
-        for (let elem of set1.values()) {
-
-            set2.clear();
-            this.lineArea2(set2, elem, layout);
-
-            if (set2.size == 0) {
-                setOut.add(elem);
-            }
-        }
-        if (setOut.size == 0) {
-            setOut.add(this);
-        }
-        setOut.forEach(el => setCount.add(el.level_scale));
-        setOut.forEach(el => el.level_scale = setCount.size - el.level_scale - 1);
-
-        return Array.from(setOut);
-    }
-
-    lineArea2(elemSet, elem, layout) {
-
-        elem.childs.forEach((el, i) => {
-            if (el.owner.layout == layout && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA')) {
-                elem.childs[i - 1].level_scale = Area.level_scale;
-                elem.childs[i + 1].level_scale = Area.level_scale;
-                elemSet.add(elem.childs[i - 1]);
-                elemSet.add(elem.childs[i + 1]);
-            }
-            if (el.owner.id == 0 && (el.type == 'IMPOST' || el.type == 'SHTULP' || el.type == 'STOIKA')) {
-                ++Area.level_scale;
-            }
-            if (el instanceof Area)
-                this.lineArea2(elemSet, el, layout);
-        });
     }
 }
 //------------------------------------------------------------------------------

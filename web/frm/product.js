@@ -456,10 +456,11 @@ product.resize = function () {
     //Прорисовка размерных линий
     let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
     $('#scale-hor input').each((i, p) => arrHor.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
-    product.scale_add_input('HORIZ', arrHor);
+    product.scale_new_input('HORIZ', arrHor);
+
     let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
     $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
-    product.scale_add_input('VERT', arrVer);
+    product.scale_new_input('VERT', arrVer);
 
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
@@ -471,14 +472,17 @@ product.resize = function () {
     $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
 }
 //------------------------------------------------------------------------------
-//Наполнение инпутами шкал горизонтальных и вертикальных размеров
-product.scale_add_input = function (layout, lineArea) {
+//Наполнение инпутами шкалы горизонтальных и вертикальных размеров
+product.scale_new_input = function (layout, lineArea) {
+    let lineArr = [];
 
     //Прорисовка горизонтальных размеров 
     if (layout == "VERT") {
-        $('#scale-hor input').each((i, el) => el.remove());
         lineArea.forEach((e, i) => {
             let inpt = document.createElement('input');
+            if ($('#scale-hor input:eq(' + i + ')').length == 1) {
+                $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
+            }
             $(inpt).val(e.lengthX.toFixed(1));
             $(inpt).attr('areaID', e.id);
             $(inpt).width(e.lengthX * winCalc.scale - 8);
@@ -487,28 +491,36 @@ product.scale_add_input = function (layout, lineArea) {
                 $(inpt).css('border-left', '4px solid #00f');
                 $(inpt).css('margin-left', '28px');
             }
-            $('#scale-hor').append(inpt);
+            lineArr.push(inpt);
         });
-
+        $('#scale-hor input').each((i, el) => el.remove());
+        lineArr.forEach((el, i) => $('#scale-hor').append(el));
 
         //Прорисовка вертикальных размеров   
     } else if (layout == "HORIZ") {
+
+        lineArr.length = 0;
         let length = winCalc.obj.height * winCalc.scale;
         $('#scale-ver').css('left', -1 * length + 8); //влево после разворота на -90 градусов 
         $('#scale-ver input').each((i, el) => el.remove());
         lineArea.reverse().forEach((e, i) => {
             let inpt = document.createElement('input');
+            if ($('#scale-ver input:eq(' + i + ')').length == 1) {
+                $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
+            }
             $(inpt).val(e.lengthY.toFixed(1));
             $(inpt).attr('areaID', e.id);
             $(inpt).width(e.lengthY * winCalc.scale - 18);
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
             if (i === lineArea.length - 1) {
-                //$(inpt).css('margin-right', e.y1 + 'px');
                 $(inpt).css('border-left', '4px solid #00f');
                 $(inpt).css('border-right', '4px solid #00f');
             }
-            $('#scale-ver').append(inpt);
+            lineArr.push(inpt);
         });
+        $('#scale-ver input').each((i, el) => el.remove());
+        lineArr.forEach((el, i) => $('#scale-ver').append(el));
+
     }
 }
 //------------------------------------------------------------------------------
@@ -531,21 +543,21 @@ product.click_canvas_xy = function (canvas, event) {
     if (winCalc.root.inside(x, y) == false) {
         scaleAreaVer = [winCalc.root];
         scaleAreaHor = [winCalc.root];
-        product.scale_add_input('HORIZ', scaleAreaHor);
-        product.scale_add_input('VERT', scaleAreaVer);
+        product.scale_new_input('HORIZ', scaleAreaHor);
+        product.scale_new_input('VERT', scaleAreaVer);
         $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
         $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 
-    } else {
+    } else { //На конструкции
         winCalc.elemList.forEach((e, i) => {
             if (e.type == 'IMPOST' || e.type == 'SHTULP' || e.type == 'STOIKA') {
                 if (e.inside(x, y)) {
                     if (e.layout == 'VERT') {
                         scaleAreaVer = winCalc.root.lineCross(e);
-                        product.scale_add_input(e.layout, scaleAreaVer);
+                        product.scale_new_input(e.layout, scaleAreaVer);
                     } else {
                         scaleAreaHor = winCalc.root.lineCross(e);
-                        product.scale_add_input(e.layout, scaleAreaHor);
+                        product.scale_new_input(e.layout, scaleAreaHor);
                     }
                 }
             }
@@ -554,23 +566,38 @@ product.click_canvas_xy = function (canvas, event) {
 }
 //------------------------------------------------------------------------------
 //Клик на кнопке масштабирования
-product.click_btn_resiz = function (btn) {
+product.click_btn_resiz = function () {
 
     //По горизонтали  
-    if ($('#scale-hor input:eq(0)').css('color') == 'rgb(255, 0, 0)') {
-        let area = winCalc.areaList.find(el => el.id == $('#scale-hor input:eq(0)').attr('areaID'));
-        area.lengthX = area.lengthX + 1;
-    } else {
-        let area = winCalc.areaList.find(el => el.id == $('#scale-hor input:eq(1)').attr('areaID'));
-        area.lengthX = area.lengthX - 1;
-    }
+    $('#scale-hor input').each((i, e) => {
+        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+
+            $('#scale-hor input').each((i, m) => {
+                let area = winCalc.areaList.find(el => el.id == $(m).attr('areaID'));
+                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                    area.lengthX = area.lengthX + 1;
+                } else {
+                    area.lengthX = area.lengthX - 1;
+                }
+                product.resize();
+            });
+        }
+    });
+
     //По вертикали
-    if ($('#scale-ver input:eq(0)').css('color') == 'rgb(255, 0, 0)') {
-        let area = winCalc.areaList.find(el => el.id == $('#scale-ver input:eq(0)').attr('areaID'));
-        area.lengthX = area.lengthX + 1;
-    } else {
-        let area = winCalc.areaList.find(el => el.id == $('#scale-ver input:eq(1)').attr('areaID'));
-        area.lengthX = area.lengthX - 1;
-    }
+    $('#scale-ver input').each((i, e) => {
+        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+
+            $('#scale-ver input').each((i, m) => {
+                let area = winCalc.areaList.find(el => el.id == $(m).attr('areaID'));
+                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                    area.lengthY = area.lengthY + 1;
+                } else {
+                    area.lengthY = area.lengthY - 1;
+                }
+                product.resize();
+            });
+        }
+    });
 }
 //------------------------------------------------------------------------------
