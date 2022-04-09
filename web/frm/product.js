@@ -451,7 +451,7 @@ product.resize = function () {
     cnv.height = $("#scale-cnv").height();
     if (order.prjprodRec != null)
         winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
-    $('#scale-ver').width(winCalc.height * winCalc.scale - 2);
+    $('#scale-ver').width(winCalc.height * winCalc.scale - 20);
 
     //Прорисовка размерных линий
     let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
@@ -500,7 +500,7 @@ product.scale_new_input = function (layout, lineArea) {
 
         lineArr.length = 0;
         let length = winCalc.obj.height * winCalc.scale;
-        $('#scale-ver').css('left', -1 * length + 8); //влево после разворота на -90 градусов 
+        //$('#scale-ver').css('left', -1 * length + 8); //влево после разворота на -90 градусов 
         lineArea.forEach((e, i) => {
             let inpt = document.createElement('input');
             if ($('#scale-ver input:eq(' + i + ')').length == 1) {
