@@ -58,6 +58,21 @@
             });
 
             function test() {
+                let area = winCalc.areaList.find(e => e.id == 15);
+                area.lengthX = area.lengthX + 10;
+                area = winCalc.areaList.find(e => e.id == 19);
+                area.lengthX = area.lengthX - 10;
+                
+                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                let cvs = document.querySelector("#cnv");
+                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
+
+                winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
+
+                order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
+                product.resize();
+                product.local_to_fields("0");
             }
         </script>
     </head>

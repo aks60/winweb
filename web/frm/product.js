@@ -444,7 +444,7 @@ product.resize = function () {
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
         var height = window.innerHeight;
-        $("#context").css("height", height - 80);
+        $("#context").css("height", height - 82);
 
         //Прорисовка конструкции
         cnv.width = $("#scale-cnv").width();
@@ -605,7 +605,7 @@ product.click_btn_resiz = function () {
                 } else {
                     area.lengthY = area.lengthY - 1;
                 }
-            });           
+            });
         }
     });
 
@@ -626,15 +626,17 @@ product.keyup_btn_enter = function (inpt, event) {
             if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
                 ++draw;
                 let dx = $(inpt).val() - areas.lengthX;
-                $('#scale-hor input').each((i, m) => {
+                if (Math.abs(dx) < areas.lengthX - 200) {
+                    $('#scale-hor input').each((i, m) => {
 
-                    let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                        area.lengthX = area.lengthX + dx;
-                    } else {
-                        area.lengthX = area.lengthX - dx;
-                    }
-                });
+                        let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                        if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                            area.lengthX = area.lengthX + dx;
+                        } else {
+                            area.lengthX = area.lengthX - dx;
+                        }
+                    });
+                }
             }
         });
 
@@ -643,15 +645,17 @@ product.keyup_btn_enter = function (inpt, event) {
             if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
 
                 let dy = $(inpt).val() - areas.lengthY;
-                $('#scale-ver input').each((i, m) => {
-                    ++draw;
-                    let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                        area.lengthY = area.lengthY + dy;
-                    } else {
-                        area.lengthY = area.lengthY - dy;
-                    }
-                });
+                if (Math.abs(dy) < areas.lengthX - 200) {
+                    $('#scale-ver input').each((i, m) => {
+                        ++draw;
+                        let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                        if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                            area.lengthY = area.lengthY + dy;
+                        } else {
+                            area.lengthY = area.lengthY - dy;
+                        }
+                    });
+                }
             }
         });
 
