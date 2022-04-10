@@ -10,7 +10,7 @@
             #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
-                /*border: 2px solid #00f;*/
+                /*border: 1px solid #00f;*/
             }
             #scale-hor {
                 width: 100%;
@@ -28,7 +28,7 @@
                 margin-left: 30px;
             }
             #scale-hor input{
-                margin-top: 12px;
+                margin-top: 14px;
             }
             #scale-ver input {
             }
