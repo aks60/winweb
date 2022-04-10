@@ -10,7 +10,7 @@
             #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
                 border: 0;
-                border: 1px solid #00f;
+                /*border: 2px solid #00f;*/
             }
             #scale-hor {
                 width: 100%;
@@ -20,7 +20,7 @@
                 transform: rotate(-90deg);
                 transform-origin: right 0px;
                 position: absolute;
-                /*margin-top: -2px;*/
+                height: 24px;
             }
             #scale-cnv {
                 width: calc(100% - 32px);
@@ -28,20 +28,18 @@
                 margin-left: 30px;
             }
             #scale-hor input{
-                margin-top: 10px;
-                border: 0;
-                border-right: 4px solid #00f;
+                margin-top: 12px;
             }
             #scale-ver input {
-                margin-bottom: 8px;
-                border: 0;
-                border-left: 4px solid #00f;
             }
             #scale-hor input, #scale-ver input {
                 text-align: center;
                 font-weight: bold;
                 font-size: 16px;
                 height: 12px;
+                border: 0;
+                border-left: 2px solid #00f;
+                border-right: 2px solid #00f;                
             }
         </style> 
         <script type="text/javascript">

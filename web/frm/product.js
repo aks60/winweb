@@ -451,7 +451,7 @@ product.resize = function () {
     cnv.height = $("#scale-cnv").height();
     if (order.prjprodRec != null)
         winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
-    $('#scale-ver').width(winCalc.height * winCalc.scale - 20);
+    $('#scale-ver').width(winCalc.height * winCalc.scale);
 
     //Прорисовка размерных линий
     let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
@@ -478,17 +478,17 @@ product.scale_new_input = function (layout, lineArea) {
     //Прорисовка горизонтальных размеров 
     if (layout == "HORIZ") {
         lineArea.forEach((e, i) => {
-            let inpt = document.createElement('input');
+            
+            let inpt = document.createElement('input'); //create input
             if ($('#scale-hor input:eq(' + i + ')').length == 1) {
                 $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
             }
             $(inpt).val(e.lengthX.toFixed(1));
             $(inpt).attr('areaID', e.id);
-            $(inpt).width(e.lengthX * winCalc.scale - 8);
+            $(inpt).width(e.width * winCalc.scale - 8);
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
             if (i === 0) {
-                $(inpt).css('border-left', '4px solid #00f');
-                $(inpt).css('margin-left', '28px');
+                $(inpt).css('margin-left', '30px');
             }
             lineArr.push(inpt);
         });
@@ -500,20 +500,17 @@ product.scale_new_input = function (layout, lineArea) {
 
         lineArr.length = 0;
         let length = winCalc.obj.height * winCalc.scale;
-        //$('#scale-ver').css('left', -1 * length + 8); //влево после разворота на -90 градусов 
+        $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
         lineArea.forEach((e, i) => {
-            let inpt = document.createElement('input');
+            
+            let inpt = document.createElement('input'); //create input
             if ($('#scale-ver input:eq(' + i + ')').length == 1) {
                 $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
             }
             $(inpt).val(e.lengthY.toFixed(1));
             $(inpt).attr('areaID', e.id);
-            $(inpt).width(e.lengthY * winCalc.scale - 18);
+            $(inpt).width(e.lengthY * winCalc.scale - 10);
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
-            if (i === 0) {
-                $(inpt).css('border-left', '4px solid #00f');
-                $(inpt).css('border-right', '4px solid #00f');
-            }
             lineArr.push(inpt);
         });
         $('#scale-ver input').each((i, el) => el.remove());
