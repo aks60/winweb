@@ -440,33 +440,36 @@ product.artikl_to_glass = function (btnSrc) {
 //==============================================================================
 //Масштабирование
 product.resize = function () {
-    var height = window.innerHeight;
-    $("#context").css("height", height - 80);
-debugger;
-    //Прорисовка конструкции
+    
     let cnv = document.querySelector("#cnv");
-    cnv.width = $("#scale-cnv").width();
-    cnv.height = $("#scale-cnv").height();
-    if (order.prjprodRec != null)
-        winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
-    $('#scale-ver').width(winCalc.height * winCalc.scale);
+    if (cnv != null) {
+        var height = window.innerHeight;
+        $("#context").css("height", height - 80);
 
-    //Прорисовка размерных линий
-    let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
-    $('#scale-hor input').each((i, p) => arrHor.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
-    product.scale_new_input('HORIZ', arrHor);
-    let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
-    $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
-    product.scale_new_input('VERT', arrVer);
+        //Прорисовка конструкции
+        cnv.width = $("#scale-cnv").width();
+        cnv.height = $("#scale-cnv").height();
+        if (order.prjprodRec != null)
+            winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
+        $('#scale-ver').width(winCalc.height * winCalc.scale);
 
-    //Прорисовка полей
-    let winWidth = $('#east').width() - 24;
-    $("div .field2[dx]").each(function (index) {
-        var width = $(this).attr('dx');
-        $(this).width(winWidth - width);
-    });
-    $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
-    $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+        //Прорисовка размерных линий
+        let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
+        $('#scale-hor input').each((i, p) => arrHor.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
+        product.scale_new_input('HORIZ', arrHor);
+        let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
+        $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
+        product.scale_new_input('VERT', arrVer);
+
+        //Прорисовка полей
+        let winWidth = $('#east').width() - 24;
+        $("div .field2[dx]").each(function (index) {
+            var width = $(this).attr('dx');
+            $(this).width(winWidth - width);
+        });
+        $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
+        $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+    }
 }
 //------------------------------------------------------------------------------
 //Перерисовать при изменении размера
@@ -480,7 +483,7 @@ product.redraw = function () {
 
     order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
     product.resize();
-    product.local_to_fields("0");    
+    product.local_to_fields("0");
 }
 //------------------------------------------------------------------------------
 //Наполнение инпутами шкалы горизонтальных и вертикальных размеров
@@ -490,7 +493,7 @@ product.scale_new_input = function (layout, lineArea) {
     //Прорисовка горизонтальных размеров 
     if (layout == "HORIZ") {
         lineArea.forEach((e, i) => {
-            
+
             let inpt = document.createElement('input'); //create input
             if ($('#scale-hor input:eq(' + i + ')').length == 1) {
                 $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
@@ -514,7 +517,7 @@ product.scale_new_input = function (layout, lineArea) {
         let length = winCalc.obj.height * winCalc.scale;
         $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
         lineArea.forEach((e, i) => {
-            
+
             let inpt = document.createElement('input'); //create input
             if ($('#scale-ver input:eq(' + i + ')').length == 1) {
                 $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
@@ -557,7 +560,7 @@ product.click_canvas_xy = function (canvas, event) {
             if (e.type == 'IMPOST' || e.type == 'SHTULP' || e.type == 'STOIKA') {
                 if (e.inside(x, y)) {
                     let m = winCalc.root.lineCross(e);
-                    if (e.layout == 'HORIZ') {                       
+                    if (e.layout == 'HORIZ') {
                         product.scale_new_input('VERT', m);
                     } else {
                         product.scale_new_input('HORIZ', m);
@@ -580,7 +583,7 @@ product.click_btn_resiz = function () {
                     area.lengthX = area.lengthX + 1;
                 } else {
                     area.lengthX = area.lengthX - 1;
-                }                
+                }
             });
             product.redraw();
         }
