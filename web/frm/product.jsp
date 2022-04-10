@@ -58,11 +58,6 @@
             });
 
             function test() {
-//                let area = winCalc.areaList.find(a => a.id == 15);
-//                area.lengthX = area.lengthX + 1;
-//                area = winCalc.areaList.find(a => a.id == 19);
-//                area.lengthX = area.lengthX - 1
-//                product.redraw();
             }
         </script>
     </head>
