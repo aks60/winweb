@@ -8,20 +8,20 @@
 
         <script type="text/javascript">
             kits.resize = function () {
-//                var height = window.innerHeight;
-//                $("#context").css("height", height - 80);
-//                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
-//                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 24);
+                var height = window.innerHeight;
+                $("#context").css("height", height - 80);
+                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
+                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 24);
             }
 
             $(document).ready(function () {
                 $(window).bind('resize', () => kits.resize()).trigger('resize');
 
-//                kits.init_table($("#table1"));
-//                kits.load_table($("#table1"));
-//                kits.resize();
-//                prepareToolBar();
-//                taqDeploy(['#dialog-card']);
+                kits.init_table($("#table1"));
+                kits.load_table($("#table1"));
+                kits.resize();
+                prepareToolBar();
+                taqDeploy(['#dialog-card']);
             });
         </script>         
     </head>

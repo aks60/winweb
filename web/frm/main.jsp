@@ -77,15 +77,9 @@
             });
 
             window.onload = function () {
-                if (product.resize != undefined) {
-                    product.resize();
-                }
-            };
+            }
 
             function loadBody(url) {
-                $('#outbody').load(url, function () {
-                    //upBody();
-                });
             }
         </script>         
     </head>

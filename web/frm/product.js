@@ -44,7 +44,6 @@ product.load_table = function (table1) {
         });
     }
     table1.jqGrid("setSelection", 1);
-    product.resize();
 }
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
@@ -78,7 +77,6 @@ product.load_tree = function (tabtree) {
                     let node = tabtree.jstree("get_selected")[0];
                     product.local_to_fields(node);
                 });
-        product.resize();
     }
 }
 product.elements = function (com, arr) {
@@ -444,7 +442,7 @@ product.artikl_to_glass = function (btnSrc) {
 product.resize = function () {
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
-
+debugger;
     //Прорисовка конструкции
     let cnv = document.querySelector("#cnv");
     cnv.width = $("#scale-cnv").width();

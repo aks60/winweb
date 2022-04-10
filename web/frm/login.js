@@ -136,7 +136,7 @@ login.token_sign = function (random) {
                         if (data.role == 'YO_HO1_RW' || data.role == 'YO_HO2_RW') {
                             $('.manager').show();
                         }
-                        loadBody('frm/patt/simpl3.jsp')
+                        $("#outbody").load('frm/patt/simpl3.jsp')
                     } else {
                         dialogMes('Сообщение', data.result);
                     }
