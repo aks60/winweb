@@ -471,6 +471,20 @@ product.resize = function () {
     $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
 }
 //------------------------------------------------------------------------------
+//Перерисовать при изменении размера
+product.redraw = function () {
+    let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+    let cvs = document.querySelector("#cnv");
+    prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
+
+    winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
+
+    order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
+    product.resize();
+    product.local_to_fields("0");    
+}
+//------------------------------------------------------------------------------
 //Наполнение инпутами шкалы горизонтальных и вертикальных размеров
 product.scale_new_input = function (layout, lineArea) {
     let lineArr = [];
@@ -558,7 +572,6 @@ product.click_canvas_xy = function (canvas, event) {
 //------------------------------------------------------------------------------
 //Клик на кнопке масштабирования
 product.click_btn_resiz = function () {
-
     //По горизонтали  
     $('#scale-hor input').each((i, e) => {
         if ($(e).css('color') == 'rgb(255, 0, 0)') {
@@ -569,9 +582,9 @@ product.click_btn_resiz = function () {
                     area.lengthX = area.lengthX + 1;
                 } else {
                     area.lengthX = area.lengthX - 1;
-                }
-                product.resize();
+                }                
             });
+            product.redraw();
         }
     });
 
@@ -586,8 +599,8 @@ product.click_btn_resiz = function () {
                 } else {
                     area.lengthY = area.lengthY - 1;
                 }
-                product.resize();
             });
+            product.redraw();
         }
     });
 }

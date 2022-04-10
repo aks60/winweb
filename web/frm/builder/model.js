@@ -43,20 +43,13 @@ export class Com5t {
         if (this.id == 0)
             this.obj.width = v;
         else {
-            let s = 0;
-            this.owner.childs.forEach(el => { //определим размер родителя
-                if (el.type == 'AREA')
-                    s += el.obj.length;
-            });
-            let dx = v - this.obj.length; //дельта изменения
-            let k = dx / s; //коэффициент изменения
-            this.winc.obj.width = this.winc.obj.width + k * this.winc.obj.width; //размер коробки
-            this.winc.areaList.forEach(el => {
-                if (el.layout == 'VERT' && (el.owner != null && this.owner.id != el.owner.id)) {
-                    el.obj.length = el.obj.length + k * el.obj.length; //изменение всех остальных кроме родителя
-                }
-            });
             this.obj.length = v;
+            let k = (v - this.lengthX) / v; //коэффициент изменения
+            this.childs.forEach(e => {
+                if (e.layout == 'VERT' && (e.typr == 'AREA' ||  e.typr == 'STVORKA')) {
+                    e.lengthX = e.lengthX + k * e.lengthX; //изменение всех остальных ниже
+                }
+            });           
         }
     }
 

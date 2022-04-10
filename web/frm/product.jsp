@@ -39,7 +39,7 @@
                 height: 12px;
                 border: 0;
                 border-left: 2px solid #00f;
-                border-right: 2px solid #00f;                
+                border-right: 2px solid #00f;
             }
         </style> 
         <script type="text/javascript">
@@ -58,6 +58,11 @@
             });
 
             function test() {
+                let area = winCalc.areaList.find(a => a.id == 15);
+                area.lengthX = area.lengthX + 1;
+                area = winCalc.areaList.find(a => a.id == 19);
+                area.lengthX = area.lengthX - 1
+                product.redraw();
             }
         </script>
     </head>
