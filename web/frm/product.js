@@ -352,7 +352,7 @@ product.artikl_to_stvorka = function (btnSrc) {
     $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
 //------------------------------------------------------------------------------
-//Заполнение
+//Заполнение\
 product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -611,7 +611,7 @@ product.click_btn_resiz = function () {
 
     //Перерисовать при изменении размера
     if (draw > 0) {
-        product.redaraw();
+        product.redraw();
     }
 }
 //------------------------------------------------------------------------------
@@ -620,7 +620,7 @@ product.keyup_btn_enter = function (inpt, event) {
     if (event.key === "Enter") {
         let areas = winCalc.areaList.find(e => e.id == $(inpt).attr('areaID'));
         let draw = 0;
-
+        
         //По горизонтали  
         $('#scale-hor input').each((i, e) => {
             if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
@@ -661,7 +661,7 @@ product.keyup_btn_enter = function (inpt, event) {
 
         //Перерисовать при изменении размера
         if (draw > 0) {
-            product.redaraw();
+            product.redraw();
         }
     }
 }
