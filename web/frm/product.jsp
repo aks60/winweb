@@ -58,19 +58,23 @@
             });
 
             function test() {
+            
+                //let scriptA = JSON.stringify(winCalc.obj);
+                //console.log(scriptA);
+                
                 let area = winCalc.areaList.find(e => e.id == 0);
-                area.lengthY = area.lengthY + 300;
+                area.lengthY = area.lengthY + 1300;
                 //area = winCalc.areaList.find(e => e.id == 19);
-                //area.lengthX = area.lengthX + 400;
+                //area.lengthX = area.lengthX + 1000;
+                
+                //let scriptB = JSON.stringify(winCalc.obj);
+                //console.log(scriptB);                
                 
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
                 let cvs = document.querySelector("#cnv");
-                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
-
-                //console.log(prjprodRec[PRJPROD.script]);
+                prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj); //, (k, v) => isEmpty(v));
                 winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
-
                 order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
                 product.resize();
                 product.local_to_fields("0");

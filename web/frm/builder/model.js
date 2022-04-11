@@ -40,20 +40,22 @@ export class Com5t {
 
     //Изменение размера
     set lengthX(v) {
-   
+
         if (this.id == 0) {
-            var k = (v - this.obj.width) / this.obj.width; //коэффициент изменения
+            var k = (v - this.obj.width) / this.obj.width; //коэффициент
             this.obj.width = v;
-        } else {
-            let k = (v - this.obj.length) / this.obj.length; //коэффициент изменения
+
+        } else if (isNaN(v) == false) {
+            let k = (v - this.obj.length) / this.obj.length; //коэффициент
             this.obj.length = v;
         }
         this.childs.forEach(e => {
             if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
                 e.lengthX = e.lengthX + k * e.lengthX; //изменение всех остальных ниже
-            }  else {
-                if (e.childs != null) {                    
+            } else {
+                if (e.childs != null) {
                     e.childs.forEach(e2 => {
+                        //if(this.id == 19) debugger;
                         if (e2.owner.layout == 'HORIZ' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
                             e2.lengthX = e2.lengthX + k * e2.lengthX; //изменение всех остальных ниже
                         }
@@ -67,11 +69,12 @@ export class Com5t {
     set lengthY(v) {
 
         if (this.id == 0) {
-            var k = (v - this.obj.height) / this.obj.height; //коэффициент изменения
+            var k = (v - this.obj.height) / this.obj.height; //коэффициент
             this.obj.height = v;
             this.obj.heightAdd = v;
-        } else {
-            let k = (v - this.obj.length) / this.obj.length; //коэффициент изменения
+
+        } else if (isNaN(v) == false) {
+            let k = (v - this.obj.length) / this.obj.length; //коэффициент            
             this.obj.length = v;
         }
         this.childs.forEach(e => {
@@ -79,6 +82,8 @@ export class Com5t {
                 e.lengthY = e.lengthY + k * e.lengthY; //изменение всех остальных ниже
             } else {
                 if (e.childs != null) {
+                    if (this.id == 19)
+                        debugger;
                     e.childs.forEach(e2 => {
                         if (e2.owner.layout == 'VERT' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
                             e2.lengthY = e2.lengthY + k * e2.lengthY; //изменение всех остальных ниже
