@@ -44,23 +44,20 @@ export class Com5t {
         if (this.id == 0) {
             var k = (v - this.obj.width) / this.obj.width; //коэффициент
             this.obj.width = v;
-
-        } else if (isNaN(v) == false) {
+            this.winc.areaList.forEach(e => {
+                if (e.layout == 'HORIZ') {
+                    e.childs.forEach(e2 => {
+                        e2.obj.length += k * e2.obj.length;
+                    });
+                }
+            });
+        } else {
             let k = (v - this.obj.length) / this.obj.length; //коэффициент
             this.obj.length = v;
         }
         this.childs.forEach(e => {
             if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                e.lengthX = e.lengthX + k * e.lengthX; //изменение всех остальных ниже
-            } else {
-                if (e.childs != null) {
-                    e.childs.forEach(e2 => {
-                        //if(this.id == 19) debugger;
-                        if (e2.owner.layout == 'HORIZ' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
-                            e2.lengthX = e2.lengthX + k * e2.lengthX; //изменение всех остальных ниже
-                        }
-                    });
-                }
+                e.obj.length = e.obj.length + k * e.obj.length; //изменение всех остальных ниже + рекурсия
             }
         });
     }
@@ -72,24 +69,20 @@ export class Com5t {
             var k = (v - this.obj.height) / this.obj.height; //коэффициент
             this.obj.height = v;
             this.obj.heightAdd = v;
-
-        } else if (isNaN(v) == false) {
+            this.winc.areaList.forEach(e => {
+                if (e.layout == 'VERT') {
+                    e.childs.forEach(e2 => {
+                        e2.obj.length += k * e2.obj.length;
+                    });
+                }
+            });
+        } else {
             let k = (v - this.obj.length) / this.obj.length; //коэффициент            
             this.obj.length = v;
         }
         this.childs.forEach(e => {
             if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                e.lengthY = e.lengthY + k * e.lengthY; //изменение всех остальных ниже
-            } else {
-                if (e.childs != null) {
-                    if (this.id == 19)
-                        debugger;
-                    e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'VERT' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
-                            e2.lengthY = e2.lengthY + k * e2.lengthY; //изменение всех остальных ниже
-                        }
-                    });
-                }
+                e.obj.length = e.obj.length + k * e.obj.length; //изменение всех остальных ниже
             }
         });
     }
