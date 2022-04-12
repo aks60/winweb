@@ -634,6 +634,8 @@ product.keyup_btn_enter = function (inpt, event) {
                         area.lengthX = area.lengthX - dx;
                     }
                 });
+            } else {
+                alert('Внимание! Недопустимые размеры конструкции');
             }
         } else { //по вертикали
             let dy = $(inpt).val() - areas.lengthY;
@@ -646,6 +648,8 @@ product.keyup_btn_enter = function (inpt, event) {
                         area.lengthY = area.lengthY - dy;
                     }
                 });
+            } else {
+                alert('Внимание! Недопустимые размеры конструкции');
             }
         }
 
