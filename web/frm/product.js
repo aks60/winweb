@@ -506,7 +506,7 @@ product.scale_new_input = function (layout, lineArea) {
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
             inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
             if (i === 0) {
-                $(inpt).css('margin-left', 30 + lineArea[i].x1 * winCalc.scale); 
+                $(inpt).css('margin-left', 30 + lineArea[i].x1 * winCalc.scale);
             }
             lineArr.push(inpt);
         });
@@ -532,7 +532,7 @@ product.scale_new_input = function (layout, lineArea) {
             inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
             if (i === 0) {
                 $(inpt).css('margin-left', (winCalc.height - e.y2) * winCalc.scale);
-            }             
+            }
             lineArr.push(inpt);
         });
         $('#scale-ver input').each((i, el) => el.remove());
@@ -622,50 +622,44 @@ product.click_btn_resiz = function () {
 product.keyup_btn_enter = function (inpt, event) {
     if (event.key === "Enter") {
         let areas = winCalc.areaList.find(e => e.id == $(inpt).attr('areaID'));
-        let draw = 0;
-    
-        //По горизонтали  
-        $('#scale-hor input').each((i, e) => {
-            if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
-                ++draw;
-                let dx = $(inpt).val() - areas.lengthX;
-                if (Math.abs(dx) < areas.lengthX - 200) {
-                    $('#scale-hor input').each((i, m) => {
 
-                        let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
-                        if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                            area.lengthX = area.lengthX + dx;
-                        } else {
-                            area.lengthX = area.lengthX - dx;
-                        }
-                    });
-                }
+        if ($(inpt).parent().attr('id') == 'scale-hor') { //по горизонтали 
+            let dx = $(inpt).val() - areas.lengthX;
+            if (Math.abs(dx) < areas.lengthX - 200) { //ограничение
+                $('#scale-hor input').each((i, m) => {
+                    let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                        area.lengthX = area.lengthX + dx;
+                    } else {
+                        area.lengthX = area.lengthX - dx;
+                    }
+                });
             }
-        });
-
-        //По вертикали
-        $('#scale-ver input').each((i, e) => {
-            if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
-
-                let dy = $(inpt).val() - areas.lengthY;
-                if (Math.abs(dy) < areas.lengthX - 200) {
-                    $('#scale-ver input').each((i, m) => {
-                        ++draw;
-                        let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
-                        if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                            area.lengthY = area.lengthY + dy;
-                        } else {
-                            area.lengthY = area.lengthY - dy;
-                        }
-                    });
-                }
+        } else { //по вертикали
+            let dy = $(inpt).val() - areas.lengthY;
+            if (Math.abs(dy) < areas.lengthX - 200) { //ограничение
+                $('#scale-ver input').each((i, m) => {
+                    let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                        area.lengthY = area.lengthY + dy;
+                    } else {
+                        area.lengthY = area.lengthY - dy;
+                    }
+                });
             }
-        });
+        }
 
         //Перерисовать при изменении размера
-        if (draw > 0) {
-            product.redraw();
-        }
+        let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+        let cvs = document.querySelector("#cnv");
+        prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
+
+        winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
+
+        order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
+        product.resize();
+        product.local_to_fields("0");
     }
 }
 //------------------------------------------------------------------------------
