@@ -623,7 +623,7 @@ product.keyup_btn_enter = function (inpt, event) {
     if (event.key === "Enter") {
         let areas = winCalc.areaList.find(e => e.id == $(inpt).attr('areaID'));
         let draw = 0;
-        
+    
         //По горизонтали  
         $('#scale-hor input').each((i, e) => {
             if ($(inpt).attr('areaID') == $(e).attr('areaID')) {
