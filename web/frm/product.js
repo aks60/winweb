@@ -506,7 +506,7 @@ product.scale_new_input = function (layout, lineArea) {
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
             inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
             if (i === 0) {
-                $(inpt).css('margin-left', '30px');
+                $(inpt).css('margin-left', 30 + lineArea[i].x1 * winCalc.scale); 
             }
             lineArr.push(inpt);
         });
@@ -521,7 +521,7 @@ product.scale_new_input = function (layout, lineArea) {
         $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
         lineArea.forEach((e, i) => {
 
-            let inpt = document.createElement('input'); //create input
+            let inpt = document.createElement('input'); //create input           
             if ($('#scale-ver input:eq(' + i + ')').length == 1) {
                 $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
             }
@@ -530,6 +530,9 @@ product.scale_new_input = function (layout, lineArea) {
             $(inpt).width(e.lengthY * winCalc.scale - 10);
             inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
             inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
+            if (i === 0) {
+                $(inpt).css('margin-left', (winCalc.height - e.y2) * winCalc.scale);
+            }             
             lineArr.push(inpt);
         });
         $('#scale-ver input').each((i, el) => el.remove());
