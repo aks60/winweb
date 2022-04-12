@@ -63,12 +63,12 @@
                 //console.log(scriptA);
 
                 let area = winCalc.areaList.find(e => e.id == 0);
-                area.lengthY = area.lengthY + 1300;
+                //area.lengthY = area.lengthY + 1300;
                 //area = winCalc.areaList.find(e => e.id == 19);
-                //area.lengthX = area.lengthX + 1000;
+                area.lengthX = area.lengthX + 1000;
 
                 //let scriptB = JSON.stringify(winCalc.obj);
-                //console.log(scriptB);                
+                //console.log(scriptB);  
 
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
@@ -85,10 +85,10 @@
                 //console.log(scriptA);
 
                 let area = winCalc.areaList.find(e => e.id == 0);
-                area.lengthY = area.lengthY - 1300;
+                //area.lengthY = area.lengthY - 1300;
                 //area = winCalc.areaList.find(e => e.id == 19);
-                //area.lengthX = area.lengthX - 1500;
-
+                area.lengthX = area.lengthX - 1500;
+                
                 //let scriptB = JSON.stringify(winCalc.obj);
                 //console.log(scriptB);                
 

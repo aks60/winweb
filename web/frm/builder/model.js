@@ -42,53 +42,54 @@ export class Com5t {
     set lengthX(v) {
 
         if (this.id == 0) {
-            var k = (v - this.obj.width) / this.obj.width; //коэффициент
+            var k = v / this.obj.width; //коэффициент
             this.obj.width = v;
             this.winc.areaList.forEach(e => {
                 if (e.layout == 'HORIZ') {
-                    e.childs.forEach(e2 => {
-                        e2.obj.length += k * e2.obj.length;
+                    e.childs.forEach(e2 => { //изменение всех по ширине
+                        e2.obj.length = k * e2.obj.length;
                     });
                 }
             });
         } else {
-            let k = (v - this.obj.length) / this.obj.length; //коэффициент
+            let k = v / this.obj.length; //коэффициент
             this.obj.length = v;
+            this.childs.forEach(e => {
+                if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
+                    e.obj.length = k * e.obj.length; //изменение всех детей
+                }
+            });
         }
-        this.childs.forEach(e => {
-            if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                e.obj.length = e.obj.length + k * e.obj.length; //изменение всех остальных ниже + рекурсия
-            }
-        });
     }
 
     //Изменение размера
     set lengthY(v) {
 
         if (this.id == 0) {
-            var k = (v - this.obj.height) / this.obj.height; //коэффициент
+            var k = v / this.obj.height; //коэффициент
             this.obj.height = v;
             this.obj.heightAdd = v;
             this.winc.areaList.forEach(e => {
                 if (e.layout == 'VERT') {
-                    e.childs.forEach(e2 => {
-                        e2.obj.length += k * e2.obj.length;
+                    e.childs.forEach(e2 => { //изменение всех по высоте
+                        e2.obj.length = k * e2.obj.length;
                     });
                 }
             });
         } else {
-            let k = (v - this.obj.length) / this.obj.length; //коэффициент            
+            let k = v / this.obj.length; //коэффициент            
             this.obj.length = v;
+            this.childs.forEach(e => {
+                if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
+                    e.obj.length = k * e.obj.length; //изменение всех детей
+                }
+            });
         }
-        this.childs.forEach(e => {
-            if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                e.obj.length = e.obj.length + k * e.obj.length; //изменение всех остальных ниже
-            }
-        });
     }
-
+    
     //Точка попадает в контур элемента
-    inside(X, Y) {
+    inside(X, Y)
+    {
         if ((this.x2 | this.y2) < 0) {
             return false;
         }
