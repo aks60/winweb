@@ -56,18 +56,17 @@ export class Com5t {
             this.obj.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                    e.lengthX = k * e.lengthX; //изменение всех детей
-                    //e.obj.length = k * e.obj.length; //изменение всех детей
+                    e.lengthX = k * e.lengthX; //изменение детей и рекурсия
+                    
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'HORIZ' && (e2.typr == 'AREA' || e2.typr == 'STVORKA')) {
-                            e2.lengthX = k * e2.lengthX; //изменение всех детей
-                            //e2.obj.length = k * e2.obj.length; //изменение всех детей
+                        if (e2.owner.layout == 'HORIZ' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
+                            e2.lengthX = k * e2.lengthX; //изменение детей и рекурсия
                         }
                     });
                 }
             });
-        }       
+        }
     }
 
     //Изменение размера
@@ -89,7 +88,14 @@ export class Com5t {
             this.obj.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                    e.obj.length = k * e.obj.length; //изменение всех детей
+                    e.lengthY = k * e.lengthY; //изменение детей и рекурсия
+                    
+                } else if (e.childs != null) {
+                    e.childs.forEach(e2 => {
+                        if (e2.owner.layout == 'VERT' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
+                            e2.lengthY = k * e2.lengthY; //изменение детей и рекурсия
+                        }
+                    });
                 }
             });
         }
