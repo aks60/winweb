@@ -56,26 +56,18 @@ export class Com5t {
             this.obj.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                    e.obj.length = k * e.obj.length; //изменение всех детей
-                    if (e.childs != null) {
-                        e.childs.forEach(e2 => {
-                            if (e2.owner.layout == 'HORIZ' && (e2.typr == 'AREA' || e2.typr == 'STVORKA')) {
-                                e2.obj.length = k * e2.obj.length; //изменение всех детей
-                            }
-                        });
-                    }
+                    e.lengthX = k * e.lengthX; //изменение всех детей
+                    //e.obj.length = k * e.obj.length; //изменение всех детей
+                } else if (e.childs != null) {
+                    e.childs.forEach(e2 => {
+                        if (e2.owner.layout == 'HORIZ' && (e2.typr == 'AREA' || e2.typr == 'STVORKA')) {
+                            e2.lengthX = k * e2.lengthX; //изменение всех детей
+                            //e2.obj.length = k * e2.obj.length; //изменение всех детей
+                        }
+                    });
                 }
             });
-        }
-//            if (e.layout == 'VERT' && (e.typr == 'AREA' || e.typr == 'STVORKA')) {
-//                e.lengthX = e.lengthX + k * e.lengthX; //изменение всех остальных ниже
-//            } else {
-//                e.childs.forEach(e2 => {
-//                    if (e2.layout == 'VERT' && (e2.typr == 'AREA' || e2.typr == 'STVORKA')) {
-//                        e2.lengthX = e2.lengthX + k * e2.lengthX; //изменение всех остальных ниже
-//                    }
-//                });
-//            }        
+        }       
     }
 
     //Изменение размера
