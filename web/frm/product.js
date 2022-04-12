@@ -652,18 +652,8 @@ product.keyup_btn_enter = function (inpt, event) {
                 alert('Внимание! Недопустимые размеры конструкции');
             }
         }
-
         //Перерисовать при изменении размера
-        let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
-        let cvs = document.querySelector("#cnv");
-        prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.obj, (k, v) => isEmpty(v));
-
-        winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
-
-        order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
-        product.resize();
-        product.local_to_fields("0");
+        product.redraw();
     }
 }
 //------------------------------------------------------------------------------
