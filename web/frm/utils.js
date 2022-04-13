@@ -217,7 +217,7 @@ function dialogMes(title, mes) {
 //TODO доработать прогресс
 function dialogPrg2() {
 
-    $("#dialog-mes").html("AKS " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
+    $("#dialog-mes").html("run " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
     $("#dialog-mes").dialog({modal: true});
     this.pgbar = $("#progressbar");
     this.pglab = $(".progress-label");

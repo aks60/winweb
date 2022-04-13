@@ -620,40 +620,61 @@ product.click_btn_resiz = function () {
 //------------------------------------------------------------------------------
 //Клик на кнопке enter
 product.keyup_btn_enter = function (inpt, event) {
+    let dv = 0;
     if (event.key === "Enter") {
         let areas = winCalc.areaList.find(e => e.id == $(inpt).attr('areaID'));
 
-        if ($(inpt).parent().attr('id') == 'scale-hor') { //по горизонтали 
-            let dx = $(inpt).val() - areas.lengthX;
-            if (Math.abs(dx) < areas.lengthX - 200) { //ограничение
+        //По горизонтали
+        if ($(inpt).parent().attr('id') == 'scale-hor') {
+            dv = $(inpt).val() - areas.lengthX;
+            $('#scale-hor input').each((i, m) => {
+                let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                if ($(inpt).attr('areaID') == $(m).attr('areaID')) { //ограничение размера
+                    dv = (area.lengthX + dv < 200) ? 0 : dv;
+                } else {
+                    dv = (area.lengthX - dv < 200) ? 0 : dv;
+                }
+            });
+            if (dv != 0)
                 $('#scale-hor input').each((i, m) => {
                     let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
                     if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                        area.lengthX = area.lengthX + dx;
+                        area.lengthX = area.lengthX + dv;
                     } else {
-                        area.lengthX = area.lengthX - dx;
+                        area.lengthX = area.lengthX - dv;
                     }
                 });
-            } else {
-                alert('Внимание! Недопустимые размеры конструкции');
-            }
-        } else { //по вертикали
-            let dy = $(inpt).val() - areas.lengthY;
-            if (Math.abs(dy) < areas.lengthX - 200) { //ограничение
+
+
+        } else { //По вертикали           
+            dv = $(inpt).val() - areas.lengthY;
+            $('#scale-ver input').each((i, m) => {
+                let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                if ($(inpt).attr('areaID') == $(m).attr('areaID')) { //ограничение размера
+                    dv = (area.lengthY + dv < 200) ? 0 : dv;
+                } else {
+                    dv = (area.lengthY - dv < 200) ? 0 : dv;
+                }
+            });
+            if (dv != 0)
                 $('#scale-ver input').each((i, m) => {
                     let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
                     if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
-                        area.lengthY = area.lengthY + dy;
+                        area.lengthY = area.lengthY + dv;
                     } else {
-                        area.lengthY = area.lengthY - dy;
+                        area.lengthY = area.lengthY - dv;
                     }
                 });
-            } else {
-                alert('Внимание! Недопустимые размеры конструкции');
-            }
         }
-        //Перерисовать при изменении размера
-        product.redraw();
+        if (dv == 0) {
+            alert('Внимание! Недопустимые размеры конструкции. (200мм)');
+
+            if ($(inpt).parent().attr('id') == 'scale-hor')
+                $(inpt).val(areas.lengthX.toFixed(1));
+            else
+                $(inpt).val(areas.lengthX.toFixed(1));
+        } else
+            product.redraw(); //перерисовать при изменении размера
     }
 }
 //------------------------------------------------------------------------------

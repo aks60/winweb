@@ -56,12 +56,12 @@ export class Com5t {
             this.obj.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                    e.lengthX = k * e.lengthX; //изменение детей и рекурсия
+                    e.lengthX = k * e.lengthX; //рекурсия изменение детей
                     
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
                         if (e2.owner.layout == 'HORIZ' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
-                            e2.lengthX = k * e2.lengthX; //изменение детей и рекурсия
+                            e2.lengthX = k * e2.lengthX; //рекурсия изменение детей
                         }
                     });
                 }
@@ -88,12 +88,12 @@ export class Com5t {
             this.obj.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
-                    e.lengthY = k * e.lengthY; //изменение детей и рекурсия
+                    e.lengthY = k * e.lengthY; //рекурсия изменение детей
                     
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
                         if (e2.owner.layout == 'VERT' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
-                            e2.lengthY = k * e2.lengthY; //изменение детей и рекурсия
+                            e2.lengthY = k * e2.lengthY; //рекурсия изменение детей
                         }
                     });
                 }
