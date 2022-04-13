@@ -58,6 +58,7 @@
             });
 
             function test() {
+                printScript(winCalc);
             }
         </script>
     </head>

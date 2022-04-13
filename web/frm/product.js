@@ -656,7 +656,10 @@ product.keyup_btn_enter = function (inpt, event) {
                     dv = (area.lengthY - dv < 200) ? 0 : dv;
                 }
             });
-            if (dv != 0)
+            if (dv != 0) {
+                if(winCalc.root.type == 'TRAPEZE') {
+                    winCalc.obj.heightAdd = winCalc.obj.height - $(inpt).val();
+                }                
                 $('#scale-ver input').each((i, m) => {
                     let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
                     if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
@@ -665,6 +668,7 @@ product.keyup_btn_enter = function (inpt, event) {
                         area.lengthY = area.lengthY - dv;
                     }
                 });
+            }
         }
         if (dv == 0) {
             alert('Внимание! Недопустимые размеры конструкции. (200мм)');
@@ -676,5 +680,6 @@ product.keyup_btn_enter = function (inpt, event) {
         } else
             product.redraw(); //перерисовать при изменении размера
     }
+    //console.log("+++ " + winCalc.heightAdd);
 }
 //------------------------------------------------------------------------------

@@ -1,6 +1,10 @@
 //------------------------------------------------------------------------------
+function printScript(winc) {
+    console.log(JSON.stringify(winc.root.obj, undefined, 4));
+}
+//------------------------------------------------------------------------------
 function taqDeploy(selectors) {
-   
+
     let mapobj = this;
     for (let selector of selectors) {
         $(selector + ' jst').each(function (index, elem) {
@@ -340,5 +344,5 @@ function findef(find, def) {
 function getSelectedRow(table) {
     let rowid = table.jqGrid('getGridParam', "selrow");
     return (rowid) ? table.jqGrid('getRowData', rowid) : null;
-}          
+}
 //------------------------------------------------------------------------------            

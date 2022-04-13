@@ -6,6 +6,7 @@ import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
 win.build = function (canvas, script) {
     let w = new Wincalc(canvas);
     w.parse(script);
+    //console.log(JSON.stringify(w.root.obj, undefined, 4));
     return w;
 }
 
