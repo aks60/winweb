@@ -75,7 +75,7 @@ export class Com5t {
         if (this.id == 0) {
             var k = v / this.obj.height; //коэффициент
             this.obj.height = v;
-            this.obj.heightAdd = v;
+            this.obj.heightAdd = k * this.obj.heightAdd;
             this.winc.areaList.forEach(e => {
                 if (e.layout == 'VERT') {
                     e.childs.forEach(e2 => { //изменение всех по высоте
