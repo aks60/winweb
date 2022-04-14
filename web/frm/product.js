@@ -656,10 +656,7 @@ product.keyup_btn_enter = function (inpt, event) {
                     dv = (area.lengthY - dv < 200) ? 0 : dv;
                 }
             });
-            if (dv != 0) {
-                if(winCalc.root.type == 'TRAPEZE') {
-                    winCalc.obj.heightAdd = winCalc.obj.height - $(inpt).val();
-                }                
+            if (dv != 0) {                
                 $('#scale-ver input').each((i, m) => {
                     let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
                     if ($(inpt).attr('areaID') == $(m).attr('areaID')) {

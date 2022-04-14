@@ -57,7 +57,7 @@ export class Com5t {
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.type == 'AREA' || e.type == 'STVORKA')) {
                     e.lengthX = k * e.lengthX; //рекурсия изменение детей
-                    
+
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
                         if (e2.owner.layout == 'HORIZ' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {
@@ -86,10 +86,13 @@ export class Com5t {
         } else {
             let k = v / this.obj.length; //коэффициент            
             this.obj.length = v;
+            if (this.type == 'ARCH' || this.type == 'TRAPEZE') {
+                this.winc.obj.heightAdd = this.winc.obj.height - v;
+            }
             this.childs.forEach(e => {
                 if (e.owner.layout == 'VERT' && (e.type == 'AREA' || e.type == 'STVORKA')) {
                     e.lengthY = k * e.lengthY; //рекурсия изменение детей
-                    
+
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
                         if (e2.owner.layout == 'VERT' && (e2.type == 'AREA' || e2.type == 'STVORKA')) {

@@ -62,7 +62,7 @@ class Wincalc {
                     owner.childs.push(stv);
                     hm.set(stv, ob2);
 
-                } else if (ob2.type == "AREA") {
+                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE") {
                     let area = new Area(ob2, owner, this);
                     owner.childs.push(area);
                     hm.set(area, ob2);
