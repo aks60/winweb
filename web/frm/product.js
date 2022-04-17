@@ -446,19 +446,21 @@ product.resize = function () {
         var height = window.innerHeight;
         $("#context").css("height", height - 82);
 
-        //Прорисовка конструкции
+        //Изменение размера канвы
         cnv.width = $("#scale-cnv").width();
         cnv.height = $("#scale-cnv").height();
         if (order.prjprodRec != null)
-            winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]); //перерисовка на cnv
-        $('#scale-ver').width(winCalc.height * winCalc.scale); //ширина шкалы перед разворотом на 90 градусов
+            
+            //Перерисовка конструкции на канве, после изменения размера канвы
+            winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]); 
+        $('#scale-ver').width(winCalc.height * winCalc.scale); //длина шкалы перед разворотом на 90 градусов
 
-        //Прорисовка горизонт. размерных линий
+        //Прорисовка горизонт. размерных линий, после изменения размера канвы
         let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
         $('#scale-hor input').each((i, p) => arrHor.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
         product.scale_new_input('HORIZ', arrHor);
 
-        //Прорисовка вертик. размерных линий
+        //Прорисовка вертик. размерных линий, после изменения размера конструкции
         let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
         $('#scale-ver input').each((i, p) => arrVer.push(winCalc.areaList.find(e => e.id == $(p).attr('areaId'))));
         product.scale_new_input('VERT', arrVer);
@@ -474,7 +476,7 @@ product.resize = function () {
     }
 }
 //------------------------------------------------------------------------------
-//Перерисовать при изменении размера
+//Перерисовать при изменении размера (размер канвы тот-же)
 product.redraw = function () {
     let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
     let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
@@ -488,7 +490,7 @@ product.redraw = function () {
     product.local_to_fields("0");
 }
 //------------------------------------------------------------------------------
-//Наполнение инпутами шкалы горизонтальных и вертикальных размеров
+//Наполнение новыми инпутами шкалы горизонтальных и вертикальных размеров
 product.scale_new_input = function (layout, lineArea) {
     let lineArr = [];
 
