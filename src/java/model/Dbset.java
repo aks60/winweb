@@ -314,7 +314,7 @@ public class Dbset {
         String script = qPrjprod.getAs(0, ePrjprod.script);
         Wincalc winc = new Wincalc(script);
         new Furniture(winc, true);
-        LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listSortAr, Type.STVORKA);
+        LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listArea, Type.STVORKA);
         for (AreaStvorka areaStv : stvList) {
             hm.put((int) areaStv.id(), App.asMap(
                     "handleRec", areaStv.handleRec, "handleColor", areaStv.handleColor,
