@@ -54,8 +54,8 @@
                 $('#n23').datepicker();
                 $('#n24').datepicker();
 
-                if (product.init_table == undefined)
-                    $('#outbody').load('frm/product.jsp');
+//                if (product.init_table == undefined)
+//                    $('#outbody').load('frm/product.jsp');
             });
 //------------------------------------------------------------------------------            
             function test() {
