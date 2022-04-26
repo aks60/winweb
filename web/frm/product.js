@@ -51,13 +51,13 @@ product.load_tree = function (tabtree) {
         let arr = new Array();
         let winc = order.get_winc();
         let root = winc.root;
-        if (root.type == 'RECTANGL')
+        if (root.RECTANGL == 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
-        else if (root.type == 'TRAPEZE')
+        else if (root.typeArea == 'TRAPEZE')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
-        else if (root.type == 'TRIANGL')
+        else if (root.typeArea == 'TRIANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
-        else if (root.type == 'ARCH')
+        else if (root.RECTANGL == 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
