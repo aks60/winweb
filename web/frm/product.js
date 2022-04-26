@@ -53,9 +53,9 @@ product.load_tree = function (tabtree) {
         let root = winc.root;
         if (root.RECTANGL == 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
-        else if (root.typeArea == 'TRAPEZE')
+        else if (root.typeArea() == 'TRAPEZE')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
-        else if (root.typeArea == 'TRIANGL')
+        else if (root.typeArea() == 'TRIANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
         else if (root.RECTANGL == 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
