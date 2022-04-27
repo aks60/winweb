@@ -18,7 +18,7 @@ class Wincalc {
     }
 
     parse(script) {
-        try {
+        //try {
             let obj = JSON.parse(script);
             this.setform(obj, this);         //форма конструкции, см. класс Area
             this.obj = obj;                  //объект калькуляции
@@ -43,9 +43,9 @@ class Wincalc {
             this.scale = 1;
             draw_elements(this); //рисуем конструкцию 
 
-        } catch (e) {
-            alert('Ошибка:Wincalc.parse() ' + e.message);
-        }
+//        } catch (e) {
+//            alert('Ошибка:Wincalc.parse() ' + e.message);
+//        }
     }
 
     //Поднять elem.form до Wincalc.form

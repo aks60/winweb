@@ -176,7 +176,7 @@ export class Area extends Com5t {
     
     //Форма контура
     typeCom() {
-        if (this != this.root && this.form != undefined) {
+        if (this.id != 0 && this.form != undefined) {
             return this.winc.root.type;
         }        
         return this.type;        
