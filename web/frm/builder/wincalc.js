@@ -20,11 +20,11 @@ class Wincalc {
     parse(script) {
         try {
             let obj = JSON.parse(script);
+            this.setform(obj, this);         //форма конструкции, см. класс Area
             this.obj = obj;                  //объект калькуляции
             this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
             this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
             this.nuni = obj.nuni;            //nuni профиля   
-            this.form = obj.form;            //форма конструкции
             this.width = obj.width;          //ширина окна, мм
             this.height = obj.height;        //высота окна, мм 
             this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
@@ -44,43 +44,53 @@ class Wincalc {
             draw_elements(this); //рисуем конструкцию 
 
         } catch (e) {
-            alert('Ошибка: ' + e.message);
+            alert('Ошибка:Wincalc.parse() ' + e.message);
         }
+    }
+
+    //Поднять elem.form до Wincalc.form
+    setform(obj, winc) {
+        obj.childs.forEach(el => {
+            if (el.form != null)
+                winc.form = el.form;
+            if (el.type == "AREA" || el.type == "ARCH" || el.type == "TRAPEZE" || el.type == "TRIANGL" || el.type == "DOOR")
+                winc.setform(el, winc); //рекурсия 
+        });
     }
 
     elements(owner, obj) {
         try {
             let hm = new Map();
             for (let ob2 of obj.childs) {
-                    if (ob2.type == "FRAME_SIDE") {
-                        let frm = new Frame(ob2, owner, this, ob2.param);
-                        owner.frames.set(ob2.layout, frm);
+                if (ob2.type == "FRAME_SIDE") {
+                    let frm = new Frame(ob2, owner, this, ob2.param);
+                    owner.frames.set(ob2.layout, frm);
 
-                    } else if (ob2.type == "STVORKA") {
-                        let stv = new Stvorka(ob2, owner, this);
-                        owner.childs.push(stv);
-                        hm.set(stv, ob2);
+                } else if (ob2.type == "STVORKA") {
+                    let stv = new Stvorka(ob2, owner, this);
+                    owner.childs.push(stv);
+                    hm.set(stv, ob2);
 
-                    } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
-                        let area = new Area(ob2, owner, this);
-                        owner.childs.push(area);
-                        hm.set(area, ob2);
+                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
+                    let area = new Area(ob2, owner, this);
+                    owner.childs.push(area);
+                    hm.set(area, ob2);
 
-                    } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
-                        let cross = new Cross(ob2, owner, this);
-                        owner.childs.push(cross);
+                } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
+                    let cross = new Cross(ob2, owner, this);
+                    owner.childs.push(cross);
 
-                    } else if (ob2.type == "GLASS") {
-                        let glass = new Glass(ob2, owner, this);
-                        owner.childs.push(glass);
-                    }
+                } else if (ob2.type == "GLASS") {
+                    let glass = new Glass(ob2, owner, this);
+                    owner.childs.push(glass);
+                }
             }
             //Теперь вложенные элементы
             for (let k of hm.keys()) {
                 this.elements(k, hm.get(k));
             }
         } catch (e) {
-            alert('Ошибка: ' + e.message);
+            alert('Ошибка:Wincalc.elements ' + e.message);
         }
     }
 

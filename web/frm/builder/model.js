@@ -2,7 +2,7 @@
 import {draw_line, draw_stroke_polygon, draw_full_polygon, draw_full_arc} from './drawing.js';
 //------------------------------------------------------------------------------
 export class Com5t {
-
+ 
     constructor(obj, owner, winc) {
         this.obj = obj;
         this.id = obj.id;//идентификатор 
@@ -132,14 +132,6 @@ export class Area extends Com5t {
         
         this.childs = new Array(0); //список детей 
 
-        //Всё нестандартное АРЕА сверху, пока примитивно
-        //Переписываю тип чтобы можно было отловить    
-        if (owner != null && (owner.typeCom() == 'ARCH' || owner.typeCom() == 'TRAPEZE')) {
-            if (owner.childs.length == 0) {
-                this.type = owner.type;
-            }
-        }
-
         //Коробка
         if (obj.length == undefined && (owner == null || owner == winc.root)) {
             this.dimension(0, 0, winc.width, winc.height);
@@ -248,6 +240,7 @@ export class Stvorka extends Area {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
+        
         this.frames = new Map(); //рамы конструкции 
 
         //Коррекция area створки с учётом ширины рамы и нахлёста
@@ -708,7 +701,7 @@ export class Glass extends Com5t {
             let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
             draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
 
-        } else if (this.owner.typeCom() == "TRAPEZE" && this.y1 == 0) {
+        } else if (this.owner.typeCom() == "TRAPEZE") {
             if (this.winc.form == 'RIGHT') {
                 draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height - this.winc.heightAdd, this.y2, this.y2, this.color1Rec);
 
