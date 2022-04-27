@@ -51,14 +51,16 @@ product.load_tree = function (tabtree) {
         let arr = new Array();
         let winc = order.get_winc();
         let root = winc.root;
-        if (root.RECTANGL == 'RECTANGL')
+        
+        if (root.typeCom() == 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
         else if (root.typeCom() == 'TRAPEZE')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
         else if (root.typeCom() == 'TRIANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
-        else if (root.RECTANGL == 'ARCH')
+        else if (root.typeCom() == 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
+        
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
         arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
@@ -140,7 +142,8 @@ product.server_to_fields = function () {
                         if (tr != undefined) {
                             let nodeID = tr[0];
                             let elem = winc.elemList.find(it => it.id == nodeID);
-                            if (elem.typeCom() == 'STVORKA') {
+//                            if (elem != undefined && elem.typeCom() == 'STVORKA') { 
+                            if (elem.typeCom() == 'STVORKA') { 
                                 product.local_to_fields(nodeID);
                             }
                         }
