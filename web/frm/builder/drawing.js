@@ -80,11 +80,11 @@ export function draw_elements(winc) {
         ctx.lineWidth = 4;
 
         //Прорисовка стеклопакетов
-        let glass = arr.filter((v, i, arr) => v.type == "GLASS");
+        let glass = arr.filter((v, i, arr) => v.typeCom() == "GLASS");
         glass.forEach((v, k, map) => v.paint());
 
         //Прорисовка импостов
-        let cross = arr.filter((v, i, arr) => v.type == "IMPOST");
+        let cross = arr.filter((v, i, arr) => v.typeCom() == "IMPOST");
         cross.forEach((v, k, map) => v.paint());
 
 //        //Прорисовка штульпов
@@ -104,7 +104,7 @@ export function draw_elements(winc) {
 
 
         //Прорисовка створок
-        let stv = arr.filter((v, i, arr) => v.type == "STVORKA");
+        let stv = arr.filter((v, i, arr) => v.typeCom() == "STVORKA");
         stv.forEach((v, k, map) => v.paint());
 
         ctx.restore();

@@ -31,7 +31,7 @@ class Wincalc {
             this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
             this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
             this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
-           
+
             this.root = new Root(obj, null, this); //главное окно                      
             this.elements(this.root, obj); //создадим элементы конструкции
 
@@ -52,29 +52,28 @@ class Wincalc {
         try {
             let hm = new Map();
             for (let ob2 of obj.childs) {
+                    if (ob2.type == "FRAME_SIDE") {
+                        let frm = new Frame(ob2, owner, this, ob2.param);
+                        owner.frames.set(ob2.layout, frm);
 
-                if (ob2.type == "FRAME_SIDE") {
-                    let frm = new Frame(ob2, owner, this, ob2.param);
-                    owner.frames.set(ob2.layout, frm);
+                    } else if (ob2.type == "STVORKA") {
+                        let stv = new Stvorka(ob2, owner, this);
+                        owner.childs.push(stv);
+                        hm.set(stv, ob2);
 
-                } else if (ob2.type == "STVORKA") {
-                    let stv = new Stvorka(ob2, owner, this);
-                    owner.childs.push(stv);
-                    hm.set(stv, ob2);
+                    } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
+                        let area = new Area(ob2, owner, this);
+                        owner.childs.push(area);
+                        hm.set(area, ob2);
 
-                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE") {
-                    let area = new Area(ob2, owner, this);
-                    owner.childs.push(area);
-                    hm.set(area, ob2);
+                    } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
+                        let cross = new Cross(ob2, owner, this);
+                        owner.childs.push(cross);
 
-                } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
-                    let cross = new Cross(ob2, owner, this);
-                    owner.childs.push(cross);
-
-                } else if (ob2.type == "GLASS") {
-                    let glass = new Glass(ob2, owner, this);
-                    owner.childs.push(glass);
-                }
+                    } else if (ob2.type == "GLASS") {
+                        let glass = new Glass(ob2, owner, this);
+                        owner.childs.push(glass);
+                    }
             }
             //Теперь вложенные элементы
             for (let k of hm.keys()) {
@@ -86,9 +85,9 @@ class Wincalc {
     }
 
     arr_of_winc(area) {
-        if(area.id == 0) {
-            this.areaList.push(this.root);            
-        } 
+        if (area.id == 0) {
+            this.areaList.push(this.root);
+        }
         if (area.frames !== undefined) {
             this.elemList.push(area);
             for (let frm of area.frames.values())

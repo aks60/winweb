@@ -22,6 +22,11 @@ export class Com5t {
         this.y2 = y2;
     }
 
+    //Форма компонента
+    typeCom() {
+        return this.type;
+    }
+    
     get width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
@@ -55,12 +60,12 @@ export class Com5t {
             let k = v / this.obj.length; //коэффициент
             this.obj.length = v;
             this.childs.forEach(e => {
-                if (e.owner.layout == 'HORIZ' && (e.typeArea() == 'AREA' || e.typeArea() == 'STVORKA')) {
+                if (e.owner.layout == 'HORIZ' && (e.typeCom() == 'AREA' || e.typeCom() == 'STVORKA')) {
                     e.lengthX = k * e.lengthX; //рекурсия изменение детей
 
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'HORIZ' && (e2.typeArea() == 'AREA' || e2.typeArea() == 'STVORKA')) {
+                        if (e2.owner.layout == 'HORIZ' && (e2.typeCom() == 'AREA' || e2.typeCom() == 'STVORKA')) {
                             e2.lengthX = k * e2.lengthX; //рекурсия изменение детей
                         }
                     });
@@ -86,16 +91,16 @@ export class Com5t {
         } else {
             let k = v / this.obj.length; //коэффициент            
             this.obj.length = v;
-            if (this.typeArea() == 'ARCH' || this.typeArea() == 'TRAPEZE') {
+            if (this.typeCom() == 'ARCH' || this.typeCom() == 'TRAPEZE') {
                 this.winc.obj.heightAdd = this.winc.obj.height - v;
             }
             this.childs.forEach(e => {
-                if (e.owner.layout == 'VERT' && (e.typeArea() == 'AREA' || e.typeArea() == 'STVORKA')) {
+                if (e.owner.layout == 'VERT' && (e.typeCom() == 'AREA' || e.typeCom() == 'STVORKA')) {
                     e.lengthY = k * e.lengthY; //рекурсия изменение детей
 
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'VERT' && (e2.typeArea() == 'AREA' || e2.typeArea() == 'STVORKA')) {
+                        if (e2.owner.layout == 'VERT' && (e2.typeCom() == 'AREA' || e2.typeCom() == 'STVORKA')) {
                             e2.lengthY = k * e2.lengthY; //рекурсия изменение детей
                         }
                     });
@@ -129,7 +134,7 @@ export class Area extends Com5t {
 
         //Всё нестандартное АРЕА сверху, пока примитивно
         //Переписываю тип чтобы можно было отловить    
-        if (owner != null && (owner.typeArea() == 'ARCH' || owner.typeArea() == 'TRAPEZE')) {
+        if (owner != null && (owner.typeCom() == 'ARCH' || owner.typeCom() == 'TRAPEZE')) {
             if (owner.childs.length == 0) {
                 this.type = owner.type;
             }
@@ -140,7 +145,7 @@ export class Area extends Com5t {
             this.dimension(0, 0, winc.width, winc.height);
 
             //Створка
-        } else if (this.type == 'STVORKA') {
+        } else if (this.typeCom() == 'STVORKA') {
             this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
             //Аrеа
@@ -178,7 +183,7 @@ export class Area extends Com5t {
     }
     
     //Форма контура
-    typeArea() {
+    typeCom() {
         if (this != this.root && this.form != undefined) {
             return this.winc.root.type;
         }        
@@ -207,7 +212,7 @@ export class Root extends Area {
         this.pardefMap = new Map(); //параметры по умолчанию   
 
         //Радиус
-        if (this.type == "ARCH") {
+        if (this.typeCom() == "ARCH") {
             let dh = win.dh_frm;
             let h = winc.height - winc.heightAdd;
             let w = winc.width;
@@ -388,7 +393,7 @@ export class Stvorka extends Area {
             draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x2, elemB.y2);
         }
 
-        if (this.winc.root.type == "DOOR") {
+        if (this.winc.root.typeCom() == "DOOR") {
 
         } else {
             let handlRGB = findef(dbset.colorList.find(rec => this.handleColor == rec[COLOR.id]), dbset.colorList);
@@ -441,7 +446,7 @@ export class Cross extends Com5t {
             let prevArea = owner.childs[0];
             prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
 
-        } else if ("TRAPEZE" == owner.typeArea() && owner.childs.length == 1) {
+        } else if ("TRAPEZE" == owner.typeCom() && owner.childs.length == 1) {
             let prevArea = owner.childs[0];
             if (winc.form == 'RIGHT') {
                 let angl = winc.root.frames.get('RIGHT').anglCut[1];
@@ -528,7 +533,7 @@ export class Frame extends Com5t {
 
     set_location(obj, owner, winc) {
 
-        if (owner.type == "ARCH") {
+        if (owner.typeCom() == "ARCH") {
             if ("BOTT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
@@ -539,7 +544,7 @@ export class Frame extends Com5t {
                 this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
             }
 
-        } else if (owner.typeArea() == "TRAPEZE") {
+        } else if (owner.typeCom() == "TRAPEZE") {
             let H = winc.height - winc.heightAdd;
             let W = winc.width;
 
@@ -601,7 +606,7 @@ export class Frame extends Com5t {
         let dh0 = win.dh_frm; //см. winapp
         let dh1 = win.dh_frm; //см. winapp
         let dz = 4
-        if (this.owner.type == "ARCH") {
+        if (this.owner.typeCom() == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
             let r = this.winc.root.radiusArch;
 
@@ -632,7 +637,7 @@ export class Frame extends Com5t {
             //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
 
 
-        } else if (this.owner.typeArea() == 'TRAPEZE') {
+        } else if (this.owner.typeCom() == 'TRAPEZE') {
             if ('BOTT' == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
 
@@ -697,13 +702,13 @@ export class Glass extends Com5t {
     }
 
     paint() {
-        if (this.owner.type == "ARCH") {
+        if (this.owner.typeCom() == "ARCH") {
             let r = this.winc.root.radiusArch;
             let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
             let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
             draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
 
-        } else if (this.owner.typeArea() == "TRAPEZE" && this.y1 == 0) {
+        } else if (this.owner.typeCom() == "TRAPEZE" && this.y1 == 0) {
             if (this.winc.form == 'RIGHT') {
                 draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height - this.winc.heightAdd, this.y2, this.y2, this.color1Rec);
 

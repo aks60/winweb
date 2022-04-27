@@ -88,7 +88,7 @@
                 if (elem.obj.param == undefined) {
                     elem.obj.param = {};
                 }
-                if (elem.type == "FRAME_SIDE") { //коробка
+                if (elem.typeCom() == "FRAME_SIDE") { //коробка
                     elem.obj.param.sysprofID = tableRec.id; //запишем профиль в скрипт
 
                 } else { //створка       

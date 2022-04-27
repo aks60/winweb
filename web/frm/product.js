@@ -53,9 +53,9 @@ product.load_tree = function (tabtree) {
         let root = winc.root;
         if (root.RECTANGL == 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
-        else if (root.typeArea() == 'TRAPEZE')
+        else if (root.typeCom() == 'TRAPEZE')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'img/tool/folder.gif'});
-        else if (root.typeArea() == 'TRIANGL')
+        else if (root.typeCom() == 'TRIANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
         else if (root.RECTANGL == 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
@@ -81,14 +81,14 @@ product.load_tree = function (tabtree) {
 }
 product.elements = function (com, arr) {
 
-    if (com.type == "STVORKA") {
+    if (com.typeCom() == "STVORKA") {
         arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'img/tool/folder.gif'});
         arr.push({'id': com.frames.get('BOTT').id, 'parent': com.id, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('RIGHT').id, 'parent': com.id, 'text': 'Рама правая', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('TOP').id, 'parent': com.id, 'text': 'Рама верхняя', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('LEFT').id, 'parent': com.id, 'text': 'Рама левая', 'icon': 'img/tool/leaf.gif'});
         for (let com2 of com.childs) {
-            if (com2.type == "GLASS") {
+            if (com2.typeCom() == "GLASS") {
                 arr.push({'id': com2.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'img/tool/leaf.gif'});
             }
         }
@@ -100,7 +100,7 @@ product.elements = function (com, arr) {
                 if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
                     let lay = (com.layout == "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'img/tool/leaf.gif'});
-                } else if (com2.type == "GLASS") {
+                } else if (com2.typeCom() == "GLASS") {
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "img/tool/leaf.gif"});
                 }
             }
@@ -122,7 +122,7 @@ product.server_to_fields = function () {
                         let id = order.prjprodRec[PRJPROD.id];
                         let winc = order.wincalcMap.get(id);
                         for (let el of winc.elemList) {
-                            if (el.type == 'STVORKA') {
+                            if (el.typeCom() == 'STVORKA') {
                                 for (let fk in data.stvFields) {
                                     if (fk == el.id) {
 
@@ -140,7 +140,7 @@ product.server_to_fields = function () {
                         if (tr != undefined) {
                             let nodeID = tr[0];
                             let elem = winc.elemList.find(it => it.id == nodeID);
-                            if (elem.type == 'STVORKA') {
+                            if (elem.typeCom() == 'STVORKA') {
                                 product.local_to_fields(nodeID);
                             }
                         }
@@ -178,16 +178,16 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-1").show();
 
         //Парам. по умолчанию
-    } else if (elem.type == "DEF_PARAM") {
+    } else if (elem.typeCom() == "DEF_PARAM") {
         product.load_table($('#table1'));
         $("#tabs-2").show();
 
         //Сторона коробки, створки
     } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
-        if (elem.type == "FRAME_SIDE") {
+        if (elem.typeCom() == "FRAME_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
-        } else if (elem.type == "STVORKA_SIDE") {
+        } else if (elem.typeCom() == "STVORKA_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона створки ' + lay[elem.layout]);
         } else {
             $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
@@ -199,7 +199,7 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-3").show();
 
         //Створка
-    } else if (elem.type == "STVORKA") {
+    } else if (elem.typeCom() == "STVORKA") {
         let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
         let type_open = TypeOpen.INVALID[1]; //сторона открывания
         for (let k in TypeOpen) {
@@ -221,7 +221,7 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-4").show();
 
         //Стеклопакет
-    } else if (elem.type == "GLASS") {
+    } else if (elem.typeCom() == "GLASS") {
         load_tabs('tabs-5', {
             n51: elem.artiklRec[ARTIKL.code], n52: elem.artiklRec[ARTIKL.name], n53: elem.color1Rec[COLOR.name]
         }, ['n51', 'n52', 'n53']);
@@ -566,7 +566,7 @@ product.click_canvas_xy = function (canvas, event) {
 
     } else { //На конструкции
         winCalc.elemList.forEach((e, i) => {
-            if (e.type == 'IMPOST' || e.type == 'SHTULP' || e.type == 'STOIKA') {
+            if (e.typeCom() == 'IMPOST' || e.typeCom() == 'SHTULP' || e.typeCom() == 'STOIKA') {
                 if (e.inside(x, y)) {
                     let m = winCalc.root.lineCross(e);
                     if (e.layout == 'HORIZ') {

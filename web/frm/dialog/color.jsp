@@ -131,7 +131,7 @@
                             elem.obj.param = {};
                             param = elem.obj.param;
                         }
-                        if (elem.type == 'STVORKA_SIDE') {
+                        if (elem.typeCom() == 'STVORKA_SIDE') {
                             let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
                             if (elem.obj.param[sideLayout] == undefined) {
                                 elem.obj.param[sideLayout] = {};
