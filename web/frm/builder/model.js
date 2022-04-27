@@ -435,11 +435,11 @@ export class Cross extends Com5t {
     set_location(obj, owner, winc) {
 
         //Коррекция положения импоста арки (подкдадка ареа над импостом)
-        if ("ARCH" == owner.type && owner.childs.length == 1) {
+        if ("ARCH" == owner.typeForm()) {
             let prevArea = owner.childs[0];
             prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
 
-        } else if ("TRAPEZE" == owner.typeForm() && owner.childs.length == 1) {
+        } else if ("TRAPEZE" == owner.typeForm()) {
             let prevArea = owner.childs[0];
             if (winc.form == 'RIGHT') {
                 let angl = winc.root.frames.get('RIGHT').anglCut[1];
