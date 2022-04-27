@@ -23,7 +23,7 @@ export class Com5t {
     }
 
     //Форма компонента
-    typeCom() {
+    typeForm() {
         return this.type;
     }
     
@@ -60,12 +60,12 @@ export class Com5t {
             let k = v / this.obj.length; //коэффициент
             this.obj.length = v;
             this.childs.forEach(e => {
-                if (e.owner.layout == 'HORIZ' && (e.typeCom() == 'AREA' || e.typeCom() == 'STVORKA')) {
+                if (e.owner.layout == 'HORIZ' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {
                     e.lengthX = k * e.lengthX; //рекурсия изменение детей
 
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'HORIZ' && (e2.typeCom() == 'AREA' || e2.typeCom() == 'STVORKA')) {
+                        if (e2.owner.layout == 'HORIZ' && (e2.typeForm() == 'AREA' || e2.typeForm() == 'STVORKA')) {
                             e2.lengthX = k * e2.lengthX; //рекурсия изменение детей
                         }
                     });
@@ -91,16 +91,16 @@ export class Com5t {
         } else {
             let k = v / this.obj.length; //коэффициент            
             this.obj.length = v;
-            if (this.typeCom() == 'ARCH' || this.typeCom() == 'TRAPEZE') {
+            if (this.typeForm() == 'ARCH' || this.typeForm() == 'TRAPEZE') {
                 this.winc.obj.heightAdd = this.winc.obj.height - v;
             }
             this.childs.forEach(e => {
-                if (e.owner.layout == 'VERT' && (e.typeCom() == 'AREA' || e.typeCom() == 'STVORKA')) {
+                if (e.owner.layout == 'VERT' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {
                     e.lengthY = k * e.lengthY; //рекурсия изменение детей
 
                 } else if (e.childs != null) {
                     e.childs.forEach(e2 => {
-                        if (e2.owner.layout == 'VERT' && (e2.typeCom() == 'AREA' || e2.typeCom() == 'STVORKA')) {
+                        if (e2.owner.layout == 'VERT' && (e2.typeForm() == 'AREA' || e2.typeForm() == 'STVORKA')) {
                             e2.lengthY = k * e2.lengthY; //рекурсия изменение детей
                         }
                     });
@@ -137,7 +137,7 @@ export class Area extends Com5t {
             this.dimension(0, 0, winc.width, winc.height);
 
             //Створка
-        } else if (this.typeCom() == 'STVORKA') {
+        } else if (this.typeForm() == 'STVORKA') {
             this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
 
             //Аrеа
@@ -175,7 +175,7 @@ export class Area extends Com5t {
     }
     
     //Форма контура
-    typeCom() {
+    typeForm() {
         if (this.id != 0 && this.form != undefined) {
             return this.winc.root.type;
         }        
@@ -204,7 +204,7 @@ export class Root extends Area {
         this.pardefMap = new Map(); //параметры по умолчанию   
 
         //Радиус
-        if (this.typeCom() == "ARCH") {
+        if (this.typeForm() == "ARCH") {
             let dh = win.dh_frm;
             let h = winc.height - winc.heightAdd;
             let w = winc.width;
@@ -386,7 +386,7 @@ export class Stvorka extends Area {
             draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x2, elemB.y2);
         }
 
-        if (this.winc.root.typeCom() == "DOOR") {
+        if (this.winc.root.typeForm() == "DOOR") {
 
         } else {
             let handlRGB = findef(dbset.colorList.find(rec => this.handleColor == rec[COLOR.id]), dbset.colorList);
@@ -439,7 +439,7 @@ export class Cross extends Com5t {
             let prevArea = owner.childs[0];
             prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
 
-        } else if ("TRAPEZE" == owner.typeCom() && owner.childs.length == 1) {
+        } else if ("TRAPEZE" == owner.typeForm() && owner.childs.length == 1) {
             let prevArea = owner.childs[0];
             if (winc.form == 'RIGHT') {
                 let angl = winc.root.frames.get('RIGHT').anglCut[1];
@@ -526,7 +526,7 @@ export class Frame extends Com5t {
 
     set_location(obj, owner, winc) {
 
-        if (owner.typeCom() == "ARCH") {
+        if (owner.typeForm() == "ARCH") {
             if ("BOTT" == this.layout) {
                 this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
             } else if ("RIGHT" == this.layout) {
@@ -537,7 +537,7 @@ export class Frame extends Com5t {
                 this.dimension(owner.x1, owner.y2 - this.winc.heightAdd, owner.x1 + win.dh_frm, owner.y2);
             }
 
-        } else if (owner.typeCom() == "TRAPEZE") {
+        } else if (owner.typeForm() == "TRAPEZE") {
             let H = winc.height - winc.heightAdd;
             let W = winc.width;
 
@@ -599,7 +599,7 @@ export class Frame extends Com5t {
         let dh0 = win.dh_frm; //см. winapp
         let dh1 = win.dh_frm; //см. winapp
         let dz = 4
-        if (this.owner.typeCom() == "ARCH") {
+        if (this.owner.typeForm() == "ARCH") {
             let Y1 = this.winc.height - this.winc.heightAdd;
             let r = this.winc.root.radiusArch;
 
@@ -630,7 +630,7 @@ export class Frame extends Com5t {
             //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
 
 
-        } else if (this.owner.typeCom() == 'TRAPEZE') {
+        } else if (this.owner.typeForm() == 'TRAPEZE') {
             if ('BOTT' == this.layout) {
                 draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
 
@@ -695,13 +695,13 @@ export class Glass extends Com5t {
     }
 
     paint() {
-        if (this.owner.typeCom() == "ARCH") {
+        if (this.owner.typeForm() == "ARCH") {
             let r = this.winc.root.radiusArch;
             let ang1 = Math.PI + Math.acos(this.winc.width / (r * 2));
             let ang2 = 2 * Math.PI - Math.acos(this.winc.width / (r * 2));
             draw_full_arc(this.winc, this.winc.width / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
 
-        } else if (this.owner.typeCom() == "TRAPEZE") {
+        } else if (this.owner.typeForm() == "TRAPEZE") {
             if (this.winc.form == 'RIGHT') {
                 draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height - this.winc.heightAdd, this.y2, this.y2, this.color1Rec);
 
