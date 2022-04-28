@@ -55,10 +55,13 @@
                 prepareToolBar();
                 let cvs = document.querySelector("#cnv");
                 cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
+                $("#spinner").spinner();
             });
 
             function test() {
-                printScript(winCalc);
+//                printScript(winCalc);
+//                product.update_script();
+                spinner.spinner("value", 5);
             }
         </script>
     </head>
@@ -66,6 +69,7 @@
         <div id="north">
             <button id="btnResiz" style="width: 80px" onClick="product.click_btn_resiz();">Размер</button>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
+            <input id="spinner">
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">

@@ -51,7 +51,7 @@ product.load_tree = function (tabtree) {
         let arr = new Array();
         let winc = order.get_winc();
         let root = winc.root;
-        
+
         if (root.typeForm() == 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'img/tool/folder.gif'});
         else if (root.typeForm() == 'TRAPEZE')
@@ -60,7 +60,7 @@ product.load_tree = function (tabtree) {
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'img/tool/folder.gif'});
         else if (root.typeForm() == 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'img/tool/folder.gif'});
-        
+
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'img/tool/folder.gif'});
         arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'img/tool/leaf.gif'});
@@ -142,7 +142,7 @@ product.server_to_fields = function () {
                         if (tr != undefined) {
                             let nodeID = tr[0];
                             let elem = winc.elemList.find(it => it.id == nodeID);
-                            if (elem.typeForm() == 'STVORKA') { 
+                            if (elem.typeForm() == 'STVORKA') {
                                 product.local_to_fields(nodeID);
                             }
                         }
@@ -354,7 +354,7 @@ product.artikl_to_stvorka = function (btnSrc) {
     $('#dialog-dic').load('frm/dialog/artikl.jsp');
 }
 //------------------------------------------------------------------------------
-//Заполнение\
+//Заполнение
 product.color_to_element = function (btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -451,10 +451,8 @@ product.resize = function () {
         //Изменение размера канвы
         cnv.width = $("#scale-cnv").width();
         cnv.height = $("#scale-cnv").height();
-        if (order.prjprodRec != null)
-            
-            //Перерисовка конструкции на канве, после изменения размера канвы
-            winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]); 
+        if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
+            winCalc = win.build(cnv, order.prjprodRec[PRJPROD.script]);
         $('#scale-ver').width(winCalc.height * winCalc.scale); //длина шкалы перед разворотом на 90 градусов
 
         //Прорисовка горизонт. размерных линий, после изменения размера канвы
@@ -660,7 +658,7 @@ product.keyup_btn_enter = function (inpt, event) {
                     dv = (area.lengthY - dv < 200) ? 0 : dv;
                 }
             });
-            if (dv != 0) {                
+            if (dv != 0) {
                 $('#scale-ver input').each((i, m) => {
                     let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
                     if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
@@ -682,5 +680,22 @@ product.keyup_btn_enter = function (inpt, event) {
             product.redraw(); //перерисовать при изменении размера
     }
     //console.log("+++ " + winCalc.heightAdd);
+}
+//------------------------------------------------------------------------------
+product.update_script = function () {
+    let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+    let winc = order.wincalcMap.get(prjprodID);
+
+    $.ajax({//запишем профиль в серверную базу данных
+        url: 'dbset?action=updateScript',
+        data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.obj)})},
+        success: function (data) {
+            if (data.result != 'ok')
+                dialogMes('Сообщение', "<p>" + data.result);
+        },
+        error: function () {
+            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+        }
+    });
 }
 //------------------------------------------------------------------------------
