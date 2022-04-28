@@ -41,6 +41,12 @@
                 border-left: 2px solid #00f;
                 border-right: 2px solid #00f;
             }
+            #spinner {
+                width: 80px;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 0;
+            }
         </style> 
         <script type="text/javascript">
 
@@ -55,21 +61,24 @@
                 prepareToolBar();
                 let cvs = document.querySelector("#cnv");
                 cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
-                $("#spinner").spinner();
+                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
+                $("#spinner").spinner({
+                    spin: function (event, ui) {
+                        product.click_spinner();
+                    }
+                });
             });
 
             function test() {
 //                printScript(winCalc);
 //                product.update_script();
-                spinner.spinner("value", 5);
             }
         </script>
     </head>
     <body>
-        <div id="north">
-            <button id="btnResiz" style="width: 80px" onClick="product.click_btn_resiz();">Размер</button>
+        <div id="north">         
+            <input id="spinner" name="value">
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
-            <input id="spinner">
         </div> 
         <div id = "context">
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%;">

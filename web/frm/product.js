@@ -548,7 +548,8 @@ product.dblclick_scale_color = function (inpt, dir) {
     $('#scale-ver input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
     $('#scale-hor input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
     $(inpt).css('color', 'rgb(255, 0, 0)');
-    $('#btnResiz').focus();
+    $("#spinner").spinner("value", $(inpt).val());
+//    $('#btnResiz').focus();
 }
 //------------------------------------------------------------------------------
 //Click на импосте для расчёта шкал размеров
@@ -561,6 +562,7 @@ product.click_canvas_xy = function (canvas, event) {
     if (winCalc.root.inside(x, y) == false) {
         product.scale_new_input('HORIZ', [winCalc.root]);
         product.scale_new_input('VERT', [winCalc.root]);
+        $("#spinner").spinner("value", 0);
         $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
         $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 
@@ -680,6 +682,50 @@ product.keyup_btn_enter = function (inpt, event) {
             product.redraw(); //перерисовать при изменении размера
     }
     //console.log("+++ " + winCalc.heightAdd);
+}
+//------------------------------------------------------------------------------
+//Клик на кнопке масштабирования
+product.click_spinner = function () {
+    let draw = 0;
+
+    //По горизонтали  
+    $('#scale-hor input').each((i, e) => {
+        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+            let areas = winCalc.areaList.find(v => v.id == $(e).attr('areaID'));
+            let dv = $("#spinner").spinner("value") - areas.lengthX;
+            ++draw;
+            $('#scale-hor input').each((i, m) => {
+                let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                    area.lengthX = area.lengthX + dv;
+                } else {
+                    area.lengthX = area.lengthX - dv;
+                }
+            });
+        }
+    });
+
+    //По вертикали
+    $('#scale-ver input').each((i, e) => {
+        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+            let areas = winCalc.areaList.find(v => v.id == $(e).attr('areaID'));
+            let dv = $("#spinner").spinner("value") - areas.lengthX;
+            ++draw;
+            $('#scale-ver input').each((i, m) => {
+                let area = winCalc.areaList.find(v => v.id == $(m).attr('areaID'));
+                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                    area.lengthY = area.lengthY + dv;
+                } else {
+                    area.lengthY = area.lengthY - dv;
+                }
+            });
+        }
+    });
+
+    //Перерисовать при изменении размера
+    if (draw > 0) {
+        product.redraw();
+    }
 }
 //------------------------------------------------------------------------------
 product.update_script = function () {
