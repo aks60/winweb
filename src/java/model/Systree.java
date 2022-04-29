@@ -65,7 +65,7 @@ public class Systree {
         List<List> prod = new ArrayList();
         Query qSysprod = new Query(eSysprod.values()).select(eSysprod.up, "order by name");
         for (Record rec : qSysprod) {
-            prod.add(Arrays.asList(
+            prod.add(List.of(
                     rec.get(eSysprod.id), 
                     rec.get(eSysprod.name),
                     rec.get(eSysprod.script), 
