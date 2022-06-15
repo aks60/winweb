@@ -340,7 +340,7 @@ public class Dbset {
     }
 
     public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
-        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.manager);
+        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.login);
         return new JSONObject(App.asMap("dealerList", qPrjpart));
     }
 
