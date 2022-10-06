@@ -19,29 +19,34 @@ class Wincalc {
 
     parse(script) {
         //try {
-            let obj = JSON.parse(script);
-            this.setform(obj, this);         //форма конструкции, см. класс Area
-            this.obj = obj;                  //объект калькуляции
-            this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
-            this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
-            this.nuni = obj.nuni;            //nuni профиля   
-            this.width = obj.width;          //ширина окна, мм
-            this.height = obj.height;        //высота окна, мм 
-            this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
-            this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
-            this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
-            this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
+        let obj = JSON.parse(script);
+        this.setform(obj, this);         //форма конструкции, см. класс Area
+        this.obj = obj;                  //объект калькуляции
+        this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
+        this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
+        this.nuni = obj.nuni;            //nuni профиля   
+        //this.width = obj.width;          //ширина окна, мм 
+        this.width1 = (obj.width1 === null) ? obj.width() : obj.width1;
+        this.width2 = obj.width2;   
+        //this.height = obj.height;        //высота окна, мм 
+        this.height1 = obj.height1;
+        this.height2 = (obj.height2 === null)? obj.height() : obj.height2;  
+        
+        this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
+        this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
+        this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
+        this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
 
-            this.root = new Root(obj, null, this); //главное окно                      
-            this.elements(this.root, obj); //создадим элементы конструкции
+        this.root = new Root(obj, null, this); //главное окно                      
+        this.elements(this.root, obj); //создадим элементы конструкции
 
-            this.areaList = new Array(); //массив area конструкции  
-            this.elemList = new Array(); //массив элементов конструкции  
-            this.arr_of_winc(this.root);
-            this.areaList.sort((a, b) => a.id - b.id);
-            this.elemList.sort((a, b) => a.id - b.id);
-            this.scale = 1;
-            draw_elements(this); //рисуем конструкцию 
+        this.areaList = new Array(); //массив area конструкции  
+        this.elemList = new Array(); //массив элементов конструкции  
+        this.arr_of_winc(this.root);
+        this.areaList.sort((a, b) => a.id - b.id);
+        this.elemList.sort((a, b) => a.id - b.id);
+        this.scale = 1;
+        draw_elements(this); //рисуем конструкцию 
 
 //        } catch (e) {
 //            alert('Ошибка:Wincalc.parse() ' + e.message);
@@ -112,4 +117,13 @@ class Wincalc {
             }
         }
     }
+
+    width() {
+        return (this.width1 > this.width2) ? this.width1 : this.width2;
+    }
+    
+
+    height() {
+        return (this.height1 > this.height2) ? this.height1 : this.height2;
+    }    
 }
