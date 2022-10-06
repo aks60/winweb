@@ -27,12 +27,12 @@ class Wincalc {
         this.nuni = obj.nuni;            //nuni профиля   
         //this.width = obj.width;          //ширина окна, мм 
         this.width1 = (obj.width1 === null) ? obj.width() : obj.width1;
-        this.width2 = obj.width2;   
+        this.width2 = obj.width2;
         //this.height = obj.height;        //высота окна, мм 
         this.height1 = obj.height1;
-        this.height2 = (obj.height2 === null)? obj.height() : obj.height2;  
+        this.height2 = (obj.height2 === null) ? obj.height() : obj.height2;
+        //this.heightAdd = obj.heightAdd;  //дополнительная высота, мм. 
         
-        this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
         this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
         this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
         this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
@@ -118,12 +118,35 @@ class Wincalc {
         }
     }
 
-    width() {
-        return (this.width1 > this.width2) ? this.width1 : this.width2;
+    width(obj) {
+        if (arguments.length === 1) {
+            if (obj.width1 === null) {
+                return obj.width2;
+            } else if (obj.width2 === null) {
+                return obj.width1;
+            } else if (obj.width1 > obj.width2) {
+                return obj.width1;
+            } else {
+                return obj.width2;
+            }
+        } else {
+            return (this.width1 > this.width2) ? this.width1 : this.width2;
+        }
     }
-    
 
-    height() {
-        return (this.height1 > this.height2) ? this.height1 : this.height2;
-    }    
+    height(obj) {
+        if (arguments.length === 1) {
+            if (obj.height1 === null) {
+                return obj.height2;
+            } else if (obj.height2 === null) {
+                return obj.height1;
+            } else if (obj.height1 > obj.height2) {
+                return obj.height1;
+            } else {
+                return obj.height2;
+            }
+        } else {
+            return (this.height1 > this.height2) ? this.height1 : this.height2;
+        }
+    }
 }
