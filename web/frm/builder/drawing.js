@@ -75,7 +75,7 @@ export function draw_elements(winc) {
         ctx.clearRect(0, 0, cnv.width, cnv.height);
 
         //Настроим контекст
-        winc.scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / obj.width : cnv.height / obj.height;
+        winc.scale = (cnv.width / winc.width(obj) < cnv.height / winc.height(obj)) ? cnv.width / winc.width(obj) : cnv.height / winc.height(obj);
         ctx.scale(winc.scale, winc.scale);
         ctx.lineWidth = 4;
 
@@ -87,13 +87,13 @@ export function draw_elements(winc) {
         let cross = arr.filter((v, i, arr) => v.typeForm() == "IMPOST");
         cross.forEach((v, k, map) => v.paint());
 
-//        //Прорисовка штульпов
-//        LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(winc.listSortEl, Type.SHTULP);
-//        elemShtulpList.stream().forEach(el - > el.paint());
-//        
-//        //Прорисовка стоек
-//        LinkedList < ElemCross > elemStoikaList = UCom.listSortObj(winc.listSortEl, Type.STOIKA);
-//        elemStoikaList.stream().forEach(el - > el.paint());
+        //Прорисовка штульпов
+        //LinkedList < ElemCross > elemShtulpList = UCom.listSortObj(winc.listSortEl, Type.SHTULP);
+        //elemShtulpList.stream().forEach(el - > el.paint());
+        
+        //Прорисовка стоек
+        //LinkedList < ElemCross > elemStoikaList = UCom.listSortObj(winc.listSortEl, Type.STOIKA);
+        //elemStoikaList.stream().forEach(el - > el.paint());
 
 
         //Прорисовка рам

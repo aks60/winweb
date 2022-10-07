@@ -24,14 +24,12 @@ class Wincalc {
         this.obj = obj;                  //объект калькуляции
         this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
         this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
-        this.nuni = obj.nuni;            //nuni профиля   
-        //this.width = obj.width;          //ширина окна, мм 
-        this.width1 = (obj.width1 === null) ? obj.width() : obj.width1;
-        this.width2 = obj.width2;
-        //this.height = obj.height;        //высота окна, мм 
-        this.height1 = obj.height1;
-        this.height2 = (obj.height2 === null) ? obj.height() : obj.height2;
-        //this.heightAdd = obj.heightAdd;  //дополнительная высота, мм. 
+        this.nuni = obj.nuni;            //nuni профиля    
+        
+        this.width1 = (obj.width1 === undefined) ? this.width(obj) : obj.width1; //ширина 2 окна, мм 
+        this.width2 = obj.width2; //ширина 2 окна, мм 
+        this.height1 = obj.height1; //высота 1 окна
+        this.height2 = (obj.height2 === undefined) ? this.height(obj) : obj.height2; //высота 2 окна
         
         this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
         this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
@@ -120,9 +118,9 @@ class Wincalc {
 
     width(obj) {
         if (arguments.length === 1) {
-            if (obj.width1 === null) {
+            if (obj.width1 === undefined) {
                 return obj.width2;
-            } else if (obj.width2 === null) {
+            } else if (obj.width2 === undefined) {
                 return obj.width1;
             } else if (obj.width1 > obj.width2) {
                 return obj.width1;
@@ -136,9 +134,9 @@ class Wincalc {
 
     height(obj) {
         if (arguments.length === 1) {
-            if (obj.height1 === null) {
+            if (obj.height1 === undefined) {
                 return obj.height2;
-            } else if (obj.height2 === null) {
+            } else if (obj.height2 === undefined) {
                 return obj.height1;
             } else if (obj.height1 > obj.height2) {
                 return obj.height1;
