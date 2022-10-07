@@ -2,7 +2,7 @@
 import {draw_line, draw_stroke_polygon, draw_full_polygon, draw_full_arc} from './drawing.js';
 //------------------------------------------------------------------------------
 export class Com5t {
- 
+
     constructor(obj, owner, winc) {
         this.obj = obj;
         this.id = obj.id;//идентификатор 
@@ -26,7 +26,7 @@ export class Com5t {
     typeForm() {
         return this.type;
     }
-    
+
     get width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
@@ -126,10 +126,10 @@ export class Area extends Com5t {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
-        if(obj.form != undefined) {
+        if (obj.form != undefined) {
             this.form = obj.form;
         }
-        
+
         this.childs = new Array(0); //список детей 
 
         //Коробка
@@ -173,13 +173,13 @@ export class Area extends Com5t {
             }
         }
     }
-    
+
     //Форма контура
     typeForm() {
         if (this.id != 0 && this.form != undefined) {
             return this.winc.root.type;
-        }        
-        return this.type;        
+        }
+        return this.type;
     }
 
     lineCross(cross) {
@@ -240,7 +240,7 @@ export class Stvorka extends Area {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
-        
+
         this.frames = new Map(); //рамы конструкции 
 
         //Коррекция area створки с учётом ширины рамы и нахлёста
@@ -554,22 +554,21 @@ export class Frame extends Com5t {
                 }
             } else if ('TOP' == this.layout) {
                 if (winc.form == 'RIGHT') {
-                    this.dimension(owner.x1, owner.y1, owner.x2, owner.y2 - winc.height2);
+                    this.dimension(owner.x1, owner.y1, owner.x2, winc.height1 - winc.height2);
                     this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                     this.anglCut[1] = Math.toDegrees(Math.atan(W / H)) / 2;
-
                 } else {
-                    this.dimension(owner.x1, owner.y2 - winc.height2, owner.x2, owner.y1);
+                    this.dimension(owner.x1, winc.height2 - winc.height1, owner.x2, owner.y1);
                     this.anglCut[1] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                     this.anglCut[0] = Math.toDegrees(Math.atan(W / H)) / 2;
                 }
             } else if ('LEFT' == this.layout) {
-                if (winc.form == 'LEFT') {
-                    this.dimension(owner.x1, owner.y2 - winc.height2, owner.x1 + win.dh_frm, owner.y2);
-                    this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
-                } else {
+                if (winc.form == 'RIGHT') {
                     this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
                     this.anglCut[0] = (Math.toDegrees(Math.atan(W / H))) / 2;
+                } else {
+                    this.dimension(owner.x1, owner.y2 - winc.height1, owner.x1 + win.dh_frm, owner.y2);
+                    this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
                 }
             }
         } else {
@@ -702,6 +701,12 @@ export class Glass extends Com5t {
             draw_full_arc(this.winc, this.winc.width() / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
 
         } else if (this.owner.typeForm() == "TRAPEZE") {
+
+//            let insideLeft = this.winc.root.frames().get(Layout.LEFT),
+//                    insideTop = this.winc.root.frames().get(Layout.TOP),
+//                    insideBott = this.winc.root.frames().get(Layout.BOTT),
+//                    insideRight = this.winc.root.frames().get(Layout.RIGHT);
+
             if (this.winc.form == 'RIGHT') {
                 draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height1 - this.winc.height2, this.y2, this.y2, this.color1Rec);
 
