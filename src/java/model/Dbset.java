@@ -317,9 +317,9 @@ public class Dbset {
         LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listArea, Type.STVORKA);
         for (AreaStvorka areaStv : stvList) {
             hm.put((int) areaStv.id(), App.asMap(
-                    "handleRec", areaStv.handleRec, "handleColor", areaStv.handleColor,
-                    "loopRec", areaStv.loopRec, "loopColor", areaStv.loopColor,
-                    "lockRec", areaStv.lockRec, "lockColor", areaStv.lockColor));
+                    "handleRec", areaStv.handleRec(), "handleColor", areaStv.handleColor(),
+                    "loopRec", areaStv.loopRec(), "loopColor", areaStv.loopColor(),
+                    "lockRec", areaStv.lockRec(), "lockColor", areaStv.lockColor()));
         }
         return new JSONObject(App.asMap("stvFields", hm));
     }
