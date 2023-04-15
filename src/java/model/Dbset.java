@@ -1,9 +1,10 @@
 package model;
 
+import builder.IArea5e;
 import builder.Wincalc;
 import builder.making.Furniture;
 import builder.model.AreaStvorka;
-import common.UCom;
+import common.LinkedCom;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -34,7 +35,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
@@ -52,17 +52,17 @@ public class Dbset {
         }
         return null;
     }
-    
+
     private static Object format3(JSONArray arr, Field field) {
         Object obj = arr.get(field.ordinal());
-        return ("".equals(obj))? null :obj;
+        return ("".equals(obj)) ? null : obj;
     }
-    
+
     private static Object format4(JSONObject obj, Field field) {
         Object ob2 = obj.get(field.name());
-        return (ob2 == null || ob2.equals(""))? null :ob2;
+        return (ob2 == null || ob2.equals("")) ? null : ob2;
     }
-    
+
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
         return new JSONObject(App.asMap("systreeList", qSystree));
@@ -114,7 +114,7 @@ public class Dbset {
     }
 
     public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
-        Query qSysprof = new Query(eSysprof.values()).select(eSysprof.up, "order by", eSysprof.prio);
+        Query qSysprof = new Query(eSysprof.values()).select(eSysprof.up, "order by", eSysprof.npp);
         return new JSONObject(App.asMap("sysprofList", qSysprof));
     }
 
@@ -138,7 +138,7 @@ public class Dbset {
             statement.executeUpdate(sql);
             connection.close();
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -154,12 +154,12 @@ public class Dbset {
             record.set(eProject.num_ord, format4(obj, eProject.num_ord));
             record.set(eProject.num_acc, format4(obj, eProject.num_acc));
             record.set(eProject.manager, format4(obj, eProject.manager));
-            record.set(eProject.date4, (obj.get(eProject.date4.name()).equals("")) ? null :obj.get(eProject.date4.name()));
-            record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null :obj.get(eProject.date6.name()));
+            record.set(eProject.date4, (obj.get(eProject.date4.name()).equals("")) ? null : obj.get(eProject.date4.name()));
+            record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null : obj.get(eProject.date6.name()));
             record.set(eProject.prjpart_id, format4(obj, eProject.prjpart_id));
             qProject.insert2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -175,13 +175,13 @@ public class Dbset {
             record.set(eProject.num_ord, format3(arr, eProject.num_ord));
             record.set(eProject.num_acc, format3(arr, eProject.num_acc));
             record.set(eProject.manager, format3(arr, eProject.manager));
-            record.set(eProject.date4, (arr.get(eProject.date4.ordinal()).equals("")) ? null :arr.get(eProject.date4.ordinal()));
-            record.set(eProject.date6, (arr.get(eProject.date6.ordinal()).equals("")) ? null :arr.get(eProject.date6.ordinal()));
+            record.set(eProject.date4, (arr.get(eProject.date4.ordinal()).equals("")) ? null : arr.get(eProject.date4.ordinal()));
+            record.set(eProject.date6, (arr.get(eProject.date6.ordinal()).equals("")) ? null : arr.get(eProject.date6.ordinal()));
             record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
             Query qProject = new Query(eProject.values());
             qProject.update2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -206,7 +206,7 @@ public class Dbset {
             record.set(ePrjkit.prjprod_id, format4(obj, ePrjkit.prjprod_id));
             qPrjkit.insert2(record);
             return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -228,7 +228,7 @@ public class Dbset {
             record.add(obj.get("systreeID"));
             qPrjprod.insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -243,7 +243,7 @@ public class Dbset {
             record.set(eProject.id, obj.get("id"));
             qProject.delete2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -258,7 +258,7 @@ public class Dbset {
             record.set(ePrjkit.id, obj.get("id"));
             qPrjkit.delete2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -281,12 +281,12 @@ public class Dbset {
             Query qPrjkit = new Query(ePrjkit.values());
             qPrjkit.update2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-    
+
     public static JSONObject deletePrjprod(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
@@ -296,7 +296,7 @@ public class Dbset {
             record.set(ePrjprod.id, obj.get("id"));
             qPrjprod.delete2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -314,8 +314,9 @@ public class Dbset {
         String script = qPrjprod.getAs(0, ePrjprod.script);
         Wincalc winc = new Wincalc(script);
         new Furniture(winc, true);
-        LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listArea, Type.STVORKA);
-        for (AreaStvorka areaStv : stvList) {
+        LinkedCom<IArea5e> stvList = winc.listArea.filter(Type.STVORKA);
+        for (IArea5e stv : stvList) {
+            AreaStvorka areaStv = (AreaStvorka) stv;
             hm.put((int) areaStv.id(), App.asMap(
                     "handleRec", areaStv.handleRec(), "handleColor", areaStv.handleColor(),
                     "loopRec", areaStv.loopRec(), "loopColor", areaStv.loopColor(),
@@ -345,7 +346,7 @@ public class Dbset {
     }
 
     public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
-        Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.categ);
+        Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.groups_id);
         return new JSONObject(App.asMap("kitsList", qKits));
     }
 
