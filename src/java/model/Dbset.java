@@ -1,9 +1,5 @@
 package model;
 
-import builder.Wincalc;
-import builder.making.TFurniture;
-import builder.model.AreaStvorka;
-import common.UCom;
 import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
@@ -27,14 +23,11 @@ import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import domain.eSysuser;
-import enums.Type;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;

@@ -19,29 +19,32 @@ class Wincalc {
 
     parse(script) {
         //try {
-            let obj = JSON.parse(script);
-            this.setform(obj, this);         //форма конструкции, см. класс Area
-            this.obj = obj;                  //объект калькуляции
-            this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
-            this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
-            this.nuni = obj.nuni;            //nuni профиля   
-            this.width = obj.width;          //ширина окна, мм
-            this.height = obj.height;        //высота окна, мм 
-            this.heightAdd = obj.heightAdd;  //дополнительная высота, мм.      
-            this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
-            this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
-            this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
+        let obj = JSON.parse(script);
+        this.setform(obj, this);         //форма конструкции, см. класс Area
+        this.obj = obj;                  //объект калькуляции
+        this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
+        this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
+        this.nuni = obj.nuni;            //nuni профиля    
+        
+        this.width1 = (obj.width1 === undefined) ? this.width(obj) : obj.width1; //ширина 2 окна, мм 
+        this.width2 = obj.width2; //ширина 2 окна, мм 
+        this.height1 = obj.height1; //высота 1 окна
+        this.height2 = (obj.height2 === undefined) ? this.height(obj) : obj.height2; //высота 2 окна
+        
+        this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
+        this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
+        this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
 
-            this.root = new Root(obj, null, this); //главное окно                      
-            this.elements(this.root, obj); //создадим элементы конструкции
+        this.root = new Root(obj, null, this); //главное окно                      
+        this.elements(this.root, obj); //создадим элементы конструкции
 
-            this.areaList = new Array(); //массив area конструкции  
-            this.elemList = new Array(); //массив элементов конструкции  
-            this.arr_of_winc(this.root);
-            this.areaList.sort((a, b) => a.id - b.id);
-            this.elemList.sort((a, b) => a.id - b.id);
-            this.scale = 1;
-            draw_elements(this); //рисуем конструкцию 
+        this.areaList = new Array(); //массив area конструкции  
+        this.elemList = new Array(); //массив элементов конструкции  
+        this.arr_of_winc(this.root);
+        this.areaList.sort((a, b) => a.id - b.id);
+        this.elemList.sort((a, b) => a.id - b.id);
+        this.scale = 1;
+        draw_elements(this); //рисуем конструкцию 
 
 //        } catch (e) {
 //            alert('Ошибка:Wincalc.parse() ' + e.message);
@@ -110,6 +113,38 @@ class Wincalc {
             } else {
                 this.elemList.push(com);
             }
+        }
+    }
+
+    width(obj) {
+        if (arguments.length === 1) {
+            if (obj.width1 === undefined) {
+                return obj.width2;
+            } else if (obj.width2 === undefined) {
+                return obj.width1;
+            } else if (obj.width1 > obj.width2) {
+                return obj.width1;
+            } else {
+                return obj.width2;
+            }
+        } else {
+            return (this.width1 > this.width2) ? this.width1 : this.width2;
+        }
+    }
+
+    height(obj) {
+        if (arguments.length === 1) {
+            if (obj.height1 === undefined) {
+                return obj.height2;
+            } else if (obj.height2 === undefined) {
+                return obj.height1;
+            } else if (obj.height1 > obj.height2) {
+                return obj.height1;
+            } else {
+                return obj.height2;
+            }
+        } else {
+            return (this.height1 > this.height2) ? this.height1 : this.height2;
         }
     }
 }
