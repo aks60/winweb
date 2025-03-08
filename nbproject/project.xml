@@ -7,16 +7,15 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${file.reference.gson-2.8.5.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.jaybird-full-3.0.4.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.jexcel.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${reference.winapp.jar}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.jrt11-0.5_proguard_base_signed.jar}</file>
@@ -28,6 +27,10 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.json-simple-1.1.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.gson-2.10.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
