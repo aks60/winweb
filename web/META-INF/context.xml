@@ -13,34 +13,6 @@
         maxIdle="3"
         maxWait="10000"
         username="sysdba" 
-        password="masterke"        
+        password="masterkey"        
     />
 </Context>
-
-<!--        name="jdbc/winweb"
-        description="Основная БД"
-        auth="Container"
-        type="javax.sql.DataSource"
-        driverClassName="org.firebirdsql.jdbc.FBDriver"
-        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-        url="jdbc:firebirdsql:localhost/3050:C:/okna/fbase/BIMAX.FDB"
-        username="sysdba"
-        password ="masterkey"
-        maxActive="100"
-        maxIdle="10"
-        minIdle="5"
-        initialSize="1"
-        maxWait="10000" 
-        testOnBorrow="true"
-        testWhileIdle="true"
-        testOnReturn="false"
-        validationQuery="SELECT 'NOW' from RDB$DATABASE"
-        validationInterval="300"
-        timeBetweenEvictionRunsMillis="30000"
-        removeAbandonedTimeout="6000"
-        removeAbandoned="true"
-        logAbandoned="true"
-        minEvictableIdleTimeMillis="300" 
-        jmxEnabled="true"-->
-        
-

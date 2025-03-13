@@ -125,7 +125,7 @@ public class Dbset {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        try (Connection connection = Conn.connection()) {
+        try (Connection connection = Conn.сonnection()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);

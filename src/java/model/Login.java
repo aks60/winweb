@@ -56,7 +56,7 @@ public class Login {
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
         try {
-            Connection connect = Conn.connection();
+            Connection connect = Conn.сonnection();
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("select * from master.dbo.syslogins where name = '" + adm_name + "' and PWDCOMPARE('" + adm_password + "',password) = 1");
             rs.next();
@@ -269,7 +269,7 @@ public class Login {
 
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        Connection connect = Conn.connection();
+        Connection connect = Conn.сonnection();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         JSONObject output = new JSONObject();

@@ -163,7 +163,7 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
                 }
             } catch (Exception e) {
-                System.err.println("request - " + action);
+                System.err.println("request - " + action + "   " + e);
             }
         }
     }
