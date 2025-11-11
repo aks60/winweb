@@ -6,7 +6,7 @@
         type="javax.sql.DataSource"
         driverClassName="org.firebirdsql.jdbc.FBDriver"
         factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-        url="jdbc:firebirdsql:localhost/3050:D:/Okna/Progect/_fbase/BIMAX.FDB"
+        url="jdbc:firebirdsql:localhost/3050:D:/Okna/fbase/BIMAX.FDB"
         columnLabelForName="true"
         defaultAutoCommit="false"
         maxActive="100"

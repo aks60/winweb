@@ -1,6 +1,6 @@
 package model;
 
-import dataset.Conn;
+import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.*;
@@ -56,7 +56,7 @@ public class Login {
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
         try {
-            Connection connect = Conn.сonnection();
+            Connection connect = Connect.getConnection();
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("select * from master.dbo.syslogins where name = '" + adm_name + "' and PWDCOMPARE('" + adm_password + "',password) = 1");
             rs.next();
@@ -213,7 +213,7 @@ public class Login {
                     Query qSysuser = new Query(eSysuser.values());
 
                     Record record = eSysuser.up.newRecord(Query.INS);
-                    record.set(eSysuser.id, Conn.genId(eSysuser.up));
+                    record.set(eSysuser.id, Connect.genId(eSysuser.up));
                     record.set(eSysuser.login, user_name);
                     record.set(eSysuser.fio, user_fio);
                     record.set(eSysuser.desc, user_desc);
@@ -269,7 +269,7 @@ public class Login {
 
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        Connection connect = Conn.сonnection();
+        Connection connect = Connect.getConnection();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         JSONObject output = new JSONObject();

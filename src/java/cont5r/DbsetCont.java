@@ -1,6 +1,7 @@
 package cont5r;
 
-import dataset.Conn;
+import dataset.Connect;
+import dataset.Connect;
 import domain.ePrjkit;
 import domain.eProject;
 import java.io.IOException;
@@ -108,7 +109,7 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("genidOrder")) {
                     out.write(JSONObject.toJSONString(
-                            new JSONObject(App.asMap("result", "ok", "id", Conn.genId(eProject.up)))));
+                            new JSONObject(App.asMap("result", "ok", "id", Connect.genId(eProject.up)))));
 
                 } else if (action.equalsIgnoreCase("insertOrder")) {
                     JSONObject output = Dbset.insertOrder(request, response);
