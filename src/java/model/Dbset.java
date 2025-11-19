@@ -1,6 +1,6 @@
 package model;
 
-import dataset.Connect;
+import dataset.Conn;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -125,7 +125,7 @@ public class Dbset {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        try (Connection connection = Connect.getConnection()) {
+        try (Connection connection = Conn.connection()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
@@ -187,7 +187,7 @@ public class Dbset {
             Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);
             Query qPrjkit = new Query(ePrjkit.values());
             Record record = ePrjkit.up.newRecord("INS");
-            record.set(ePrjkit.id, Connect.genId(ePrjkit.up));
+            record.set(ePrjkit.id, Conn.genId(ePrjkit.up));
             record.set(ePrjkit.numb, 1);
             record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
             record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
@@ -213,7 +213,7 @@ public class Dbset {
             Query qPrjprod = new Query(ePrjprod.values());
             Record record = new Record();
             record.add("INS");
-            record.add(Connect.genId(ePrjprod.up));
+            record.add(Conn.genId(ePrjprod.up));
             record.add(0);
             record.add(obj.get("name"));
             record.add(obj.get("script"));

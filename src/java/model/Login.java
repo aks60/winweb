@@ -1,24 +1,22 @@
 package model;
 
-import dataset.Connect;
+import dataset.Conn;
 import dataset.Query;
 import dataset.Record;
 import domain.*;
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import model.sys.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.sql.Statement;
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import java.sql.ResultSet;
 import java.security.SecureRandom;
 import java.math.BigInteger;
-import java.security.InvalidKeyException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -26,8 +24,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
-import javax.crypto.NoSuchPaddingException;
 import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
 import org.bouncycastle.crypto.params.ECDomainParameters;
@@ -44,9 +43,8 @@ import org.json.simple.JSONObject;
 //@WebServlet(name = "AdminCont", urlPatterns = {"/admin"})
 public class Login {
 
-    private static String algorithm = "DESede";
-    private static byte[] encoded = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
-    static String rndstr = "";
+    private static String transformation = "AES/ECB/PKCS5Padding";
+    private static byte[] bytkey = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
 
     //новый токен, проверка отсутствия логина в базе
     public HashMap rtwEmptyLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -56,7 +54,7 @@ public class Login {
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
         try {
-            Connection connect = Connect.getConnection();
+            Connection connect = Conn.connection();
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("select * from master.dbo.syslogins where name = '" + adm_name + "' and PWDCOMPARE('" + adm_password + "',password) = 1");
             rs.next();
@@ -191,7 +189,7 @@ public class Login {
 
     //новый пользователь, сохранение user, password и role в базе данных
     public JSONObject newLogin(HttpServletRequest request, HttpServletResponse response) {
-
+        
         String adm_name = request.getParameter("username");
         String adm_password = request.getParameter("password");
         String user_name = request.getParameter("username2");
@@ -203,23 +201,22 @@ public class Login {
         try {
             if (adm_name.equals("admin") || adm_name.equals("sysdba")) {
                 Query user = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
+
                 if (user.isEmpty() == true) { //если нет создаём его
+                    SecretKeySpec secretkey = createSecretKey();
+                    byte[] bytOpenPas = encrypt(secretkey, user_password.getBytes());
+                    String strOpenPas = Base64.getEncoder().encodeToString(bytOpenPas); 
 
-                    Key key = new SecretKeySpec(encoded, algorithm); //зашифруем пароль
-                    Cipher cipher = Cipher.getInstance(algorithm);
-                    cipher.init(Cipher.ENCRYPT_MODE, key);
-                    byte[] password3 = cipher.doFinal(user_password.getBytes());
-                    String password4 = new String(password3);
                     Query qSysuser = new Query(eSysuser.values());
-
                     Record record = eSysuser.up.newRecord(Query.INS);
-                    record.set(eSysuser.id, Connect.genId(eSysuser.up));
+                    record.set(eSysuser.id, Conn.genId(eSysuser.up));
                     record.set(eSysuser.login, user_name);
                     record.set(eSysuser.fio, user_fio);
                     record.set(eSysuser.desc, user_desc);
                     record.set(eSysuser.role, user_role);
-                    record.set(eSysuser.openkey, password4);
+                    record.set(eSysuser.openkey, strOpenPas);
                     qSysuser.insert(record);
+
                     output.put("result", "true");
                 } else {
                     output.put("result", "Такой пользователь уже создан");
@@ -229,22 +226,8 @@ public class Login {
             output.put("result", "Ошибка создания нового пользователя");
             return output;
 
-        } catch (NoSuchAlgorithmException e) {
-            output.put("result", "Ошибка создания нового пользователя №1");
-            return output;
-        } catch (NoSuchPaddingException e) {
-            output.put("result", "Ошибка создания нового пользователя №2");
-            return output;
-        } catch (IllegalBlockSizeException e) {
-            output.put("result", "Ошибка создания нового пользователя №3");
-            return output;
-        } catch (BadPaddingException e) {
-            output.put("result", "Ошибка создания нового пользователя №4");
-            return output;
-        } catch (InvalidKeyException e) {
-            output.put("result", "Ошибка создания нового пользователя №5");
-            return output;
         } catch (Exception e) {
+            System.err.println(e);
             output.put("result", "Ошибка создания нового пользователя №6");
             return output;
         }
@@ -269,7 +252,7 @@ public class Login {
 
     public HashMap userConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        Connection connect = Connect.getConnection();
+        Connection connect = Conn.connection();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         JSONObject output = new JSONObject();
@@ -296,17 +279,18 @@ public class Login {
             } else {
                 Query user = new Query(eSysuser.values()).select("select * from sysuser a where a.login = '" + username + "'");
                 if (user.isEmpty() == false) {
-                    //декодируем пароль на сервере  
-                    Key key = new SecretKeySpec(encoded, algorithm);
-                    Cipher cipher = Cipher.getInstance(algorithm);
-                    cipher.init(Cipher.DECRYPT_MODE, key);
+                    
+                    SecretKeySpec secretkey = createSecretKey();
                     String user_fio = user.getAs(0, eSysuser.fio);
-                    byte[] openkey = user.get(0, eSysuser.openkey).toString().getBytes();
-                    byte[] password2 = cipher.doFinal(openkey);
-                    String password3 = new String(password2);
+                    String strOpenKey = user.get(0, eSysuser.openkey).toString();
+                    byte[] bytOpenKey = Base64.getDecoder().decode(strOpenKey);
+
+                    byte[] bytPas = decrypt(secretkey, bytOpenKey);
+                    String password2 = new String(bytPas, StandardCharsets.UTF_8);
+
                     //если пароль клиента и сервера совпали
-                    if (password.equals(password3)) {
-                        
+                    if (password.equals(password2)) {
+
                         output.put("role", user.get(0, eSysuser.role));
                         output.put("user_name", username);
                         output.put("user_fio", user_fio);
@@ -320,26 +304,45 @@ public class Login {
                 }
                 return output;
             }
-
-        } catch (NoSuchAlgorithmException e) {
-            output.put("result", "Ошибка авторизации №1");
-            return output;
-        } catch (NoSuchPaddingException e) {
-            output.put("result", "Ошибка авторизации №2");
-            return output;
-        } catch (IllegalBlockSizeException e) {
-            output.put("result", "Ошибка авторизации №3");
-            return output;
-        } catch (BadPaddingException e) {
-            output.put("result", "Ошибка авторизации №4");
-            return output;
-        } catch (InvalidKeyException e) {
-            output.put("result", "Ошибка авторизации №5");
-            return output;
         } catch (Exception e) {
+            System.err.println(e);
             output.put("result", "Неизвестная ошибка");
             return output;
         }
     }
 
+    public byte[] encrypt(SecretKeySpec secretKey, byte[] bytPas) {
+        try {
+            Cipher cipher = Cipher.getInstance(transformation);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return cipher.doFinal(bytPas);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public byte[] decrypt(SecretKeySpec secretKey, byte[] openPas) {
+        try {
+            Cipher cipher = Cipher.getInstance(transformation);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return cipher.doFinal(openPas);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    private SecretKeySpec createSecretKey() {
+        SecretKeySpec sks = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] key = md.digest(bytkey);
+            key = Arrays.copyOf(key, 24);
+            sks = new SecretKeySpec(key, "AES");
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println(e);
+        }
+        return sks;
+    }
 }

@@ -61,7 +61,7 @@
                                 </tr>
                                 <tr>
                                     <td>Пароль пользователя:</td>
-                                    <td><input class="password" placeholder='Введите пароль' value='qwerty' type="password" style="width: 160px;"/></td>
+                                    <td><input class="password" placeholder='Введите пароль' value='diler' type="password" style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>ФИО:</td>
