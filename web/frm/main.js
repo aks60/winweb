@@ -1,5 +1,6 @@
-login.init_login = function () {
-    console.log('aksenov');
+
+export function sayHi() {
+  alert(`AKS`);
 }
 
 

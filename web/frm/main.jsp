@@ -3,7 +3,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="frm/main.js"></script>
         <title>SA-OKNA</title>
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.13/redmond/jquery-ui.css">          
@@ -60,20 +59,20 @@
 
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {},
-            login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+                    login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
                 $.jstree.defaults.core.themes.variant = "large";
-                
+
                 //Для совместимости java и JavaScript
                 Math.toDegrees = function (x) {
                     return 180 / Math.PI * x;
                 };
                 Math.toRadians = function (x) {
-                   return x / 180 * Math.PI; 
+                    return x / 180 * Math.PI;
                 };
             });
 
@@ -81,7 +80,8 @@
             };
 
             function loadBody(url) {
-            };
+            }
+            ;
         </script>         
     </head>
     <body>
@@ -106,7 +106,8 @@
                         groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
 
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
-                ) => { //загрузка базы данных 
+                        ) => {
+                    //загрузка базы данных 
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
