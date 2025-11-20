@@ -29,9 +29,9 @@
                 $("button").button();
             });
 
-            //$('#pan1 .login').val('admin');
-            //$('#pan1 .password').val('masterkey');
-            //$('#pan1 .login').val('dealer');
+            $('#pan1 .password').val('masterkey')
+            //$('#pan1 .login').val('admin');            ;
+            $('#pan1 .login').val('dealer');
             //login.user_connect();
         </script>         
     </head>
@@ -53,11 +53,11 @@
                         <table height="80" width="340">
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input class="login" placeholder='Введите логин' value='dealer'  type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value=''  type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input class="password" placeholder='Введите пароль' value='masterkey' type='password' size='16'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='' type='password' size='16'></td>
                             </tr>
                             <td></td>
                             <td>
