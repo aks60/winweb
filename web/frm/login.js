@@ -34,7 +34,7 @@ login.init_login = function () {
             dialogMes("Неудача", login.data.result);
         }
     }
-}
+};
 
 //----------------  Авторизация через логин-пароль  ----------------------------
 login.user_connect = function () {

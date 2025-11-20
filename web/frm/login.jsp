@@ -17,7 +17,7 @@
             login.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 54);
-            }
+            };
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();
