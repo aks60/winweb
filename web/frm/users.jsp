@@ -53,23 +53,23 @@
                                 </tr> 
                                 <tr>
                                     <td>Пароль администратора:</td>
-                                    <td><input class="password" placeholder='Введите пароль' value='Tantal6' type='password' size='17'></td>
+                                    <td><input class="password" placeholder='Введите пароль' value='masterkey' type='password' size='17'></td>
                                 </tr>                            
                                 <tr>
                                     <td>Логин пользователя:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='asd' type="text" size='16' style="width: 160px;"/></td>
+                                    <td><input class="login" placeholder='Введите логин' value='dealer' type="text" size='16' style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>Пароль пользователя:</td>
-                                    <td><input class="password" placeholder='Введите пароль' value='diler' type="password" style="width: 160px;"/></td>
+                                    <td><input class="password" placeholder='Введите пароль' value='masterkey' type="password" style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>ФИО:</td>
-                                    <td><input class="fio" placeholder='Введите ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input class="fio" placeholder='Введите ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
                                     <td>Описание:</td>
-                                    <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input class="desc" placeholder='Описание ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
                                     <td></td><td><button type="button" onClick="users.logim_create();" style="width: 164px;">Зарегистрировать</button></td>

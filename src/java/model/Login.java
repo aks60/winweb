@@ -199,7 +199,7 @@ public class Login {
         String user_role = request.getParameter("role");
         JSONObject output = new JSONObject(App.asMap("login", true, "mes", "Новый пользователь создан"));
         try {
-            if (adm_name.equals("admin") || adm_name.equals("sysdba")) {
+            if (adm_name.equalsIgnoreCase("admin") || adm_name.equalsIgnoreCase("sysdba")) {
                 Query user = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
 
                 if (user.isEmpty() == true) { //если нет создаём его
@@ -257,7 +257,7 @@ public class Login {
         String password = request.getParameter("password");
         JSONObject output = new JSONObject();
         try {
-            if (username.equals("admin") || username.equals("sysdba")) {
+            if (username.equalsIgnoreCase("admin") || username.equals("sysdba")) {
                 try {
                     Class.forName("org.firebirdsql.jdbc.FBDriver");
                     DatabaseMetaData metadata = connect.getMetaData();
@@ -289,7 +289,7 @@ public class Login {
                     String password2 = new String(bytPas, StandardCharsets.UTF_8);
 
                     //если пароль клиента и сервера совпали
-                    if (password.equals(password2)) {
+                    if (password.equalsIgnoreCase(password2)) {
 
                         output.put("role", user.get(0, eSysuser.role));
                         output.put("user_name", username);
