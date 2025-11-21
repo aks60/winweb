@@ -81,7 +81,6 @@
 
             function loadBody(url) {
             }
-            ;
         </script>         
     </head>
     <body>
