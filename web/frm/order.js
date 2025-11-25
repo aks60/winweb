@@ -78,7 +78,6 @@ order.click_table2 = function (e) {
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
-//debugger;
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
@@ -87,13 +86,21 @@ order.load_table = function (table1, table2) {
         if (tr[ORDER.id] == order.orderID) {
             rowID = i + 1;
         }
+//        debugger;
+//              
+//        let rec = dbset.dealerList[0];
+//        let obj4 = rec[DEALER.id];
+//        let obj3 = tr[ORDER.prjpart_id];
+//        let obj2 = dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]);
+//        let obj = findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner];
+
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
             num_ord: tr[ORDER.num_ord],
             num_acc: tr[ORDER.num_acc],
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
-            partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            //partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
             manager: tr[ORDER.manager],
             prjpart_id: tr[ORDER.prjpart_id]
         });
