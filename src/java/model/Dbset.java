@@ -324,8 +324,7 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and a.id in (16767, 16543, 16095) order by a.id desc");
-        //Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
