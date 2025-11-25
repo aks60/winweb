@@ -48,7 +48,7 @@
                 <div id="centr" style="position: absolute; height: 100%; width: 100%;">
                     <div id="pan1">                   
                         <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
-                        <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br> 
+                        <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'=.</p><br><br> 
 
                         <table height="80" width="340">
                             <tr>

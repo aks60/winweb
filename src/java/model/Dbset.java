@@ -1,6 +1,6 @@
 package model;
 
-import dataset.Conn;
+import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -125,7 +125,7 @@ public class Dbset {
         String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
 
-        try (Connection connection = Conn.connection()) {
+        try (Connection connection = Connect.getConnection()) {
             Statement statement = statement = connection.createStatement();
             String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
@@ -187,7 +187,7 @@ public class Dbset {
             Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);
             Query qPrjkit = new Query(ePrjkit.values());
             Record record = ePrjkit.up.newRecord("INS");
-            record.set(ePrjkit.id, Conn.genId(ePrjkit.up));
+            record.set(ePrjkit.id, Connect.genId(ePrjkit.up));
             record.set(ePrjkit.numb, 1);
             record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
             record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
@@ -213,7 +213,7 @@ public class Dbset {
             Query qPrjprod = new Query(ePrjprod.values());
             Record record = new Record();
             record.add("INS");
-            record.add(Conn.genId(ePrjprod.up));
+            record.add(Connect.genId(ePrjprod.up));
             record.add(0);
             record.add(obj.get("name"));
             record.add(obj.get("script"));
@@ -324,7 +324,8 @@ public class Dbset {
     }
 
     public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and a.id in (16767, 16543, 16095) order by a.id desc");
+        //Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
