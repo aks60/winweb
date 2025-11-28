@@ -98,7 +98,11 @@
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
-
+            
+//                    systreeList();
+//                    sysprodList();
+//                    colorList();
+                    
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),

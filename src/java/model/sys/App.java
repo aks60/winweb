@@ -178,7 +178,7 @@ public class App {
         try {
             HashMap hm = new HashMap();
             for (int i = 0; i < arr.length; i += 2) {
-                hm.put(arr[i], arr[i + 1]);
+                hm.put(arr[i], String.valueOf(arr[i + 1]));
             }
             return hm;
         } catch (Exception e) {
