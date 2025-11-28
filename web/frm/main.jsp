@@ -40,8 +40,8 @@
                     ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 21, date5: 22, date6: 23, owner: 24, prjpart_id: 26},
                     USER = {id: 1, role: 2, login: 3, fio: 4, desc: 7},
                     KITS = {id: 1, name: 2, types: 3, categ: 4},
-                    KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7};
-            DEALER = {id: 1, partner: 2, login: 3};
+                    KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7},
+                    DEALER = {id: 1, partner: 2, login: 3};
 
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
@@ -97,7 +97,7 @@
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
-            
+
 //                    systreeList();
 //                    sysprodList();
 //                    colorList();
@@ -114,7 +114,7 @@
 //                    kitsList();
 //                    kitdetList();
 //                    prjkitList();
-                    
+
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
