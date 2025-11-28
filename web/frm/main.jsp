@@ -99,11 +99,24 @@
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
             
-//                    systreeList();
-//                    sysprodList();
-//                    colorList();
+                    systreeList();
+                    sysprodList();
+                    colorList();
+                    artiklList();
+                    artdetList();
+                    prjprodList();
+                    sysfurnList();
+                    sysprofList();
+                    syspar1List();
+                    paramsList();
+                    groupList();
+                    orderList();
+                    dealerList();
+                    kitsList();
+                    kitdetList();
+                    prjkitList();
                     
-            $("#outbody").load('frm/login.jsp', function () {
+/*            $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
                         furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
@@ -144,6 +157,7 @@
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })
             });
+ */
         </script> 
     </body>
 </html>
