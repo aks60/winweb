@@ -3,7 +3,7 @@ export function systreeList() {
     return  $.ajax({
         url: 'dbset?action=systreeList'
     }).fail(function () {
-        alert("ERR sysprodList");
+        alert("ERR systreeList");
     });
 }
 //------------------------  SYSPROD  -------------------------------------------

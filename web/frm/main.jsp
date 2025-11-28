@@ -19,7 +19,6 @@
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
         <script type="text/javascript" src="jss/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="frm/utils.js"></script>
-        <script type="text/javascript" src="frm/order.js"></script>
         <script type="module" src="frm/builder/wincalc.js"></script>
 
         <script type="text/javascript">
@@ -99,24 +98,24 @@
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
             
-                    systreeList();
-                    sysprodList();
-                    colorList();
-                    artiklList();
-                    artdetList();
-                    prjprodList();
-                    sysfurnList();
-                    sysprofList();
-                    syspar1List();
-                    paramsList();
-                    groupList();
-                    orderList();
-                    dealerList();
-                    kitsList();
-                    kitdetList();
-                    prjkitList();
+//                    systreeList();
+//                    sysprodList();
+//                    colorList();
+//                    artiklList();
+//                    artdetList();
+//                    prjprodList();
+//                    sysfurnList();
+//                    sysprofList();
+//                    syspar1List();
+//                    paramsList();
+//                    groupList();
+//                    orderList();
+//                    dealerList();
+//                    kitsList();
+//                    kitdetList();
+//                    prjkitList();
                     
-/*            $("#outbody").load('frm/login.jsp', function () {
+            $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
                         furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
@@ -157,7 +156,6 @@
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })
             });
- */
         </script> 
     </body>
 </html>
