@@ -23,12 +23,12 @@ login.init_login = function () {
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
-//            if (login.data.role == 'RDB$ADMIN') {
-//                $("#outbody").load('frm/users.jsp');
-//            } else {
+            if (login.data.role == 'RDB$ADMIN') {
+                $("#outbody").load('frm/users.jsp');
+            } else {
                 $("#mainmenu").load('frm/menu.jsp');
                 $("#outbody").load('frm/order.jsp');
-//            }
+            }
         } else {
             login.que_requests = 1;
             dialogMes("Неудача", login.data.result);

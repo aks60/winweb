@@ -124,7 +124,6 @@
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных 
-                    //localStorage.user = JSON.stringify({name: "John"});
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
@@ -147,11 +146,11 @@
                     login.init_login();
 
                     //Виртуальные артикулы  
-                    dbset.sysprofList.virtualRec = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    dbset.artiklList.virtualRec = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    dbset.artdetList.virtualRec = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
-                    dbset.colorList.virtualRec = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-                    dbset.sysfurnList.virtualRec = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+                    dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
+                    dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+                    dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
 
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');

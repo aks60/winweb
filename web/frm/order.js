@@ -78,9 +78,10 @@ order.click_table2 = function (e) {
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
+    debugger;
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
-    dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
+    //dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
         let tr = dbset.orderList[i];
         if (tr[ORDER.id] == order.orderID) {

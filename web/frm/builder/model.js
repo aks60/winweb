@@ -252,10 +252,10 @@ export class Stvorka extends Area {
         this.frames.set("TOP", new Frame(obj, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
         this.frames.set("LEFT", new Frame(obj, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
-        this.sysfurnRec = dbset.sysfurnList.virtualRec; //фурнитура створки
-        this.handleRec = dbset.artiklList.virtualRec;   //ручка       
-        this.loopRec = dbset.artiklList.virtualRec;     //подвес (петли)
-        this.lockRec = dbset.artiklList.virtualRec;     //замок
+        this.sysfurnRec = dbset.sysfurnVirt; //фурнитура створки
+        this.handleRec = dbset.artiklVirt;   //ручка       
+        this.loopRec = dbset.artiklVirt;     //подвес (петли)
+        this.lockRec = dbset.artiklVirt;     //замок
         this.handleColor = -3;
         this.loopColor = -3;
         this.lockColor = -3;
@@ -467,7 +467,7 @@ export class Cross extends Com5t {
                     && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
-            return dbset.sysprofList.virtualRec; //[-3, 0, typ, -1, -3, -3];
+            return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
         }
         return record;
     }
@@ -588,7 +588,7 @@ export class Frame extends Com5t {
         let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
                     && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
-            dbset.sysprofList.virtualRec; //[-3, 0, typ, -1, -3, -3];
+            dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
         }
         return record;
     }
