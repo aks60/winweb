@@ -1,8 +1,37 @@
-
-//------------------------------------------------------------------------------
-//function loadData(data) {
-//    for(let i = 0; i < data) {
-//        
+////------------------------------------------------------------------------------
+//export function loadData(db) {
+//
+//    let idb = indexedDB.open("store", 1);
+//    db = await idb.openDb('winDB', 1, db => {
+//        if (db.oldVersion == 0) {
+//            // выполняем инициализацию
+//            db.createObjectStore('winDB', {keyPath: 'id'});
+//        }
+//    });
+//}
+////------------------------------------------------------------------------------
+//export function loadData(data) {
+//
+//    let idb = indexedDB.open("store", 1);
+//    let db = await idb.openDb('winDB', 1, db => {
+//        if (db.oldVersion == 0) {
+//            // выполняем инициализацию
+//            db.createObjectStore('winDB', {keyPath: 'id'});
+//        }
+//    });
+//
+//    let transaction = db.transaction('winDB', 'readwrite');
+//    let books = transaction.objectStore('winDB');
+//
+//    try {
+//        await books.add("1");
+//        await books.add("2");
+//
+//        await transaction.complete;
+//
+//        console.log('сохранено');
+//    } catch (err) {
+//        console.log('ошибка', err.message);
 //    }
 //}
 //------------------------  SYSTREE  -------------------------------------------
