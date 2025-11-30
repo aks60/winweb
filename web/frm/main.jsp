@@ -124,6 +124,7 @@
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных 
+                    //localStorage.user = JSON.stringify({name: "John"});
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
