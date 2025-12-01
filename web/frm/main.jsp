@@ -42,7 +42,6 @@
                     KITS = {id: 1, name: 2, types: 3, categ: 4},
                     KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7},
                     DEALER = {id: 1, partner: 2, login: 3};
-
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
                 IMPOST: [3, 3, 'Импост'], STOIKA: [5, 5, 'Стойка'], ERKER: [7, 7, 'Эркер'], EDGE: [8, 8, 'Грань'], SHTULP: [9, 9, 'Штульп'],
@@ -56,17 +55,14 @@
                 RIGHT: [2, "Правая поворотная (открывается слева-направо, ручка слева)"], LEFTUP: [3, "Левая поворотно-откидная"],
                 RIGHTUP: [4, "Правая поворотно-откидная"], UPPER: [5, "Откидная (открывается сверху)"], LEFTMOV: [11, "Раздвижная влево (открывается справа-налево, защелка справа"],
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
-
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {},
                     login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
-
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
                 $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
                 $.jstree.defaults.core.themes.variant = "large";
-
                 //Для совместимости java и JavaScript
                 Math.toDegrees = function (x) {
                     return 180 / Math.PI * x;
@@ -75,10 +71,8 @@
                     return x / 180 * Math.PI;
                 };
             });
-
             window.onload = function () {
             };
-
             function loadBody(url) {
             }
         </script>         
@@ -97,7 +91,6 @@
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
-
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
@@ -106,7 +99,7 @@
 
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
-                    //загрузка базы данных 
+                    //загрузка базы данных      
                     dbset.systreeList = p1[0];
                     dbset.sysprodList = p2[0];
                     dbset.colorList = p3[0];
@@ -125,16 +118,13 @@
                     dbset.kitsList = pG[0];
                     dbset.kitdetList = pH[0];
                     dbset.prjkitList = pI[0];
-
                     login.init_login();
-
                     //Виртуальные артикулы  
                     dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
                     dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
                     dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
                     dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })
