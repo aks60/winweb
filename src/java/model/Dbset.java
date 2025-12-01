@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
@@ -60,6 +61,20 @@ public class Dbset {
     public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
         return new JSONObject(App.asMap("systreeList", qSystree));
+    }
+
+    public static String systreeArr(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Query qSystree = new Query(eSystree.values()).select(eSystree.up);
+            HashMap hm = App.asMap("systreeList", qSystree);
+            
+            Gson gson = new Gson();
+            String jsonArray = gson.toJson(qSystree);
+            return jsonArray;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {

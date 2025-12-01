@@ -98,22 +98,9 @@
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
 
-//                    systreeList();
-//                    sysprodList();
-//                    colorList();
-//                    artiklList();
-//                    artdetList();
-//                    prjprodList();
-//                    sysfurnList();
-//                    sysprofList();
-//                    syspar1List();
-//                    paramsList();
-//                    groupList();
-//                    orderList();
-//                    dealerList();
-//                    kitsList();
-//                    kitdetList();
-//                    prjkitList();
+//            let obj1 = systreeList();
+//            let obj2 = sysprodList().sysprodList;
+//            let obj3 = colorList();
 
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
