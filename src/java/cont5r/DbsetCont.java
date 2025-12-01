@@ -1,8 +1,9 @@
 package cont5r;
 
 import com.google.gson.Gson;
-//import com.google.appengine.repackaged.com.google.gson.Gson;
+import dataset.Connect;
 import dataset.Query;
+import domain.eProject;
 import domain.eSystree;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Dbset;
+import model.sys.App;
+import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
 public class DbsetCont extends HttpServlet {
@@ -38,149 +42,125 @@ public class DbsetCont extends HttpServlet {
 
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
-        Gson gson = new Gson();
-        try {
-            PrintWriter out = response.getWriter();
-
-            if (action.equalsIgnoreCase("systreeArr")) {
-
-                Query qSystree = new Query(eSystree.values()).select(eSystree.up);
-                String output = gson.toJson(qSystree);
-                out.write(output);
-
-            }
-        } catch (Exception e) {
-            System.err.println("ERROR");
-        }
-//        try (PrintWriter out = response.getWriter()) {
-//            try {
-//                if (action.equalsIgnoreCase("systreeList")) {
-//                    JSONObject output = Dbset.systreeList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
+//        try {
+//            PrintWriter out = response.getWriter();
 //
-//                } else if (action.equalsIgnoreCase("systreeArr")) {
-//                    String output = Dbset.systreeArr(request, response);
-//                    out.write(output);
+//            if (action.equalsIgnoreCase("systreeArr")) {
+//                com.google.gson.Gson gson = new com.google.gson.Gson();
+//                Query qSystree = new Query(eSystree.values()).select(eSystree.up);
+//                String output = gson.toJson(qSystree);
+//                out.write(output);
 //
-//                } else if (action.equalsIgnoreCase("sysprodList")) {
-//                    JSONObject output = Dbset.sysprodList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("groupList")) {
-//                    JSONObject output = Dbset.groupList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("colorList")) {
-//                    JSONObject output = Dbset.colorList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("orderList")) {
-//                    JSONObject output = Dbset.orderList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("artiklList")) {
-//                    JSONObject output = Dbset.artiklList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("artdetList")) {
-//                    JSONObject output = Dbset.artdetList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("furnitureList")) {
-//                    JSONObject output = Dbset.furnitureList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("furndetList")) {
-//                    JSONObject output = Dbset.furndetList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("prjprodList")) {
-//                    JSONObject output = Dbset.prjprodList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("sysfurnList")) {
-//                    JSONObject output = Dbset.sysfurnList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("sysprofList")) {
-//                    JSONObject output = Dbset.sysprofList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("syspar1List")) {
-//                    JSONObject output = Dbset.syspar1List(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("paramsList")) {
-//                    JSONObject output = Dbset.paramsList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("updateScript")) {
-//                    JSONObject output = Dbset.updateScript(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("insertPrjprod")) {
-//                    JSONObject output = Dbset.insertPrjprod(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("genidOrder")) {
-//                    out.write(JSONObject.toJSONString(
-//                            new JSONObject(App.asMap("result", "ok", "id", Connect.genId(eProject.up)))));
-//
-//                } else if (action.equalsIgnoreCase("insertOrder")) {
-//                    JSONObject output = Dbset.insertOrder(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("updateOrder")) {
-//                    JSONObject output = Dbset.updateOrder(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("insertKits")) {
-//                    JSONObject output = Dbset.insertKits(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("deleteOrder")) {
-//                    JSONObject output = Dbset.deleteOrder(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("updatePrjkit")) {
-//                    JSONObject output = Dbset.updatePrjkit(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("deletePrjkit")) {
-//                    JSONObject output = Dbset.deletePrjkit(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("deletePrjprod")) {
-//                    JSONObject output = Dbset.deletePrjprod(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("prjkitList")) {
-//                    JSONObject output = Dbset.prjkitList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("userList")) {
-//                    JSONObject output = Dbset.userList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("stvFields")) {
-//                    JSONObject output = Dbset.stvFields(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("dealerList")) {
-//                    JSONObject output = Dbset.dealerList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("kitsList")) {
-//                    JSONObject output = Dbset.kitsList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//
-//                } else if (action.equalsIgnoreCase("kitdetList")) {
-//                    JSONObject output = Dbset.kitdetList(request, response);
-//                    out.write(JSONObject.toJSONString(output));
-//                }
-//            } catch (Exception e) {
-//                System.err.println("request - " + action + "   " + e);
 //            }
+//        } catch (Exception e) {
+//            System.err.println("ERROR");
 //        }
+        try (PrintWriter out = response.getWriter()) {
+            try {
+                if (action.equalsIgnoreCase("systreeList")) {
+                    out.write(Dbset.systreeList(request, response));
+
+                } else if (action.equalsIgnoreCase("sysprodList")) {
+                    out.write(Dbset.sysprodList(request, response));
+
+                } else if (action.equalsIgnoreCase("groupList")) {
+                    out.write(Dbset.groupList(request, response));
+
+                } else if (action.equalsIgnoreCase("colorList")) {
+                    out.write(Dbset.colorList(request, response));
+
+                } else if (action.equalsIgnoreCase("orderList")) {
+                    out.write(Dbset.orderList(request, response));
+
+                } else if (action.equalsIgnoreCase("artiklList")) {
+                    out.write(Dbset.artiklList(request, response));
+
+                } else if (action.equalsIgnoreCase("artdetList")) {
+                    out.write(Dbset.artdetList(request, response));
+
+                } else if (action.equalsIgnoreCase("furnitureList")) {
+                    out.write(Dbset.furnitureList(request, response));
+
+                } else if (action.equalsIgnoreCase("furndetList")) {
+                    out.write(Dbset.furndetList(request, response));
+
+                } else if (action.equalsIgnoreCase("prjprodList")) {
+                    out.write(Dbset.prjprodList(request, response));
+
+                } else if (action.equalsIgnoreCase("sysfurnList")) {
+                    out.write(Dbset.sysfurnList(request, response));
+
+                } else if (action.equalsIgnoreCase("sysprofList")) {
+                    out.write(Dbset.sysprofList(request, response));
+
+                } else if (action.equalsIgnoreCase("syspar1List")) {
+                    out.write(Dbset.syspar1List(request, response));
+
+                } else if (action.equalsIgnoreCase("paramsList")) {
+                    out.write(Dbset.paramsList(request, response));
+
+                } else if (action.equalsIgnoreCase("updateScript")) {
+                    JSONObject output = Dbset.updateScript(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("insertPrjprod")) {
+                    JSONObject output = Dbset.insertPrjprod(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("genidOrder")) {
+                    out.write(JSONObject.toJSONString(
+                            new JSONObject(App.asMap("result", "ok", "id", Connect.genId(eProject.up)))));
+
+                } else if (action.equalsIgnoreCase("insertOrder")) {
+                    JSONObject output = Dbset.insertOrder(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("updateOrder")) {
+                    JSONObject output = Dbset.updateOrder(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("insertKits")) {
+                    JSONObject output = Dbset.insertKits(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("deleteOrder")) {
+                    JSONObject output = Dbset.deleteOrder(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("updatePrjkit")) {
+                    JSONObject output = Dbset.updatePrjkit(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("deletePrjkit")) {
+                    JSONObject output = Dbset.deletePrjkit(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("deletePrjprod")) {
+                    JSONObject output = Dbset.deletePrjprod(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("prjkitList")) {
+                    out.write(Dbset.prjkitList(request, response));
+
+                } else if (action.equalsIgnoreCase("userList")) {
+                    out.write(Dbset.userList(request, response));
+
+                } else if (action.equalsIgnoreCase("stvFields")) {
+                    JSONObject output = Dbset.stvFields(request, response);
+                    out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("dealerList")) {
+                    out.write(Dbset.dealerList(request, response));
+
+                } else if (action.equalsIgnoreCase("kitsList")) {
+                    out.write(Dbset.kitsList(request, response));
+
+                } else if (action.equalsIgnoreCase("kitdetList")) {
+                    out.write(Dbset.kitdetList(request, response));
+                }
+            } catch (Exception e) {
+                System.err.println("request - " + action + "   " + e);
+            }
+        }
     }
 }

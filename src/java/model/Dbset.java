@@ -40,6 +40,7 @@ import org.json.simple.JSONValue;
 public class Dbset {
 
     private static SimpleDateFormat fd = new SimpleDateFormat("dd.MM.yyyy");
+    private static Gson gson = new Gson();
 
     private static String format2(Object date) {
         if (date instanceof Date) {
@@ -58,83 +59,69 @@ public class Dbset {
         return (ob2 == null || ob2.equals("")) ? null : ob2;
     }
 
-    public static JSONObject systreeList(HttpServletRequest request, HttpServletResponse response) {
+    public static String systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
-        return new JSONObject(App.asMap("systreeList", qSystree));
+        return gson.toJson(qSystree);
     }
 
-    public static String systreeArr(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Query qSystree = new Query(eSystree.values()).select(eSystree.up);
-            HashMap hm = App.asMap("systreeList", qSystree);
-            
-            Gson gson = new Gson();
-            String jsonArray = gson.toJson(qSystree);
-            return jsonArray;
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-
-    public static JSONObject sysprodList(HttpServletRequest request, HttpServletResponse response) {
+    public static String sysprodList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysprod = new Query(eSysprod.values()).select(eSysprod.up);
-        return new JSONObject(App.asMap("sysprodList", qSysprod));
+        return gson.toJson(qSysprod);
     }
 
-    public static JSONObject groupList(HttpServletRequest request, HttpServletResponse response) {
+    public static String groupList(HttpServletRequest request, HttpServletResponse response) {
         Query qGroup = new Query(eGroups.values()).select(eGroups.up, "order by", eGroups.name);
-        return new JSONObject(App.asMap("groupList", qGroup));
+        return gson.toJson(qGroup);
     }
 
-    public static JSONObject colorList(HttpServletRequest request, HttpServletResponse response) {
+    public static String colorList(HttpServletRequest request, HttpServletResponse response) {
         Query qColor = new Query(eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
-        return new JSONObject(App.asMap("colorList", qColor));
+        return gson.toJson(qColor);
     }
 
-    public static JSONObject artiklList(HttpServletRequest request, HttpServletResponse response) {
+    public static String artiklList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "order by ", eArtikl.level1);
-        return new JSONObject(App.asMap("artiklList", qArtikl));
+        return gson.toJson(qArtikl);
     }
 
-    public static JSONObject artdetList(HttpServletRequest request, HttpServletResponse response) {
+    public static String artdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtdet = new Query(eArtdet.values()).select(eArtdet.up);
-        return new JSONObject(App.asMap("artdetList", qArtdet));
+        return gson.toJson(qArtdet);
     }
 
-    public static JSONObject furndetList(HttpServletRequest request, HttpServletResponse response) {
+    public static String furndetList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up);
-        return new JSONObject(App.asMap("furndetList", qFurndet));
+        return gson.toJson(qFurndet);
     }
 
-    public static JSONObject furnitureList(HttpServletRequest request, HttpServletResponse response) {
+    public static String furnitureList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurniture = new Query(eFurniture.values()).select(eFurniture.up);
-        return new JSONObject(App.asMap("furnitureList", qFurniture));
+        return gson.toJson(qFurniture);
     }
 
-    public static JSONObject prjprodList(HttpServletRequest request, HttpServletResponse response) {
+    public static String prjprodList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up);
-        return new JSONObject(App.asMap("prjprodList", qPrjprod));
+        return gson.toJson(qPrjprod);
     }
 
-    public static JSONObject sysfurnList(HttpServletRequest request, HttpServletResponse response) {
+    public static String sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysfurn = new Query(eSysfurn.values()).select(eSysfurn.up, "order by", eSysfurn.npp);
-        return new JSONObject(App.asMap("sysfurnList", qSysfurn));
+        return gson.toJson(qSysfurn);
     }
 
-    public static JSONObject sysprofList(HttpServletRequest request, HttpServletResponse response) {
+    public static String sysprofList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysprof = new Query(eSysprof.values()).select(eSysprof.up, "order by", eSysprof.npp);
-        return new JSONObject(App.asMap("sysprofList", qSysprof));
+        return gson.toJson(qSysprof);
     }
 
-    public static JSONObject syspar1List(HttpServletRequest request, HttpServletResponse response) {
+    public static String syspar1List(HttpServletRequest request, HttpServletResponse response) {
         Query qSyspar1 = new Query(eSyspar1.values()).select(eSyspar1.up);
-        return new JSONObject(App.asMap("syspar1List", qSyspar1));
+       return gson.toJson(qSyspar1);
     }
 
-    public static JSONObject paramsList(HttpServletRequest request, HttpServletResponse response) {
+    public static String paramsList(HttpServletRequest request, HttpServletResponse response) {
         Query qParams = new Query(eParams.values()).select(eParams.up);
-        return new JSONObject(App.asMap("paramsList", qParams));
+        return gson.toJson(qParams);
     }
 
     public static JSONObject updateScript(HttpServletRequest request, HttpServletResponse response) {
@@ -311,9 +298,9 @@ public class Dbset {
         }
     }
 
-    public static JSONObject prjkitList(HttpServletRequest request, HttpServletResponse response) {
+    public static String prjkitList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjkit = new Query(ePrjkit.values()).select(ePrjkit.up);
-        return new JSONObject(App.asMap("prjkitList", qPrjkit));
+        return gson.toJson(qPrjkit);
     }
 
     public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
@@ -334,34 +321,33 @@ public class Dbset {
         return null;
     }
 
-    public static JSONObject userList(HttpServletRequest request, HttpServletResponse response) {
+    public static String userList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        return new JSONObject(App.asMap("userList", qSysuser));
+        return gson.toJson(qSysuser);
     }
 
-    public static JSONObject orderList(HttpServletRequest request, HttpServletResponse response) {
+    public static String orderList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
             rec.setNo(eProject.date6, format2(rec.get(eProject.date6)));
         }
-//        HashMap hm = App.asMap("orderList", qProject);
-        return new JSONObject(App.asMap("orderList", qProject));
+        return gson.toJson(qProject);
     }
 
-    public static JSONObject dealerList(HttpServletRequest request, HttpServletResponse response) {
+    public static String dealerList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.login);
-        return new JSONObject(App.asMap("dealerList", qPrjpart));
+        return gson.toJson(qPrjpart);
     }
 
-    public static JSONObject kitsList(HttpServletRequest request, HttpServletResponse response) {
+    public static String kitsList(HttpServletRequest request, HttpServletResponse response) {
         Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.groups_id);
-        return new JSONObject(App.asMap("kitsList", qKits));
+        return gson.toJson(qKits);
     }
 
-    public static JSONObject kitdetList(HttpServletRequest request, HttpServletResponse response) {
+    public static String kitdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "order by", eKitdet.id);
-        return new JSONObject(App.asMap("kitdetList", qKitdet));
+        return gson.toJson(qKitdet);
     }
 }

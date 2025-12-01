@@ -98,10 +98,6 @@
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
 
-//            let obj1 = systreeList();
-//            let obj2 = sysprodList().sysprodList;
-//            let obj3 = colorList();
-
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
@@ -111,24 +107,24 @@
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных 
-                    dbset.systreeList = p1[0].systreeList;
-                    dbset.sysprodList = p2[0].sysprodList;
-                    dbset.colorList = p3[0].colorList;
-                    dbset.artiklList = p4[0].artiklList;
-                    dbset.artdetList = p5[0].artdetList;
-                    dbset.furnitureList = p6[0].furnitureList;
-                    dbset.furndetList = p7[0].furndetList;
-                    dbset.prjprodList = p8[0].prjprodList;
-                    dbset.sysfurnList = p9[0].sysfurnList;
-                    dbset.sysprofList = pA[0].sysprofList;
-                    dbset.syspar1List = pB[0].syspar1List;
-                    dbset.paramsList = pC[0].paramsList;
-                    dbset.groupList = pD[0].groupList;
-                    dbset.orderList = pE[0].orderList;
-                    dbset.dealerList = pF[0].dealerList;
-                    dbset.kitsList = pG[0].kitsList;
-                    dbset.kitdetList = pH[0].kitdetList;
-                    dbset.prjkitList = pI[0].prjkitList;
+                    dbset.systreeList = p1[0];
+                    dbset.sysprodList = p2[0];
+                    dbset.colorList = p3[0];
+                    dbset.artiklList = p4[0];
+                    dbset.artdetList = p5[0];
+                    dbset.furnitureList = p6[0];
+                    dbset.furndetList = p7[0];
+                    dbset.prjprodList = p8[0];
+                    dbset.sysfurnList = p9[0];
+                    dbset.sysprofList = pA[0];
+                    dbset.syspar1List = pB[0];
+                    dbset.paramsList = pC[0];
+                    dbset.groupList = pD[0];
+                    dbset.orderList = pE[0];
+                    dbset.dealerList = pF[0];
+                    dbset.kitsList = pG[0];
+                    dbset.kitdetList = pH[0];
+                    dbset.prjkitList = pI[0];
 
                     login.init_login();
 
