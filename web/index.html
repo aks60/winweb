@@ -18,9 +18,17 @@
         <script type="text/javascript" src="jss/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="frm/utils.js"></script>
         <script type="module" src="frm/builder/wincalc.js"></script>
+        <script type="module" src="jss//jsts-2.12.1/jsts.js"></script>
         <script type="text/javascript">
+            
+//            var OBJ1 = new jsts.io.GeoJSONReader();
+//            var OBJ2 = new jsts.geom.Location();
+            
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {},
-                    login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+                    login = {que_requests: 2}, users = {}, order = {orderID: 16767,
+                wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+            window.onload = function () {
+            };
         </script>
         <style></style> 
 
@@ -40,59 +48,61 @@
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
 
-            $.ajax({
-                url: 'dbset?action=systreeArr'
-            }).done(function (data) {
-                debugger;
-                alert("success aks");
-            }).fail(function () {
-                debugger;
-                alert("error aks");
+            //import * as jsts from 'jsts';
+            //var reader = new jsts.io.GeoJSONReader();
+
+            //let pnt = new jsts.org.locationtech.jts.geom.Point();
+
+            //import OL3Parser from 'jsts/org/locationtech/jts/io/OL3Parser.js';
+            //import BufferOp from 'jsts/org/locationtech/jts/operation/buffer/BufferOp.js';
+            //import Coordinate from 'jsts/org/locationtech/jts/geom/Coordinate.js';
+            //import GeometryFactory from 'jsts/org/locationtech/jts/geom/GeometryFactory.js';
+            //import BufferParameters from 'jsts/org/locationtech/jts/operation/buffer/BufferParameters.js';
+            //import {BufferOp} from 'jsts/org/locationtech/jts/operation/buffer';
+
+            //const geoReader = new jsts.io.GeoJSONReader();
+            //const geoWriter = new jsts.io.GeoJSONWriter();
+
+            $("#outbody").load('frm/login.jsp', function () {
+                $.when(
+                        systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
+                        furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
+                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
+
+                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
+                        ) => {
+                    //загрузка базы данных      
+                    dbset.systreeList = p1[0];
+                    dbset.sysprodList = p2[0];
+                    dbset.colorList = p3[0];
+                    dbset.artiklList = p4[0];
+                    dbset.artdetList = p5[0];
+                    dbset.furnitureList = p6[0];
+                    dbset.furndetList = p7[0];
+                    dbset.prjprodList = p8[0];
+                    dbset.sysfurnList = p9[0];
+                    dbset.sysprofList = pA[0];
+                    dbset.syspar1List = pB[0];
+                    dbset.paramsList = pC[0];
+                    dbset.groupList = pD[0];
+                    dbset.orderList = pE[0];
+                    dbset.dealerList = pF[0];
+                    dbset.kitsList = pG[0];
+                    dbset.kitdetList = pH[0];
+                    dbset.prjkitList = pI[0];
+                    login.init_login();
+                    //Виртуальные артикулы  
+                    dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
+                    dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+                    dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+                }).catch(() => {
+                    dialogMes('Ошибка', 'Ошибка загрузки базы данных');
+                })
             });
-
-//            $("#outbody").load('frm/login.jsp', function () {
-//                $.when(
-//                        systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
-//                        furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
-//                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
-//
-//                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
-//                        ) => {
-//                    //загрузка базы данных 
-//                    //debugger;
-//                    dbset.systreeList = p1[0].systreeList;
-//                    dbset.sysprodList = p2[0].sysprodList;
-//                    dbset.colorList = p3[0].colorList;
-//                    dbset.artiklList = p4[0].artiklList;
-//                    dbset.artdetList = p5[0].artdetList;
-//                    dbset.furnitureList = p6[0].furnitureList;
-//                    dbset.furndetList = p7[0].furndetList;
-//                    dbset.prjprodList = p8[0].prjprodList;
-//                    dbset.sysfurnList = p9[0].sysfurnList;
-//                    dbset.sysprofList = pA[0].sysprofList;
-//                    dbset.syspar1List = pB[0].syspar1List;
-//                    dbset.paramsList = pC[0].paramsList;
-//                    dbset.groupList = pD[0].groupList;
-//                    dbset.orderList = pE[0].orderList;
-//                    dbset.dealerList = pF[0].dealerList;
-//                    dbset.kitsList = pG[0].kitsList;
-//                    dbset.kitdetList = pH[0].kitdetList;
-//                    dbset.prjkitList = pI[0].prjkitList;
-//
-//                    login.init_login();
-//
-//                    dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-//                    dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-//                    dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
-//                    dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-//                    dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-//
-//                }).catch(() => {
-//                    dialogMes('Ошибка', 'Ошибка загрузки базы данных');
-//                });
-//            });
-
-        </script>         
+            var OBJ2 = new jsts.geom.Location();
+        </script>        
     </body>
 </html>
 
