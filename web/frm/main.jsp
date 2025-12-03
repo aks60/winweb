@@ -18,6 +18,7 @@
         <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
         <script type="text/javascript" src="jss/jstree-3.3.12/jstree.js"></script>
+        <script type="module" src="jss//jsts-2.12.1/jsts.js"></script>
         <script type="text/javascript" src="frm/utils.js"></script>
         <script type="module" src="frm/builder/wincalc.js"></script>
 
@@ -91,6 +92,15 @@
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
             } from './frm/builder/dbset.js';
+            
+            var OBJ3 = new jsts.io.GeoJSONReader();
+            var OBJ4 = new jsts.geom.Location();
+            var OBJ5 = new jsts.geom.GeometryFactory();
+            var OBJ6 = new jsts.operation.buffer.BufferParameters();
+            var OBJ7 = new jsts.io.GeoJSONWriter();
+            var OBJ8 = new jsts.geom.Coordinate();
+            var OBJ9 = new jsts.io.OL3Parser();
+            
             $("#outbody").load('frm/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
