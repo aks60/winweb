@@ -1,7 +1,17 @@
 //------------------------------------------------------------------------------
 import {draw_elements} from './drawing.js';
-import {Root} from './frm/builder/model/AreaRoot.js';
 import {Root, Area, Stvorka, Cross, Frame, Glass, Com5t} from './model.js';
+
+//import {AreaArch} from './model/areaArch.js';
+//import {AreaDoor} from './model/areaDoor.js';
+//import {AreaRectangl} from './model/areaRectangl.js';
+//import {AreaRoot} from './model/areaRoot.js';
+//import {AreaSimple} from './model/areaSimple.js';
+//import {AreaStvorca} from './model/areaStvorkat.js';
+//import {Com5t} from './model/com5t.js';
+//import {ElemCross} from './model/elemCrosst.js';
+//import {ElemFrame} from './model/elemFrame.js';
+//import {elemGlass} from './model/elemGlass.js';
 //------------------------------------------------------------------------------
 
 win.build = function (canvas, script) {

@@ -1,5 +1,5 @@
 
-import {Com5t} from './frm/buildr/model/com5t.js';
+import {Com5t} from './model/com5t.js';
 
 export class AreaSimple extends Com5t {
 

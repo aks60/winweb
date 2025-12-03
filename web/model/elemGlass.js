@@ -1,5 +1,5 @@
 
-import {Com5t} from './frm/builder/model/com5t.js';
+import {Com5t} from './model/com5t.js';
 
 export class Glass extends Com5t {
 

@@ -11,16 +11,16 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/html-ui.css">
 
-        <script type="text/javascript" src="jss/jquery-3.6.0/jquery-3.6.0.js"></script>                               
-        <script type="text/javascript" src="jss/jquery-ui-1.13/jquery-ui.js"></script> 
-        <script type="text/javascript" src="jss/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
+        <script type="text/javascript" src="lib/jquery-3.6.0/jquery-3.6.0.js"></script>                               
+        <script type="text/javascript" src="lib/jquery-ui-1.13/jquery-ui.js"></script> 
+        <script type="text/javascript" src="lib/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
 
-        <script type="text/javascript" src="jss/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="jss/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
-        <script type="text/javascript" src="jss/jstree-3.3.12/jstree.js"></script>
-        <script type="module" src="jss//jsts-2.12.1/jsts.js"></script>
-        <script type="text/javascript" src="frm/utils.js"></script>
-        <script type="module" src="frm/builder/wincalc.js"></script>
+        <script type="text/javascript" src="lib/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
+        <script type="text/javascript" src="lib/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
+        <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
+        <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
+        <script type="text/javascript" src="frame/utils.js"></script>
+        <script type="module" src="frame/builder/wincalc.js"></script>
 
         <script type="text/javascript">
             //Поля таблиц
@@ -91,7 +91,7 @@
                     artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
-            } from './frm/builder/dbset.js';
+            } from './frame/builder/dbset.js';
             
             var OBJ3 = new jsts.io.GeoJSONReader();
             var OBJ4 = new jsts.geom.Location();
@@ -101,7 +101,7 @@
             var OBJ8 = new jsts.geom.Coordinate();
             var OBJ9 = new jsts.io.OL3Parser();
             
-            $("#outbody").load('frm/login.jsp', function () {
+            $("#outbody").load('frame/login.jsp', function () {
                 $.when(
                         systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
                         furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
