@@ -28,8 +28,8 @@ order.init_table = function (table1, table2) {
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
             let orderRow = table1.jqGrid('getRowData', rowid);
-            order.orderID = orderRow.id
-            order.wincalcMap.clear()
+            order.orderID = orderRow.id;
+            order.wincalcMap.clear();
             //Очистим таблицу конструкций
             let j = 1;
             let rc = table2.rows.length;
@@ -78,30 +78,24 @@ order.click_table2 = function (e) {
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
-    //debugger;
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     dbset.orderList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
     for (let i = 0; i < dbset.orderList.length; i++) {
-        let tr = dbset.orderList[i];
+        let tr = dbset.orderList[i].list;
         if (tr[ORDER.id] == order.orderID) {
             rowID = i + 1;
         }
-//        debugger;
-//              
-//        let rec = dbset.dealerList[0];
-//        let obj4 = rec[DEALER.id];
-//        let obj3 = tr[ORDER.prjpart_id];
-//        let obj2 = dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]);
-//        let obj = findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner];
-
+        let obj1 = tr[ORDER.num_ord];
+        let obj2 = tr[ORDER.num_acc];
+            debugger;
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
             num_ord: tr[ORDER.num_ord],
             num_acc: tr[ORDER.num_acc],
             date4: tr[ORDER.date4],
             date6: tr[ORDER.date6],
-            //partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
             manager: tr[ORDER.manager],
             prjpart_id: tr[ORDER.prjpart_id]
         });

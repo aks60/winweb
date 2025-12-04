@@ -22,6 +22,9 @@
         <script type="text/javascript" src="frame/utils.js"></script>
         <script type="module" src="frame/builder/wincalc.js"></script>
 
+        //<script type="module" src="frame/order.js"></script>
+
+
         <script type="text/javascript">
             //Поля таблиц
             var SYSTREE = {id: 1, name: 2, glas: 3, depth: 4, col1: 5, col2: 6, col3: 7, cgrp: 8, types: 12, parent_id: 13},
@@ -38,11 +41,11 @@
                     PRJKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, prjprod_id: 12},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
-                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 21, date5: 22, date6: 23, owner: 24, prjpart_id: 26},
+                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 19, date5: 20, date6: 21, owner: 22, prjpart_id: 25},
                     USER = {id: 1, role: 2, login: 3, fio: 4, desc: 7},
                     KITS = {id: 1, name: 2, types: 3, categ: 4},
                     KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7},
-                    DEALER = {id: 1, partner: 2, login: 3};
+                    DEALER = {id: 1, partner: 3, login: 4};
             //Enum - перечисления
             var Type = {NONE: [0, 0, 'Не определено'], FRAME_SIDE: [1, 1, 'Сторона коробки'], STVORKA_SIDE: [2, 2, 'Сторона створки'],
                 IMPOST: [3, 3, 'Импост'], STOIKA: [5, 5, 'Стойка'], ERKER: [7, 7, 'Эркер'], EDGE: [8, 8, 'Грань'], SHTULP: [9, 9, 'Штульп'],
@@ -86,30 +89,19 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {
-            systreeList, sysprodList, colorList,
-                    artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
-                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
-                    kitsList, kitdetList, prjkitList
-            } from './frame/builder/dbset.js';
-            
-            var OBJ3 = new jsts.io.GeoJSONReader();
-            var OBJ4 = new jsts.geom.Location();
-            var OBJ5 = new jsts.geom.GeometryFactory();
-            var OBJ6 = new jsts.operation.buffer.BufferParameters();
-            var OBJ7 = new jsts.io.GeoJSONWriter();
-            var OBJ8 = new jsts.geom.Coordinate();
-            var OBJ9 = new jsts.io.OL3Parser();
-            
+            //import {sayHi} from './frame/main.js';
+            //sayHi();
             $("#outbody").load('frame/login.jsp', function () {
                 $.when(
-                        systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
-                        furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
-                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
-
+                        $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
+                        $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
+                        $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
+                        $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
+                        $.post("dbset?action=groupList"), $.post("dbset?action=orderList"), $.post("dbset?action=dealerList"),
+                        $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
-                    //загрузка базы данных      
+                    //загрузка базы данных  
                     dbset.systreeList = p1[0];
                     dbset.sysprodList = p2[0];
                     dbset.colorList = p3[0];

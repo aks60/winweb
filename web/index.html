@@ -29,7 +29,7 @@
 
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {}, login = {que_requests: 2},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
-            
+
             window.onload = function () {
             };
         </script>
@@ -44,13 +44,6 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
         <script type="module">
 
-            import {
-            systreeList, sysprodList, colorList,
-                    artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
-                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
-                    kitsList, kitdetList, prjkitList
-            } from './frame/builder/dbset.js';
-
             var OBJ3 = new jsts.io.GeoJSONReader();
             var OBJ4 = new jsts.geom.Location();
             var OBJ5 = new jsts.geom.GeometryFactory();
@@ -61,10 +54,12 @@
 
             $("#outbody").load('frame/login.jsp', function () {
                 $.when(
-                        systreeList(), sysprodList(), colorList(), artiklList(), artdetList(), furnitureList(),
-                        furndetList(), prjprodList(), sysfurnList(), sysprofList(), syspar1List(), paramsList(),
-                        groupList(), orderList(), dealerList(), kitsList(), kitdetList(), prjkitList()
-
+                        $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
+                        $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
+                        $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
+                        $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
+                        $.post("dbset?action=groupList"), $.post("dbset?action=orderList"), $.post("dbset?action=dealerList"),
+                        $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных      

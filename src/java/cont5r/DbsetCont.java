@@ -2,11 +2,11 @@ package cont5r;
 
 import com.google.gson.Gson;
 import dataset.Connect;
-import dataset.Query;
 import domain.eProject;
-import domain.eSystree;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,21 +42,9 @@ public class DbsetCont extends HttpServlet {
 
         response.setContentType("application/json; charset=UTF-8");
         String action = request.getParameter("action");
-//        try {
-//            PrintWriter out = response.getWriter();
-//
-//            if (action.equalsIgnoreCase("systreeArr")) {
-//                com.google.gson.Gson gson = new com.google.gson.Gson();
-//                Query qSystree = new Query(eSystree.values()).select(eSystree.up);
-//                String output = gson.toJson(qSystree);
-//                out.write(output);
-//
-//            }
-//        } catch (Exception e) {
-//            System.err.println("ERROR");
-//        }
+
         try (PrintWriter out = response.getWriter()) {
-            try {
+            try {               
                 if (action.equalsIgnoreCase("systreeList")) {
                     out.write(Dbset.systreeList(request, response));
 
