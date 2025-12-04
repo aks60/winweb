@@ -86,9 +86,6 @@ order.load_table = function (table1, table2) {
         if (tr[ORDER.id] == order.orderID) {
             rowID = i + 1;
         }
-        let obj1 = tr[ORDER.num_ord];
-        let obj2 = tr[ORDER.num_acc];
-            debugger;
         table1.jqGrid('addRowData', i + 1, {
             id: tr[ORDER.id],
             num_ord: tr[ORDER.num_ord],
@@ -124,8 +121,8 @@ order.delete_table1 = function (table) {
                             if (data.result == 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < dbset.orderList.length; ++i) {
-                                    if (orderRow.id == dbset.orderList[i][ORDER.id]) {
-                                        dbset.orderList.splice(i, 1);
+                                    if (orderRow.id == dbset.orderList[i].list[ORDER.id]) {
+                                        dbset.orderList.list.splice(i, 1);
                                     }
                                 }
                             } else

@@ -90,7 +90,7 @@
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < dbset.kitsList.length; i++) {
-                    let tr = dbset.kitsList[i];
+                    let tr = dbset.kitsList[i].list;
                     table1.jqGrid('addRowData', i + 1, {
                         id: tr[KITS.id],
                         categ: tr[KITS.categ],

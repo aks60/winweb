@@ -91,7 +91,7 @@
 
                 } else if ($('#outbody title').text() == 'KITS') {
                     for (let i = 0; i < dbset.artiklList.length; i++) {
-                        let tr = dbset.artiklList[i];
+                        let tr = dbset.artiklList[i].list;
                         table.jqGrid('addRowData', i + 1, {
                             id: tr[ARTIKL.id],
                             type: TYPE[tr[ARTIKL.level1]],

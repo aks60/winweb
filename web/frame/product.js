@@ -33,14 +33,14 @@ product.load_table = function (table1) {
     syspar1List2.sort((a, b) => b[SYSPAR1.params_id] - a[SYSPAR1.params_id]);
     for (let i = 0; i < syspar1List2.length; i++) {
 
-        let syspar1Rec = syspar1List2[i];
-        let paramsRec = dbset.paramsList.find(tr => syspar1Rec[SYSPAR1.params_id] == tr[PARAMS.id]);
+        let tr = syspar1List2[i].list;
+        let paramsRec = dbset.paramsList.find(tr => tr[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {
 
-            id: syspar1Rec[SYSPAR1.id],
+            id: tr[SYSPAR1.id],
             text: paramsRec[PARAMS.text],
-            val: syspar1Rec[SYSPAR1.text],
-            fixed: syspar1Rec[SYSPAR1.fixed]
+            val: tr[SYSPAR1.text],
+            fixed: tr[SYSPAR1.fixed]
         });
     }
     table1.jqGrid("setSelection", 1);
