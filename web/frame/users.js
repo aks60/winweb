@@ -40,12 +40,12 @@ users.init_table1 = function (table) {
 }
 //------------------------------------------------------------------------------
 users.load_table1 = function (table) {
-    debugger;
+    
     table.jqGrid('clearGridData', true);
     $.ajax({
         url: 'dbset?action=userList',
         success: function (data) {
-            users.userList = data.userList;
+            users.userList = data;
             for (let i = 0; i < users.userList.length; i++) {
                 let tr = users.userList[i].list;
                 table.jqGrid('addRowData', i + 1, {
