@@ -326,7 +326,7 @@ public class Dbset {
         return gson.toJson(qSysuser);
     }
 
-    public static String orderList(HttpServletRequest request, HttpServletResponse response) {
+    public static String projectList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));

@@ -58,7 +58,7 @@
                         $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
                         $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
                         $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
-                        $.post("dbset?action=groupList"), $.post("dbset?action=orderList"), $.post("dbset?action=dealerList"),
+                        $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                         $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
@@ -76,7 +76,7 @@
                     dbset.syspar1List = pB[0];
                     dbset.paramsList = pC[0];
                     dbset.groupList = pD[0];
-                    dbset.orderList = pE[0];
+                    dbset.projectList = pE[0];
                     dbset.dealerList = pF[0];
                     dbset.kitsList = pG[0];
                     dbset.kitdetList = pH[0];
