@@ -4,7 +4,7 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <script type="text/javascript" src="frame/order.js"></script> 
-        <title>ORDER</title>
+        <title>PROJECT</title>
 
         <style>
             #table2 tr:hover {
