@@ -157,9 +157,9 @@ public class App {
         return arr;
     }
 
-    public static <E> E[] asMas(E... objs) {
-        return objs;
-    }
+//    public static <E> E[] asMas(E... objs) {
+//        return objs;
+//    }
 
     public static TreeMap asTree(Object... arr) {
         try {
@@ -187,8 +187,8 @@ public class App {
         }
     }
 
-    public static ArrayList<HashMap> asMap(Table... tables) {
-
+//    public static ArrayList<HashMap> asMap(Table... tables) {
+//
 //        if (tables[0] == null) {
 //            return null;
 //        }
@@ -229,8 +229,8 @@ public class App {
 //            output.add(hm);
 //        }
 //        return output;
-          return null;
-    }
+//          return null;
+//    }
 
     public static HashMap<Object, Record> asMap(Table table, Field id) {
 

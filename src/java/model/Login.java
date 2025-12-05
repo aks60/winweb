@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
 import org.bouncycastle.crypto.params.ECDomainParameters;
@@ -46,9 +47,9 @@ public class Login {
     private static byte[] bytkey = {79, 12, 91, 62, 19, 71, 36, 84, 19, 63, 55, 89, 35, 27, 01, 82, 45, 64, 26, 95, 77, 83, 18, 90};
 
     //новый токен, проверка отсутствия логина в базе
-    public HashMap rtwEmptyLogin(HttpServletRequest request, HttpServletResponse response) {
+    public Map rtwEmptyLogin(HttpServletRequest request, HttpServletResponse response) {
 
-        HashMap output = App.asMap("login", "true", "mes", "");
+        Map output = Map.of("login", "true", "mes", "");
         String adm_name = request.getParameter("admname");
         char[] adm_password = request.getParameter("password").toCharArray();
         String login = request.getParameter("login");
@@ -62,7 +63,7 @@ public class Login {
                 Query qUser = new Query(eSysuser.values());
                 for (Record recordUser : qUser) {
                     if (login.equals(recordUser.get(eSysuser.login))) {
-                        output.putAll(App.asMap("login", true, "mes", "Пользователь с таким именем уже существует в базе данных"));
+                        output.putAll(Map.of("login", true, "mes", "Пользователь с таким именем уже существует в базе данных"));
                     }
                 }
             }
@@ -79,20 +80,20 @@ public class Login {
 
         } catch (SQLException e) {
             System.err.println(e);
-            output.putAll(App.asMap("login", true, "mes", "Ошибка авторизации прав администратора"));
+            output.putAll(Map.of("login", true, "mes", "Ошибка авторизации прав администратора"));
             return output;
         }
     }
 
     //новый токен, сохранение user, open key и role в базе данных
-    public HashMap newToken(HttpServletRequest request, HttpServletResponse response) {
+    public Map newToken(HttpServletRequest request, HttpServletResponse response) {
 
         String openkey = request.getParameter("openkey");
         String login = request.getParameter("login");
         String user_role = request.getParameter("role");
         String user_desc = request.getParameter("desc");
 
-        HashMap output = App.asMap("login", login, "openkey", openkey);
+        Map output = Map.of("login", login, "openkey", openkey);
         Query qSysuser = new Query(eSysuser.values());
         Record record = eSysuser.up.newRecord(Query.INS);
         record.setNo(eSysuser.login, login);
@@ -104,21 +105,21 @@ public class Login {
     }
 
     //авторизация токен, генерация клиенту случ. последовательности
-    public HashMap rtwRandom(HttpServletRequest request, HttpServletResponse response) {
+    public Map rtwRandom(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         session.setAttribute("login", request.getParameter("login"));
         SecureRandom random = new SecureRandom();
         session.setAttribute("random", random);
         String rndstr = new BigInteger(130, random).toString(32);
-        HashMap output = App.asMap("random", rndstr);
+        Map output = Map.of("random", rndstr);
         return output;
     }
 
     //авторизация токен, проверка подписи
-    public HashMap rtwConnect(HttpServletRequest request, HttpServletResponse response) {
+    public Map rtwConnect(HttpServletRequest request, HttpServletResponse response) {
 
-        HashMap output = App.asMap("result", "Ошибка авторизации", "role", "empty");
+        Map output = Map.of("result", "Ошибка авторизации", "role", "empty");
         try {
             HttpSession session = request.getSession();
             String loginToken = session.getAttribute("login").toString();
@@ -196,7 +197,7 @@ public class Login {
         String user_fio = request.getParameter("fio");
         String user_desc = request.getParameter("desc");
         String user_role = request.getParameter("role");
-        JSONObject output = new JSONObject(App.asMap("login", true, "mes", "Новый пользователь создан"));
+        JSONObject output = new JSONObject(Map.of("login", true, "mes", "Новый пользователь создан"));
         try {
             if (adm_name.equalsIgnoreCase("admin") || adm_name.equalsIgnoreCase("sysdba")) {
                 Query user = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.login, "='" + user_name + "'");
@@ -233,7 +234,7 @@ public class Login {
     }
 
     public JSONObject deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
-        JSONObject output = new JSONObject(App.asMap("result", "Ошибка удаления пользователя"));
+        JSONObject output = new JSONObject(Map.of("result", "Ошибка удаления пользователя"));
         try {
             Query qUser = new Query(eSysuser.values()).select(eSysuser.up, "where", eSysuser.id, "=", id);
             if (qUser.isEmpty() == false) {

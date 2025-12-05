@@ -26,9 +26,9 @@ order.init_table = function (table1, table2) {
             {name: 'prjpart_id', hidden: true}
         ],
         //Загрузка таблицы 2
-        onSelectRow: function (rowid) {
-            let orderRow = table1.jqGrid('getRowData', rowid);
-            order.orderID = orderRow.id;
+        onSelectRow: function (rowid) {            
+            let projectRow = table1.jqGrid('getRowData', rowid);
+            order.orderID = projectRow.id;
             order.wincalcMap.clear();
             //Очистим таблицу конструкций
             let j = 1;
@@ -37,7 +37,7 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             //Заполним табл. конструкций            
-            let prjprodList = dbset.prjprodList.filter(rec => orderRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
+            let prjprodList = dbset.prjprodList.filter(rec => projectRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
             if (prjprodList.length > 0) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
@@ -82,7 +82,7 @@ order.load_table = function (table1, table2) {
     table1.jqGrid('clearGridData', true);
     dbset.projectList.sort((a, b) => b[PROJECT.id] - a[PROJECT.id]);
     for (let i = 0; i < dbset.projectList.length; i++) {
-        let tr = dbset.projectList[i].list;
+        let tr = dbset.projectList[i];
         if (tr[PROJECT.id] == order.orderID) {
             rowID = i + 1;
         }
@@ -121,8 +121,8 @@ order.delete_table1 = function (table) {
                             if (data.result == 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < dbset.projectList.length; ++i) {
-                                    if (orderRow.id == dbset.projectList[i].list[PROJECT.id]) {
-                                        dbset.projectList.list.splice(i, 1);
+                                    if (orderRow.id == dbset.projectList[i][PROJECT.id]) {
+                                        dbset.projectList.splice(i, 1);
                                     }
                                 }
                             } else
@@ -194,12 +194,13 @@ order.add_prjprod = function (table2, prjprodRec) {
     canvas.id = 'cnv' + prjprodRec[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
+    debugger;
     let id = document.createTextNode(prjprodRec[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec[PRJPROD.name]);
     let script = prjprodRec[PRJPROD.script];
-    let iwincalc = win.build(canvas, script);
+    //let iwincalc = win.build(canvas, script);
     //Массив объектов winc
-    order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
+    //order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');

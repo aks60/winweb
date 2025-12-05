@@ -97,7 +97,7 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("genidOrder")) {
                     out.write(JSONObject.toJSONString(
-                            new JSONObject(App.asMap("result", "ok", "id", Connect.genId(eProject.up)))));
+                            new JSONObject(Map.of("result", "ok", "id", Connect.genId(eProject.up)))));
 
                 } else if (action.equalsIgnoreCase("insertOrder")) {
                     JSONObject output = Dbset.insertOrder(request, response);

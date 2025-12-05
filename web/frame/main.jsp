@@ -91,9 +91,6 @@
         <script type="module">
             //import {sayHi} from './frame/main.js';
             //sayHi();
-//            let obj0 = 1;
-//            let obj1 = $.post("dbset?action=projectList");
-//            let obj2 = 1;
             $("#outbody").load('frame/login.jsp', function () {
                 $.when(
                         $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
@@ -104,29 +101,29 @@
                         $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
-                    //загрузка базы данных  
-                    //debugger;
-                    dbset.systreeList = p1[0];
-                    dbset.sysprodList = p2[0];
-                    dbset.colorList = p3[0];
-                    dbset.artiklList = p4[0];
-                    dbset.artdetList = p5[0];
-                    dbset.furnitureList = p6[0];
-                    dbset.furndetList = p7[0];
-                    dbset.prjprodList = p8[0];
-                    dbset.sysfurnList = p9[0];
-                    dbset.sysprofList = pA[0];
-                    dbset.syspar1List = pB[0];
-                    dbset.paramsList = pC[0];
-                    dbset.groupList = pD[0];
-                    dbset.projectList = pE[0];
-                    dbset.dealerList = pF[0];
-                    dbset.kitsList = pG[0];
-                    dbset.kitdetList = pH[0];
-                    dbset.prjkitList = pI[0];
+                    //загрузка базы данных
+                    debugger;
+                    dbset.systreeList = p1[0].systreeList;
+                    dbset.sysprodList = p2[0].sysprodList;
+                    dbset.colorList = p3[0].colorList;
+                    dbset.artiklList = p4[0].artiklList;
+                    dbset.artdetList = p5[0].artdetList;
+                    dbset.furnitureList = p6[0].furnitureList;
+                    dbset.furndetList = p7[0].furndetList;
+                    dbset.prjprodList = p8[0].prjprodList;
+                    dbset.sysfurnList = p9[0].sysfurnList;
+                    dbset.sysprofList = pA[0].sysprofList;
+                    dbset.syspar1List = pB[0].syspar1List;
+                    dbset.paramsList = pC[0].paramsList;
+                    dbset.groupList = pD[0].groupList;
+                    dbset.projectList = pE[0].projectList;
+                    dbset.dealerList = pF[0].dealerList;
+                    dbset.kitsList = pG[0].kitsList;
+                    dbset.kitdetList = pH[0].kitdetList;
+                    dbset.prjkitList = pI[0].prjkitLi
                     
                     login.init_login();
-                    
+
                     //Виртуальные артикулы  
                     dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
                     dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});

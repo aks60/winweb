@@ -29,7 +29,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.sys.App;
@@ -61,67 +61,67 @@ public class Dbset {
 
     public static String systreeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSystree = new Query(eSystree.values()).select(eSystree.up);
-        return gson.toJson(qSystree);
+        return gson.toJson(Map.of("systreeList", qSystree));
     }
 
     public static String sysprodList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysprod = new Query(eSysprod.values()).select(eSysprod.up);
-        return gson.toJson(qSysprod);
+        return gson.toJson(Map.of("sysprodList", qSysprod));
     }
 
     public static String groupList(HttpServletRequest request, HttpServletResponse response) {
         Query qGroup = new Query(eGroups.values()).select(eGroups.up, "order by", eGroups.name);
-        return gson.toJson(qGroup);
+        return gson.toJson(Map.of("groupList", qGroup));
     }
 
     public static String colorList(HttpServletRequest request, HttpServletResponse response) {
         Query qColor = new Query(eColor.values()).select(eColor.up, "where", eColor.id, " > 0", "order by", eColor.name);
-        return gson.toJson(qColor);
+        return gson.toJson(Map.of("colorList", qColor));
     }
 
     public static String artiklList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtikl = new Query(eArtikl.values()).select(eArtikl.up, "order by ", eArtikl.level1);
-        return gson.toJson(qArtikl);
+        return gson.toJson(Map.of("artiklList", qArtikl));
     }
 
     public static String artdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtdet = new Query(eArtdet.values()).select(eArtdet.up);
-        return gson.toJson(qArtdet);
+        return gson.toJson(Map.of("artdetList", qArtdet));
     }
 
     public static String furndetList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up);
-        return gson.toJson(qFurndet);
+        return gson.toJson(Map.of("furndetList", qFurndet));
     }
 
     public static String furnitureList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurniture = new Query(eFurniture.values()).select(eFurniture.up);
-        return gson.toJson(qFurniture);
+        return gson.toJson(Map.of("furnitureList", qFurniture));
     }
 
     public static String prjprodList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up);
-        return gson.toJson(qPrjprod);
+        return gson.toJson(Map.of("prjprodList", qPrjprod));
     }
 
     public static String sysfurnList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysfurn = new Query(eSysfurn.values()).select(eSysfurn.up, "order by", eSysfurn.npp);
-        return gson.toJson(qSysfurn);
+        return gson.toJson(Map.of("sysfurnList", qSysfurn));
     }
 
     public static String sysprofList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysprof = new Query(eSysprof.values()).select(eSysprof.up, "order by", eSysprof.npp);
-        return gson.toJson(qSysprof);
+        return gson.toJson(Map.of("sysprofList", qSysprof));
     }
 
     public static String syspar1List(HttpServletRequest request, HttpServletResponse response) {
         Query qSyspar1 = new Query(eSyspar1.values()).select(eSyspar1.up);
-       return gson.toJson(qSyspar1);
+       return gson.toJson(Map.of("syspar1List", qSyspar1));
     }
 
     public static String paramsList(HttpServletRequest request, HttpServletResponse response) {
         Query qParams = new Query(eParams.values()).select(eParams.up);
-        return gson.toJson(qParams);
+        return gson.toJson(Map.of("paramsList", qParams));
     }
 
     public static JSONObject updateScript(HttpServletRequest request, HttpServletResponse response) {
@@ -133,10 +133,10 @@ public class Dbset {
             String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
             statement.executeUpdate(sql);
             connection.close();
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -154,10 +154,10 @@ public class Dbset {
             record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null : obj.get(eProject.date6.name()));
             record.set(eProject.prjpart_id, format4(obj, eProject.prjpart_id));
             qProject.insert2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -176,10 +176,10 @@ public class Dbset {
             record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
             Query qProject = new Query(eProject.values());
             qProject.update2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -201,10 +201,10 @@ public class Dbset {
             record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
             record.set(ePrjkit.prjprod_id, format4(obj, ePrjkit.prjprod_id));
             qPrjkit.insert2(record);
-            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
+            return new JSONObject(Map.of("result", "ok", "prjkitRec", record));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -223,10 +223,10 @@ public class Dbset {
             record.add(obj.get("projectID"));
             record.add(obj.get("systreeID"));
             qPrjprod.insert2(record);
-            return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
+            return new JSONObject(Map.of("result", "ok", "id", record.getInt(ePrjprod.id)));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -238,10 +238,10 @@ public class Dbset {
             Record record = eProject.up.newRecord("DEL");
             record.set(eProject.id, obj.get("id"));
             qProject.delete2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -253,10 +253,10 @@ public class Dbset {
             Record record = ePrjkit.up.newRecord("DEL");
             record.set(ePrjkit.id, obj.get("id"));
             qPrjkit.delete2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -276,10 +276,10 @@ public class Dbset {
             record.set(ePrjkit.prjprod_id, format3(arr, ePrjkit.prjprod_id));
             Query qPrjkit = new Query(ePrjkit.values());
             qPrjkit.update2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
@@ -291,16 +291,16 @@ public class Dbset {
             Record record = ePrjprod.up.newRecord("DEL");
             record.set(ePrjprod.id, obj.get("id"));
             qPrjprod.delete2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            return new JSONObject(Map.of("result", "ok"));
 
         } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+            return new JSONObject(Map.of("result", "Ошибка: " + e));
         }
     }
 
     public static String prjkitList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjkit = new Query(ePrjkit.values()).select(ePrjkit.up);
-        return gson.toJson(qPrjkit);
+        return gson.toJson(Map.of("prjkitList", qPrjkit));
     }
 
     public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
@@ -317,13 +317,13 @@ public class Dbset {
 //                    "loopRec", areaStv.loopRec, "loopColor", areaStv.loopColor,
 //                    "lockRec", areaStv.lockRec, "lockColor", areaStv.lockColor));
 //        }
-//        return new JSONObject(App.asMap("stvFields", hm));
+//        return new JSONObject(Map.of("stvFields", hm));
         return null;
     }
 
     public static String userList(HttpServletRequest request, HttpServletResponse response) {
         Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        return gson.toJson(qSysuser);
+        return gson.toJson(Map.of("userList", qSysuser));
     }
 
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
@@ -333,21 +333,21 @@ public class Dbset {
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
             rec.setNo(eProject.date6, format2(rec.get(eProject.date6)));
         }
-        return gson.toJson(qProject);
+        return gson.toJson(Map.of("projectList", qProject));
     }
 
     public static String dealerList(HttpServletRequest request, HttpServletResponse response) {
         Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.login);
-        return gson.toJson(qPrjpart);
+        return gson.toJson(Map.of("dealerList", qPrjpart));
     }
 
     public static String kitsList(HttpServletRequest request, HttpServletResponse response) {
         Query qKits = new Query(eKits.values()).select(eKits.up, "order by", eKits.groups_id);
-        return gson.toJson(qKits);
+        return gson.toJson(Map.of("kitsList", qKits));
     }
 
     public static String kitdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "order by", eKitdet.id);
-        return gson.toJson(qKitdet);
+        return gson.toJson(Map.of("kitdetList", qKitdet));
     }
 }
