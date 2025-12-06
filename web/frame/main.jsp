@@ -93,7 +93,7 @@
                     artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
                     sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
                     kitsList, kitdetList, prjkitList
-            } from './frame/builder/dbset.js';
+            } from './data/dbset.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
 
