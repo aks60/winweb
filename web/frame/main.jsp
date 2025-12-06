@@ -129,6 +129,11 @@
                     dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
                     dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+                    
+                    debugger;
+                    let record = dbset.systreeList[1];
+                    let cell = record[1];
+                    
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })
