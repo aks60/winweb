@@ -89,37 +89,45 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
+            import { systreeList, sysprodList, colorList,
+                    artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
+                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
+                    kitsList, kitdetList, prjkitList
+            } from './frame/builder/dbset.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
+
             $("#outbody").load('frame/login.jsp', function () {
                 $.when(
-                        $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
+                        systreeList(),
+                        //$.post("dbset?action=systreeList"), 
+                        $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
                         $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
-                        $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
-                        $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
-                        $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
-                        $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
+//                        $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
+//                        $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
+//                        $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
+//                        $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных
                     dbset.systreeList = p1[0].systreeList;
                     dbset.sysprodList = p2[0].sysprodList;
                     dbset.colorList = p3[0].colorList;
-                    dbset.artiklList = p4[0].artiklList;
-                    dbset.artdetList = p5[0].artdetList;
-                    dbset.furnitureList = p6[0].furnitureList;
-                    dbset.furndetList = p7[0].furndetList;
-                    dbset.prjprodList = p8[0].prjprodList;
-                    dbset.sysfurnList = p9[0].sysfurnList;
-                    dbset.sysprofList = pA[0].sysprofList;
-                    dbset.syspar1List = pB[0].syspar1List;
-                    dbset.paramsList = pC[0].paramsList;
-                    dbset.groupList = pD[0].groupList;
-                    dbset.projectList = pE[0].projectList;
-                    dbset.dealerList = pF[0].dealerList;
-                    dbset.kitsList = pG[0].kitsList;
-                    dbset.kitdetList = pH[0].kitdetList;
-                    dbset.prjkitList = pI[0].prjkitLi
+//                    dbset.artiklList = p4[0].artiklList;
+//                    dbset.artdetList = p5[0].artdetList;
+//                    dbset.furnitureList = p6[0].furnitureList;
+//                    dbset.furndetList = p7[0].furndetList;
+//                    dbset.prjprodList = p8[0].prjprodList;
+//                    dbset.sysfurnList = p9[0].sysfurnList;
+//                    dbset.sysprofList = pA[0].sysprofList;
+//                    dbset.syspar1List = pB[0].syspar1List;
+//                    dbset.paramsList = pC[0].paramsList;
+//                    dbset.groupList = pD[0].groupList;
+//                    dbset.projectList = pE[0].projectList;
+//                    dbset.dealerList = pF[0].dealerList;
+//                    dbset.kitsList = pG[0].kitsList;
+//                    dbset.kitdetList = pH[0].kitdetList;
+//                    dbset.prjkitList = pI[0].prjkitLi
 
                     login.init_login();
 
@@ -129,11 +137,13 @@
                     dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
                     dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-                    
+
                     debugger;
-                    let record = dbset.systreeList[1];
-                    let cell = record[1];
-                    
+                    let rec1 = dbset.systreeList[1];
+                    let rec2 = dbset.colorList[1];
+                    let cel1 = rec1[1];
+                    let cel2 = rec2[1];
+
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 })
