@@ -1,5 +1,5 @@
 
-import {CAMA} from '../builder/model/Cama.js';
+import {CAMA} from '../build/model/Cama.js';
 
 export function sayHi() {
     

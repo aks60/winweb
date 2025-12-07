@@ -20,7 +20,7 @@
         <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
         <script type="text/javascript" src="frame/utils.js"></script>
-        <script type="module" src="./builder/Wincalc.js"></script>
+        <script type="module" src="./build/Wincalc.js"></script>
 
         <!--<script type="module" src="frame/order.js"></script>-->
 
@@ -89,7 +89,7 @@
 
         <script type="module">
             
-//            import {Wincalc} from './builder/Wincalc.js';
+//            import {Wincalc} from './build/Wincalc.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
 

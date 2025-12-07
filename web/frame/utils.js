@@ -333,11 +333,11 @@ function findef(find, def) {
     if (ret != undefined) {
         return ret;
     } else {
-        if (def.virtualRec != undefined) {
-            return def.virtualRec;
-        } else {
+//        if (def.virtualRec != undefined) {
+//            return def.virtualRec;
+//        } else {
             return new Array(def[0].length);
-        }
+//        }
     }
 }
 //------------------------------------------------------------------------------    
