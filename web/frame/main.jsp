@@ -20,7 +20,7 @@
         <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
         <script type="text/javascript" src="frame/utils.js"></script>
-        <script type="module" src="builder/Wincalc.js"></script>
+        <script type="module" src="./builder/Wincalc.js"></script>
 
         <!--<script type="module" src="frame/order.js"></script>-->
 
@@ -122,7 +122,7 @@
                     dbset.kitdetList = pH[0];
                     dbset.prjkitList = pI[0];
                     
-                    login.init_login();
+                    //login.init_login();
                     
                     //Виртуальные артикулы  
                     dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
