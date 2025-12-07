@@ -1,14 +1,14 @@
 
-import {AreaArch} from './builder/model/areaArch.js';
-import {AreaDoor} from './builder/model/areaDoor.js';
-import {AreaRectangl} from './builder/model/areaRectangl.js';
-import {AreaRoot} from './builder/model/areaRoot.js';
-import {AreaSimple} from './builder/model/areaSimple.js';
-import {AreaStvorca} from './builder/model/areaStvorkat.js';
-import {Com5t} from './model/com5t.js';
-import {ElemCross} from '/builder./model/elemCrosst.js';
-import {ElemFrame} from './builder/model/elemFrame.js';
-import {elemGlass} from './builder/model/elemGlass.js';
+import {AreaArch} from './builder/model/AreaArch.js';
+import {AreaDoor} from './builder/model/AreaDoor.js';
+import {AreaRectangl} from './builder/model/AreaRectangl.js';
+import {AreaRoot} from './builder/model/AreaRoot.js';
+import {AreaSimple} from './builder/model/AreaSimple.js';
+import {AreaStvorca} from './builder/model/AreaStvorkat.js';
+import {Com5t} from './builder/model/Com5t.js';
+import {ElemCross} from '/builder./model/ElemCrosst.js';
+import {ElemFrame} from './builder/model/ElemFrame.js';
+import {elemGlass} from './builder/model/ElemGlass.js';
 
 win.build = function (canvas, script) {
     let w = new Wincalc(canvas);
@@ -42,7 +42,7 @@ export class Wincalc {
         this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
         this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
 
-        this.root = new Root(obj, null, this); //главное окно                      
+        this.root = new AreaRoot(obj, null, this); //главное окно                      
         this.elements(this.root, obj); //создадим элементы конструкции
 
         this.areaList = new Array(); //массив area конструкции  
@@ -73,25 +73,25 @@ export class Wincalc {
             let hm = new Map();
             for (let ob2 of obj.childs) {
                 if (ob2.type == "FRAME_SIDE") {
-                    let frm = new Frame(ob2, owner, this, ob2.param);
+                    let frm = new ElemFrame(ob2, owner, this, ob2.param);
                     owner.frames.set(ob2.layout, frm);
 
                 } else if (ob2.type == "STVORKA") {
-                    let stv = new Stvorka(ob2, owner, this);
+                    let stv = new AreaStvorka(ob2, owner, this);
                     owner.childs.push(stv);
                     hm.set(stv, ob2);
 
                 } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
-                    let area = new Area(ob2, owner, this);
+                    let area = new AreaSimple(ob2, owner, this);
                     owner.childs.push(area);
                     hm.set(area, ob2);
 
                 } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
-                    let cross = new Cross(ob2, owner, this);
+                    let cross = new ElemCross(ob2, owner, this);
                     owner.childs.push(cross);
 
                 } else if (ob2.type == "GLASS") {
-                    let glass = new Glass(ob2, owner, this);
+                    let glass = new ElemGlass(ob2, owner, this);
                     owner.childs.push(glass);
                 }
             }

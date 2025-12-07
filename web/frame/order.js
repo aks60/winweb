@@ -30,7 +30,7 @@ order.init_table = function (table1, table2) {
         ],
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
-            debugger;
+            //debugger;
             let projectRow = table1.jqGrid('getRowData', rowid);
             order.orderID = projectRow.id;
             order.wincalcMap.clear();
@@ -46,8 +46,9 @@ order.init_table = function (table1, table2) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
 
-                    //Новая запись в таблице конструкций
+                    //Добавим запись в таблице конструкций
                     order.add_prjprod(table2, rec);
+                    
                     //Выделение строки табл. конструкций
                     if (order.prjprodRec != null && order.prjprodRec[PRJPROD.id] == rec.list[PRJPROD.id]) {
                         prjprodID = rec.list[PRJPROD.id];
@@ -67,6 +68,7 @@ order.taq_parent = function (node, tag) { //рекурсия
         return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
     return null;
 }
+
 order.click_table2 = function (e) {
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
@@ -200,14 +202,14 @@ debugger;
     canvas.id = 'cnv' + prjprodRec.list[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
-    debugger;
+    
     let id = document.createTextNode(prjprodRec.list[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec.list[PRJPROD.name]);
     let script = prjprodRec.list[PRJPROD.script];    
-    let w = new Wincalc(canvas);
-    let iwincalc = w.parse(script);
+    let iwincalc = win.build(canvas, script);
+    
     //Массив объектов winc
-    //order.wincalcMap.set(prjprodRec.list[PRJPROD.id], iwincalc);
+   order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
