@@ -1,5 +1,4 @@
 
-import {CAMA} from './model/Cama.js';
 import {Com5t} from './model/Com5t.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';

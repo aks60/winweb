@@ -88,10 +88,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            //import {Com5t} from './builder/model/Com5t.js';
             
-            import {Wincalc} from './builder/Wincalc.js';
-     
+//            import {Wincalc} from './builder/Wincalc.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
 
