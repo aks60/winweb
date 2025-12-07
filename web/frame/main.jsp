@@ -20,7 +20,7 @@
         <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
         <script type="text/javascript" src="frame/utils.js"></script>
-        <script type="module" src="builder/making/wincalc.js"></script>
+        <script type="module" src="builder/wincalc.js"></script>
 
         <!--<script type="module" src="frame/order.js"></script>-->
 

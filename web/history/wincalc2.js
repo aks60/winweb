@@ -21,7 +21,7 @@ win.build = function (canvas, script) {
     return w;
 };
 
-class Wincalc {
+class Wincalc2 {
 
     constructor(canvas) {
         this.cnv = canvas;

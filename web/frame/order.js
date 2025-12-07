@@ -1,3 +1,6 @@
+
+//import {Wincalc} from './builder/Wincalc.js';
+
 //----------------- Текущий WINC  ----------------------------------------------
 order.get_winc = function () {
     if (order.wincalcMap != undefined && order.prjprodRec != undefined) {
@@ -26,7 +29,7 @@ order.init_table = function (table1, table2) {
             {name: 'prjpart_id', hidden: true}
         ],
         //Загрузка таблицы 2
-        onSelectRow: function (rowid) {       
+        onSelectRow: function (rowid) {
             debugger;
             let projectRow = table1.jqGrid('getRowData', rowid);
             order.orderID = projectRow.id;
@@ -190,6 +193,8 @@ order.delete_table2 = function () {
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.add_prjprod = function (table2, prjprodRec) {
 
+debugger;
+
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
     canvas.id = 'cnv' + prjprodRec.list[PRJPROD.id];
@@ -198,8 +203,9 @@ order.add_prjprod = function (table2, prjprodRec) {
     debugger;
     let id = document.createTextNode(prjprodRec.list[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec.list[PRJPROD.name]);
-    let script = prjprodRec.list[PRJPROD.script];
-    //let iwincalc = win.build(canvas, script);
+    let script = prjprodRec.list[PRJPROD.script];    
+    let w = new Wincalc(canvas);
+    let iwincalc = w.parse(script);
     //Массив объектов winc
     //order.wincalcMap.set(prjprodRec.list[PRJPROD.id], iwincalc);
     let td1 = document.createElement('td');

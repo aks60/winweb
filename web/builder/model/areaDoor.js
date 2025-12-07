@@ -1,5 +1,5 @@
 
-import {AreaSimple} from './model/areaSimple.js';
+import {AreaSimple} from './builder/model/areaSimple.js';
 
 export class AreaDoor extends AreaSimple {
     
