@@ -1,7 +1,7 @@
 
-import {AreaSimple} from './builder/model/AreaSimple.js';
+import {AreaSimple} from './AreaSimple.js';
 
-export class Stvorka extends Area {
+export class AreaStvorka extends AreaSimple {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
@@ -12,10 +12,10 @@ export class Stvorka extends Area {
         this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
                 owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("BOTT") - win.naxl));
 
-        this.frames.set("BOTT", new Frame(obj, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
-        this.frames.set("RIGHT", new Frame(obj, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
-        this.frames.set("TOP", new Frame(obj, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
-        this.frames.set("LEFT", new Frame(obj, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
+        this.frames.set("BOTT", new ElemFrame(obj, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
+        this.frames.set("RIGHT", new ElemFrame(obj, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
+        this.frames.set("TOP", new ElemFrame(obj, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
+        this.frames.set("LEFT", new ElemFrame(obj, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
         this.sysfurnRec = dbset.sysfurnVirt; //фурнитура створки
         this.handleRec = dbset.artiklVirt;   //ручка       

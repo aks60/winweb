@@ -1,3 +1,3 @@
-export let CAMA = 99;
+export let CAMA = 'Модуль САМА в действии';
 
 

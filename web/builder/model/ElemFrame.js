@@ -1,7 +1,7 @@
 
-import {Com5t} from './builder/model/Com5t.js';
+import {Com5t} from './Com5t.js';
 
-export class Frame extends Com5t {
+export class ElemFrame extends Com5t {
 
     constructor(obj, owner, winc, param, id, layout, type) {
         super(obj, owner, winc);

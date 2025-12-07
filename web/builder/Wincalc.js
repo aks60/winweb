@@ -1,15 +1,15 @@
 
-import {CAMA} from './builder/model/Cama.js';
-//import {Com5t} from './builder/model/Com5t.js';
-//import {AreaSimple} from './builder/model/AreaSimple.js';
-//import {AreaArch} from .'/builder/model/AreaArch.js';
-//import {AreaDoor} from './builder/model/AreaDoor.js';
-//import {AreaRectangl} from './builder/model/AreaRectangl.js';
-//import {AreaRoot} from './builder/model/AreaRoot.js';
-//import {AreaStvorca} from './builder/model/AreaStvorkat.js';
-//import {ElemCross} from './builder./model/ElemCrosst.js';
-//import {ElemFrame} from './builder/model/ElemFrame.js';
-//import {elemGlass} from './builder/model/ElemGlass.js';
+import {CAMA} from './model/Cama.js';
+import {Com5t} from './model/Com5t.js';
+import {AreaSimple} from './model/AreaSimple.js';
+import {AreaArch} from './model/AreaArch.js';
+import {AreaDoor} from './model/AreaDoor.js';
+import {AreaRectangl} from './model/AreaRectangl.js';
+import {AreaRoot} from './model/AreaRoot.js';
+import {AreaStvorka} from './model/AreaStvorka.js';
+import {ElemCross} from './model/ElemCross.js';
+import {ElemFrame} from './model/ElemFrame.js';
+import {ElemGlass} from './model/ElemGlass.js';
 
 win.build = function (canvas, script) {
     let w = new Wincalc(canvas);

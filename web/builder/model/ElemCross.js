@@ -1,7 +1,7 @@
 
-import {Com5t} from './builder/model/Com5t.js';
+import {Com5t} from './Com5t.js';
 
-export class Cross extends Com5t {
+export class ElemCross extends Com5t {
 
     constructor(obj, owner, winc) {
         super(obj, owner, winc);
