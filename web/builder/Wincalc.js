@@ -1,5 +1,6 @@
 
-import {Com5t} from './builder/model/Com5t.js';
+import {CAMA} from './builder/model/Cama.js';
+//import {Com5t} from './builder/model/Com5t.js';
 //import {AreaSimple} from './builder/model/AreaSimple.js';
 //import {AreaArch} from .'/builder/model/AreaArch.js';
 //import {AreaDoor} from './builder/model/AreaDoor.js';

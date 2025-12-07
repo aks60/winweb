@@ -20,10 +20,9 @@
         <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
         <script type="text/javascript" src="frame/utils.js"></script>
-        <script type="module" src="./builder/Wincalc.js"></script>
+        <!--<script type="module" src="./builder/Wincalc.js"></script>-->
 
         <!--<script type="module" src="frame/order.js"></script>-->
-
 
         <script type="text/javascript">
             //Поля таблиц
@@ -89,6 +88,10 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
+            //import {Com5t} from './builder/model/Com5t.js';
+            
+            import {Wincalc} from './builder/Wincalc.js';
+     
             //import {sayHi} from './frame/main.js';
             //sayHi();
 
