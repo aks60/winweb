@@ -11,6 +11,7 @@ import {ElemFrame} from './model/ElemFrame.js';
 import {ElemGlass} from './model/ElemGlass.js';
 
 win.build = function (canvas, script) {
+    debugger;
     let w = new Wincalc(canvas);
     w.parse(script);
     //console.log(JSON.stringify(w.root.obj, undefined, 4));
@@ -25,22 +26,22 @@ export class Wincalc {
     }
 
     parse(script) {
-        //try {
+        // try {
         let obj = JSON.parse(script);
         this.setform(obj, this);         //форма конструкции, см. класс Area
         this.obj = obj;                  //объект калькуляции
         this.prj = obj.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
         this.ord = obj.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
         this.nuni = obj.nuni;            //nuni профиля    
-        
+
         this.width1 = (obj.width1 === undefined) ? this.width(obj) : obj.width1; //ширина 2 окна, мм 
         this.width2 = obj.width2; //ширина 2 окна, мм 
         this.height1 = obj.height1; //высота 1 окна
         this.height2 = (obj.height2 === undefined) ? this.height(obj) : obj.height2; //высота 2 окна
-        
-        this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec[COLOR.id]), dbset.colorList);
-        this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec[COLOR.id]), dbset.colorList);
-        this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec[COLOR.id]), dbset.colorList);
+
+        this.color1Rec = findef(dbset.colorList.find(rec => obj.color1 == rec.list[COLOR.id]), dbset.colorList);
+        this.color2Rec = findef(dbset.colorList.find(rec => obj.color2 == rec.list[COLOR.id]), dbset.colorList);
+        this.color3Rec = findef(dbset.colorList.find(rec => obj.color3 == rec.list[COLOR.id]), dbset.colorList);
 
         this.root = new AreaRoot(obj, null, this); //главное окно                      
         this.elements(this.root, obj); //создадим элементы конструкции
@@ -53,9 +54,9 @@ export class Wincalc {
         this.scale = 1;
         draw_elements(this); //рисуем конструкцию 
 
-//        } catch (e) {
-//            alert('Ошибка:Wincalc.parse() ' + e.message);
-//        }
+        // } catch (e) {
+        // alert('Ошибка:Wincalc.parse() ' + e.message);
+        //}
     }
 
     //Поднять elem.form до Wincalc.form

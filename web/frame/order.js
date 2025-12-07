@@ -1,6 +1,3 @@
-
-//import {Wincalc} from './builder/Wincalc.js';
-
 //----------------- Текущий WINC  ----------------------------------------------
 order.get_winc = function () {
     if (order.wincalcMap != undefined && order.prjprodRec != undefined) {
@@ -194,22 +191,20 @@ order.delete_table2 = function () {
 }
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.add_prjprod = function (table2, prjprodRec) {
-
-debugger;
-
+    
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
     canvas.id = 'cnv' + prjprodRec.list[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
-    
+
     let id = document.createTextNode(prjprodRec.list[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec.list[PRJPROD.name]);
     let script = prjprodRec.list[PRJPROD.script];    
     let iwincalc = win.build(canvas, script);
     
     //Массив объектов winc
-   order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
+   //order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
