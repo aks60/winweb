@@ -1,5 +1,5 @@
 
-import {Com5t} from './builder/model/com5t.js';
+import {Com5t} from './builder/model/Com5t.js';
 
 export class Frame extends Com5t {
 
