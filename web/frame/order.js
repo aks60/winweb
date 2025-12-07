@@ -80,21 +80,21 @@ order.click_table2 = function (e) {
 order.load_table = function (table1, table2) {
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
-    dbset.projectList.sort((a, b) => b[ORDER.id] - a[ORDER.id]);
+    dbset.projectList.sort((a, b) => b[PROJECT.id] - a[PROJECT.id]);
     for (let i = 0; i < dbset.projectList.length; i++) {
         let tr = dbset.projectList[i].list;
-        if (tr[ORDER.id] == order.orderID) {
+        if (tr[PROJECT.id] == order.orderID) {
             rowID = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
-            id: tr[ORDER.id],
-            num_ord: tr[ORDER.num_ord],
-            num_acc: tr[ORDER.num_acc],
-            date4: tr[ORDER.date4],
-            date6: tr[ORDER.date6],
-            partner: findef(dbset.dealerList.find(rec => tr[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-            manager: tr[ORDER.manager],
-            prjpart_id: tr[ORDER.prjpart_id]
+            id: tr[PROJECT.id],
+            num_ord: tr[PROJECT.num_ord],
+            num_acc: tr[PROJECT.num_acc],
+            date4: tr[PROJECT.date4],
+            date6: tr[PROJECT.date6],
+            partner: findef(dbset.dealerList.find(rec => tr[PROJECT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            manager: tr[PROJECT.manager],
+            prjpart_id: tr[PROJECT.prjpart_id]
         });
     }
     table1.jqGrid("setSelection", rowID);
@@ -121,7 +121,7 @@ order.delete_table1 = function (table) {
                             if (data.result == 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < dbset.projectList.length; ++i) {
-                                    if (orderRow.id == dbset.projectList[i].list[ORDER.id]) {
+                                    if (orderRow.id == dbset.projectList[i].list[PROJECT.id]) {
                                         dbset.projectList.list.splice(i, 1);
                                     }
                                 }
@@ -216,7 +216,7 @@ order.add_prjprod = function (table2, prjprodRec) {
 //----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.projectList.find(rec => orderRow.id = rec[ORDER.id]);
+    let orderRec = dbset.projectList.find(rec => orderRow.id = rec[PROJECT.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
         data: {param: JSON.stringify({})},
@@ -250,14 +250,14 @@ order.insert_table1 = function (taq) {
                                     if (data.result == 'ok') {
                                         let record = new Array(41);
                                         record[0] = 'SEL';
-                                        record[ORDER.id] = dat.id;
-                                        record[ORDER.num_ord] = $("#n21").val();
-                                        record[ORDER.num_acc] = $("#n22").val();
-                                        record[ORDER.manager] = login.data.user_fio;
-                                        record[ORDER.date4] = $("#n23").val();
-                                        record[ORDER.date6] = $("#n24").val();
-                                        record[ORDER.owner] = login.data.user_name;
-                                        record[ORDER.prjpart_id] = $("#n25").attr("fk");
+                                        record[PROJECT.id] = dat.id;
+                                        record[PROJECT.num_ord] = $("#n21").val();
+                                        record[PROJECT.num_acc] = $("#n22").val();
+                                        record[PROJECT.manager] = login.data.user_fio;
+                                        record[PROJECT.date4] = $("#n23").val();
+                                        record[PROJECT.date6] = $("#n24").val();
+                                        record[PROJECT.owner] = login.data.user_name;
+                                        record[PROJECT.prjpart_id] = $("#n25").attr("fk");
                                         dbset.projectList.push(record);
                                         order.load_table($("#table1"));
                                     } else
@@ -286,7 +286,7 @@ order.insert_table1 = function (taq) {
 order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.projectList.find(rec => orderRow.id == rec[ORDER.id]);
+    let orderRec = dbset.projectList.find(rec => orderRow.id == rec[PROJECT.id]);
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
@@ -303,13 +303,13 @@ order.update_table1 = function (taq) {
             "Применить": function () {
 
                 orderRec[0] = 'UPD';
-                orderRec[ORDER.num_ord] = $("#n21").val();
-                orderRec[ORDER.num_acc] = $("#n22").val();
-                orderRec[ORDER.manager] = login.data.user_fio;
-                orderRec[ORDER.date4] = $("#n23").val();
-                orderRec[ORDER.date6] = $("#n24").val();
-                orderRec[ORDER.owner] = login.data.user_name;
-                orderRec[ORDER.prjpart_id] = $("#n25").attr("fk");
+                orderRec[PROJECT.num_ord] = $("#n21").val();
+                orderRec[PROJECT.num_acc] = $("#n22").val();
+                orderRec[PROJECT.manager] = login.data.user_fio;
+                orderRec[PROJECT.date4] = $("#n23").val();
+                orderRec[PROJECT.date6] = $("#n24").val();
+                orderRec[PROJECT.owner] = login.data.user_name;
+                orderRec[PROJECT.prjpart_id] = $("#n25").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateOrder',
                     data: {param: JSON.stringify(orderRec)},
@@ -317,13 +317,13 @@ order.update_table1 = function (taq) {
                         if (data.result == 'ok') {
                             let rowid = $('#table1').jqGrid('getGridParam', "selrow");
                             $('#table1').jqGrid('setRowData', rowid, {
-                                id: orderRec[ORDER.id],
-                                num_ord: orderRec[ORDER.num_ord],
-                                num_acc: orderRec[ORDER.num_acc],
-                                date4: orderRec[ORDER.date4],
-                                date6: orderRec[ORDER.date6],
-                                partner: findef(dbset.dealerList.find(rec => orderRec[ORDER.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
-                                manager: orderRec[ORDER.manager]
+                                id: orderRec[PROJECT.id],
+                                num_ord: orderRec[PROJECT.num_ord],
+                                num_acc: orderRec[PROJECT.num_acc],
+                                date4: orderRec[PROJECT.date4],
+                                date6: orderRec[PROJECT.date6],
+                                partner: findef(dbset.dealerList.find(rec => orderRec[PROJECT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+                                manager: orderRec[PROJECT.manager]
                             });
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);

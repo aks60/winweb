@@ -9,8 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Login;
-import model.sys.Sys;
+import cont5r.sys.Sys;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 

@@ -20,9 +20,9 @@
         <script type="text/javascript" src="lib/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib/jsts-2.12.1/jsts-min.js"></script>
         <script type="text/javascript" src="frame/utils.js"></script>
-        <script type="module" src="frame/builder/wincalc.js"></script>
+        <script type="module" src="builder/making/wincalc.js"></script>
 
-        //<script type="module" src="frame/order.js"></script>
+        <script type="module" src="frame/order.js"></script>
 
 
         <script type="text/javascript">
@@ -41,7 +41,7 @@
                     PRJKIT = {id: 1, numb: 2, width: 3, height: 4, color1_id: 5, color2_id: 6, color3_id: 7, flag: 10, artikl_id: 11, prjprod_id: 12},
                     SYSPAR1 = {id: 1, text: 2, params_id: 3, systree_id: 4, fixed: 5},
                     PARAMS = {id: 1, text: 2, params_id: 12},
-                    ORDER = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 19, date5: 20, date6: 21, owner: 22, prjpart_id: 25},
+                    PROJECT = {id: 1, num_ord: 2, num_acc: 3, manager: 4, date4: 19, date5: 20, date6: 21, owner: 22, prjpart_id: 25},
                     USER = {id: 1, role: 2, login: 3, fio: 4, desc: 7},
                     KITS = {id: 1, name: 2, types: 3, categ: 4},
                     KITDET = {id: 1, flag: 2, color1_id: 3, color2_id: 4, color3_id: 5, artikl_id: 6, kits_id: 7},
@@ -120,7 +120,9 @@
                     dbset.kitsList = pG[0];
                     dbset.kitdetList = pH[0];
                     dbset.prjkitList = pI[0];
+                    
                     login.init_login();
+                    
                     //Виртуальные артикулы  
                     dbset.sysprofVirt = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
                     dbset.artiklVirt = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
