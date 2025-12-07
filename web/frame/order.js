@@ -26,9 +26,9 @@ order.init_table = function (table1, table2) {
             {name: 'prjpart_id', hidden: true}
         ],
         //Загрузка таблицы 2
-        onSelectRow: function (rowid) {
-            let orderRow = table1.jqGrid('getRowData', rowid);
-            order.orderID = orderRow.id;
+        onSelectRow: function (rowid) {            
+            let projectRow = table1.jqGrid('getRowData', rowid);
+            order.orderID = projectRow.id;
             order.wincalcMap.clear();
             //Очистим таблицу конструкций
             let j = 1;
@@ -37,7 +37,7 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             //Заполним табл. конструкций            
-            let prjprodList = dbset.prjprodList.filter(rec => orderRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
+            let prjprodList = dbset.prjprodList.filter(rec => projectRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу orderRow.id
             if (prjprodList.length > 0) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
@@ -194,12 +194,13 @@ order.add_prjprod = function (table2, prjprodRec) {
     canvas.id = 'cnv' + prjprodRec[PRJPROD.id];
     canvas.width = 68;
     canvas.height = 68;
+    debugger;
     let id = document.createTextNode(prjprodRec[PRJPROD.id]);
     let name = document.createTextNode(prjprodRec[PRJPROD.name]);
     let script = prjprodRec[PRJPROD.script];
-    let iwincalc = win.build(canvas, script);
+    //let iwincalc = win.build(canvas, script);
     //Массив объектов winc
-    order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
+    //order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');

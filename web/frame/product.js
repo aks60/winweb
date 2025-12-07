@@ -33,7 +33,7 @@ product.load_table = function (table1) {
     syspar1List2.sort((a, b) => b[SYSPAR1.params_id] - a[SYSPAR1.params_id]);
     for (let i = 0; i < syspar1List2.length; i++) {
 
-        let tr = syspar1List2[i].list;
+        let tr = syspar1List2[i];
         let paramsRec = dbset.paramsList.find(tr => tr[SYSPAR1.params_id] == tr[PARAMS.id]);
         table1.jqGrid('addRowData', i + 1, {
 

@@ -47,7 +47,7 @@ users.load_table1 = function (table) {
         success: function (data) {
             users.userList = data;
             for (let i = 0; i < users.userList.length; i++) {
-                let tr = users.userList[i].list;
+                let tr = users.userList[i];
                 table.jqGrid('addRowData', i + 1, {
                     id: tr[USER.id],
                     fio: tr[USER.fio],
@@ -179,8 +179,8 @@ users.token_create = function (login) {
             var record = regionList[index].name
             if (element == record) {
 
-                uch = regionList[index].list.uch
-                if (regionList[index].list.id == 599999) {
+                uch = regionList[index].uch
+                if (regionList[index].id == 599999) {
                     role = 'DIALER_RW';
                 } else {
                     role = 'DIALER_RW';
