@@ -22,7 +22,7 @@
         <script type="text/javascript" src="frame/utils.js"></script>
         <script type="module" src="builder/making/wincalc.js"></script>
 
-        <script type="module" src="frame/order.js"></script>
+        <!--<script type="module" src="frame/order.js"></script>-->
 
 
         <script type="text/javascript">
@@ -89,17 +89,11 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import { systreeList, sysprodList, colorList,
-                    artiklList, artdetList, furnitureList, furndetList, prjprodList, sysfurnList,
-                    sysprofList, syspar1List, paramsList, groupList, orderList, dealerList,
-                    kitsList, kitdetList, prjkitList
-            } from './data/dbset.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
 
             $("#outbody").load('frame/login.jsp', function () {
                 $.when(
-                        systreeList(),
                         $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
                         $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
                         $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
@@ -136,12 +130,6 @@
                     dbset.artdetVirt = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
                     dbset.colorVirt = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurnVirt = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-
-//                    debugger;
-//                    let rec1 = dbset.systreeList[1];
-//                    let rec2 = dbset.colorList[1];
-//                    let cel1 = rec1[1];
-//                    let cel2 = rec2[1];
 
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
