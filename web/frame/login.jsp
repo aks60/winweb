@@ -46,7 +46,7 @@
                     <button id="btn2"  type="button" onClick="onPage('1');" style="width: 164px; margin: 12px;">Авторизация пользователя(пароль)</button>  
                 </div>                 
                 <div id="centr" style="position: absolute; height: 100%; width: 100%;">
-                    <div id="pan1">                   
+                    <form id="pan1">                   
                         <p class="pantitle"><font size=3>Авторизация через пароль доступа</font></p> 
                         <p>Введите логин, пароль доступа и нажмите кнопку 'Войти'.</p><br><br> 
 
@@ -57,7 +57,7 @@
                             </tr> 
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input class="password" placeholder='Введите пароль' value='' type='password' size='16'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='' type='password' autocomplete='username' size='16'></td>
                             </tr>
                             <td></td>
                             <td>
@@ -65,8 +65,8 @@
                             </td>                            
                         </table>
 
-                    </div>                      
-                    <div id="pan2" style="margin-left: 0px; display: none;"> 
+                    </form>                      
+                    <form id="pan2" style="margin-left: 0px; display: none;"> 
                         <p class="tabletitle"><p class="tabletitle"><font size=3>Авторизация через USB токен</font></p> 
                         <p>Воспользуйтесь кнопкой «Обновить» для вывода актуального списка учетных записей, 
                             сохраненных на USB-токене. Для аутентификации выберите логин в выпадающем 
@@ -89,7 +89,7 @@
                                 </td>
                             </tr>
                         </table>                
-                    </div> 
+                    </form> 
                 </div>  
                 <div id="east" style="position: absolute; height: 100%; width: 194px; right: -200px;">
                     <div style="margin-left: 20px">
