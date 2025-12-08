@@ -126,7 +126,6 @@
                     login.init_login();
                     
                     //Виртуальные артикулы 
-                    debugger;
                     dbset.sysprofList.virtualRec = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
                     dbset.artiklList.virtualRec = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
                     dbset.artdetList.virtualRec = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
