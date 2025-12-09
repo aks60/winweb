@@ -330,7 +330,7 @@ function createVirtualRec(recordList, size, virtualData) {
         recordList.virtualRec[k] = virtualData[k];
 }
 //------------------------------------------------------------------------------            
-function findefs(key, index, recordList) {
+function findef(key, index, recordList) {
     try {
         let record = recordList.find(rec => key == rec.list[index]);
         if (record != undefined) {
@@ -347,7 +347,7 @@ function findefs(key, index, recordList) {
             }
         }
     } catch (error) {
-        console.error("Ошибка: utils.findefs()", error.message);
+        console.error("Ошибка: utils.findef()", error.message);
     }
 }
 //------------------------------------------------------------------------------    

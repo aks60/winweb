@@ -18,7 +18,7 @@ product.init_table = function (table1) {
             $('#dialog-dic').load('frame/dialog/param.jsp');
         }, onSelectRow: function (rowid) {
             let syspar1Row = table1.jqGrid('getRowData', rowid);
-            product.groupParam = findefs(syspar1Row.id, SYSPAR1.id, dbset.syspar1List)[SYSPAR1.params_id];
+            product.groupParam = findef(syspar1Row.id, SYSPAR1.id, dbset.syspar1List)[SYSPAR1.params_id];
         }
     });
 }
@@ -212,13 +212,13 @@ product.local_to_fields = function (nodeID) {
         load_tabs('tabs-4', {
             n41: elem.width, n42: elem.height, n43: furnitureRec[FURNITURE.name], n44: type_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
-            n46: findefs(elem.handleColor, COLOR.id, dbset.colorList)[COLOR.name],
+            n46: findef(elem.handleColor, COLOR.id, dbset.colorList)[COLOR.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
             n48: elem.handleHeight,
             n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name],
-            n4A: findefs(elem.loopColor, COLOR.id, dbset.colorList)[COLOR.name],
+            n4A: findef(elem.loopColor, COLOR.id, dbset.colorList)[COLOR.name],
             n4B: elem.lockRec[ARTIKL.code] + ' ÷ ' + elem.lockRec[ARTIKL.name],
-            n4C: findefs(elem.lockColor, COLOR.id, dbset.colorList)[COLOR.name],
+            n4C: findef(elem.lockColor, COLOR.id, dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
 

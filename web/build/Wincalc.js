@@ -47,9 +47,9 @@ export class Wincalc {
         this.height1 = wson.height1; //высота 1 окна
         this.height2 = (wson.height2 === undefined) ? this.height(wson) : wson.height2; //высота 2 окна
 
-        this.color1Rec = findefs(wson.color1, COLOR.id, dbset.colorList);
-        this.color2Rec = findefs(wson.color2, COLOR.id, dbset.colorList);
-        this.color3Rec = findefs(wson.color3, COLOR.id, dbset.colorList);
+        this.color1Rec = findef(wson.color1, COLOR.id, dbset.colorList);
+        this.color2Rec = findef(wson.color2, COLOR.id, dbset.colorList);
+        this.color3Rec = findef(wson.color3, COLOR.id, dbset.colorList);
 
         this.root = new AreaRoot(wson, null, this); //главное окно  
             //Главное окно

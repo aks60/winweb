@@ -13,9 +13,9 @@ export class ElemCross extends Com5t {
     }
 
     init_constructiv(param) {
-        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findefs(param.colorID1, COLOR.id, dbset.colorList) : this.winc.color1Rec;
-        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findefs(param.colorID2, COLOR.id, dbset.colorList) : this.winc.color2Rec;
-        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findefs(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
+        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(param.colorID1, COLOR.id, dbset.colorList) : this.winc.color1Rec;
+        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(param.colorID2, COLOR.id, dbset.colorList) : this.winc.color2Rec;
+        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
 
         //Профиль поперечины
         if (this.wson.param != undefined && this.wson.param.sysprofID != undefined)
@@ -29,8 +29,8 @@ export class ElemCross extends Com5t {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
             }
         }
-        this.artiklRec = findefs(this.sysprofRec[SYSPROF.artikl_id], ARTIKL.id, dbset.artiklList);
-        this.artiklAn = findefs(this.artiklRec[ARTIKL.analog_id], ARTIKL.id, dbset.artiklList);
+        this.artiklRec = findef(this.sysprofRec[SYSPROF.artikl_id], ARTIKL.id, dbset.artiklList);
+        this.artiklAn = findef(this.artiklRec[ARTIKL.analog_id], ARTIKL.id, dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }
