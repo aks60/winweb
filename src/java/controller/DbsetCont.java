@@ -1,4 +1,4 @@
-package cont5r;
+package controller;
 
 import com.google.gson.Gson;
 import dataset.Connect;
@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import cont5r.sys.App;
+import controller.sys.App;
 import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
