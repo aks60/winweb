@@ -60,12 +60,12 @@
                         if (kitdetList != undefined) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let tr = kitdetList[i];
-                                let artiklRec = findef(dbset.artiklList.find(rec => tr[KITDET.artikl_id] == rec.list[ARTIKL.id]), dbset.artiklList);
+                                let artiklRec = findefs(tr[KITDET.artikl_id], ARTIKL.id, dbset.artiklList);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[KITDET.id],
                                     code: artiklRec[ARTIKL.code],
                                     name: artiklRec[ARTIKL.name],
-                                    color1_id: findef(dbset.colorList.find(rec => tr[KITDET.color1_id] == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
+                                    color1_id: findefs(tr[KITDET.color1_id], COLOR.id, dbset.colorList)[COLOR.name],
                                     unit: tr[KITDET.unit]
                                 });
                             }

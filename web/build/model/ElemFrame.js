@@ -17,9 +17,9 @@ export class ElemFrame extends Com5t {
     }
 
     init_constructiv(param) {
-        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(dbset.colorList.find(rec => param.colorID1 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color1Rec;
-        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(dbset.colorList.find(rec => param.colorID2 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color2Rec;
-        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(dbset.colorList.find(rec => param.colorID3 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color3Rec;
+        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findefs(param.colorID1, COLOR.id, dbset.colorList) : this.winc.color1Rec;
+        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findefs(param.colorID2, COLOR.id, dbset.colorList) : this.winc.color2Rec;
+        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findefs(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
 
         if (param != undefined && param.sysprofID != undefined)
             this.sysprofID = param.sysprofID; //сист.профиль
@@ -35,9 +35,9 @@ export class ElemFrame extends Com5t {
                 this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0])[SYSPROF.id];
 
         }
-        this.sysprofRec = findef(dbset.sysprofList.find(rec => this.sysprofID == rec.list[SYSPROF.id]), dbset.sysprofList);
-        this.artiklRec = findef(dbset.artiklList.find(rec => this.sysprofRec[SYSPROF.artikl_id] == rec.list[ARTIKL.id]), dbset.artiklList);
-        this.artiklAn = findef(dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]), dbset.artiklList);
+        this.sysprofRec = findefs(this.sysprofID, SYSPROF.id, dbset.sysprofList);
+        this.artiklRec = findefs(this.sysprofRec[SYSPROF.artikl_id], ARTIKL.id, dbset.artiklList);
+        this.artiklAn = findefs(this.artiklRec[ARTIKL.analog_id], ARTIKL.id, dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }

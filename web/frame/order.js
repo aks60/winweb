@@ -76,7 +76,7 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id], dbset.prjprodList));
+        order.prjprodRec = findefs(prjprodID, PRJPROD.id, dbset.prjprodList);
     }
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
@@ -95,7 +95,7 @@ order.load_table = function (table1, table2) {
             num_acc: tr[PROJECT.num_acc],
             date4: tr[PROJECT.date4],
             date6: tr[PROJECT.date6],
-            partner: findef(dbset.dealerList.find(rec => tr[PROJECT.prjpart_id] == rec.list[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            partner: findefs(tr[PROJECT.prjpart_id], DEALER.id, dbset.dealerList)[DEALER.partner],
             manager: tr[PROJECT.manager],
             prjpart_id: tr[PROJECT.prjpart_id]
         });
@@ -328,7 +328,7 @@ order.update_table1 = function (taq) {
                                 num_acc: orderRec[PROJECT.num_acc],
                                 date4: orderRec[PROJECT.date4],
                                 date6: orderRec[PROJECT.date6],
-                                partner: findef(dbset.dealerList.find(rec => orderRec[PROJECT.prjpart_id] == rec.list[DEALER.id]), dbset.dealerList)[DEALER.partner],
+                                partner: findefs(orderRec[PROJECT.prjpart_id], DEALER.id, dbset.dealerList)[DEALER.partner],
                                 manager: orderRec[PROJECT.manager]
                             });
                         } else

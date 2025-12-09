@@ -34,29 +34,27 @@ export class AreaStvorka extends AreaSimple {
         if (this.wson.param != undefined && this.wson.param.sysfurnID != undefined)
             this.sysfurnRec = dbset.sysfurnList.find(rec => this.wson.param.sysfurnID == rec.list[SYSFURN.id]); //по параметру
         if (this.sysfurnRec == undefined)
-            this.sysfurnRec = findef(dbset.sysfurnList.find(rec => rec.list[SYSFURN.systree_id] == this.winc.nuni), dbset.sysfurnList); //ищем первую в системе
+            this.sysfurnRec = findefs(this.winc.nuni, SYSFURN.systree_id, dbset.sysfurnList); //ищем первую в системе
 
         //Ручка
         if (this.wson.param != undefined && this.wson.param.artiklHandl != undefined)
             this.handleRec = this.wson.param.artiklHandl; //по параметру
         else if (this.sysfurnRec != undefined)
-            this.handleRec = findef(dbset.artiklList.find(rec =>
-                this.sysfurnRec[SYSFURN.artikl_id1] == rec.list[ARTIKL.id]), dbset.artiklList); //ручка по умолчанию см. систему
+            this.handleRec = findefs(this.sysfurnRec[SYSFURN.artikl_id1], ARTIKL.id, dbset.artiklList); //ручка по умолчанию см. систему
 
         //Текстура ручки
         if (this.wson.param != undefined && this.wson.param.colorHandl != undefined)
             this.handleColor = this.wson.param.colorHandl; //по параметру
         else if (this.handleRec != undefined) {
-            this.handleColor = findef(dbset.artdetList.find(rec =>
-                this.handleRec[ARTIKL.id] == rec.list[ARTDET.artikl_id]), dbset.artdetList)[ARTDET.color_fk]; //первая запись
+             this.handleColor = findefs(this.handleRec[ARTIKL.id], ARTDET.artikl_id, dbset.artdetList).list[ARTDET.color_fk];  //первая запись
+             
             if (this.handleColor < 0)
-                this.handleColor = findef(dbset.colorList.find(rec =>
-                    (-1 * this.handleColor) == rec.list[COLOR.id]), dbset.colorList)[COLOR.id]; //первый цвет в группе
+                this.handleColor = findefs((-1 * this.handleColor), COLOR.id, dbset.colorList).list[COLOR.id]; //первый цвет в группе
         }
 
         //Подвес (петли)
         if (this.wson.param != undefined && this.wson.param.artiklLoop != undefined)
-            this.loopRec = findef(dbset.artiklList.find(rec => this.wson.param.artiklLoop == rec.list[ARTIKL.id]), dbset.artiklList);
+            this.loopRec = findefs(this.wson.param.artiklLoop, ARTIKL.id, dbset.artiklList);
 
         //Текстура подвеса
         if (this.wson.param != undefined && this.wson.param.colorLoop != undefined)
@@ -64,7 +62,7 @@ export class AreaStvorka extends AreaSimple {
 
         //Замок
         if (this.wson.param != undefined && this.wson.param.artiklLock != undefined)
-            this.lockRec = findef(dbset.artiklList.find(rec => this.wson.param.artiklLock == rec.list[ARTIKL.id]), dbset.artiklList);
+            this.lockRec = findefs(this.wson.param.artiklLock, ARTIKL.id, dbset.artiklList);
 
         //Текстура замка
         if (this.wson.param != undefined && this.wson.param.colorLock != undefined)
@@ -154,7 +152,7 @@ export class AreaStvorka extends AreaSimple {
         if (this.winc.root.typeForm() == "DOOR") {
 
         } else {
-            let handlRGB = findef(dbset.colorList.find(rec => this.handleColor == rec.list[COLOR.id]), dbset.colorList);
+            let handlRGB = findefs(this.handleColor, COLOR.id, dbset.colorList);
             draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB);
             DX = DX - 12;
             Y1 = Y1 + 20;

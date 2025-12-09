@@ -330,21 +330,6 @@ function createVirtualRec(recordList, size, virtualData) {
         recordList.virtualRec[k] = virtualData[k];
 }
 //------------------------------------------------------------------------------            
-function findef(tableRec, tableList) {
-    if (tableRec != undefined) {
-        return tableRec;
-    } else {
-        if (tableList != undefined) {
-            if (tableList.virtualRec != undefined) {
-                return tableList.virtualRec;
-            } else {
-                return new Array(tableList[0].list.length);
-            }
-        } else {
-            return new Array(60);
-        }
-    }
-}
 function findefs(key, index, recordList) {
     try {
         let record = recordList.find(rec => key == rec.list[index]);
