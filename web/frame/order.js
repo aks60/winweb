@@ -76,7 +76,7 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id], dbset.prjprodList));
+        order.prjprodRec = findef(dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id], dbset.prjprodList));
     }
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
@@ -95,7 +95,7 @@ order.load_table = function (table1, table2) {
             num_acc: tr[PROJECT.num_acc],
             date4: tr[PROJECT.date4],
             date6: tr[PROJECT.date6],
-            partner: findef(dbset.dealerList.find(rec => tr[PROJECT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+            partner: findef(dbset.dealerList.find(rec => tr[PROJECT.prjpart_id] == rec.list[DEALER.id]), dbset.dealerList)[DEALER.partner],
             manager: tr[PROJECT.manager],
             prjpart_id: tr[PROJECT.prjpart_id]
         });
@@ -222,7 +222,7 @@ order.add_prjprod = function (table2, prjprodRec) {
 //----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.projectList.find(rec => orderRow.id = rec[PROJECT.id]);
+    let orderRec = dbset.projectList.find(rec => orderRow.id = rec.list[PROJECT.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
         data: {param: JSON.stringify({})},
@@ -292,7 +292,7 @@ order.insert_table1 = function (taq) {
 order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.projectList.find(rec => orderRow.id == rec[PROJECT.id]);
+    let orderRec = dbset.projectList.find(rec => orderRow.id == rec.list[PROJECT.id]);
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
@@ -328,7 +328,7 @@ order.update_table1 = function (taq) {
                                 num_acc: orderRec[PROJECT.num_acc],
                                 date4: orderRec[PROJECT.date4],
                                 date6: orderRec[PROJECT.date6],
-                                partner: findef(dbset.dealerList.find(rec => orderRec[PROJECT.prjpart_id] == rec[DEALER.id]), dbset.dealerList)[DEALER.partner],
+                                partner: findef(dbset.dealerList.find(rec => orderRec[PROJECT.prjpart_id] == rec.list[DEALER.id]), dbset.dealerList)[DEALER.partner],
                                 manager: orderRec[PROJECT.manager]
                             });
                         } else

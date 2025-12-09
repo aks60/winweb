@@ -24,17 +24,17 @@ kits.init_table = function (table) {
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     if (order.wincalcMap.size != 0) {
-        kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec[PRJKIT.prjprod_id]);
+        kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec.list[PRJKIT.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
-            let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+            let artiklRec = findef(dbset.artiklList.find(rec => tr[PRJKIT.artikl_id] == rec.list[ARTIKL.id]), dbset.artiklList);
             table.jqGrid('addRowData', i + 1, {
                 id: tr[KITS.id],
                 code: artiklRec[ARTIKL.code],
                 name: artiklRec[ARTIKL.name],
-                color1: findef(dbset.colorList.find(rec => tr[PRJKIT.color1_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-                color2: findef(dbset.colorList.find(rec => tr[PRJKIT.color2_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
-                color3: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+                color1: findef(dbset.colorList.find(rec => tr[PRJKIT.color1_id] == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
+                color2: findef(dbset.colorList.find(rec => tr[PRJKIT.color2_id] == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
+                color3: findef(dbset.colorList.find(rec => tr[PRJKIT.color3_id] == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
                 width: tr[PRJKIT.width],
                 height: tr[PRJKIT.height],
                 numb: tr[PRJKIT.numb]
@@ -67,7 +67,7 @@ kits.update_table = function (taq) {
 
     let rowid = $("#table1").jqGrid('getGridParam', "selrow");
     let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
-    let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
+    let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[PRJKIT.id]);
 
     $("#n53").val(prjkitRow.color1);
     $("#n54").val(prjkitRow.color2);
@@ -181,20 +181,20 @@ kits.color_to_kit = function (btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();        
         let prjkitRow = getSelectedRow($('#table1'));
-        let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec[PRJKIT.id]);
+        let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[PRJKIT.id]);
         for (let rec of dbset.artdetList) {
-            if (rec[ARTDET.artikl_id] == prjkitRec[PRJKIT.artikl_id]) {
-                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+            if (rec.list[ARTDET.artikl_id] == prjkitRec[PRJKIT.artikl_id]) {
+                if (rec.list[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
 
                     dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec.list[ARTDET.color_fk])) {
 
                             groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    let color2Rec = dbset.colorList.find(rec3 => rec.list[ARTDET.color_fk] == rec3[COLOR.id]);
                     groupSet.add(color2Rec[COLOR.colgrp_id]);
                     colorSet.add(color2Rec);
                 }

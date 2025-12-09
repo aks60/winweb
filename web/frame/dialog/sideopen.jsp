@@ -84,7 +84,7 @@
                 let elem = winc.elemList.find(it => it.id == elemID);
                 elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
                 elem.wson.param.typeOpen = tableRec.id; //запишем тип открывания
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
                 prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.wson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.

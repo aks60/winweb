@@ -13,9 +13,9 @@ export class ElemCross extends Com5t {
     }
 
     init_constructiv(param) {
-        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(dbset.colorList.find(rec => param.colorID1 == rec[COLOR.id]), dbset.colorList) : this.winc.color1Rec;
-        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(dbset.colorList.find(rec => param.colorID2 == rec[COLOR.id]), dbset.colorList) : this.winc.color2Rec;
-        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(dbset.colorList.find(rec => param.colorID3 == rec[COLOR.id]), dbset.colorList) : this.winc.color3Rec;
+        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(dbset.colorList.find(rec => param.colorID1 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color1Rec;
+        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(dbset.colorList.find(rec => param.colorID2 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color2Rec;
+        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(dbset.colorList.find(rec => param.colorID3 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color3Rec;
 
         //Профиль поперечины
         if (this.wson.param != undefined && this.wson.param.sysprofID != undefined)
@@ -29,8 +29,8 @@ export class ElemCross extends Com5t {
                 this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
             }
         }
-        this.artiklRec = findef(dbset.artiklList.find(rec => this.sysprofRec[SYSPROF.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
-        this.artiklAn = findef(dbset.artiklList.find(rec => this.artiklRec[ARTIKL.analog_id] == rec[ARTIKL.id]), dbset.artiklList);
+        this.artiklRec = findef(dbset.artiklList.find(rec => this.sysprofRec[SYSPROF.artikl_id] == rec.list[ARTIKL.id]), dbset.artiklList);
+        this.artiklAn = findef(dbset.artiklList.find(rec => this.artiklRec[ARTIKL.analog_id] == rec.list[ARTIKL.id]), dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
         }
@@ -67,9 +67,9 @@ export class ElemCross extends Com5t {
     }
 
     find_first(nuni, typ, us1) {
-        let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id]
-                    && rec[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec[SYSPROF.use_side]
-                    && (us1 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
+        let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id]
+                    && rec.list[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec.list[SYSPROF.use_side]
+                    && (us1 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
             return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
         }

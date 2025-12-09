@@ -110,7 +110,7 @@
                         let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                         let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
 
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.elemList.find(it => it.id == elemID);
@@ -162,7 +162,7 @@
 
                     } else if ($('#outbody title').text() == 'KITS') {
                         let artiklRow = getSelectedRow(table);
-                        let artiklRec = dbset.artiklList.find(rec => artiklRow.id == rec[ARTIKL.id]);
+                        let artiklRec = dbset.artiklList.find(rec => artiklRow.id == rec.list[ARTIKL.id]);
 
                         if (kits.buttonSrc == 'n51' || kits.buttonSrc == 'n52') {
                             $("#n51").val(artiklRow.code);
@@ -217,7 +217,7 @@
             function  load2_table(level_1, level_2) {
 
                 let pkSet = new Set();
-                let artiklArr = dbset.artiklList.filter(rec => rec[ARTIKL.level1] == level_1 && rec[ARTIKL.level2] == level_2);
+                let artiklArr = dbset.artiklList.filter(rec => rec.list[ARTIKL.level1] == level_1 && rec.list[ARTIKL.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                 let winc = order.wincalcMap.get(prjprodID);
@@ -236,7 +236,7 @@
                         }
                     }
                 }
-                let artiklList = artiklArr.filter(rec => pkSet.has(rec[ARTIKL.id]));
+                let artiklList = artiklArr.filter(rec => pkSet.has(rec.list[ARTIKL.id]));
                 for (let i = 0; i < artiklList.length; i++) {
                     let tr = artiklList[i];
                     $("#tab-artikl").jqGrid('addRowData', i + 1, {

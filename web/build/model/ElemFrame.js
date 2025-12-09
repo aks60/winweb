@@ -17,9 +17,9 @@ export class ElemFrame extends Com5t {
     }
 
     init_constructiv(param) {
-        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(dbset.colorList.find(rec => param.colorID1 == rec[COLOR.id]), dbset.colorList) : this.winc.color1Rec;
-        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(dbset.colorList.find(rec => param.colorID2 == rec[COLOR.id]), dbset.colorList) : this.winc.color2Rec;
-        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(dbset.colorList.find(rec => param.colorID3 == rec[COLOR.id]), dbset.colorList) : this.winc.color3Rec;
+        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(dbset.colorList.find(rec => param.colorID1 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color1Rec;
+        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(dbset.colorList.find(rec => param.colorID2 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color2Rec;
+        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(dbset.colorList.find(rec => param.colorID3 == rec.list[COLOR.id]), dbset.colorList) : this.winc.color3Rec;
 
         if (param != undefined && param.sysprofID != undefined)
             this.sysprofID = param.sysprofID; //сист.профиль
@@ -35,8 +35,8 @@ export class ElemFrame extends Com5t {
                 this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0])[SYSPROF.id];
 
         }
-        this.sysprofRec = findef(dbset.sysprofList.find(rec => this.sysprofID == rec[SYSPROF.id]), dbset.sysprofList);
-        this.artiklRec = findef(dbset.artiklList.find(rec => this.sysprofRec[SYSPROF.artikl_id] == rec[ARTIKL.id]), dbset.artiklList);
+        this.sysprofRec = findef(dbset.sysprofList.find(rec => this.sysprofID == rec.list[SYSPROF.id]), dbset.sysprofList);
+        this.artiklRec = findef(dbset.artiklList.find(rec => this.sysprofRec[SYSPROF.artikl_id] == rec.list[ARTIKL.id]), dbset.artiklList);
         this.artiklAn = findef(dbset.artiklList.find(el => el[ARTIKL.id] == this.artiklRec[ARTIKL.analog_id]), dbset.artiklList);
         if (this.artiklAn == undefined) {
             this.artiklAn = this.artiklRec;
@@ -104,8 +104,8 @@ export class ElemFrame extends Com5t {
     }
 
     find_first(nuni, typ, us1, us2) {
-        let record = dbset.sysprofList.find(rec => nuni == rec[SYSPROF.systree_id] && typ == rec[SYSPROF.use_type] && 0 != rec[SYSPROF.use_side]
-                    && (us1 == rec[SYSPROF.use_side] || us2 == rec[SYSPROF.use_side] || UseSide.ANY[0] == rec[SYSPROF.use_side]));
+        let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id] && typ == rec.list[SYSPROF.use_type] && 0 != rec.list[SYSPROF.use_side]
+                    && (us1 == rec.list[SYSPROF.use_side] || us2 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
         if (nuni == -3 || record == undefined) {
             dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
         }

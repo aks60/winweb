@@ -18,7 +18,7 @@ product.init_table = function (table1) {
             $('#dialog-dic').load('frame/dialog/param.jsp');
         }, onSelectRow: function (rowid) {
             let syspar1Row = table1.jqGrid('getRowData', rowid);
-            product.groupParam = findef(dbset.syspar1List.find(rec => syspar1Row.id == rec[SYSPAR1.id]), dbset.syspar1List)[SYSPAR1.params_id];
+            product.groupParam = findef(dbset.syspar1List.find(rec => syspar1Row.id == rec.list[SYSPAR1.id]), dbset.syspar1List)[SYSPAR1.params_id];
         }
     });
 }
@@ -202,7 +202,7 @@ product.local_to_fields = function (nodeID) {
 
         //Створка
     } else if (elem.typeForm() == "STVORKA") {
-        let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec[FURNITURE.id]);
+        let furnitureRec = dbset.furnitureList.find(rec => elem.sysfurnRec[SYSFURN.furniture_id] == rec.list[FURNITURE.id]);
         let type_open = TypeOpen.INVALID[1]; //сторона открывания
         for (let k in TypeOpen) {
             if (TypeOpen[k][0] == elem.typeOpen) {
@@ -212,13 +212,13 @@ product.local_to_fields = function (nodeID) {
         load_tabs('tabs-4', {
             n41: elem.width, n42: elem.height, n43: furnitureRec[FURNITURE.name], n44: type_open,
             n45: elem.handleRec[ARTIKL.code] + ' ÷ ' + elem.handleRec[ARTIKL.name],
-            n46: findef(dbset.colorList.find(rec => elem.handleColor == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            n46: findef(dbset.colorList.find(rec => elem.handleColor == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
             n48: elem.handleHeight,
             n49: elem.loopRec[ARTIKL.code] + ' ÷ ' + elem.loopRec[ARTIKL.name],
-            n4A: findef(dbset.colorList.find(rec => elem.loopColor == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            n4A: findef(dbset.colorList.find(rec => elem.loopColor == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
             n4B: elem.lockRec[ARTIKL.code] + ' ÷ ' + elem.lockRec[ARTIKL.name],
-            n4C: findef(dbset.colorList.find(rec => elem.lockColor == rec[COLOR.id]), dbset.colorList)[COLOR.name],
+            n4C: findef(dbset.colorList.find(rec => elem.lockColor == rec.list[COLOR.id]), dbset.colorList)[COLOR.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
 
@@ -238,11 +238,11 @@ product.color_to_windows = function (btnSrc) {
     let groupSet = new Set();
     let colorSet = new Set();
 
-    let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.cgrp];
+    let groupTxt = dbset.systreeList.find(rec => winc.nuni == rec.list[SYSTREE.id])[SYSTREE.cgrp];
     let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-    let colorTxt = (btnSrc == 'n14') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col1]
-            : (btnSrc == 'n15') ? dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col2]
-            : dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id])[SYSTREE.col3];
+    let colorTxt = (btnSrc == 'n14') ? dbset.systreeList.find(rec => winc.nuni == rec.list[SYSTREE.id])[SYSTREE.col1]
+            : (btnSrc == 'n15') ? dbset.systreeList.find(rec => winc.nuni == rec.list[SYSTREE.id])[SYSTREE.col2]
+            : dbset.systreeList.find(rec => winc.nuni == rec.list[SYSTREE.id])[SYSTREE.col3];
     let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
 
     //Поле группы текстур заполнено
@@ -382,18 +382,18 @@ product.color_to_element = function (btnSrc) {
 
         //Все текстуры артикула элемента конструкции
         for (let rec of dbset.artdetList) {
-            if (rec[ARTDET.artikl_id] == artiklElem[ARTIKL.id]) {
-                if (rec[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+            if (rec.list[ARTDET.artikl_id] == artiklElem[ARTIKL.id]) {
+                if (rec.list[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
 
                     dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec[ARTDET.color_fk])) {
+                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec.list[ARTDET.color_fk])) {
 
                             groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => rec[ARTDET.color_fk] == rec3[COLOR.id]);
+                    let color2Rec = dbset.colorList.find(rec3 => rec.list[ARTDET.color_fk] == rec3[COLOR.id]);
                     groupSet.add(color2Rec[COLOR.colgrp_id]);
                     colorSet.add(color2Rec);
                 }
@@ -419,7 +419,7 @@ product.artikl_to_glass = function (btnSrc) {
         let elem = winc.elemList.find(it => it.id == nodeID);
 
         //Список доступных толщин в ветке системы например 4;5;8
-        let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec[SYSTREE.id]);
+        let systreeRec = dbset.systreeList.find(rec => winc.nuni == rec.list[SYSTREE.id]);
         if (systreeRec != undefined) {
             let depth = systreeRec[SYSTREE.depth];
             depth = depth.replace(/;/g, ',');
@@ -427,8 +427,8 @@ product.artikl_to_glass = function (btnSrc) {
                 depth = depth.substring(0, depth.length - 1);
             }
             depth = depth.split(',');
-            let artiklList = dbset.artiklList.filter(rec => rec[ARTIKL.depth] != undefined && 5 == rec[ARTIKL.level1]
-                        && [1, 2, 3].includes(rec[ARTIKL.level2]) && depth.includes(rec[ARTIKL.depth].toString()));
+            let artiklList = dbset.artiklList.filter(rec => rec.list[ARTIKL.depth] != undefined && 5 == rec.list[ARTIKL.level1]
+                        && [1, 2, 3].includes(rec.list[ARTIKL.level2]) && depth.includes(rec.list[ARTIKL.depth].toString()));
 
             product.artiklArr = artiklList;
             product.buttonSrc = btnSrc;
@@ -479,7 +479,7 @@ product.resize = function () {
 //Перерисовать при изменении размера (размер канвы тот-же)
 product.redraw = function () {
     let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+    let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
     let cvs = document.querySelector("#cnv");
     prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.wson, (k, v) => isEmpty(v));
 

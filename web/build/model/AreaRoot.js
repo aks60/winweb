@@ -32,7 +32,7 @@ export class AreaRoot extends AreaSimple {
                 //Накладываем к параметрам системы конструкции параметры конкретной конструкции
                 let groupArr = this.wson.param.ioknaParam;
                 for (let group of groupArr) {
-                    let paramsRec = dbset.paramsList.find(rec => group == rec[PARAMS.id]);
+                    let paramsRec = dbset.paramsList.find(rec => group == rec.list[PARAMS.id]);
                     let syspar1Rec = this.pardefMap.get(paramsRec[PARAMS.params_id]);
                     syspar1Rec[SYSPAR1.text] = paramsRec[PARAMS.text];
                 }

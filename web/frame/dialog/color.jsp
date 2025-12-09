@@ -56,7 +56,7 @@
                         let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                         if (base.colorArr.length == 0) {
 
-                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
+                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec.list[COLOR.colgrp_id]);
                             for (let i = 0; i < colorList.length; i++) {
                                 let colorRec = colorList[i];
                                 table2.jqGrid('addRowData', i + 1, {
@@ -67,7 +67,7 @@
                                 table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         } else {
-                            let colorArr = base.colorArr.filter(rec => colgrpRow.id == rec[COLOR.colgrp_id]);
+                            let colorArr = base.colorArr.filter(rec => colgrpRow.id == rec.list[COLOR.colgrp_id]);
                             for (let i = 0; i < colorArr.length; i++) {
                                 let colorRec = colorArr[i];
                                 table2.jqGrid('addRowData', i + 1, {
@@ -102,7 +102,7 @@
                 let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                 if (base.groupSet.size > 0) {
 
-                    let groupList = dbset.groupList.filter(rec => base.groupSet.has(rec[GROUP.id]));
+                    let groupList = dbset.groupList.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
                     for (let i = 0; i < groupList.length; i++) {
                         let tr = groupList[i];
                         table1.jqGrid('addRowData', i + 1, {
@@ -164,7 +164,7 @@
                             elem.wson.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
-                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
                         prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v));
                         let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[PRJPROD.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.

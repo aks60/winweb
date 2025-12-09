@@ -62,7 +62,7 @@
                     buttons: {
                         "Выбрать": function () {
                             let orderRow = getSelectedRow($("#table1"));
-                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec[SYSPROD.id]);
+                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec.list[SYSPROD.id]);
                             if (sysprodRec != undefined) {
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
@@ -120,7 +120,7 @@
                         //Заполним табл. конструкций 
                         let systreeRec = table1.jqGrid('getRowData', rowid);
                         if (systreeRec.isLeaf == 'true') {
-                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec[SYSPROD.systree_id]);
+                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec.list[SYSPROD.systree_id]);
                             if (sysprodList.length > 0) {
                                 prjprodID = null;
                                 for (let rec of sysprodList) {
@@ -129,7 +129,7 @@
                                     add_clone(table2, rec);
                                     //Первая конструкция
                                     if (prjprodID == null) {
-                                        prjprodID = rec[SYSPROD.id];
+                                        prjprodID = rec.list[SYSPROD.id];
                                     }
                                 }
                                 //Программный клик на первой конструкции

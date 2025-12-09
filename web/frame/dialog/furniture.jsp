@@ -94,9 +94,9 @@
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
                 elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
-                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec[SYSFURN.furniture_id] && winc.nuni == rec[SYSFURN.systree_id]);
+                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec.list[SYSFURN.furniture_id] && winc.nuni == rec.list[SYSFURN.systree_id]);
                 elem.wson.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
                 prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.wson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.

@@ -32,7 +32,7 @@
                         "Выбрать": function () {
                             let rowid = table.jqGrid('getGridParam', "selrow");
                             let paramsRow = table.jqGrid('getRowData', rowid);
-                            let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec[PARAMS.id]);
+                            let paramsRec = dbset.paramsList.find(rec => paramsRow.id == rec.list[PARAMS.id]);
                             let paramDef = paramsRow.id;                            
                             let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                             let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
@@ -41,7 +41,7 @@
                             winc.wson.param.ioknaParam = (winc.wson.param.ioknaParam == undefined) ? [] : winc.wson.param.ioknaParam;
                             for(let i = 0; i < winc.wson.param.ioknaParam.length; ++i) {
                                 
-                              let titleID2 = dbset.paramsList.find(rec => winc.wson.param.ioknaParam[i] == rec[PARAMS.id])[PARAMS.params_id];
+                              let titleID2 = dbset.paramsList.find(rec => winc.wson.param.ioknaParam[i] == rec.list[PARAMS.id])[PARAMS.params_id];
                               if(titleID1 == titleID2) {
                                   winc.wson.param.ioknaParam.splice(i, 1);
                               }
@@ -86,7 +86,7 @@
 //------------------------------------------------------------------------------
             function load_table(table) {
                 table.jqGrid('clearGridData', true);
-                let params2List = dbset.paramsList.filter(rec => product.groupParam == rec[PARAMS.params_id] && rec[PARAMS.id] != rec[PARAMS.params_id]);
+                let params2List = dbset.paramsList.filter(rec => product.groupParam == rec.list[PARAMS.params_id] && rec.list[PARAMS.id] != rec.list[PARAMS.params_id]);
                 for (let i = 0; i < params2List.length; i++) {
                     let tr = params2List[i];
                     table.jqGrid('addRowData', i + 1, {
