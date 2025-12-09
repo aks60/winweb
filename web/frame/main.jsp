@@ -59,8 +59,9 @@
                 RIGHTUP: [4, "Правая поворотно-откидная"], UPPER: [5, "Откидная (открывается сверху)"], LEFTMOV: [11, "Раздвижная влево (открывается справа-налево, защелка справа"],
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {},
-                    login = {que_requests: 2}, users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {}, login = {que_requests: 2},
+                    users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
                 jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
@@ -88,7 +89,7 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            
+
 //            import {Wincalc} from './build/Wincalc.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
@@ -104,6 +105,7 @@
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных  
+                    dbset = {sysprofList: [], artiklList: [], artdetList: [], colorList: [], sysfurnList: []};
                     dbset.systreeList = p1[0];
                     dbset.sysprodList = p2[0];
                     dbset.colorList = p3[0];
@@ -122,19 +124,19 @@
                     dbset.kitsList = pG[0];
                     dbset.kitdetList = pH[0];
                     dbset.prjkitList = pI[0];
-                    
                     login.init_login();
-                    
-                    //Виртуальные артикулы 
-                    dbset.sysprofList.virtualRec = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    dbset.artiklList.virtualRec = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    dbset.artdetList.virtualRec = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
-                    dbset.colorList.virtualRec = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-                    dbset.sysfurnList.virtualRec = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-
+                    //Виртуальные артикулы
+                    dbset.virtualList = {
+                        sysprofRec: createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3}),
+                        artiklRec: createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3}),
+                        artdetRec: createVirtualRec(37, {1: -3, 14: -3, 15: -3}),
+                        colorRec: createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3}),
+                        sysfurnRec: createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3})
+                    };
+                    console.log(artiklList.);
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
-                })
+                });
             });
         </script> 
     </body>

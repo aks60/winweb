@@ -93,17 +93,17 @@
 
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.elemList.find(it => it.id == elemID);
-                elem.obj.param = (elem.obj.param == undefined) ? {} : elem.obj.param;
+                elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
                 let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec[SYSFURN.furniture_id] && winc.nuni == rec[SYSFURN.systree_id]);
-                elem.obj.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
+                elem.wson.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec[PRJPROD.id]);
-                prjprodRec[PRJPROD.script] = JSON.stringify(winc.obj, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.obj, (k, v) => isEmpty(v)));
+                prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.wson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных
                     url: 'dbset?action=updateScript',
-                    data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.obj)})},
+                    data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.wson)})},
                     success: function (data) {
                         if (data.result == 'ok') {
                             $("#n43").val(tableRec.name);

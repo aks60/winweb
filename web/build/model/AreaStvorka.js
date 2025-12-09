@@ -3,8 +3,8 @@ import {AreaSimple} from './AreaSimple.js';
 
 export class AreaStvorka extends AreaSimple {
 
-    constructor(obj, owner, winc) {
-        super(obj, owner, winc);
+    constructor(wson, owner, winc) {
+        super(wson, owner, winc);
 
         this.frames = new Map(); //рамы конструкции 
 
@@ -12,10 +12,10 @@ export class AreaStvorka extends AreaSimple {
         this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
                 owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("BOTT") - win.naxl));
 
-        this.frames.set("BOTT", new ElemFrame(obj, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
-        this.frames.set("RIGHT", new ElemFrame(obj, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
-        this.frames.set("TOP", new ElemFrame(obj, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
-        this.frames.set("LEFT", new ElemFrame(obj, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
+        this.frames.set("BOTT", new ElemFrame(wson, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
+        this.frames.set("RIGHT", new ElemFrame(wson, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
+        this.frames.set("TOP", new ElemFrame(wson, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
+        this.frames.set("LEFT", new ElemFrame(wson, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
 
         this.sysfurnRec = dbset.sysfurnVirt; //фурнитура створки
         this.handleRec = dbset.artiklVirt;   //ручка       
@@ -31,21 +31,21 @@ export class AreaStvorka extends AreaSimple {
 
     init_constructiv() {
         //Фурнитура створки
-        if (this.obj.param != undefined && this.obj.param.sysfurnID != undefined)
-            this.sysfurnRec = dbset.sysfurnList.find(rec => this.obj.param.sysfurnID == rec[SYSFURN.id]); //по параметру
+        if (this.wson.param != undefined && this.wson.param.sysfurnID != undefined)
+            this.sysfurnRec = dbset.sysfurnList.find(rec => this.wson.param.sysfurnID == rec[SYSFURN.id]); //по параметру
         if (this.sysfurnRec == undefined)
             this.sysfurnRec = findef(dbset.sysfurnList.find(rec => rec[SYSFURN.systree_id] == this.winc.nuni), dbset.sysfurnList); //ищем первую в системе
 
         //Ручка
-        if (this.obj.param != undefined && this.obj.param.artiklHandl != undefined)
-            this.handleRec = this.obj.param.artiklHandl; //по параметру
+        if (this.wson.param != undefined && this.wson.param.artiklHandl != undefined)
+            this.handleRec = this.wson.param.artiklHandl; //по параметру
         else if (this.sysfurnRec != undefined)
             this.handleRec = findef(dbset.artiklList.find(rec =>
                 this.sysfurnRec[SYSFURN.artikl_id1] == rec[ARTIKL.id]), dbset.artiklList); //ручка по умолчанию см. систему
 
         //Текстура ручки
-        if (this.obj.param != undefined && this.obj.param.colorHandl != undefined)
-            this.handleColor = this.obj.param.colorHandl; //по параметру
+        if (this.wson.param != undefined && this.wson.param.colorHandl != undefined)
+            this.handleColor = this.wson.param.colorHandl; //по параметру
         else if (this.handleRec != undefined) {
             this.handleColor = findef(dbset.artdetList.find(rec =>
                 this.handleRec[ARTIKL.id] == rec[ARTDET.artikl_id]), dbset.artdetList)[ARTDET.color_fk]; //первая запись
@@ -55,34 +55,34 @@ export class AreaStvorka extends AreaSimple {
         }
 
         //Подвес (петли)
-        if (this.obj.param != undefined && this.obj.param.artiklLoop != undefined)
-            this.loopRec = findef(dbset.artiklList.find(rec => this.obj.param.artiklLoop == rec[ARTIKL.id]), dbset.artiklList);
+        if (this.wson.param != undefined && this.wson.param.artiklLoop != undefined)
+            this.loopRec = findef(dbset.artiklList.find(rec => this.wson.param.artiklLoop == rec[ARTIKL.id]), dbset.artiklList);
 
         //Текстура подвеса
-        if (this.obj.param != undefined && this.obj.param.colorLoop != undefined)
-            this.loopColor = this.obj.param.colorLoop;
+        if (this.wson.param != undefined && this.wson.param.colorLoop != undefined)
+            this.loopColor = this.wson.param.colorLoop;
 
         //Замок
-        if (this.obj.param != undefined && this.obj.param.artiklLock != undefined)
-            this.lockRec = findef(dbset.artiklList.find(rec => this.obj.param.artiklLock == rec[ARTIKL.id]), dbset.artiklList);
+        if (this.wson.param != undefined && this.wson.param.artiklLock != undefined)
+            this.lockRec = findef(dbset.artiklList.find(rec => this.wson.param.artiklLock == rec[ARTIKL.id]), dbset.artiklList);
 
         //Текстура замка
-        if (this.obj.param != undefined && this.obj.param.colorLock != undefined)
-            this.lockColor = this.obj.param.colorLock;
+        if (this.wson.param != undefined && this.wson.param.colorLock != undefined)
+            this.lockColor = this.wson.param.colorLock;
 
         //Сторона открывания
-        if (this.obj.param != undefined && this.obj.param.typeOpen != undefined) {
-            this.typeOpen = this.obj.param.typeOpen;
+        if (this.wson.param != undefined && this.wson.param.typeOpen != undefined) {
+            this.typeOpen = this.wson.param.typeOpen;
         } else if (this.sysfurnRec != undefined) {
             this.typeOpen = (this.sysfurnRec[SYSFURN.side_open] == 1) ? 1 : 2;
         }
 
         //Положение или высота ручки на створке
-        if (this.obj.param != undefined && this.obj.param.positionHandl != undefined) {
-            let position = this.obj.param.positionHandl;
+        if (this.wson.param != undefined && this.wson.param.positionHandl != undefined) {
+            let position = this.wson.param.positionHandl;
             if (position == 3) { //VARIAT.id
                 this.handleLayout = 'VARIAT';
-                this.handleHeight = this.obj.param.heightHandl;
+                this.handleHeight = this.wson.param.heightHandl;
             } else {
                 this.handleLayout = (this.position == 'MIDL') ? 'MIDL' : 'CONST';
                 this.handleHeight = this.frames.get("LEFT").height / 2;
@@ -117,8 +117,8 @@ export class AreaStvorka extends AreaSimple {
 
     param(side) {
 
-        if (this.obj.param != undefined && this.obj.param[side] != undefined)
-            return this.obj.param[side];
+        if (this.wson.param != undefined && this.wson.param[side] != undefined)
+            return this.wson.param[side];
         else
             return undefined;
     }

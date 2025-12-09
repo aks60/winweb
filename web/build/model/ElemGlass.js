@@ -3,8 +3,8 @@ import {Com5t} from './Com5t.js';
 
 export class ElemGlass extends Com5t {
 
-    constructor(obj, owner, winc) {
-        super(obj, owner, winc);
+    constructor(wson, owner, winc) {
+        super(wson, owner, winc);
         this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
         this.init_constructiv();
     }
@@ -12,15 +12,15 @@ export class ElemGlass extends Com5t {
     init_constructiv() {
 
         //Артикул стекла
-        if (this.obj.param != undefined && this.obj.param.artglasID != undefined)
-            this.artiklRec = dbset.artiklList.find(rec => this.obj.param.artglasID == rec[ARTIKL.id]);
+        if (this.wson.param != undefined && this.wson.param.artglasID != undefined)
+            this.artiklRec = dbset.artiklList.find(rec => this.wson.param.artglasID == rec[ARTIKL.id]);
         else {
             let systreeRec = dbset.systreeList.find(rec => this.winc.nuni == rec[SYSTREE.id]); //по умолчанию стеклопакет
             this.artiklRec = dbset.artiklList.find(rec => systreeRec[SYSTREE.glas] == rec[ARTIKL.code]);
         }
         //Цвет стекла
-        if (this.obj.param != undefined && this.obj.param.colorGlass != undefined)
-            this.color1Rec = findef(dbset.colorList.find(rec => this.obj.param.colorGlass == rec[COLOR.id]), dbset.colorList);
+        if (this.wson.param != undefined && this.wson.param.colorGlass != undefined)
+            this.color1Rec = findef(dbset.colorList.find(rec => this.wson.param.colorGlass == rec[COLOR.id]), dbset.colorList);
         else {
             let color_fk = findef(dbset.artdetList.find(rec => this.artiklRec[ARTIKL.id] == rec[ARTDET.artikl_id]), dbset.artdetList)[ARTDET.color_fk];
             this.color1Rec = findef(dbset.colorList.find(rec => color_fk == rec[COLOR.id]), dbset.colorList);

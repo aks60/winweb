@@ -3,16 +3,17 @@ import {Com5t} from './Com5t.js';
 
 export class AreaSimple extends Com5t {
 
-    constructor(obj, owner, winc) {
-        super(obj, owner, winc);
-        if (obj.form != undefined) {
-            this.form = obj.form;
+    constructor(wson, owner, winc) {
+        alrt('new AreaSimple');
+        super(wson, owner, winc);
+        if (wson.form != undefined) {
+            this.form = wson.form;
         }
 
         this.childs = new Array(0); //список детей 
 
         //Коробка
-        if (obj.length == undefined && (owner == null || owner == winc.root)) {
+        if (wson.length == undefined && (owner == null || owner == winc.root)) {
             this.dimension(0, 0, winc.width(), winc.height());
 
             //Створка
@@ -21,8 +22,8 @@ export class AreaSimple extends Com5t {
 
             //Аrеа
         } else {
-            let height = (owner.layout == "VERT") ? obj.length : owner.height;
-            let width = (owner.layout == "HORIZ") ? obj.length : owner.width;
+            let height = (owner.layout == "VERT") ? wson.length : owner.height;
+            let width = (owner.layout == "HORIZ") ? wson.length : owner.width;
 
             if (owner.childs.length == 0) { //если owner.childs.length == 0 то prevArea искать нет смысла
                 if (owner.layout == "VERT") { //сверху вниз

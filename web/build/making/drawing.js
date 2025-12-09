@@ -68,14 +68,14 @@ export function draw_text(winc) {
 //Рисуем конструкцию
 export function draw_elements(winc) {
     try {
-        let obj = winc.obj, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
+        let wson = winc.wson, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
 
         ctx.save();
         ctx.fillStyle = '#ffffff';
         ctx.clearRect(0, 0, cnv.width, cnv.height);
 
         //Настроим контекст
-        winc.scale = (cnv.width / obj.width < cnv.height / obj.height) ? cnv.width / obj.width : cnv.height / obj.height;
+        winc.scale = (cnv.width / wson.width < cnv.height / wson.height) ? cnv.width / wson.width : cnv.height / wson.height;
         ctx.scale(winc.scale, winc.scale);
         ctx.lineWidth = 4;
 

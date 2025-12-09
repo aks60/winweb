@@ -1,11 +1,10 @@
 
 import {AreaSimple} from './AreaSimple.js';
 
-export class AreaDoor extends AreaSimple {
+export class AreaTrapeze extends AreaSimple {
     
     constructor() {
-        alrt('new AreaDoor');
+        alrt('new AreaTrapeze');
     }
 }
-
 

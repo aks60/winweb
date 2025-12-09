@@ -1,13 +1,13 @@
 
 export class Com5t {
 
-    constructor(obj, owner, winc) {
-        this.obj = obj;
-        this.id = obj.id;//идентификатор 
+    constructor(wson, owner, winc) {
+        this.wson = (wson);
+        this.id = (wson).id;//идентификатор 
         this.owner = owner;//владелец
         this.winc = winc;//главный класс калькуляции   
-        this.layout = obj.layout;//напрвление расположения
-        this.type = obj.type;//тип элемента
+        this.layout = (wson).layout;//напрвление расположения
+        this.type = (wson).type;//тип элемента
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
@@ -34,19 +34,19 @@ export class Com5t {
     }
 
     get lengthX() {
-        return (this.id === 0) ? this.winc.width(obj) : this.obj.length;
+        return (this.id === 0) ? this.winc.width(wson) : this.wson.length;
     }
 
     get lengthY() {
-        return (this.id === 0) ? this.obj.height : this.obj.length;
+        return (this.id === 0) ? this.wson.height : this.wson.length;
     }
 
     //Изменение размера
     set lengthX(v) {
 
         if (this.id == 0) {
-            var k = v / this.obj.width; //коэффициент
-            this.obj.width = v;
+            var k = v / this.wson.width; //коэффициент
+            this.wson.width = v;
             this.winc.areaList.forEach(e => {
                 if (e.layout == 'HORIZ') {
                     e.childs.forEach(e2 => { //изменение всех по ширине
@@ -55,8 +55,8 @@ export class Com5t {
                 }
             });
         } else {
-            let k = v / this.obj.length; //коэффициент
-            this.obj.length = v;
+            let k = v / this.wson.length; //коэффициент
+            this.wson.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {
                     e.lengthX = k * e.lengthX; //рекурсия изменение детей
@@ -76,21 +76,21 @@ export class Com5t {
     set lengthY(v) {
 
         if (this.id == 0) {
-            var k = v / this.obj.height; //коэффициент
-            this.obj.height = v;
-            this.obj.heightAdd = k * this.obj.heightAdd;
+            var k = v / this.wson.height; //коэффициент
+            this.wson.height = v;
+            this.wson.heightAdd = k * this.wson.heightAdd;
             this.winc.areaList.forEach(e => {
                 if (e.layout == 'VERT') {
                     e.childs.forEach(e2 => { //изменение всех по высоте
-                        e2.obj.length = k * e2.obj.length;
+                        e2.wson.length = k * e2.wson.length;
                     });
                 }
             });
         } else {
-            let k = v / this.obj.length; //коэффициент            
-            this.obj.length = v;
+            let k = v / this.wson.length; //коэффициент            
+            this.wson.length = v;
             if (this.typeForm() == 'ARCH' || this.typeForm() == 'TRAPEZE') {
-                this.winc.obj.heightAdd = this.winc.obj.height - v;
+                this.winc.wson.heightAdd = this.winc.wson.height - v;
             }
             this.childs.forEach(e => {
                 if (e.owner.layout == 'VERT' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {

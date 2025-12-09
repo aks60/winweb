@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 function printScript(winc) {
-    console.log(JSON.stringify(winc.root.obj, undefined, 4));
+    console.log(JSON.stringify(winc.root.wson, undefined, 4));
 }
 //------------------------------------------------------------------------------
 function taqDeploy(selectors) {
@@ -329,6 +329,7 @@ function createVirtualRec(size, data) {
 }
 //------------------------------------------------------------------------------            
 function findef(find, def) {
+    debugger;
     let ret = find;
     if (ret != undefined) {
         return ret;
