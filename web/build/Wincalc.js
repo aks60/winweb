@@ -47,22 +47,22 @@ export class Wincalc {
         this.height1 = wson.height1; //высота 1 окна
         this.height2 = (wson.height2 === undefined) ? this.height(wson) : wson.height2; //высота 2 окна
 
-        this.color1Rec = findef(dbset.colorList.find(rec => wson.color1 == rec.list[COLOR.id]), dbset.colorList);
-        this.color2Rec = findef(dbset.colorList.find(rec => wson.color2 == rec.list[COLOR.id]), dbset.colorList);
-        this.color3Rec = findef(dbset.colorList.find(rec => wson.color3 == rec.list[COLOR.id]), dbset.colorList);
+        this.color1Rec = findefs(wson.color1, COLOR.id, dbset.colorList);
+        this.color2Rec = findefs(wson.color2, COLOR.id, dbset.colorList);
+        this.color3Rec = findefs(wson.color3, COLOR.id, dbset.colorList);
 
         this.root = new AreaRoot(wson, null, this); //главное окно  
             //Главное окно
             if (Type.RECTANGL == wson.type) {
                 root = new AreaRectangl(this, wson);
 
-            } else if (Type.TRAPEZE == gson.type) {
+            } else if (Type.TRAPEZE == wson.type) {
                 root = new AreaTrapeze(this, wson);
 
-            } else if (Type.ARCH == gson.type) {
+            } else if (Type.ARCH == wson.type) {
                 root = new AreaArch(this, wson);
 
-            } else if (Type.DOOR == gson.type) {
+            } else if (Type.DOOR == wson.type) {
                 root = new AreaDoor(this, wson);
             }        
 
@@ -86,7 +86,7 @@ export class Wincalc {
         //}
     }
 
-    //Цыклическое заполнение root по содержимому gson 
+    //Цыклическое заполнение root по содержимому wson 
     creator() {
         try {
             let hm = new Map();

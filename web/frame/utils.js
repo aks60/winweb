@@ -345,6 +345,26 @@ function findef(tableRec, tableList) {
         }
     }
 }
+function findefs(key, index, recordList) {
+    try {
+        let record = recordList.find(rec => key == rec.list[index]);
+        if (record != undefined) {
+            return record;
+        } else {
+            if (recordList != undefined) {
+                if (recordList.virtualRec != undefined) {
+                    return recordList.virtualRec;
+                } else {
+                    return new Array(recordList[0].list.length);
+                }
+            } else {
+                return new Array(60);
+            }
+        }
+    } catch (error) {
+        console.error("Ошибка: utils.findefs()", error.message);
+    }
+}
 //------------------------------------------------------------------------------    
 function getSelectedRow(table) {
     let rowid = table.jqGrid('getGridParam', "selrow");
