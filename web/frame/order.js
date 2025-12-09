@@ -202,7 +202,7 @@ order.add_prjprod = function (table2, prjprodRec) {
     let name = document.createTextNode(prjprodRec.list[PRJPROD.name]);
     let script = prjprodRec.list[PRJPROD.script];   
     
-    let iwincalc = win.build(canvas, script);
+    //let iwincalc = win.build(canvas, script);
     
     //Массив объектов winc
    //order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);

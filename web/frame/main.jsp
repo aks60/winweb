@@ -105,7 +105,6 @@
                         ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
                         ) => {
                     //загрузка базы данных  
-                    dbset = {sysprofList: [], artiklList: [], artdetList: [], colorList: [], sysfurnList: []};
                     dbset.systreeList = p1[0];
                     dbset.sysprodList = p2[0];
                     dbset.colorList = p3[0];
@@ -124,16 +123,16 @@
                     dbset.kitsList = pG[0];
                     dbset.kitdetList = pH[0];
                     dbset.prjkitList = pI[0];
+
                     login.init_login();
+
                     //Виртуальные артикулы
-                    dbset.virtualList = {
-                        sysprofRec: createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3}),
-                        artiklRec: createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3}),
-                        artdetRec: createVirtualRec(37, {1: -3, 14: -3, 15: -3}),
-                        colorRec: createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3}),
-                        sysfurnRec: createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3})
-                    };
-                    console.log(artiklList.);
+                    createVirtualRec(dbset.sysprofList, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    createVirtualRec(dbset.artiklList, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    createVirtualRec(dbset.artdetList, 37, {1: -3, 14: -3, 15: -3});
+                    createVirtualRec(dbset.colorList, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+                    createVirtualRec(dbset.sysfurnList, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+
                 }).catch(() => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных');
                 });

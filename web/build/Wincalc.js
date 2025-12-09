@@ -30,11 +30,10 @@ export class Wincalc {
 
     build(script) {
         // try {
-        debugger;
         //Инит свойств
         this.nppID = 0;
         this.mapPardef.clear();
-        for (var el of  [listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
+        for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
             el.length = 0;
         }
         this.wson = JSON.parse(script); //объект калькуляции

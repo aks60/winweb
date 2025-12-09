@@ -321,23 +321,27 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
-function createVirtualRec(size, data) {
-    let arr = new Array(size);
-    for (let k in data)
-        arr[k] = data[k];
-    return arr;
+function createVirtualRec(recordList, size, virtualData) {
+    if (recordList == undefined) {
+        recordList = {};
+    }
+    recordList.virtualRec = new Array(size);
+    for (let k in virtualData)
+        recordList.virtualRec[k] = virtualData[k];
 }
 //------------------------------------------------------------------------------            
-function findef(find, def) {
-    debugger;
-    let ret = find;
-    if (ret != undefined) {
-        return ret;
+function findef(tableRec, tableList) {
+    if (tableRec != undefined) {
+        return tableRec;
     } else {
-        if (def.virtualRec != undefined) {
-            return def.virtualRec;
+        if (tableList != undefined) {
+            if (tableList.virtualRec != undefined) {
+                return tableList.virtualRec;
+            } else {
+                return new Array(tableList[0].list.length);
+            }
         } else {
-            return new Array(def[0].length);
+            return new Array(60);
         }
     }
 }
