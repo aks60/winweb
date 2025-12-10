@@ -60,6 +60,7 @@ order.init_table = function (table1, table2) {
     });
     order.resize();
 }
+
 order.taq_parent = function (node, tag) { //рекурсия
     if (node)
         return (node.tagName == tag) ? node : order.taq_parent(node.parentElement, tag);
