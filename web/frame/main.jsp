@@ -59,6 +59,9 @@
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {}, login = {que_requests: 2},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
+            dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
+                sysprof: {}, syspar1: {}, params: {}, group: {}, project: {}, dealer: {}, kits: {}, kitdet: {}, prjkit: {}
+            };
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
@@ -87,52 +90,51 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-
-            //import {Wincalc} from './build/Wincalc.js';
             //import {sayHi} from './frame/main.js';
             //sayHi();
 
             $("#outbody").load('frame/login.jsp', function () {
-                $.when(
-                        $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
-                        $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
-                        $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
-                        $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
-                        $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
-                        $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
-                        ).done((p1, p2, p3, p4, p5, p6, p7, p8, p9, pA, pB, pC, pD, pE, pF, pG, pH, pI
-                        ) => {
-                    //загрузка базы данных  
-                    dbset.systreeList = p1[0];
-                    dbset.sysprodList = p2[0];
-                    dbset.colorList = p3[0];
-                    dbset.artiklList = p4[0];
-                    dbset.artdetList = p5[0];
-                    dbset.furnitureList = p6[0];
-                    dbset.furndetList = p7[0];
-                    dbset.prjprodList = p8[0];
-                    dbset.sysfurnList = p9[0];
-                    dbset.sysprofList = pA[0];
-                    dbset.syspar1List = pB[0];
-                    dbset.paramsList = pC[0];
-                    dbset.groupList = pD[0];
-                    dbset.projectList = pE[0];
-                    dbset.dealerList = pF[0];
-                    dbset.kitsList = pG[0];
-                    dbset.kitdetList = pH[0];
-                    dbset.prjkitList = pI[0];
-
-                    login.init_login();
+                Promise.all([
+                    $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
+                    $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
+                    $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"),
+                    $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"),
+                    $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
+                    $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
+                ]).then(p => {
+                    //загрузка базы данных 
+                    let arr = Object.keys(dbset);
+                    debugger;
+                    dbset.systree.list = p[0];
+                    dbset.sysprod.list = p[1];
+                    dbset.color.listt = p[2];
+                    dbset.artikl.list = p[3];
+                    dbset.artdet.list = p[4];
+                    dbset.furniture.list = p[5];
+                    dbset.furndet.list = p[6];
+                    dbset.prjprod.list = p[7];
+                    dbset.sysfurn.list = p[8];
+                    dbset.sysprof.list = p[9];
+                    dbset.syspar1.list= p[10];
+                    dbset.params.list = p[11];
+                    dbset.group.list = p[12];
+                    dbset.project.list = p[13];
+                    dbset.dealer.list = p[14];
+                    dbset.kits.list = p[15];
+                    dbset.kitdet.list = p[16];
+                    dbset.prjkit.list = p[17];
+                    
+                    //login.init_login();
 
                     //Виртуальные артикулы
-                    createVirtualRec(dbset.sysprofList, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    createVirtualRec(dbset.artiklList, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    createVirtualRec(dbset.artdetList, 37, {1: -3, 14: -3, 15: -3});
-                    createVirtualRec(dbset.colorList, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-                    createVirtualRec(dbset.sysfurnList, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+//                    createVirtualRec(dbset.sysprofList, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+//                    createVirtualRec(dbset.artiklList, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+//                    createVirtualRec(dbset.artdetList, 37, {1: -3, 14: -3, 15: -3});
+//                    createVirtualRec(dbset.colorList, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+//                    createVirtualRec(dbset.sysfurnList, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
 
-                }).catch(() => {
-                    dialogMes('Ошибка', 'Ошибка загрузки базы данных');
+                }).catch(error => {
+                    dialogMes('Ошибка загрузки базы данных', error);
                 });
             });
         </script> 
