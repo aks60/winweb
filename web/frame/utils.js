@@ -321,13 +321,10 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
-function createVirtualRec(recordList, size, virtualData) {
-    if (recordList == undefined) {
-        recordList = {};
-    }
-    recordList.virtualRec = new Array(size);
+function createVirtualRec(tname, size, virtualData) {
+    tname.vrec = new Array(size);
     for (let k in virtualData)
-        recordList.virtualRec[k] = virtualData[k];
+        tname.vrec[k] = virtualData[k];
 }
 //------------------------------------------------------------------------------            
 function findef(key, index, recordList) {
@@ -348,6 +345,21 @@ function findef(key, index, recordList) {
         }
     } catch (error) {
         console.error("Ошибка: utils.findef()", error.message);
+    }
+}
+//------------------------------------------------------------------------------            
+function findefs(key, index, tname) {
+    try {
+        let record = tname.list.find(rec => key == rec[index]);
+        if (record != undefined) {
+            return record;
+        } else if (tname.vrec != undefined) {
+            return tname.vrec;
+        } else {
+            return new Array(40);
+        }
+    } catch (error) {
+        console.error("Ошибка: utils.findefs()", error.message);
     }
 }
 //------------------------------------------------------------------------------    

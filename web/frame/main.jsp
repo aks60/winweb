@@ -102,39 +102,19 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
-                    //загрузка базы данных 
-                    let arr = Object.keys(dbset);
-                    debugger;
-                    dbset.systree.list = p[0];
-                    dbset.sysprod.list = p[1];
-                    dbset.color.listt = p[2];
-                    dbset.artikl.list = p[3];
-                    dbset.artdet.list = p[4];
-                    dbset.furniture.list = p[5];
-                    dbset.furndet.list = p[6];
-                    dbset.prjprod.list = p[7];
-                    dbset.sysfurn.list = p[8];
-                    dbset.sysprof.list = p[9];
-                    dbset.syspar1.list= p[10];
-                    dbset.params.list = p[11];
-                    dbset.group.list = p[12];
-                    dbset.project.list = p[13];
-                    dbset.dealer.list = p[14];
-                    dbset.kits.list = p[15];
-                    dbset.kitdet.list = p[16];
-                    dbset.prjkit.list = p[17];
-                    
-                    //login.init_login();
+                    let keys = Object.keys(dbset);
+                    for (var i = 0; i < keys.length; i++) {
+                        dbset[keys[i]].list = p[i];
+                    }                  
+                    login.init_login();
 
-                    //Виртуальные артикулы
-//                    createVirtualRec(dbset.sysprofList, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-//                    createVirtualRec(dbset.artiklList, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-//                    createVirtualRec(dbset.artdetList, 37, {1: -3, 14: -3, 15: -3});
-//                    createVirtualRec(dbset.colorList, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-//                    createVirtualRec(dbset.sysfurnList, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-
+                    createVirtualRec(dbset.sysprof, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    createVirtualRec(dbset.artikl, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    createVirtualRec(dbset.artdet, 37, {1: -3, 14: -3, 15: -3});
+                    createVirtualRec(dbset.color, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+                    createVirtualRec(dbset.sysfurn, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});                  
                 }).catch(error => {
-                    dialogMes('Ошибка загрузки базы данных', error);
+                    dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + error.message);
                 });
             });
         </script> 
