@@ -321,11 +321,17 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
-function createVirtualRec(tname, size, virtualData) {
-    tname.vrec = new Array(size);
-    for (let k in virtualData)
-        tname.vrec[k] = virtualData[k];
-}
+//function createVirtualRec(tname, size, virtualData) {
+//    tname.vrec = new Array(size);
+//    for (let k in virtualData)
+//        tname.vrec[k] = virtualData[k];
+//}
+//function createVirtual2Rec(size, virtualData) {
+//    const vrec = new Array(size);
+//    for (let k in virtualData)
+//        vrec[k] = virtualData[k];
+//    return vrec;
+//}
 //------------------------------------------------------------------------------            
 function findef(key, index, recordList) {
     try {

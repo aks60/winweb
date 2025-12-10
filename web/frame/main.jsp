@@ -57,11 +57,10 @@
                 RIGHTUP: [4, "Правая поворотно-откидная"], UPPER: [5, "Откидная (открывается сверху)"], LEFTMOV: [11, "Раздвижная влево (открывается справа-налево, защелка справа"],
                 RIGHTMOV: [12, "Раздвижная вправо (открывается слева-направо, защелка слева"], INVALID: [16, "Не определено"]};
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbset = {}, dbrec = {}, login = {que_requests: 2},
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
-            dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
-                sysprof: {}, syspar1: {}, params: {}, group: {}, project: {}, dealer: {}, kits: {}, kitdet: {}, prjkit: {}
-            };
+            var dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
+                sysprof: {}, syspar1: {}, params: {}, group: {}, project: {}, dealer: {}, kits: {}, kitdet: {}, prjkit: {}};
 
             $(document).ready(function () {
                 //Глобальные настройки и параметры 
@@ -90,8 +89,15 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            //import {sayHi} from './frame/main.js';
+            import {sayHi} from './frame/main.js';
             //sayHi();
+
+            function createVirtual2Rec(size, virtualData) {
+                const vrec = new Array(size);
+                for (let k in virtualData)
+                    vrec[k] = virtualData[k];
+                return vrec;
+            }
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
@@ -105,14 +111,15 @@
                     let keys = Object.keys(dbset);
                     for (var i = 0; i < keys.length; i++) {
                         dbset[keys[i]].list = p[i];
-                    }                  
+                    }
                     login.init_login();
 
-                    createVirtualRec(dbset.sysprof, 7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    createVirtualRec(dbset.artikl, 37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    createVirtualRec(dbset.artdet, 37, {1: -3, 14: -3, 15: -3});
-                    createVirtualRec(dbset.color, 15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
-                    createVirtualRec(dbset.sysfurn, 10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});                  
+                    dbset.sysprof.vrec = createVirtual2Rec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    dbset.artikl.vrec = createVirtual2Rec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    dbset.artdet.vrec = createVirtual2Rec(37, {1: -3, 14: -3, 15: -3});
+                    dbset.color.vrec = createVirtual2Rec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
+                    dbset.sysfurn.vrec = createVirtual2Rec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+
                 }).catch(error => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + error.message);
                 });

@@ -8,6 +8,7 @@ order.get_winc = function () {
 }
 //-----------------  Инициализация таблицы  ------------------------------------
 order.init_table = function (table1, table2) {
+    debugger;
     table1.jqGrid({
         datatype: "local",
         gridview: true,
@@ -27,7 +28,6 @@ order.init_table = function (table1, table2) {
         ],
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
-            debugger;
             let projectRow = table1.jqGrid('getRowData', rowid);
             order.orderID = projectRow.id;
             order.wincalcMap.clear();
@@ -82,6 +82,7 @@ order.click_table2 = function (e) {
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
+    debugger;
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     dbset.project.list.sort((a, b) => b[PROJECT.id] - a[PROJECT.id]);
@@ -192,7 +193,6 @@ order.delete_table2 = function () {
 }
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.add_prjprod = function (table2, rec) {
-    debugger;
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
     canvas.id = 'cnv' + rec[PRJPROD.id];
