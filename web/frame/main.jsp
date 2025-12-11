@@ -61,23 +61,26 @@
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
             var dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
                 sysprof: {}, syspar1: {}, params: {}, group: {}, project: {}, dealer: {}, kits: {}, kitdet: {}, prjkit: {}};
-
-            $(document).ready(function () {
-                //Глобальные настройки и параметры 
-                jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
-                $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
-                $.jstree.defaults.core.themes.variant = "large";
-                //Для совместимости java и JavaScript
-                Math.toDegrees = function (x) {
-                    return 180 / Math.PI * x;
-                };
-                Math.toRadians = function (x) {
-                    return x / 180 * Math.PI;
-                };
-            });
-            window.onload = function () {
+            
+            
+            //Для совместимости java и JavaScript
+            Math.toDegrees = function (x) {
+                return 180 / Math.PI * x;
             };
-            function loadBody(url) {
+            Math.toRadians = function (x) {
+                return x / 180 * Math.PI;
+            };
+
+            //Глобальные настройки и параметры 
+            jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
+            $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
+            $.jstree.defaults.core.themes.variant = "large";
+
+            function createVirtual2Rec(size, virtualData) {
+                const vrec = new Array(size);
+                for (let k in virtualData)
+                    vrec[k] = virtualData[k];
+                return vrec;
             }
         </script>         
     </head>
@@ -89,15 +92,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {sayHi} from './frame/main.js';
+            //import {sayHi} from './frame/main.js';
             //sayHi();
-
-            function createVirtual2Rec(size, virtualData) {
-                const vrec = new Array(size);
-                for (let k in virtualData)
-                    vrec[k] = virtualData[k];
-                return vrec;
-            }
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

@@ -305,7 +305,7 @@ public class Login {
             }
         } catch (Exception e) {
             System.err.println(e);
-            output.put("result", "Неизвестная ошибка");
+            output.put("result", "Неизвестная ошибка на controller.userConnect()");
             return output;
         }
     }
