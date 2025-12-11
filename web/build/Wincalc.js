@@ -31,7 +31,6 @@ export class Wincalc {
     build(script) {
         // try {
         //Инит свойств
-        debugger;
         this.nppID = 0;
         this.mapPardef.clear();
         for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
@@ -48,28 +47,30 @@ export class Wincalc {
         this.height1 = this.wson.height1; //высота 1 окна
         this.height2 = (this.wson.height2 === undefined) ? this.height(this.wson) : this.wson.height2; //высота 2 окна
 
-        this.color1Rec = findef(this.wson.color1, COLOR.id, dbset.colorList);
-        this.color2Rec = findef(this.wson.color2, COLOR.id, dbset.colorList);
-        this.color3Rec = findef(this.wson.color3, COLOR.id, dbset.colorList);
+        this.color1Rec = findefs(this.wson.color1, COLOR.id, dbset.color);
+        this.color2Rec = findefs(this.wson.color2, COLOR.id, dbset.color);
+        this.color3Rec = findefs(this.wson.color3, COLOR.id, dbset.color);
+
+        debugger;
 
         //this.root = new AreaRoot(wson, null, this); //главное окно  
         //Главное окно
-        if (Type.RECTANGL == this.wson.type) {
+        if ('RECTANGL' === this.wson.type) {
             this.root = new AreaRectangl(this, this.wson);
 
-        } else if (Type.TRAPEZE == this.wson.type) {
+        } else if ('TRAPEZE' === this.wson.type) {
             this.root = new AreaTrapeze(this, this.wson);
 
-        } else if (Type.ARCH == this.wson.type) {
+        } else if ('ARCH' === this.wson.type) {
             this.root = new AreaArch(this, this.wson);
 
-        } else if (Type.DOOR == this.wson.type) {
+        } else if ('DOOR' === this.wson.type) {
             this.root = new AreaDoor(this, this.wson);
         }
 
         //creator(); //создадим элементы конструкции
         //location(); //кальк. коорд. элементов конструкции
- 
+
         //this.arr_of_winc(this.root);
         //draw_elements(this); //рисуем конструкцию 
 

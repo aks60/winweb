@@ -77,8 +77,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            //import {sayHi} from './frame/main.js';
-            //sayHi();
+            import {jstsTest} from './frame/main.js';
+            //jstsTest();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

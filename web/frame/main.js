@@ -1,15 +1,52 @@
 
-export function sayHi() {
-    
-    var OBJ3 = new jsts.io.GeoJSONReader();
-    var OBJ4 = new jsts.geom.Location();
-    var OBJ5 = new jsts.geom.GeometryFactory();
-    var OBJ6 = new jsts.operation.buffer.BufferParameters();
-    var OBJ7 = new jsts.io.GeoJSONWriter();
-    var OBJ8 = new jsts.geom.Coordinate();
-    var OBJ9 = new jsts.io.OL3Parser();
-    
-    alert(`Превет sayHi().`);
+//https://stackoverflow.com/questions/36118883/using-jsts-buffer-to-identify-a-self-intersecting-polygon
+//https://openlayers.org/en/latest/examples/jsts.html
+//https://gist.github.com/pgiraud/2ed05b0a9e394c5652b3
+//https://gis.stackexchange.com/questions/388347/spatial-operations-with-jsts
+//https://www.clouddefense.ai/code/javascript/example/jsts
+//https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
+
+export function jstsTest() {
+    try {
+        debugger;
+
+        var OBJ03 = new jsts.io.GeoJSONReader();
+        var OBJ04 = new jsts.geom.Location();
+        var OBJ06 = new jsts.operation.buffer.BufferParameters();
+        var OBJ07 = new jsts.io.GeoJSONWriter();
+        var OBJ08 = new jsts.geom.Coordinate();
+        var OBJ09 = new jsts.io.OL3Parser();
+        var OBJ10 = new jsts.geom.PrecisionModel(1000);
+        var OBJ11 = new jsts.geom.GeometryFactory(OBJ10);
+        var OBJ12 = new jsts.util.GeometricShapeFactory(OBJ11);
+        var OBJ13 = new jsts.geom.util.AffineTransformation;
+        //var OBJ14 = new jsts.awt.ShapeWriter;
+        var OBJ15 = new jsts.geom.Envelope;
+        var OBJ16 = new jsts.geom.Geometry;
+        var OBJ17 = new jsts.geom.LineString;
+        //var OBJ18 = new jsts.geom.Polygon;
+
+        {
+            let coordinates = [
+                new jsts.geom.Coordinate(0, 0),
+                new jsts.geom.Coordinate(10, 0),
+                new jsts.geom.Coordinate(10, 10),
+                new jsts.geom.Coordinate(0, 10),
+                new jsts.geom.Coordinate(0, 0) // Closing point
+            ];
+            let precisionModel = new jsts.geom.PrecisionModel(1000);
+            let geometryFactory = new jsts.geom.GeometryFactory(precisionModel);
+            let shell = geometryFactory.createLinearRing(coordinates);
+            let polygon = geometryFactory.createPolygon(shell, null);
+            console.log("Polygon area:", polygon.getArea());
+            console.log("Polygon centroid:", polygon.getCentroid().toString());
+            console.log("WKT representation:", new jsts.io.WKTWriter().write(polygon));
+        }
+
+        alert(`Превет jstsTest().`);
+    } catch (error) {
+        alert(`Ошибка jsts(). => ` + error.message);
+    }
 }
 
 

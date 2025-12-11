@@ -2,6 +2,8 @@
 export class Com5t {
 
     constructor(wson, owner, winc) {
+        const MAXSIDE = 200;
+        const MAXPOINT = 1000;
         this.wson = (wson);
         this.id = (wson).id;//идентификатор 
         this.owner = owner;//владелец
