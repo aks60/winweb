@@ -47,7 +47,7 @@ export class Com5t {
         if (this.id == 0) {
             var k = v / this.wson.width; //коэффициент
             this.wson.width = v;
-            this.winc.areaList.forEach(e => {
+            this.winc.listArea.forEach(e => {
                 if (e.layout == 'HORIZ') {
                     e.childs.forEach(e2 => { //изменение всех по ширине
                         e2.obj.length = k * e2.obj.length;
@@ -79,7 +79,7 @@ export class Com5t {
             var k = v / this.wson.height; //коэффициент
             this.wson.height = v;
             this.wson.heightAdd = k * this.wson.heightAdd;
-            this.winc.areaList.forEach(e => {
+            this.winc.listArea.forEach(e => {
                 if (e.layout == 'VERT') {
                     e.childs.forEach(e2 => { //изменение всех по высоте
                         e2.wson.length = k * e2.wson.length;

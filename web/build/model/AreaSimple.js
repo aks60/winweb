@@ -64,7 +64,7 @@ export class AreaSimple extends Com5t {
 
     lineCross(cross) {
         let arr = [];
-        this.winc.elemList.forEach(e => {
+        this.winc.listElem.forEach(e => {
             if (e.id == cross.id) {
                 e.owner.childs.forEach((e2, i) => {
                     if (e2.id == cross.id)

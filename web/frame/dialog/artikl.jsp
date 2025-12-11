@@ -113,7 +113,7 @@
                         let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
 
                         let winc = order.wincalcMap.get(prjprodID);
-                        let elem = winc.elemList.find(it => it.id == elemID);
+                        let elem = winc.listElem.find(it => it.id == elemID);
                         elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
 
                         //Стеклопакет
@@ -221,7 +221,7 @@
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                 let winc = order.wincalcMap.get(prjprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
+                let elem = winc.listElem.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
                     if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
 

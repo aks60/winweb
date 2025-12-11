@@ -321,17 +321,12 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
-//function createVirtualRec(tname, size, virtualData) {
-//    tname.vrec = new Array(size);
-//    for (let k in virtualData)
-//        tname.vrec[k] = virtualData[k];
-//}
-//function createVirtual2Rec(size, virtualData) {
-//    const vrec = new Array(size);
-//    for (let k in virtualData)
-//        vrec[k] = virtualData[k];
-//    return vrec;
-//}
+function createVirtualRec(size, virtualData) {
+    const vrec = new Array(size);
+    for (let k in virtualData)
+        vrec[k] = virtualData[k];
+    return vrec;
+}
 //------------------------------------------------------------------------------            
 function findef(key, index, recordList) {
     try {
@@ -373,4 +368,12 @@ function getSelectedRow(table) {
     let rowid = table.jqGrid('getGridParam', "selrow");
     return (rowid) ? table.jqGrid('getRowData', rowid) : null;
 }
+//------------------------------------------------------------------------------
+//Для совместимости java и JavaScript
+Math.toDegrees = function (x) {
+    return 180 / Math.PI * x;
+};
+Math.toRadians = function (x) {
+    return x / 180 * Math.PI;
+};
 //------------------------------------------------------------------------------            

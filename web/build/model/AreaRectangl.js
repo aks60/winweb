@@ -3,7 +3,7 @@ import {AreaSimple} from './AreaSimple.js';
 
 export class AreaRectangl extends AreaSimple {
     
-    constructor() {
+    constructor(winc, wson) {
         alrt('new AreaRectangl');
     }
 }

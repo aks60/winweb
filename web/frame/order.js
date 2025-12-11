@@ -8,7 +8,7 @@ order.get_winc = function () {
 }
 //-----------------  Инициализация таблицы  ------------------------------------
 order.init_table = function (table1, table2) {
-    debugger;
+    //debugger;
     table1.jqGrid({
         datatype: "local",
         gridview: true,
@@ -82,7 +82,7 @@ order.click_table2 = function (e) {
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
-    debugger;
+    //debugger;
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     dbset.project.list.sort((a, b) => b[PROJECT.id] - a[PROJECT.id]);
@@ -203,10 +203,12 @@ order.add_prjprod = function (table2, rec) {
     let name = document.createTextNode(rec[PRJPROD.name]);
     let script = rec[PRJPROD.script];   
     
-    //let iwincalc = win.build(canvas, script);
+    //Сщздание экземпрляра окна!!!
+    let winc = win.build(canvas, script);
+    winc.build(script);
     
     //Массив объектов winc
-   //order.wincalcMap.set(prjprodRec[PRJPROD.id], iwincalc);
+   //order.wincalcMap.set(prjprodRec[PRJPROD.id], winc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');

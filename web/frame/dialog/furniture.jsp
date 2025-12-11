@@ -92,7 +92,7 @@
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
+                let elem = winc.listElem.find(it => it.id == elemID);
                 elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
                 let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec.list[SYSFURN.furniture_id] && winc.nuni == rec.list[SYSFURN.systree_id]);
                 elem.wson.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт

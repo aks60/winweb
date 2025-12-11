@@ -81,7 +81,7 @@
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
+                let elem = winc.listElem.find(it => it.id == elemID);
                 elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
                 elem.wson.param.typeOpen = tableRec.id; //запишем тип открывания
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);

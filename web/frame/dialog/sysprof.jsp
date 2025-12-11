@@ -84,7 +84,7 @@
                 let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
-                let elem = winc.elemList.find(it => it.id == elemID);
+                let elem = winc.listElem.find(it => it.id == elemID);
                 if (elem.wson.param == undefined) {
                     elem.wson.param = {};
                 }
