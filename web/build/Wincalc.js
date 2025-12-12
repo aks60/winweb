@@ -1,4 +1,5 @@
 
+import {WsonRoot} from './script/WsonRoot.js';
 import {Com5t} from './model/Com5t.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
@@ -36,7 +37,8 @@ export class Wincalc {
         for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
             el.length = 0;
         }
-        this.wson = JSON.parse(script); //объект калькуляции
+        this.jsonObj = JSON.parse(script); //объект калькуляции
+        this.wson = new WsonRoot(this.jsonObj); 
         //this.setform(wson, this);         //форма конструкции, см. класс Area                 
         this.prj = this.wson.prj;              //номер тестируемого проекта, поле пока нужно только для тестов 
         this.ord = this.wson.ord;              //номер тестируемого заказа, поле пока нужно только для тестов 
@@ -51,25 +53,23 @@ export class Wincalc {
         this.color2Rec = findefs(this.wson.color2, COLOR.id, dbset.color);
         this.color3Rec = findefs(this.wson.color3, COLOR.id, dbset.color);
 
-        debugger;
-
         //this.root = new AreaRoot(wson, null, this); //главное окно  
         //Главное окно
         if ('RECTANGL' === this.wson.type) {
-            this.root = new AreaRectangl(this, this.wson);
+            this.root = new AreaRectangl(this, this.wson, null);
 
         } else if ('TRAPEZE' === this.wson.type) {
-            this.root = new AreaTrapeze(this, this.wson);
+            this.root = new AreaTrapeze(this, this.wson, null);
 
         } else if ('ARCH' === this.wson.type) {
-            this.root = new AreaArch(this, this.wson);
+            this.root = new AreaArch(this, this.wson, null);
 
         } else if ('DOOR' === this.wson.type) {
-            this.root = new AreaDoor(this, this.wson);
+            this.root = new AreaDoor(this, this.wson, null);
         }
 
-        //creator(); //создадим элементы конструкции
-        //location(); //кальк. коорд. элементов конструкции
+        creator(); //создадим элементы конструкции
+        location(); //кальк. коорд. элементов конструкции
 
         //this.arr_of_winc(this.root);
         //draw_elements(this); //рисуем конструкцию 
@@ -84,39 +84,39 @@ export class Wincalc {
 
     //Цыклическое заполнение root по содержимому wson 
     creator() {
-        try {
-            let hm = new Map();
-            for (let ob2 of this.wson.childs) {
-                if (ob2.type == "FRAME_SIDE") {
-                    let frm = new ElemFrame(ob2, owner, this, ob2.param);
-                    owner.frames.set(ob2.layout, frm);
-
-                } else if (ob2.type == "STVORKA") {
-                    let stv = new AreaStvorka(ob2, this.root, this);
-                    this.root.childs.push(stv);
-                    hm.set(stv, ob2);
-
-                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
-                    let area = new AreaSimple(ob2, this.root, this);
-                    this.root.childs.push(area);
-                    hm.set(area, ob2);
-
-                } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
-                    let cross = new ElemCross(ob2, this.root, this);
-                    this.root.childs.push(cross);
-
-                } else if (ob2.type == "GLASS") {
-                    let glass = new ElemGlass(ob2, this.root, this);
-                    this.root.childs.push(glass);
-                }
-            }
-            //Теперь вложенные элементы
-            for (let k of hm.keys()) {
-                this.creator(k, hm.get(k));
-            }
-        } catch (e) {
-            alert('Ошибка:Wincalc.elements ' + e.message);
-        }
+//        try {
+//            let hm = new Map();
+//            for (let ob2 of this.wson.childs) {
+//                if (ob2.type == "FRAME_SIDE") {
+//                    let frm = new ElemFrame(ob2, owner, this, ob2.param);
+//                    owner.frames.set(ob2.layout, frm);
+//
+//                } else if (ob2.type == "STVORKA") {
+//                    let stv = new AreaStvorka(ob2, this.root, this);
+//                    this.root.childs.push(stv);
+//                    hm.set(stv, ob2);
+//
+//                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
+//                    let area = new AreaSimple(ob2, this.root, this);
+//                    this.root.childs.push(area);
+//                    hm.set(area, ob2);
+//
+//                } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
+//                    let cross = new ElemCross(ob2, this.root, this);
+//                    this.root.childs.push(cross);
+//
+//                } else if (ob2.type == "GLASS") {
+//                    let glass = new ElemGlass(ob2, this.root, this);
+//                    this.root.childs.push(glass);
+//                }
+//            }
+//            //Теперь вложенные элементы
+//            for (let k of hm.keys()) {
+//                this.creator(k, hm.get(k));
+//            }
+//        } catch (e) {
+//            alert('Ошибка:Wincalc.elements ' + e.message);
+//        }
     }
 
     //Кальк.коорд. элементов конструкции
@@ -126,7 +126,8 @@ export class Wincalc {
 
     //Рисуем конструкцию
     draw() {
-
+        //this.listArea.forEach()
+        //UCom.filter(this.listArea, 'STVORKA').stream().forEach(el -> el.paint());
     }
 
     width(wson) {

@@ -1,7 +1,17 @@
 
 export class Com5t {
 
-    constructor(wson, owner, winc) {
+    constructor(winc, id, wson, owner) {
+        this.id = id;
+        this.winc = winc;
+        this.owner = owner;
+        this.wson = wson;
+        this.root = winc.root;
+        this.type = wson.type;
+        //timer.setRepeats(false);
+    }
+    
+    /*constructor(wson, owner, winc) {
         const MAXSIDE = 200;
         const MAXPOINT = 1000;
         this.wson = (wson);
@@ -13,7 +23,7 @@ export class Com5t {
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
-    }
+    }*/
 
     dimension(x1, y1, x2, y2) {
         this.x1 = x1;

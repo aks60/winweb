@@ -3,9 +3,15 @@ import {Com5t} from './Com5t.js';
 
 export class AreaSimple extends Com5t {
 
-    constructor(wson, owner, winc) {
+constructor(winc, wson, owner) {
+    super(winc, wson.id, wson, owner);
+        winc.listArea.add(this);
+        winc.listAll.add(this);    
+}
+
+/*    constructor(winc, wson, owner) {
         alrt('new AreaSimple');
-        super(wson, owner, winc);
+        super(winc, wson, owner);
         if (wson.form != undefined) {
             this.form = wson.form;
         }
@@ -52,7 +58,7 @@ export class AreaSimple extends Com5t {
                 }
             }
         }
-    }
+    }*/
 
     //Форма контура
     typeForm() {
