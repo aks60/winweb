@@ -81,29 +81,28 @@ export class Wincalc {
     //Цыклическое заполнение root по содержимому gson 
     creator() {
         try {
-            debugger;
             let hm = new Map();
-            for (let ob2 of this.gson.childs) {
-                if (ob2.type === "FRAME_SIDE") {
-                   // let frm = new ElemFrame(ob2, owner, this, ob2.param);
-                    //owner.frames.set(ob2.layout, frm);
+            for (let gs of this.gson.childs) {
+                if (gs.type === "FRAME_SIDE") {
+                    let frm = new ElemFrame(gs, this.owner, this, gs.param);
+                    //owner.frames.set(gs.layout, frm);
 
-                } else if (ob2.type === "STVORKA") {
-                    //let stv = new AreaStvorka(ob2, this.root, this);
+                } else if (gs.type === "STVORKA") {
+                    //let stv = new AreaStvorka(gs, this.root, this);
                     //this.root.childs.push(stv);
-                   // hm.set(stv, ob2);
+                   // hm.set(stv, gs);
 
-                } else if (ob2.type === "AREA" || ob2.type === "ARCH" || ob2.type === "TRAPEZE" || ob2.type === "TRIANGL" || ob2.type === "DOOR") {
-                    //let area = new AreaSimple(ob2, this.root, this);
+                } else if (gs.type === "AREA" || gs.type === "ARCH" || gs.type === "TRAPEZE" || gs.type === "TRIANGL" || gs.type === "DOOR") {
+                    //let area = new AreaSimple(gs, this.root, this);
                     //this.root.childs.push(area);
-                    //hm.set(area, ob2);
+                    //hm.set(area, gs);
 
-                } else if (ob2.type === "IMPOST" || ob2.type === "SHTULP" || ob2.type == "STOIKA") {
-                    //let cross = new ElemCross(ob2, this.root, this);
+                } else if (gs.type === "IMPOST" || gs.type === "SHTULP" || gs.type == "STOIKA") {
+                    //let cross = new ElemCross(gs, this.root, this);
                     //this.root.childs.push(cross);
 
-                } else if (ob2.type === "GLASS") {
-                    //let glass = new ElemGlass(ob2, this.root, this);
+                } else if (gs.type === "GLASS") {
+                    //let glass = new ElemGlass(gs, this.root, this);
                     //this.root.childs.push(glass);
                 }
             }
@@ -123,15 +122,9 @@ export class Wincalc {
 
     //Рисуем конструкцию
     draw() {
-        debugger;
-        //const mas = this.listArea.filter(el => el.gson.obj.type == 'RECTANGL');
-        //mas.foEach(el => el.pain());
-        
-        this.listArea.forEach(area => {
-            if(area.gson.obj.type == 'RECTANGL') {
-                area.pain();
-            }
-        });
+        this.listArea.filter(el => el.gson.obj.type == 'RECTANGL').forEach((el) => el.pain());
+        //Прорисовка рам
+        this.listElem.filter(el => el.gson.obj.type == 'BOX_SIDE').forEach((el) => el.pain());      
     }
 
     width(gson) {

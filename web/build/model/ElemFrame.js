@@ -3,8 +3,8 @@ import {Com5t} from './Com5t.js';
 
 export class ElemFrame extends Com5t {
 
-    constructor(gson, owner, winc, param, id, layout, type) {
-        super(gson, owner, winc);
+    constructor(winc, id, owner, gson, param, layout, type) {
+        super(winc, id, gson, owner);
         this.anglCut = [45, 45]; //угол реза
         if (id != undefined) { //если сторона створки
             this.id = id;      //дополнительные параметры
@@ -12,11 +12,11 @@ export class ElemFrame extends Com5t {
             this.type = type;
         }
 
-        this.init_constructiv(param);
-        this.set_location(gson, owner, winc, param, id, layout, type);
+        //this.initArtikle(param);
+        //this.setLocation(gson, owner, winc, param, id, layout, type);
     }
 
-    init_constructiv(param) {
+    initArtikle(param) {
         this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(param.colorID1, COLOR.id, dbset.colorList) : this.winc.color1Rec;
         this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(param.colorID2, COLOR.id, dbset.colorList) : this.winc.color2Rec;
         this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
@@ -43,7 +43,7 @@ export class ElemFrame extends Com5t {
         }
     }
 
-    set_location(gson, owner, winc) {
+    setLocation(gson, owner, winc) {
 
         if (owner.typeForm() == "ARCH") {
             if ("BOTT" == this.layout) {
@@ -113,6 +113,8 @@ export class ElemFrame extends Com5t {
     }
 
     paint() {
+        alert('exec ElemFrame.pain()');
+        /*
         let dh = win.dh_frm;
         let dh0 = win.dh_frm; //см. winapp
         let dh1 = win.dh_frm; //см. winapp
@@ -182,7 +184,7 @@ export class ElemFrame extends Com5t {
             draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
             draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
             draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
-        }
+        }*/
     }
 }
 

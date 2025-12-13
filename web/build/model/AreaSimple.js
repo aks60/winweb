@@ -61,7 +61,7 @@ constructor(winc, gson, owner) {
     }*/
     
     pain() {
-        alert('exec AreaSimple.pain()');
+        console.log('exec AreaSimple.pain()');
     }
     
     //Форма контура

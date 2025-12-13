@@ -1,41 +1,25 @@
 
 export class Com5t {
 
+    static MAXSIDE = 200;
+    static MAXPOINT = 1000; 
+
     constructor(winc, id, gson, owner) {
         this.id = id;
         this.winc = winc;
         this.owner = owner;
         this.gson = gson;
-        //this.root = winc.root;
-        //this.type = gson.type;
-        //timer.setRepeats(false);
-        //alert('create Com5t');
-    }
-    
-    /*constructor(gson, owner, winc) {
-        const MAXSIDE = 200;
-        const MAXPOINT = 1000;
-        this.gson = (gson);
-        this.id = (gson).id;//идентификатор 
-        this.owner = owner;//владелец
-        this.winc = winc;//главный класс калькуляции   
-        this.layout = (gson).layout;//напрвление расположения
-        this.type = (gson).type;//тип элемента
+        this.root = winc.root;
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
-    }*/
+    }
 
     dimension(x1, y1, x2, y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-    }
-
-    //Форма компонента
-    typeForm() {
-        return this.type;
     }
 
     get width() {
@@ -121,8 +105,7 @@ export class Com5t {
     }
 
     //Точка попадает в контур элемента
-    inside(X, Y)
-    {
+    inside(X, Y) {
         if ((this.x2 | this.y2) < 0) {
             return false;
         }

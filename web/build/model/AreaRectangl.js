@@ -11,6 +11,7 @@ export class AreaRectangl extends AreaSimple {
     }
 
     pain() {
+//        console.log('exec AreaRectangl.pain()');
         alert('exec AreaRectangl.pain()');
     }
 }
