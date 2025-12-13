@@ -5,8 +5,8 @@ export class AreaSimple extends Com5t {
 
 constructor(winc, gson, owner) {
     super(winc, gson.id, gson, owner);
-        winc.listArea.add(this);
-        winc.listAll.add(this);    
+        winc.listArea.push(this);
+        winc.listAll.push(this);    
 }
 
 /*    constructor(winc, gson, owner) {
@@ -59,7 +59,11 @@ constructor(winc, gson, owner) {
             }
         }
     }*/
-
+    
+    pain() {
+        alert('exec AreaSimple.pain()');
+    }
+    
     //Форма контура
     typeForm() {
         if (this.id != 0 && this.form != undefined) {

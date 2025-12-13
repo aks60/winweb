@@ -9,7 +9,7 @@ export class Com5t {
         //this.root = winc.root;
         //this.type = gson.type;
         //timer.setRepeats(false);
-        alert('exec Com5t');
+        //alert('create Com5t');
     }
     
     /*constructor(gson, owner, winc) {
