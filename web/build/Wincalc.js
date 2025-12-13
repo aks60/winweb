@@ -1,5 +1,5 @@
 
-import {WsonRoot} from './script/WsonRoot.js';
+import {GsonRoot} from './script/GsonRoot.js';
 import {Com5t} from './model/Com5t.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
@@ -37,7 +37,7 @@ export class Wincalc {
                 el.length = 0;
             }
             this.jsonObj = JSON.parse(script);      //объект калькуляции
-            this.gson = new WsonRoot(this.jsonObj); //объектная модель конструкции 1-го уровня
+            this.gson = new GsonRoot(this.jsonObj); //объектная модель конструкции 1-го уровня
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
 
             this.width1 = (this.gson.obj.width1 === undefined) ? this.width(this.gson) : this.gson.obj.width1; //ширина 1 окна
@@ -62,6 +62,7 @@ export class Wincalc {
             } else if ('DOOR' === this.gson.obj.type) {
                 this.root = new AreaDoor(this, this.gson, null);
             }
+            
             this.creator(); //создадим элементы конструкции       
             this.location(); //кальк. коорд. элементов конструкции       
             this.draw(); //прорисовка конструкции
@@ -79,40 +80,40 @@ export class Wincalc {
 
     //Цыклическое заполнение root по содержимому gson 
     creator() {
-        this.test = 0;
-/*        try {
+        try {
+            debugger;
             let hm = new Map();
             for (let ob2 of this.gson.childs) {
-                if (ob2.type == "FRAME_SIDE") {
-                    let frm = new ElemFrame(ob2, owner, this, ob2.param);
-                    owner.frames.set(ob2.layout, frm);
+                if (ob2.type === "FRAME_SIDE") {
+                   // let frm = new ElemFrame(ob2, owner, this, ob2.param);
+                    //owner.frames.set(ob2.layout, frm);
 
-                } else if (ob2.type == "STVORKA") {
-                    let stv = new AreaStvorka(ob2, this.root, this);
-                    this.root.childs.push(stv);
-                    hm.set(stv, ob2);
+                } else if (ob2.type === "STVORKA") {
+                    //let stv = new AreaStvorka(ob2, this.root, this);
+                    //this.root.childs.push(stv);
+                   // hm.set(stv, ob2);
 
-                } else if (ob2.type == "AREA" || ob2.type == "ARCH" || ob2.type == "TRAPEZE" || ob2.type == "TRIANGL" || ob2.type == "DOOR") {
-                    let area = new AreaSimple(ob2, this.root, this);
-                    this.root.childs.push(area);
-                    hm.set(area, ob2);
+                } else if (ob2.type === "AREA" || ob2.type === "ARCH" || ob2.type === "TRAPEZE" || ob2.type === "TRIANGL" || ob2.type === "DOOR") {
+                    //let area = new AreaSimple(ob2, this.root, this);
+                    //this.root.childs.push(area);
+                    //hm.set(area, ob2);
 
-                } else if (ob2.type == "IMPOST" || ob2.type == "SHTULP" || ob2.type == "STOIKA") {
-                    let cross = new ElemCross(ob2, this.root, this);
-                    this.root.childs.push(cross);
+                } else if (ob2.type === "IMPOST" || ob2.type === "SHTULP" || ob2.type == "STOIKA") {
+                    //let cross = new ElemCross(ob2, this.root, this);
+                    //this.root.childs.push(cross);
 
-                } else if (ob2.type == "GLASS") {
-                    let glass = new ElemGlass(ob2, this.root, this);
-                    this.root.childs.push(glass);
+                } else if (ob2.type === "GLASS") {
+                    //let glass = new ElemGlass(ob2, this.root, this);
+                    //this.root.childs.push(glass);
                 }
             }
             //Теперь вложенные элементы
-            for (let k of hm.keys()) {
-                this.creator(k, hm.get(k));
-            }
+            //for (let k of hm.keys()) {
+            //    this.creator(k, hm.get(k));
+            //}
         } catch (e) {
-            alert('Ошибка:Wincalc.elements ' + e.message);
-        }*/
+            alert('Ошибка:Wincalc.creator() ' + e.message);
+        }
     }
 
     //Кальк.коорд. элементов конструкции
