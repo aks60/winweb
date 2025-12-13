@@ -3,7 +3,7 @@
 <html>
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <script type="text/javascript" src="lib/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
+        <script type="text/javascript" src="lib-js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="text/javascript" src="frame/product.js"></script>
         <title>PRODUCT</title>
         <style>

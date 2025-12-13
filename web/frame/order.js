@@ -204,8 +204,8 @@ order.add_prjprod = function (table2, rec) {
     let script = rec[PRJPROD.script];   
     
     //Сщздание экземпрляра окна!!!
-    let winc = win.build(canvas, script);
-    winc.build(script);
+    //let winc = win.build(canvas, script);
+    //winc.build(script);
     
     //Массив объектов winc
    //order.wincalcMap.set(prjprodRec[PRJPROD.id], winc);
