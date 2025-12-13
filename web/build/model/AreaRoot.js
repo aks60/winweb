@@ -3,8 +3,8 @@ import {AreaSimple} from './AreaSimple.js';
 
 export class AreaRoot extends AreaSimple {
 
-    constructor(wson, owner, winc) {
-        super(wson, owner, winc);
+    constructor(gson, owner, winc) {
+        super(gson, owner, winc);
         this.frames = new Map(); //рамы конструкции 
         this.pardefMap = new Map(); //параметры по умолчанию   
 
@@ -27,10 +27,10 @@ export class AreaRoot extends AreaSimple {
 
     //Параметр
     init_pardef_map() {
-        if (this.wson.param != undefined) {
-            if (this.wson.param.ioknaParam != undefined) {
+        if (this.gson.param != undefined) {
+            if (this.gson.param.ioknaParam != undefined) {
                 //Накладываем к параметрам системы конструкции параметры конкретной конструкции
-                let groupArr = this.wson.param.ioknaParam;
+                let groupArr = this.gson.param.ioknaParam;
                 for (let group of groupArr) {
                     let paramsRec = dbset.paramsList.find(rec => group == rec.list[PARAMS.id]);
                     let syspar1Rec = this.pardefMap.get(paramsRec[PARAMS.params_id]);

@@ -85,27 +85,27 @@
 
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
-                if (elem.wson.param == undefined) {
-                    elem.wson.param = {};
+                if (elem.gson.param == undefined) {
+                    elem.gson.param = {};
                 }
                 if (elem.typeForm() == "FRAME_SIDE") { //коробка
-                    elem.wson.param.sysprofID = tableRec.id; //запишем профиль в скрипт
+                    elem.gson.param.sysprofID = tableRec.id; //запишем профиль в скрипт
 
                 } else { //створка       
                     let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-                    elem.wson.param[sideLayout] = {sysprofID: tableRec.id};
+                    elem.gson.param[sideLayout] = {sysprofID: tableRec.id};
                 }
 
                 //Запишем профиль в локальн. бд
                 let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v));
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.wson, (k, v) => isEmpty(v)));
+                prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({
                     url: 'dbset?action=updateScript',
-                    data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.wson)})},
+                    data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson)})},
                     success: function (data) {
                         if (data.result == 'ok') {
                             $("#n31").val(tableRec.code);

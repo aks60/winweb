@@ -2,7 +2,7 @@
 export class WsonElem {
 
     constructor(jsonObj) {
-        this.jsonObj = jsonObj;
+        this.obj = jsonObj;
         //alert("create WsonElem")
     }
 

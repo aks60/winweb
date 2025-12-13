@@ -44,8 +44,8 @@ export function jstsTest() {
         }
 
         alert(`Превет jstsTest().`);
-    } catch (error) {
-        alert(`Ошибка jsts(). => ` + error.message);
+    } catch (e) {
+        alert(`Ошибка jsts(). => ` + e.message);
     }
 }
 

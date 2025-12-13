@@ -3,13 +3,13 @@ import {Com5t} from './Com5t.js';
 
 export class ElemCross extends Com5t {
 
-    constructor(wson, owner, winc) {
-        super(wson, owner, winc);
+    constructor(gson, owner, winc) {
+        super(gson, owner, winc);
         this.layout = (owner.layout == 'VERT') ? 'HORIZ' : 'VERT';
         this.anglCut = [90, 90]; //угол реза
 
-        this.init_constructiv(this.wson.param);
-        this.set_location(wson, owner, winc);
+        this.init_constructiv(this.gson.param);
+        this.set_location(gson, owner, winc);
     }
 
     init_constructiv(param) {
@@ -18,8 +18,8 @@ export class ElemCross extends Com5t {
         this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
 
         //Профиль поперечины
-        if (this.wson.param != undefined && this.wson.param.sysprofID != undefined)
-            this.sysprofRec = this.wson.param.sysprofID;
+        if (this.gson.param != undefined && this.gson.param.sysprofID != undefined)
+            this.sysprofRec = this.gson.param.sysprofID;
 
         else {
             if ("VERT" == this.layout) { //сверху вниз
@@ -36,7 +36,7 @@ export class ElemCross extends Com5t {
         }
     }
 
-    set_location(wson, owner, winc) {
+    set_location(gson, owner, winc) {
 
         //Коррекция положения импоста арки (подкдадка ареа над импостом)
         if ("ARCH" == owner.typeForm()) {

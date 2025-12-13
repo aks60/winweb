@@ -3,8 +3,8 @@ import {Com5t} from './Com5t.js';
 
 export class ElemFrame extends Com5t {
 
-    constructor(wson, owner, winc, param, id, layout, type) {
-        super(wson, owner, winc);
+    constructor(gson, owner, winc, param, id, layout, type) {
+        super(gson, owner, winc);
         this.anglCut = [45, 45]; //угол реза
         if (id != undefined) { //если сторона створки
             this.id = id;      //дополнительные параметры
@@ -13,7 +13,7 @@ export class ElemFrame extends Com5t {
         }
 
         this.init_constructiv(param);
-        this.set_location(wson, owner, winc, param, id, layout, type);
+        this.set_location(gson, owner, winc, param, id, layout, type);
     }
 
     init_constructiv(param) {
@@ -43,7 +43,7 @@ export class ElemFrame extends Com5t {
         }
     }
 
-    set_location(wson, owner, winc) {
+    set_location(gson, owner, winc) {
 
         if (owner.typeForm() == "ARCH") {
             if ("BOTT" == this.layout) {

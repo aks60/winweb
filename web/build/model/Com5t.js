@@ -1,25 +1,26 @@
 
 export class Com5t {
 
-    constructor(winc, id, wson, owner) {
+    constructor(winc, id, gson, owner) {
         this.id = id;
         this.winc = winc;
         this.owner = owner;
-        this.wson = wson;
-        this.root = winc.root;
-        this.type = wson.type;
+        this.gson = gson;
+        //this.root = winc.root;
+        //this.type = gson.type;
         //timer.setRepeats(false);
+        alert('exec Com5t');
     }
     
-    /*constructor(wson, owner, winc) {
+    /*constructor(gson, owner, winc) {
         const MAXSIDE = 200;
         const MAXPOINT = 1000;
-        this.wson = (wson);
-        this.id = (wson).id;//идентификатор 
+        this.gson = (gson);
+        this.id = (gson).id;//идентификатор 
         this.owner = owner;//владелец
         this.winc = winc;//главный класс калькуляции   
-        this.layout = (wson).layout;//напрвление расположения
-        this.type = (wson).type;//тип элемента
+        this.layout = (gson).layout;//напрвление расположения
+        this.type = (gson).type;//тип элемента
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
@@ -46,19 +47,19 @@ export class Com5t {
     }
 
     get lengthX() {
-        return (this.id === 0) ? this.winc.width(wson) : this.wson.length;
+        return (this.id === 0) ? this.winc.width(gson) : this.gson.length;
     }
 
     get lengthY() {
-        return (this.id === 0) ? this.wson.height : this.wson.length;
+        return (this.id === 0) ? this.gson.height : this.gson.length;
     }
 
     //Изменение размера
     set lengthX(v) {
 
         if (this.id == 0) {
-            var k = v / this.wson.width; //коэффициент
-            this.wson.width = v;
+            var k = v / this.gson.width; //коэффициент
+            this.gson.width = v;
             this.winc.listArea.forEach(e => {
                 if (e.layout == 'HORIZ') {
                     e.childs.forEach(e2 => { //изменение всех по ширине
@@ -67,8 +68,8 @@ export class Com5t {
                 }
             });
         } else {
-            let k = v / this.wson.length; //коэффициент
-            this.wson.length = v;
+            let k = v / this.gson.length; //коэффициент
+            this.gson.length = v;
             this.childs.forEach(e => {
                 if (e.owner.layout == 'HORIZ' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {
                     e.lengthX = k * e.lengthX; //рекурсия изменение детей
@@ -88,21 +89,21 @@ export class Com5t {
     set lengthY(v) {
 
         if (this.id == 0) {
-            var k = v / this.wson.height; //коэффициент
-            this.wson.height = v;
-            this.wson.heightAdd = k * this.wson.heightAdd;
+            var k = v / this.gson.height; //коэффициент
+            this.gson.height = v;
+            this.gson.heightAdd = k * this.gson.heightAdd;
             this.winc.listArea.forEach(e => {
                 if (e.layout == 'VERT') {
                     e.childs.forEach(e2 => { //изменение всех по высоте
-                        e2.wson.length = k * e2.wson.length;
+                        e2.gson.length = k * e2.gson.length;
                     });
                 }
             });
         } else {
-            let k = v / this.wson.length; //коэффициент            
-            this.wson.length = v;
+            let k = v / this.gson.length; //коэффициент            
+            this.gson.length = v;
             if (this.typeForm() == 'ARCH' || this.typeForm() == 'TRAPEZE') {
-                this.winc.wson.heightAdd = this.winc.wson.height - v;
+                this.winc.gson.heightAdd = this.winc.gson.height - v;
             }
             this.childs.forEach(e => {
                 if (e.owner.layout == 'VERT' && (e.typeForm() == 'AREA' || e.typeForm() == 'STVORKA')) {

@@ -481,7 +481,7 @@ product.redraw = function () {
     let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
     let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
     let cvs = document.querySelector("#cnv");
-    prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.wson, (k, v) => isEmpty(v));
+    prjprodRec[PRJPROD.script] = JSON.stringify(winCalc.gson, (k, v) => isEmpty(v));
 
     winCalc = win.build(cvs, prjprodRec[PRJPROD.script]);
 
@@ -519,7 +519,7 @@ product.scale_new_input = function (layout, lineArea) {
     } else if (layout == "VERT") {
 
         lineArr.length = 0;
-        let length = winCalc.wson.height * winCalc.scale;
+        let length = winCalc.gson.height * winCalc.scale;
         $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
         lineArea.forEach((e, i) => {
 
@@ -734,7 +734,7 @@ product.update_script = function () {
 
     $.ajax({//запишем профиль в серверную базу данных
         url: 'dbset?action=updateScript',
-        data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.wson)})},
+        data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson)})},
         success: function (data) {
             if (data.result != 'ok')
                 dialogMes('Сообщение', "<p>" + data.result);

@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 function printScript(winc) {
-    console.log(JSON.stringify(winc.root.wson, undefined, 4));
+    console.log(JSON.stringify(winc.root.gson, undefined, 4));
 }
 //------------------------------------------------------------------------------
 function taqDeploy(selectors) {
@@ -329,7 +329,8 @@ function createVirtualRec(size, virtualData) {
 }
 //------------------------------------------------------------------------------            
 function findef(key, index, tname) {
-   alert('см. findefs()')
+   alert('см. findefs()');
+   return null;
 }
 //------------------------------------------------------------------------------            
 function findefs(key, index, tname) {
@@ -342,8 +343,8 @@ function findefs(key, index, tname) {
         } else {
             return new Array(40);
         }
-    } catch (error) {
-        console.error("Ошибка: utils.findefs()", error.message);
+    } catch (e) {
+        console.log("Ошибка: utils.findefs(). " + e.message);
     }
 }
 //------------------------------------------------------------------------------    

@@ -3,23 +3,23 @@ import {Com5t} from './Com5t.js';
 
 export class AreaSimple extends Com5t {
 
-constructor(winc, wson, owner) {
-    super(winc, wson.id, wson, owner);
+constructor(winc, gson, owner) {
+    super(winc, gson.id, gson, owner);
         winc.listArea.add(this);
         winc.listAll.add(this);    
 }
 
-/*    constructor(winc, wson, owner) {
+/*    constructor(winc, gson, owner) {
         alrt('new AreaSimple');
-        super(winc, wson, owner);
-        if (wson.form != undefined) {
-            this.form = wson.form;
+        super(winc, gson, owner);
+        if (gson.form != undefined) {
+            this.form = gson.form;
         }
 
         this.childs = new Array(0); //список детей 
 
         //Коробка
-        if (wson.length == undefined && (owner == null || owner == winc.root)) {
+        if (gson.length == undefined && (owner == null || owner == winc.root)) {
             this.dimension(0, 0, winc.width(), winc.height());
 
             //Створка
@@ -28,8 +28,8 @@ constructor(winc, wson, owner) {
 
             //Аrеа
         } else {
-            let height = (owner.layout == "VERT") ? wson.length : owner.height;
-            let width = (owner.layout == "HORIZ") ? wson.length : owner.width;
+            let height = (owner.layout == "VERT") ? gson.length : owner.height;
+            let width = (owner.layout == "HORIZ") ? gson.length : owner.width;
 
             if (owner.childs.length == 0) { //если owner.childs.length == 0 то prevArea искать нет смысла
                 if (owner.layout == "VERT") { //сверху вниз

@@ -114,42 +114,42 @@
 
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
-                        elem.wson.param = (elem.wson.param == undefined) ? {} : elem.wson.param;
+                        elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
 
                         //Стеклопакет
                         if (product.buttonSrc == 'n51') {
-                            elem.wson.param.artglasID = tableRow.id; //запишем профиль в скрипт
+                            elem.gson.param.artglasID = tableRow.id; //запишем профиль в скрипт
                             $("#n51").val(tableRow.code);
                             $("#n52").val(tableRow.name);
 
                             //Ручка
                         } else if (product.buttonSrc == 'n45') {
-                            elem.wson.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
+                            elem.gson.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
                             $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
                             $("#n46").val('');
 
                             //Подвес
                         } else if (product.buttonSrc == 'n49') {
-                            elem.wson.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
+                            elem.gson.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
                             $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
                             $("#n4A").val('');
 
                             //Замок
                         } else if (product.buttonSrc == 'n4B') {
-                            elem.wson.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
+                            elem.gson.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
                             $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
                             $("#n4C").val('');
                         }
 
                         //Запишем скрипт в локальн. бд 
-                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v));
+                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         let winc2 = win.build(winc.cnv, prjprodRec[PRJPROD.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.wson, (k, v) => isEmpty(v))})},
+                            data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => isEmpty(v))})},
                             success: (data) => {
                                 if (data.result != 'ok')
                                     dialogMes('Сообщение', "<p>" + data.result);

@@ -101,8 +101,8 @@
                     dbset.color.vrec = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurn.vrec = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
 
-                }).catch(error => {
-                    dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + error.message);
+                }).catch(e => {
+                    dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
                 });
             });
         </script> 

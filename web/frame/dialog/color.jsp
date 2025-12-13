@@ -126,28 +126,28 @@
                         let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
-                        let param = elem.wson.param;
-                        if (elem.wson.param == undefined) {
-                            elem.wson.param = {};
-                            param = elem.wson.param;
+                        let param = elem.gson.param;
+                        if (elem.gson.param == undefined) {
+                            elem.gson.param = {};
+                            param = elem.gson.param;
                         }
                         if (elem.typeForm() == 'STVORKA_SIDE') {
                             let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-                            if (elem.wson.param[sideLayout] == undefined) {
-                                elem.wson.param[sideLayout] = {};
-                                param = elem.wson.param[sideLayout];
+                            if (elem.gson.param[sideLayout] == undefined) {
+                                elem.gson.param[sideLayout] = {};
+                                param = elem.gson.param[sideLayout];
                             } else {
-                                param = elem.wson.param[sideLayout];
+                                param = elem.gson.param[sideLayout];
                             }
                         }
 
                         //Запишем текстуру в параметр
                         if (product.buttonSrc == 'n14')
-                            winc.wson.color1 = colorRow.id;
+                            winc.gson.color1 = colorRow.id;
                         else if (product.buttonSrc == 'n15')
-                            winc.wson.color2 = colorRow.id;
+                            winc.gson.color2 = colorRow.id;
                         else if (product.buttonSrc == 'n16')
-                            winc.wson.color3 = colorRow.id;
+                            winc.gson.color3 = colorRow.id;
                         else if (product.buttonSrc == 'n33')
                             param.colorID1 = colorRow.id;
                         else if (product.buttonSrc == 'n34')
@@ -155,17 +155,17 @@
                         else if (product.buttonSrc == 'n35')
                             param.colorID3 = colorRow.id;
                         else if (product.buttonSrc == 'n46')
-                            elem.wson.param.colorHandl = colorRow.id;
+                            elem.gson.param.colorHandl = colorRow.id;
                         else if (product.buttonSrc == 'n4A')
-                            elem.wson.param.colorLoop = colorRow.id;
+                            elem.gson.param.colorLoop = colorRow.id;
                         else if (product.buttonSrc == 'n4C')
-                            elem.wson.param.colorLock = colorRow.id;
+                            elem.gson.param.colorLock = colorRow.id;
                         else if (product.buttonSrc == 'n53')
-                            elem.wson.param.colorGlass = colorRow.id;
+                            elem.gson.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
                         let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.wson, (k, v) => isEmpty(v));
+                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[PRJPROD.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 

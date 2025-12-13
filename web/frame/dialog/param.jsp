@@ -37,20 +37,20 @@
                             let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
                             let winc = order.wincalcMap.get(order.prjprodRec[PRJPROD.id]);
                             let titleID1 = paramsRec[PARAMS.params_id];
-                            winc.wson.param = (winc.wson.param == undefined) ? {} : winc.wson.param;
-                            winc.wson.param.ioknaParam = (winc.wson.param.ioknaParam == undefined) ? [] : winc.wson.param.ioknaParam;
-                            for(let i = 0; i < winc.wson.param.ioknaParam.length; ++i) {
+                            winc.gson.param = (winc.gson.param == undefined) ? {} : winc.gson.param;
+                            winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;
+                            for(let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
                                 
-                              let titleID2 = dbset.paramsList.find(rec => winc.wson.param.ioknaParam[i] == rec.list[PARAMS.id])[PARAMS.params_id];
+                              let titleID2 = dbset.paramsList.find(rec => winc.gson.param.ioknaParam[i] == rec.list[PARAMS.id])[PARAMS.params_id];
                               if(titleID1 == titleID2) {
-                                  winc.wson.param.ioknaParam.splice(i, 1);
+                                  winc.gson.param.ioknaParam.splice(i, 1);
                               }
                             }
-                            winc.wson.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
+                            winc.gson.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
                             
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=updateScript',
-                                data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.wson, (k, v) => isEmpty(v))})},
+                                data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => isEmpty(v))})},
                                 success: function (data) {
                                     if (data.result == 'ok') {
                                         winc.root.init_pardef_map();
