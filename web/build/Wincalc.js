@@ -40,30 +40,27 @@ export class Wincalc {
             this.gson = new GsonRoot(this.jsonObj); //объектная модель конструкции 1-го уровня
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
 
-            this.width1 = (this.gson.obj.width1 === undefined) ? this.width(this.gson) : this.gson.obj.width1; //ширина 1 окна
-            this.width2 = this.gson.obj.width2; //ширина 2 окна
-            this.height1 = this.gson.obj.height1; //высота 1 окна
-            this.height2 = (this.gson.obj.height2 === undefined) ? this.height(this.gson) : this.gson.height2; //высота 2 окна
-
-            this.color1Rec = findefs(this.gson.obj.color1, COLOR.id, dbset.color);
-            this.color2Rec = findefs(this.gson.obj.color2, COLOR.id, dbset.color);
-            this.color3Rec = findefs(this.gson.obj.color3, COLOR.id, dbset.color);
+            //Инит конструктива
+            this.nuni = (this.gson.nuni == undefined) ? -3 : this.gson.nuni;
+            this.color1Rec = findefs(this.gson.color1, COLOR.id, dbset.color);
+            this.color2Rec = findefs(this.gson.color2, COLOR.id, dbset.color);
+            this.color3Rec = findefs(this.gson.color3, COLOR.id, dbset.color);
 
             //Главное окно
-            if ('RECTANGL' === this.gson.obj.type) {
+            if ('RECTANGL' === this.gson.type) {
                 this.root = new AreaRectangl(this, this.gson, null);
 
-            } else if ('TRAPEZE' === this.gson.obj.type) {
+            } else if ('TRAPEZE' === this.gson.type) {
                 this.root = new AreaTrapeze(this, this.gson, null);
 
-            } else if ('ARCH' === this.gson.obj.type) {
+            } else if ('ARCH' === this.gson.type) {
                 this.root = new AreaArch(this, this.gson, null);
 
-            } else if ('DOOR' === this.gson.obj.type) {
+            } else if ('DOOR' === this.gson.type) {
                 this.root = new AreaDoor(this, this.gson, null);
             }
             
-            this.creator(); //создадим элементы конструкции       
+            this.creator(this.root, this.gson); //создадим элементы конструкции       
             this.location(); //кальк. коорд. элементов конструкции       
             this.draw(); //прорисовка конструкции
 
@@ -79,30 +76,31 @@ export class Wincalc {
     }
 
     //Цыклическое заполнение root по содержимому gson 
-    creator() {
+    creator(owner, gson) {
+        debugger;
         try {
             let hm = new Map();
-            for (let gs of this.gson.childs) {
-                if (gs.type === "FRAME_SIDE") {
-                    let frm = new ElemFrame(gs, this.owner, this, gs.param);
-                    //owner.frames.set(gs.layout, frm);
+            for (let js of gson.childs) {
+                if (js.type === "BOX_SIDE") {
+                    let frm = new ElemFrame(this, js.id, js, owner);
+                    //owner.frames.set(js.layout, frm);
 
-                } else if (gs.type === "STVORKA") {
-                    //let stv = new AreaStvorka(gs, this.root, this);
+                } else if (js.type === "STVORKA") {
+                    //let stv = new AreaStvorka(js, this.root, this);
                     //this.root.childs.push(stv);
-                   // hm.set(stv, gs);
+                   // hm.set(stv, js);
 
-                } else if (gs.type === "AREA" || gs.type === "ARCH" || gs.type === "TRAPEZE" || gs.type === "TRIANGL" || gs.type === "DOOR") {
-                    //let area = new AreaSimple(gs, this.root, this);
+                } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
+                    //let area = new AreaSimple(js, this.root, this);
                     //this.root.childs.push(area);
-                    //hm.set(area, gs);
+                    //hm.set(area, js);
 
-                } else if (gs.type === "IMPOST" || gs.type === "SHTULP" || gs.type == "STOIKA") {
-                    //let cross = new ElemCross(gs, this.root, this);
+                } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type == "STOIKA") {
+                    //let cross = new ElemCross(js, this.root, this);
                     //this.root.childs.push(cross);
 
-                } else if (gs.type === "GLASS") {
-                    //let glass = new ElemGlass(gs, this.root, this);
+                } else if (js.type === "GLASS") {
+                    //let glass = new ElemGlass(js, this.root, this);
                     //this.root.childs.push(glass);
                 }
             }
@@ -122,42 +120,20 @@ export class Wincalc {
 
     //Рисуем конструкцию
     draw() {
-        this.listArea.filter(el => el.gson.obj.type == 'RECTANGL').forEach((el) => el.pain());
+        this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.pain());
         //Прорисовка рам
-        this.listElem.filter(el => el.gson.obj.type == 'BOX_SIDE').forEach((el) => el.pain());      
+        this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.pain());      
+    }
+    
+    // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
+     width() {
+        //return root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }
 
-    width(gson) {
-        if (arguments.length === 1) {
-            if (gson.obj.width1 === undefined) {
-                return gson.obj.width2;
-            } else if (gson.obj.width2 === undefined) {
-                return gson.obj.width1;
-            } else if (gson.obj.width1 > gson.obj.width2) {
-                return gson.obj.width1;
-            } else {
-                return gson.obj.width2;
-            }
-        } else {
-            return (this.width1 > this.width2) ? this.width1 : this.width2;
-        }
+    height() {
+        //return root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
     }
-
-    height(gson) {
-        if (arguments.length === 1) {
-            if (gson.obj.height1 === undefined) {
-                return gson.obj.height2;
-            } else if (gson.obj.height2 === undefined) {
-                return gson.obj.height1;
-            } else if (gson.obj.height1 > gson.obj.height2) {
-                return gson.obj.height1;
-            } else {
-                return gson.obj.height2;
-            }
-        } else {
-            return (this.height1 > this.height2) ? this.height1 : this.height2;
-        }
-    }
+    // </editor-fold>     
 
 // <editor-fold defaultstate="collapsed" desc="SUPPORT"> 
     arr_of_winc(area) {
