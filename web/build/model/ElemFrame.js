@@ -1,17 +1,16 @@
 
-import {Com5t} from './Com5t.js';
+import {ElemSimple} from './ElemSimple.js';
 
-export class ElemFrame extends Com5t {
+export class ElemFrame extends ElemSimple {
 
     constructor(winc, id, owner, gson, param, layout, type) {
-        super(winc, id, gson, owner);
+        super(winc, gson, owner); //winc, id, gson, owner);
         this.anglCut = [45, 45]; //угол реза
         if (id != undefined) { //если сторона створки
             this.id = id;      //дополнительные параметры
             this.layout = layout;
             this.type = type;
-        }
-
+        }     
         //this.initArtikle(param);
         //this.setLocation(gson, owner, winc, param, id, layout, type);
     }
@@ -115,76 +114,76 @@ export class ElemFrame extends Com5t {
     paint() {
         alert('exec ElemFrame.pain()');
         /*
-        let dh = win.dh_frm;
-        let dh0 = win.dh_frm; //см. winapp
-        let dh1 = win.dh_frm; //см. winapp
-        let dz = 4
-        if (this.owner.typeForm() == "ARCH") {
-            let Y1 = this.winc.height1 - this.winc.height2;
-            let r = this.winc.root.radiusArch;
-
-            if ("BOTT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-
-            } else if ("RIGHT" == this.layout) {
-                let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width() - 2 * dh) / ((r - dh) * 2)));
-                let a = (r - dh) * Math.sin(Math.toRadians(ang2));
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, (r - a), this.y1, this.y2, this.y2 - dh0, this.color2Rec);
-
-            } else if ("TOP" == this.layout) {
-                let r2 = r - win.dh_frm;
-                let ang1 = Math.PI + Math.acos(this.winc.width() / (r * 2));
-                let ang2 = 2 * Math.PI - Math.acos(this.winc.width() / (r * 2));
-                draw_full_arc(this.winc, this.winc.width() / 2, r, r - win.dh_frm / 2, ang1, ang2, win.dh_frm, this.color2Rec);
-                draw_full_arc(this.winc, this.winc.width() / 2, r, r, ang1, ang2, 5);
-                draw_full_arc(this.winc, this.winc.width() / 2, r, r - win.dh_frm, ang1, ang2, 5);
-            } else if ("LEFT" == this.layout) {
-                let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width() - 2 * dh) / ((r - dh) * 2)));
-                let a = (r - dh) * Math.sin(Math.toRadians(ang2));
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, (r - a), this.y2 - dh1, this.y2, this.color2Rec);
-
-            }
-            //draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
-            //draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
-            //draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
-            //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
-
-
-        } else if (this.owner.typeForm() == 'TRAPEZE') {
-            if ('BOTT' == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-
-            } else if ('RIGHT' == this.layout) {
-                let angl = (this.winc.form == 'RIGHT') ? Math.toRadians(90 - this.anglCut[1]) : Math.toRadians(90 - this.anglCut[0]);
-                let dh2 = dh * Math.tan(angl);
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh2, this.y1, this.y2, this.y2 - dh0, this.color2Rec);
-
-            } else if ('TOP' == this.layout) {
-                let anglHoriz = (180 - Math.toDegrees(Math.atan((this.winc.height1 - this.winc.height2) / this.winc.width())));
-                let dy = (win.dh_frm / Math.sin(Math.toRadians(anglHoriz - 90)));
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y2, this.y2 + dy, this.y1 + dy, this.color2Rec);
-
-            } else if ('LEFT' == this.layout) {
-                let angl = Math.toRadians(90 - this.anglCut[0]);
-                let dh2 = dh * Math.tan(angl);
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh2, this.y2 - dh1, this.y2, this.color2Rec);
-            }
-
-        } else {
-            if ("BOTT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-            } else if ("RIGHT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh1, this.y1, this.y2, this.y2 - dh0, this.color2Rec);
-            } else if ("TOP" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh0, this.x1 + dh1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-            } else if ("LEFT" == this.layout) {
-                draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh0, this.y2 - dh1, this.y2, this.color2Rec);
-            }
-            draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
-            draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
-            draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
-            draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
-        }*/
+         let dh = win.dh_frm;
+         let dh0 = win.dh_frm; //см. winapp
+         let dh1 = win.dh_frm; //см. winapp
+         let dz = 4
+         if (this.owner.typeForm() == "ARCH") {
+         let Y1 = this.winc.height1 - this.winc.height2;
+         let r = this.winc.root.radiusArch;
+         
+         if ("BOTT" == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+         
+         } else if ("RIGHT" == this.layout) {
+         let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width() - 2 * dh) / ((r - dh) * 2)));
+         let a = (r - dh) * Math.sin(Math.toRadians(ang2));
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, (r - a), this.y1, this.y2, this.y2 - dh0, this.color2Rec);
+         
+         } else if ("TOP" == this.layout) {
+         let r2 = r - win.dh_frm;
+         let ang1 = Math.PI + Math.acos(this.winc.width() / (r * 2));
+         let ang2 = 2 * Math.PI - Math.acos(this.winc.width() / (r * 2));
+         draw_full_arc(this.winc, this.winc.width() / 2, r, r - win.dh_frm / 2, ang1, ang2, win.dh_frm, this.color2Rec);
+         draw_full_arc(this.winc, this.winc.width() / 2, r, r, ang1, ang2, 5);
+         draw_full_arc(this.winc, this.winc.width() / 2, r, r - win.dh_frm, ang1, ang2, 5);
+         } else if ("LEFT" == this.layout) {
+         let ang2 = 90 - Math.toDegrees(Math.asin((this.winc.width() - 2 * dh) / ((r - dh) * 2)));
+         let a = (r - dh) * Math.sin(Math.toRadians(ang2));
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, (r - a), this.y2 - dh1, this.y2, this.color2Rec);
+         
+         }
+         //draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
+         //draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
+         //draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
+         //draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
+         
+         
+         } else if (this.owner.typeForm() == 'TRAPEZE') {
+         if ('BOTT' == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+         
+         } else if ('RIGHT' == this.layout) {
+         let angl = (this.winc.form == 'RIGHT') ? Math.toRadians(90 - this.anglCut[1]) : Math.toRadians(90 - this.anglCut[0]);
+         let dh2 = dh * Math.tan(angl);
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh2, this.y1, this.y2, this.y2 - dh0, this.color2Rec);
+         
+         } else if ('TOP' == this.layout) {
+         let anglHoriz = (180 - Math.toDegrees(Math.atan((this.winc.height1 - this.winc.height2) / this.winc.width())));
+         let dy = (win.dh_frm / Math.sin(Math.toRadians(anglHoriz - 90)));
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y2, this.y2 + dy, this.y1 + dy, this.color2Rec);
+         
+         } else if ('LEFT' == this.layout) {
+         let angl = Math.toRadians(90 - this.anglCut[0]);
+         let dh2 = dh * Math.tan(angl);
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh2, this.y2 - dh1, this.y2, this.color2Rec);
+         }
+         
+         } else {
+         if ("BOTT" == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1 + dh0, this.x2 - dh1, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+         } else if ("RIGHT" == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1 + dh1, this.y1, this.y2, this.y2 - dh0, this.color2Rec);
+         } else if ("TOP" == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2 - dh0, this.x1 + dh1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+         } else if ("LEFT" == this.layout) {
+         draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1 + dh0, this.y2 - dh1, this.y2, this.color2Rec);
+         }
+         draw_line(this.winc, this.owner.x1 + dz, this.owner.y1 + dz, this.owner.x1 + dh, this.owner.y1 + dh, this.color2Rec);
+         draw_line(this.winc, this.owner.x2 - dz, this.owner.y1 + dz, this.owner.x2 - dh, this.owner.y1 + dh, this.color2Rec);
+         draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
+         draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
+         }*/
     }
 }
 

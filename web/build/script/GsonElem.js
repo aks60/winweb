@@ -39,7 +39,7 @@ export class GsonElem {
     get param() {
         return this.obj.param;
     }
-    set param() {
+    set param(param) {
         this.obj.param = param;
     }
     get type() {

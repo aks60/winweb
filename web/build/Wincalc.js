@@ -77,13 +77,13 @@ export class Wincalc {
 
     //Цыклическое заполнение root по содержимому gson 
     creator(owner, gson) {
-        debugger;
+        //debugger;
         try {
             let hm = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let frm = new ElemFrame(this, js.id, js, owner);
-                    //owner.frames.set(js.layout, frm);
+                    let elem5e = new ElemFrame(this, js.id, js, owner);
+                    this.root.frames.push(elem5e);
 
                 } else if (js.type === "STVORKA") {
                     //let stv = new AreaStvorka(js, this.root, this);
@@ -121,7 +121,7 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.pain());
-        //Прорисовка рам
+        debugger;
         this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.pain());      
     }
     
