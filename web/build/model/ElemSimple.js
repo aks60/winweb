@@ -1,5 +1,5 @@
 
-import {Timer} from '/common/Timer.js';
+import {Timer} from '../../common/Timer.js';
 import {Com5t} from './Com5t.js';
 
 export class ElemSimple extends Com5t {
@@ -12,11 +12,10 @@ export class ElemSimple extends Com5t {
         this.passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, 
         this.delta = 3;
         this.SIZE = 20;
-//        this.timer = new Timer(() => {
-//            alert('exec Timer()');
-//        }, 3000);
-//        this.timer.test();
-        //this.timer.pause();
+        this.timer = new Timer(() => {
+            alert('exec Timer()');
+        }, 3000);
+        this.timer.pause();
         //this.borderColor = Color.BLACK; 
 
         winc.listElem.push(this);

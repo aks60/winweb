@@ -5,7 +5,6 @@ export class GsonElem {
     constructor(jsonObj) {
         this.obj = jsonObj;
         this.owner = null;
-        this.childs = new Array(); //список детей
         //alert("create GsonElem")
     }
 
@@ -32,9 +31,6 @@ export class GsonElem {
     }
     get childs() {
         return this.obj.childs;
-    }
-    set childs(childs) {
-        this.obj.childs = childs;
     }
     get param() {
         return this.obj.param;
