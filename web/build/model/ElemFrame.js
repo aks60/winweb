@@ -5,8 +5,8 @@ export class ElemFrame extends ElemSimple {
 
     constructor(winc, id, ownerId) {
         try {
-            super(winc, id, ownerId); //winc, id, gson, owner);
-            this.initArtikle(param);
+            super(winc, id, ownerId);
+            this.initArtikle();
             this.setLocation();
             
         } catch (e) {
@@ -14,7 +14,7 @@ export class ElemFrame extends ElemSimple {
         }
     }
 
-    initArtikle(param) {
+    initArtikle() {
         try {
             consoleLog('Exec:ElemFrame.initArtikle()');
         } catch (e) {

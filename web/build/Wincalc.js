@@ -117,7 +117,7 @@ export class Wincalc {
 
     //Кальк.коорд. элементов конструкции
     location() {
-        debugger;
+       // debugger;
         try {
             this.listElem.forEach(e => e.initArtikle());
             this.root.setLocation();
