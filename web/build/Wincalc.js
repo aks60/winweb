@@ -1,5 +1,4 @@
 
-import {GsonRoot} from './script/GsonRoot.js';
 import {Com5t} from './model/Com5t.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
@@ -40,12 +39,11 @@ export class Wincalc {
             for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
                 el.length = 0;
             }
-            this.jsonObj = JSON.parse(script);      //объект калькуляции
-            debugger;
-            this.gson = new GsonRoot(this.jsonObj); //объектная модель конструкции 1-го уровня
+            this.gson = JSON.parse(script);      //объектная модель конструкции
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
 
             //Инит конструктива
+            this.id = this.gson.id;
             this.nuni = (this.gson.nuni == undefined) ? -3 : this.gson.nuni;
             this.color1Rec = findefs(this.gson.color1, COLOR.id, dbset.color);
             this.color2Rec = findefs(this.gson.color2, COLOR.id, dbset.color);
@@ -53,16 +51,16 @@ export class Wincalc {
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
-                this.root = new AreaRectangl(this, this.gson, null);
+                this.root = new AreaRectangl(this, this.id, this.id);
 
             } else if ('TRAPEZE' === this.gson.type) {
-                this.root = new AreaTrapeze(this, this.gson, null);
+                this.root = new AreaTrapeze(this, this.id, this.id);
 
             } else if ('ARCH' === this.gson.type) {
-                this.root = new AreaArch(this, this.gson, null);
+                this.root = new AreaArch(this, this.id, this.id);
 
             } else if ('DOOR' === this.gson.type) {
-                this.root = new AreaDoor(this, this.gson, null);
+                this.root = new AreaDoor(this, this.id, this.id);
             }
 
             this.creator(this.root, this.gson); //создадим элементы конструкции       
@@ -84,8 +82,9 @@ export class Wincalc {
             let hm = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let elem5e = new ElemFrame(this, js.id, owner, js);
+                    let elem5e = new ElemFrame(this, js.id, owner.id);
                     this.root.frames.push(elem5e);
+                    hm.set(elem5e, js);
 
                 } else if (js.type === "STVORKA") {
                     //let stv = new AreaStvorka(js, this.root, this);
@@ -151,6 +150,31 @@ export class Wincalc {
         } catch (e) {
             errorLog('Error:Wincalc.draw() ' + e.message);
         }
+    }
+
+    //console.log(findJson(7));
+    findJson(id) {
+        let obj = {}, data = this.gson;
+        
+        let recursive = (data) => {
+            if (id == data.id) {
+                obj = data;
+            }
+            if (typeof data === 'object' && data !== null) {
+                // Если это массив
+                if (Array.isArray(data)) {
+                    data.forEach((item, index) => {            
+                        recursive(item); //рекурсивный вызов
+                    });
+                } else { // Если это объект
+                    Object.keys(data).forEach(key => {
+                        recursive(data[key]); //рекурсивный вызов
+                    });
+                }
+            }
+        }
+        recursive(data);
+        return obj;
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 

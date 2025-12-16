@@ -368,3 +368,23 @@ function errorLog(mes) {
    alert(mes); 
 }
 //------------------------------------------------------------------------------
+function traverseJson(data) {
+    if (typeof data === 'object' && data !== null) {
+        // Если это массив
+        if (Array.isArray(data)) {
+            data.forEach((item, index) => {
+                console.log(`Массив, индекс ${index}:`, item);
+                traverseJson(item); // Рекурсивный вызов
+            });
+        } else { // Если это объект
+            Object.keys(data).forEach(key => {
+                console.log(`Ключ: ${key}, Значение: ${data[key]}`);
+                traverseJson(data[key]); // Рекурсивный вызов
+            });
+        }
+    } //else {
+        // Это примитивное значение (строка, число, null, boolean)
+       // console.log('Примитивное значение:', data);
+    //}
+}
+//------------------------------------------------------------------------------

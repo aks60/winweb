@@ -3,17 +3,12 @@ import {ElemSimple} from './ElemSimple.js';
 
 export class ElemFrame extends ElemSimple {
 
-    constructor(winc, id, owner, gson, param, layout, type) {
+    constructor(winc, id, ownerId) {
         try {
-            super(winc, gson, owner); //winc, id, gson, owner);
-            this.anglCut = [45, 45]; //угол реза
-            if (id != undefined) { //если сторона створки
-                this.id = id;      //дополнительные параметры
-                this.layout = layout;
-                this.type = type;
-            }
+            super(winc, id, ownerId); //winc, id, gson, owner);
             this.initArtikle(param);
-            this.setLocation(gson, owner, winc, param, id, layout, type);
+            this.setLocation();
+            
         } catch (e) {
             errorLog('Error:ElemFrame.constructor() ' + e.message);
         }

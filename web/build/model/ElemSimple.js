@@ -4,8 +4,8 @@ import {Com5t} from './Com5t.js';
 
 export class ElemSimple extends Com5t {
 
-    constructor(winc, gson, owner) {
-        super(winc, gson.id, gson, owner);
+    constructor(winc, id, ownerId) {
+        super(winc, id, ownerId);
 
         this.betweenHoriz = [0, 0]; //угол между векторами 
         this.pointPress = null;
