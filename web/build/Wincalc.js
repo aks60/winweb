@@ -26,6 +26,7 @@ export class Wincalc {
             this.listJoin = new Array(); //список соед.
             this.listAll = new Array();  //список всех компонентов (area + elem)
             this.listKit = new Array();  //комплектация
+            this.gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000));
         } catch (e) {
             errorLog('Error:Wincalc.constructor() ' + e.message);
     }

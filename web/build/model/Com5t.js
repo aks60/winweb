@@ -16,12 +16,12 @@ export class Com5t {
     get id() {
         return this.gson.id;
     }
-//    get ownerId() {
-//        return this.ownerId;
-//    }
-//    set(ownerId) {
-//        this.ownerId = ownerId;
-//    }
+    get x1() {
+      return this.gson.x1; 
+    }
+    get y1() {
+      return this.gson.y1; 
+    }
     get childs() {
         return this.gson.childs;
     }

@@ -13,9 +13,12 @@ export class AreaRectangl extends AreaSimple {
 
     setLocation() {
         try {
-            //debugger;
+            debugger;
             let cooBox = new Array;
-            var OBJ08 = new jsts.geom.Coordinate(10.0, 20.0, 5.0);
+            this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
+            cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
+
+            let geoShell = this.winc.gf.createPolygon(cooBox);
 
             consoleLog('Exec:AreaRectangl.setLocation()');
         } catch (e) {
