@@ -59,7 +59,7 @@ kits.insert2_table = function (table) {
         $('#dialog-dic').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
-        console.error("Ошибка: kits.insert2_table() " + e.message);
+        console.error('Error: kits.insert2_table() ' + e.message);
     }
 }
 //------------  Редактирования строки таблицы  ---------------------------------
@@ -172,7 +172,7 @@ kits.artikl_to_kit = function (btnSrc) {
         $('#dialog-dic').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
-        console.error("Ошибка: kits.artikl_to_kit() " + e.message);
+        console.error('Error: kits.artikl_to_kit() ' + e.message);
     }
 }
 //-----------------------  Заполнение  -----------------------------------------
@@ -206,7 +206,7 @@ kits.color_to_kit = function (btnSrc) {
         $('#dialog-dic').load('frame/dialog/color.jsp');
 
     } catch (e) {
-        console.error("Ошибка: kits.color_to_kit() " + e.message);
+        console.error('Error: kits.color_to_kit() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------

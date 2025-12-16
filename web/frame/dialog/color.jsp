@@ -222,7 +222,7 @@
                         }
                     }
                 } catch (e) {
-                    console.error("Ошибка: color.rec_dialog_save() " + e.message);
+                    console.error('Error: color.rec_dialog_save() ' + e.message);
                 }
             }
 //------------------------------------------------------------------------------

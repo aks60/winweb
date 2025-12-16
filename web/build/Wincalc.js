@@ -18,18 +18,22 @@ win.build = function (canvas, script) {
 export class Wincalc {
 
     constructor(canvas = null) {
-        this.cnv = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.mapPardef = new Map();  //пар. по умолчанию + наложенные пар. клиента
-        this.listArea = new Array(); //список ареа.
-        this.listElem = new Array(); //список элем.
-        this.listJoin = new Array(); //список соед.
-        this.listAll = new Array();  //список всех компонентов (area + elem)
-        this.listKit = new Array();  //комплектация
+        try {
+            this.cnv = canvas;
+            this.ctx = canvas.getContext('2d');
+            this.mapPardef = new Map();  //пар. по умолчанию + наложенные пар. клиента
+            this.listArea = new Array(); //список ареа.
+            this.listElem = new Array(); //список элем.
+            this.listJoin = new Array(); //список соед.
+            this.listAll = new Array();  //список всех компонентов (area + elem)
+            this.listKit = new Array();  //комплектация
+        } catch (e) {
+            errorLog('Error:Wincalc.constructor() ' + e.message);
+    }
     }
 
     build(script) {
-        //try {
+        try {
             //Инит свойств
             this.nppID = 0;
             this.mapPardef.clear();
@@ -37,6 +41,7 @@ export class Wincalc {
                 el.length = 0;
             }
             this.jsonObj = JSON.parse(script);      //объект калькуляции
+            debugger;
             this.gson = new GsonRoot(this.jsonObj); //объектная модель конструкции 1-го уровня
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
 
@@ -59,20 +64,17 @@ export class Wincalc {
             } else if ('DOOR' === this.gson.type) {
                 this.root = new AreaDoor(this, this.gson, null);
             }
-            
+
             this.creator(this.root, this.gson); //создадим элементы конструкции       
             this.location(); //кальк. коорд. элементов конструкции       
             this.draw(); //прорисовка конструкции
-
-            //this.arr_of_winc(this.root);
-            //draw_elements(this); //рисуем конструкцию 
-
             return this;
 
             //console.log(JSON.stringify(w.root.gson, undefined, 4));
-        //} catch (e) {
-        //    alert('Ошибка:Wincalc.build(). ' + e.message);
-        //}
+            consoleLog('Exec:Wincalc.build()');
+        } catch (e) {
+            errorLog('Error:Wincalc.build(). ' + e.message);
+        }
     }
 
     //Цыклическое заполнение root по содержимому gson 
@@ -82,13 +84,13 @@ export class Wincalc {
             let hm = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let elem5e = new ElemFrame(this, js.id, js, owner);
+                    let elem5e = new ElemFrame(this, js.id, owner, js);
                     this.root.frames.push(elem5e);
 
                 } else if (js.type === "STVORKA") {
                     //let stv = new AreaStvorka(js, this.root, this);
                     //this.root.childs.push(stv);
-                   // hm.set(stv, js);
+                    // hm.set(stv, js);
 
                 } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
                     //let area = new AreaSimple(js, this.root, this);
@@ -108,25 +110,51 @@ export class Wincalc {
             //for (let k of hm.keys()) {
             //    this.creator(k, hm.get(k));
             //}
+            consoleLog('Exec:Wincalc.creator()');
         } catch (e) {
-            alert('Ошибка:Wincalc.creator() ' + e.message);
+            errorLog('Error:Wincalc.creator() ' + e.message);
         }
     }
 
     //Кальк.коорд. элементов конструкции
     location() {
+        debugger;
+        try {
+            this.listElem.forEach(e => e.initArtikle());
+            this.root.setLocation();
 
+            for (let elem of this.listElem) {
+                if (elem instanceof ElemFrame) {
+                    elem.setLocation();
+                } //else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {
+                //  elem.setLocation();
+                //}
+                for (let area of this.listArea) {
+                    if (area.id != 0.0) {
+                        if (area instanceof AreaStvorka == false && area.owner instanceof AreaStvorka == false) {
+                            area.setLocation();
+                        }
+                    }
+                }
+            }
+            consoleLog('Exec:Wincalc.location()');
+        } catch (e) {
+            errorLog('Error:Wincalc.location() ' + e.message);
+        }
     }
 
     //Рисуем конструкцию
     draw() {
-        this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.pain());
-        debugger;
-        this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.pain());      
+        try {
+            this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.paint());
+            this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.paint());
+        } catch (e) {
+            errorLog('Error:Wincalc.draw() ' + e.message);
+        }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
-     width() {
+    width() {
         //return root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }
 

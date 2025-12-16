@@ -5,6 +5,7 @@ export class GsonElem {
     constructor(jsonObj) {
         this.obj = jsonObj;
         this.owner = null;
+        this.x1 = null, this.y1 = null, this.h = null, this.x2 = null, this.y2 = null;
         //alert("create GsonElem")
     }
 
@@ -57,7 +58,7 @@ export class GsonElem {
                 }
             });
         } catch (e) {
-            console.log("Ошибка:GeoElem.setOwnerAndForm() " + e);
+            errorLog('Error:GeoElem.setOwnerAndForm()  ' + e.message);
         }
     }
 }

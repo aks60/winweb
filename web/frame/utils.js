@@ -344,7 +344,7 @@ function findefs(key, index, tname) {
             return new Array(40);
         }
     } catch (e) {
-        console.log("Ошибка: utils.findefs(). " + e.message);
+        console.log('Error: utils.findefs() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------    
@@ -360,4 +360,11 @@ Math.toDegrees = function (x) {
 Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
-//------------------------------------------------------------------------------            
+//------------------------------------------------------------------------------ 
+function consoleLog(mes) {
+    //console.log(mes);
+}
+function errorLog(mes) {
+   alert(mes); 
+}
+//------------------------------------------------------------------------------

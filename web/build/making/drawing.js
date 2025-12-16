@@ -109,7 +109,7 @@ export function draw_elements(winc) {
 
         ctx.restore();
     } catch (e) {
-        console.error('Ошибка: drawing.draw_elements() ' + e.message);
+        console.error('Error: drawing.draw_elements() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------

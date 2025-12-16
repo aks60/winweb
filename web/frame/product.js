@@ -151,7 +151,7 @@ product.server_to_fields = function () {
             }
         }
     } catch (e) {
-        console.error("Ошибка: product.server_to_fields() " + e.message);
+        console.error('Error: product.server_to_fields() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -300,7 +300,7 @@ product.color_to_windows = function (btnSrc) {
     $('#dialog-dic').load('frame/dialog/color.jsp');
 
     //} catch (e) {
-    //    console.error("Ошибка: product.color_to_windows(): " + e.message);
+    //    console.error('Error:product.color_to_windows() ' + e.message);
     //}
 }
 //------------------------------------------------------------------------------
@@ -332,7 +332,7 @@ product.sysprof_to_frame = function (btnSrc) {
         $('#dialog-dic').load('frame/dialog/sysprof.jsp');
 
     } catch (e) {
-        console.error("Ошибка: product.sysprof_to_frame() " + e.message);
+        console.error('Error: product.sysprof_to_frame() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ product.color_to_element = function (btnSrc) {
         $('#dialog-dic').load('frame/dialog/color.jsp');
 
     } catch (e) {
-        console.error("Ошибка: product.color_to_element() " + e.message);
+        console.error('Error: product.color_to_element() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------
@@ -436,7 +436,7 @@ product.artikl_to_glass = function (btnSrc) {
 
         }
     } catch (e) {
-        console.error("Ошибка: product.artikl_to_glass() " + e.message);
+        console.error('Error: product.artikl_to_glass() ' + e.message);
     }
 }
 //==============================================================================

@@ -34,7 +34,7 @@ export class ElemSimple extends Com5t {
 
     }
 
-    pain() {
+    paint() {
 
     }
 

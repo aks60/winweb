@@ -13,6 +13,7 @@ export class Com5t {
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
+        //dimension(x1, y1, x2, y2);
     }
 
     dimension(x1, y1, x2, y2) {

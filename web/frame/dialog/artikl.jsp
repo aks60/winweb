@@ -210,7 +210,7 @@
                     }
 
                 } catch (e) {
-                    console.error("Ошибка: artikl.rec_dialog_save() " + e.message);
+                    console.error('Error: artikl.rec_dialog_save() ' + e.message);
                 }
             }
 //------------------------------------------------------------------------------
