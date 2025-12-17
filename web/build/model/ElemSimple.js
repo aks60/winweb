@@ -40,7 +40,8 @@ export class ElemSimple extends Com5t {
 
     layout() {
         try {
-//            double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
+            debugger;
+            //const anglHor = UGeo.anglHor(this.gson.x1, this.gson.y1, this.gson.x2, this.gson.y2);
 //
 //            if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
 //                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
@@ -57,7 +58,7 @@ export class ElemSimple extends Com5t {
         } catch (e) {
             errorLog("Ошибка:ElemSimple.layout() " + e.message);
         }
-//        return Layout.ANY;
+        return 'ANY';
     }
 }
 
