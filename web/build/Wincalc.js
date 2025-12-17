@@ -35,9 +35,6 @@ export class Wincalc {
 
     build(script) {
         try {
-        debugger;
-        let o2 = UGeo.anglHor(10, 100, 5, 50);
-        
             //Инит свойств
             this.nppID = 0;
             this.mapPardef.clear();
@@ -73,8 +70,6 @@ export class Wincalc {
             this.draw(); //прорисовка конструкции
             return this;
 
-            //console.log(JSON.stringify(w.root.gson, undefined, 4));
-            consoleLog('Exec:Wincalc.build()');
         } catch (e) {
             errorLog('Error:Wincalc.build(). ' + e.message);
         }
@@ -113,7 +108,6 @@ export class Wincalc {
             //for (let k of hm.keys()) {
             //    this.creator(k, hm.get(k));
             //}
-            consoleLog('Exec:Wincalc.creator()');
         } catch (e) {
             errorLog('Error:Wincalc.creator() ' + e.message);
         }
@@ -121,7 +115,6 @@ export class Wincalc {
 
     //Кальк.коорд. элементов конструкции
     location() {
-        // debugger;
         try {
             this.listElem.forEach(e => e.initArtikle());
             this.root.setLocation();
@@ -140,7 +133,6 @@ export class Wincalc {
                     }
                 }
             }
-            consoleLog('Exec:Wincalc.location()');
         } catch (e) {
             errorLog('Error:Wincalc.location() ' + e.message);
         }

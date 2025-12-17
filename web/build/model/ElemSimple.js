@@ -39,7 +39,7 @@ export class ElemSimple extends Com5t {
     }
 
     layout() {
-//        try {
+        try {
 //            double anglHor = UGeo.anglHor(x1(), y1(), x2(), y2());
 //
 //            if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
@@ -54,9 +54,9 @@ export class ElemSimple extends Com5t {
 //            } else if (anglHor >= 225 && anglHor <= 315) {
 //                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
 //            }
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:ElemSimple.layout() " + e);
-//        }
+        } catch (e) {
+            errorLog("Ошибка:ElemSimple.layout() " + e.message);
+        }
 //        return Layout.ANY;
     }
 }

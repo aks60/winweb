@@ -19,6 +19,7 @@
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
         <script type="text/javascript" src="lib-js/jsts-2.12.1/jsts-min.js"></script>
+        
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
 
@@ -81,6 +82,7 @@
             //jstsTest();
 
             $("#outbody").load('frame/login.jsp', function () {
+                login.user_connect();                
                 Promise.all([
                     $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
                     $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),

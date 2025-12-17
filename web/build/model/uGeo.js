@@ -47,11 +47,7 @@ UGeo.findJson = (id, data) => {
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
-    let o1 = new jsts.geom.Coordinate(x1, y1);
-    let o2 = new jsts.geom.Coordinate(x2, y2);
-    let o3 = jsts.algorithm.Angle.angle(o1, o2);
-    
-    let ang = UGeo.radToDeg(jsts.algoritm.Angle.angle(new jsts.geom.Coordinate(x1, y1), new jsts.geom.Coordinate(x2, y2)));
+    let ang = UGeo.radToDeg(jsts.algorithm.Angle.angle(new jsts.geom.Coordinate(x1, y1), new jsts.geom.Coordinate(x2, y2)));
     return (ang > 0) ? 360 - ang : Math.abs(ang);
 };
 UGeo.degToRad = (degrees) => {

@@ -8,8 +8,6 @@
 
 export function jstsTest() {
     try {
-        debugger;
-
         var OBJ03 = new jsts.io.GeoJSONReader();
         var OBJ04 = new jsts.geom.Location();
         var OBJ06 = new jsts.operation.buffer.BufferParameters();

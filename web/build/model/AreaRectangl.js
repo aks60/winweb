@@ -17,7 +17,6 @@ export class AreaRectangl extends AreaSimple {
 
     setLocation() {
         try {
-            //debugger;
             let cooBox = new Array;
             this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
             cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
@@ -25,7 +24,6 @@ export class AreaRectangl extends AreaSimple {
             let geoShell = this.winc.gf.createPolygon(cooBox);
             //let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, -6, 1);
 
-            consoleLog('Exec:AreaRectangl.setLocation()');
         } catch (e) {
             errorLog('Error:AreaRectangl.setLocation() ' + e.message);
         }
@@ -33,7 +31,6 @@ export class AreaRectangl extends AreaSimple {
 
     paint() {
         try {
-            //alert('Exec:AreaRectangl.paint()');
             consoleLog('Exec:AreaRectangl.paint()');
         } catch (e) {
             errorLog('Error:AreaRectangl.paint() ' + e.message);

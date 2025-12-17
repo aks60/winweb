@@ -30,7 +30,6 @@ export class ElemFrame extends ElemSimple {
                 }
             }
 
-            consoleLog('Exec:ElemFrame.initArtikle()');
         } catch (e) {
             errorLog('Error:ElemFrame.initArtikle() ' + e.message);
         }

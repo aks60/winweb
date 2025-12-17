@@ -20,15 +20,7 @@
                 $("#btn2").focus();
                 $(window).bind('resize', () => login.resize()).trigger('resize');
                 $("button").button();
-
-                $('#pan1 .password').val('masterkey')
-                //$('#pan1 .login').val('admin');            ;
-                $('#pan1 .login').val('dealer');
             });
-            window.onload = function () {
-                alert("LOGIN");
-                //login.user_connect();
-            };
         </script>         
     </head>
     <body>
@@ -49,11 +41,11 @@
                         <table height="80" width="340">
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input class="login" placeholder='Введите логин' value=''  type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value='dealer'  type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль пользователя:</td>
-                                <td><input class="password" placeholder='Введите пароль' value='' type='password' autocomplete='username' size='16'></td>
+                                <td><input class="password" placeholder='Введите пароль' value='masterkey' type='password' autocomplete='username' size='16'></td>
                             </tr>
                             <td></td>
                             <td>
