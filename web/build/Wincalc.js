@@ -80,7 +80,7 @@ export class Wincalc {
     //Цыклическое заполнение root по содержимому gson 
     creator(owner, gson) {
         debugger;
-        let o1 = UGeo.degToRad(180);
+        let o2 = UGeo.anglHor(10, 100, 5, 50);
         try {
             let hm = new Map();
             for (let js of gson.childs) {
@@ -120,7 +120,7 @@ export class Wincalc {
 
     //Кальк.коорд. элементов конструкции
     location() {
-       // debugger;
+        // debugger;
         try {
             this.listElem.forEach(e => e.initArtikle());
             this.root.setLocation();

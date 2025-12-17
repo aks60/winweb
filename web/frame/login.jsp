@@ -7,13 +7,6 @@
         <title>Login</title>
 
         <script type="text/javascript">
-            //системные свойства               
-//            $.ajax({
-//                url: 'login?action=property',
-//                success: function (data) {
-//                }
-//            });
-
             login.resize = function () {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 54);
@@ -27,12 +20,12 @@
                 $("#btn2").focus();
                 $(window).bind('resize', () => login.resize()).trigger('resize');
                 $("button").button();
-            });
 
-            $('#pan1 .password').val('masterkey')
-            //$('#pan1 .login').val('admin');            ;
-            $('#pan1 .login').val('dealer');
-            //login.user_connect();
+                $('#pan1 .password').val('masterkey')
+                //$('#pan1 .login').val('admin');            ;
+                $('#pan1 .login').val('dealer');
+                login.user_connect();
+            });
         </script>         
     </head>
     <body>
