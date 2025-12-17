@@ -30,11 +30,14 @@ export class Wincalc {
             this.gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000));
         } catch (e) {
             errorLog('Error:Wincalc.constructor() ' + e.message);
-    }
+        }
     }
 
     build(script) {
         try {
+        debugger;
+        let o2 = UGeo.anglHor(10, 100, 5, 50);
+        
             //Инит свойств
             this.nppID = 0;
             this.mapPardef.clear();
@@ -79,8 +82,6 @@ export class Wincalc {
 
     //Цыклическое заполнение root по содержимому gson 
     creator(owner, gson) {
-        debugger;
-        let o2 = UGeo.anglHor(10, 100, 5, 50);
         try {
             let hm = new Map();
             for (let js of gson.childs) {
