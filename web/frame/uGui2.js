@@ -344,7 +344,7 @@ function findefs(key, index, tname) {
             return new Array(40);
         }
     } catch (e) {
-        console.log('Error: utils.findefs() ' + e.message);
+        console.log('Error: uGui.findefs() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------    
