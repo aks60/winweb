@@ -93,7 +93,7 @@ export class Wincalc {
                     // hm.set(stv, js);
 
                 } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
-                    let area = new AreaSimple(js, this.root, this);
+                    //let area = new AreaSimple(js, this.root, this);
                     //this.root.childs.push(area);
                     //hm.set(area, js);
 
