@@ -8,7 +8,7 @@ order.get_winc = function () {
 }
 //-----------------  Инициализация таблицы  ------------------------------------
 order.init_table = function (table1, table2) {
-    //debugger;
+    debugger;
     table1.jqGrid({
         datatype: "local",
         gridview: true,

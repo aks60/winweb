@@ -24,8 +24,11 @@
                 $('#pan1 .password').val('masterkey')
                 //$('#pan1 .login').val('admin');            ;
                 $('#pan1 .login').val('dealer');
-                login.user_connect();
             });
+            window.onload = function () {
+                alert("LOGIN");
+                //login.user_connect();
+            };
         </script>         
     </head>
     <body>

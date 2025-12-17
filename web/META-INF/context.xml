@@ -9,6 +9,7 @@
         url="jdbc:firebirdsql://localhost:3050/C:\\Okna\\fbase\\bimax.fdb?encoding=win1251"
         columnLabelForName="true"
         defaultAutoCommit="false"
+        validationQuery="SELECT 'NOW' from RDB$DATABASE"
         maxActive="100"
         maxIdle="3"
         maxWait="10000"
