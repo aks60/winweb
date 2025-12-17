@@ -9,6 +9,8 @@ export class AreaSimple extends Com5t {
             winc.listArea.push(this);
             winc.listAll.push(this);
             this.frames = new Array(); //список рам 
+            this.childs = new Array(); //дети
+            this.listenerPassEdit = null; //для прорисовки точек движения сегментов
         } catch (e) {
             errorLog('Error:AreaSimple.constructor() ' + e.message);
         }

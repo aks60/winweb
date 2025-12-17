@@ -1,4 +1,5 @@
 
+import {isValidColor} from './UGeo.js';
 import {ElemSimple} from './ElemSimple.js';
 
 export class ElemFrame extends ElemSimple {
@@ -15,7 +16,15 @@ export class ElemFrame extends ElemSimple {
     }
 
     initArtikle() {
-        try {
+        try {      
+            this.colorID1 = isValidColor(this.gson.param, 'colorID1', this.winc.colorID1);
+            this.colorID2 = isValidColor(this.gson.param, 'colorID2', this.winc.colorID2);
+            this.colorID3 = isValidColor(this.gson.param, 'colorID3', this.winc.colorID3);
+
+            this.sysprofRec = this.gson.param['sysprofID'];
+            //if(this.sysprofRec === undefined) this.sysprofRec = this.owner.sysprofRec;  
+            
+            
             consoleLog('Exec:ElemFrame.initArtikle()');
         } catch (e) {
             errorLog('Error:ElemFrame.initArtikle() ' + e.message);
