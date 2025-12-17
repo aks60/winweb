@@ -1,12 +1,15 @@
 
 import {AreaSimple} from './AreaSimple.js';
-import {bufferGeometry} from './bufferGeometry.js';
+import {UGeo} from './uGeo.js';
 
 export class AreaRectangl extends AreaSimple {
 
-    constructor(winc, id, ownerId) {
+    constructor(winc, gson, owner) {
         try {
-            super(winc, id, ownerId);
+            super(winc, gson, owner);
+            if (owner === null)
+                this.owner = this;
+            
         } catch (e) {
             errorLog('Error:AreaRectangl.constructor() ' + e.message);
         }
@@ -14,13 +17,13 @@ export class AreaRectangl extends AreaSimple {
 
     setLocation() {
         try {
-            debugger;
+            //debugger;
             let cooBox = new Array;
             this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
             cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
-            
+
             let geoShell = this.winc.gf.createPolygon(cooBox);
-            let geoInner = bufferGeometry(geoShell, this.winc.listElem, -6, 1);
+            //let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, -6, 1);
 
             consoleLog('Exec:AreaRectangl.setLocation()');
         } catch (e) {

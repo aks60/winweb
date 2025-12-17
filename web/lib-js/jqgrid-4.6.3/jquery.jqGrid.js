@@ -5400,7 +5400,7 @@ var xmlJsonClass = {
 		return v;
 	};
 	$.fmatter.util = {
-		// Taken from YAHOO utils
+		// Taken from YAHOO uGui
 		NumberFormat : function(nData,opts) {
 			if(!$.fmatter.isNumber(nData)) {
 				nData *= 1;

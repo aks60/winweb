@@ -4,31 +4,12 @@ export class Com5t {
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
 
-    constructor(winc, id, ownerId) {
+    constructor(winc, gson, owner) {
         this.winc = winc;
-        this.ownerId = ownerId;
-        this.gson = winc.findJson(id);
+        this.owner = owner; //владелец
+        this.gson = gson;
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
     }   
-
-    get id() {
-        return this.gson.id;
-    }
-    get x1() {
-      return this.gson.x1; 
-    }
-    get y1() {
-      return this.gson.y1; 
-    }
-    get childs() {
-        return this.gson.childs;
-    }
-    get param() {
-        return this.gson.param;
-    }
-    get type() {
-        return this.gson.type;
-    }
 }

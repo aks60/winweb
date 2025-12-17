@@ -3,9 +3,9 @@ import {Com5t} from './Com5t.js';
 
 export class AreaSimple extends Com5t {
 
-    constructor(winc, id, ownerId) {
+    constructor(winc, gson, owner) {
         try {
-            super(winc, id, ownerId);
+            super(winc, gson, owner);
             winc.listArea.push(this);
             winc.listAll.push(this);
             this.frames = new Array(); //список рам 

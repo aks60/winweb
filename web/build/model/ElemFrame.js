@@ -1,30 +1,35 @@
 
-import {isValidColor} from './UGeo.js';
+import {UGeo} from './uGeo.js';
 import {ElemSimple} from './ElemSimple.js';
 
 export class ElemFrame extends ElemSimple {
 
-    constructor(winc, id, ownerId) {
+    constructor(winc, gson, owner) {
         try {
-            super(winc, id, ownerId);
+            super(winc, gson, owner);
             this.initArtikle();
             this.setLocation();
-            
+
         } catch (e) {
             errorLog('Error:ElemFrame.constructor() ' + e.message);
         }
     }
 
     initArtikle() {
-        try {      
-            this.colorID1 = isValidColor(this.gson.param, 'colorID1', this.winc.colorID1);
-            this.colorID2 = isValidColor(this.gson.param, 'colorID2', this.winc.colorID2);
-            this.colorID3 = isValidColor(this.gson.param, 'colorID3', this.winc.colorID3);
+        try {
+            this.colorID1 = UGeo.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
+            this.colorID2 = UGeo.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
+            this.colorID3 = UGeo.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
 
-            this.sysprofRec = this.gson.param['sysprofID'];
-            //if(this.sysprofRec === undefined) this.sysprofRec = this.owner.sysprofRec;  
-            
-            
+            this.sysprofRec = UGeo.isValidJson(this.gson.param, 'sysprofID', null);
+            if (this.owner.sysprofRec !== undefined)
+                this.sysprofRec = this.owner.sysprofRec;
+            else {
+                if ('BOTT' === this.layout()) {
+                    this.sysprofRec = null; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
+                }
+            }
+
             consoleLog('Exec:ElemFrame.initArtikle()');
         } catch (e) {
             errorLog('Error:ElemFrame.initArtikle() ' + e.message);

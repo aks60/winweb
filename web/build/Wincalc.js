@@ -1,4 +1,5 @@
 
+import {UGeo} from './model/uGeo.js';
 import {Com5t} from './model/Com5t.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
@@ -52,16 +53,16 @@ export class Wincalc {
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
-                this.root = new AreaRectangl(this, this.id, this.id);
+                this.root = new AreaRectangl(this, this.gson, null);
 
             } else if ('TRAPEZE' === this.gson.type) {
-                this.root = new AreaTrapeze(this, this.id, this.id);
+                this.root = new AreaTrapeze(this, this.gson, null);
 
             } else if ('ARCH' === this.gson.type) {
-                this.root = new AreaArch(this, this.id, this.id);
+                this.root = new AreaArch(this, this.gson, null);
 
             } else if ('DOOR' === this.gson.type) {
-                this.root = new AreaDoor(this, this.id, this.id);
+                this.root = new AreaDoor(this, this.gson, null);
             }
 
             this.creator(this.root, this.gson); //создадим элементы конструкции       
@@ -78,12 +79,13 @@ export class Wincalc {
 
     //Цыклическое заполнение root по содержимому gson 
     creator(owner, gson) {
-        //debugger;
+        debugger;
+        let o1 = UGeo.degToRad(180);
         try {
             let hm = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let elem5e = new ElemFrame(this, js.id, owner.id);
+                    let elem5e = new ElemFrame(this, js, owner);
                     this.root.frames.push(elem5e);
                     hm.set(elem5e, js);
 
@@ -152,32 +154,6 @@ export class Wincalc {
             errorLog('Error:Wincalc.draw() ' + e.message);
         }
     }
-
-    //console.log(findJson(7));
-    findJson(id) {
-        let obj = {}, data = this.gson;
-        
-        let recursive = (data) => {
-            if (id == data.id) {
-                obj = data;
-            }
-            if (typeof data === 'object' && data !== null) {
-                // Если это массив
-                if (Array.isArray(data)) {
-                    data.forEach((item, index) => {            
-                        recursive(item); //рекурсивный вызов
-                    });
-                } else { // Если это объект
-                    Object.keys(data).forEach(key => {
-                        recursive(data[key]); //рекурсивный вызов
-                    });
-                }
-            }
-        }
-        recursive(data);
-        return obj;
-    }
-
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     width() {
         //return root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
