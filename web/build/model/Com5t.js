@@ -11,5 +11,17 @@ export class Com5t {
         this.color1Rec = winc.color1Rec;
         this.color2Rec = winc.color2Rec;
         this.color3Rec = winc.color3Rec;
-    }   
+    }
+    get x1() {
+        return this.gson.x1;
+    }
+    get y1() {
+        return this.gson.y1;
+    }
+    get x2() {
+        return this.gson.x2;
+    }
+    get y2() {
+        return this.gson.y2;
+    }
 }

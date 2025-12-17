@@ -25,9 +25,13 @@ export class ElemFrame extends ElemSimple {
             if (this.owner.sysprofRec !== undefined)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                if ('BOTT' === this.layout()) {
-                    this.sysprofRec = null; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
-                }
+                //debugger;
+                //let o1 = this.x2;
+                //let o2 = this.y2;
+                
+//                if ('BOTT' === this.layout()) {
+//                    this.sysprofRec = null; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
+//                }
             }
 
         } catch (e) {
@@ -42,103 +46,6 @@ export class ElemFrame extends ElemSimple {
             errorLog('Error:ElemFrame.setLocation() ' + e.message);
         }
     }
-
-    /*    initArtikle(param) {
-     this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(param.colorID1, COLOR.id, dbset.colorList) : this.winc.color1Rec;
-     this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(param.colorID2, COLOR.id, dbset.colorList) : this.winc.color2Rec;
-     this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(param.colorID3, COLOR.id, dbset.colorList) : this.winc.color3Rec;
-     
-     if (param != undefined && param.sysprofID != undefined)
-     this.sysprofID = param.sysprofID; //сист.профиль
-     
-     else { //профиль по умолчанию
-     if ('BOTT' == this.layout)
-     this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['BOTT'][0], UseSide['HORIZ'][0])[SYSPROF.id];
-     else if ('RIGHT' == this.layout)
-     this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['RIGHT'][0], UseSide['VERT'][0])[SYSPROF.id];
-     else if ('TOP' == this.layout)
-     this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['TOP'][0], UseSide['HORIZ'][0])[SYSPROF.id];
-     else if ('LEFT' == this.layout)
-     this.sysprofID = this.find_first(this.winc.nuni, Type[this.type][1], UseSide['LEFT'][0], UseSide['VERT'][0])[SYSPROF.id];
-     
-     }
-     this.sysprofRec = findef(this.sysprofID, SYSPROF.id, dbset.sysprofList);
-     this.artiklRec = findef(this.sysprofRec[SYSPROF.artikl_id], ARTIKL.id, dbset.artiklList);
-     this.artiklAn = findef(this.artiklRec[ARTIKL.analog_id], ARTIKL.id, dbset.artiklList);
-     if (this.artiklAn == undefined) {
-     this.artiklAn = this.artiklRec;
-     }
-     }
-     
-     setLocation(gson, owner, winc) {
-     
-     if (owner.typeForm() == "ARCH") {
-     if ("BOTT" == this.layout) {
-     this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
-     } else if ("RIGHT" == this.layout) {
-     this.dimension(owner.x2 - win.dh_frm, owner.y2 - this.winc.height2, owner.x2, owner.y2);
-     } else if ("TOP" == this.layout) {
-     //this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);                 
-     } else if ("LEFT" == this.layout) {
-     this.dimension(owner.x1, owner.y2 - this.winc.height2, owner.x1 + win.dh_frm, owner.y2);
-     }
-     
-     } else if (owner.typeForm() == "TRAPEZE") {
-     let H = winc.height1 - winc.height2;
-     let W = winc.width();
-     
-     if ('BOTT' == this.layout) {
-     this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
-     
-     } else if ('RIGHT' == this.layout) {
-     if (winc.form == 'RIGHT') {
-     this.dimension(owner.x2 - win.dh_frm, owner.y2 - winc.height2, owner.x2, owner.y2);
-     this.anglCut[1] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
-     } else {
-     this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
-     this.anglCut[0] = Math.toDegrees(Math.atan(W / H)) / 2;
-     }
-     } else if ('TOP' == this.layout) {
-     if (winc.form == 'RIGHT') {
-     this.dimension(owner.x1, owner.y1, owner.x2, winc.height1 - winc.height2);
-     this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
-     this.anglCut[1] = Math.toDegrees(Math.atan(W / H)) / 2;
-     } else {
-     this.dimension(owner.x1, winc.height2 - winc.height1, owner.x2, owner.y1);
-     this.anglCut[1] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
-     this.anglCut[0] = Math.toDegrees(Math.atan(W / H)) / 2;
-     }
-     } else if ('LEFT' == this.layout) {
-     if (winc.form == 'RIGHT') {
-     this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
-     this.anglCut[0] = (Math.toDegrees(Math.atan(W / H))) / 2;
-     } else {
-     this.dimension(owner.x1, owner.y2 - winc.height1, owner.x1 + win.dh_frm, owner.y2);
-     this.anglCut[0] = (180 - Math.toDegrees(Math.atan(W / H))) / 2;
-     }
-     }
-     } else {
-     if ("BOTT" == this.layout) {
-     this.dimension(owner.x1, owner.y2 - win.dh_frm, owner.x2, owner.y2);
-     } else if ("RIGHT" == this.layout) {
-     this.dimension(owner.x2 - win.dh_frm, owner.y1, owner.x2, owner.y2);
-     } else if ("TOP" == this.layout) {
-     this.dimension(owner.x1, owner.y1, owner.x2, owner.y1 + win.dh_frm);
-     } else if ("LEFT" == this.layout) {
-     this.dimension(owner.x1, owner.y1, owner.x1 + win.dh_frm, owner.y2);
-     }
-     }
-     }
-     
-     find_first(nuni, typ, us1, us2) {
-     let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id] && typ == rec.list[SYSPROF.use_type] && 0 != rec.list[SYSPROF.use_side]
-     && (us1 == rec.list[SYSPROF.use_side] || us2 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
-     if (nuni == -3 || record == undefined) {
-     dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
-     }
-     return record;
-     }
-     */
 
     paint() {
         try {
@@ -218,6 +125,23 @@ export class ElemFrame extends ElemSimple {
          draw_line(this.winc, this.owner.x2 - dz, this.owner.y2 - dz, this.owner.x2 - dh, this.owner.y2 - dh, this.color2Rec);
          draw_line(this.winc, this.owner.x1 + dz, this.owner.y2 - dz, this.owner.x1 + dh, this.owner.y2 - dh, this.color2Rec);
          }*/
+    }
+
+    get x2() {
+        for (let i = 0; i < this.owner.frames.length; i++) {
+            if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
+                return this.owner.frames[(i === this.owner.frames.length - 1) ? 0 : i + 1].x1;
+            }
+        }
+        return null;
+    }
+    get y2() {
+        for (let i = 0; i < this.owner.frames.length; i++) {
+            if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
+                return this.owner.frames.get((i === this.owner.frames.length - 1) ? 0 : i + 1).y1;
+            }
+        }
+        return null;
     }
 }
 
