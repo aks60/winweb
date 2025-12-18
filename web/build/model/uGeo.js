@@ -1,50 +1,6 @@
 //------------------------------------------------------------------------------
 export let UGeo = {};
 //------------------------------------------------------------------------------
-UGeo.isValidJson = (jso, key, def) => {
-    try {
-        if (isValidNumber(jso[key])) {
-            return jso[key];
-        } else {
-            return def;
-        }
-    } catch (e) {
-        return def;
-    }
-};
-//------------------------------------------------------------------------------
-UGeo.isValidNumber = (val, def) => {
-    if (typeof val === 'number' && Number.isFinite(val)) {
-        return val;
-    } else {
-        def;
-    }
-};
-//------------------------------------------------------------------------------
-UGeo.findJson = (id, data) => {
-    let obj = {};
-
-    let recursive = (data) => {
-        if (id == data.id) {
-            obj = data;
-        }
-        if (typeof data === 'object' && data !== null) {
-            // Если это массив
-            if (Array.isArray(data)) {
-                data.forEach((item, index) => {
-                    recursive(item); //рекурсивный вызов
-                });
-            } else { // Если это объект
-                Object.keys(data).forEach(key => {
-                    recursive(data[key]); //рекурсивный вызов
-                });
-            }
-        }
-    };
-    recursive(data);
-    return obj;
-};
-//------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(jsts.algorithm.Angle.angle(new jsts.geom.Coordinate(x1, y1), new jsts.geom.Coordinate(x2, y2)));
@@ -95,5 +51,6 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
      return null;
      */
 };
+//------------------------------------------------------------------------------
 
 

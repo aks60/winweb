@@ -5,7 +5,6 @@ import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
 import {AreaDoor} from './model/AreaDoor.js';
 import {AreaRectangl} from './model/AreaRectangl.js';
-import {AreaRoot} from './model/AreaRoot.js';
 import {AreaStvorka} from './model/AreaStvorka.js';
 import {ElemCross} from './model/ElemCross.js';
 import {ElemFrame} from './model/ElemFrame.js';

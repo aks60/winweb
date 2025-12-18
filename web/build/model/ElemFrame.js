@@ -1,5 +1,7 @@
 
 import {UGeo} from './uGeo.js';
+import {UseSideTo} from '../../enums/UseSideTo.js';
+import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
 
 export class ElemFrame extends ElemSimple {
@@ -7,8 +9,6 @@ export class ElemFrame extends ElemSimple {
     constructor(winc, gson, owner) {
         try {
             super(winc, gson, owner);
-            this.initArtikle();
-            this.setLocation();
 
         } catch (e) {
             errorLog('Error:ElemFrame.constructor() ' + e.message);
@@ -17,21 +17,25 @@ export class ElemFrame extends ElemSimple {
 
     initArtikle() {
         try {
-            this.colorID1 = UGeo.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
-            this.colorID2 = UGeo.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
-            this.colorID3 = UGeo.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
+            this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
+            this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
+            this.colorID3 = UCom.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
 
-            this.sysprofRec = UGeo.isValidJson(this.gson.param, 'sysprofID', null);
+            this.sysprofRec = UCom.isValidJson(this.gson.param, 'sysprofID', null);
             if (this.owner.sysprofRec !== undefined)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                //debugger;
-                //let o1 = this.x2;
-                //let o2 = this.y2;
-                
-//                if ('BOTT' === this.layout()) {
-//                    this.sysprofRec = null; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.BOT, UseSideTo.HORIZ);
-//                }
+                if ('BOTT' === this.layout()) {
+                    this.sysprofRec = [1]; //dbset.sysprof.find5(this.winc.nuni, type.id2, UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
+                } else if ('RIGHT' === this.layout()) {
+                    this.sysprofRec = [2]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.RIGHT, UseSideTo.VERT);
+                } else if ('TOP' === this.layout()) {
+                    this.sysprofRec = [3]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.TOP, UseSideTo.HORIZ);
+                } else if ('LEFT' === this.layout()) {
+                    this.sysprofRec = [4]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.LEFT, UseSideTo.VERT);
+                } else {
+                    this.sysprofRec = [0]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.ANY, UseSideTo.ANY);
+                }
             }
 
         } catch (e) {
@@ -138,7 +142,7 @@ export class ElemFrame extends ElemSimple {
     get y2() {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
-                return this.owner.frames.get((i === this.owner.frames.length - 1) ? 0 : i + 1).y1;
+                return this.owner.frames[(i === this.owner.frames.length - 1) ? 0 : i + 1].y1;
             }
         }
         return null;

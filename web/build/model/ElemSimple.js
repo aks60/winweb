@@ -1,4 +1,4 @@
-
+import {UGeo} from './uGeo.js';
 import {Timer} from '../../common/Timer.js';
 import {Com5t} from './Com5t.js';
 
@@ -40,21 +40,20 @@ export class ElemSimple extends Com5t {
 
     layout() {
         try {
-            debugger;
-            //const anglHor = UGeo.anglHor(this.gson.x1, this.gson.y1, this.gson.x2, this.gson.y2);
-//
-//            if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
-//                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.HORIZ : Layout.BOTT;
-//
-//            } else if (anglHor >= 45 && anglHor < 135) {
-//                return Layout.RIGHT;
-//
-//            } else if (anglHor >= 135 && anglHor < 225) {
-//                return Layout.TOP;
-//
-//            } else if (anglHor >= 225 && anglHor <= 315) {
-//                return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VERT : Layout.LEFT;
-//            }
+            const anglHor = UGeo.anglHor(this.x1, this.y1, this.x2, this.y2);
+
+            if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
+                return (this.type === 'IMPOST' || this.type === 'SHTULP') ? 'HORIZ' : 'BOTT';
+
+            } else if (anglHor >= 45 && anglHor < 135) {
+                return 'RIGHT';
+
+            } else if (anglHor >= 135 && anglHor < 225) {
+                return 'TOP';
+
+            } else if (anglHor >= 225 && anglHor <= 315) {
+                return (this.type === 'IMPOST' || this.type === 'SHTULP') ? 'VERT' : 'LEFT';
+            }
         } catch (e) {
             errorLog("Ошибка:ElemSimple.layout() " + e.message);
         }
