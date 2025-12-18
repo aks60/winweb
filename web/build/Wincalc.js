@@ -1,6 +1,7 @@
 
 import {UGeo} from './model/uGeo.js';
 import {Com5t} from './model/Com5t.js';
+import {Type} from '../enums/Type.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
 import {AreaDoor} from './model/AreaDoor.js';
@@ -29,7 +30,7 @@ export class Wincalc {
             this.gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000));
         } catch (e) {
             errorLog('Error:Wincalc.constructor() ' + e.message);
-        }
+    }
     }
 
     build(script) {
@@ -45,7 +46,7 @@ export class Wincalc {
 
             //Инит конструктива
             this.id = this.gson.id;
-            this.nuni = (this.gson.nuni == undefined) ? -3 : this.gson.nuni;
+            this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
             this.color1Rec = findefs(this.gson.color1, COLOR.id, dbset.color);
             this.color2Rec = findefs(this.gson.color2, COLOR.id, dbset.color);
             this.color3Rec = findefs(this.gson.color3, COLOR.id, dbset.color);
@@ -53,15 +54,19 @@ export class Wincalc {
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
                 this.root = new AreaRectangl(this, this.gson, null);
+                this.root.type = Type.RECTANGL;
 
             } else if ('TRAPEZE' === this.gson.type) {
                 this.root = new AreaTrapeze(this, this.gson, null);
+                this.root.type = Type.TRAPEZE;
 
             } else if ('ARCH' === this.gson.type) {
                 this.root = new AreaArch(this, this.gson, null);
+                this.root.type = Type.ARCH;
 
             } else if ('DOOR' === this.gson.type) {
                 this.root = new AreaDoor(this, this.gson, null);
+                this.root.type = Type.DOOR;
             }
 
             this.creator(this.root, this.gson); //создадим элементы конструкции       
@@ -80,33 +85,52 @@ export class Wincalc {
             let hm = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let elem5e = new ElemFrame(this, js, owner);
-                    this.root.frames.push(elem5e);
-                    hm.set(elem5e, js);
+                    let box = new ElemFrame(this, js, owner);
+                    box.type = Type.FRAME_SIDE;
+                    this.root.frames.push(box);
+                    hm.set(box, js);
 
                 } else if (js.type === "STVORKA") {
-                    //let stv = new AreaStvorka(js, this.root, this);
+                    //let stv = new AreaStvorka(this, js, owner);
+                    //stv.type = Type.STVORKA;
                     //this.root.childs.push(stv);
-                    // hm.set(stv, js);
+                    //hm.set(stv, js);
 
                 } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
-                    //let area = new AreaSimple(js, this.root, this);
-                    //this.root.childs.push(area);
-                    //hm.set(area, js);
+//                    let area = new AreaSimple(this, js, owner);
+//                    if (js.type === "AREA")
+//                        area.type = Type.AREA;
+//                    else if (js.type === "ARCH")
+//                        area.type = Type.ARCH;
+//                    else if (js.type === "TRAPEZE")
+//                        area.type = Type.TRAPEZE;
+//                    else if (js.type === "TRIANGL")
+//                        area.type = Type.TRIANGL;
+//                    else if (js.type === "DOOR")
+//                        area.type = Type.DOOR;
+//                    this.root.childs.push(area);
+//                    hm.set(area, js);
 
-                } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type == "STOIKA") {
-                    //let cross = new ElemCross(js, this.root, this);
-                    //this.root.childs.push(cross);
+                } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type === "STOIKA") {
+//                    let cross = new ElemCross(this, js, owner);
+//                    if (js.type === "IMPOST")
+//                        cross.type = Type.IMPOST;
+//                    else if (js.type === "SHTULP")
+//                        cross.type = Type.SHTULP;
+//                    else if (js.type === "STOIKA")
+//                        cross.type = Type.STOIKA;
+//                    this.root.childs.push(cross);
 
                 } else if (js.type === "GLASS") {
-                    //let glass = new ElemGlass(js, this.root, this);
-                    //this.root.childs.push(glass);
+//                    let glass = new ElemGlass(js, this.root, this);
+//                    glass.type = Type.GLASS;
+//                    this.root.childs.push(glass);
                 }
             }
             //Теперь вложенные элементы
-            //for (let k of hm.keys()) {
-            //    this.creator(k, hm.get(k));
-            //}
+//            for (let k of hm.keys()) {
+//                this.creator(k, hm.get(k));
+//            }
         } catch (e) {
             errorLog('Error:Wincalc.creator() ' + e.message);
         }
