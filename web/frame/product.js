@@ -185,9 +185,9 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-2").show();
 
         //Сторона коробки, створки
-    } else if (["FRAME_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
+    } else if (["BOX_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
-        if (elem.typeForm() == "FRAME_SIDE") {
+        if (elem.typeForm() == "BOX_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
         } else if (elem.typeForm() == "STVORKA_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона створки ' + lay[elem.layout]);

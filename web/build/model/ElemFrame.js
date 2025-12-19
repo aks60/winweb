@@ -1,6 +1,7 @@
 
 import {UGeo} from './uGeo.js';
 import {UseSideTo} from '../../enums/UseSideTo.js';
+import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
 
@@ -16,6 +17,7 @@ export class ElemFrame extends ElemSimple {
     }
 
     initArtikle() {
+        //debugger;
         try {
             this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
             this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
@@ -26,17 +28,19 @@ export class ElemFrame extends ElemSimple {
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if ('BOTT' === this.layout()) {
-                    this.sysprofRec = [1]; //dbset.sysprof.find5(this.winc.nuni, type.id2, UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
+                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
                 } else if ('RIGHT' === this.layout()) {
-                    this.sysprofRec = [2]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.RIGHT, UseSideTo.VERT);
+                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.RIGHT[0], UseSideTo.VERT[0]);
                 } else if ('TOP' === this.layout()) {
-                    this.sysprofRec = [3]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.TOP, UseSideTo.HORIZ);
+                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.TOP[0], UseSideTo.HORIZ[0]);
                 } else if ('LEFT' === this.layout()) {
-                    this.sysprofRec = [4]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.LEFT, UseSideTo.VERT);
+                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.LEFT[0], UseSideTo.VERT[0]);
                 } else {
-                    this.sysprofRec = [0]; //eSysprof.find5(winc.nuni, type.id2, UseSideTo.ANY, UseSideTo.ANY);
+                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
                 }
             }
+            this.artiklRec = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], false); //артикул
+            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], true); //аналог             
 
         } catch (e) {
             errorLog('Error:ElemFrame.initArtikle() ' + e.message);

@@ -88,7 +88,7 @@
                 if (elem.gson.param == undefined) {
                     elem.gson.param = {};
                 }
-                if (elem.typeForm() == "FRAME_SIDE") { //коробка
+                if (elem.typeForm() == "BOX_SIDE") { //коробка
                     elem.gson.param.sysprofID = tableRec.id; //запишем профиль в скрипт
 
                 } else { //створка       

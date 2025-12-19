@@ -86,7 +86,7 @@ export class Wincalc {
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
                     let box = new ElemFrame(this, js, owner);
-                    box.type = Type.FRAME_SIDE;
+                    box.type = Type.BOX_SIDE;
                     this.root.frames.push(box);
                     hm.set(box, js);
 
