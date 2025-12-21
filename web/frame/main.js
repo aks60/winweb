@@ -7,7 +7,7 @@ import {Com5t} from '/winweb/build/model/Com5t.js';
 //https://www.clouddefense.ai/code/javascript/example/jsts
 //https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
 
-export function jsts1Test() {
+export function Test1() {
     try {
         var OBJ03 = new jsts.io.GeoJSONReader();
         var OBJ04 = new jsts.geom.Location();
@@ -48,7 +48,7 @@ export function jsts1Test() {
     }
 }
 
-export function jsts2Test() {
+export function Test2() {
     debugger;
     let result = Com5t.gf.createPolygon();
     let listShell = Array.of([1, 2, 3]);
