@@ -28,7 +28,7 @@
             var SYSTREE = {id: 1, name: 2, glas: 3, depth: 4, col1: 5, col2: 6, col3: 7, cgrp: 8, types: 12, parent_id: 13},
                     GROUP = {id: 1, grup: 2, name: 4, val: 5},
                     COLOR = {id: 1, name: 3, rgb: 5, groups_id: 12},
-                    ARTIKL = {id: 1, code: 2, level1: 3, level2: 4, name: 5, size_centr: 11, height: 14, depth: 15, analog_id: 35},
+                    ARTIKL = {id: 1, code: 2, level1: 3, level2: 4, name: 5, size_falz: 9, size_centr: 11, height: 14, depth: 15, analog_id: 35},
                     ARTDET = {id: 1, color_fk: 14, artikl_id: 15},
                     FURNITURE = {id: 1, name: 2},
                     FURNDET = {id: 1, color_fk: 3, artikl_id: 4, furniture_id1: 5, furniture_id2: 6, furndet_id: 7},

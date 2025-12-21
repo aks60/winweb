@@ -20,7 +20,7 @@ export class AreaRectangl extends AreaSimple {
             let cooBox = new Array;
             this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
             cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
-debugger;
+
             let geoShell = this.winc.gf.createPolygon(cooBox);
             let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, -6, 1);
             

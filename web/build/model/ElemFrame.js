@@ -21,7 +21,6 @@ export class ElemFrame extends ElemSimple {
     }
 
     initArtikle() {
-        debugger;
         try {
             this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
             this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
