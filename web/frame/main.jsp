@@ -66,7 +66,8 @@
 
         <script type="module">
             //import {jsts1Test, jsts2Test} from './frame/main.js';
-            
+            //jsts2Test();
+
             $("#outbody").load('frame/login.jsp', function () {
                 login.user_connect();
                 Promise.all([
@@ -89,7 +90,6 @@
                     dbset.color.vrec = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 14: -3});
                     dbset.sysfurn.vrec = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
 
-                    //jsts2Test();
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
                 });

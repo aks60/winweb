@@ -1,6 +1,6 @@
 
 import {AreaSimple} from './AreaSimple.js';
-import {Com5t} from '/winweb/build/model/Com5t.js';
+import {Com5t} from './Com5t.js';
 import {UGeo} from './uGeo.js';
 
 export class AreaRectangl extends AreaSimple {
