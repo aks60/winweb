@@ -1,4 +1,5 @@
 //------------------------------------------------------------------------------
+import {Com5t} from '/winweb/build/model/Com5t.js';
 export let UGeo = {};
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
@@ -28,23 +29,22 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             }
         }
         debugger;
-//  if (cooShell.length > Com5t.MAXSIDE) {
-//     let id = cooShell[geoShell.getCoordinates().length / 2].z;
-//     let polyCurv = bufferCurve(geoShell, hm.get(id));
-//     let polyRect = bufferRectangl(geoShell, hm);
-//     let polyArch = polyRect.union(polyCurv);
-//     
-//     LinearRing ring = polyArch.getInteriorRingN(0);
-//     Polygon poly = gf.createPolygon(ring);
-//     poly.normalize();
-//     //Test.init(polyRect); 
-//     updateZet(poly, polyRect);
-//     return poly;
-//     
-//     } else {
-//     Polygon poly1 = bufferPolygon(geoShell, hm);
-//     return poly1;
-//     }
+        if (cooShell.length > Com5t.MAXSIDE) {
+            let id = cooShell[geoShell.getCoordinates().length / 2].z;
+            let polyCurv = bufferCurve(geoShell, hm.get(id));
+            let polyRect = bufferRectangl(geoShell, hm);
+            let polyArch = polyRect.union(polyCurv);
+
+            ring = polyArch.getInteriorRingN(0);
+            poly = gf.createPolygon(ring);
+            poly.normalize();
+            updateZet(poly, polyRect);
+            return poly;
+
+        } else {
+            poly1 = bufferPolygon(geoShell, hm);
+            return poly1;
+        }
         //Test.init(poly1, poly2); 
     } catch (e) {
         console.log("Ошибка: uGeo.bufferGeometry() " + e);
@@ -53,55 +53,118 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
 
 };
 //------------------------------------------------------------------------------
-UGeo.bufferCurve = (geoShell, dist) => {
-
+//TODO Гадкая функция. Надо переписать!
+//При слиянии двух полигонов появляются точки соединения с непонятным Z значением
+UGeo.updateZet = (arc, rec) => {
+//        boolean pass = false;
+//        Coordinate cooArc[] = arc.getCoordinates();
+//        Coordinate cooRec[] = rec.getCoordinates();
+//
+//        for (int i = 0; i < cooArc.length - 1; i++) {
+//            if (cooArc[i].z % 1 != 0) {
+//                for (int j = 1; j < cooRec.length; j++) {
+//
+//                    if (PointLocation.isOnSegment(cooArc[i], cooRec[j - 1], cooRec[j])) {
+//                        if (pass == false) {
+//                            
+//                            cooArc[i].z = cooRec[j].z;
+//                        } else {
+//                            cooArc[i].z = cooRec[j - 1].z;
+//                        }
+//                        pass = true;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        cooArc[cooArc.length - 1].z = cooArc[0].z;
+    return {};
+};
+//------------------------------------------------------------------------------
+UGeo.bufferRectangl = (geoShell, hmDist) => {
 //        Polygon result = gf.createPolygon();
+//        Set<Double> set = new HashSet();
+//        List<Coordinate> listBuffer = new ArrayList<Coordinate>();
+//        List<Coordinate> listShell = new ArrayList<Coordinate>();
 //        Coordinate[] cooShell = geoShell.getCoordinates();
-//        double ID = cooShell[cooShell.length / 2].z;
-//
-//        List<Coordinate> listInner = new ArrayList<Coordinate>();
-//        List<Coordinate> listShell = List.of(cooShell).stream().filter(c -> c.z == ID).toList();
-//
 //        try {
-//            for (int i = 1; i < listShell.size(); i++) {
+//            for (int i = 0; i < cooShell.length; i++) {
+//                if (set.add(cooShell[i].z)) {
+//                    listShell.add(cooShell[i]);
+//                }
+//            }
+//            hmDist.put(4.0, 0.0); //такая вот фича!
 //
-//                //Перебор левого и правого сегмента от точки пересечения
-//                if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
-//                    segRighShell.setCoordinates(listShell.get(i - 1), listShell.get(i));
-//                    segRighInner = segRighShell.offset(-dist);
-//                }
-//                if (i < Com5t.MAXSIDE || (cross != null && i > Com5t.MAXSIDE)) {
-//                    int j = (i == listShell.size() - 1) ? 1 : i + 1;
-//                    segLeftShell.setCoordinates(listShell.get(i), listShell.get(j));
-//                    segLeftInner = segLeftShell.offset(-dist);
-//                }
+//            for (int i = 0; i < listShell.size(); i++) {
 //
-//                //Коррекция первой и последней точки дуги
-//                if (i == 1) {
-//                    segRighInner.p0.z = ID;
-//                    listInner.add(segRighInner.p0);
+//                //Перебор левого и правого сегмента от точки пересечения 
+//                int j = (i == 0) ? listShell.size() - 1 : i - 1;
+//                final double id1 = listShell.get(j).z;
+//                segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
+//                segRighInner = segRighShell.offset(-hmDist.get(id1));
+//
+//                int k = (i == listShell.size() - 1) ? 0 : i + 1;
+//                final double id2 = listShell.get(i).z;
+//                segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
+//                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+//
+//                //Точка пересечения сегментов
+//                cross = segLeftInner.lineIntersection(segRighInner);
+//
+//                if (cross != null) {
+//                    cross.z = listShell.get(i).z;
+//                    listBuffer.add(cross);
 //                }
+//            }
+//            Collections.reverse(listBuffer);
+//            List<Coordinate> listOut = new ArrayList(listShell);
+//            listOut.addAll(listBuffer);
+//            listOut.add(listOut.get(0));
+//            Polygon geoBuffer = gf.createPolygon(listOut.toArray(new Coordinate[0]));
+//
+//            result = geoBuffer;
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:UGeo.bufferRectangl() " + e);
+//        }
+//        return result;
+    return {};
+};
+//------------------------------------------------------------------------------    
+UGeo.bufferPolygon = (geoShell, hmDist) => {
+
+        result = gf.createPolygon();
+        listBuffer = new Array();
+        listShell = Array.of(geoShell.getCoordinates());
+//        try {
+//            for (int i = 0; i < listShell.size() - 1; i++) {
+//
+//                //Перебор левого и правого сегмента от точки пересечения 
+//                int j = (i == 0) ? listShell.size() - 2 : i - 1;
+//                final double id1 = listShell.get(j).z;
+//                segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
+//                segRighInner = segRighShell.offset(-hmDist.get(id1));
+//
+//                int k = (i == listShell.size() - 1) ? 0 : i + 1;
+//                final double id2 = listShell.get(i).z;
+//                segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
+//                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+//
 //                //Точка пересечения сегментов
 //                cross = segLeftInner.intersection(segRighInner);
 //
-//                if (cross != null) { //заполнение очереди
-//                    cross.z = ID;
-//                    listInner.add(cross);
-//                }
-//                if (i == listShell.size() - 2) {
-//                    segLeftInner.p1.z = ID;
-//                    listInner.add(segLeftInner.p1);
+//                if (cross != null) {
+//                    cross.z = listShell.get(i).z;
+//                    listBuffer.add(cross);
 //                }
 //            }
-//            //Test.init(gf.createLineString(listInner.toArray(new Coordinate[0]);
-//            Collections.reverse(listInner);
-//            listInner.addAll(listShell);
-//            listInner.add(0, listInner.get(listInner.size() - 1));
-//            result = gf.createPolygon(listInner.toArray(new Coordinate[0]));
+//            listBuffer.add(listBuffer.get(0));
+//            Polygon geoBuffer = gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
+//
+//            result = geoBuffer;
 //
 //        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.bufferCurve() " + e);
+//            System.err.println("Ошибка:UGeo.bufferPolygon() " + e);
 //        }
 //        return result;
-            return {};
-    }
+};

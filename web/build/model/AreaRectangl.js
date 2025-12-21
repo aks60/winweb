@@ -1,5 +1,6 @@
 
 import {AreaSimple} from './AreaSimple.js';
+import {Com5t} from '/winweb/build/model/Com5t.js';
 import {UGeo} from './uGeo.js';
 
 export class AreaRectangl extends AreaSimple {
@@ -21,8 +22,8 @@ export class AreaRectangl extends AreaSimple {
             this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
             cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
 
-            let geoShell = this.winc.gf.createPolygon(cooBox);
-            let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, -6, 1);
+            let geoShell = Com5t.gf.createPolygon(cooBox);
+            //let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, -6, 1);
             
         } catch (e) {
             errorLog('Error:AreaRectangl.setLocation() ' + e.message);

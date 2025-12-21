@@ -1,3 +1,4 @@
+import {Com5t} from '/winweb/build/model/Com5t.js';
 
 //https://stackoverflow.com/questions/36118883/using-jsts-buffer-to-identify-a-self-intersecting-polygon
 //https://openlayers.org/en/latest/examples/jsts.html
@@ -6,7 +7,7 @@
 //https://www.clouddefense.ai/code/javascript/example/jsts
 //https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
 
-export function jstsTest() {
+export function jsts1Test() {
     try {
         var OBJ03 = new jsts.io.GeoJSONReader();
         var OBJ04 = new jsts.geom.Location();
@@ -45,6 +46,13 @@ export function jstsTest() {
     } catch (e) {
         alert(`Ошибка jsts(). => ` + e.message);
     }
+}
+
+export function jsts2Test() {
+    debugger;
+    let result = Com5t.gf.createPolygon();
+    let listShell = Array.of([1, 2, 3]);
+    let listBuffer = new Array();
 }
 
 

@@ -1,5 +1,5 @@
 
-import {Com5t} from './Com5t.js';
+import {Com5t} from './model/Com5t.js';
 
 export class AreaSimple extends Com5t {
 
@@ -22,7 +22,7 @@ export class AreaSimple extends Com5t {
 //            Polygon geoShell = (Polygon) this.area.getGeometryN(0);
 //            Polygon geoInner = Com5t.buffer(geoShell, winc.listElem, 0, 0);
 //            Polygon geoFalz = Com5t.buffer(geoShell, winc.listElem, 0, 1);
-//            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
+//            this.area = Com5t.gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
             
             //consoleLog('Exec:AreaSimple.setLocation()');
         } catch (e) {

@@ -3,6 +3,8 @@ export class Com5t {
 
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
+    static gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000)); //фабрика геометрий    
+
     winc = null; //главн. класс калькуляции
     owner = null; //владелец
     gson = null; //json объект элемента

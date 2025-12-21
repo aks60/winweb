@@ -16,18 +16,24 @@ win.build = function (canvas, script) {
 };
 
 export class Wincalc {
+    id; //id конструкции
+    nuni; //код системы  
+    gson; //объектная модель конструкции
+    mapPardef = new Map();  //пар. по умолчанию + наложенные пар. клиента
+    listArea = new Array(); //список ареа.
+    listElem = new Array(); //список элем.
+    listJoin = new Array(); //список соед.
+    listAll = new Array();  //список всех компонентов (area + elem)
+    listKit = new Array();  //комплектация    
+    color1Rec; //цвет базовый
+    color2Rec; //цвет внутр.
+    color3Rec; //цвет внещний 
+    root; //объектная модель конструкции
 
     constructor(canvas = null) {
         try {
             this.cnv = canvas;
             this.ctx = canvas.getContext('2d');
-            this.mapPardef = new Map();  //пар. по умолчанию + наложенные пар. клиента
-            this.listArea = new Array(); //список ареа.
-            this.listElem = new Array(); //список элем.
-            this.listJoin = new Array(); //список соед.
-            this.listAll = new Array();  //список всех компонентов (area + elem)
-            this.listKit = new Array();  //комплектация
-            this.gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000));
         } catch (e) {
             errorLog('Error: Wincalc.constructor() ' + e.message);
     }
@@ -36,7 +42,6 @@ export class Wincalc {
     build(script) {
         try {
             //Инит свойств
-            this.nppID = 0;
             this.mapPardef.clear();
             for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
                 el.length = 0;
