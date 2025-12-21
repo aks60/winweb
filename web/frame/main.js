@@ -1,4 +1,4 @@
-import {Com5t} from '/winweb/build/model/Com5t.js';
+//import {Com5t} from '/winweb/build/model/Com5t.js';
 
 //https://stackoverflow.com/questions/36118883/using-jsts-buffer-to-identify-a-self-intersecting-polygon
 //https://openlayers.org/en/latest/examples/jsts.html
@@ -48,11 +48,11 @@ export function jsts1Test() {
     }
 }
 
-export function jsts2Test() {
-    debugger;
-    let result = Com5t.gf.createPolygon();
-    let listShell = Array.of([1, 2, 3]);
-    let listBuffer = new Array();
-}
+//export function jsts2Test() {
+//    debugger;
+//    let result = Com5t.gf.createPolygon();
+//    let listShell = Array.of([1, 2, 3]);
+//    let listBuffer = new Array();
+//}
 
 

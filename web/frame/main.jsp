@@ -65,7 +65,7 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {jsts1Test, jsts2Test} from './frame/main.js';
+            //import {jsts1Test, jsts2Test} from './frame/main.js';
             
             $("#outbody").load('frame/login.jsp', function () {
                 login.user_connect();
