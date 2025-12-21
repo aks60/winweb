@@ -75,7 +75,7 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
             return virt;
         };
     } catch (e) {
-        errorLog('Error:UCom.dbset.sysprof.find5() ' + e.message);
+        errorLog('Error: UCom.dbset.sysprof.find5() ' + e.message);
     }
 };
 //------------------------------------------------------------------------------ 
@@ -94,7 +94,7 @@ dbset.artikl.find = (id, analog) => {
         }
         return recordRec;
     } catch (e) {
-        errorLog('Error:UCom.dbset.artikl.find() ' + e.message);
+        errorLog('Error: UCom.dbset.artikl.find() ' + e.message);
     }
 };
 //------------------------------------------------------------------------------    

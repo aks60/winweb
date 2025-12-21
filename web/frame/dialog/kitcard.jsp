@@ -140,7 +140,7 @@
                         });
                     }
                 } catch (e) {
-                    console.error('Error:kitcard.save_table() ' + e.message);
+                    console.error('Error: kitcard.save_table() ' + e.message);
                 }
             }
 //------------------------------------------------------------------------------

@@ -7,15 +7,15 @@ export class AreaArch extends AreaSimple {
         try {
             alrt('new AreaArch');
         } catch (e) {
-            errorLog('Error:AreaArch.constructor() ' + e.message);
+            errorLog('Error: AreaArch.constructor() ' + e.message);
         }
     }
     
     setLocation() {
         try {
-            consoleLog('Exec:AreaArch.setLocation()');
+            consoleLog('Exec: AreaArch.setLocation()');
         } catch (e) {
-            errorLog('Error:AreaArch.setLocation() ' + e.message);
+            errorLog('Error: AreaArch.setLocation() ' + e.message);
         }
     }    
 }

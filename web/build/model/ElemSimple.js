@@ -4,37 +4,27 @@ import {Com5t} from './Com5t.js';
 
 export class ElemSimple extends Com5t {
 
+    betweenHoriz = [0, 0]; //угол между векторами   
+    pointPress = null;
+    passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, 
+    //[0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
+    delta = 3;
+    SIZE = 20;
+    timer = new Timer(() => {
+        alert('exec Timer()');
+    }, 3000);
+    spcRec = null; //спецификация элемента
+    borderColor = 0; //Color.BLACK;
+
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
 
-        this.betweenHoriz = [0, 0]; //угол между векторами 
-        this.pointPress = null;
-        this.passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, 
-        this.delta = 3;
-        this.SIZE = 20;
-        this.timer = new Timer(() => {
-            alert('exec Timer()');
-        }, 3000);
         this.timer.pause();
-        //this.borderColor = Color.BLACK; 
-
         winc.listElem.push(this);
         winc.listAll.push(this);
     }
 
-    initConstructiv(param) {
-
-    }
-
-    initParametr(param) {
-
-    }
-
-    setLocation() {
-
-    }
-
-    paint() {
+    addListenerEvents() {
 
     }
 
@@ -58,6 +48,17 @@ export class ElemSimple extends Com5t {
             errorLog("Ошибка:ElemSimple.layout() " + e.message);
         }
         return 'ANY';
+    }
+
+    paint() {
+
+    }
+    
+    setDimension(x1, y1, x2, y2) {
+        this.gson.x1 = x1;
+        this.gson.y1 = y1;
+        this.gson.x2 = x2;
+        this.gson.y2 = y2;
     }
 }
 

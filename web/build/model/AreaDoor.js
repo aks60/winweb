@@ -7,15 +7,15 @@ export class AreaDoor extends AreaSimple {
         try {
             alrt('new AreaDoor');
         } catch (e) {
-            errorLog('Error:AreaDoor.constructor() ' + e.message);
+            errorLog('Error: AreaDoor.constructor() ' + e.message);
         }
     }
 
     setLocation() {
         try {
-            consoleLog('Exec:AreaDoor.setLocation()');
+            consoleLog('Exec: AreaDoor.setLocation()');
         } catch (e) {
-            errorLog('Error:AreaDoor.setLocation() ' + e.message);
+            errorLog('Error: AreaDoor.setLocation() ' + e.message);
         }
     }
 }

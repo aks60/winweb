@@ -29,7 +29,7 @@ export class Wincalc {
             this.listKit = new Array();  //комплектация
             this.gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000));
         } catch (e) {
-            errorLog('Error:Wincalc.constructor() ' + e.message);
+            errorLog('Error: Wincalc.constructor() ' + e.message);
     }
     }
 
@@ -75,7 +75,7 @@ export class Wincalc {
             return this;
 
         } catch (e) {
-            errorLog('Error:Wincalc.build(). ' + e.message);
+            errorLog('Error: Wincalc.build(). ' + e.message);
         }
     }
 
@@ -132,7 +132,7 @@ export class Wincalc {
 //                this.creator(k, hm.get(k));
 //            }
         } catch (e) {
-            errorLog('Error:Wincalc.creator() ' + e.message);
+            errorLog('Error: Wincalc.creator() ' + e.message);
         }
     }
 
@@ -157,7 +157,7 @@ export class Wincalc {
                 }
             }
         } catch (e) {
-            errorLog('Error:Wincalc.location() ' + e.message);
+            errorLog('Error: Wincalc.location() ' + e.message);
         }
     }
 
@@ -167,7 +167,7 @@ export class Wincalc {
             this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.paint());
             this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.paint());
         } catch (e) {
-            errorLog('Error:Wincalc.draw() ' + e.message);
+            errorLog('Error: Wincalc.draw() ' + e.message);
         }
     }
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
@@ -185,7 +185,7 @@ export class Wincalc {
         if (area.id == 0) {
             this.areaList.push(this.root);
         }
-        if (area.frames !== undefined) {
+        if (area.frames !== null) {
             this.elemList.push(area);
             for (let frm of area.frames.values())
                 this.elemList.push(frm);
