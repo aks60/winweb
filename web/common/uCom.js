@@ -46,7 +46,6 @@ UCom.findJson = (id, data) => {
 };
 //------------------------------------------------------------------------------
 dbset.sysprof.find = (nuni, typeId, us1, us2) => {
-    //debugger;
     try {
         if (nuni === -3) {
             return virtualRec(typeId);

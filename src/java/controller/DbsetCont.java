@@ -40,10 +40,13 @@ public class DbsetCont extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("application/json; charset=UTF-8");
+//        response.setHeader("Cache-Control", "no-cache, no-store");
+//        response.setHeader("Pragma", "no-cache");
+//        response.setHeader("Expires", "0");
         String action = request.getParameter("action");
 
         try (PrintWriter out = response.getWriter()) {
-            try {               
+            try {
                 if (action.equalsIgnoreCase("systreeList")) {
                     out.write(Dbset.systreeList(request, response));
 

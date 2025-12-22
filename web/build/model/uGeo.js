@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-import {Com5t} from '/winweb/build/model/Com5t.js';
+import {Com5t} from './Com5t.js';
 export let UGeo = {};
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
@@ -28,21 +28,20 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
                 hm.set(el.gson.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] - rec[ARTIKL.size_falz] + amend);
             }
         }
-        debugger;
         if (cooShell.length > Com5t.MAXSIDE) {
             let id = cooShell[geoShell.getCoordinates().length / 2].z;
-            let polyCurv = bufferCurve(geoShell, hm.get(id));
-            let polyRect = bufferRectangl(geoShell, hm);
-            let polyArch = polyRect.union(polyCurv);
+            let polyCurv = UGeo.bufferCurve(geoShell, hm.get(id));
+            let polyRect = UGeo.bufferRectangl(geoShell, hm);
+            let polyArch = UGeo.polyRect.union(polyCurv);
 
             ring = polyArch.getInteriorRingN(0);
             poly = gf.createPolygon(ring);
             poly.normalize();
-            updateZet(poly, polyRect);
+            UGeo.updateZet(poly, polyRect);
             return poly;
 
         } else {
-            poly1 = bufferPolygon(geoShell, hm);
+            poly1 = UGeo.bufferPolygon(geoShell, hm);
             return poly1;
         }
         //Test.init(poly1, poly2); 
@@ -132,11 +131,14 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 };
 //------------------------------------------------------------------------------    
 UGeo.bufferPolygon = (geoShell, hmDist) => {
+    debugger;
+    let result = Com5t.gf.createPolygon();
+    try {
+        let listBuffer = new Array();
+        let listShell = Array.of(geoShell.getCoordinates());
+        let listShell2 = geoShell.getCoordinates();
+        let o1 = 0;
 
-        result = gf.createPolygon();
-        listBuffer = new Array();
-        listShell = Array.of(geoShell.getCoordinates());
-//        try {
 //            for (int i = 0; i < listShell.size() - 1; i++) {
 //
 //                //Перебор левого и правого сегмента от точки пересечения 
@@ -163,8 +165,8 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
 //
 //            result = geoBuffer;
 //
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.bufferPolygon() " + e);
-//        }
-//        return result;
+    } catch (e) {
+        console.log("Ошибка: UGeo.bufferPolygon() " + e);
+    }
+    return result;
 };

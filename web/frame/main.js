@@ -49,7 +49,6 @@ export function Test1() {
 }
 
 export function Test2() {
-    debugger;
     let result = Com5t.gf.createPolygon();
     let listShell = Array.of([1, 2, 3]);
     let listBuffer = new Array();
