@@ -1,6 +1,14 @@
 //------------------------------------------------------------------------------
 import {Com5t} from './Com5t.js';
+import {LineSegm} from '/winweb/common/LineSegm.js';
+//------------------------------------------------------------------------------
 export let UGeo = {};
+//------------------------------------------------------------------------------
+UGeo.segRighShell = new LineSegm();
+UGeo.segRighInner = null;
+UGeo.egLeftShell = new LineSegm();
+UGeo.segLeftInner = null;
+UGeo.cross = new jsts.geom.Coordinate();
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
@@ -131,40 +139,40 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 };
 //------------------------------------------------------------------------------    
 UGeo.bufferPolygon = (geoShell, hmDist) => {
-    debugger;
+    
     let result = Com5t.gf.createPolygon();
     try {
         let listBuffer = new Array();
-        let listShell = Array.of(geoShell.getCoordinates());
-        let listShell2 = geoShell.getCoordinates();
-        let o1 = 0;
+        let listShell = geoShell.getCoordinates();
+        for (let i = 0; i < listShell.length - 1; i++) {
 
-//            for (int i = 0; i < listShell.size() - 1; i++) {
-//
-//                //Перебор левого и правого сегмента от точки пересечения 
-//                int j = (i == 0) ? listShell.size() - 2 : i - 1;
-//                final double id1 = listShell.get(j).z;
-//                segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
-//                segRighInner = segRighShell.offset(-hmDist.get(id1));
-//
-//                int k = (i == listShell.size() - 1) ? 0 : i + 1;
-//                final double id2 = listShell.get(i).z;
-//                segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
-//                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
-//
-//                //Точка пересечения сегментов
-//                cross = segLeftInner.intersection(segRighInner);
-//
-//                if (cross != null) {
-//                    cross.z = listShell.get(i).z;
-//                    listBuffer.add(cross);
-//                }
-//            }
-//            listBuffer.add(listBuffer.get(0));
-//            Polygon geoBuffer = gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
-//
-//            result = geoBuffer;
-//
+            //Перебор левого и правого сегмента от точки пересечения 
+            let j = (i === 0) ? listShell.length - 2 : i - 1;
+            const id1 = listShell[j].z;
+            
+            debugger;
+            
+            UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
+            UGeo.segRighInner = UGeo.segRighShell.offset(-hmDist[id1]);
+
+            let k = (i === listShell.length - 1) ? 0 : i + 1;
+            const id2 = listShell[i].z;
+            UGeo.segLeftShell.setCoordinates(new jsts.geom.Coordinate(listShell[i]),new jsts.geom.Coordinate(listShell[k]));
+            UGeo.segLeftInner = UGeo.segLeftShell.offset(-hmDist[id2]);
+
+            //Точка пересечения сегментов
+            UGeo.cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+
+            if (UGeo.cross != null) {
+                UGeo.cross.z = listShell[i].z;
+                listBuffer.push(cross);
+            }
+        }
+        listBuffer.push(listBuffer[0]);
+        let geoBuffer = Com5t.gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
+
+        result = geoBuffer;
+
     } catch (e) {
         console.log("Ошибка: UGeo.bufferPolygon() " + e);
     }
