@@ -4,7 +4,7 @@ import {Com5t} from './Com5t.js';
 export let UGeo = {};
 //------------------------------------------------------------------------------
 UGeo.segRighShell = new jsts.geom.LineSegment(), UGeo.segRighInner = null;
-UGeo.egLeftShell = new jsts.geom.LineSegment(), UGeo.segLeftInner = null;
+UGeo.segLeftShell = new jsts.geom.LineSegment(), UGeo.segLeftInner = null;
 UGeo.cross = new jsts.geom.Coordinate();
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
@@ -143,17 +143,13 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         let listBuffer = new Array();
         let listShell = geoShell.getCoordinates();
         for (let i = 0; i < listShell.length - 1; i++) {
-
+            debugger;
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
 
-            debugger;
-
             UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
-            let o2 = UGeo.segmentOffset([UGeo.segRighShell.p0, UGeo.segRighShell.p1], -37);
-//            UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell.getCoordinates(), -37);
-            //UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell, -hmDist.get(id1));
+            UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell, -hmDist.get(id1));           
 
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
@@ -161,10 +157,10 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             UGeo.segLeftInner = UGeo.segmentOffset(UGeo.segLeftShell, -hmDist.get(id2));
 
             //Точка пересечения сегментов
-            UGeo.cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+            let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
 
-            if (UGeo.cross != null) {
-                UGeo.cross.z = listShell[i].z;
+            if (cross !== null) {
+                cross.z = listShell[i].z;
                 listBuffer.push(cross);
             }
         }
@@ -179,44 +175,35 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
     return result;
 };
 //------------------------------------------------------------------------------
-UGeo.pointsToJSTSCoordinates = (pts) => {
-    var coords = [];
-    for (var i = 0, l = pts.length; i < l; i++) {
-        coords[i] = new jsts.geom.Coordinate(pts[i].x, pts[i].y);
-    }
-    return coords;
-};
-UGeo.JSTSCoordinatesToPoints = (coords) => {
-    var pts = [];
-    for (var i = 0, l = coords.length; i < l; i++) {
-        pts[i] = L.point(coords[i].x, coords[i].y);
-    }
-    return pts;
-};
-//https://github.com/drnextgis/Leaflet.PolylineOffset
-UGeo.segmentOffset = (pts, offset) => {
-    let arr = [];
-    for (var i = 0; i < pts.length; i++) {
-        let p = pts[i];
-
-        //Вычисляем смещенные точки
-        let dx = p.x2 - p.x1;
-        let dy = p.y2 - p.y1;
-        let length = Math.sqrt(dx * dx + dy * dy);
-
-        // Единичный вектор направления
-        let ux = dx / length;
-        let uy = dy / length;
-
-        // Перпендикулярный вектор (для смещения вправо)
-        let vx = -uy;
-        let vy = ux;
-
-        // Смещенные точки
-        let newX1 = x1 + offset * vx;
-        let newY1 = y1 + offset * vy;
-        let newX2 = x2 + offset * vx;
-        let newY2 = y2 + offset * vy;
-    }
+UGeo.segmentOffset = (lineSegm, offsetDistance) => {
+    let offset0 = UGeo.pointAlongOffset(lineSegm, 0, offsetDistance);
+    let offset1 = UGeo.pointAlongOffset(lineSegm, 1, offsetDistance);
+    return new jsts.geom.LineSegment(offset0, offset1);
 };
 //------------------------------------------------------------------------------
+UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
+
+    let segx = lineSegm.p0.x + segmentLengthFraction * (lineSegm.p1.x - lineSegm.p0.x);
+    let segy = lineSegm.p0.y + segmentLengthFraction * (lineSegm.p1.y - lineSegm.p0.y);
+    //let segz = (segmentLengthFraction === 0) ? lineSegm.p0.z : lineSegm.p1.z;
+
+    let dx = lineSegm.p1.x - lineSegm.p0.x;
+    let dy = lineSegm.p1.y - lineSegm.p0.y;
+    let len = Math.hypot(dx, dy);
+    let ux = 0.0;
+    let uy = 0.0;
+    if (offsetDistance !== 0.0) {
+        ux = offsetDistance * dx / len;
+        uy = offsetDistance * dy / len;
+    }
+
+    let offsetx = segx - uy;
+    let offsety = segy + ux;
+
+    let coord = new jsts.geom.Coordinate(lineSegm.p0);
+    coord.setX(offsetx);
+    coord.setY(offsety);
+    //coord.setZ(segz);
+    return coord;
+};
+//------------------------------------------------------------------------------  
