@@ -19,6 +19,10 @@ UGeo.radToDeg = (rad) => {
     return rad / (Math.PI / 180);
 };
 //------------------------------------------------------------------------------
+UGeo.polyCurve = (geoShell, geoInner, ID) => {
+    
+};
+//------------------------------------------------------------------------------
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
     //debugger;
@@ -40,22 +44,19 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             let polyRect = UGeo.bufferRectangl(geoShell, hm);
             let polyArch = UGeo.polyRect.union(polyCurv);
 
-            ring = polyArch.getInteriorRingN(0);
-            poly = gf.createPolygon(ring);
-            poly.normalize();
-            UGeo.updateZet(poly, polyRect);
-            return poly;
+            let ring = polyArch.getInteriorRingN(0);
+            let polyCurve = Com5t.gf.createPolygon(ring);
+            polyCurve.normalize();
+            UGeo.updateZet(polyCurve, polyRect);
+            return polyCurve;
 
         } else {
-            poly1 = UGeo.bufferPolygon(geoShell, hm);
-            return poly1;
+            let polyRect = UGeo.bufferPolygon(geoShell, hm);
+            return polyRect;
         }
-        //Test.init(poly1, poly2); 
     } catch (e) {
         console.log("Ошибка: uGeo.bufferGeometry() " + e);
     }
-    return null;
-
 };
 //------------------------------------------------------------------------------
 //TODO Гадкая функция. Надо переписать!
@@ -137,19 +138,16 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 };
 //------------------------------------------------------------------------------    
 UGeo.bufferPolygon = (geoShell, hmDist) => {
-
-    let result = Com5t.gf.createPolygon();
     try {
         let listBuffer = new Array();
         let listShell = geoShell.getCoordinates();
         for (let i = 0; i < listShell.length - 1; i++) {
-            debugger;
+
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
-
             UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
-            UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell, -hmDist.get(id1));           
+            UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell, -hmDist.get(id1));
 
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
@@ -158,21 +156,18 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
 
             //Точка пересечения сегментов
             let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
-
             if (cross !== null) {
                 cross.z = listShell[i].z;
-                listBuffer.push(cross);
+                let p = new jsts.geom.Coordinate(cross.x, cross.y, cross.z);
+                listBuffer.push(p);
             }
         }
         listBuffer.push(listBuffer[0]);
-        let geoBuffer = Com5t.gf.createPolygon(listBuffer.toArray(new Coordinate[0]));
-
-        result = geoBuffer;
+        return  Com5t.gf.createPolygon(listBuffer);
 
     } catch (e) {
         console.log("Ошибка: UGeo.bufferPolygon() " + e);
     }
-    return result;
 };
 //------------------------------------------------------------------------------
 UGeo.segmentOffset = (lineSegm, offsetDistance) => {

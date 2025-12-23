@@ -1,5 +1,6 @@
 
 import {UGeo} from './uGeo.js';
+import {Com5t} from './Com5t.js';
 import {UseSideTo} from '../../enums/UseSideTo.js';
 import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
@@ -9,7 +10,7 @@ export class ElemFrame extends ElemSimple {
 
     radiusArc = 0; //радиус арки
     lengthArc = 0; //длина арки  
-    
+
     constructor(winc, gson, owner) {
         try {
             super(winc, gson, owner);
@@ -52,6 +53,24 @@ export class ElemFrame extends ElemSimple {
 
     setLocation() {
         try {
+            let geoShell = this.owner.area.getGeometryN(0), geoInner = this.owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
+            let cooShell = geoShell.getCoordinates(), cooInner = geoInner.getCoordinates();
+            for (let i = 0; i < cooShell.length; i++) {
+                if (cooShell[i].z === this.id) {
+                    if (this.gson.h !== undefined) { //полигон арки
+
+                        this.area = UGeo.polyCurve(geoShell, geoInner, this.id);
+                    } else { //полигон рамы   
+                        this.area = Com5t.gf.createPolygon([
+                            new jsts.geom.Coordinate(this.x1, this.y1),
+                            new jsts.geom.Coordinate(this.x2, this.y2),
+                            new jsts.geom.Coordinate(cooInner[i + 1].x, cooInner[i + 1].y),
+                            new jsts.geom.Coordinate(cooInner[i].x, cooInner[i].y),
+                            new jsts.geom.Coordinate(this.x1, this.y1)]);
+                    }
+                    break;
+                }
+            }
             consoleLog('Exec: ElemFrame.setLocation()');
         } catch (e) {
             errorLog('Error: ElemFrame.setLocation() ' + e.message);
