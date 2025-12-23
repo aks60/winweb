@@ -5,6 +5,7 @@ export class Com5t {
     static MAXPOINT = 1000;
     static gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000)); //фабрика геометрий    
 
+    id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции
     owner = null; //владелец
     gson = null; //json объект элемента
@@ -21,6 +22,7 @@ export class Com5t {
 
     constructor(winc, gson, owner) {
         try {
+            this.id = gson.id;
             this.winc = winc;
             this.owner = owner; //владелец
             this.gson = gson;

@@ -24,6 +24,7 @@ UGeo.radToDeg = (rad) => {
 //------------------------------------------------------------------------------
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
+    debugger;
     const cooShell = geoShell.getCoordinates();
     let hm = new Map();
     try {
@@ -153,6 +154,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             debugger;
             
             UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
+            let o1 = -hmDist[id1];
             UGeo.segRighInner = UGeo.segRighShell.offset(-hmDist[id1]);
 
             let k = (i === listShell.length - 1) ? 0 : i + 1;
