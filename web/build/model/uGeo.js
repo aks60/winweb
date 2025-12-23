@@ -180,7 +180,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let segx = lineSegm.p0.x + segmentLengthFraction * (lineSegm.p1.x - lineSegm.p0.x);
     let segy = lineSegm.p0.y + segmentLengthFraction * (lineSegm.p1.y - lineSegm.p0.y);
-    //let segz = (segmentLengthFraction === 0) ? lineSegm.p0.z : lineSegm.p1.z;
+    let segz = (segmentLengthFraction === 0) ? lineSegm.p0.z : lineSegm.p1.z;
 
     let dx = lineSegm.p1.x - lineSegm.p0.x;
     let dy = lineSegm.p1.y - lineSegm.p0.y;
@@ -198,7 +198,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     let coord = new jsts.geom.Coordinate(lineSegm.p0);
     coord.setX(offsetx);
     coord.setY(offsety);
-    //coord.setZ(segz);
+    coord.setZ(segz);
     return coord;
 };
 //------------------------------------------------------------------------------  
