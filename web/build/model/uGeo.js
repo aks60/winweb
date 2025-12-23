@@ -1,13 +1,10 @@
 //------------------------------------------------------------------------------
 import {Com5t} from './Com5t.js';
-import {LineSegm} from '/winweb/common/LineSegm.js';
 //------------------------------------------------------------------------------
 export let UGeo = {};
 //------------------------------------------------------------------------------
-UGeo.segRighShell = new LineSegm();
-UGeo.segRighInner = null;
-UGeo.egLeftShell = new LineSegm();
-UGeo.segLeftInner = null;
+UGeo.segRighShell = new jsts.geom.LineSegment(), UGeo.segRighInner = null;
+UGeo.egLeftShell = new jsts.geom.LineSegment(), UGeo.segLeftInner = null;
 UGeo.cross = new jsts.geom.Coordinate();
 //------------------------------------------------------------------------------
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
@@ -24,17 +21,17 @@ UGeo.radToDeg = (rad) => {
 //------------------------------------------------------------------------------
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
-    debugger;
+    //debugger;
     const cooShell = geoShell.getCoordinates();
     let hm = new Map();
     try {
         //Смещения сегментов
         for (let el of list) {
-            const rec = (el.artiklRec === null) ? dbset.artikl.vrev : el.artiklRec;
+            const rec = (el.artiklRec === null) ? dbset.artikl.vrec : el.artiklRec;
             if (opt === 0) {
-                hm.set(el.gson.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] + amend);
+                hm.set(el.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] + amend);
             } else if (opt === 1) {
-                hm.set(el.gson.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] - rec[ARTIKL.size_falz] + amend);
+                hm.set(el.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] - rec[ARTIKL.size_falz] + amend);
             }
         }
         if (cooShell.length > Com5t.MAXSIDE) {
@@ -109,12 +106,12 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 //                int j = (i == 0) ? listShell.size() - 1 : i - 1;
 //                final double id1 = listShell.get(j).z;
 //                segRighShell.setCoordinates(listShell.get(j), listShell.get(i));
-//                segRighInner = segRighShell.offset(-hmDist.get(id1));
+//                segRighInner = UGeo.segmentOffset(segRighShell, -hmDist.get(id1));
 //
 //                int k = (i == listShell.size() - 1) ? 0 : i + 1;
 //                final double id2 = listShell.get(i).z;
 //                segLeftShell.setCoordinates(listShell.get(i), listShell.get(k));
-//                segLeftInner = segLeftShell.offset(-hmDist.get(id2));
+//                segLeftInner = UGeo.segmentOffset(segLeftShell, -hmDist.get(id2));
 //
 //                //Точка пересечения сегментов
 //                cross = segLeftInner.lineIntersection(segRighInner);
@@ -140,7 +137,7 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 };
 //------------------------------------------------------------------------------    
 UGeo.bufferPolygon = (geoShell, hmDist) => {
-    
+
     let result = Com5t.gf.createPolygon();
     try {
         let listBuffer = new Array();
@@ -150,17 +147,18 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
-            
+
             debugger;
-            
+
             UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
-            let o1 = -hmDist[id1];
-            UGeo.segRighInner = UGeo.segRighShell.offset(-hmDist[id1]);
+            let o2 = UGeo.segmentOffset([UGeo.segRighShell.p0, UGeo.segRighShell.p1], -37);
+//            UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell.getCoordinates(), -37);
+            //UGeo.segRighInner = UGeo.segmentOffset(UGeo.segRighShell, -hmDist.get(id1));
 
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
-            UGeo.segLeftShell.setCoordinates(new jsts.geom.Coordinate(listShell[i]),new jsts.geom.Coordinate(listShell[k]));
-            UGeo.segLeftInner = UGeo.segLeftShell.offset(-hmDist[id2]);
+            UGeo.segLeftShell.setCoordinates(new jsts.geom.Coordinate(listShell[i]), new jsts.geom.Coordinate(listShell[k]));
+            UGeo.segLeftInner = UGeo.segmentOffset(UGeo.segLeftShell, -hmDist.get(id2));
 
             //Точка пересечения сегментов
             UGeo.cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
@@ -180,3 +178,45 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
     }
     return result;
 };
+//------------------------------------------------------------------------------
+UGeo.pointsToJSTSCoordinates = (pts) => {
+    var coords = [];
+    for (var i = 0, l = pts.length; i < l; i++) {
+        coords[i] = new jsts.geom.Coordinate(pts[i].x, pts[i].y);
+    }
+    return coords;
+};
+UGeo.JSTSCoordinatesToPoints = (coords) => {
+    var pts = [];
+    for (var i = 0, l = coords.length; i < l; i++) {
+        pts[i] = L.point(coords[i].x, coords[i].y);
+    }
+    return pts;
+};
+//https://github.com/drnextgis/Leaflet.PolylineOffset
+UGeo.segmentOffset = (pts, offset) => {
+    let arr = [];
+    for (var i = 0; i < pts.length; i++) {
+        let p = pts[i];
+
+        //Вычисляем смещенные точки
+        let dx = p.x2 - p.x1;
+        let dy = p.y2 - p.y1;
+        let length = Math.sqrt(dx * dx + dy * dy);
+
+        // Единичный вектор направления
+        let ux = dx / length;
+        let uy = dy / length;
+
+        // Перпендикулярный вектор (для смещения вправо)
+        let vx = -uy;
+        let vy = ux;
+
+        // Смещенные точки
+        let newX1 = x1 + offset * vx;
+        let newY1 = y1 + offset * vy;
+        let newX2 = x2 + offset * vx;
+        let newY2 = y2 + offset * vy;
+    }
+};
+//------------------------------------------------------------------------------
