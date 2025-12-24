@@ -45,7 +45,7 @@ export class Com5t {
         }
     }
     color() {
-        return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
+        //return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
     
     get x1() {

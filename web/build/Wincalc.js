@@ -29,6 +29,9 @@ export class Wincalc {
     color2Rec; //цвет внутр.
     color3Rec; //цвет внещний 
     root; //объектная модель конструкции
+    cnv; //канва рисования 2d
+    sceleton = false; //см. paint
+    ctx; //графический контекст 2d    
 
     constructor(canvas = null) {
         try {
