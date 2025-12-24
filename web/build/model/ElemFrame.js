@@ -81,6 +81,7 @@ export class ElemFrame extends ElemSimple {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
                 Draw.polygon(this.winc, this.area);
+                //Draw.line(this.winc, 0, 0, 40, 40, 'rgb(100,100,100)');
             }
         } catch (e) {
             errorLog('Error: ElemFrame.paint() ' + e.message);

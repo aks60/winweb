@@ -4,7 +4,7 @@ export class Draw {
     static line(winc, x1, y1, x2, y2, rgb) {
         let ctx = winc.ctx;
         ctx.save();
-        ctx.strokeStyle = (rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
+        ctx.strokeStyle = "blue"; //(rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -15,16 +15,18 @@ export class Draw {
     }
 
     static polygon(winc, polygon) {
+        
         let ctx = winc.ctx;
-        const coo = polygon.getCoordinates(); // Это массив точек
-        ctx.beginPath();
-        ctx.moveTo(coo[0][0], coo[0][1]); // Перемещаемся к первой точке
+        const coo = polygon.getCoordinates(); // это массив точек
+        ctx.beginPath();  
+
+        ctx.moveTo(coo[0][0], coo[0][1]); // перемещаемся к первой точке
         for (let i = 1; i < coo.length; i++) {
-            ctx.lineTo(coo[i][0], coo[i][1]); // Рисуем линии
+            ctx.lineTo(coo[i].x, coo[i].y); // рисуем линии
         }
-        ctx.closePath(); // Замыкаем контур
-        ctx.strokeStyle = 'blue';
-        ctx.lineWidth = 2;
+       ctx.closePath(); // Замыкаем контур
+        //ctx.strokeStyle = 'blue';
+        //ctx.fillStyle = 'blue';
         ctx.stroke(); // Рисуем контур
     }
 
@@ -43,7 +45,7 @@ export class Draw {
         ctx.stroke();
         ctx.restore();
     }
-    
+
     static polygon_full(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
         let ctx = winc.ctx;

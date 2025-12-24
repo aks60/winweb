@@ -24,7 +24,8 @@ export class Wincalc {
     listElem = new Array(); //список элем.
     listJoin = new Array(); //список соед.
     listAll = new Array();  //список всех компонентов (area + elem)
-    listKit = new Array();  //комплектация    
+    listKit = new Array();  //комплектация   
+    scale = 1; //коэффициент сжатия
     color1Rec; //цвет базовый
     color2Rec; //цвет внутр.
     color3Rec; //цвет внещний 
@@ -33,13 +34,13 @@ export class Wincalc {
     sceleton = false; //см. paint
     ctx; //графический контекст 2d    
 
-    constructor(canvas = null) {
+    constructor(canvas) {
         try {
             this.cnv = canvas;
             this.ctx = canvas.getContext('2d');
         } catch (e) {
             errorLog('Error: Wincalc.constructor() ' + e.message);
-    }
+        }
     }
 
     build(script) {
@@ -78,13 +79,13 @@ export class Wincalc {
             }
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
-            
+
             this.listElem.forEach(e => e.initArtikle()); //артиклы элементов
-            
+
             this.location(); //кальк. коорд. элементов конструкции    
-            
+
             this.draw(); //прорисовка конструкции
-            
+
             return this;
 
         } catch (e) {
@@ -151,7 +152,7 @@ export class Wincalc {
 
     //Кальк.коорд. элементов конструкции
     location() {
-        try {            
+        try {
             this.root.setLocation();
 
             for (let elem of this.listElem) {
@@ -176,19 +177,32 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            this.listArea.filter(el => el.gson.type == 'RECTANGL').forEach((el) => el.paint());
-            this.listElem.filter(el => el.gson.type == 'BOX_SIDE').forEach((el) => el.paint());
+            debugger;
+            this.ctx.save();
+
+            //Настроим контекст
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+            this.scale = (this.cnv.width / this.width() < this.cnv.height / this.height())
+                    ? this.cnv.width / this.width() : this.cnv.height / this.height();
+            this.ctx.scale(this.scale, this.scale);
+            this.ctx.lineWidth = 8;
+
+            this.listArea.filter(el => el.gson.type === 'RECTANGL').forEach((el) => el.paint());
+            this.listElem.filter(el => el.gson.type === 'BOX_SIDE').forEach((el) => el.paint());
+
+            this.ctx.restore();
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }
     }
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     width() {
-        //return root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
+        return this.root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }
 
     height() {
-        //return root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
+        return this.root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
     }
     // </editor-fold>     
 
