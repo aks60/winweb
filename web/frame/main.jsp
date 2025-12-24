@@ -22,6 +22,7 @@
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
+        <script type="module" src="./build/making/drawing.js"></script>
 
         <script type="text/javascript">
             //Глобальные объекты
@@ -67,6 +68,8 @@
         <script type="module">
             //import {Test1, Test2} from './frame/main.js';
             //Test2();
+            debugger;
+            var OBJ14 = new jsts.awt.ShapeWriter();
 
             $("#outbody").load('frame/login.jsp', function () {
                 login.user_connect();

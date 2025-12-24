@@ -87,7 +87,6 @@ export class ElemFrame extends ElemSimple {
 
                 //this.winc.ctx.setColor([0, 0, 0]);
                 //this.winc.ctx.draw(shape);
-
             }
             consoleLog('Exec: ElemFrame.paint()');
         } catch (e) {
