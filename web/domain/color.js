@@ -7844,9 +7844,9 @@ class Color {
 }
 
 Color.defineFunctions({
-    gets,
+    get,
     getAll,
-    sets,
+    set,
     setAll,
     to,
     equals,
