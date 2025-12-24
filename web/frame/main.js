@@ -18,12 +18,11 @@ export function Test1() {
         var OBJ10 = new jsts.geom.PrecisionModel(1000);
         var OBJ11 = new jsts.geom.GeometryFactory(OBJ10);
         var OBJ12 = new jsts.util.GeometricShapeFactory(OBJ11);
-        var OBJ13 = new jsts.geom.util.AffineTransformation;
-        //var OBJ14 = new jsts.awt.ShapeWriter;
-        var OBJ15 = new jsts.geom.Envelope;
-        var OBJ16 = new jsts.geom.Geometry;
-        var OBJ17 = new jsts.geom.LineString;
-        //var OBJ18 = new jsts.geom.Polygon;
+        var OBJ13 = new jsts.geom.util.AffineTransformation();
+        var OBJ15 = new jsts.geom.Envelope();
+        var OBJ16 = new jsts.geom.Geometry();
+        var OBJ17 = new jsts.geom.LineString();
+        //var OBJ18 = new jsts.geom.Polygon();
 
         {
             let coordinates = [
@@ -33,18 +32,18 @@ export function Test1() {
                 new jsts.geom.Coordinate(0, 10),
                 new jsts.geom.Coordinate(0, 0) // Closing point
             ];
-            let precisionModel = new jsts.geom.PrecisionModel(1000);
-            let geometryFactory = new jsts.geom.GeometryFactory(precisionModel);
-            let shell = geometryFactory.createLinearRing(coordinates);
-            let polygon = geometryFactory.createPolygon(shell, null);
+            let pm = new jsts.geom.PrecisionModel(1000);
+            let gf = new jsts.geom.GeometryFactory(pm);
+            let shell = gf.createLinearRing(coordinates);
+            let polygon = gf.createPolygon(shell, null);
             console.log("Polygon area:", polygon.getArea());
             console.log("Polygon centroid:", polygon.getCentroid().toString());
             console.log("WKT representation:", new jsts.io.WKTWriter().write(polygon));
         }
 
-        alert(`Превет jstsTest().`);
+        alert(`Превет Test1().`);
     } catch (e) {
-        alert(`Ошибка jsts(). => ` + e.message);
+        alert(`Ошибка: Test1()  ` + e.message);
     }
 }
 
