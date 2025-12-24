@@ -20,10 +20,10 @@ export class ElemGlass extends Com5t {
         }
         //Цвет стекла
         if (this.gson.param != undefined && this.gson.param.colorGlass != undefined)
-            this.color1Rec = findef(this.gson.param.colorGlass, COLOR.id, dbset.colorList);
+            this.color1Rec = findef(this.gson.param.colorGlass, COLOR.id, dbset.color);
         else {
-            let color_fk = findef(this.artiklRec[ARTIKL.id], ARTDET.artikl_id, dbset.artdetList).list[ARTDET.color_fk];
-            this.color1Rec = findef(color_fk, COLOR.id, dbset.colorList);
+            let color_fk = findef(this.artiklRec[ARTIKL.id], ARTDET.artikl_id, dbset.artdet).list[ARTDET.color_fk];
+            this.color1Rec = findef(color_fk, COLOR.id, dbset.color);
         }
     }
 

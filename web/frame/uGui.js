@@ -329,11 +329,6 @@ function createVirtualRec(size, virtualData) {
 }
 //------------------------------------------------------------------------------            
 function findef(key, index, tname) {
-   alert('см. findefs()');
-   return null;
-}
-//------------------------------------------------------------------------------            
-function findefs(key, index, tname) {
     try {
         let record = tname.list.find(rec => key == rec[index]);
         if (record != undefined) {
@@ -344,7 +339,7 @@ function findefs(key, index, tname) {
             return new Array(40);
         }
     } catch (e) {
-        console.log('Error: uGui.findefs() ' + e.message);
+        console.log('Error: uGui.findef() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------    

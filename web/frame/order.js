@@ -76,7 +76,7 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findefs(prjprodID, PRJPROD.id, dbset.prjprod);
+        order.prjprodRec = findef(prjprodID, PRJPROD.id, dbset.prjprod);
     }
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
@@ -95,7 +95,7 @@ order.load_table = function (table1, table2) {
             num_acc: tr[PROJECT.num_acc],
             date4: tr[PROJECT.date4],
             date6: tr[PROJECT.date6],
-            partner: findefs(tr[PROJECT.prjpart_id], DEALER.id, dbset.dealer)[DEALER.partner],
+            partner: findef(tr[PROJECT.prjpart_id], DEALER.id, dbset.dealer)[DEALER.partner],
             manager: tr[PROJECT.manager],
             prjpart_id: tr[PROJECT.prjpart_id]
         });

@@ -55,9 +55,9 @@ export class Wincalc {
             //Инит конструктива
             this.id = this.gson.id;
             this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
-            this.color1Rec = findefs(this.gson.color1, COLOR.id, dbset.color);
-            this.color2Rec = findefs(this.gson.color2, COLOR.id, dbset.color);
-            this.color3Rec = findefs(this.gson.color3, COLOR.id, dbset.color);
+            this.color1Rec = findef(this.gson.color1, COLOR.id, dbset.color);
+            this.color2Rec = findef(this.gson.color2, COLOR.id, dbset.color);
+            this.color3Rec = findef(this.gson.color3, COLOR.id, dbset.color);
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
