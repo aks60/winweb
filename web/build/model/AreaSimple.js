@@ -13,8 +13,8 @@ export class AreaSimple extends Com5t {
             super(winc, gson, owner);
             this.initConstructiv(gson.param);
             this.initParametr(gson.param);
-            winc.listArea.push(this);
-            winc.listAll.push(this);
+            this.winc.listArea.push(this);
+            this.winc.listAll.push(this);
         } catch (e) {
             errorLog('Error: AreaSimple.constructor() ' + e.message);
         }
@@ -25,12 +25,15 @@ export class AreaSimple extends Com5t {
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
     initConstructiv(param) {
-        if (param !== undefined && param[PKjson.sysprofID] !== undefined) {//профили через параметр
-            sysprofRec = dbset.sysprof.list.find3(param[PKjson.sysprofID]);
+        try {
+            if (param !== undefined && param[PKjson.sysprofID] !== undefined) {//профили через параметр
+                sysprofRec = dbset.sysprof.list.find3(param[PKjson.sysprofID]);
+            }//else if(this.owner.id === 0) {
+            //    sysprofRec = dbset.sysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
+            //}
+        } catch (e) {
+            errorLog('Error: AreaSimple.initConstructiv() ' + e.message);
         }
-        //else if(this.owner.id === 0) {
-        //    sysprofRec = dbset.sysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
-        //}
     }
     /**
      * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
@@ -44,9 +47,8 @@ export class AreaSimple extends Com5t {
             if (param !== undefined && param[PKjson.ioknaParam] !== undefined) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 let ioknaParamArr = param[PKjson.ioknaParam];
-                //Цикл по пааметрам менеджера
-                for (const ioknaID of ioknaParamArr) {
-                    //Record paramsRec, syspar1Rec;   
+                for (const ioknaID of ioknaParamArr) { //цикл по пааметрам менеджера
+                    //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
                         let paramsRec = dbset.params.find(ioknaID); //параметр менеджера
                         let syspar1Rec = this.winc.mapPardef[paramsRec[PARAMS.groups_id]];

@@ -3,7 +3,9 @@ export class Com5t {
 
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
-    static gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel(1000)); //фабрика геометрий    
+    static gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel()); //фабрика геометрий    
+    //static gsf = new jsts.geom.GeometricShapeFactory(gf);
+    //static aff = new jsts.geom.AffineTransformation();    
 
     id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции
@@ -24,8 +26,8 @@ export class Com5t {
         try {
             this.id = gson.id;
             this.winc = winc;
-            this.owner = owner; //владелец
-            this.gson = gson;
+            this.owner = owner;
+            this.gson = gson; 
             this.color1Rec = winc.color1Rec;
             this.color2Rec = winc.color2Rec;
             this.color3Rec = winc.color3Rec;
@@ -33,15 +35,28 @@ export class Com5t {
             errorLog('Error: Com5t.constructor() ' + e.message);
         }
     }
+    //Длина компонента
+    length() {
+        if(this.gson.h !== undefined) {
+            return new jsts.geom.LineSegment(this.x1, this.y1, this.x2, this.y2).getLength();
+        } else {
+           //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
+           consoleLog('Com5t.length() - функция не реализована');
+        }
+    }
+    
     get x1() {
         return this.gson.x1;
     }
+    
     get y1() {
         return this.gson.y1;
     }
+    
     get x2() {
         return this.gson.x2;
     }
+    
     get y2() {
         return this.gson.y2;
     }

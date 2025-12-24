@@ -71,7 +71,6 @@ export class ElemFrame extends ElemSimple {
                     break;
                 }
             }
-            consoleLog('Exec: ElemFrame.setLocation()');
         } catch (e) {
             errorLog('Error: ElemFrame.setLocation() ' + e.message);
         }
@@ -79,7 +78,6 @@ export class ElemFrame extends ElemSimple {
 
     paint() {
         try {
-            //alert('Exec: ElemFrame.paint()');
             consoleLog('Exec: ElemFrame.paint()');
         } catch (e) {
             errorLog('Error: AreaSimple.paint() ' + e.message);

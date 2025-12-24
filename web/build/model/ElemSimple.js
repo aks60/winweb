@@ -9,11 +9,7 @@ export class ElemSimple extends Com5t {
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     delta = 3;
     SIZE = 20;
-    timer = new Timer(() => {
-        alert('exec Timer()');
-    }, 3000);
-    spcRec = null; //спецификация элемента
-    borderColor = 0; //Color.BLACK;
+    timer = new Timer(() => alert('exec Timer()'), 160);
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
@@ -24,9 +20,13 @@ export class ElemSimple extends Com5t {
     }
 
     addListenerEvents() {
-
+        this.timer.stop();
     }
 
+    moveXY(x, y) {
+
+    }
+    
     layout() {
         try {
             const anglHor = UGeo.anglHor(this.x1, this.y1, this.x2, this.y2);
@@ -52,7 +52,7 @@ export class ElemSimple extends Com5t {
     paint() {
 
     }
-    
+
     setDimension(x1, y1, x2, y2) {
         this.gson.x1 = x1;
         this.gson.y1 = y1;
