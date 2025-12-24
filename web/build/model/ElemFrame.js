@@ -5,6 +5,7 @@ import {UseSideTo} from '../../enums/UseSideTo.js';
 import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
+import {Draw} from '../making/Draw.js';
 
 export class ElemFrame extends ElemSimple {
 
@@ -79,7 +80,8 @@ export class ElemFrame extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
-
+                consoleLog('Exec: ElemFrame.paint()');
+                Draw.polygon(this.winc, this.area);
                 //super.paint();
                 //this.winc.ctx.setColor(this.color());
                 //shape = new jsts.awt.ShapeWriter().toShape(this.area.getGeometryN(0));
@@ -88,7 +90,6 @@ export class ElemFrame extends ElemSimple {
                 //this.winc.ctx.setColor([0, 0, 0]);
                 //this.winc.ctx.draw(shape);
             }
-            consoleLog('Exec: ElemFrame.paint()');
         } catch (e) {
             errorLog('Error: AreaSimple.paint() ' + e.message);
         }

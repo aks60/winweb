@@ -13,7 +13,7 @@ export class AreaTrapeze extends AreaSimple {
 
     setLocation() {
         try {
-            consoleLog('Exec: AreaTrapeze.setLocation()');
+            //console.log('Exec: AreaTrapeze.setLocation()');
         } catch (e) {
             errorLog('Error: AreaTrapeze.setLocation() ' + e.message);
         }

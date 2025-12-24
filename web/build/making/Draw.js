@@ -1,26 +1,7 @@
 //------------------------------------------------------------------------------
 export class Draw {
 
-    constructor() {
-    }
-
-    stroke_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
-        let ctx = winc.ctx;
-        ctx.save();
-        ctx.strokeStyle = 'rgb(0,0,0)';
-        ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x3, y3);
-        ctx.lineTo(x4, y4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-    }
-
-    line(winc, x1, y1, x2, y2, rgb) {
+    static line(winc, x1, y1, x2, y2, rgb) {
         let ctx = winc.ctx;
         ctx.save();
         ctx.strokeStyle = (rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
@@ -33,7 +14,7 @@ export class Draw {
         ctx.restore();
     }
 
-    polygon(winc, polygon) {
+    static polygon(winc, polygon) {
         let ctx = winc.ctx;
         const coo = polygon.getCoordinates(); // Это массив точек
         ctx.beginPath();
@@ -47,7 +28,23 @@ export class Draw {
         ctx.stroke(); // Рисуем контур
     }
 
-    full_polygon(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
+    static polygon_stroke(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
+        let ctx = winc.ctx;
+        ctx.save();
+        ctx.strokeStyle = 'rgb(0,0,0)';
+        ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.lineTo(x4, y4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+    
+    static polygon_full(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {
 
         let ctx = winc.ctx;
         ctx.save();
@@ -63,7 +60,7 @@ export class Draw {
         ctx.restore();
     }
 
-    full_arc(winc, x, y, r, ang1, ang2, lineWidth, strokeStyle, fillStyle, fill) {
+    static arc_full(winc, x, y, r, ang1, ang2, lineWidth, strokeStyle, fillStyle, fill) {
         let ctx = winc.ctx;
         ctx.save();
         ctx.strokeStyle = (strokeStyle) ? '#' + strokeStyle[COLOR.rgb].toString(16) : 'rgb(0,0,0)';
@@ -77,14 +74,14 @@ export class Draw {
         ctx.restore();
     }
 
-    text(winc) {
+    static text(winc) {
 
         let ctx = winc.ctx;
         ctx.font = "30px Arial";
         ctx.strokeText("Hello World", 10, 50);
     }
 
-    elements(winc) {
+    static elements(winc) {
         try {
             let gson = winc.gson, cnv = winc.cnv, ctx = winc.ctx, arr = winc.elemList;
 

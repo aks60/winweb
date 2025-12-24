@@ -13,7 +13,7 @@ export class AreaArch extends AreaSimple {
     
     setLocation() {
         try {
-            consoleLog('Exec: AreaArch.setLocation()');
+            console.log('Exec: AreaArch.setLocation()');
         } catch (e) {
             errorLog('Error: AreaArch.setLocation() ' + e.message);
         }

@@ -82,7 +82,7 @@ export class AreaSimple extends Com5t {
 
     paint() {
         try {
-            consoleLog('Exec: AreaSimple.paint()');
+            //console.log('Exec: AreaSimple.paint()');
         } catch (e) {
             errorLog('Error: AreaSimple.paint() ' + e.message);
         }

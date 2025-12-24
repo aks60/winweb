@@ -41,7 +41,7 @@ export class Com5t {
             return new jsts.geom.LineSegment(this.x1, this.y1, this.x2, this.y2).getLength();
         } else {
            //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
-           consoleLog('Com5t.length() - функция не реализована');
+           console.log('Com5t.length() - функция не реализована');
         }
     }
     color() {

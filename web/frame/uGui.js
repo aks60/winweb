@@ -360,10 +360,6 @@ Math.toDegrees = function (x) {
 Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
-//------------------------------------------------------------------------------ 
-function consoleLog(mes) {
-    //console.log(mes);
-}
 function errorLog(mes) {
    alert(mes); 
 }
