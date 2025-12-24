@@ -74,9 +74,14 @@ export class Wincalc {
                 this.root.type = Type.DOOR;
             }
 
-            this.creator(this.root, this.gson); //создадим элементы конструкции       
-            this.location(); //кальк. коорд. элементов конструкции       
+            this.creator(this.root, this.gson); //создадим элементы конструкции    
+            
+            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов
+            
+            this.location(); //кальк. коорд. элементов конструкции    
+            
             this.draw(); //прорисовка конструкции
+            
             return this;
 
         } catch (e) {
@@ -143,8 +148,7 @@ export class Wincalc {
 
     //Кальк.коорд. элементов конструкции
     location() {
-        try {
-            this.listElem.forEach(e => e.initArtikle());
+        try {            
             this.root.setLocation();
 
             for (let elem of this.listElem) {

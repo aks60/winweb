@@ -77,6 +77,14 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
         errorLog('Error: UCom.dbset.sysprof.find5() ' + e.message);
     }
 };
+//------------------------------------------------------------------------------
+dbset.sysprof.find3 = (_id) => {
+    let sysprof = dbset.sysprof.list.find(rec => rec.id === _id);
+    if (sysprof === undefined) {
+        sysprof = dbset.sysprof.vrec;
+    }
+    return sysprof;
+};
 //------------------------------------------------------------------------------ 
 dbset.artikl.find = (id, analog) => {
     try {
@@ -96,6 +104,15 @@ dbset.artikl.find = (id, analog) => {
         errorLog('Error: UCom.dbset.artikl.find() ' + e.message);
     }
 };
-//------------------------------------------------------------------------------    
+//------------------------------------------------------------------------------
+dbset.params.find = _id => {
+    let elem = dbset.params.list.find(rec => _id === rec.id);
+    if (elem === undefined) {
+        elem = dbset.params.vrec;
+    }
+    return elem;
+};
+//------------------------------------------------------------------------------
+
 
 

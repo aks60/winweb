@@ -18,15 +18,17 @@ export class AreaRectangl extends AreaSimple {
 
     setLocation() {
         try {
+            //Вершины рамы
             let cooBox = new Array;
             this.frames.forEach(frame => cooBox.push(new jsts.geom.Coordinate(frame.x1, frame.y1, frame.id)));
             cooBox.push(new jsts.geom.Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
 
+            //Аrea рамы  
             let geoShell = Com5t.gf.createPolygon(cooBox);
             let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 0);
-            let geoFalz = UGeo.bufferGeometry(geoShell,this.winc.listElem, 0, 1);
-            this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);            
-            
+            let geoFalz = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 1);
+            this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
+
         } catch (e) {
             errorLog('Error:AreaRectangl.setLocation() ' + e.message);
         }

@@ -1,4 +1,4 @@
-export const  Layout = {
+export const Layout = {
     ANY: [-1, 'Любая'],
     HORIZ: [-2, 'Горизонт.'],
     VERT: [-3, 'Вертикальн.'],
