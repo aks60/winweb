@@ -17,17 +17,19 @@ export class Draw {
     static polygon(winc, polygon) {
         
         let ctx = winc.ctx;
-        const coo = polygon.getCoordinates(); // это массив точек
+        ctx.save();
+        const coo = polygon.getCoordinates(); //это массив точек
         ctx.beginPath();  
-
-        ctx.moveTo(coo[0][0], coo[0][1]); // перемещаемся к первой точке
+        ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
         for (let i = 1; i < coo.length; i++) {
-            ctx.lineTo(coo[i].x, coo[i].y); // рисуем линии
+            ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
         }
-       ctx.closePath(); // Замыкаем контур
+       ctx.closePath(); //замыкаем контур
+       ctx.lineWidth = 8;
         //ctx.strokeStyle = 'blue';
         //ctx.fillStyle = 'blue';
-        ctx.stroke(); // Рисуем контур
+        ctx.stroke(); //рисуем контур
+        ctx.restore();
     }
 
     static polygon_stroke(winc, x1, x2, x3, x4, y1, y2, y3, y4, rgb) {

@@ -177,21 +177,13 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            debugger;
-            this.ctx.save();
-
-            //Настроим контекст
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
             this.scale = (this.cnv.width / this.width() < this.cnv.height / this.height())
                     ? this.cnv.width / this.width() : this.cnv.height / this.height();
             this.ctx.scale(this.scale, this.scale);
-            this.ctx.lineWidth = 8;
 
             this.listArea.filter(el => el.gson.type === 'RECTANGL').forEach((el) => el.paint());
             this.listElem.filter(el => el.gson.type === 'BOX_SIDE').forEach((el) => el.paint());
 
-            this.ctx.restore();
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }
