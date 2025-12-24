@@ -1,4 +1,4 @@
-
+//https://colorjs.io/dist/color.js
 export class Com5t {
 
     static MAXSIDE = 200;
@@ -43,6 +43,9 @@ export class Com5t {
            //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
            consoleLog('Com5t.length() - функция не реализована');
         }
+    }
+    color() {
+        return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
     
     get x1() {
