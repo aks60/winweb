@@ -188,6 +188,24 @@ export class Wincalc {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }
     }
+
+    //Рисуем polygon
+    paint(polygon) {
+        this.ctx.save();
+        const coo = polygon.getCoordinates(); //это массив точек
+        this.ctx.beginPath();
+        this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
+        for (let i = 1; i < coo.length; i++) {
+            this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
+        }
+        this.ctx.closePath(); //замыкаем контур
+        this.ctx.lineWidth = 8;
+        //this.ctx.strokeStyle = 'blue';
+        //this.ctx.fillStyle = 'blue';
+        this.ctx.stroke(); //рисуем контур
+        this.ctx.restore();
+    }
+
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     width() {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
