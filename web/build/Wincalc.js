@@ -96,13 +96,13 @@ export class Wincalc {
     //Цыклическое заполнение root по содержимому gson 
     creator(owner, gson) {
         try {
-            let hm = new Map();
+            let hmDip = new Map();
             for (let js of gson.childs) {
                 if (js.type === "BOX_SIDE") {
-                    let box = new ElemFrame(this, js, owner);
+                    const box = new ElemFrame(this, js, owner);
                     box.type = Type.BOX_SIDE;
-                    this.root.frames.push(box);
-                    hm.set(box, js);
+                    this.root.frames.push(box); //добавим ребёнка родителю
+                    hmDip.set(box, js); //погружение ареа
 
                 } else if (js.type === "STVORKA") {
                     //let stv = new AreaStvorka(this, js, owner);
@@ -123,17 +123,18 @@ export class Wincalc {
 //                    else if (js.type === "DOOR")
 //                        area.type = Type.DOOR;
 //                    this.root.childs.push(area);
-//                    hm.set(area, js);
+//                    hmDip.set(area, js);
 
                 } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type === "STOIKA") {
-//                    let cross = new ElemCross(this, js, owner);
-//                    if (js.type === "IMPOST")
-//                        cross.type = Type.IMPOST;
-//                    else if (js.type === "SHTULP")
-//                        cross.type = Type.SHTULP;
-//                    else if (js.type === "STOIKA")
-//                        cross.type = Type.STOIKA;
-//                    this.root.childs.push(cross);
+                    const cross = new ElemCross(this, js, owner);
+                    if (js.type === "IMPOST")
+                        cross.type = Type.IMPOST;
+                    else if (js.type === "SHTULP")
+                        cross.type = Type.SHTULP;
+                    else if (js.type === "STOIKA")
+                        cross.type = Type.STOIKA;
+                    this.root.childs.push(cross); //добавим ребёнка родителю
+                    hmDip.set(cross, js); //погружение ареа                    
 
                 } else if (js.type === "GLASS") {
 //                    let glass = new ElemGlass(js, this.root, this);
@@ -189,21 +190,26 @@ export class Wincalc {
         }
     }
 
-    //Рисуем polygon
-    paint(polygon) {
-        this.ctx.save();
-        const coo = polygon.getCoordinates(); //это массив точек
-        this.ctx.beginPath();
-        this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
-        for (let i = 1; i < coo.length; i++) {
-            this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
+    //Рисуем элем.констр.
+    paint(element) {
+        //this.ctx.save();
+        if (element instanceof jsts.geom.Polygon) {
+            const coo = element.getCoordinates(); //это массив точек
+            this.ctx.strokeStyle = 'blue';
+            this.ctx.fillStyle = '#ff0000';
+            this.ctx.lineWidth = 8;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
+            for (let i = 1; i < coo.length; i++)
+                this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
+            this.ctx.closePath(); //замыкаем контур
+
+            this.ctx.stroke(); //рисуем контур           
+        } else {
+            alert('Wincalc.paint()');
         }
-        this.ctx.closePath(); //замыкаем контур
-        this.ctx.lineWidth = 8;
-        //this.ctx.strokeStyle = 'blue';
-        //this.ctx.fillStyle = 'blue';
-        this.ctx.stroke(); //рисуем контур
-        this.ctx.restore();
+        //this.ctx.restore();
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 

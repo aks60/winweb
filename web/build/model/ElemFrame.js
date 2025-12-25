@@ -5,7 +5,6 @@ import {UseSideTo} from '../../enums/UseSideTo.js';
 import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
-import {Draw} from '../making/Draw.js';
 
 export class ElemFrame extends ElemSimple {
 
@@ -80,8 +79,7 @@ export class ElemFrame extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
-                this.paint(this.area);
-                //Draw.line(this.winc, 0, 0, 40, 40, 'rgb(100,100,100)');
+                this.winc.paint(this.area);
             }
         } catch (e) {
             errorLog('Error: ElemFrame.paint() ' + e.message);
@@ -96,6 +94,7 @@ export class ElemFrame extends ElemSimple {
         }
         return null;
     }
+    
     get y2() {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {

@@ -19,8 +19,55 @@ UGeo.radToDeg = (rad) => {
     return rad / (Math.PI / 180);
 };
 //------------------------------------------------------------------------------
+//Список входн. параметров не замыкается начальной точкой как в jts!
+UGeo.arrCoord = (arr) => {
+    list = new Array();
+    for (const i = 1; i < arr.length; i = i + 2) {
+        list.puth(new jsts.geom.Coordinate(arr[i - 1], arr[i]));
+    }
+    list.push(new jsts.geom.Coordinate(arr[0], arr[1]));
+
+    return list;
+};
+//------------------------------------------------------------------------------
+//Список входн. параметров не замыкается начальной точкой как в jts!
+UGeo.newPolygon = (arr) => {
+    try {
+        return Com5t.gf.createPolygon(UGeo.arrCoord(arr));
+    } catch (e) {
+        errorLog("Error: UGeo.newPolygon()" + e);
+    }
+};
+//------------------------------------------------------------------------------
+//Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
+UGeo.geoCross = (poly, line) => {
+    try {
+        poly = poly.getGeometryN(0);
+        out = new Array();
+        const c = poly.getCoordinates();
+        for (let i = 1; i < c.length; i++) {
+
+            const segm1 = c[i - 1];
+            const segm2 = c[i];
+            const c3 = jsts.geom.Intersection.lineSegment(line.p0, line.p1, segm1, segm2);
+            if (c3 !== null) {
+                out.push(c3);
+            }
+        }
+        if (out[0] < out[1]) {
+            const temp = out[0];
+            out[0] = out[1];
+            out[1] = temp;
+        }
+        return out;
+
+    } catch (e) {
+        errorLog("Error: UGeo.geoCross()" + e);
+    }
+};
+//------------------------------------------------------------------------------
 UGeo.polyCurve = (geoShell, geoInner, ID) => {
-    
+
 };
 //------------------------------------------------------------------------------
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)

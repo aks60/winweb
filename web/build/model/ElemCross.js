@@ -1,87 +1,107 @@
 
+import {UGeo} from './uGeo.js';
 import {Com5t} from './Com5t.js';
+import {UseSideTo} from '../../enums/UseSideTo.js';
+import {Type} from '../../enums/Type.js';
+import {Layout} from '../../enums/Layout.js';
+import {UCom} from '../../common/uCom.js';
+import {ElemSimple} from './ElemSimple.js';
 
-export class ElemCross extends Com5t {
+export class ElemCross  extends ElemSimple {
 
-    constructor(gson, owner, winc) {
-        super(gson, owner, winc);
-        this.layout = (owner.layout == 'VERT') ? 'HORIZ' : 'VERT';
-        this.anglCut = [90, 90]; //угол реза
+    constructor(winc, gson, owner) {
+        //debugger;
+        try {
+            super(winc, gson, owner);
+            this.addListenerEvents();
 
-        this.init_constructiv(this.gson.param);
-        this.set_location(gson, owner, winc);
-    }
-
-    init_constructiv(param) {
-        this.color1Rec = (param != undefined && param.colorID1 != undefined) ? findef(param.colorID1, COLOR.id, dbset.color) : this.winc.color1Rec;
-        this.color2Rec = (param != undefined && param.colorID2 != undefined) ? findef(param.colorID2, COLOR.id, dbset.color) : this.winc.color2Rec;
-        this.color3Rec = (param != undefined && param.colorID3 != undefined) ? findef(param.colorID3, COLOR.id, dbset.color) : this.winc.color3Rec;
-
-        //Профиль поперечины
-        if (this.gson.param != undefined && this.gson.param.sysprofID != undefined)
-            this.sysprofRec = this.gson.param.sysprofID;
-
-        else {
-            if ("VERT" == this.layout) { //сверху вниз
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.HORIZ[0]);
-
-            } else if ("HORIZ" == this.layout) { //слева направо
-                this.sysprofRec = this.find_first(this.winc.nuni, Type[this.type][1], UseSide.VERT[0]);
-            }
-        }
-        this.artiklRec = findef(this.sysprofRec[SYSPROF.artikl_id], ARTIKL.id, dbset.artikl);
-        this.artiklAn = findef(this.artiklRec[ARTIKL.analog_id], ARTIKL.id, dbset.artikl);
-        if (this.artiklAn == undefined) {
-            this.artiklAn = this.artiklRec;
+            this.layout = (owner.layout == Layout.VERT) ? Layout.HORIZ : Layout.VERT;
+            this.anglCut = [90, 90]; //угол реза            
+        } catch (e) {
+            errorLog('Error:ElemCross.constructor() ' + e.message);
         }
     }
 
-    set_location(gson, owner, winc) {
+    initArtikle() {
+        try {
+            this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
+            this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
+            this.colorID3 = UCom.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
 
-        //Коррекция положения импоста арки (подкдадка ареа над импостом)
-        if ("ARCH" == owner.typeForm()) {
-            let prevArea = owner.childs[0];
-            prevArea.y2 = prevArea.y2 + win.dh_crss / 2;
-
-        } else if ("TRAPEZE" == owner.typeForm()) {
-            let prevArea = owner.childs[0];
-            if (winc.form == 'RIGHT') {
-                let angl = winc.root.frames.get('RIGHT').anglCut[1];
-                var dy = win.dh_frm * Math.tan(Math.toRadians(90 - angl));
+            //Профиль поперечины
+            this.sysprofRec = UCom.isValidJson(this.gson.param, 'sysprofID', null);
+            if (this.owner.sysprofRec !== null)
+                this.sysprofRec = this.owner.sysprofRec;
+            else {
+                this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
             }
-            prevArea.dimension(prevArea.x1, prevArea.y1, prevArea.x2, prevArea.y2 + (win.dh_crss / 2) + dy);
-        }
-        for (let index = owner.childs.length - 1; index >= 0; --index) {
-            if (owner.childs[index] instanceof Area) {
-                let prevArea = owner.childs[index]; //index указывает на предыдущий элемент
+            this.artiklRec = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], false); //артикул
+            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], true); //аналог     
 
-                if ("VERT" == owner.layout) { //сверху вниз
-                    this.dimension(prevArea.x1, prevArea.y2 - win.dh_crss / 2, prevArea.x2, prevArea.y2 + win.dh_crss / 2);
-
-                } else if ("HORIZ" == owner.layout) { //слева направо
-                    this.dimension(prevArea.x2 - win.dh_crss / 2, prevArea.y1, prevArea.x2 + win.dh_crss / 2, prevArea.y2);
-                }
-                break;
+            //Сделано для коррекции ширины импостов
+            if (this.artiklRecAn[ARTIKL.id] == -3) {
+                this.artiklRec[ARTIKL.height] = this.artiklRec[ARTIKL.height] + 16;
+                this.artiklRecAn[ARTIKL.height] = this.artiklRec[ARTIKL.height] + 16;
             }
+
+            //Если импост виртуальный
+            if (this.artiklRec[ARTIKL.id] == -3) {
+                this.artiklRec[ARTIKL.size_centr] = 40;
+                this.artiklRecAn[ARTIKL.size_centr] = 40;
+            }
+        } catch (e) {
+            errorLog('Error: ElemCross.initArtikle() ' + e.message);
         }
     }
 
-    find_first(nuni, typ, us1) {
-        let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id]
-                    && rec.list[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec.list[SYSPROF.use_side]
-                    && (us1 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
-        if (nuni == -3 || record == undefined) {
-            return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
+    setLocation() { //gson, owner, winc) {
+        try {
+            const geoShell = this.owner.area.getGeometryN(0);
+            const geoFalz = this.owner.area.getGeometryN(2);
+
+            //Пилим полигон импостом
+            const geoSplit = UGeo.splitPolygon(geoShell.copy(), this.segment());
+            this.owner.childs.get(0).area = geoSplit[1];
+            this.owner.childs.get(2).area = geoSplit[2];
+
+            //Левый и правый сегмент вдоль импоста
+            const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
+            const baseSegm = new jsts.geom.LineSegment(new jsts.geom.Coordinate(this.x1()
+                    , this.y1()), new jsts.geom.Coordinate(this.x2(), this.y2()));
+            const offsetSegment = [baseSegm.offset(+delta), baseSegm.offset(-delta)];
+
+            //Точки пересечения канвы сегментами импоста
+            const areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
+            const C1 = UGeo.geoCross(areaCanvas, offsetSegment[0]);
+            const C2 = UGeo.geoCross(areaCanvas, offsetSegment[1]);
+
+            //Ареа импоста, обрезаем areaPadding 
+            const areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
+            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
+
+        } catch (e) {
+            errorLog("Error: ElemCross.setLocation " + e);
         }
-        return record;
     }
 
     paint() {
-        if ("VERT" == this.owner.layout) {
-            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
-
-        } else if ("HORIZ" == this.owner.layout) {
-            draw_stroke_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.y1, this.y2, this.y2, this.color2Rec);
+        try {
+            if (this.area !== null && this.winc.sceleton === false) {
+                const geoInne = this.owner.area.getGeometryN(1);
+                this.winc.paint(geoInne);
+            }
+        } catch (e) {
+            errorLog('Error: ElemFrame.paint() ' + e.message);
         }
     }
+
+    /* find_first(nuni, typ, us1) {
+     let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id]
+     && rec.list[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec.list[SYSPROF.use_side]
+     && (us1 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
+     if (nuni == -3 || record == undefined) {
+     return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
+     }
+     return record;
+     } */
 }
