@@ -159,9 +159,9 @@ export class Wincalc {
             for (let elem of this.listElem) {
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
-                } //else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {
-                //  elem.setLocation();
-                //}
+                } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {
+                    elem.setLocation();
+                }
                 for (let area of this.listArea) {
                     if (area.id != 0.0) {
                         if (area instanceof AreaStvorka == false && area.owner instanceof AreaStvorka == false) {
@@ -182,8 +182,9 @@ export class Wincalc {
                     ? this.cnv.width / this.width() : this.cnv.height / this.height();
             this.ctx.scale(this.scale, this.scale);
 
-            this.listArea.filter(el => el.gson.type === 'RECTANGL').forEach((el) => el.paint());
-            this.listElem.filter(el => el.gson.type === 'BOX_SIDE').forEach((el) => el.paint());
+            this.listArea.filter(el => el.type === Type.RECTANGL).forEach((el) => el.paint());
+            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
+            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);

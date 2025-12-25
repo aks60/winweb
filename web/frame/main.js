@@ -39,6 +39,7 @@ export function Test1() {
             console.log("Polygon area:", polygon.getArea());
             console.log("Polygon centroid:", polygon.getCentroid().toString());
             console.log("WKT representation:", new jsts.io.WKTWriter().write(polygon));
+
         }
 
         alert(`Превет Test1().`);

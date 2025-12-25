@@ -50,6 +50,9 @@
         <script type="module">
             //import {Test1, Test2} from './frame/main.js';
             //Test1();
+            debugger;
+            let o1 = new jsts.math.DD();
+            
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
                     $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
