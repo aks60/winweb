@@ -1,6 +1,6 @@
 import {Com5t} from '/winweb/build/model/Com5t.js';
-import PrecisionModel from '../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/PrecisionModel.js';
-import GeometryFactory from '../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/GeometryFactory.js';
+import PrecisionModel from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/PrecisionModel.js';
+import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
 
 //https://stackoverflow.com/questions/36118883/using-jsts-buffer-to-identify-a-self-intersecting-polygon
 //https://openlayers.org/en/latest/examples/jsts.html

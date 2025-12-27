@@ -1,7 +1,7 @@
 
-import PrecisionModel from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/PrecisionModel.js';
-import GeometryFactory from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/GeometryFactory.js';
-import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
+import PrecisionModel from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/PrecisionModel.js';
+import GeometryFactory from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
+import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 
 export class Com5t {
 

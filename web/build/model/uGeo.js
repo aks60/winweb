@@ -1,8 +1,8 @@
 import {Com5t} from './Com5t.js';
-import Intersection from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/algorithm/Intersection.js';
-import Angle from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/algorithm/Angle.js';
-import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
-import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
+import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
+import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js';
+import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 export let UGeo = {};
 
