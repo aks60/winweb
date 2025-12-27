@@ -1,7 +1,9 @@
 import {Com5t} from './Com5t.js';
 import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
+import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js';
 import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 export let UGeo = {};
@@ -59,12 +61,15 @@ UGeo.splitPolygon = (geom, segment) => {
         //Вставим точки пересечения в список коорд. см.exten
         for (const i = 1; i < coo.length; i++) {
             
-//            debugger;                                
-//            let p1 =  new Coordinate(10, 0, 11);
-//            let p2 =  new Coordinate(100, 100, 22);
-//            let p3 =  new Coordinate(5, 20, 33);
-//            let p4 =  new Coordinate(5, 40, 44);
-//            const cross2 = Intersection.intersection(p1, p2, p3, p4);
+            debugger;                                
+            let p1 =  new Coordinate(10, 0, 11);
+            let p2 =  new Coordinate(100, 100, 22);
+            let p3 =  new Coordinate(5, 20, 33);
+            let p4 =  new Coordinate(5, 40, 44);
+            const cross2 = Intersection.intersection(p1, p2, p3, p4);
+            const line2 = new LineString(p3, p4);
+            let point = InteriorPoint.getInteriorPoint(line2);
+            
 
             const crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии                          
             
