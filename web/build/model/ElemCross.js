@@ -8,14 +8,12 @@ import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-
 export class ElemCross extends ElemSimple {
 
     constructor(winc, gson, owner) {
         try {
             super(winc, gson, owner);
             this.addListenerEvents();
-
             this.layout = (owner.layout == Layout.VERT) ? Layout.HORIZ : Layout.VERT;
             this.anglCut = [90, 90]; //угол реза            
         } catch (e) {
@@ -28,7 +26,6 @@ export class ElemCross extends ElemSimple {
             this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
             this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
             this.colorID3 = UCom.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
-
             //Профиль поперечины
             this.sysprofRec = UCom.isValidJson(this.gson.param, 'sysprofID', null);
             if (this.owner.sysprofRec !== null)
@@ -57,15 +54,13 @@ export class ElemCross extends ElemSimple {
 
     setLocation() {
         try {
-            //debugger;
+            debugger;
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
-
-            //Пилим полигон импостом
-            const segmImp = UGeo.normalizeSegm(new LineSegment(
-                    new Coordinate(this.x1, this.y1, this.id),
-                    new Coordinate(this.x2, this.y2, this.id)));
+            //Пилим полигон импостом     
+            let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
+            var v = 0;
 //            this.owner.childs[0].area = geoSplit[1];
 //            this.owner.childs[2].area = geoSplit[2];
 //

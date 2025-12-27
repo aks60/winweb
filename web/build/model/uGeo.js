@@ -5,6 +5,7 @@ import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+//import GeometryFactory from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
 
 export let UGeo = {};
 
@@ -47,38 +48,29 @@ UGeo.newPolygon = (arr) => {
 };
 
 //Пилим многоугольник
-UGeo.splitPolygon = (geom, segment) => {
+UGeo.splitPolygon = (geom, segm) => {
     try {
-        var b = true;
-        let hsCheck = new Set();
+        var b = true, hsCheck = new Set();
         let coo = geom.getGeometryN(0).copy().getCoordinates();
         let cooL = [], cooR = [];
         let crosTwo = [], listExt = [coo[0]];
-        let segmImp = UGeo.normalizeSegm(new LineSegment(
-                new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
-                new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
+        let segmImp = UGeo.normalizeSegm(LineSegment.new([
+            [segm.p0.x, segm.p0.y, segm.p0.z],
+            [segm.p1.x, segm.p1.y, segm.p1.z]]));
 
         //Вставим точки пересечения в список коорд. см.exten
         for (const i = 1; i < coo.length; i++) {
-            
-            debugger;                                
-            let p1 =  new Coordinate(10, 0, 11);
-            let p2 =  new Coordinate(100, 100, 22);
-            let p3 =  new Coordinate(5, 20, 33);
-            let p4 =  new Coordinate(5, 40, 44);
-            const cross2 = Intersection.intersection(p1, p2, p3, p4);
-            const line2 = new LineString(p3, p4);
-            let point = InteriorPoint.getInteriorPoint(line2);
-            
 
-            const crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии                          
-            
+            const cros = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
+            const line = Com5t.gf.createLineString(coo[i - 1], coo[i]);
+            let bool = pointLocator.intersects([cros, line]);
+
             hsCheck.add(coo[i]);
             //Вставим точку в сегмент
-            if (crosP !== null) {
-                crosTwo.push(crosP);
-                if (hsCheck.add(crosP)) {
-                    listExt.push(crosP);
+            if (bool === true) {
+                crosTwo.push(cros);
+                if (hsCheck.add(cros)) {
+                    listExt.push(cros);
                 }
             }
             listExt.push(coo[i]);
@@ -111,14 +103,14 @@ UGeo.splitPolygon = (geom, segment) => {
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeom.rotate(cooR);
-            cooR.push(cooR.get(0));
+            cooR.push(cooR[0]);
         } else {
-            cooR.push(cooR.get(0));
+            cooR.push(cooR[0]);
         }
         return [Com5t.gf.createLineString(crosTwo),
             Com5t.gf.createPolygon(cooL),
             Com5t.gf.createPolygon(cooR)];
-        
+
     } catch (e) {
         errorLog("Error: UGeo.splitPolygon() " + e);
     }
@@ -278,7 +270,7 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 //        return result;
     return {};
 };
- 
+
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
         let listBuffer = new Array();

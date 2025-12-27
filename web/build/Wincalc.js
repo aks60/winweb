@@ -82,8 +82,6 @@ export class Wincalc {
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
 
-            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов
-
             this.location(); //кальк. коорд. элементов конструкции    
 
             this.draw(); //прорисовка конструкции
@@ -156,6 +154,8 @@ export class Wincalc {
     //Кальк.коорд. элементов конструкции
     location() {
         try {
+            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов
+            
             this.root.setLocation();
 
             for (let elem of this.listElem) {

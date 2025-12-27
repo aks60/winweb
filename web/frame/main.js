@@ -1,7 +1,3 @@
-import {Com5t} from '/winweb/build/model/Com5t.js';
-import PrecisionModel from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/PrecisionModel.js';
-import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
-
 //https://stackoverflow.com/questions/36118883/using-jsts-buffer-to-identify-a-self-intersecting-polygon
 //https://openlayers.org/en/latest/examples/jsts.html
 //https://gist.github.com/pgiraud/2ed05b0a9e394c5652b3
@@ -9,51 +5,96 @@ import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Geo
 //https://www.clouddefense.ai/code/javascript/example/jsts
 //https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
 
-export function Test1() {
-    try {
-//        var OBJ03 = new GeoJSONReader();
-//        var OBJ04 = new Location();
-//        var OBJ06 = new BufferParameters();
-//        var OBJ07 = new GeoJSONWriter();
-//        var OBJ08 = new Coordinate();
-//        var OBJ09 = new OL3Parser();
-//        var OBJ10 = new PrecisionModel(1000);
-//        var OBJ11 = new GeometryFactory(OBJ10);
-//        var OBJ12 = new GeometricShapeFactory(OBJ11);
-//        var OBJ13 = new AffineTransformation();
-//        var OBJ15 = new Envelope();
-//        var OBJ16 = new Geometry();
-//        var OBJ17 = new LineString();
-//        //var OBJ18 = new Polygon();
-//
-//        {
-//            let coordinates = [
-//                new Coordinate(0, 0),
-//                new Coordinate(10, 0),
-//                new Coordinate(10, 10),
-//                new Coordinate(0, 10),
-//                new Coordinate(0, 0) // Closing point
-//            ];
-//            let pm = new PrecisionModel(1000);
-//            let gf = new GeometryFactory(pm);
-//            let shell = gf.createLinearRing(coordinates);
-//            let polygon = gf.createPolygon(shell, null);
-//            console.log("Polygon area:", polygon.getArea());
-//            console.log("Polygon centroid:", polygon.getCentroid().toString());
-//            console.log("WKT representation:", new WKTWriter().write(polygon));
-//
-//        }
+import {Com5t} from '../build/model/Com5t.js';
+import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+import LineSegment from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
+import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js';
+import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
-        alert(`Превет Test1().`);
+//import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
+//import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
+
+export function newGeometryFactory() {
+    Coordinate.new = (x, y, z) => {
+        if (z === undefined)
+            return new Coordinate(x, y);
+        else
+            return new Coordinate(x, y, z);
+    };
+
+    LineSegment.new = (arr1, arr2) => {
+        let p1 = null, p2 = null;
+        if (arr1.length < 3)
+            p1 = new Coordinate(arr1[0], arr1[1]);
+        else
+            p1 = new Coordinate(arr1[0], arr1[1], arr1[2]);
+
+        if (arr2.length < 3)
+            p2 = new Coordinate(arr2[0], arr2[1]);
+        else
+            p2 = new Coordinate(arr2[0], arr2[1], arr2[2]);
+
+        return new LineSegment(p1, p2);
+    };
+
+    LineString.new = (masArr) => {
+        let arr = new Array();
+        for (const p of masArr) {
+            if (p.length < 3)
+                arr.push(Coordinate.new(p[0], p[1]));
+            else
+                arr.push(Coordinate.new(p[0], p[1], p[2]));
+        }
+        return  Com5t.gf.createLineString(arr);
+    };
+
+    LinearRing.new = (masArr) => {
+        let arr = new Array();
+        for (const p of masArr) {
+            if (p.length < 3)
+                arr.push(Coordinate.new(p[0], p[1]));
+            else
+                arr.push(Coordinate.new(p[0], p[1], p[2]));
+        }
+        arr.push(new Coordinate(arr[0]));
+        return  Com5t.gf.createLinearRing(arr);
+    };
+
+    Polygon.new = (masArr) => {
+        let arr = new Array();
+        for (const p of masArr) {
+            if (p.length < 3)
+                arr.push(Coordinate.new(p[0], p[1]));
+            else
+                arr.push(Coordinate.new(p[0], p[1], p[2]));
+        }
+        arr.push(new Coordinate(arr[0]));
+        return Com5t.gf.createPolygon(arr);
+    };
+}
+
+export function Test() {
+    try {
+        let p1 = new Coordinate(10, 0, 1);
+        let p2 = new Coordinate(100, 100, 2);
+        let p3 = new Coordinate(5, 20, 3);
+        let p4 = new Coordinate(5, 40, 4);
+        let p5 = new Coordinate(5, 40, 5);
+        let p6 = new Coordinate(100, 40, 6);
+
+        let poly1 = Polygon.new([[0, 0, 1], [0, 1300, 2], [1400, 1300, 3], [1400, 0, 4]]);
+        let poly2 = Polygon.new([[0, 0], [0, 1300], [1400, 1300], [1400, 0]]);
+        let line1 = LineString.new([[0, 0, 1], [100, 20, 2]]);
+        let line2 = LineString.new([[0, 0], [100, 20]]);
+        var v = 0;
+
+
+        //alert(`Превет Test().`);
     } catch (e) {
-        alert(`Ошибка: Test1()  ` + e.message);
+        alert(`Ошибка: Test()  ` + e.message);
     }
 }
 
-export function Test2() {
-    let result = Com5t.gf.createPolygon();
-    let listShell = Array.of([1, 2, 3]);
-    let listBuffer = new Array();
-}
 
 
