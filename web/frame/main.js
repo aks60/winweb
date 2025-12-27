@@ -9,38 +9,38 @@ import {Com5t} from '/winweb/build/model/Com5t.js';
 
 export function Test1() {
     try {
-        var OBJ03 = new jsts.io.GeoJSONReader();
-        var OBJ04 = new jsts.geom.Location();
-        var OBJ06 = new jsts.operation.buffer.BufferParameters();
-        var OBJ07 = new jsts.io.GeoJSONWriter();
-        var OBJ08 = new jsts.geom.Coordinate();
-        var OBJ09 = new jsts.io.OL3Parser();
-        var OBJ10 = new jsts.geom.PrecisionModel(1000);
-        var OBJ11 = new jsts.geom.GeometryFactory(OBJ10);
-        var OBJ12 = new jsts.util.GeometricShapeFactory(OBJ11);
-        var OBJ13 = new jsts.geom.util.AffineTransformation();
-        var OBJ15 = new jsts.geom.Envelope();
-        var OBJ16 = new jsts.geom.Geometry();
-        var OBJ17 = new jsts.geom.LineString();
-        //var OBJ18 = new jsts.geom.Polygon();
-
-        {
-            let coordinates = [
-                new jsts.geom.Coordinate(0, 0),
-                new jsts.geom.Coordinate(10, 0),
-                new jsts.geom.Coordinate(10, 10),
-                new jsts.geom.Coordinate(0, 10),
-                new jsts.geom.Coordinate(0, 0) // Closing point
-            ];
-            let pm = new jsts.geom.PrecisionModel(1000);
-            let gf = new jsts.geom.GeometryFactory(pm);
-            let shell = gf.createLinearRing(coordinates);
-            let polygon = gf.createPolygon(shell, null);
-            console.log("Polygon area:", polygon.getArea());
-            console.log("Polygon centroid:", polygon.getCentroid().toString());
-            console.log("WKT representation:", new jsts.io.WKTWriter().write(polygon));
-
-        }
+//        var OBJ03 = new jsts.io.GeoJSONReader();
+//        var OBJ04 = new jsts.geom.Location();
+//        var OBJ06 = new jsts.operation.buffer.BufferParameters();
+//        var OBJ07 = new jsts.io.GeoJSONWriter();
+//        var OBJ08 = new jsts.geom.Coordinate();
+//        var OBJ09 = new jsts.io.OL3Parser();
+//        var OBJ10 = new jsts.geom.PrecisionModel(1000);
+//        var OBJ11 = new jsts.geom.GeometryFactory(OBJ10);
+//        var OBJ12 = new jsts.util.GeometricShapeFactory(OBJ11);
+//        var OBJ13 = new jsts.geom.util.AffineTransformation();
+//        var OBJ15 = new jsts.geom.Envelope();
+//        var OBJ16 = new jsts.geom.Geometry();
+//        var OBJ17 = new jsts.geom.LineString();
+//        //var OBJ18 = new jsts.geom.Polygon();
+//
+//        {
+//            let coordinates = [
+//                new jsts.geom.Coordinate(0, 0),
+//                new jsts.geom.Coordinate(10, 0),
+//                new jsts.geom.Coordinate(10, 10),
+//                new jsts.geom.Coordinate(0, 10),
+//                new jsts.geom.Coordinate(0, 0) // Closing point
+//            ];
+//            let pm = new jsts.geom.PrecisionModel(1000);
+//            let gf = new jsts.geom.GeometryFactory(pm);
+//            let shell = gf.createLinearRing(coordinates);
+//            let polygon = gf.createPolygon(shell, null);
+//            console.log("Polygon area:", polygon.getArea());
+//            console.log("Polygon centroid:", polygon.getCentroid().toString());
+//            console.log("WKT representation:", new jsts.io.WKTWriter().write(polygon));
+//
+//        }
 
         alert(`Превет Test1().`);
     } catch (e) {

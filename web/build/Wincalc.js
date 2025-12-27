@@ -10,6 +10,8 @@ import {AreaStvorka} from './model/AreaStvorka.js';
 import {ElemCross} from './model/ElemCross.js';
 import {ElemFrame} from './model/ElemFrame.js';
 import {ElemGlass} from './model/ElemGlass.js';
+import Polygon from '../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Polygon.js';
+import Coordinate from '../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 win.build = function (canvas, script) {
     return new Wincalc(canvas).build(script);
@@ -184,7 +186,7 @@ export class Wincalc {
 
             this.listArea.filter(el => el.type === Type.RECTANGL).forEach((el) => el.paint());
             this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
-            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
+            //this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
@@ -194,6 +196,7 @@ export class Wincalc {
     //Рисуем элем.констр.
     paint(element) {
         //this.ctx.save();
+        debugger;
         if (element instanceof jsts.geom.Polygon) {
             const coo = element.getCoordinates(); //это массив точек
             this.ctx.strokeStyle = 'blue';

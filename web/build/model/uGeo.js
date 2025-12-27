@@ -1,4 +1,7 @@
 import {Com5t} from './Com5t.js';
+import Intersection from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/algorithm/Intersection.js';
+import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
+import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 export let UGeo = {};
 
@@ -51,12 +54,18 @@ UGeo.splitPolygon = (geom, segment) => {
         let segmImp = UGeo.normalizeSegm(new jsts.geom.LineSegment(
                 new jsts.geom.Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
                 new jsts.geom.Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
-debugger;
+
         //Вставим точки пересечения в список коорд. см.exten
         for (const i = 1; i < coo.length; i++) {
-            const crosP = jsts.algorithm.Intersection.lineSegment(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения сегмента и линии                
             
-            ///let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+//            debugger;                                
+//            let p1 =  new jsts.geom.Coordinate(10, 0, 11);
+//            let p2 =  new jsts.geom.Coordinate(100, 100, 22);
+//            let p3 =  new jsts.geom.Coordinate(5, 20, 33);
+//            let p4 =  new jsts.geom.Coordinate(5, 40, 44);
+//            const cross2 = Intersection.intersection(p1, p2, p3, p4);
+
+            const crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии                          
             
             hsCheck.add(coo[i]);
             //Вставим точку в сегмент
@@ -263,7 +272,7 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 //        return result;
     return {};
 };
-//------------------------------------------------------------------------------    
+ 
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
         let listBuffer = new Array();
@@ -296,13 +305,13 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         console.log("Ошибка: UGeo.bufferPolygon() " + e);
     }
 };
-//------------------------------------------------------------------------------
+
 UGeo.offsetSegm = (lineSegm, offsetDistance) => {
     let offset0 = UGeo.pointAlongOffset(lineSegm, 0, offsetDistance);
     let offset1 = UGeo.pointAlongOffset(lineSegm, 1, offsetDistance);
     return new jsts.geom.LineSegment(offset0, offset1);
 };
-//------------------------------------------------------------------------------
+
 UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let segx = lineSegm.p0.x + segmentLengthFraction * (lineSegm.p1.x - lineSegm.p0.x);
@@ -328,28 +337,28 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     coord.setZ(segz);
     return coord;
 };
-//------------------------------------------------------------------------------ 
+
 function findIntersection(lineY, point1, point2) {
-    let { k, b } = lineY; // Прямая L: y = kx + b
-    let { x1, y1 } = point1; // Конечная точка отрезка A
-    let { x2, y2 } = point2; // Конечная точка отрезка B
-
-    // Уравнение прямой, проходящей через A и B (если она не вертикальная)
-    // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-
-    // Подставляем y = kx + b в уравнение прямой через точки
-    // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-
-    // Решаем относительно x (перемножаем крест-накрест)
-    // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
-    // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
-    // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
-    // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
-
-    let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
-
-    // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
-    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
-        // Прямые параллельны, пер
-    }
+//    let { k, b } = lineY; // Прямая L: y = kx + b
+//    let { x1, y1 } = point1; // Конечная точка отрезка A
+//    let { x2, y2 } = point2; // Конечная точка отрезка B
+//
+//    // Уравнение прямой, проходящей через A и B (если она не вертикальная)
+//    // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+//
+//    // Подставляем y = kx + b в уравнение прямой через точки
+//    // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+//
+//    // Решаем относительно x (перемножаем крест-накрест)
+//    // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
+//    // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
+//    // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
+//    // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
+//
+//    let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
+//
+//    // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
+//    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
+//        // Прямые параллельны, пер
+//    }
 }

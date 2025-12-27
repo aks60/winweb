@@ -5,6 +5,7 @@ import {UseSideTo} from '../../enums/UseSideTo.js';
 import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
+import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemFrame extends ElemSimple {
 

@@ -6,6 +6,8 @@ import {Type} from '../../enums/Type.js';
 import {Layout} from '../../enums/Layout.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
+import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
+import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemCross extends ElemSimple {
 
@@ -63,7 +65,7 @@ export class ElemCross extends ElemSimple {
             const segmImp = UGeo.normalizeSegm(new jsts.geom.LineSegment(
                     new jsts.geom.Coordinate(this.x1, this.y1, this.id),
                     new jsts.geom.Coordinate(this.x2, this.y2, this.id)));
-            //const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
+            const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
 //            this.owner.childs[0].area = geoSplit[1];
 //            this.owner.childs[2].area = geoSplit[2];
 //
@@ -89,7 +91,6 @@ export class ElemCross extends ElemSimple {
 
     paint() {
         try {
-            debugger;
             if (this.area !== null && this.winc.sceleton === false) {
                 const geoInne = this.owner.area.getGeometryN(1);
                 this.winc.paint(geoInne);

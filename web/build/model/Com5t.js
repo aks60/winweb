@@ -1,4 +1,7 @@
-//https://colorjs.io/dist/color.js
+
+import GeometryFactory from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/GeometryFactory.js';
+import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
+
 export class Com5t {
 
     static MAXSIDE = 200;

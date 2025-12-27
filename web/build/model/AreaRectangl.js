@@ -2,6 +2,7 @@
 import {AreaSimple} from './AreaSimple.js';
 import {Com5t} from './Com5t.js';
 import {UGeo} from './uGeo.js';
+import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 export class AreaRectangl extends AreaSimple {
 
