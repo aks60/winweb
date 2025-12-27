@@ -63,11 +63,11 @@ export class ElemFrame extends ElemSimple {
                         this.area = UGeo.polyCurve(geoShell, geoInner, this.id);
                     } else { //полигон рамы   
                         this.area = Com5t.gf.createPolygon([
-                            new jsts.geom.Coordinate(this.x1, this.y1),
-                            new jsts.geom.Coordinate(this.x2, this.y2),
-                            new jsts.geom.Coordinate(cooInner[i + 1].x, cooInner[i + 1].y),
-                            new jsts.geom.Coordinate(cooInner[i].x, cooInner[i].y),
-                            new jsts.geom.Coordinate(this.x1, this.y1)]);
+                            new Coordinate(this.x1, this.y1),
+                            new Coordinate(this.x2, this.y2),
+                            new Coordinate(cooInner[i + 1].x, cooInner[i + 1].y),
+                            new Coordinate(cooInner[i].x, cooInner[i].y),
+                            new Coordinate(this.x1, this.y1)]);
                     }
                     break;
                 }

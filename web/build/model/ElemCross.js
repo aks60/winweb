@@ -62,17 +62,17 @@ export class ElemCross extends ElemSimple {
             const geoFalz = this.owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            const segmImp = UGeo.normalizeSegm(new jsts.geom.LineSegment(
-                    new jsts.geom.Coordinate(this.x1, this.y1, this.id),
-                    new jsts.geom.Coordinate(this.x2, this.y2, this.id)));
+            const segmImp = UGeo.normalizeSegm(new LineSegment(
+                    new Coordinate(this.x1, this.y1, this.id),
+                    new Coordinate(this.x2, this.y2, this.id)));
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
 //            this.owner.childs[0].area = geoSplit[1];
 //            this.owner.childs[2].area = geoSplit[2];
 //
 //            //Левый и правый сегмент вдоль импоста
 //            const delta = this.artiklRec[ARTIKL.height] - this.artiklRec[ARTIKL.size_centr]; //ширина
-//            const baseSegm = new jsts.geom.LineSegment(new jsts.geom.Coordinate(this.x1
-//                    , this.y1), new jsts.geom.Coordinate(this.x2, this.y2));
+//            const baseSegm = new LineSegment(new Coordinate(this.x1
+//                    , this.y1), new Coordinate(this.x2, this.y2));
 //            const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
 //
 //            //Точки пересечения канвы сегментами импоста

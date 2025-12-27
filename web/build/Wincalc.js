@@ -197,7 +197,7 @@ export class Wincalc {
     paint(element) {
         //this.ctx.save();
         debugger;
-        if (element instanceof jsts.geom.Polygon) {
+        if (element instanceof Polygon) {
             const coo = element.getCoordinates(); //это массив точек
             this.ctx.strokeStyle = 'blue';
             this.ctx.fillStyle = '#ff0000';

@@ -1,4 +1,5 @@
 
+import PrecisionModel from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/PrecisionModel.js';
 import GeometryFactory from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/GeometryFactory.js';
 import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
 
@@ -6,9 +7,9 @@ export class Com5t {
 
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
-    static gf = new jsts.geom.GeometryFactory(new jsts.geom.PrecisionModel()); //фабрика геометрий    
-    //static gsf = new jsts.geom.GeometricShapeFactory(gf);
-    //static aff = new jsts.geom.AffineTransformation();    
+    static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий    
+    //static gsf = new GeometricShapeFactory(gf);
+    //static aff = new AffineTransformation();    
 
     id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции
@@ -41,7 +42,7 @@ export class Com5t {
     //Длина компонента
     length() {
         if(this.gson.h !== undefined) {
-            return new jsts.geom.LineSegment(this.x1, this.y1, this.x2, this.y2).getLength();
+            return new LineSegment(this.x1, this.y1, this.x2, this.y2).getLength();
         } else {
            //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
            console.log('Com5t.length() - функция не реализована');

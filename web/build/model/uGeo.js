@@ -1,17 +1,18 @@
 import {Com5t} from './Com5t.js';
 import Intersection from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/algorithm/Intersection.js';
+import Angle from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/algorithm/Angle.js';
 import LineSegment from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/LineSegment.js';
 import Coordinate from '../../lib-js/jsts-2.12.1M/org/locationtech/jts/geom/Coordinate.js';
 
 export let UGeo = {};
 
-UGeo.segRighShell = new jsts.geom.LineSegment(), UGeo.segRighInner = null;
-UGeo.segLeftShell = new jsts.geom.LineSegment(), UGeo.segLeftInner = null;
-UGeo.cross = new jsts.geom.Coordinate();
+UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
+UGeo.segLeftShell = new LineSegment(), UGeo.segLeftInner = null;
+UGeo.cross = new Coordinate();
 
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
-    let ang = UGeo.radToDeg(jsts.algorithm.Angle.angle(new jsts.geom.Coordinate(x1, y1), new jsts.geom.Coordinate(x2, y2)));
+    let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
     return (ang > 0) ? 360 - ang : Math.abs(ang);
 };
 
@@ -27,9 +28,9 @@ UGeo.radToDeg = (rad) => {
 UGeo.arrCoord = (arr) => {
     list = new Array();
     for (const i = 1; i < arr.length; i = i + 2) {
-        list.puth(new jsts.geom.Coordinate(arr[i - 1], arr[i]));
+        list.puth(new Coordinate(arr[i - 1], arr[i]));
     }
-    list.push(new jsts.geom.Coordinate(arr[0], arr[1]));
+    list.push(new Coordinate(arr[0], arr[1]));
 
     return list;
 };
@@ -51,18 +52,18 @@ UGeo.splitPolygon = (geom, segment) => {
         let coo = geom.getGeometryN(0).copy().getCoordinates();
         let cooL = [], cooR = [];
         let crosTwo = [], listExt = [coo[0]];
-        let segmImp = UGeo.normalizeSegm(new jsts.geom.LineSegment(
-                new jsts.geom.Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
-                new jsts.geom.Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
+        let segmImp = UGeo.normalizeSegm(new LineSegment(
+                new Coordinate(segment.p0.x, segment.p0.y, segment.p0.z),
+                new Coordinate(segment.p1.x, segment.p1.y, segment.p1.z)));
 
         //Вставим точки пересечения в список коорд. см.exten
         for (const i = 1; i < coo.length; i++) {
             
 //            debugger;                                
-//            let p1 =  new jsts.geom.Coordinate(10, 0, 11);
-//            let p2 =  new jsts.geom.Coordinate(100, 100, 22);
-//            let p3 =  new jsts.geom.Coordinate(5, 20, 33);
-//            let p4 =  new jsts.geom.Coordinate(5, 40, 44);
+//            let p1 =  new Coordinate(10, 0, 11);
+//            let p2 =  new Coordinate(100, 100, 22);
+//            let p3 =  new Coordinate(5, 20, 33);
+//            let p4 =  new Coordinate(5, 40, 44);
 //            const cross2 = Intersection.intersection(p1, p2, p3, p4);
 
             const crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии                          
@@ -85,8 +86,8 @@ UGeo.splitPolygon = (geom, segment) => {
             //Проход через точку пересечения
             if (crd.z === undefined) {
                 b = !b; //первая точка пройдена
-                let cL = new jsts.geom.Coordinate(crd.x, crd.y, segmImp.p0.z);
-                let cR = new jsts.geom.Coordinate(crd.x, crd.y);
+                let cL = new Coordinate(crd.x, crd.y, segmImp.p0.z);
+                let cR = newCoordinate(crd.x, crd.y);
 
                 if (crosTwo[0] === crd) {
                     cL.z = segmImp.p0.z;
@@ -138,7 +139,7 @@ UGeo.geoCross = (poly, line) => {
 
             const segm1 = c[i - 1];
             const segm2 = c[i];
-            const c3 = jsts.geom.Intersection.lineSegment(line.p0, line.p1, segm1, segm2);
+            const c3 = Intersection.lineSegment(line.p0, line.p1, segm1, segm2);
             if (c3 !== null) {
                 out.push(c3);
             }
@@ -282,19 +283,19 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
-            UGeo.segRighShell.setCoordinates(new jsts.geom.Coordinate(listShell[j]), new jsts.geom.Coordinate(listShell[i]));
+            UGeo.segRighShell.setCoordinates(new Coordinate(listShell[j]), new Coordinate(listShell[i]));
             UGeo.segRighInner = UGeo.offsetSegm(UGeo.segRighShell, -hmDist.get(id1));
 
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
-            UGeo.segLeftShell.setCoordinates(new jsts.geom.Coordinate(listShell[i]), new jsts.geom.Coordinate(listShell[k]));
+            UGeo.segLeftShell.setCoordinates(new Coordinate(listShell[i]), new Coordinate(listShell[k]));
             UGeo.segLeftInner = UGeo.offsetSegm(UGeo.segLeftShell, -hmDist.get(id2));
 
             //Точка пересечения сегментов
             let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
             if (cross !== null) {
                 cross.z = listShell[i].z;
-                let p = new jsts.geom.Coordinate(cross.x, cross.y, cross.z);
+                let p = new Coordinate(cross.x, cross.y, cross.z);
                 listBuffer.push(p);
             }
         }
@@ -309,7 +310,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
 UGeo.offsetSegm = (lineSegm, offsetDistance) => {
     let offset0 = UGeo.pointAlongOffset(lineSegm, 0, offsetDistance);
     let offset1 = UGeo.pointAlongOffset(lineSegm, 1, offsetDistance);
-    return new jsts.geom.LineSegment(offset0, offset1);
+    return new LineSegment(offset0, offset1);
 };
 
 UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
@@ -331,7 +332,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     let offsetx = segx - uy;
     let offsety = segy + ux;
 
-    let coord = new jsts.geom.Coordinate(lineSegm.p0);
+    let coord = new Coordinate(lineSegm.p0);
     coord.setX(offsetx);
     coord.setY(offsety);
     coord.setZ(segz);
