@@ -47,8 +47,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {newGeometryFactory, Test} from './frame/main.js';
-            newGeometryFactory();
+            import {localizeFactory, Test} from './frame/main.js';
+            localizeFactory();
             //Test();
             
             $("#outbody").load('frame/login.jsp', function () {

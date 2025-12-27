@@ -15,7 +15,8 @@ import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js'
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 //import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
 
-export function newGeometryFactory() {
+export function localizeFactory() {
+    
     Coordinate.new = (x, y, z) => {
         if (z === undefined)
             return new Coordinate(x, y);
