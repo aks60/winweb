@@ -60,9 +60,8 @@ export class ElemCross extends ElemSimple {
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
-            var v = 0;
-//            this.owner.childs[0].area = geoSplit[1];
-//            this.owner.childs[2].area = geoSplit[2];
+            this.owner.childs[0].area = geoSplit[1];
+            this.owner.childs[2].area = geoSplit[2];
 //
 //            //Левый и правый сегмент вдоль импоста
 //            const delta = this.artiklRec[ARTIKL.height] - this.artiklRec[ARTIKL.size_centr]; //ширина

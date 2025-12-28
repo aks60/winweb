@@ -1,11 +1,12 @@
 import {Com5t} from './Com5t.js';
 import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js';
+import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
 import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js';
+import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-//import GeometryFactory from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
 
 export let UGeo = {};
 
@@ -54,37 +55,40 @@ UGeo.splitPolygon = (geom, segm) => {
         let coo = geom.getGeometryN(0).copy().getCoordinates();
         let cooL = [], cooR = [];
         let crosTwo = [], listExt = [coo[0]];
-        let segmImp = UGeo.normalizeSegm(LineSegment.new([
-            [segm.p0.x, segm.p0.y, segm.p0.z],
-            [segm.p1.x, segm.p1.y, segm.p1.z]]));
+        let segmImp = UGeo.normalizeSegm(LineSegment.new(
+                [segm.p0.x, segm.p0.y, segm.p0.z],
+                [segm.p1.x, segm.p1.y, segm.p1.z]));
 
-        //Вставим точки пересечения в список коорд. см.exten
-        for (const i = 1; i < coo.length; i++) {
+        //Вставим точки пересечения в список коорд.
+        const pointloc = new PointLocator();
+        for (let i = 1; i < coo.length; i++) {
 
-            const cros = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
-            const line = Com5t.gf.createLineString(coo[i - 1], coo[i]);
-            let bool = pointLocator.intersects([cros, line]);
-
+            let cros = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
             hsCheck.add(coo[i]);
-            //Вставим точку в сегмент
-            if (bool === true) {
-                crosTwo.push(cros);
-                if (hsCheck.add(cros)) {
-                    listExt.push(cros);
+
+            if (cros !== null) {
+                let line = LineString.new([coo[i - 1], coo[i]]);
+                let bool = pointloc.intersects(cros, line);
+
+                //Вставим точку в сегмент
+                if (bool === true) {
+                    crosTwo.push(cros);
+                    if (hsCheck.add(cros)) {
+                        listExt.push(cros);
+                    }
                 }
             }
             listExt.push(coo[i]);
         }
-
         //Обход сегментов до и после точек пересечения
-        for (const i = 0; i < listExt.length; ++i) {
+        for (let i = 0; i < listExt.length; ++i) {
             let crd = listExt[i];
 
             //Проход через точку пересечения
-            if (crd.z === undefined) {
+            if (Number.isNaN(crd.z)) {
                 b = !b; //первая точка пройдена
-                let cL = new Coordinate(crd.x, crd.y, segmImp.p0.z);
-                let cR = newCoordinate(crd.x, crd.y);
+                let cL = Coordinate.new(crd.x, crd.y, segmImp.p0.z);
+                let cR = Coordinate.new(crd.x, crd.y);
 
                 if (crosTwo[0] === crd) {
                     cL.z = segmImp.p0.z;
@@ -102,17 +106,16 @@ UGeo.splitPolygon = (geom, segm) => {
         }
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
-            UGeom.rotate(cooR);
+            UGeo.rotate(cooR);
             cooR.push(cooR[0]);
         } else {
             cooR.push(cooR[0]);
         }
-        return [Com5t.gf.createLineString(crosTwo),
-            Com5t.gf.createPolygon(cooL),
-            Com5t.gf.createPolygon(cooR)];
+        
+        return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
-        errorLog("Error: UGeo.splitPolygon() " + e);
+        errorLog("Error: UGeo.splitPolygon() " + e.message);
     }
 };
 

@@ -3,24 +3,46 @@ import {AreaSimple} from './AreaSimple.js';
 
 export class AreaStvorka extends AreaSimple {
 
-    constructor(gson, owner, winc) {
-        super(gson, owner, winc);
+    /*spcRec = null; //спецификация москитки
+    sysfurnRec = SYSFURN.vrec; //фурнитура
+    knobRec = dbset.artikl.vrec; //ручка
+    loopRec = dbset.artikl.vrec; //подвес(петли)
+    lockRec = ARTIKL.vrec; //замок
+    mosqRec = dbset.artikl.vrec; //москитка
+    elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
+
+    lineOpenHor = null; //линии горизонт. открывания
+    lineOpenVer = null; //линии вертик. открывания
+    knobOpen = null; //ручка открывания    
+    knobColor = -3; //цвет ручки вирт...
+    loopColor = -3; //цвет подвеса вирт...
+    lockColor = -3; //цвет замка вирт...
+    mosqColor = -3; //цвет москитки вирт...
+
+    knobHeight = 0; //высота ручки
+    typeOpen = TypeOpen1.EMPTY; //направление открывания
+    knobLayout = LayoutKnob.MIDL; //положение ручки на створке      
+    offset[] = [0, 0, 0, 0];
+     */
+    
+    constructor(winc, gson, owner) {
+        super(winc, gson, owner);
 
         this.frames = new Map(); //рамы конструкции 
 
-        //Коррекция area створки с учётом ширины рамы и нахлёста
-        this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
-                owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("BOTT") - win.naxl));
-
-        this.frames.set("BOTT", new ElemFrame(gson, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
-        this.frames.set("RIGHT", new ElemFrame(gson, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
-        this.frames.set("TOP", new ElemFrame(gson, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
-        this.frames.set("LEFT", new ElemFrame(gson, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
-
-        this.sysfurnRec = dbset.sysfurnVirt; //фурнитура створки
-        this.handleRec = dbset.artiklVirt;   //ручка       
-        this.loopRec = dbset.artiklVirt;     //подвес (петли)
-        this.lockRec = dbset.artiklVirt;     //замок
+//        //Коррекция area створки с учётом ширины рамы и нахлёста
+//        this.dimension(owner.x1 + (this.margin("LEFT") - win.naxl), owner.y1 + (this.margin("TOP") - win.naxl),
+//                owner.x2 - (this.margin("RIGHT") - win.naxl), owner.y2 - (this.margin("BOTT") - win.naxl));
+//
+//        this.frames.set("BOTT", new ElemFrame(gson, this, winc, this.param('stvorkaBottom'), this.id + '.1', "BOTT", "STVORKA_SIDE"));
+//        this.frames.set("RIGHT", new ElemFrame(gson, this, winc, this.param('stvorkaRight'), this.id + '.2', "RIGHT", "STVORKA_SIDE"));
+//        this.frames.set("TOP", new ElemFrame(gson, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
+//        this.frames.set("LEFT", new ElemFrame(gson, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
+debugger;
+        this.sysfurnRec = dbset.sysfurn.vrec; //фурнитура створки
+        this.handleRec = dbset.artikl.vrec;   //ручка       
+        this.loopRec = dbset.artikl.vrec;     //подвес (петли)
+        this.lockRec = dbset.artikl.vrec;     //замок
         this.handleColor = -3;
         this.loopColor = -3;
         this.lockColor = -3;
@@ -122,40 +144,40 @@ export class AreaStvorka extends AreaSimple {
     }
 
     paint() {
-        let DX = 16, DY = 60, X1 = 0, Y1 = 0;
-        let elemB = this.frames.get("BOTT");
-        let elemR = this.frames.get("RIGHT");
-        let elemT = this.frames.get("TOP");
-        let elemL = this.frames.get("LEFT");
-        elemB.paint();
-        elemR.paint();
-        elemT.paint();
-        elemL.paint();
-
-        if (this.typeOpen == 1 || this.typeOpen == 3) {
-            X1 = elemR.x1 + (elemR.x2 - elemR.x1) / 2;
-            Y1 = elemR.y1 + (elemR.y2 - elemR.y1) / 2;
-            draw_line(this.winc, elemL.x1, elemL.y1, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
-            draw_line(this.winc, elemL.x1, elemL.y2, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
-
-        } else if (this.typeOpen == 2 || this.typeOpen == 4) {
-            X1 = elemL.x1 + (elemL.x2 - elemL.x1) / 2;
-            Y1 = elemL.y1 + (elemL.y2 - elemL.y1) / 2;
-            draw_line(this.winc, elemR.x2, elemR.y1, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
-            draw_line(this.winc, elemR.x2, elemR.y2, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
-        }
-        if (this.typeOpen == 3 || this.typeOpen == 4) {
-            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x1, elemB.y2);
-            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x2, elemB.y2);
-        }
-
-        if (this.winc.root.typeForm() == "DOOR") {
-
-        } else {
-            let handlRGB = findef(this.handleColor, COLOR.id, dbset.color);
-            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB);
-            DX = DX - 12;
-            Y1 = Y1 + 20;
-        }
+//        let DX = 16, DY = 60, X1 = 0, Y1 = 0;
+//        let elemB = this.frames.get("BOTT");
+//        let elemR = this.frames.get("RIGHT");
+//        let elemT = this.frames.get("TOP");
+//        let elemL = this.frames.get("LEFT");
+//        elemB.paint();
+//        elemR.paint();
+//        elemT.paint();
+//        elemL.paint();
+//
+//        if (this.typeOpen == 1 || this.typeOpen == 3) {
+//            X1 = elemR.x1 + (elemR.x2 - elemR.x1) / 2;
+//            Y1 = elemR.y1 + (elemR.y2 - elemR.y1) / 2;
+//            draw_line(this.winc, elemL.x1, elemL.y1, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
+//            draw_line(this.winc, elemL.x1, elemL.y2, elemR.x2, elemR.y1 + (elemR.y2 - elemR.y1) / 2);
+//
+//        } else if (this.typeOpen == 2 || this.typeOpen == 4) {
+//            X1 = elemL.x1 + (elemL.x2 - elemL.x1) / 2;
+//            Y1 = elemL.y1 + (elemL.y2 - elemL.y1) / 2;
+//            draw_line(this.winc, elemR.x2, elemR.y1, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
+//            draw_line(this.winc, elemR.x2, elemR.y2, elemL.x1, elemL.y1 + (elemL.y2 - elemL.y1) / 2);
+//        }
+//        if (this.typeOpen == 3 || this.typeOpen == 4) {
+//            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x1, elemB.y2);
+//            draw_line(this.winc, elemT.x1 + (elemT.x2 - elemT.x1) / 2, elemT.y1, elemB.x2, elemB.y2);
+//        }
+//
+//        if (this.winc.root.typeForm() == "DOOR") {
+//
+//        } else {
+//            let handlRGB = findef(this.handleColor, COLOR.id, dbset.color);
+//            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB);
+//            DX = DX - 12;
+//            Y1 = Y1 + 20;
+//        }
     }
 }

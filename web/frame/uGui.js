@@ -321,13 +321,6 @@ function isEmpty(v) {
     }
 }
 //------------------------------------------------------------------------------            
-function createVirtualRec(size, virtualData) {
-    const vrec = new Array(size);
-    for (let k in virtualData)
-        vrec[k] = virtualData[k];
-    return vrec;
-}
-//------------------------------------------------------------------------------            
 function findef(key, index, tname) {
     try {
         let record = tname.list.find(rec => key == rec[index]);
@@ -356,8 +349,8 @@ Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
 function errorLog(mes) {
-   //alert(mes); 
-   console.log(mes);
+    //alert(mes); 
+    console.log(mes);
 }
 //------------------------------------------------------------------------------
 function traverseJson(data) {
@@ -375,8 +368,8 @@ function traverseJson(data) {
             });
         }
     } //else {
-        // Это примитивное значение (строка, число, null, boolean)
-       // console.log('Примитивное значение:', data);
+    // Это примитивное значение (строка, число, null, boolean)
+    // console.log('Примитивное значение:', data);
     //}
 }
 //------------------------------------------------------------------------------

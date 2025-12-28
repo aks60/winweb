@@ -49,7 +49,7 @@
         <script type="module">
             import {localizeFactory, Test} from './frame/main.js';
             localizeFactory();
-            //Test();
+            Test();
             
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
@@ -67,12 +67,12 @@
                     login.init_login();
                     login.user_connect();
 
-                    dbset.sysprof.vrec = createVirtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    dbset.artikl.vrec = createVirtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    dbset.artdet.vrec = createVirtualRec(37, {1: -3, 14: -3, 15: -3});
-                    dbset.color.vrec = createVirtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 5: '000000', 14: -3});
-                    dbset.sysfurn.vrec = createVirtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-                    dbset.params.vrec = createVirtualRec(11, {1: -3, 2: 'Виртуал', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3});
+                    dbset.sysprof.vrec = virtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
+                    dbset.artikl.vrec = virtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
+                    dbset.artdet.vrec = virtualRec(37, {1: -3, 14: -3, 15: -3});
+                    dbset.color.vrec = virtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 5: '000000', 14: -3});
+                    dbset.sysfurn.vrec = virtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
+                    dbset.params.vrec = virtualRec(11, {1: -3, 2: 'Виртуал', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3});
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

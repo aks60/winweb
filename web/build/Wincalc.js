@@ -105,25 +105,25 @@ export class Wincalc {
                     hmDip.set(box, js); //погружение ареа
 
                 } else if (js.type === "STVORKA") {
-                    //let stv = new AreaStvorka(this, js, owner);
-                    //stv.type = Type.STVORKA;
-                    //this.root.childs.push(stv);
-                    //hm.set(stv, js);
+                    let stv = new AreaStvorka(this, js, owner);
+                    stv.type = Type.STVORKA;
+                    owner.childs.push(stv);
+                    hmDip.set(stv, js);
 
                 } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
-//                    let area = new AreaSimple(this, js, owner);
-//                    if (js.type === "AREA")
-//                        area.type = Type.AREA;
-//                    else if (js.type === "ARCH")
-//                        area.type = Type.ARCH;
-//                    else if (js.type === "TRAPEZE")
-//                        area.type = Type.TRAPEZE;
-//                    else if (js.type === "TRIANGL")
-//                        area.type = Type.TRIANGL;
-//                    else if (js.type === "DOOR")
-//                        area.type = Type.DOOR;
-//                    this.root.childs.push(area);
-//                    hmDip.set(area, js);
+                    let area = new AreaSimple(this, js, owner);
+                    if (js.type === "AREA")
+                        area.type = Type.AREA;
+                    else if (js.type === "ARCH")
+                        area.type = Type.ARCH;
+                    else if (js.type === "TRAPEZE")
+                        area.type = Type.TRAPEZE;
+                    else if (js.type === "TRIANGL")
+                        area.type = Type.TRIANGL;
+                    else if (js.type === "DOOR")
+                        area.type = Type.DOOR;
+                    owner.childs.push(area);
+                    hmDip.set(area, js);
 
                 } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type === "STOIKA") {
                     const cross = new ElemCross(this, js, owner);
@@ -133,19 +133,19 @@ export class Wincalc {
                         cross.type = Type.SHTULP;
                     else if (js.type === "STOIKA")
                         cross.type = Type.STOIKA;
-                    this.root.childs.push(cross); //добавим ребёнка родителю
+                    owner.childs.push(cross); //добавим ребёнка родителю
                     hmDip.set(cross, js); //погружение ареа                    
 
                 } else if (js.type === "GLASS") {
 //                    let glass = new ElemGlass(js, this.root, this);
 //                    glass.type = Type.GLASS;
-//                    this.root.childs.push(glass);
+//                    owner.childs.push(glass);
                 }
             }
             //Теперь вложенные элементы
-//            for (let k of hm.keys()) {
-//                this.creator(k, hm.get(k));
-//            }
+            for (let k of hmDip.keys()) {
+                this.creator(k, hmDip.get(k));
+            }
         } catch (e) {
             errorLog('Error: Wincalc.creator() ' + e.message);
         }
