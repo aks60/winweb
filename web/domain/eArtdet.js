@@ -16,7 +16,6 @@ eArtdet = {
     artikl2: 13, //Артикул 1С
     color_fk: 14, //Текстура на id_Группы или id_Текстуры
     artikl_id: 15, //Артикул
-    list: [],
     vrec: virtualRec(16, {1: -3, 14: -3, 15: -3})
 };
 

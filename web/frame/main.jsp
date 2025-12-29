@@ -44,6 +44,7 @@
         <script type="module" src="domain/eSysuser.js"></script>
 
         <script type="text/javascript">
+            
             //Поля таблиц
             var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,

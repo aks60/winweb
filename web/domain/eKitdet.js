@@ -8,6 +8,5 @@ eKitdet = {
     color3_id: 5, //Внешняя текстура
     artikl_id: 6, //Артикул
     kits_id: 7, //Комплект
-    list: [],
     vrec: virtualRec(8)
 };

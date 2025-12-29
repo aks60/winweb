@@ -36,7 +36,6 @@ eArtikl = {
     currenc1_id: 33, //Основная валюта
     currenc2_id: 34, //Неосновная валюта
     analog_id: 35, //Аналог профиля
-    list: [],
     vrec: virtualRec(36, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3}),
     find(id, analog) {
         try {

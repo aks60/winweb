@@ -11,6 +11,5 @@ eParmap = {
     groups_id: 8, //Название параметра
     color_id1: 9, //Текстура профиля
     color_id2: 10, //Текстура элемента
-    list: [],
     vrec: virtualRec(11)
 };

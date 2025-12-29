@@ -7,7 +7,6 @@ eSysprof = {
     use_side: 4, //Сторона использования
     artikl_id: 5, //Артикул
     systree_id: 6, //Система
-    list: [],
     vrec: virtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3}),
     find(nuni, typeId, us1, us2) {
         try {

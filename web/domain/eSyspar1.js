@@ -6,6 +6,5 @@ eSyspar1 = {
     groups_id: 3, //Название параметра
     systree_id: 4, //Система
     fixed: 5, //Закреплено
-    list: [],
     vrec: virtualRec(6)
 };

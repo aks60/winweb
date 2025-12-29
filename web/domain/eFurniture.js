@@ -16,7 +16,6 @@ eFurniture = {
     view_open: 13, //Вид открывания
     pars: 14, //Использ. параметры
     coord_lim: 15, //Координаты ограничений
-    list: [],
     vrec: virtualRec(16)
 };
 
