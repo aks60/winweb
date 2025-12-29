@@ -45,8 +45,8 @@
 
         <script type="text/javascript">
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups, 
-                    eKitdet, eParams,eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, 
+            var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups,
+                    eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSystree, eSysuser;
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
