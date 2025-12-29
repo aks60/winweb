@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-ARTDET = {
+eArtdet = {
     up: 0, //Тариф.мат.ценности
     id: 1, //Идентификатор
     cost_unit: 2, //Тариф единицы измерения

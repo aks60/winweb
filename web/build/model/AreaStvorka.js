@@ -54,7 +54,7 @@ debugger;
     init_constructiv() {
         //Фурнитура створки
         if (this.gson.param != undefined && this.gson.param.sysfurnID != undefined)
-            this.sysfurnRec = dbset.sysfurnList.find(rec => this.gson.param.sysfurnID == rec.list[SYSFURN.id]); //по параметру
+            this.sysfurnRec = dbset.sysfurnList.find(rec => this.gson.param.sysfurnID == rec.list[eSysfurn.id]); //по параметру
         if (this.sysfurnRec == undefined)
             this.sysfurnRec = findef(this.winc.nuni, SYSFURN.systree_id, dbset.sysfurn); //ищем первую в системе
 
@@ -62,16 +62,16 @@ debugger;
         if (this.gson.param != undefined && this.gson.param.artiklHandl != undefined)
             this.handleRec = this.gson.param.artiklHandl; //по параметру
         else if (this.sysfurnRec != undefined)
-            this.handleRec = findef(this.sysfurnRec[SYSFURN.artikl_id1], ARTIKL.id, dbset.artikl.list); //ручка по умолчанию см. систему
+            this.handleRec = findef(this.sysfurnRec[eSysfurn.artikl_id1], ARTIKL.id, dbset.artikl.list); //ручка по умолчанию см. систему
 
         //Текстура ручки
         if (this.gson.param != undefined && this.gson.param.colorHandl != undefined)
             this.handleColor = this.gson.param.colorHandl; //по параметру
         else if (this.handleRec != undefined) {
-             this.handleColor = findef(this.handleRec[ARTIKL.id], ARTDET.artikl_id, dbset.artdet).list[ARTDET.color_fk];  //первая запись
+             this.handleColor = findef(this.handleRec[eArtikl.id], ARTDET.artikl_id, dbset.artdet).list[eArtdet.color_fk];  //первая запись
              
             if (this.handleColor < 0)
-                this.handleColor = findef((-1 * this.handleColor), COLOR.id, dbset.color).list[COLOR.id]; //первый цвет в группе
+                this.handleColor = findef((-1 * this.handleColor), COLOR.id, dbset.color).list[eColor.id]; //первый цвет в группе
         }
 
         //Подвес (петли)
@@ -94,7 +94,7 @@ debugger;
         if (this.gson.param != undefined && this.gson.param.typeOpen != undefined) {
             this.typeOpen = this.gson.param.typeOpen;
         } else if (this.sysfurnRec != undefined) {
-            this.typeOpen = (this.sysfurnRec[SYSFURN.side_open] == 1) ? 1 : 2;
+            this.typeOpen = (this.sysfurnRec[eSysfurn.side_open] == 1) ? 1 : 2;
         }
 
         //Положение или высота ручки на створке
@@ -108,13 +108,13 @@ debugger;
                 this.handleHeight = this.frames.get("LEFT").height / 2;
 
             }
-        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 1) {  //MIDL.id
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[eSysfurn.hand_pos] == 1) {  //MIDL.id
             this.handleLayout = 'MIDL';
             this.handleHeight = this.frames.get("LEFT").height / 2;
-        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 2) {    //CONST.id) {
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[eSysfurn.hand_pos] == 2) {    //CONST.id) {
             this.handleLayout = 'CONST';
             this.handleHeight = this.frames.get("LEFT").height / 2;
-        } else if (this.sysfurnRec != undefined && this.sysfurnRec[SYSFURN.hand_pos] == 3) {    //VARIAT.id) {
+        } else if (this.sysfurnRec != undefined && this.sysfurnRec[eSysfurn.hand_pos] == 3) {    //VARIAT.id) {
             this.handleLayout = 'VARIAT';
             this.handleHeight = this.frames.get("LEFT").height / 2;
         } else {

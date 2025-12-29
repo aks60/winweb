@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-PRJKIT = {
+ePrjkit = {
     up: 0, //Комплекты изделия
     id: 1, //Идентификатор
     numb: 2, //Количество

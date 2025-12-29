@@ -4,7 +4,7 @@ export class Draw {
     static line(winc, x1, y1, x2, y2, rgb) {
         let ctx = winc.ctx;
         ctx.save();
-        ctx.strokeStyle = "blue"; //(rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[COLOR.rgb].toString(16);
+        ctx.strokeStyle = "blue"; //(rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[eColor.rgb].toString(16);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -36,7 +36,7 @@ export class Draw {
         let ctx = winc.ctx;
         ctx.save();
         ctx.strokeStyle = 'rgb(0,0,0)';
-        ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
+        ctx.fillStyle = '#' + rgb[eColor.rgb].toString(16);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -53,7 +53,7 @@ export class Draw {
         let ctx = winc.ctx;
         ctx.save();
         ctx.strokeStyle = 'rgb(0,0,0)';
-        ctx.fillStyle = '#' + rgb[COLOR.rgb].toString(16);
+        ctx.fillStyle = '#' + rgb[eColor.rgb].toString(16);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -67,8 +67,8 @@ export class Draw {
     static arc_full(winc, x, y, r, ang1, ang2, lineWidth, strokeStyle, fillStyle, fill) {
         let ctx = winc.ctx;
         ctx.save();
-        ctx.strokeStyle = (strokeStyle) ? '#' + strokeStyle[COLOR.rgb].toString(16) : 'rgb(0,0,0)';
-        ctx.fillStyle = (fillStyle) ? '#' + fillStyle[COLOR.rgb].toString(16) : ctx.fillStyle;
+        ctx.strokeStyle = (strokeStyle) ? '#' + strokeStyle[eColor.rgb].toString(16) : 'rgb(0,0,0)';
+        ctx.fillStyle = (fillStyle) ? '#' + fillStyle[eColor.rgb].toString(16) : ctx.fillStyle;
         ctx.lineWidth = lineWidth;
         ctx.beginPath();
         ctx.arc(x, y, r, ang1, ang2);

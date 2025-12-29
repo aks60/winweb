@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-COLOR = {
+eColor = {
     up: 0, //Описание текстур
     id: 1, //Идентификатор
     code: 2, //Код

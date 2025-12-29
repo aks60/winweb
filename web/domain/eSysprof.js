@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSPROF = {
+eSysprof = {
     up: 0, //Профили системы
     id: 1, //Идентификатор
     npp: 2, //Приоритет

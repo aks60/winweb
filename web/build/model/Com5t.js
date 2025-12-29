@@ -49,7 +49,7 @@ export class Com5t {
         }
     }
     color() {
-        return (this.timer.timerId !== null) ?  [255, 120, 0] : this.color2Rec[COLOR.rgb];
+        return (this.timer.timerId !== null) ?  [255, 120, 0] : this.color2Rec[eColor.rgb];
     }
     
     get x1() {

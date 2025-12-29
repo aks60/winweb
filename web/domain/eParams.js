@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-PARAMS = {
+eParams = {
     up: 0, //Список параметров
     id: 1, //Идентификатор
     text: 2, //Значения параметра

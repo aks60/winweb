@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSFURN = {
+eSysfurn = {
     up: 0, //Фурнитуры системы профилей
     id: 1, //Идентификатор
     npp: 2, //Приоритет обвязки

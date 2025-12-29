@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-GROUPS = {
+eGroups = {
     up: 0, //Справочники
     id: 1, //Идентификатор
     npp: 2, //Номер п/п

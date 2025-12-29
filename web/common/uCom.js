@@ -51,12 +51,12 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
             return virtualRec(typeId);
         }
         const arr = dbset.sysprof.list.find(
-                rec => rec[SYSPROF.systree_id] === nuni
-                    && rec[SYSPROF.use_type] === typeId
-                    && rec[SYSPROF.use_side] != UseSideTo.MANUAL[0]
-                    && (rec[SYSPROF.use_side] === us1
-                            || rec[SYSPROF.use_side] == us2
-                            || rec[SYSPROF.use_side] == UseSideTo.ANY[0])
+                rec => rec[eSysprof.systree_id] === nuni
+                    && rec[eSysprof.use_type] === typeId
+                    && rec[eSysprof.use_side] != UseSideTo.MANUAL[0]
+                    && (rec[eSysprof.use_side] === us1
+                            || rec[eSysprof.use_side] == us2
+                            || rec[eSysprof.use_side] == UseSideTo.ANY[0])
         );
         if (arr !== undefined) {
             return arr;
@@ -66,11 +66,11 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
 
         virtualRec = (typeId) => {
             const virt = [...dbset.sysprof.vrec];
-            virt[SYSPROF.id] = -3;
-            virt[SYSPROF.use_type] = typeId;
-            virt[SYSPROF.use_side] = -1;
-            virt[SYSPROF.systree_id] = -3;
-            virt[SYSPROF.artikl_id] = -3;
+            virt[eSysprof.id] = -3;
+            virt[eSysprof.use_type] = typeId;
+            virt[eSysprof.use_side] = -1;
+            virt[eSysprof.systree_id] = -3;
+            virt[eSysprof.artikl_id] = -3;
             return virt;
         };
     } catch (e) {
@@ -91,13 +91,13 @@ dbset.artikl.find = (id, analog) => {
         if (id === -3) {
             return dbset.artikl.vrec;
         }
-        let recordRec = dbset.artikl.list.find(rec => id === rec[ARTIKL.id]);
+        let recordRec = dbset.artikl.list.find(rec => id === rec[eArtikl.id]);
         if (recordRec === undefined) {
             recordRec = dbset.artikl.vrec;
         }
-        if (analog === true && recordRec[ARTIKL.analog_id] !== null) {
-            const _analog_id = recordRec[ARTIKL.analog_id];
-            recordRec = dbset.artikl.find(rec => _analog_id === rec[ARTIKL.id]);
+        if (analog === true && recordRec[eArtikl.analog_id] !== null) {
+            const _analog_id = recordRec[eArtikl.analog_id];
+            recordRec = dbset.artikl.find(rec => _analog_id === rec[eArtikl.id]);
         }
         return recordRec;
     } catch (e) {

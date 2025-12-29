@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-PARMAP = {
+eParmap = {
     up: 0, //Парметры текстур
     id: 1, //Идентификатор
     joint: 2, //Параметр соединений

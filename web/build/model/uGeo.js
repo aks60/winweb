@@ -170,9 +170,9 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
         for (let el of list) {
             const rec = (el.artiklRec === null) ? dbset.artikl.vrec : el.artiklRec;
             if (opt === 0) {
-                hm.set(el.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] + amend);
+                hm.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] + amend);
             } else if (opt === 1) {
-                hm.set(el.id, rec[ARTIKL.height] - rec[ARTIKL.size_centr] - rec[ARTIKL.size_falz] + amend);
+                hm.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] - rec[eArtikl.size_falz] + amend);
             }
         }
         if (cooShell.length > Com5t.MAXSIDE) {

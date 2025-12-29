@@ -78,14 +78,14 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
                 elem.gson.param.typeOpen = tableRec.id; //запишем тип открывания
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 

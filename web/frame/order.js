@@ -1,7 +1,7 @@
 //----------------- Текущий WINC  ----------------------------------------------
 order.get_winc = function () {
     if (order.wincalcMap != undefined && order.prjprodRec != undefined) {
-        let prjprodID = order.prjprodRec[PRJPROD.id];
+        let prjprodID = order.prjprodRec[ePrjprod.id];
         return order.wincalcMap.get(prjprodID);
     }
     return null;
@@ -37,7 +37,7 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             //Заполним табл. конструкций            
-            let prjprodList = dbset.prjprod.list.filter(rec => projectRow.id == rec[PRJPROD.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+            let prjprodList = dbset.prjprod.list.filter(rec => projectRow.id == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
             if (prjprodList.length > 0) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
@@ -46,10 +46,10 @@ order.init_table = function (table1, table2) {
                     order.add_prjprod(table2, rec);
                     
                     //Выделение строки табл. конструкций
-                    if (order.prjprodRec != null && order.prjprodRec[PRJPROD.id] == rec[PRJPROD.id]) {
-                        prjprodID = rec[PRJPROD.id];
+                    if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] == rec[ePrjprod.id]) {
+                        prjprodID = rec[ePrjprod.id];
                     } else if (prjprodID == null) {
-                        prjprodID = rec[PRJPROD.id]; //первая конструкция
+                        prjprodID = rec[ePrjprod.id]; //первая конструкция
                     }
                 }
                 document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
@@ -76,28 +76,28 @@ order.click_table2 = function (e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findef(prjprodID, PRJPROD.id, dbset.prjprod);
+        order.prjprodRec = findef(prjprodID, ePrjprod.id, dbset.prjprod);
     }
 }
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table = function (table1, table2) {
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
-    dbset.project.list.sort((a, b) => b[PROJECT.id] - a[PROJECT.id]);
+    dbset.project.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
     for (let i = 0; i < dbset.project.list.length; i++) {
         let tr = dbset.project.list[i];
-        if (tr[PROJECT.id] == order.orderID) {
+        if (tr[eProject.id] == order.orderID) {
             rowID = i + 1;
         }
         table1.jqGrid('addRowData', i + 1, {
-            id: tr[PROJECT.id],
-            num_ord: tr[PROJECT.num_ord],
-            num_acc: tr[PROJECT.num_acc],
-            date4: tr[PROJECT.date4],
-            date6: tr[PROJECT.date6],
-            partner: findef(tr[PROJECT.prjpart_id], DEALER.id, dbset.dealer)[DEALER.partner],
-            manager: tr[PROJECT.manager],
-            prjpart_id: tr[PROJECT.prjpart_id]
+            id: tr[eProject.id],
+            num_ord: tr[eProject.num_ord],
+            num_acc: tr[eProject.num_acc],
+            date4: tr[eProject.date4],
+            date6: tr[eProject.date6],
+            partner: findef(tr[eProject.prjpart_id], eDealer.id, dbset.dealer)[eDealer.partner],
+            manager: tr[eProject.manager],
+            prjpart_id: tr[eProject.prjpart_id]
         });
     }
     table1.jqGrid("setSelection", rowID);
@@ -124,7 +124,7 @@ order.delete_table1 = function (table) {
                             if (data.result == 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < dbset.project.list.length; ++i) {
-                                    if (orderRow.id == dbset.project.list[i][PROJECT.id]) {
+                                    if (orderRow.id == dbset.project.list[i][eProject.id]) {
                                         dbset.project.list.splice(i, 1);
                                     }
                                 }
@@ -159,14 +159,14 @@ order.delete_table2 = function () {
                 "Да": function () {
                     $.ajax({
                         url: 'dbset?action=deletePrjprod',
-                        data: {param: JSON.stringify({id: order.prjprodRec[PRJPROD.id]})},
+                        data: {param: JSON.stringify({id: order.prjprodRec[ePrjprod.id]})},
                         success: (data) => {
                             if (data.result == 'ok') {
-                                let id = 'tr' + order.prjprodRec[PRJPROD.id];
+                                let id = 'tr' + order.prjprodRec[ePrjprod.id];
                                 var trow = document.getElementById(id);
                                 trow.remove();
                                 for (let i = 0; i < dbset.prjprodList.length; ++i) {
-                                    if (dbset.prjprodList[i][PRJPROD.id] == order.prjprodRec[PRJPROD.id]) {
+                                    if (dbset.prjprodList[i][ePrjprod.id] == order.prjprodRec[ePrjprod.id]) {
                                         dbset.prjprodList.splice(i, 1);
                                     }
                                 }
@@ -193,25 +193,25 @@ order.delete_table2 = function () {
 order.add_prjprod = function (table2, rec) {
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
-    canvas.id = 'cnv' + rec[PRJPROD.id];
+    canvas.id = 'cnv' + rec[ePrjprod.id];
     canvas.width = 68;
     canvas.height = 68;
 
-    let id = document.createTextNode(rec[PRJPROD.id]);
-    let name = document.createTextNode(rec[PRJPROD.name]);
-    let script = rec[PRJPROD.script];   
+    let id = document.createTextNode(rec[ePrjprod.id]);
+    let name = document.createTextNode(rec[ePrjprod.name]);
+    let script = rec[ePrjprod.script];   
     
     //Сщздание экземпрляра окна!!!
     let winc = win.build(canvas, script);
     //winc.build(script);
     
     //Массив объектов winc
-   //order.wincalcMap.set(prjprodRec[PRJPROD.id], winc);
+   //order.wincalcMap.set(prjprodRec[ePrjprod.id], winc);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
     let tr = document.createElement('tr');
-    tr.id = 'tr' + rec[PRJPROD.id];
+    tr.id = 'tr' + rec[ePrjprod.id];
     td1.appendChild(id);
     td2.appendChild(name);
     td3.appendChild(canvas);
@@ -223,7 +223,7 @@ order.add_prjprod = function (table2, rec) {
 //----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.project.list.find(rec => orderRow.id = rec[PROJECT.id]);
+    let orderRec = dbset.project.list.find(rec => orderRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
         data: {param: JSON.stringify({})},
@@ -257,14 +257,14 @@ order.insert_table1 = function (taq) {
                                     if (data.result == 'ok') {
                                         let record = new Array(41);
                                         record[0] = 'SEL';
-                                        record[PROJECT.id] = dat.id;
-                                        record[PROJECT.num_ord] = $("#n21").val();
-                                        record[PROJECT.num_acc] = $("#n22").val();
-                                        record[PROJECT.manager] = login.data.user_fio;
-                                        record[PROJECT.date4] = $("#n23").val();
-                                        record[PROJECT.date6] = $("#n24").val();
-                                        record[PROJECT.owner] = login.data.user_name;
-                                        record[PROJECT.prjpart_id] = $("#n25").attr("fk");
+                                        record[eProject.id] = dat.id;
+                                        record[eProject.num_ord] = $("#n21").val();
+                                        record[eProject.num_acc] = $("#n22").val();
+                                        record[eProject.manager] = login.data.user_fio;
+                                        record[eProject.date4] = $("#n23").val();
+                                        record[eProject.date6] = $("#n24").val();
+                                        record[eProject.owner] = login.data.user_name;
+                                        record[eProject.prjpart_id] = $("#n25").attr("fk");
                                         dbset.projectList.push(record);
                                         order.load_table($("#table1"));
                                     } else
@@ -293,7 +293,7 @@ order.insert_table1 = function (taq) {
 order.update_table1 = function (taq) {
 
     let orderRow = getSelectedRow($("#table1"));
-    let orderRec = dbset.project.list.find(rec => orderRow.id == rec[PROJECT.id]);
+    let orderRec = dbset.project.list.find(rec => orderRow.id == rec[eProject.id]);
     $("#n21").val(orderRow.num_ord);
     $("#n22").val(orderRow.num_acc);
     $("#n23").val(orderRow.date4);
@@ -310,13 +310,13 @@ order.update_table1 = function (taq) {
             "Применить": function () {
 
                 orderRec[0] = 'UPD';
-                orderRec[PROJECT.num_ord] = $("#n21").val();
-                orderRec[PROJECT.num_acc] = $("#n22").val();
-                orderRec[PROJECT.manager] = login.data.user_fio;
-                orderRec[PROJECT.date4] = $("#n23").val();
-                orderRec[PROJECT.date6] = $("#n24").val();
-                orderRec[PROJECT.owner] = login.data.user_name;
-                orderRec[PROJECT.prjpart_id] = $("#n25").attr("fk");
+                orderRec[eProject.num_ord] = $("#n21").val();
+                orderRec[eProject.num_acc] = $("#n22").val();
+                orderRec[eProject.manager] = login.data.user_fio;
+                orderRec[eProject.date4] = $("#n23").val();
+                orderRec[eProject.date6] = $("#n24").val();
+                orderRec[eProject.owner] = login.data.user_name;
+                orderRec[eProject.prjpart_id] = $("#n25").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateOrder',
                     data: {param: JSON.stringify(orderRec)},
@@ -324,13 +324,13 @@ order.update_table1 = function (taq) {
                         if (data.result == 'ok') {
                             let rowid = $('#table1').jqGrid('getGridParam', "selrow");
                             $('#table1').jqGrid('setRowData', rowid, {
-                                id: orderRec[PROJECT.id],
-                                num_ord: orderRec[PROJECT.num_ord],
-                                num_acc: orderRec[PROJECT.num_acc],
-                                date4: orderRec[PROJECT.date4],
-                                date6: orderRec[PROJECT.date6],
-                                partner: findef(orderRec[PROJECT.prjpart_id], DEALER.id, dbset.dealer)[DEALER.partner],
-                                manager: orderRec[PROJECT.manager]
+                                id: orderRec[eProject.id],
+                                num_ord: orderRec[eProject.num_ord],
+                                num_acc: orderRec[eProject.num_acc],
+                                date4: orderRec[eProject.date4],
+                                date6: orderRec[eProject.date6],
+                                partner: findef(orderRec[eProject.prjpart_id], DEALER.id, dbset.dealer)[eDealer.partner],
+                                manager: orderRec[eProject.manager]
                             });
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);

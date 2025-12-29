@@ -70,10 +70,10 @@
                         for (let i = 0; i < product.artiklArr.length; i++) {
                             let tr = product.artiklArr[i];
                             table.jqGrid('addRowData', i + 1, {
-                                id: tr[ARTIKL.id],
-                                type: TYPE[tr[ARTIKL.level1]],
-                                code: tr[ARTIKL.code],
-                                name: tr[ARTIKL.name]});
+                                id: tr[eArtikl.id],
+                                type: TYPE[tr[eArtikl.level1]],
+                                code: tr[eArtikl.code],
+                                name: tr[eArtikl.name]});
                         }
                         //Ручка
                     } else if (product.buttonSrc == 'n45') {
@@ -93,10 +93,10 @@
                     for (let i = 0; i < dbset.artiklList.length; i++) {
                         let tr = dbset.artiklList[i];
                         table.jqGrid('addRowData', i + 1, {
-                            id: tr[ARTIKL.id],
-                            type: TYPE[tr[ARTIKL.level1]],
-                            code: tr[ARTIKL.code],
-                            name: tr[ARTIKL.name]});
+                            id: tr[eArtikl.id],
+                            type: TYPE[tr[eArtikl.level1]],
+                            code: tr[eArtikl.code],
+                            name: tr[eArtikl.name]});
                     }
                 }
                 table.jqGrid("setSelection", 1);
@@ -109,8 +109,8 @@
                         let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                         let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
-                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
+                        let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
 
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
@@ -142,8 +142,8 @@
                         }
 
                         //Запишем скрипт в локальн. бд 
-                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = win.build(winc.cnv, prjprodRec[PRJPROD.script]);
+                        prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                        let winc2 = win.build(winc.cnv, prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
@@ -162,7 +162,7 @@
 
                     } else if ($('#outbody title').text() == 'KITS') {
                         let artiklRow = getSelectedRow(table);
-                        let artiklRec = dbset.artiklList.find(rec => artiklRow.id == rec.list[ARTIKL.id]);
+                        let artiklRec = dbset.artiklList.find(rec => artiklRow.id == rec.list[eArtikl.id]);
 
                         if (kits.buttonSrc == 'n51' || kits.buttonSrc == 'n52') {
                             $("#n51").val(artiklRow.code);
@@ -176,26 +176,26 @@
                                 url: 'dbset?action=insertKits',
                                 data: {
                                     param: JSON.stringify({
-                                        color1_id: artiklRec[ARTIKL.color1_id],
-                                        color2_id: artiklRec[ARTIKL.color2_id],
-                                        color3_id: artiklRec[ARTIKL.color3_id],                        
-                                        artikl_id: artiklRec[ARTIKL.id],
-                                        prjprod_id: order.prjprodRec[PRJPROD.id]
+                                        color1_id: artiklRec[eArtikl.color1_id],
+                                        color2_id: artiklRec[eArtikl.color2_id],
+                                        color3_id: artiklRec[eArtikl.color3_id],                        
+                                        artikl_id: artiklRec[eArtikl.id],
+                                        prjprod_id: order.prjprodRec[ePrjprod.id]
                                     })
                                 },
                                 success: (data) => {
                                     if (data.result == 'ok') {
                                         let record = new Array(13);
                                         record[0] = 'SEL';
-                                        record[PRJKIT.id] = data.prjkitRec[PRJKIT.id];
-                                        record[PRJKIT.numb] = data.prjkitRec[PRJKIT.numb];
-                                        record[PRJKIT.width] = data.prjkitRec[PRJKIT.width];
-                                        record[PRJKIT.height] = data.prjkitRec[PRJKIT.height];
-                                        record[PRJKIT.color1_id] = data.prjkitRec[PRJKIT.color1_id];
-                                        record[PRJKIT.color2_id] = data.prjkitRec[PRJKIT.color2_id];
-                                        record[PRJKIT.color3_id] = data.prjkitRec[PRJKIT.color3_id];
-                                        record[PRJKIT.artikl_id] = data.prjkitRec[PRJKIT.artikl_id];
-                                        record[PRJKIT.prjprod_id] = data.prjkitRec[PRJKIT.prjprod_id];
+                                        record[ePrjkit.id] = data.prjkitRec[ePrjkit.id];
+                                        record[ePrjkit.numb] = data.prjkitRec[ePrjkit.numb];
+                                        record[ePrjkit.width] = data.prjkitRec[ePrjkit.width];
+                                        record[ePrjkit.height] = data.prjkitRec[ePrjkit.height];
+                                        record[ePrjkit.color1_id] = data.prjkitRec[ePrjkit.color1_id];
+                                        record[ePrjkit.color2_id] = data.prjkitRec[ePrjkit.color2_id];
+                                        record[ePrjkit.color3_id] = data.prjkitRec[ePrjkit.color3_id];
+                                        record[ePrjkit.artikl_id] = data.prjkitRec[ePrjkit.artikl_id];
+                                        record[ePrjkit.prjprod_id] = data.prjkitRec[ePrjkit.prjprod_id];
                                         dbset.prjkitList.push(record);
                                     } else {
                                         dialogMes('Сообщение', "<p>" + data.result);
@@ -217,33 +217,33 @@
             function  load2_table(level_1, level_2) {
 
                 let pkSet = new Set();
-                let artiklArr = dbset.artiklList.filter(rec => rec.list[ARTIKL.level1] == level_1 && rec.list[ARTIKL.level2] == level_2);
+                let artiklArr = dbset.artiklList.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 for (let furndetRec1 of dbset.furndetList) {
-                    if (furndetRec1[FURNDET.furniture_id1] == elem.sysfurnRec[SYSFURN.furniture_id]) {
+                    if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {
 
-                        if (furndetRec1[FURNDET.furniture_id2] == null) { //НЕ НАБОР                                
-                            pkSet.add(furndetRec1[FURNDET.artikl_id]);
+                        if (furndetRec1[eFurndet.furniture_id2] == null) { //НЕ НАБОР                                
+                            pkSet.add(furndetRec1[eFurndet.artikl_id]);
                         } else {
                             for (let furndetRec2 of dbset.furndetList) {
-                                if (furndetRec1[FURNDET.furniture_id2] == furndetRec2[FURNDET.furniture_id1]) {
-                                    pkSet.add(furndetRec2[FURNDET.artikl_id]);
+                                if (furndetRec1[eFurndet.furniture_id2] == furndetRec2[eFurndet.furniture_id1]) {
+                                    pkSet.add(furndetRec2[eFurndet.artikl_id]);
                                 }
                             }
                         }
                     }
                 }
-                let artiklList = artiklArr.filter(rec => pkSet.has(rec.list[ARTIKL.id]));
+                let artiklList = artiklArr.filter(rec => pkSet.has(rec.list[eArtikl.id]));
                 for (let i = 0; i < artiklList.length; i++) {
                     let tr = artiklList[i];
                     $("#tab-artikl").jqGrid('addRowData', i + 1, {
-                        id: tr[ARTIKL.id],
-                        type: TYPE[tr[ARTIKL.level1]],
-                        code: tr[ARTIKL.code],
-                        name: tr[ARTIKL.name]
+                        id: tr[eArtikl.id],
+                        type: TYPE[tr[eArtikl.level1]],
+                        code: tr[eArtikl.code],
+                        name: tr[eArtikl.name]
                     });
                 }
             }

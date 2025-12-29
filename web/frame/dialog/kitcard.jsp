@@ -56,17 +56,17 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec.list[KITDET.kits_id]);
+                        kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec.list[eKitdet.kits_id]);
                         if (kitdetList != undefined) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let tr = kitdetList[i];
-                                let artiklRec = findef(tr[KITDET.artikl_id], ARTIKL.id, dbset.artikl);
+                                let artiklRec = findef(tr[eKitdet.artikl_id], ARTIKL.id, dbset.artikl);
                                 table2.jqGrid('addRowData', i + 1, {
-                                    id: tr[KITDET.id],
-                                    code: artiklRec[ARTIKL.code],
-                                    name: artiklRec[ARTIKL.name],
-                                    color1_id: findef(tr[KITDET.color1_id], COLOR.id, dbset.color)[COLOR.name],
-                                    unit: tr[KITDET.unit]
+                                    id: tr[eKitdet.id],
+                                    code: artiklRec[eArtikl.code],
+                                    name: artiklRec[eArtikl.name],
+                                    color1_id: findef(tr[eKitdet.color1_id], COLOR.id, dbset.color)[eColor.name],
+                                    unit: tr[eKitdet.unit]
                                 });
                             }
                         }
@@ -108,26 +108,26 @@
                             url: 'dbset?action=insertKits',
                             data: {
                                 param: JSON.stringify({
-                                    color1_id: kitdetRec[KITDET.color1_id],
-                                    color2_id: kitdetRec[KITDET.color2_id],
-                                    color3_id: kitdetRec[KITDET.color3_id],
-                                    artikl_id: kitdetRec[KITDET.artikl_id],
-                                    prjprod_id: order.prjprodRec[PRJPROD.id]
+                                    color1_id: kitdetRec[eKitdet.color1_id],
+                                    color2_id: kitdetRec[eKitdet.color2_id],
+                                    color3_id: kitdetRec[eKitdet.color3_id],
+                                    artikl_id: kitdetRec[eKitdet.artikl_id],
+                                    prjprod_id: order.prjprodRec[ePrjprod.id]
                                 })
                             },
                             success: (data) => {
                                 if (data.result == 'ok') {
                                     let record = new Array(13);
                                     record[0] = 'SEL';
-                                    record[PRJKIT.id] = data.prjkitRec[PRJKIT.id];
-                                    record[PRJKIT.numb] = data.prjkitRec[PRJKIT.numb];
-                                    record[PRJKIT.width] = data.prjkitRec[PRJKIT.width];
-                                    record[PRJKIT.height] = data.prjkitRec[PRJKIT.height];
-                                    record[PRJKIT.color1_id] = data.prjkitRec[PRJKIT.color1_id];
-                                    record[PRJKIT.color2_id] = data.prjkitRec[PRJKIT.color2_id];
-                                    record[PRJKIT.color3_id] = data.prjkitRec[PRJKIT.color3_id];
-                                    record[PRJKIT.artikl_id] = data.prjkitRec[PRJKIT.artikl_id];
-                                    record[PRJKIT.prjprod_id] = data.prjkitRec[PRJKIT.prjprod_id];
+                                    record[ePrjkit.id] = data.prjkitRec[ePrjkit.id];
+                                    record[ePrjkit.numb] = data.prjkitRec[ePrjkit.numb];
+                                    record[ePrjkit.width] = data.prjkitRec[ePrjkit.width];
+                                    record[ePrjkit.height] = data.prjkitRec[ePrjkit.height];
+                                    record[ePrjkit.color1_id] = data.prjkitRec[ePrjkit.color1_id];
+                                    record[ePrjkit.color2_id] = data.prjkitRec[ePrjkit.color2_id];
+                                    record[ePrjkit.color3_id] = data.prjkitRec[ePrjkit.color3_id];
+                                    record[ePrjkit.artikl_id] = data.prjkitRec[ePrjkit.artikl_id];
+                                    record[ePrjkit.prjprod_id] = data.prjkitRec[ePrjkit.prjprod_id];
                                     dbset.prjkitList.push(record);
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);

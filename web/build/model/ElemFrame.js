@@ -44,8 +44,8 @@ export class ElemFrame extends ElemSimple {
                     this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
                 }
             }
-            this.artiklRec = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], false); //артикул
-            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], true); //аналог             
+            this.artiklRec = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
+            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог             
 
         } catch (e) {
             errorLog('Error: ElemFrame.initArtikle() ' + e.message);

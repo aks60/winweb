@@ -56,25 +56,25 @@
                         let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                         if (base.colorArr.length == 0) {
 
-                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec.list[COLOR.colgrp_id]);
+                            let colorList = dbset.colorList.filter(rec => colgrpRow.id == rec.list[eColor.colgrp_id]);
                             for (let i = 0; i < colorList.length; i++) {
                                 let colorRec = colorList[i];
                                 table2.jqGrid('addRowData', i + 1, {
-                                    id: colorRec[COLOR.id],
-                                    name: colorRec[COLOR.name]
+                                    id: colorRec[eColor.id],
+                                    name: colorRec[eColor.name]
                                 });
-                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                                let rgb = '#' + colorRec[eColor.rgb].toString(16);
                                 table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         } else {
-                            let colorArr = base.colorArr.filter(rec => colgrpRow.id == rec.list[COLOR.colgrp_id]);
+                            let colorArr = base.colorArr.filter(rec => colgrpRow.id == rec.list[eColor.colgrp_id]);
                             for (let i = 0; i < colorArr.length; i++) {
                                 let colorRec = colorArr[i];
                                 table2.jqGrid('addRowData', i + 1, {
-                                    id: colorRec[COLOR.id],
-                                    name: colorRec[COLOR.name]
+                                    id: colorRec[eColor.id],
+                                    name: colorRec[eColor.name]
                                 });
-                                let rgb = '#' + colorRec[COLOR.rgb].toString(16);
+                                let rgb = '#' + colorRec[eColor.rgb].toString(16);
                                 table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         }
@@ -123,7 +123,7 @@
                     if ($('#outbody title').text() == 'PRODUCT') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                        let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
                         let param = elem.gson.param;
@@ -164,15 +164,15 @@
                             elem.gson.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
-                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                        prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[PRJPROD.script]);
+                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                        prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                        let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[PRJPROD.script]})},
+                            data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[ePrjprod.script]})},
                             success: function (data) {
                                 if (data.result == 'ok') {
                                     //Запишем выбранную запись в тег страницы

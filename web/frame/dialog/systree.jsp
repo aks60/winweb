@@ -62,17 +62,17 @@
                     buttons: {
                         "Выбрать": function () {
                             let orderRow = getSelectedRow($("#table1"));
-                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec.list[SYSPROD.id]);
+                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec.list[eSysprod.id]);
                             if (sysprodRec != undefined) {
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
                                     url: 'dbset?action=insertPrjprod',
-                                    data: {param: JSON.stringify({name: sysprodRec[SYSPROD.name], script: sysprodRec[SYSPROD.script],
-                                            projectID: orderRow.id, systreeID: sysprodRec[SYSPROD.systree_id]})},
+                                    data: {param: JSON.stringify({name: sysprodRec[eSysprod.name], script: sysprodRec[eSysprod.script],
+                                            projectID: orderRow.id, systreeID: sysprodRec[eSysprod.systree_id]})},
                                     success: (data) => {
                                         if (data.result == 'ok') {
-                                            let record = ['SEL', data.id, 0, sysprodRec[SYSPROD.name],
-                                                sysprodRec[SYSPROD.script], orderRow.id, sysprodRec[SYSPROD.systree_id]];
+                                            let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
+                                                sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
                                             dbset.prjprodList.push(record);
                                             order.add_prjprod(document.getElementById('table2'), record);
 
@@ -120,7 +120,7 @@
                         //Заполним табл. конструкций 
                         let systreeRec = table1.jqGrid('getRowData', rowid);
                         if (systreeRec.isLeaf == 'true') {
-                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec.list[SYSPROD.systree_id]);
+                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec.list[eSysprod.systree_id]);
                             if (sysprodList.length > 0) {
                                 prjprodID = null;
                                 for (let rec of sysprodList) {
@@ -129,7 +129,7 @@
                                     add_clone(table2, rec);
                                     //Первая конструкция
                                     if (prjprodID == null) {
-                                        prjprodID = rec.list[SYSPROD.id];
+                                        prjprodID = rec.list[eSysprod.id];
                                     }
                                 }
                                 //Программный клик на первой конструкции
@@ -160,13 +160,13 @@
 //------------------------------------------------------------------------------
             function add_clone(table, sysprodRec) {
 
-                let id = document.createTextNode(sysprodRec[SYSPROD.id]);
-                let name = document.createTextNode(sysprodRec[SYSPROD.name]);
-                let script = sysprodRec[SYSPROD.script];
+                let id = document.createTextNode(sysprodRec[eSysprod.id]);
+                let name = document.createTextNode(sysprodRec[eSysprod.name]);
+                let script = sysprodRec[eSysprod.script];
 
                 let canvas = document.createElement("canvas");
                 canvas.class = "cnv";
-                canvas.id = 'cnv' + sysprodRec[SYSPROD.id];
+                canvas.id = 'cnv' + sysprodRec[eSysprod.id];
                 canvas.width = 68;
                 canvas.height = 68;
 

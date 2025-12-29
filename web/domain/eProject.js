@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-PROJECT = {
+eProject = {
     up: 0, //Заказы проектов
     id: 1, //Идентификатор
     num_ord: 2, //Номер заказа

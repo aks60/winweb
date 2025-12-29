@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-FURNDET = {
+eFurndet = {
     up: 0, //Спецификация фурнитуры
     id: 1, //Идентификатор
     color_us: 2, //Подбор текстуры

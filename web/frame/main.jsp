@@ -23,31 +23,31 @@
         <script type="module" src="./build/Wincalc.js"></script>
         <script type="module" src="./build/making/Draw.js"></script>
 
-        <script type="module" src="domain/ARTDET.js"></script>
-        <script type="module" src="./domain/ARTIKL.js"></script>
-        <script type="module" src="./domain/COLOR.js"></script>
-        <script type="module" src="domain/DEALER.js"></script>
-        <script type="module" src="domain/FURNDET.js"></script>
-        <script type="module" src="domain/FURNITURE.js"></script>
-        <script type="module" src="domain/GROUPS.js"></script>
-        <script type="module" src="domain/KITDET.js"></script>
-        <script type="module" src="domain/PARAMS.js"></script>
-        <script type="module" src="domain/PARMAP.js"></script>
-        <script type="module" src="domain/PRJKIT.js"></script>
-        <script type="module" src="domain/PRJPROD.js"></script>
-        <script type="module" src="domain/PROJECT.js"></script>
-        <script type="module" src="domain/SYSFURN.js"></script>
-        <script type="module" src="domain/SYSPAR1.js"></script>
-        <script type="module" src="domain/SYSPROD.js"></script>
-        <script type="module" src="domain/SYSPROF.js"></script>
-        <script type="module" src="domain/SYSTREE.js"></script>
-        <script type="module" src="domain/SYSUSER.js"></script>
+        <script type="module" src="domain/eArtdet.js"></script>
+        <script type="module" src="./domain/eArtikl.js"></script>
+        <script type="module" src="./domain/eColor.js"></script>
+        <script type="module" src="domain/eDealer.js"></script>
+        <script type="module" src="domain/eFurndet.js"></script>
+        <script type="module" src="domain/eFurniture.js"></script>
+        <script type="module" src="domain/eGroups.js"></script>
+        <script type="module" src="domain/eKitdet.js"></script>
+        <script type="module" src="domain/eParams.js"></script>
+        <script type="module" src="domain/eParmap.js"></script>
+        <script type="module" src="domain/ePrjkit.js"></script>
+        <script type="module" src="domain/ePrjprod.js"></script>
+        <script type="module" src="domain/eProject.js"></script>
+        <script type="module" src="domain/eSysfurn.js"></script>
+        <script type="module" src="domain/eSyspar1.js"></script>
+        <script type="module" src="domain/eSysprod.js"></script>
+        <script type="module" src="domain/eSysprof.js"></script>
+        <script type="module" src="domain/eSystree.js"></script>
+        <script type="module" src="domain/eSysuser.js"></script>
 
         <script type="text/javascript">
             //Поля таблиц
-            var ARTDET, ARTIKL, COLOR, DEALER, FURNDET, FURNITURE, GROUPS, 
-                    KITDET, PARAMS,PARMAP, PRJKIT, PRJPROD, PROJECT, SYSFURN, 
-                    SYSPAR1, SYSPROD, SYSPROF, SYSTREE, SYSUSER;
+            var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups, 
+                    eKitdet, eParams,eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, 
+                    eSyspar1, eSysprod, eSysprof, eSystree, eSysuser;
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};

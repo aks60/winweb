@@ -66,9 +66,9 @@
                 for (let i = 0; i < dbset.dealerList.length; i++) {
                     let tr = dbset.dealerList[i].list;
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[DEALER.id],
-                        partner: tr[DEALER.partner],
-                        manager: tr[DEALER.manager]});
+                        id: tr[eDealer.id],
+                        partner: tr[eDealer.partner],
+                        manager: tr[eDealer.manager]});
                 }
                 table.jqGrid("setSelection", 1);
             }

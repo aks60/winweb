@@ -33,19 +33,19 @@ export class ElemCross extends ElemSimple {
             else {
                 this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
             }
-            this.artiklRec = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], false); //артикул
-            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[SYSPROF.artikl_id], true); //аналог     
+            this.artiklRec = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
+            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
 
             //Сделано для коррекции ширины импостов
-            if (this.artiklRecAn[ARTIKL.id] == -3) {
-                this.artiklRec[ARTIKL.height] = this.artiklRec[ARTIKL.height] + 16;
-                this.artiklRecAn[ARTIKL.height] = this.artiklRec[ARTIKL.height] + 16;
+            if (this.artiklRecAn[eArtikl.id] == -3) {
+                this.artiklRec[eArtikl.height] = this.artiklRec[eArtikl.height] + 16;
+                this.artiklRecAn[eArtikl.height] = this.artiklRec[eArtikl.height] + 16;
             }
 
             //Если импост виртуальный
-            if (this.artiklRec[ARTIKL.id] == -3) {
-                this.artiklRec[ARTIKL.size_centr] = 40;
-                this.artiklRecAn[ARTIKL.size_centr] = 40;
+            if (this.artiklRec[eArtikl.id] == -3) {
+                this.artiklRec[eArtikl.size_centr] = 40;
+                this.artiklRecAn[eArtikl.size_centr] = 40;
             }
         } catch (e) {
             errorLog('Error: ElemCross.initArtikle() ' + e.message);
@@ -64,7 +64,7 @@ export class ElemCross extends ElemSimple {
             this.owner.childs[2].area = geoSplit[2];
 //
 //            //Левый и правый сегмент вдоль импоста
-//            const delta = this.artiklRec[ARTIKL.height] - this.artiklRec[ARTIKL.size_centr]; //ширина
+//            const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
 //            const baseSegm = new LineSegment(new Coordinate(this.x1
 //                    , this.y1), new Coordinate(this.x2, this.y2));
 //            const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
@@ -95,9 +95,9 @@ export class ElemCross extends ElemSimple {
     }
 
     /* find_first(nuni, typ, us1) {
-     let record = dbset.sysprofList.find(rec => nuni == rec.list[SYSPROF.systree_id]
-     && rec.list[SYSPROF.use_type] == typ && UseSide.MANUAL[0] != rec.list[SYSPROF.use_side]
-     && (us1 == rec.list[SYSPROF.use_side] || UseSide.ANY[0] == rec.list[SYSPROF.use_side]));
+     let record = dbset.sysprofList.find(rec => nuni == rec.list[eSysprof.systree_id]
+     && rec.list[eSysprof.use_type] == typ && UseSide.MANUAL[0] != rec.list[eSysprof.use_side]
+     && (us1 == rec.list[eSysprof.use_side] || UseSide.ANY[0] == rec.list[eSysprof.use_side]));
      if (nuni == -3 || record == undefined) {
      return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
      }

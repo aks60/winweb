@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSUSER = {
+eSysuser = {
     up: 0, //Пользователи системы
     id: 1, //Идентификатор
     role: 2, //Роль

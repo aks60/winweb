@@ -63,13 +63,13 @@
             function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = order.prjprodRec[SYSPROF.id];
+                let id = order.prjprodRec[eSysprof.id];
                 let winc = order.wincalcMap.get(id);
                 let furnitureList = [];
                 for (let furnitureRec of dbset.furnitureList) {
                     for (let sysfurnRec of dbset.sysfurnList) {
-                        if (furnitureRec[FURNITURE.id] == sysfurnRec[SYSFURN.furniture_id]
-                                && sysfurnRec[SYSFURN.systree_id] == winc.nuni) {
+                        if (furnitureRec[eFurnituire.id] == sysfurnRec[eSysfurn.furniture_id]
+                                && sysfurnRec[eSysfurn.systree_id] == winc.nuni) {
                             furnitureList.push(furnitureRec);
                         }
                     }
@@ -77,8 +77,8 @@
                 for (let i = 0; i < furnitureList.length; i++) {
                     let tr = furnitureList[i];
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[FURNITURE.id],
-                        name: tr[FURNITURE.name]
+                        id: tr[eFurnituire.id],
+                        name: tr[eFurnituire.name]
                     });
                 }
                 table.jqGrid("setSelection", 1);
@@ -89,15 +89,15 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
-                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec.list[SYSFURN.furniture_id] && winc.nuni == rec.list[SYSFURN.systree_id]);
-                elem.gson.param.sysfurnID = sysfurnRec[SYSFURN.id]; //запишем профиль в скрипт
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
+                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec.list[eSysfurn.furniture_id] && winc.nuni == rec.list[eSysfurn.systree_id]);
+                elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 

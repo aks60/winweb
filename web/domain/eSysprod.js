@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSPROD = {
+eSysprod = {
     up: 0, //Типовые изделия системные
     id: 1, //Идентификатор
     npp: 2, //Номер п/п

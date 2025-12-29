@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-ARTIKL = {
+eArtikl = {
     up: 0, //Материальные ценности
     id: 1, //Идентификатор
     code: 2, //Артикул

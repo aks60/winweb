@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSTREE = {
+eSystree = {
     up: 0, //Дерево системы профилей
     id: 1, //Идентиф.системы(NUNI)
     npp: 2, //Номер п/п

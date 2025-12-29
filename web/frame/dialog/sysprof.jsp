@@ -60,17 +60,17 @@
             function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = order.prjprodRec[SYSPROF.id];
+                let id = order.prjprodRec[eSysprof.id];
                 let winc = order.wincalcMap.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
-                    let artRec = dbset.artiklList.find(rec => tr[SYSPROF.artikl_id] == rec.list[ARTIKL.id]);
+                    let artRec = dbset.artiklList.find(rec => tr[eSysprof.artikl_id] == rec.list[eArtikl.id]);
                     table.jqGrid('addRowData', i + 1, {
-                        id: tr[SYSPROF.id],
-                        side: use_name(tr[SYSPROF.use_side]),
-                        code: artRec[ARTIKL.code],
-                        name: artRec[ARTIKL.name]
+                        id: tr[eSysprof.id],
+                        side: use_name(tr[eSysprof.use_side]),
+                        code: artRec[eArtikl.code],
+                        name: artRec[eArtikl.name]
                     });
                 }
                 table.jqGrid("setSelection", 1);
@@ -81,7 +81,7 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[PRJPROD.id]; //id prjprod заказа
+                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
@@ -97,8 +97,8 @@
                 }
 
                 //Запишем профиль в локальн. бд
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[PRJPROD.id]);
-                prjprodRec[PRJPROD.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 

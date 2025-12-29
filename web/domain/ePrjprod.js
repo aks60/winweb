@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-PRJPROD = {
+ePrjprod = {
     up: 0, //Изделия заказa
     id: 1, //Идентификатор
     num: 2, //Количество единиц

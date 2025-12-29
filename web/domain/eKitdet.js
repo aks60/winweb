@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-KITDET = {
+eKitdet = {
     up: 0, //Спецификация комплектов
     id: 1, //Идентификатор
     flag: 2, //Флаг

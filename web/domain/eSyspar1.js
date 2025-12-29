@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-SYSPAR1 = {
+eSyspar1 = {
     up: 0, //Парамметры системы профилей
     id: 1, //Идентификатор
     text: 2, //Значения параметра

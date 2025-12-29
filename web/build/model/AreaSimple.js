@@ -51,16 +51,16 @@ export class AreaSimple extends Com5t {
                     //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
                         let paramsRec = dbset.params.find(ioknaID); //параметр менеджера
-                        let syspar1Rec = this.winc.mapPardef[paramsRec[PARAMS.groups_id]];
+                        let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
                         if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
-                            syspar1Rec[PARAMS.text] = paramsRec[PARAMS.text]; //накладываем параметр менеджера
+                            syspar1Rec[eParams.text] = paramsRec[eParams.text]; //накладываем параметр менеджера
                         }
                     } else {
                         let paramsRec = dbset.params.find(ioknaID); //параметр менеджера
-                        let syspar1Rec = this.winc.mapPardef[paramsRec[PARAMS.groups_id]];
+                        let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
                         if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
-                            let text = dbset.color.list.find(paramsRec[PARMAP.color_id1])[COLOR.name];
-                            syspar1Rec[PARAMS.text] = text; //накладываем параметр менеджера
+                            let text = dbset.color.list.find(paramsRec[eParmap.color_id1])[eColor.name];
+                            syspar1Rec[eParams.text] = text; //накладываем параметр менеджера
                         }
                     }
                 }

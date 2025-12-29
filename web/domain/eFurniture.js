@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-FURNITURE = {
+eFurniture = {
     up: 0, //Фурнитура
     id: 1, //Идентификатор
     name: 2, //Название

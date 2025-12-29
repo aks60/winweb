@@ -24,20 +24,20 @@ kits.init_table = function (table) {
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     if (order.wincalcMap.size != 0) {
-        kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[PRJPROD.id] == rec.list[PRJKIT.prjprod_id]);
+        kits.prjkitList = dbset.prjkitList.filter(rec => order.prjprodRec[ePrjprod.id] == rec.list[ePrjkit.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
-            let artiklRec = findef(tr[PRJKIT.artikl_id], ARTIKL.id, dbset.artikl.list);
+            let artiklRec = findef(tr[ePrjkit.artikl_id], ARTIKL.id, dbset.artikl.list);
             table.jqGrid('addRowData', i + 1, {
                 id: tr[KITS.id],
-                code: artiklRec[ARTIKL.code],
-                name: artiklRec[ARTIKL.name],
-                color1: findef(tr[PRJKIT.color1_id], COLOR.id, dbset.color)[COLOR.name],
-                color2: findef(tr[PRJKIT.color2_id], COLOR.id, dbset.color)[COLOR.name],
-                color3: findef(tr[PRJKIT.color3_id], COLOR.id, dbset.color)[COLOR.name],
-                width: tr[PRJKIT.width],
-                height: tr[PRJKIT.height],
-                numb: tr[PRJKIT.numb]
+                code: artiklRec[eArtikl.code],
+                name: artiklRec[eArtikl.name],
+                color1: findef(tr[ePrjkit.color1_id], COLOR.id, dbset.color)[eColor.name],
+                color2: findef(tr[ePrjkit.color2_id], COLOR.id, dbset.color)[eColor.name],
+                color3: findef(tr[ePrjkit.color3_id], COLOR.id, dbset.color)[eColor.name],
+                width: tr[ePrjkit.width],
+                height: tr[ePrjkit.height],
+                numb: tr[ePrjkit.numb]
             });
         }
         table.jqGrid("setSelection", 1);
@@ -67,7 +67,7 @@ kits.update_table = function (taq) {
 
     let rowid = $("#table1").jqGrid('getGridParam', "selrow");
     let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
-    let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[PRJKIT.id]);
+    let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[ePrjkit.id]);
 
     $("#n53").val(prjkitRow.color1);
     $("#n54").val(prjkitRow.color2);
@@ -75,9 +75,9 @@ kits.update_table = function (taq) {
     $("#n56").val(prjkitRow.width);
     $("#n57").val(prjkitRow.height);
     $("#n58").val(prjkitRow.numb);
-    $("#n53").attr("fk", prjkitRec[PRJKIT.color1_id]);
-    $("#n54").attr("fk", prjkitRec[PRJKIT.color2_id]);
-    $("#n55").attr("fk", prjkitRec[PRJKIT.color3_id]);
+    $("#n53").attr("fk", prjkitRec[ePrjkit.color1_id]);
+    $("#n54").attr("fk", prjkitRec[ePrjkit.color2_id]);
+    $("#n55").attr("fk", prjkitRec[ePrjkit.color3_id]);
 
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования артикула",
@@ -89,12 +89,12 @@ kits.update_table = function (taq) {
             "Применить": function () {
 
                 prjkitRec[0] = 'UPD';
-                prjkitRec[PRJKIT.numb] = $("#n58").val();
-                prjkitRec[PRJKIT.width] = $("#n56").val();
-                prjkitRec[PRJKIT.height] = $("#n57").val();
-                prjkitRec[PRJKIT.color1_id] = $("#n53").attr("fk");
-                prjkitRec[PRJKIT.color2_id] = $("#n54").attr("fk");
-                prjkitRec[PRJKIT.color3_id] = $("#n55").attr("fk");
+                prjkitRec[ePrjkit.numb] = $("#n58").val();
+                prjkitRec[ePrjkit.width] = $("#n56").val();
+                prjkitRec[ePrjkit.height] = $("#n57").val();
+                prjkitRec[ePrjkit.color1_id] = $("#n53").attr("fk");
+                prjkitRec[ePrjkit.color2_id] = $("#n54").attr("fk");
+                prjkitRec[ePrjkit.color3_id] = $("#n55").attr("fk");
 
                 $.ajax({
                     url: 'dbset?action=updatePrjkit',
@@ -146,7 +146,7 @@ kits.delete_table = function (table) {
                         if (data.result == 'ok') {
                             table.jqGrid("delRowData", rowid);
                             for (let i = 0; i < dbset.prjkitList.length; ++i) {
-                                if (prjkitID == dbset.prjkitList[i][PRJKIT.id]) {
+                                if (prjkitID == dbset.prjkitList[i][ePrjkit.id]) {
                                     dbset.prjkitList.splice(i, 1);
                                 }
                             }
@@ -181,21 +181,21 @@ kits.color_to_kit = function (btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();        
         let prjkitRow = getSelectedRow($('#table1'));
-        let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[PRJKIT.id]);
+        let prjkitRec = dbset.prjkitList.find(rec => prjkitRow.id == rec.list[ePrjkit.id]);
         for (let rec of dbset.artdetList) {
-            if (rec.list[ARTDET.artikl_id] == prjkitRec[PRJKIT.artikl_id]) {
-                if (rec.list[ARTDET.color_fk] < 0) { //все текстуры групы color_fk
+            if (rec.list[eArtdet.artikl_id] == prjkitRec[ePrjkit.artikl_id]) {
+                if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
 
                     dbset.colorList.forEach(colorRec => {
-                        if (colorRec[COLOR.colgrp_id] == Math.abs(rec.list[ARTDET.color_fk])) {
+                        if (colorRec[eColor.colgrp_id] == Math.abs(rec.list[eArtdet.color_fk])) {
 
-                            groupSet.add(Math.abs(colorRec[COLOR.colgrp_id]));
+                            groupSet.add(Math.abs(colorRec[eColor.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = dbset.colorList.find(rec3 => rec.list[ARTDET.color_fk] == rec3[COLOR.id]);
-                    groupSet.add(color2Rec[COLOR.colgrp_id]);
+                    let color2Rec = dbset.colorList.find(rec3 => rec.list[eArtdet.color_fk] == rec3[eColor.id]);
+                    groupSet.add(color2Rec[eColor.colgrp_id]);
                     colorSet.add(color2Rec);
                 }
             }
