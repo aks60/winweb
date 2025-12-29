@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 SYSUSER = {
     up: 0, //Пользователи системы
     id: 1, //Идентификатор
@@ -8,4 +9,5 @@ SYSUSER = {
     email: 6, //Почта
     desc: 7, //Описание
     openkey: 8, //Открытый ключ
+    vrec: virtualRec(9)
 };

@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 PARMAP = {
     up: 0, //Парметры текстур
     id: 1, //Идентификатор
@@ -10,4 +11,5 @@ PARMAP = {
     groups_id: 8, //Название параметра
     color_id1: 9, //Текстура профиля
     color_id2: 10, //Текстура элемента
+    vrec: virtualRec(11)
 };

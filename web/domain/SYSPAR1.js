@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 SYSPAR1 = {
     up: 0, //Парамметры системы профилей
     id: 1, //Идентификатор
@@ -5,4 +6,5 @@ SYSPAR1 = {
     groups_id: 3, //Название параметра
     systree_id: 4, //Система
     fixed: 5, //Закреплено
+    vrec: virtualRec(6)
 };

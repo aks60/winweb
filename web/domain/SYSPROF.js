@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 SYSPROF = {
     up: 0, //Профили системы
     id: 1, //Идентификатор
@@ -6,4 +7,5 @@ SYSPROF = {
     use_side: 4, //Сторона использования
     artikl_id: 5, //Артикул
     systree_id: 6, //Система
+    vrec: virtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3})
 };

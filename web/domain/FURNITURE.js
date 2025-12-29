@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 FURNITURE = {
     up: 0, //Фурнитура
     id: 1, //Идентификатор
@@ -15,6 +16,7 @@ FURNITURE = {
     view_open: 13, //Вид открывания
     pars: 14, //Использ. параметры
     coord_lim: 15, //Координаты ограничений
+    vrec: virtualRec(16)
 };
 
 

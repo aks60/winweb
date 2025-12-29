@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 SYSPROD = {
     up: 0, //Типовые изделия системные
     id: 1, //Идентификатор
@@ -5,4 +6,5 @@ SYSPROD = {
     name: 3, //Название изделия
     script: 4, //Скрипт построения окна
     systree_id: 5, //Система
+    vrec: virtualRec(6)
 };

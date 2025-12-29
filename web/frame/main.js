@@ -109,10 +109,10 @@ export function Test() {
 //        let x1 = LineString.new([c1, c2]);
 //        let x2 = Polygon.new([p1, p2, p3, p4]);
 
-        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
-        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1400, 3], [1300, 0, 4]]);
-        let o3 = UGeo.splitPolygon(o2, o1);
-        let o4 = 0;
+//        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
+//        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1400, 3], [1300, 0, 4]]);
+//        let o3 = UGeo.splitPolygon(o2, o1);
+//        let o4 = 0;
 
         //alert(`Превет Test().`);
     } catch (e) {

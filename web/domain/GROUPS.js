@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 GROUPS = {
     up: 0, //Справочники
     id: 1, //Идентификатор
@@ -16,5 +17,6 @@ GROUPS = {
     //12 - Учитывать накладные расходы в себест.
     name: 4, //Название группы
     val: 5, //Значение
+    vrec: virtualRec(6)
 }
 ;

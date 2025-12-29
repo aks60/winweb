@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 KITDET = {
     up: 0, //Спецификация комплектов
     id: 1, //Идентификатор
@@ -7,4 +8,5 @@ KITDET = {
     color3_id: 5, //Внешняя текстура
     artikl_id: 6, //Артикул
     kits_id: 7, //Комплект
+    vrec: virtualRec(8)
 };

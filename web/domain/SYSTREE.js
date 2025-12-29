@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 SYSTREE = {
     up: 0, //Дерево системы профилей
     id: 1, //Идентиф.системы(NUNI)
@@ -14,4 +15,5 @@ SYSTREE = {
     types: 12, //Тип конструкции
     note: 13, //Примечание
     parent_id: 14, //Родитель
+    vrec: virtualRec(15)
 };

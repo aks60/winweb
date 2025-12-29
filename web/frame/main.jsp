@@ -20,13 +20,36 @@
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
 
         <script type="text/javascript" src="frame/uGui.js"></script>
-        <script type="text/javascript" src="/winweb/enums/Fields.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
         <script type="module" src="./build/making/Draw.js"></script>
 
+        <script type="module" src="domain/ARTDET.js"></script>
+        <script type="module" src="./domain/ARTIKL.js"></script>
+        <script type="module" src="./domain/COLOR.js"></script>
+        <script type="module" src="domain/DEALER.js"></script>
+        <script type="module" src="domain/FURNDET.js"></script>
+        <script type="module" src="domain/FURNITURE.js"></script>
+        <script type="module" src="domain/GROUPS.js"></script>
+        <script type="module" src="domain/KITDET.js"></script>
+        <script type="module" src="domain/PARAMS.js"></script>
+        <script type="module" src="domain/PARMAP.js"></script>
+        <script type="module" src="domain/PRJKIT.js"></script>
+        <script type="module" src="domain/PRJPROD.js"></script>
+        <script type="module" src="domain/PROJECT.js"></script>
+        <script type="module" src="domain/SYSFURN.js"></script>
+        <script type="module" src="domain/SYSPAR1.js"></script>
+        <script type="module" src="domain/SYSPROD.js"></script>
+        <script type="module" src="domain/SYSPROF.js"></script>
+        <script type="module" src="domain/SYSTREE.js"></script>
+        <script type="module" src="domain/SYSUSER.js"></script>
+
         <script type="text/javascript">
+            //Поля таблиц
+            var ARTDET, ARTIKL, COLOR, DEALER, FURNDET, FURNITURE, GROUPS, 
+                    KITDET, PARAMS,PARMAP, PRJKIT, PRJPROD, PROJECT, SYSFURN, 
+                    SYSPAR1, SYSPROD, SYSPROF, SYSTREE, SYSUSER;
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2},
+            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
             //Таблицы базы данных
             var dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
@@ -36,7 +59,6 @@
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
             $.jstree.defaults.core.themes.variant = "large";
-
         </script>         
     </head>
     <body>
@@ -49,8 +71,9 @@
         <script type="module">
             import {localizeFactory, Test} from './frame/main.js';
             localizeFactory();
-            Test();
-            
+            //Test();
+            //alert(PROJECT.id);
+
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
                     $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
@@ -66,14 +89,6 @@
                     }
                     login.init_login();
                     login.user_connect();
-
-                    dbset.sysprof.vrec = virtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3});
-                    dbset.artikl.vrec = virtualRec(37, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3});
-                    dbset.artdet.vrec = virtualRec(37, {1: -3, 14: -3, 15: -3});
-                    dbset.color.vrec = virtualRec(15, {1: -3, 2: 'Авторасчёт', 4: -3, 5: '000000', 14: -3});
-                    dbset.sysfurn.vrec = virtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3});
-                    dbset.params.vrec = virtualRec(11, {1: -3, 2: 'Виртуал', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3});
-
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
                 });

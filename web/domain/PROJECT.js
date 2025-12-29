@@ -1,3 +1,4 @@
+import {virtualRec} from './domain.js';
 PROJECT = {
     up: 0, //Заказы проектов
     id: 1, //Идентификатор
@@ -25,4 +26,5 @@ PROJECT = {
     currenc_id: 23, //Валюта
     vendor_id: 24, //Продавец
     prjpart_id: 25, //Контрагент
+    vrec: virtualRec(26)
 };
