@@ -168,7 +168,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
     try {
         //Смещения сегментов
         for (let el of list) {
-            const rec = (el.artiklRec === null) ? dbset.artikl.vrec : el.artiklRec;
+            const rec = (el.artiklRec === null) ? eArtikl.vrec : el.artiklRec;
             if (opt === 0) {
                 hm.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] + amend);
             } else if (opt === 1) {

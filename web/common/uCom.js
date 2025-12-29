@@ -65,7 +65,7 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
         }
 
         virtualRec = (typeId) => {
-            const virt = [...dbset.sysprof.vrec];
+            const virt = [...eSysprof.vrec];
             virt[eSysprof.id] = -3;
             virt[eSysprof.use_type] = typeId;
             virt[eSysprof.use_side] = -1;
@@ -81,7 +81,7 @@ dbset.sysprof.find = (nuni, typeId, us1, us2) => {
 dbset.sysprof.find3 = (_id) => {
     let sysprof = dbset.sysprof.list.find(rec => rec.id === _id);
     if (sysprof === undefined) {
-        sysprof = dbset.sysprof.vrec;
+        sysprof = eSysprof.vrec;
     }
     return sysprof;
 };
@@ -89,11 +89,11 @@ dbset.sysprof.find3 = (_id) => {
 dbset.artikl.find = (id, analog) => {
     try {
         if (id === -3) {
-            return dbset.artikl.vrec;
+            return eArtikl.vrec;
         }
         let recordRec = dbset.artikl.list.find(rec => id === rec[eArtikl.id]);
         if (recordRec === undefined) {
-            recordRec = dbset.artikl.vrec;
+            recordRec = eArtikl.vrec;
         }
         if (analog === true && recordRec[eArtikl.analog_id] !== null) {
             const _analog_id = recordRec[eArtikl.analog_id];
@@ -108,7 +108,7 @@ dbset.artikl.find = (id, analog) => {
 dbset.params.find = _id => {
     let elem = dbset.params.list.find(rec => _id === rec.id);
     if (elem === undefined) {
-        elem = dbset.params.vrec;
+        elem = eParams.vrec;
     }
     return elem;
 };

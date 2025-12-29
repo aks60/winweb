@@ -4,11 +4,11 @@ import {AreaSimple} from './AreaSimple.js';
 export class AreaStvorka extends AreaSimple {
 
     /*spcRec = null; //спецификация москитки
-    sysfurnRec = SYSFURN.vrec; //фурнитура
-    knobRec = dbset.artikl.vrec; //ручка
-    loopRec = dbset.artikl.vrec; //подвес(петли)
-    lockRec = ARTIKL.vrec; //замок
-    mosqRec = dbset.artikl.vrec; //москитка
+    sysfurnRec = eSysfurn.vrec; //фурнитура
+    knobRec = eArtikl.vrec; //ручка
+    loopRec = eArtikl.vrec; //подвес(петли)
+    lockRec = eArtikl.vrec; //замок
+    mosqRec = eArtikl.vrec; //москитка
     elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
     lineOpenHor = null; //линии горизонт. открывания
@@ -39,10 +39,10 @@ export class AreaStvorka extends AreaSimple {
 //        this.frames.set("TOP", new ElemFrame(gson, this, winc, this.param('stvorkaTop'), this.id + '.3', "TOP", "STVORKA_SIDE"));
 //        this.frames.set("LEFT", new ElemFrame(gson, this, winc, this.param('stvorkaLeft'), this.id + '.4', "LEFT", "STVORKA_SIDE"));
 debugger;
-        this.sysfurnRec = dbset.sysfurn.vrec; //фурнитура створки
-        this.handleRec = dbset.artikl.vrec;   //ручка       
-        this.loopRec = dbset.artikl.vrec;     //подвес (петли)
-        this.lockRec = dbset.artikl.vrec;     //замок
+        this.sysfurnRec = eSysfurn.vrec; //фурнитура створки
+        this.handleRec = eArtikl.vrec;   //ручка       
+        this.loopRec = eArtikl.vrec;     //подвес (петли)
+        this.lockRec = eAartikl.vrec;     //замок
         this.handleColor = -3;
         this.loopColor = -3;
         this.lockColor = -3;
