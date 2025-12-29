@@ -48,12 +48,10 @@
             var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSystree, eSysuser;
+
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
-            //Таблицы базы данных
-            var dbset = {systree: {}, sysprod: {}, color: {}, artikl: {}, artdet: {}, furniture: {}, furndet: {}, prjprod: {}, sysfurn: {},
-                sysprof: {}, syspar1: {}, params: {}, group: {}, project: {}, dealer: {}, kits: {}, kitdet: {}, prjkit: {}};
 
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
@@ -72,7 +70,6 @@
             import {localizeFactory, Test} from './frame/main.js';
             localizeFactory();
             //Test();
-            //alert(PROJECT.id);
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
@@ -83,16 +80,15 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
-                    const listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
+                    var listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
                         eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
-                    let keys = Object.keys(dbset);
-                    for (var i = 0; i < keys.length; i++) {
-                        dbset[keys[i]].list = p[i];
+                    
+                    for (var i = 0; i < listT.length; i++)
                         listT[i].list = p[i];
-                    }
+
                     login.init_login();
                     login.user_connect();
-                    
+
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
                 });

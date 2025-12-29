@@ -27,9 +27,9 @@ export class AreaSimple extends Com5t {
     initConstructiv(param) {
         try {
             if (param !== undefined && param[PKjson.sysprofID] !== undefined) {//профили через параметр
-                sysprofRec = dbset.sysprof.list.find3(param[PKjson.sysprofID]);
+                sysprofRec = eSysprof.find3(param[PKjson.sysprofID]);
             }//else if(this.owner.id === 0) {
-            //    sysprofRec = dbset.sysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
+            //    sysprofRec = eSysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
             //}
         } catch (e) {
             errorLog('Error: AreaSimple.initConstructiv() ' + e.message);
@@ -50,16 +50,16 @@ export class AreaSimple extends Com5t {
                 for (const ioknaID of ioknaParamArr) { //цикл по пааметрам менеджера
                     //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
-                        let paramsRec = dbset.params.find(ioknaID); //параметр менеджера
+                        let paramsRec = eParams.find(ioknaID); //параметр менеджера
                         let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
                         if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
                             syspar1Rec[eParams.text] = paramsRec[eParams.text]; //накладываем параметр менеджера
                         }
                     } else {
-                        let paramsRec = dbset.params.find(ioknaID); //параметр менеджера
+                        let paramsRec = eParams.find(ioknaID); //параметр менеджера
                         let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
                         if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
-                            let text = dbset.color.list.find(paramsRec[eParmap.color_id1])[eColor.name];
+                            let text = eColor.find(paramsRec[eParmap.color_id1])[eColor.name];
                             syspar1Rec[eParams.text] = text; //накладываем параметр менеджера
                         }
                     }

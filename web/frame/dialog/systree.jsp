@@ -62,7 +62,7 @@
                     buttons: {
                         "Выбрать": function () {
                             let orderRow = getSelectedRow($("#table1"));
-                            let sysprodRec = dbset.sysprodList.find(rec => sysprodID == rec.list[eSysprod.id]);
+                            let sysprodRec = eSysprod.ist.find(rec => sysprodID == rec.list[eSysprod.id]);
                             if (sysprodRec != undefined) {
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
@@ -73,7 +73,7 @@
                                         if (data.result == 'ok') {
                                             let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
                                                 sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
-                                            dbset.prjprodList.push(record);
+                                            ePrjprod.list.push(record);
                                             order.add_prjprod(document.getElementById('table2'), record);
 
                                         } else
@@ -120,7 +120,7 @@
                         //Заполним табл. конструкций 
                         let systreeRec = table1.jqGrid('getRowData', rowid);
                         if (systreeRec.isLeaf == 'true') {
-                            let sysprodList = dbset.sysprodList.filter(rec => systreeRec.id == rec.list[eSysprod.systree_id]);
+                            let sysprodList = eSysprod.list.filter(rec => systreeRec.id == rec.list[eSysprod.systree_id]);
                             if (sysprodList.length > 0) {
                                 prjprodID = null;
                                 for (let rec of sysprodList) {

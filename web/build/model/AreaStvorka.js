@@ -54,29 +54,29 @@ debugger;
     init_constructiv() {
         //Фурнитура створки
         if (this.gson.param != undefined && this.gson.param.sysfurnID != undefined)
-            this.sysfurnRec = dbset.sysfurnList.find(rec => this.gson.param.sysfurnID == rec.list[eSysfurn.id]); //по параметру
+            this.sysfurnRec = eSysfurn.list.find(rec => this.gson.param.sysfurnID == rec.list[eSysfurn.id]); //по параметру
         if (this.sysfurnRec == undefined)
-            this.sysfurnRec = findef(this.winc.nuni, SYSFURN.systree_id, dbset.sysfurn); //ищем первую в системе
+            this.sysfurnRec = findef(this.winc.nuni, SYSFURN.systree_id, eSysfurn); //ищем первую в системе
 
         //Ручка
         if (this.gson.param != undefined && this.gson.param.artiklHandl != undefined)
             this.handleRec = this.gson.param.artiklHandl; //по параметру
         else if (this.sysfurnRec != undefined)
-            this.handleRec = findef(this.sysfurnRec[eSysfurn.artikl_id1], ARTIKL.id, dbset.artikl.list); //ручка по умолчанию см. систему
+            this.handleRec = findef(this.sysfurnRec[eSysfurn.artikl_id1], ARTIKL.id, eArtikl.list); //ручка по умолчанию см. систему
 
         //Текстура ручки
         if (this.gson.param != undefined && this.gson.param.colorHandl != undefined)
             this.handleColor = this.gson.param.colorHandl; //по параметру
         else if (this.handleRec != undefined) {
-             this.handleColor = findef(this.handleRec[eArtikl.id], ARTDET.artikl_id, dbset.artdet).list[eArtdet.color_fk];  //первая запись
+             this.handleColor = findef(this.handleRec[eArtikl.id], ARTDET.artikl_id, eArtdet).list[eArtdet.color_fk];  //первая запись
              
             if (this.handleColor < 0)
-                this.handleColor = findef((-1 * this.handleColor), COLOR.id, dbset.color).list[eColor.id]; //первый цвет в группе
+                this.handleColor = findef((-1 * this.handleColor), COLOR.id, eColor).list[eColor.id]; //первый цвет в группе
         }
 
         //Подвес (петли)
         if (this.gson.param != undefined && this.gson.param.artiklLoop != undefined)
-            this.loopRec = findef(this.gson.param.artiklLoop, ARTIKL.id, dbset.artikl);
+            this.loopRec = findef(this.gson.param.artiklLoop, ARTIKL.id, eArtikl);
 
         //Текстура подвеса
         if (this.gson.param != undefined && this.gson.param.colorLoop != undefined)
@@ -84,7 +84,7 @@ debugger;
 
         //Замок
         if (this.gson.param != undefined && this.gson.param.artiklLock != undefined)
-            this.lockRec = findef(this.gson.param.artiklLock, ARTIKL.id, dbset.artikl);
+            this.lockRec = findef(this.gson.param.artiklLock, ARTIKL.id, eArtikl);
 
         //Текстура замка
         if (this.gson.param != undefined && this.gson.param.colorLock != undefined)
@@ -174,7 +174,7 @@ debugger;
 //        if (this.winc.root.typeForm() == "DOOR") {
 //
 //        } else {
-//            let handlRGB = findef(this.handleColor, COLOR.id, dbset.color);
+//            let handlRGB = findef(this.handleColor, COLOR.id, eColor);
 //            draw_stroke_polygon(this.winc, X1 - DX, X1 + DX, X1 + DX, X1 - DX, Y1 - DY, Y1 - DY, Y1 + DY, Y1 + DY, handlRGB);
 //            DX = DX - 12;
 //            Y1 = Y1 + 20;

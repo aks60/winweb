@@ -63,8 +63,8 @@
             }
 //------------------------------------------------------------------------------ 
             function load_table(table) {
-                for (let i = 0; i < dbset.dealerList.length; i++) {
-                    let tr = dbset.dealerList[i].list;
+                for (let i = 0; i < eDealer.list.length; i++) {
+                    let tr = eDealer.list[i].list;
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[eDealer.id],
                         partner: tr[eDealer.partner],

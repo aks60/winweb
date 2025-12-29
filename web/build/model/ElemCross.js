@@ -31,10 +31,10 @@ export class ElemCross extends ElemSimple {
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
+                this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
             }
-            this.artiklRec = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
-            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
+            this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
+            this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
 
             //Сделано для коррекции ширины импостов
             if (this.artiklRecAn[eArtikl.id] == -3) {
@@ -95,11 +95,11 @@ export class ElemCross extends ElemSimple {
     }
 
     /* find_first(nuni, typ, us1) {
-     let record = dbset.sysprofList.find(rec => nuni == rec.list[eSysprof.systree_id]
+     let record = eSysprof.list.find(rec => nuni == rec.list[eSysprof.systree_id]
      && rec.list[eSysprof.use_type] == typ && UseSide.MANUAL[0] != rec.list[eSysprof.use_side]
      && (us1 == rec.list[eSysprof.use_side] || UseSide.ANY[0] == rec.list[eSysprof.use_side]));
      if (nuni == -3 || record == undefined) {
-     return dbset.sysprofVirt; //[-3, 0, typ, -1, -3, -3];
+     return eSysprof.virt; //[-3, 0, typ, -1, -3, -3];
      }
      return record;
      } */

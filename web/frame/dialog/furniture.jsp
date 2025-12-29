@@ -66,8 +66,8 @@
                 let id = order.prjprodRec[eSysprof.id];
                 let winc = order.wincalcMap.get(id);
                 let furnitureList = [];
-                for (let furnitureRec of dbset.furnitureList) {
-                    for (let sysfurnRec of dbset.sysfurnList) {
+                for (let furnitureRec of eFurniture.list) {
+                    for (let sysfurnRec of eSysfurn.list) {
                         if (furnitureRec[eFurnituire.id] == sysfurnRec[eSysfurn.furniture_id]
                                 && sysfurnRec[eSysfurn.systree_id] == winc.nuni) {
                             furnitureList.push(furnitureRec);
@@ -94,9 +94,9 @@
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
-                let sysfurnRec = dbset.sysfurnList.find(rec => tableRec.id == rec.list[eSysfurn.furniture_id] && winc.nuni == rec.list[eSysfurn.systree_id]);
+                let sysfurnRec = eSysfurn.list.find(rec => tableRec.id == rec.list[eSysfurn.furniture_id] && winc.nuni == rec.list[eSysfurn.systree_id]);
                 elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.

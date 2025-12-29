@@ -56,16 +56,16 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        kitdetList = dbset.kitdetList.filter(rec => kitsRow.id == rec.list[eKitdet.kits_id]);
+                        kitdetList = eKitdet.list.filter(rec => kitsRow.id == rec.list[eKitdet.kits_id]);
                         if (kitdetList != undefined) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let tr = kitdetList[i];
-                                let artiklRec = findef(tr[eKitdet.artikl_id], ARTIKL.id, dbset.artikl);
+                                let artiklRec = findef(tr[eKitdet.artikl_id], ARTIKL.id, eArtikl);
                                 table2.jqGrid('addRowData', i + 1, {
                                     id: tr[eKitdet.id],
                                     code: artiklRec[eArtikl.code],
                                     name: artiklRec[eArtikl.name],
-                                    color1_id: findef(tr[eKitdet.color1_id], COLOR.id, dbset.color)[eColor.name],
+                                    color1_id: findef(tr[eKitdet.color1_id], COLOR.id, eColor)[eColor.name],
                                     unit: tr[eKitdet.unit]
                                 });
                             }
@@ -89,8 +89,8 @@
             function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
-                for (let i = 0; i < dbset.kitsList.length; i++) {
-                    let tr = dbset.kitsList[i].list;
+                for (let i = 0; i < ePrjkit.list.length; i++) {
+                    let tr =ePrjkit.list[i].list;
                     table1.jqGrid('addRowData', i + 1, {
                         id: tr[KITS.id],
                         categ: tr[KITS.categ],
@@ -128,7 +128,7 @@
                                     record[ePrjkit.color3_id] = data.prjkitRec[ePrjkit.color3_id];
                                     record[ePrjkit.artikl_id] = data.prjkitRec[ePrjkit.artikl_id];
                                     record[ePrjkit.prjprod_id] = data.prjkitRec[ePrjkit.prjprod_id];
-                                    dbset.prjkitList.push(record);
+                                    ePrjkit.list.push(record);
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }

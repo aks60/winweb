@@ -8,6 +8,7 @@ eFurndet = {
     furniture_id1: 5, //Фурнитура
     furniture_id2: 6, //Набор
     furndet_id: 7, //Ссылка на родителя
+    list: [],
     vrec: virtualRec(8)
 };
 

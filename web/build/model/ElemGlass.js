@@ -13,17 +13,17 @@ export class ElemGlass extends Com5t {
 
         //Артикул стекла
         if (this.gson.param != undefined && this.gson.param.artglasID != undefined)
-            this.artiklRec = dbset.artiklList.find(rec => this.gson.param.artglasID == rec.list[eArtikl.id]);
+            this.artiklRec = eArtikl.list.find(rec => this.gson.param.artglasID == rec.list[eArtikl.id]);
         else {
-            let systreeRec = dbset.systreeList.find(rec => this.winc.nuni == rec.list[eSystree.id]); //по умолчанию стеклопакет
-            this.artiklRec = dbset.artiklList.find(rec => systreeRec[eSystree.glas] == rec.list[eArtikl.code]);
+            let systreeRec = eSystree.list.find(rec => this.winc.nuni == rec.list[eSystree.id]); //по умолчанию стеклопакет
+            this.artiklRec = deArtikl.list.find(rec => systreeRec[eSystree.glas] == rec.list[eArtikl.code]);
         }
         //Цвет стекла
         if (this.gson.param != undefined && this.gson.param.colorGlass != undefined)
-            this.color1Rec = findef(this.gson.param.colorGlass, COLOR.id, dbset.color);
+            this.color1Rec = findef(this.gson.param.colorGlass, COLOR.id, eColor);
         else {
-            let color_fk = findef(this.artiklRec[eArtikl.id], ARTDET.artikl_id, dbset.artdet).list[eArtdet.color_fk];
-            this.color1Rec = findef(color_fk, COLOR.id, dbset.color);
+            let color_fk = findef(this.artiklRec[eArtikl.id], ARTDET.artikl_id, eArtdet).list[eArtdet.color_fk];
+            this.color1Rec = findef(color_fk, COLOR.id, eColor);
         }
     }
 

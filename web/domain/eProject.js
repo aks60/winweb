@@ -26,5 +26,6 @@ eProject = {
     currenc_id: 23, //Валюта
     vendor_id: 24, //Продавец
     prjpart_id: 25, //Контрагент
+    list: [],
     vrec: virtualRec(26)
 };

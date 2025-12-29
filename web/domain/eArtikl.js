@@ -36,5 +36,24 @@ eArtikl = {
     currenc1_id: 33, //Основная валюта
     currenc2_id: 34, //Неосновная валюта
     analog_id: 35, //Аналог профиля
-    vrec: virtualRec(36, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3})
+    list: [],
+    vrec: virtualRec(36, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3}),
+    find(id, analog) {
+        try {
+            if (id === -3) {
+                return this.vrec;
+            }
+            let recordRec = this.list.find(rec => id === rec[this.id]);
+            if (recordRec === undefined) {
+                recordRec = this.vrec;
+            }
+            if (analog === true && recordRec[this.analog_id] !== null) {
+                const _analog_id = recordRec[this.analog_id];
+                recordRec = this.list.find(rec => _analog_id === rec[this.id]);
+            }
+            return recordRec;
+        } catch (e) {
+            errorLog('Error: eArtikl.find() ' + e.message);
+        }
+    }
 };

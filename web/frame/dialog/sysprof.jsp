@@ -65,7 +65,7 @@
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
-                    let artRec = dbset.artiklList.find(rec => tr[eSysprof.artikl_id] == rec.list[eArtikl.id]);
+                    let artRec = eArtikl.list.find(rec => tr[eSysprof.artikl_id] == rec.list[eArtikl.id]);
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[eSysprof.id],
                         side: use_name(tr[eSysprof.use_side]),
@@ -97,7 +97,7 @@
                 }
 
                 //Запишем профиль в локальн. бд
-                let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                 let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.

@@ -33,19 +33,19 @@ export class ElemFrame extends ElemSimple {
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if ('BOTT' === this.layout()) {
-                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
                 } else if ('RIGHT' === this.layout()) {
-                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.RIGHT[0], UseSideTo.VERT[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.RIGHT[0], UseSideTo.VERT[0]);
                 } else if ('TOP' === this.layout()) {
-                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.TOP[0], UseSideTo.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.TOP[0], UseSideTo.HORIZ[0]);
                 } else if ('LEFT' === this.layout()) {
-                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.LEFT[0], UseSideTo.VERT[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.LEFT[0], UseSideTo.VERT[0]);
                 } else {
-                    this.sysprofRec = dbset.sysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
                 }
             }
-            this.artiklRec = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
-            this.artiklRecAn = dbset.artikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог             
+            this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
+            this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог             
 
         } catch (e) {
             errorLog('Error: ElemFrame.initArtikle() ' + e.message);

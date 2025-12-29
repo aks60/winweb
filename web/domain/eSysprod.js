@@ -6,5 +6,6 @@ eSysprod = {
     name: 3, //Название изделия
     script: 4, //Скрипт построения окна
     systree_id: 5, //Система
+    list: [],
     vrec: virtualRec(6)
 };

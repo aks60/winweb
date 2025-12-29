@@ -9,5 +9,6 @@ eSysuser = {
     email: 6, //Почта
     desc: 7, //Описание
     openkey: 8, //Открытый ключ
+    list: [],
     vrec: virtualRec(9)
 };

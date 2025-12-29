@@ -7,5 +7,6 @@ ePrjprod = {
     script: 4, //Скрипт построения окна
     project_id: 5, //Заказ
     systree_id: 6, //Система
+    list: [],
     vrec: virtualRec(7)
 };

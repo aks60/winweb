@@ -90,8 +90,8 @@
                     }
 
                 } else if ($('#outbody title').text() == 'KITS') {
-                    for (let i = 0; i < dbset.artiklList.length; i++) {
-                        let tr = dbset.artiklList[i];
+                    for (let i = 0; i < eArtikl.list.length; i++) {
+                        let tr = eArtikl.list[i];
                         table.jqGrid('addRowData', i + 1, {
                             id: tr[eArtikl.id],
                             type: TYPE[tr[eArtikl.level1]],
@@ -110,7 +110,7 @@
                         let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                         let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                        let prjprodRec = dbset.prjprodList.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                        let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
 
                         let winc = order.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
@@ -162,7 +162,7 @@
 
                     } else if ($('#outbody title').text() == 'KITS') {
                         let artiklRow = getSelectedRow(table);
-                        let artiklRec = dbset.artiklList.find(rec => artiklRow.id == rec.list[eArtikl.id]);
+                        let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec.list[eArtikl.id]);
 
                         if (kits.buttonSrc == 'n51' || kits.buttonSrc == 'n52') {
                             $("#n51").val(artiklRow.code);
@@ -196,7 +196,7 @@
                                         record[ePrjkit.color3_id] = data.prjkitRec[ePrjkit.color3_id];
                                         record[ePrjkit.artikl_id] = data.prjkitRec[ePrjkit.artikl_id];
                                         record[ePrjkit.prjprod_id] = data.prjkitRec[ePrjkit.prjprod_id];
-                                        dbset.prjkitList.push(record);
+                                        ePrjkit.list.push(record);
                                     } else {
                                         dialogMes('Сообщение', "<p>" + data.result);
                                     }
@@ -217,18 +217,18 @@
             function  load2_table(level_1, level_2) {
 
                 let pkSet = new Set();
-                let artiklArr = dbset.artiklList.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
+                let artiklArr = eArtikl.list.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
                 let winc = order.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
-                for (let furndetRec1 of dbset.furndetList) {
+                for (let furndetRec1 of eFurndet.list) {
                     if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {
 
                         if (furndetRec1[eFurndet.furniture_id2] == null) { //НЕ НАБОР                                
                             pkSet.add(furndetRec1[eFurndet.artikl_id]);
                         } else {
-                            for (let furndetRec2 of dbset.furndetList) {
+                            for (let furndetRec2 of eFurndet.list) {
                                 if (furndetRec1[eFurndet.furniture_id2] == furndetRec2[eFurndet.furniture_id1]) {
                                     pkSet.add(furndetRec2[eFurndet.artikl_id]);
                                 }

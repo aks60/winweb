@@ -15,5 +15,6 @@ eSystree = {
     types: 12, //Тип конструкции
     note: 13, //Примечание
     parent_id: 14, //Родитель
+    list: [],
     vrec: virtualRec(15)
 };
