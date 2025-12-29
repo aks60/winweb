@@ -83,12 +83,16 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
+                    const listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
+                        eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
                     let keys = Object.keys(dbset);
                     for (var i = 0; i < keys.length; i++) {
                         dbset[keys[i]].list = p[i];
+                        listT[i].list = p[i];
                     }
                     login.init_login();
                     login.user_connect();
+                    
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
                 });

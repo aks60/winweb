@@ -322,7 +322,7 @@ function isEmpty(v) {
 }
 //------------------------------------------------------------------------------            
 function findef(key, index, tname) {
-    alert('Больше не работает');
+    //alert('Больше не работает');
     try {
         let record = tname.list.find(rec => key == rec[index]);
         if (record != undefined) {
