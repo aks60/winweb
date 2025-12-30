@@ -29,10 +29,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
+import domain.eElement;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -349,5 +349,10 @@ public class Dbset {
     public static String kitdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qKitdet = new Query(eKitdet.values()).select(eKitdet.up, "order by", eKitdet.id);
         return gson.toJson(qKitdet);
+    }
+
+    public static String elementList(HttpServletRequest request, HttpServletResponse response) {
+        Query qElement = new Query(eElement.values()).select(eElement.up, "order by", eElement.id);
+        return gson.toJson(qElement);
     }
 }

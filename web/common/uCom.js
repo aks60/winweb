@@ -10,6 +10,7 @@ UCom.isValidJson = (jso, key, def) => {
             return def;
         }
     } catch (e) {
+        console.log('Error: UCom.isValidJson ' + e);
         return def;
     }
 };
@@ -24,24 +25,29 @@ UCom.isValidNumber = (val, def) => {
 //------------------------------------------------------------------------------
 UCom.findJson = (id, data) => {
     let obj = {};
-    let recursive = (data) => {
-        if (id == data.id) {
-            obj = data;
-        }
-        if (typeof data === 'object' && data !== null) {
-            // Если это массив
-            if (Array.isArray(data)) {
-                data.forEach((item, index) => {
-                    recursive(item); //рекурсивный вызов
-                });
-            } else { // Если это объект
-                Object.keys(data).forEach(key => {
-                    recursive(data[key]); //рекурсивный вызов
-                });
+    try {
+        let recursive = (data) => {
+            if (id == data.id) {
+                obj = data;
             }
-        }
-    };
-    recursive(data);
+            if (typeof data === 'object' && data !== null) {
+                // Если это массив
+                if (Array.isArray(data)) {
+                    data.forEach((item, index) => {
+                        recursive(item); //рекурсивный вызов
+                    });
+                } else { // Если это объект
+                    Object.keys(data).forEach(key => {
+                        recursive(data[key]); //рекурсивный вызов
+                    });
+                }
+            }
+        };
+        recursive(data);
+    } catch (e) {
+        console.log('Error: UCom.findJson ' + e);
+        return def;
+    }
     return obj;
 };
 //------------------------------------------------------------------------------

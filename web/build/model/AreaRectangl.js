@@ -21,8 +21,8 @@ export class AreaRectangl extends AreaSimple {
         try {
             //Вершины рамы
             let cooBox = new Array;
-            this.frames.forEach(frame => cooBox.push(new Coordinate(frame.x1, frame.y1, frame.id)));
-            cooBox.push(new Coordinate(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
+            this.frames.forEach(frame => cooBox.push(Coordinate.new(frame.x1, frame.y1, frame.id)));
+            cooBox.push(Coordinate.new(this.frames[0].x1, this.frames[0].y1, this.frames[0].id));
 
             //Аrea рамы  
             let geoShell = Com5t.gf.createPolygon(cooBox);

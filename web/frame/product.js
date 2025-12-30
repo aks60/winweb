@@ -203,10 +203,10 @@ product.local_to_fields = function (nodeID) {
         //Створка
     } else if (elem.typeForm() == "STVORKA") {
         let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] == rec.list[eFurnituire.id]);
-        let type_open = TypeOpen.INVALID[1]; //сторона открывания
-        for (let k in TypeOpen) {
-            if (TypeOpen[k][0] == elem.typeOpen) {
-                type_open = TypeOpen[k][1];
+        let type_open = TypeOpen1.INVALID[1]; //сторона открывания
+        for (let k in TypeOpen1) {
+            if (TypeOpen1[k][0] == elem.typeOpen) {
+                type_open = TypeOpen1[k][1];
             }
         }
         load_tabs('tabs-4', {

@@ -6,7 +6,6 @@ import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-
 export class ElemFrame extends ElemSimple {
 
     radiusArc = 0; //радиус арки
@@ -16,7 +15,6 @@ export class ElemFrame extends ElemSimple {
         try {
             super(winc, gson, owner);
             this.addListenerEvents();
-
         } catch (e) {
             errorLog('Error:ElemFrame.constructor() ' + e.message);
         }
@@ -27,7 +25,6 @@ export class ElemFrame extends ElemSimple {
             this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
             this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
             this.colorID3 = UCom.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
-
             this.sysprofRec = UCom.isValidJson(this.gson.param, 'sysprofID', null);
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
@@ -61,13 +58,13 @@ export class ElemFrame extends ElemSimple {
                     if (this.gson.h !== undefined) { //полигон арки
 
                         this.area = UGeo.polyCurve(geoShell, geoInner, this.id);
-                    } else { //полигон рамы   
+                    } else { //полигон рамы  
                         this.area = Com5t.gf.createPolygon([
-                            new Coordinate(this.x1, this.y1),
-                            new Coordinate(this.x2, this.y2),
-                            new Coordinate(cooInner[i + 1].x, cooInner[i + 1].y),
-                            new Coordinate(cooInner[i].x, cooInner[i].y),
-                            new Coordinate(this.x1, this.y1)]);
+                            Coordinate.new(this.x1, this.y1),
+                            Coordinate.new(this.x2, this.y2),
+                            Coordinate.new(cooInner[i + 1].x, cooInner[i + 1].y),
+                            Coordinate.new(cooInner[i].x, cooInner[i].y),
+                            Coordinate.new(this.x1, this.y1)]);
                     }
                     break;
                 }
@@ -95,7 +92,7 @@ export class ElemFrame extends ElemSimple {
         }
         return null;
     }
-    
+
     get y2() {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {

@@ -60,8 +60,8 @@
 //------------------------------------------------------------------------------
             function load_table(table) {
 
-                let typeOpen = [TypeOpen.LEFT, TypeOpen.LEFTUP, TypeOpen.LEFTMOV,
-                    TypeOpen.RIGHT, TypeOpen.RIGHTUP, TypeOpen.RIGHTMOV, TypeOpen.UPPER, TypeOpen.FIXED];
+                let typeOpen = [TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFTMOV,
+                    TypeOpen1.RIGHT, TypeOpen1.RIGHTUP, TypeOpen1.RIGHTMOV, TypeOpen1.UPPER, TypeOpen1.FIXED];
                 table.jqGrid('clearGridData', true);
                 for (let i = 0; i < typeOpen.length; i++) {
                     let elem = typeOpen[i];

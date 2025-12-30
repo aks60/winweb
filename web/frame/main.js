@@ -45,14 +45,14 @@ export function localizeFactory() {
         let m1 = mas(p1), m2 = mas(p2);
         let c1 = null, c2 = null;
         if (m1.length < 3)
-            c1 = new Coordinate(m1[0], m1[1]);
+            c1 = Coordinate.new(m1[0], m1[1]);
         else
-            c1 = new Coordinate(m1[0], m1[1], m1[2]);
+            c1 = Coordinate.new(m1[0], m1[1], m1[2]);
 
         if (m2.length < 3)
-            c2 = new Coordinate(m2[0], m2[1]);
+            c2 = Coordinate.new(m2[0], m2[1]);
         else
-            c2 = new Coordinate(m2[0], m2[1], m2[2]);
+            c2 = Coordinate.new(m2[0], m2[1], m2[2]);
 
         return new LineSegment(c1, c2);
     };

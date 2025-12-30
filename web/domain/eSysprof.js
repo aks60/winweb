@@ -1,4 +1,6 @@
 import {virtualRec} from './domain.js';
+import {UseSideTo} from '../enums/UseSideTo.js';
+
 eSysprof = {
     up: 0, //Профили системы
     id: 1, //Идентификатор
