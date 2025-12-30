@@ -329,7 +329,7 @@ order.update_table1 = function (taq) {
                                 num_acc: orderRec[eProject.num_acc],
                                 date4: orderRec[eProject.date4],
                                 date6: orderRec[eProject.date6],
-                                partner: findef(orderRec[eProject.prjpart_id], DEALER.id, eDealer)[eDealer.partner],
+                                partner: findef(orderRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
                                 manager: orderRec[eProject.manager]
                             });
                         } else

@@ -212,13 +212,13 @@ product.local_to_fields = function (nodeID) {
         load_tabs('tabs-4', {
             n41: elem.width, n42: elem.height, n43: furnitureRec[eFurnituire.name], n44: type_open,
             n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handleRec[eArtikl.name],
-            n46: findef(elem.handleColor, COLOR.id, eColor)[eColor.name],
+            n46: findef(elem.handleColor, eColor.id, eColor)[eColor.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
             n48: elem.handleHeight,
             n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
-            n4A: findef(elem.loopColor, COLOR.id, eColor)[eColor.name],
+            n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
             n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
-            n4C: findef(elem.lockColor, COLOR.id, eColor)[eColor.name],
+            n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
         }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
         $("#tabs-4").show();
 

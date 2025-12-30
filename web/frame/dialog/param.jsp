@@ -3,7 +3,7 @@
 <html>
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SYSPROF</title>
+        <title>PARAM</title>
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------            

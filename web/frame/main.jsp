@@ -81,8 +81,8 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
-                    listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
-                        eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
+                    listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, 
+                        eSysfurn, eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
                     for (var i = 0; i < listT.length; i++)
                         listT[i].list = p[i];
 

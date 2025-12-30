@@ -27,14 +27,14 @@ kits.load_table = function (table) {
         kits.prjkitList = ePrjkit.list.filter(rec => order.prjprodRec[ePrjprod.id] == rec.list[ePrjkit.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
-            let artiklRec = findef(tr[ePrjkit.artikl_id], ARTIKL.id, eArtikl);
+            let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
             table.jqGrid('addRowData', i + 1, {
                 id: tr[KITS.id],
                 code: artiklRec[eArtikl.code],
                 name: artiklRec[eArtikl.name],
-                color1: findef(tr[ePrjkit.color1_id], COLOR.id, eColor)[eColor.name],
-                color2: findef(tr[ePrjkit.color2_id], COLOR.id, eColor)[eColor.name],
-                color3: findef(tr[ePrjkit.color3_id], COLOR.id, eColor)[eColor.name],
+                color1: findef(tr[ePrjkit.color1_id], eColor.id, eColor)[eColor.name],
+                color2: findef(tr[ePrjkit.color2_id], eColor.id, eColor)[eColor.name],
+                color3: findef(tr[ePrjkit.color3_id], eColor.id, eColor)[eColor.name],
                 width: tr[ePrjkit.width],
                 height: tr[ePrjkit.height],
                 numb: tr[ePrjkit.numb]

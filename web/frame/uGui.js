@@ -322,16 +322,13 @@ function isEmpty(v) {
 }
 //------------------------------------------------------------------------------            
 function findef(key, index, tname) {
-    //alert('Больше не работает');
     try {
-        let record = tname.list.find(rec => key == rec[index]);
-        if (record != undefined) {
+        let record = tname.list.find(rec => key === rec[index]);
+        if (record !== undefined) {
             return record;
-        } else if (tname.vrec != undefined) {
-            return tname.vrec;
-        } else {
-            return new Array(40);
         }
+        return tname.vrec;
+
     } catch (e) {
         console.log('Error: uGui.findef() ' + e.message);
     }
