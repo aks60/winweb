@@ -44,12 +44,12 @@
         <script type="module" src="domain/eSysuser.js"></script>
 
         <script type="text/javascript">
-            
+
             //Поля таблиц
             var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSystree, eSysuser;
-
+            var listT = [];
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
@@ -81,9 +81,8 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
-                    var listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
+                    listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, eSysfurn,
                         eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
-                    
                     for (var i = 0; i < listT.length; i++)
                         listT[i].list = p[i];
 
