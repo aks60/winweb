@@ -79,7 +79,7 @@ export class Wincalc {
                 this.root = new AreaDoor(this, this.gson, null);
                 this.root.type = Type.DOOR;
             }
-//debugger;
+
             this.creator(this.root, this.gson); //создадим элементы конструкции    
 
             this.location(); //кальк. коорд. элементов конструкции    
@@ -105,10 +105,10 @@ export class Wincalc {
                     hmDip.set(box, js); //погружение ареа
 
                 } else if (js.type === "STVORKA") {
-//                    let stv = new AreaStvorka(this, js, owner);
-//                    stv.type = Type.STVORKA;
-//                    owner.childs.push(stv);
-//                    hmDip.set(stv, js);
+                    let stv = new AreaStvorka(this, js, owner);
+                    stv.type = Type.STVORKA;
+                    owner.childs.push(stv);
+                    hmDip.set(stv, js);
 
                 } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
                     let area = new AreaSimple(this, js, owner);
@@ -143,9 +143,9 @@ export class Wincalc {
                 }
             }
             //Теперь вложенные элементы
-//            for (let k of hmDip.keys()) {
-//                this.creator(k, hmDip.get(k));
-//            }
+            for (let k of hmDip.keys()) {
+                this.creator(k, hmDip.get(k));
+            }
         } catch (e) {
             errorLog('Error: Wincalc.creator() ' + e.message);
         }
@@ -154,10 +154,10 @@ export class Wincalc {
     //Кальк.коорд. элементов конструкции
     location() {
         try {
-            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов
-            
+            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов            
             this.root.setLocation();
 
+            //Исключая импост створки т.к. ств. ещё не создана
             for (let elem of this.listElem) {
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
@@ -172,6 +172,14 @@ export class Wincalc {
                     }
                 }
             }
+
+            //Создание створки
+            //UCom.filter(listArea, Type.STVORKA).forEach(e => ((AreaStvorka) e).addStvSide());
+            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.addStvorka());
+            //UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
+            //UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
+            //UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
+            
         } catch (e) {
             errorLog('Error: Wincalc.location() ' + e.message);
         }

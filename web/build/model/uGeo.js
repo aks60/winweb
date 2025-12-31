@@ -111,7 +111,7 @@ UGeo.splitPolygon = (geom, segm) => {
         } else {
             cooR.push(cooR[0]);
         }
-        
+
         return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
@@ -362,4 +362,13 @@ function findIntersection(lineY, point1, point2) {
 //    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
 //        // Прямые параллельны, пер
 //    }
+}
+
+function filter(lst, type) {
+    let list2 = new Array();
+    for (let el of lst) {
+        if (type === el.type)
+            list2.add(el);
+    }
+    return list2;
 }

@@ -27,7 +27,7 @@ export class AreaSimple extends Com5t {
     initConstructiv(param) {
         try {
             if (param !== undefined && param[PKjson.sysprofID] !== undefined) {//профили через параметр
-                sysprofRec = eSysprof.find3(param[PKjson.sysprofID]);
+                this.sysprofRec = eSysprof.find3(param[PKjson.sysprofID]);
             }//else if(this.owner.id === 0) {
             //    sysprofRec = eSysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
             //}

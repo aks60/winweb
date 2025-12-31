@@ -23,11 +23,12 @@ export class ElemCross extends ElemSimple {
 
     initArtikle() {
         try {
-            this.colorID1 = UCom.isValidJson(this.gson.param, 'colorID1', this.winc.colorID1);
-            this.colorID2 = UCom.isValidJson(this.gson.param, 'colorID2', this.winc.colorID2);
-            this.colorID3 = UCom.isValidJson(this.gson.param, 'colorID3', this.winc.colorID3);
+            this.colorID1 = isFinite(this.gson.param.color1) ? Number(this.gson.param.color1) : this.winc.colorID1;
+            this.colorID2 = isFinite(this.gson.param.color2) ? Number(this.gson.param.color2) : this.winc.colorID2;
+            this.colorID3 = isFinite(this.gson.param.color3) ? Number(this.gson.param.color3) : this.winc.colorID3;
+
             //Профиль поперечины
-            this.sysprofRec = UCom.isValidJson(this.gson.param, 'sysprofID', null);
+            this.sysprofRec = (isFinite(this.gson.param.sysprofID)) ? Number(this.gson.param.sysprofID) : null;
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
@@ -37,13 +38,13 @@ export class ElemCross extends ElemSimple {
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
 
             //Сделано для коррекции ширины импостов
-            if (this.artiklRecAn[eArtikl.id] == -3) {
+            if (this.artiklRecAn[eArtikl.id] === -3) {
                 this.artiklRec[eArtikl.height] = this.artiklRec[eArtikl.height] + 16;
                 this.artiklRecAn[eArtikl.height] = this.artiklRec[eArtikl.height] + 16;
             }
 
             //Если импост виртуальный
-            if (this.artiklRec[eArtikl.id] == -3) {
+            if (this.artiklRec[eArtikl.id] === -3) {
                 this.artiklRec[eArtikl.size_centr] = 40;
                 this.artiklRecAn[eArtikl.size_centr] = 40;
             }
