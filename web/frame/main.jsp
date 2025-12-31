@@ -31,6 +31,7 @@
         <script type="module" src="domain/eFurniture.js"></script>
         <script type="module" src="domain/eGroups.js"></script>
         <script type="module" src="domain/eKitdet.js"></script>
+        <script type="module" src="domain/eKits.js"></script>
         <script type="module" src="domain/eParams.js"></script>
         <script type="module" src="domain/eParmap.js"></script>
         <script type="module" src="domain/ePrjkit.js"></script>
@@ -46,10 +47,10 @@
         <script type="text/javascript">
 
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, eDealer, eFurndet, eFurniture, eGroups,
+            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSystree, eSysuser;
-            var listT = [];
+
             //Глобальные объекты
             var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
                     users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
@@ -81,11 +82,9 @@
                     $.post("dbset?action=groupList"), $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"),
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList")
                 ]).then(p => {
-                    listT = [eSystree, eSysprod, eColor, eArtikl, eArtdet, eFurniture, eFurndet, ePrjprod, 
-                        eSysfurn, eSysprof, eSyspar1, eParams, eGroups, eProject, eDealer, ePrjkit, eKitdet, ePrjkit];
-                    for (var i = 0; i < listT.length; i++)
-                        listT[i].list = p[i];
-
+                    eSystree.list = p[0], eSysprod.list = p[1], eColor.list = p[2], eArtikl.list = p[3], eArtdet.list = p[4], eFurniture.list = p[5], 
+                    eFurndet.list = p[6], ePrjprod.list = p[7], eSysfurn.list = p[8], eSysprof.list = p[9], eSyspar1.list = p[10], eParams.list = p[11], 
+                    eGroups.list = p[12], eProject.list = p[13], eDealer.list = p[14], eKits.list = p[15], eKitdet.list = p[16], ePrjkit.list = p[17];
                     login.init_login();
                     login.user_connect();
 
