@@ -1,7 +1,7 @@
 
 import {UGeo} from './uGeo.js';
 import {Com5t} from './Com5t.js';
-import {UseSideTo} from '../../enums/UseSideTo.js';
+import {UseSide} from '../../enums/UseSide.js';
 import {Type} from '../../enums/Type.js';
 import {Layout} from '../../enums/Layout.js';
 import {UCom} from '../../common/uCom.js';
@@ -23,16 +23,15 @@ export class ElemCross extends ElemSimple {
 
     initArtikle() {
         try {
-            this.colorID1 = isFinite(this.gson.param.color1) ? Number(this.gson.param.color1) : this.winc.colorID1;
-            this.colorID2 = isFinite(this.gson.param.color2) ? Number(this.gson.param.color2) : this.winc.colorID2;
-            this.colorID3 = isFinite(this.gson.param.color3) ? Number(this.gson.param.color3) : this.winc.colorID3;
-
-            //Профиль поперечины
-            this.sysprofRec = (isFinite(this.gson.param.sysprofID)) ? Number(this.gson.param.sysprofID) : null;
+            this.colorID1 = UCom.isFinite(this.gson.param, 'color1') ? Number(this.gson.param.color1) : this.winc.colorID1;
+            this.colorID2 = UCom.isFinite(this.gson.param, 'color2') ? Number(this.gson.param.color2) : this.winc.colorID2;
+            this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.winc.colorID3;
+            this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
+            
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
+                this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
             }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     

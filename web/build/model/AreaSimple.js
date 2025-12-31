@@ -29,7 +29,7 @@ export class AreaSimple extends Com5t {
             if (param !== undefined && param[PKjson.sysprofID] !== undefined) {//профили через параметр
                 this.sysprofRec = eSysprof.find3(param[PKjson.sysprofID]);
             }//else if(this.owner.id === 0) {
-            //    sysprofRec = eSysprof.list.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
+            //    sysprofRec = eSysprof.list.find4(this.winc.nuni, UseType.FRAME.id, UseSide.ANY);
             //}
         } catch (e) {
             errorLog('Error: AreaSimple.initConstructiv() ' + e.message);

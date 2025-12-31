@@ -150,6 +150,9 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("elementList")) {
                     out.write(Dbset.elementList(request, response));
+
+                } else if (action.equalsIgnoreCase("syssizeList")) {
+                    out.write(Dbset.syssizeList(request, response));
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

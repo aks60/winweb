@@ -1,6 +1,7 @@
 
 import {AreaSimple} from './AreaSimple.js';
 import {TypeOpen1} from '../../enums/TypeOpen1.js';
+import {Type} from '../../enums/Type.js';
 import {LayoutKnob} from '../../enums/LayoutKnob.js';
 export class AreaStvorka extends AreaSimple {
 
@@ -29,16 +30,17 @@ export class AreaStvorka extends AreaSimple {
         super(winc, gson, owner);
     }
 
-    addStvorka() {
-        debugger;
-        if (this.frames.size === 0) {
+    initStvorka() {
+        if (this.frames.length === 0) {
             //owner.area - если нет полигона створки в гл.окне 
             //this.area  - получатется при распиле owner.area импостом
             //Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-            let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST))
-                    || (this.root.type === Type.DOOR)) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+            
+            debugger;
+            let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
+                    || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
-//            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            let dh = this.winc.syssizRec.getDbl(eSyssize.falz) + this.winc.syssizRec.getDbl(eSyssize.naxl);
 //            Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
 //            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
 //            for (int i = 0; i < coo.length - 1; i++) {

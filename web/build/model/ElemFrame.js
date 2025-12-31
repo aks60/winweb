@@ -1,7 +1,7 @@
 
 import {UGeo} from './uGeo.js';
 import {Com5t} from './Com5t.js';
-import {UseSideTo} from '../../enums/UseSideTo.js';
+import {UseSide} from '../../enums/UseSide.js';
 import {Type} from '../../enums/Type.js';
 import {UCom} from '../../common/uCom.js';
 import {ElemSimple} from './ElemSimple.js';
@@ -21,25 +21,25 @@ export class ElemFrame extends ElemSimple {
     }
 
     initArtikle() {
-        try {
-            this.colorID1 = (isFinite(this.gson.param.color1)) ? Number(this.gson.param.color1) : this.winc.colorID1;
-            this.colorID2 = (isFinite(this.gson.param.color2)) ? Number(this.gson.param.color2) : this.winc.colorID2;
-            this.colorID3 = (isFinite(this.gson.param.color3)) ? Number(this.gson.param.color3) : this.winc.colorID3;
+        try {            
+            this.colorID1 = (UCom.isFinite(this.gson.param, 'color1')) ? Number(this.gson.param.color1) : this.winc.colorID1;
+            this.colorID2 = (UCom.isFinite(this.gson.param, 'color2')) ? Number(this.gson.param.color2) : this.winc.colorID2;
+            this.colorID3 = (UCom.isFinite(this.gson.param, 'color3')) ? Number(this.gson.param.color3) : this.winc.colorID3;           
+            this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
             
-            this.sysprofRec = (isFinite(this.gson.param.sysprofID)) ? Number(this.gson.param.sysprofID) : null;
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if ('BOTT' === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.BOT[0], UseSideTo.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.BOT[0], UseSide.HORIZ[0]);
                 } else if ('RIGHT' === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.RIGHT[0], UseSideTo.VERT[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.RIGHT[0], UseSide.VERT[0]);
                 } else if ('TOP' === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.TOP[0], UseSideTo.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.TOP[0], UseSide.HORIZ[0]);
                 } else if ('LEFT' === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.LEFT[0], UseSideTo.VERT[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.LEFT[0], UseSide.VERT[0]);
                 } else {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSideTo.ANY[0], UseSideTo.ANY[0]);
+                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
                 }
             }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул

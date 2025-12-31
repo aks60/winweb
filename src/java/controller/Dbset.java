@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
 import domain.eElement;
+import domain.eSyssize;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -354,5 +355,10 @@ public class Dbset {
     public static String elementList(HttpServletRequest request, HttpServletResponse response) {
         Query qElement = new Query(eElement.values()).select(eElement.up, "order by", eElement.id);
         return gson.toJson(qElement);
+    }
+
+    public static String syssizeList(HttpServletRequest request, HttpServletResponse response) {
+        Query qSyssize = new Query(eSyssize.values()).select(eSyssize.up, "order by", eSyssize.id);
+        return gson.toJson(qSyssize);
     }
 }

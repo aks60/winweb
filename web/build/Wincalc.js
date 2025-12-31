@@ -2,6 +2,7 @@
 import {UGeo} from './model/uGeo.js';
 import {Com5t} from './model/Com5t.js';
 import {Type} from '../enums/Type.js';
+import {UseType} from '../enums/UseType.js';
 import {AreaSimple} from './model/AreaSimple.js';
 import {AreaArch} from './model/AreaArch.js';
 import {AreaDoor} from './model/AreaDoor.js';
@@ -28,6 +29,7 @@ export class Wincalc {
     listAll = new Array();  //список всех компонентов (area + elem)
     listKit = new Array();  //комплектация   
     scale = 1; //коэффициент сжатия
+    syssizRec; //системные константы
     colorID1; //цвет базовый
     colorID2; //цвет внутр.
     colorID3; //цвет внещний 
@@ -54,10 +56,13 @@ export class Wincalc {
             }
             this.gson = JSON.parse(script);      //объектная модель конструкции
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
-
+debugger;
             //Инит конструктива
             this.id = this.gson.id;
             this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
+            let sysprofRec = eSysprof.find2(thisnuni, UseType.FRAME[0]); //первая.запись коробки
+            let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
+            this.syssizRec = eSyssize.find(artiklRec); //системные константы
             this.colorID1 = findef(this.gson.color1, eColor.id, eColor)[eColor.id];
             this.colorID2 = findef(this.gson.color2, eColor.id, eColor)[eColor.id];
             this.colorID3 = findef(this.gson.color3, eColor.id, eColor)[eColor.id];
@@ -102,7 +107,6 @@ export class Wincalc {
                     const box = new ElemFrame(this, js, owner);
                     box.type = Type.BOX_SIDE;
                     this.root.frames.push(box); //добавим ребёнка родителю
-                    hmDip.set(box, js); //погружение ареа
 
                 } else if (js.type === "STVORKA") {
                     let stv = new AreaStvorka(this, js, owner);
@@ -175,7 +179,7 @@ export class Wincalc {
 
             //Создание створки
             //UCom.filter(listArea, Type.STVORKA).forEach(e => ((AreaStvorka) e).addStvSide());
-            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.addStvorka());
+            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
             //UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             //UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
             //UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());

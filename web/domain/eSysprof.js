@@ -1,5 +1,5 @@
 import {virtualRec} from './domain.js';
-import {UseSideTo} from '../enums/UseSideTo.js';
+import {UseSide} from '../enums/UseSide.js';
 
 eSysprof = {
     up: 0, //Профили системы
@@ -9,41 +9,66 @@ eSysprof = {
     use_side: 4, //Сторона использования
     artikl_id: 5, //Артикул
     systree_id: 6, //Система
-    vrec: virtualRec(7, {1: -3, 2: 0, 3: 0, 4: -1, 5: -3, 6: -3}),
-    find(nuni, typeId, us1, us2) {
+    vrec: virtualRec(7, {0: 'SEL', 1: -3, 2: 0, 3: 0, 4: UseSide.ANY[1], 5: -3, 6: -3}),
+    vrecCust: (useTypeID, useSideID) => {
+        const virt = [...this.vrec];
+        virt[this.id] = -3;
+        virt[this.use_type] = useTypeID;
+        virt[this.use_side] = useSideID;
+        virt[this.systree_id] = -3;
+        virt[this.artikl_id] = -3;
+        return virt;
+    },
+
+    find(nuni, useTypeID, useSide1ID, useSide2ID) {
         try {
             if (nuni === -3) {
-                return virtualRec(typeId);
+                return vrecCust(useTypeID, UseSide.ANY[1]);
             }
             const arr = this.list.find(
                     rec => rec[this.systree_id] === nuni
-                        && rec[this.use_type] === typeId
-                        && rec[this.use_side] != UseSideTo.MANUAL[0]
-                        && (rec[this.use_side] === us1
-                                || rec[this.use_side] == us2
-                                || rec[this.use_side] == UseSideTo.ANY[0])
+                        && rec[this.use_type] === useTypeID
+                        && rec[this.use_side] !== UseSide.MANUAL[0]
+                        && (rec[this.use_side] === useSide1ID
+                                || rec[this.use_side] === useSide2ID
+                                || rec[this.use_side] === UseSide.ANY[0])
             );
             if (arr !== undefined) {
                 return arr;
             } else {
-                return virtualRec(typeId);
+                return vrecCust(useTypeID, -1);
             }
 
-            virtualRec = (typeId) => {
-                const virt = [...this.vrec];
-                virt[this.id] = -3;
-                virt[this.use_type] = typeId;
-                virt[this.use_side] = -1;
-                virt[this.systree_id] = -3;
-                virt[this.artikl_id] = -3;
-                return virt;
-            };
         } catch (e) {
             errorLog('Error: eSysprof.find() ' + e.message);
         }
     },
-    find3(_id) {
-        let sysprof = this.list.find(rec => rec.id === _id);
+
+    find2(nuni, useTypeID) {
+        if (nuni === -3) {
+            return vrecCust(useTypeID, UseSide.ANY[1]);
+        }
+        let mapPrio = new Map();
+        this.list.filter(rec => rec[this.systree_id] === nuni && rec[this.use_type] === useTypeID)
+                .forEach(rec => mapPrio.set(rec[this.npp], rec));
+        let minLevel = 32767;
+        for (let entry of mapPrio) {
+
+            if (entry[0] === 0) { //если нулевой приоритет
+                return entry[1];
+            }
+            if (minLevel > entry[0]) { //поднимаемся вверх по приоритету
+                minLevel = entry[0];
+            }
+        }
+        if (mapPrio.size === 0) {
+            return this.vrec;
+        }
+        return mapPrio[minLevel];
+    },
+
+    find3(ID) {
+        let sysprof = this.list.find(rec => rec.id === ID);
         if (sysprof === undefined) {
             sysprof = this.vrec;
         }
