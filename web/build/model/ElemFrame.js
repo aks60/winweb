@@ -1,11 +1,10 @@
 
 import {UGeo} from './uGeo.js';
-import {Com5t} from './Com5t.js';
-import {UseSide} from '../../enums/UseSide.js';
-import {Type} from '../../enums/Type.js';
+import {UseSide, Type} from '../../enums/enums.js';
 import {UCom} from '../../common/uCom.js';
-import {ElemSimple} from './ElemSimple.js';
+import {Com5t, ElemSimple} from './model.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+
 export class ElemFrame extends ElemSimple {
 
     radiusArc = 0; //радиус арки
@@ -21,12 +20,12 @@ export class ElemFrame extends ElemSimple {
     }
 
     initArtikle() {
-        try {            
+        try {
             this.colorID1 = (UCom.isFinite(this.gson.param, 'color1')) ? Number(this.gson.param.color1) : this.winc.colorID1;
             this.colorID2 = (UCom.isFinite(this.gson.param, 'color2')) ? Number(this.gson.param.color2) : this.winc.colorID2;
-            this.colorID3 = (UCom.isFinite(this.gson.param, 'color3')) ? Number(this.gson.param.color3) : this.winc.colorID3;           
+            this.colorID3 = (UCom.isFinite(this.gson.param, 'color3')) ? Number(this.gson.param.color3) : this.winc.colorID3;
             this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
-            
+
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {

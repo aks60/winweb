@@ -1,6 +1,5 @@
 
-import {AreaSimple} from './AreaSimple.js';
-import {Com5t} from './Com5t.js';
+import {AreaSimple, Com5t} from './model.js';
 import {UGeo} from './uGeo.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 

@@ -7,6 +7,7 @@ export class Com5t {
 
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
+    static #jsonID = 0;
     static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий    
     //static gsf = new GeometricShapeFactory(gf);
     //static aff = new AffineTransformation();    
@@ -31,7 +32,7 @@ export class Com5t {
             this.id = gson.id;
             this.winc = winc;
             this.owner = owner;
-            this.gson = gson; 
+            this.gson = gson;
             this.color1Rec = winc.color1Rec;
             this.color2Rec = winc.color2Rec;
             this.color3Rec = winc.color3Rec;
@@ -41,30 +42,37 @@ export class Com5t {
     }
     //Длина компонента
     length() {
-        if(this.gson.h !== undefined) {
+        if (this.gson.h !== undefined) {
             return new LineSegment(this.x1, this.y1, this.x2, this.y2).getLength();
         } else {
-           //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
-           console.log('Com5t.length() - функция не реализована');
+            //return UGeo.lengthCurve(owner.area.getGeometryN(0), this.id); 
+            console.log('Com5t.length() - функция не реализована');
         }
     }
     color() {
-        return (this.timer.timerId !== null) ?  [255, 120, 0] : this.color2Rec[eColor.rgb];
+        return (this.timer.timerId !== null) ? [255, 120, 0] : this.color2Rec[eColor.rgb];
     }
-    
+
     get x1() {
         return this.gson.x1;
     }
-    
+
     get y1() {
         return this.gson.y1;
     }
-    
+
     get x2() {
         return this.gson.x2;
     }
-    
+
     get y2() {
         return this.gson.y2;
+    }
+
+    get jsonID() {
+        let max = 0;
+        for (let e of this.winc.listAll)
+            Com5t.#jsonID = e.id > max ? e.id : max;
+        return ++Com5t.#jsonID;
     }
 }

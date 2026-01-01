@@ -1,11 +1,8 @@
 
 import {UGeo} from './uGeo.js';
-import {Com5t} from './Com5t.js';
-import {UseSide} from '../../enums/UseSide.js';
-import {Type} from '../../enums/Type.js';
-import {Layout} from '../../enums/Layout.js';
 import {UCom} from '../../common/uCom.js';
-import {ElemSimple} from './ElemSimple.js';
+import {Layout, Type, UseSide} from '../../enums/enums.js';
+import {ElemSimple, Com5t} from './model.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 export class ElemCross extends ElemSimple {
@@ -14,7 +11,7 @@ export class ElemCross extends ElemSimple {
         try {
             super(winc, gson, owner);
             this.addListenerEvents();
-            this.layout = (owner.layout == Layout.VERT) ? Layout.HORIZ : Layout.VERT;
+            this.layout = (owner.layout === Layout.VERT) ? Layout.HORIZ : Layout.VERT;
             this.anglCut = [90, 90]; //угол реза            
         } catch (e) {
             errorLog('Error:ElemCross.constructor() ' + e.message);

@@ -7,27 +7,22 @@ import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-
 export let UGeo = {};
 
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
 UGeo.segLeftShell = new LineSegment(), UGeo.segLeftInner = null;
 UGeo.cross = new Coordinate();
-
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
     return (ang > 0) ? 360 - ang : Math.abs(ang);
 };
-
 UGeo.degToRad = (degrees) => {
     return degrees * (Math.PI / 180);
 };
-
 UGeo.radToDeg = (rad) => {
     return rad / (Math.PI / 180);
 };
-
 //Список входн. параметров не замыкается начальной точкой как в jts!
 UGeo.arrCoord = (arr) => {
     list = new Array();
@@ -35,10 +30,8 @@ UGeo.arrCoord = (arr) => {
         list.puth(new Coordinate(arr[i - 1], arr[i]));
     }
     list.push(new Coordinate(arr[0], arr[1]));
-
     return list;
 };
-
 //Список входн. параметров не замыкается начальной точкой как в jts!
 UGeo.newPolygon = (arr) => {
     try {
@@ -47,7 +40,6 @@ UGeo.newPolygon = (arr) => {
         errorLog("Error: UGeo.newPolygon()" + e);
     }
 };
-
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
     try {
@@ -58,18 +50,15 @@ UGeo.splitPolygon = (geom, segm) => {
         let segmImp = UGeo.normalizeSegm(LineSegment.new(
                 [segm.p0.x, segm.p0.y, segm.p0.z],
                 [segm.p1.x, segm.p1.y, segm.p1.z]));
-
         //Вставим точки пересечения в список коорд.
         const pointloc = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
 
             let cros = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
             hsCheck.add(coo[i]);
-
             if (cros !== null) {
                 let line = LineString.new([coo[i - 1], coo[i]]);
                 let bool = pointloc.intersects(cros, line);
-
                 //Вставим точку в сегмент
                 if (bool === true) {
                     crosTwo.push(cros);
@@ -80,16 +69,14 @@ UGeo.splitPolygon = (geom, segm) => {
             }
             listExt.push(coo[i]);
         }
-        //Обход сегментов до и после точек пересечения
+//Обход сегментов до и после точек пересечения
         for (let i = 0; i < listExt.length; ++i) {
             let crd = listExt[i];
-
             //Проход через точку пересечения
             if (Number.isNaN(crd.z)) {
                 b = !b; //первая точка пройдена
                 let cL = Coordinate.new(crd.x, crd.y, segmImp.p0.z);
                 let cR = Coordinate.new(crd.x, crd.y);
-
                 if (crosTwo[0] === crd) {
                     cL.z = segmImp.p0.z;
                     cR.z = listExt[i - 1].z;
@@ -99,12 +86,11 @@ UGeo.splitPolygon = (geom, segm) => {
                 }
                 cooL.push(cL);
                 cooR.push(cR);
-
             } else { //Построение координат слева и справа от импоста
                 ((b === true) ? cooL : cooR).push(crd);
             }
         }
-        //Построение 'пятой' точки
+//Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
             cooR.push(cooR[0]);
@@ -113,12 +99,10 @@ UGeo.splitPolygon = (geom, segm) => {
         }
 
         return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
-
     } catch (e) {
         errorLog("Error: UGeo.splitPolygon() " + e.message);
     }
 };
-
 UGeo.rotate = (arr) => {
     arr.push(arr.shift());
     return arr;
@@ -128,7 +112,6 @@ UGeo.normalizeSegm = (segm) => {
     segm.normalize();
     return segm;
 };
-
 //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
 UGeo.geoCross = (poly, line) => {
     try {
@@ -150,19 +133,16 @@ UGeo.geoCross = (poly, line) => {
             out[1] = temp;
         }
         return out;
-
     } catch (e) {
         errorLog("Error: UGeo.geoCross()" + e);
     }
 };
-
 UGeo.polyCurve = (geoShell, geoInner, ID) => {
 
 };
-
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
-    //debugger;
+//debugger;
     const cooShell = geoShell.getCoordinates();
     let hm = new Map();
     try {
@@ -180,13 +160,11 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             let polyCurv = UGeo.bufferCurve(geoShell, hm.get(id));
             let polyRect = UGeo.bufferRectangl(geoShell, hm);
             let polyArch = UGeo.polyRect.union(polyCurv);
-
             let ring = polyArch.getInteriorRingN(0);
             let polyCurve = Com5t.gf.createPolygon(ring);
             polyCurve.normalize();
             UGeo.updateZet(polyCurve, polyRect);
             return polyCurve;
-
         } else {
             let polyRect = UGeo.bufferPolygon(geoShell, hm);
             return polyRect;
@@ -195,8 +173,6 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
         errorLog("Error: uGeo.bufferGeometry() " + e);
     }
 };
-
-//TODO Гадкая функция. Надо переписать!
 //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
 UGeo.updateZet = (arc, rec) => {
 //        boolean pass = false;
@@ -223,7 +199,6 @@ UGeo.updateZet = (arc, rec) => {
 //        cooArc[cooArc.length - 1].z = cooArc[0].z;
     return {};
 };
-
 UGeo.bufferRectangl = (geoShell, hmDist) => {
 //        Polygon result = gf.createPolygon();
 //        Set<Double> set = new HashSet();
@@ -273,24 +248,21 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 //        return result;
     return {};
 };
-
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
         let listBuffer = new Array();
         let listShell = geoShell.getCoordinates();
         for (let i = 0; i < listShell.length - 1; i++) {
 
-            //Перебор левого и правого сегмента от точки пересечения 
+//Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
             UGeo.segRighShell.setCoordinates(new Coordinate(listShell[j]), new Coordinate(listShell[i]));
             UGeo.segRighInner = UGeo.offsetSegm(UGeo.segRighShell, -hmDist.get(id1));
-
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
             UGeo.segLeftShell.setCoordinates(new Coordinate(listShell[i]), new Coordinate(listShell[k]));
             UGeo.segLeftInner = UGeo.offsetSegm(UGeo.segLeftShell, -hmDist.get(id2));
-
             //Точка пересечения сегментов
             let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
             if (cross !== null) {
@@ -301,24 +273,20 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         }
         listBuffer.push(listBuffer[0]);
         return  Com5t.gf.createPolygon(listBuffer);
-
     } catch (e) {
         errorLog("Error: UGeo.bufferPolygon() " + e);
     }
 };
-
 UGeo.offsetSegm = (lineSegm, offsetDistance) => {
     let offset0 = UGeo.pointAlongOffset(lineSegm, 0, offsetDistance);
     let offset1 = UGeo.pointAlongOffset(lineSegm, 1, offsetDistance);
     return new LineSegment(offset0, offset1);
 };
-
 UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let segx = lineSegm.p0.x + segmentLengthFraction * (lineSegm.p1.x - lineSegm.p0.x);
     let segy = lineSegm.p0.y + segmentLengthFraction * (lineSegm.p1.y - lineSegm.p0.y);
     let segz = (segmentLengthFraction === 0) ? lineSegm.p0.z : lineSegm.p1.z;
-
     let dx = lineSegm.p1.x - lineSegm.p0.x;
     let dy = lineSegm.p1.y - lineSegm.p0.y;
     let len = Math.hypot(dx, dy);
@@ -331,39 +299,36 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let offsetx = segx - uy;
     let offsety = segy + ux;
-
     let coord = new Coordinate(lineSegm.p0);
     coord.setX(offsetx);
     coord.setY(offsety);
     coord.setZ(segz);
     return coord;
 };
+/*function findIntersection(lineY, point1, point2) {
+    let { k, b } = lineY; // Прямая L: y = kx + b
+    let { x1, y1 } = point1; // Конечная точка отрезка A
+    let { x2, y2 } = point2; // Конечная точка отрезка B
 
-function findIntersection(lineY, point1, point2) {
-//    let { k, b } = lineY; // Прямая L: y = kx + b
-//    let { x1, y1 } = point1; // Конечная точка отрезка A
-//    let { x2, y2 } = point2; // Конечная точка отрезка B
-//
-//    // Уравнение прямой, проходящей через A и B (если она не вертикальная)
-//    // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-//
-//    // Подставляем y = kx + b в уравнение прямой через точки
-//    // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-//
-//    // Решаем относительно x (перемножаем крест-накрест)
-//    // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
-//    // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
-//    // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
-//    // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
-//
-//    let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
-//
-//    // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
-//    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
-//        // Прямые параллельны, пер
-//    }
+    // Уравнение прямой, проходящей через A и B (если она не вертикальная)
+    // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+
+    // Подставляем y = kx + b в уравнение прямой через точки
+    // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+
+    // Решаем относительно x (перемножаем крест-накрест)
+    // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
+    // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
+    // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
+    // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
+
+    let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
+
+    // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
+    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
+        // Прямые параллельны, пер
+    }
 }
-
 function filter(lst, type) {
     let list2 = new Array();
     for (let el of lst) {
@@ -371,4 +336,4 @@ function filter(lst, type) {
             list2.add(el);
     }
     return list2;
-}
+}*/

@@ -1,8 +1,9 @@
 
-import {AreaSimple} from './AreaSimple.js';
-import {TypeOpen1} from '../../enums/TypeOpen1.js';
-import {Type} from '../../enums/Type.js';
-import {LayoutKnob} from '../../enums/LayoutKnob.js';
+import {UGeo} from './uGeo.js';
+import {UCom} from '../../common/uCom.js';
+import {Com5t, ElemFrame, AreaSimple} from './model.js'
+import {Type, TypeOpen1, PKjson, LayoutKnob} from '../../enums/enums.js';
+
 export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
@@ -32,31 +33,29 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
+            debugger;
             if (this.frames.length === 0) {
                 //owner.area - если нет полигона створки в гл.окне 
                 //this.area  - получатется при распиле owner.area импостом
-                //Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-
-                debugger;
                 let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                         || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+
                 //Полигон створки с учётом нахлёста 
-                let dh = this.winc.syssizRec.getDbl(eSyssize.falz) + this.winc.syssizRec.getDbl(eSyssize.naxl);
-//            Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
-//            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
-//            for (int i = 0; i < coo.length - 1; i++) {
-//
-//                //Координаты рам створок
-//                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
-//                //Впихнул параметры в gson
-//                if (isJson(this.gson.param, PKjson.stvorkaSide[i])) {
-//                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
-//                }
-//                ElemFrame sideStv = new ElemFrame(this.winc, this.id + (.1 + Double.valueOf(i) / 10), gson, this);
-//                this.frames.add(sideStv);
-//                coo[i].z = sideStv.id;
-//            }
-//            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
+                let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
+                let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+                let coo = stvShell.getGeometryN(0).getCoordinates();
+                for (let i = 0; i < coo.length - 1; i++) {
+
+                    //Json координаты рам створок
+                    let gson = {id: this.jsonID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
+                    gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
+                    let sideStv = new ElemFrame(this.winc, gson, this.owner);
+                    sideStv.type = Type.STV_SIDE;
+                    
+                    this.frames.push(sideStv);
+                    coo[i].z = sideStv.id;
+                }
+                coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
             }
         } catch (e) {
             errorLog("Error: AreaStvorka.initStvorka() " + e);

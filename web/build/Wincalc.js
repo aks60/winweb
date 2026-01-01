@@ -1,16 +1,9 @@
 
 import {UGeo} from './model/uGeo.js';
-import {Com5t} from './model/Com5t.js';
-import {Type} from '../enums/Type.js';
+import {Type} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
-import {AreaSimple} from './model/AreaSimple.js';
-import {AreaArch} from './model/AreaArch.js';
-import {AreaDoor} from './model/AreaDoor.js';
-import {AreaRectangl} from './model/AreaRectangl.js';
-import {AreaStvorka} from './model/AreaStvorka.js';
-import {ElemCross} from './model/ElemCross.js';
-import {ElemFrame} from './model/ElemFrame.js';
-import {ElemGlass} from './model/ElemGlass.js';
+import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, 
+    AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
@@ -178,7 +171,6 @@ export class Wincalc {
             }
 
             //Создание створки
-            //UCom.filter(listArea, Type.STVORKA).forEach(e => ((AreaStvorka) e).addStvSide());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
             //UCom.filter(listArea, Type.STVORKA).forEach(a -> a.frames.forEach(e -> e.initArtikle()));
             //UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
