@@ -56,11 +56,11 @@ export class Wincalc {
             }
             this.gson = JSON.parse(script);      //объектная модель конструкции
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
-debugger;
+
             //Инит конструктива
             this.id = this.gson.id;
             this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
-            let sysprofRec = eSysprof.find2(thisnuni, UseType.FRAME[0]); //первая.запись коробки
+            let sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
             let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
             this.syssizRec = eSyssize.find(artiklRec); //системные константы
             this.colorID1 = findef(this.gson.color1, eColor.id, eColor)[eColor.id];

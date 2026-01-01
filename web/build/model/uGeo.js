@@ -192,7 +192,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             return polyRect;
         }
     } catch (e) {
-        console.log("Ошибка: uGeo.bufferGeometry() " + e);
+        errorLog("Error: uGeo.bufferGeometry() " + e);
     }
 };
 
@@ -303,7 +303,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         return  Com5t.gf.createPolygon(listBuffer);
 
     } catch (e) {
-        console.log("Ошибка: UGeo.bufferPolygon() " + e);
+        errorLog("Error: UGeo.bufferPolygon() " + e);
     }
 };
 

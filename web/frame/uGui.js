@@ -330,7 +330,7 @@ function findef(key, index, tname) {
         return tname.vrec;
 
     } catch (e) {
-        console.log('Error: uGui.findef() ' + e.message);
+        errorLog('Error: uGui.findef() ' + e.message);
     }
 }
 //------------------------------------------------------------------------------    
@@ -347,8 +347,8 @@ Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
 function errorLog(mes) {
-    //alert(mes); 
-    console.log(mes);
+    alert(mes); 
+    //console.log(mes);
 }
 //------------------------------------------------------------------------------
 function traverseJson(data) {

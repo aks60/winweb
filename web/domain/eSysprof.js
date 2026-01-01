@@ -45,33 +45,41 @@ eSysprof = {
     },
 
     find2(nuni, useTypeID) {
-        if (nuni === -3) {
-            return vrecCust(useTypeID, UseSide.ANY[1]);
-        }
-        let mapPrio = new Map();
-        this.list.filter(rec => rec[this.systree_id] === nuni && rec[this.use_type] === useTypeID)
-                .forEach(rec => mapPrio.set(rec[this.npp], rec));
-        let minLevel = 32767;
-        for (let entry of mapPrio) {
+        try {
+            if (nuni === -3) {
+                return vrecCust(useTypeID, UseSide.ANY[1]);
+            }
+            let mapPrio = new Map();
+            this.list.filter(rec => rec[this.systree_id] === nuni && rec[this.use_type] === useTypeID)
+                    .forEach(rec => mapPrio.set(rec[this.npp], rec));
+            let minLevel = 32767;
+            for (let entry of mapPrio) {
 
-            if (entry[0] === 0) { //если нулевой приоритет
-                return entry[1];
+                if (entry[0] === 0) { //если нулевой приоритет
+                    return entry[1];
+                }
+                if (minLevel > entry[0]) { //поднимаемся вверх по приоритету
+                    minLevel = entry[0];
+                }
             }
-            if (minLevel > entry[0]) { //поднимаемся вверх по приоритету
-                minLevel = entry[0];
+            if (mapPrio.size === 0) {
+                return this.vrec;
             }
+            return mapPrio.get(minLevel);
+        } catch (e) {
+            errorLog('Error: eSysprof.find() ' + e.message);
         }
-        if (mapPrio.size === 0) {
-            return this.vrec;
-        }
-        return mapPrio[minLevel];
     },
 
     find3(ID) {
-        let sysprof = this.list.find(rec => rec.id === ID);
-        if (sysprof === undefined) {
-            sysprof = this.vrec;
+        try {
+            let sysprof = this.list.find(rec => rec.id === ID);
+            if (this.sysprof === undefined) {
+                this.sysprof = this.vrec;
+            }
+            return this.sysprof;
+        } catch (e) {
+            errorLog('Error: eSysprof.find() ' + e.message);
         }
-        return sysprof;
     }
 };

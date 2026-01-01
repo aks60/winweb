@@ -31,16 +31,17 @@ export class AreaStvorka extends AreaSimple {
     }
 
     initStvorka() {
-        if (this.frames.length === 0) {
-            //owner.area - если нет полигона створки в гл.окне 
-            //this.area  - получатется при распиле owner.area импостом
-            //Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-            
-            debugger;
-            let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
-                    || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-            //Полигон створки с учётом нахлёста 
-            let dh = this.winc.syssizRec.getDbl(eSyssize.falz) + this.winc.syssizRec.getDbl(eSyssize.naxl);
+        try {
+            if (this.frames.length === 0) {
+                //owner.area - если нет полигона створки в гл.окне 
+                //this.area  - получатется при распиле owner.area импостом
+                //Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+
+                debugger;
+                let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
+                        || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+                //Полигон створки с учётом нахлёста 
+                let dh = this.winc.syssizRec.getDbl(eSyssize.falz) + this.winc.syssizRec.getDbl(eSyssize.naxl);
 //            Polygon stvShell = buffer(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
 //            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
 //            for (int i = 0; i < coo.length - 1; i++) {
@@ -56,6 +57,9 @@ export class AreaStvorka extends AreaSimple {
 //                coo[i].z = sideStv.id;
 //            }
 //            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
+            }
+        } catch (e) {
+            errorLog("Error: AreaStvorka.initStvorka() " + e);
         }
     }
 

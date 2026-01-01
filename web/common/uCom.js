@@ -23,7 +23,7 @@ UCom.findJson = (id, data) => {
         };
         recursive(data);
     } catch (e) {
-        console.log('Error: UCom.findJson ' + e);
+        errorLog('Error: UCom.findJson ' + e);
         return def;
     }
     return obj;
