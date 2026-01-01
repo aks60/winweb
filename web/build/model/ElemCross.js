@@ -2,9 +2,11 @@
 import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
 import {Layout, Type, UseSide} from '../../enums/enums.js';
-import {ElemSimple, Com5t} from './model.js';
+import {Com5t} from './model.js';
+import {ElemSimple} from './ElemSimple.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+
 export class ElemCross extends ElemSimple {
 
     constructor(winc, gson, owner) {
