@@ -37,12 +37,12 @@ eArtikl = {
     currenc2_id: 34, //Неосновная валюта
     analog_id: 35, //Аналог профиля
     vrec: virtualRec(36, {1: -3, 2: 'Авторасчёт', 5: 'Авторасчёт', 14: 80, 15: 4, 35: -3}),
-    find(id, analog) {
+    find(ID, analog) {
         try {
-            if (id === -3) {
+            if (ID === -3) {
                 return this.vrec;
             }
-            let recordRec = this.list.find(rec => id === rec[this.id]);
+            let recordRec = this.list.find(rec => ID === rec[this.id]);
             if (recordRec === undefined) {
                 recordRec = this.vrec;
             }

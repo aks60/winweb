@@ -142,10 +142,9 @@ UGeo.polyCurve = (geoShell, geoInner, ID) => {
 };
 //bufferGeometry(geoShell, this.winc.listElem, -6, 1)
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
-//debugger;
-    const cooShell = geoShell.getCoordinates();
-    let hm = new Map();
     try {
+        const cooShell = geoShell.getCoordinates();
+        let hm = new Map();
         //Смещения сегментов
         for (let el of list) {
             const rec = (el.artiklRec === null) ? eArtikl.vrec : el.artiklRec;
@@ -254,7 +253,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         let listShell = geoShell.getCoordinates();
         for (let i = 0; i < listShell.length - 1; i++) {
 
-//Перебор левого и правого сегмента от точки пересечения 
+            //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
             UGeo.segRighShell.setCoordinates(new Coordinate(listShell[j]), new Coordinate(listShell[i]));
@@ -274,7 +273,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         listBuffer.push(listBuffer[0]);
         return  Com5t.gf.createPolygon(listBuffer);
     } catch (e) {
-        errorLog("Error: UGeo.bufferPolygon() " + e);
+        errorLog("Error: UGeo.bufferPolygon() " + e.message);
     }
 };
 UGeo.offsetSegm = (lineSegm, offsetDistance) => {
@@ -306,34 +305,34 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     return coord;
 };
 /*function findIntersection(lineY, point1, point2) {
-    let { k, b } = lineY; // Прямая L: y = kx + b
-    let { x1, y1 } = point1; // Конечная точка отрезка A
-    let { x2, y2 } = point2; // Конечная точка отрезка B
-
-    // Уравнение прямой, проходящей через A и B (если она не вертикальная)
-    // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-
-    // Подставляем y = kx + b в уравнение прямой через точки
-    // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
-
-    // Решаем относительно x (перемножаем крест-накрест)
-    // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
-    // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
-    // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
-    // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
-
-    let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
-
-    // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
-    if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
-        // Прямые параллельны, пер
-    }
-}
-function filter(lst, type) {
-    let list2 = new Array();
-    for (let el of lst) {
-        if (type === el.type)
-            list2.add(el);
-    }
-    return list2;
-}*/
+ let { k, b } = lineY; // Прямая L: y = kx + b
+ let { x1, y1 } = point1; // Конечная точка отрезка A
+ let { x2, y2 } = point2; // Конечная точка отрезка B
+ 
+ // Уравнение прямой, проходящей через A и B (если она не вертикальная)
+ // (y - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+ 
+ // Подставляем y = kx + b в уравнение прямой через точки
+ // (kx + b - y1) / (x - x1) = (y2 - y1) / (x2 - x1)
+ 
+ // Решаем относительно x (перемножаем крест-накрест)
+ // (kx + b - y1) * (x2 - x1) = (y2 - y1) * (x - x1)
+ // kx*(x2-x1) + (b-y1)*(x2-x1) = (y2-y1)*x - (y2-y1)*x1
+ // x * (k*(x2-x1) - (y2-y1)) = -(b-y1)*(x2-x1) - (y2-y1)*x1
+ // x * (k*(x2-x1) - (y2-y1)) = (y1-b)*(x2-x1) - (y2-y1)*x1
+ 
+ let denom = k * (x2 - x1) - (y2 - y1); // Знаменатель для x
+ 
+ // Проверка на параллельность (если знаменатель 0, прямые параллельны или совпадают)
+ if (Math.abs(denom) < 1e-9) { // Используем допуск для плавающей точки
+ // Прямые параллельны, пер
+ }
+ }
+ function filter(lst, type) {
+ let list2 = new Array();
+ for (let el of lst) {
+ if (type === el.type)
+ list2.add(el);
+ }
+ return list2;
+ }*/

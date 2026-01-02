@@ -10,5 +10,21 @@ eSysfurn = {
     artikl_id1: 7, //Артикул ручки по умолчанию
     artikl_id2: 8, //Артиккул подвеса (петли) по умолчанию
     systree_id: 9, //Система профилей
-    vrec: virtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3})
+    vrec: virtualRec(10, {1: -3, 4: -1, 6: -3, 7: -3, 8: -3, 9: -3}),
+
+    find2(ID) {
+        let rec = this.list.find(rec => rec[this.id] === ID);
+        if (rec === undefined) {
+            return this.vrec;
+        }
+        return rec;
+    },
+
+    find3(NUNI) {
+        let rec = this.list.find(rec => rec[this.systree_id] === NUNI);
+        if (rec === undefined) {
+            return this.vrec;
+        }
+        return rec;
+    }
 };

@@ -81,5 +81,5 @@ eSysprof = {
         } catch (e) {
             errorLog('Error: eSysprof.find() ' + e.message);
         }
-    }
+    },
 };
