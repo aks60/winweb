@@ -33,7 +33,6 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
-            debugger;
             if (this.frames.length === 0) {
                 //owner.area - если нет полигона створки в гл.окне 
                 //this.area  - получатется при распиле owner.area импостом
