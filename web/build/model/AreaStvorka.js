@@ -160,9 +160,9 @@ export class AreaStvorka extends AreaSimple {
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            let stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
-            let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
-            this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
+            //let stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
+            //let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
+            //this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
 //
 //            //Высота ручки, линии открывания
 //            if (this.typeOpen != TypeOpen1.EMPTY) {
