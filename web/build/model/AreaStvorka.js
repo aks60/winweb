@@ -177,15 +177,15 @@ debugger;
                         this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
-//
-//                //Линии гориз. открывания
-//                ElemSimple stvside = TypeOpen1.getKnob(this, this.typeOpen);
-//                int ind = UGeo.getIndex(this.area, stvside.id);
-//                Coordinate h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
-//                LineSegment s1 = UGeo.getSegment(area, ind - 1);
-//                LineSegment s2 = UGeo.getSegment(area, ind + 1);
-//                lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
-//
+
+                //Линии гориз. открывания
+                let stvside = TypeOpen1.getKnob(this, this.typeOpen);
+                let ind = UGeo.getIndex(this.area, stvside.id);
+                let h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
+                let s1 = UGeo.getSegment(area, ind - 1);
+                let s2 = UGeo.getSegment(area, ind + 1);
+                lineOpenHor = Com5t.gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
+
 //                //Линии вертик. открывания
 //                if (typeOpen === TypeOpen1.LEFTUP || typeOpen === TypeOpen1.RIGHUP) {
 //                    ElemSimple stv2 = UCom.layout(this.frames, Layout.TOP);

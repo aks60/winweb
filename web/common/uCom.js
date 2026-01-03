@@ -42,5 +42,16 @@ UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
 
+UCom.layout = (list, layout) => {
+        try {
+            let elemFrame = list.filter(e => e.layout === layout);
+            return elemFrame;
+
+        } catch (e) {
+            errorLog("Error: UCom.layout()");
+        }
+        return null;
+    }
+
 
 

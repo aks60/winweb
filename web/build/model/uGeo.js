@@ -12,6 +12,7 @@ export let UGeo = {};
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
 UGeo.segLeftShell = new LineSegment(), UGeo.segLeftInner = null;
 UGeo.cross = new Coordinate();
+
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
@@ -223,4 +224,23 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     coord.setY(offsety);
     coord.setZ(segz);
     return coord;
+};
+UGeo.getSegment = (poly, index) => {
+    //poly = poly.getGeometryN(0);
+    let coo = structuredClone(poly.getCoordinates());
+    coo.length = coo.length - 1;
+    index = (index >= coo.length) ? index - coo.length : index;
+    let j = (index < 0) ? index + coo.length : index;
+    let k = (j + 1 >= coo.length) ? j + 1 - coo.length : j + 1;
+
+    return new LineSegment(coo[j], coo[k]);
+};
+UGeo.getIndex = (geo, id) => {
+    let coo = geo.getGeometryN(0).getCoordinates();
+    for (let i = 0; i < coo.length - 1; i++) {
+        if (coo[i].z === id) {
+            return i;
+        }
+    }
+    errorLog("Error: UGeo.getIndex()");
 };
