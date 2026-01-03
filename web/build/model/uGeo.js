@@ -26,7 +26,7 @@ UGeo.radToDeg = (rad) => {
 };
 //Список входн. параметров не замыкается начальной точкой как в jts!
 UGeo.arrCoord = (arr) => {
-    list = new Array();
+    let list = new Array();
     for (const i = 1; i < arr.length; i = i + 2) {
         list.puth(new Coordinate(arr[i - 1], arr[i]));
     }

@@ -4,6 +4,7 @@ import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
 import {Type, TypeOpen1, TypeOpen2, PKjson, LayoutHand} from '../../enums/enums.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
+import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 
 export class AreaStvorka extends AreaSimple {
 
@@ -177,14 +178,14 @@ export class AreaStvorka extends AreaSimple {
                         this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
-debugger;
+//debugger;
                 //Линии гориз. открывания
                 let stvside = TypeOpen1.getHand(this, this.typeOpen);
                 let ind = UGeo.getIndex(this.area, stvside.id);
-                let h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
-                let s1 = UGeo.getSegment(area, ind - 1);
-                let s2 = UGeo.getSegment(area, ind + 1);
-                lineOpenHor = Com5t.gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
+                let h = UGeo.getSegment(this.area, ind).midPoint(); //высота ручки по умолчанию
+                let s1 = UGeo.getSegment(this.area, ind - 1);
+                let s2 = UGeo.getSegment(this.area, ind + 1);
+                this.lineOpenHor = LineString.new([[s1.p0.x, s1.p0.y], [h.x, h.y], [s2.p1.x, s2.p1.y], [h.x, h.y]]);
 
 //                //Линии вертик. открывания
 //                if (typeOpen === TypeOpen1.LEFTUP || typeOpen === TypeOpen1.RIGHUP) {

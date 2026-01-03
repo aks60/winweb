@@ -1,6 +1,7 @@
 import {UGeo} from './uGeo.js';
 import {Timer} from '../../common/Timer.js';
 import {Com5t} from './Com5t.js';
+import {Layout, Type} from '../../enums/enums.js';
 
 export class ElemSimple extends Com5t {
 
@@ -32,21 +33,21 @@ export class ElemSimple extends Com5t {
             const anglHor = UGeo.anglHor(this.x1, this.y1, this.x2, this.y2);
 
             if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
-                return (this.type === 'IMPOST' || this.type === 'SHTULP') ? Layout.HOR : Layout.BOT;
+                return (this.type === Type.IMPOST || this.type === Type.SHTULP) ? Layout.HOR : Layout.BOT;
 
             } else if (anglHor >= 45 && anglHor < 135) {
                 return Layout.RIG;
 
             } else if (anglHor >= 135 && anglHor < 225) {
-                return 'TOP';
+                return Layout.TOP;
 
             } else if (anglHor >= 225 && anglHor <= 315) {
-                return (this.type === 'IMPOST' || this.type === 'SHTULP') ? Layout.VER : Layout.LEF;
+                return (this.type === Type.IMPOST || this.type === Type.SHTULP) ? Layout.VER : Layout.LEF;
             }
         } catch (e) {
-            errorLog("Ошибка:ElemSimple.layout() " + e.message);
+            errorLog("Error: ElemSimple.layout() " + e.message);
         }
-        return 'ANY';
+        return Layout.ANY;
     }
 
     paint() {

@@ -11,6 +11,10 @@ export const TypeOpen1 = {
     REQUEST: [16, "Запрос", "Не определено"],
     getHand(areaStv, typeOpen) {
         if ([this.LEFT, this.LEFTUP, this.LEFMOV].includes(typeOpen)) {
+            for(let e of areaStv.frames) {
+                let o1 = e.layout();
+                let o2 = 0;
+            }
             return areaStv.frames.find(e => e.layout() === Layout.RIG);
         } else if ([this.RIGH, this.RIGHUP, this.RIGMOV].includes(typeOpen)) {
             return areaStv.frames.find(e => e.layout() === Layout.LEF);
