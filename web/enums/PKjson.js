@@ -8,12 +8,12 @@ export const PKjson = {
     elementID: "elementID", //ID составов
     parentID: "parentID", //ID родителя
 
-    artiklKnob: "artiklKnob", //Ручка на створке
+    artiklHand: "artiklHand", //Ручка на створке
     artiklLoop: "artiklLoop", //Подвес на створке
     artiklLock: "artiklLock", //Замок на створке
     artiklRasc: "artiklRasc", //Раскладка
 
-    colorKnob: "colorKnob", //Цвет ручки створки 
+    colorHand: "colorHand", //Цвет ручки створки 
     colorLoop: "colorLoop", //Цвет подвеса
     colorLock: "colorLock", //Цвет замка
     colorGlass: "colorGlass", //Цвет стекла
@@ -24,8 +24,8 @@ export const PKjson = {
     colorID3: "colorID3", //Текстура   
 
     typeOpen: "typeOpen", //Тип открывания    
-    positionKnob: "positionKnob", //Положение ручки на створке      
-    heightKnob: "heightKnob", //Высота ручки на створке 
+    positionHand: "positionHand", //Положение ручки на створке      
+    heightHand: "heightHand", //Высота ручки на створке 
 
     stvorkaBot: "stvorkaBot", //Элемент    
     stvorkaRig: "stvorkaRig", //Элемент    

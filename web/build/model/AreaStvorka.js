@@ -2,14 +2,14 @@
 import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
-import {Type, TypeOpen1, TypeOpen2, PKjson, LayoutKnob} from '../../enums/enums.js';
+import {Type, TypeOpen1, TypeOpen2, PKjson, LayoutHand} from '../../enums/enums.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
 export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
     sysfurnRec = eSysfurn.vrec; //фурнитура
-    knobRec = eArtikl.vrec; //ручка
+    handRec = eArtikl.vrec; //ручка
     loopRec = eArtikl.vrec; //подвес(петли)
     lockRec = eArtikl.vrec; //замок
     mosqRec = eArtikl.vrec; //москитка
@@ -17,15 +17,15 @@ export class AreaStvorka extends AreaSimple {
 
     lineOpenHor = null; //линии горизонт. открывания
     lineOpenVer = null; //линии вертик. открывания
-    knobOpen = null; //ручка открывания    
-    knobColor = -3; //цвет ручки вирт...
+    handOpen = null; //ручка открывания    
+    handColor = -3; //цвет ручки вирт...
     loopColor = -3; //цвет подвеса вирт...
     lockColor = -3; //цвет замка вирт...
     mosqColor = -3; //цвет москитки вирт...
 
-    knobHeight = 0; //высота ручки
+    handHeight = 0; //высота ручки
     typeOpen = TypeOpen1.EMPTY; //направление открывания
-    knobLayout = LayoutKnob.MIDL; //положение ручки на створке      
+    handLayout = LayoutHand.MIDL; //положение ручки на створке      
     offset = [0, 0, 0, 0];
 
     constructor(winc, gson, owner) {
@@ -84,20 +84,20 @@ export class AreaStvorka extends AreaSimple {
                 this.sysfurnRec = eSysfurn.find3(this.winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (UCom.isFinite(param, PKjson.artiklKnob)) {
-                this.knobRec = eArtikl.find(param[PKjson.artiklKnob], false);
+            if (UCom.isFinite(param, PKjson.artiklHand)) {
+                this.handRec = eArtikl.find(param[PKjson.artiklHand], false);
             } else { //по умолчанию
-                this.knobRec = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
+                this.handRec = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
             }
             //Текстура ручки
-            if (UCom.isFinite(param, PKjson.colorKnob)) {
-                this.knobColor = param[PKjson.colorKnob];
-            } else if (this.knobColor === -3) { //по умолчанию (первая в списке)
-                this.knobColor = eArtdet.find(this.knobRec[eArtikl.id])[eArtdet.color_fk];
-                if (this.knobColor < 0) { //если все текстуры группы
-                    let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.knobColor);
+            if (UCom.isFinite(param, PKjson.colorHand)) {
+                this.handColor = param[PKjson.colorHand];
+            } else if (this.handColor === -3) { //по умолчанию (первая в списке)
+                this.handColor = eArtdet.find(this.handRec[eArtikl.id])[eArtdet.color_fk];
+                if (this.handColor < 0) { //если все текстуры группы
+                    let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor);
                     if (recordList.length === 0) {
-                        this.knobColor = eColor.list.find(this.knobColor)[0][eColor.id];
+                        this.handColor = eColor.list.find(this.handColor)[0][eColor.id];
                     }
                 }
             }
@@ -126,18 +126,18 @@ export class AreaStvorka extends AreaSimple {
                         : (index === TypeOpen2.LEF[0]) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке, ручка задана параметром
-            if (UCom.isFinite(param, PKjson.positionKnob)) {
-                let position = param[PKjson.positionKnob];
-                if (position === LayoutKnob.VAR[0]) { //вариационная
-                    this.knobLayout = LayoutKnob.VAR;
-                    if (UCom.isFinite(param, PKjson.heightKnob)) {
-                        this.knobHeight = param[PKjson.heightKnob];
-                        if (UCom.isFinite(param, PKjson.heightKnob)) {
-                            this.knobHeight = param[PKjson.heightKnob];
+            if (UCom.isFinite(param, PKjson.positionHand)) {
+                let position = param[PKjson.positionHand];
+                if (position === LayoutHand.VAR[0]) { //вариационная
+                    this.handLayout = LayoutHand.VAR;
+                    if (UCom.isFinite(param, PKjson.heightHand)) {
+                        this.handHeight = param[PKjson.heightHand];
+                        if (UCom.isFinite(param, PKjson.heightHand)) {
+                            this.handHeight = param[PKjson.heightHand];
                         }
                     }
                 } else { //по середине или константная
-                    this.knobLayout = (position === LayoutKnob.MIDL[0]) ? LayoutKnob.MIDL : LayoutKnob.CONST;
+                    this.handLayout = (position === LayoutHand.MIDL[0]) ? LayoutHand.MIDL : LayoutHand.CONST;
                 }
             }
         } catch (e) {
@@ -167,19 +167,19 @@ export class AreaStvorka extends AreaSimple {
 
             //Высота ручки, линии открывания
             if (this.typeOpen !== TypeOpen1.EMPTY) {
-                if (UCom.isFinite(this.gson.param, PKjson.positionKnob) === false) {
+                if (UCom.isFinite(this.gson.param, PKjson.positionHand) === false) {
 
-                    if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutKnob.MIDL.id) { //по середине
-                        this.knobLayout = LayoutKnob.MIDL;
-                        this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-                    } else if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutKnob.CONST.id) { //константная
-                        this.knobLayout = LayoutKnob.CONST;
-                        this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutHand.MIDL.id) { //по середине
+                        this.handLayout = LayoutHand.MIDL;
+                        this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    } else if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutHand.CONST.id) { //константная
+                        this.handLayout = LayoutHand.CONST;
+                        this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
 debugger;
                 //Линии гориз. открывания
-                let stvside = TypeOpen1.getKnob(this, this.typeOpen);
+                let stvside = TypeOpen1.getHand(this, this.typeOpen);
                 let ind = UGeo.getIndex(this.area, stvside.id);
                 let h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
                 let s1 = UGeo.getSegment(area, ind - 1);
@@ -197,9 +197,9 @@ debugger;
 //                }
 //                //Полигон ручки
 //                double DX = 10, DY = 60;
-//                if (knobLayout === LayoutKnob.VAR && this.knobHeight != 0) {
+//                if (handLayout === LayoutHand.VAR && this.handHeight != 0) {
 //                    LineSegment lineSegm = UGeo.getSegment(area, ind);
-//                    h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //высота ручки на створке
+//                    h = lineSegm.pointAlong((this.handHeight / lineSegm.getLength())); //высота ручки на створке
 //                }
 //                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
 //                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
@@ -210,17 +210,17 @@ debugger;
 //                    h.x = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
 //                }
 //                if (root.type === Type.DOOR) {
-//                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
+//                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
 //                } else {
-//                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
+//                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
 //                }
 //                //Направление открывания
 //                if (typeOpen != TypeOpen1.UPPER) {
 //                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
 //                    if (!(anglHoriz === 90 || anglHoriz === 270)) {
 //                        AffineTransformation aff = new AffineTransformation();
-//                        aff.setToRotation(Math.toRadians(anglHoriz), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());
-//                        this.knobOpen = (Polygon) aff.transform(this.knobOpen);
+//                        aff.setToRotation(Math.toRadians(anglHoriz), this.handOpen.getCentroid().getX(), this.handOpen.getCentroid().getY());
+//                        this.handOpen = (Polygon) aff.transform(this.handOpen);
 //                    }
 //                }
             }

@@ -9,7 +9,7 @@ export const TypeOpen1 = {
     LEFMOV: [11, "Левое", "Раздвижная влево (открывается справа-налево, защелка справа"],
     RIGMOV: [12, "Правое", "Раздвижная вправо (открывается слева-направо, защелка слева"],
     REQUEST: [16, "Запрос", "Не определено"],
-    getKnob(areaStv, typeOpen) {
+    getHand(areaStv, typeOpen) {
         if ([this.LEFT, this.LEFTUP, this.LEFMOV].includes(typeOpen)) {
             return areaStv.frames.find(e => e.layout() === Layout.RIG);
         } else if ([this.RIGH, this.RIGHUP, this.RIGMOV].includes(typeOpen)) {
