@@ -11,13 +11,13 @@ export const TypeOpen1 = {
     REQUEST: [16, "Запрос", "Не определено"],
     getKnob(areaStv, typeOpen) {
         if ([this.LEFT, this.LEFTUP, this.LEFMOV].includes(typeOpen)) {
-            return areaStv.frames.find(e => e.layout === Layout.RIG);
+            return areaStv.frames.find(e => e.layout() === Layout.RIG);
         } else if ([this.RIGH, this.RIGHUP, this.RIGMOV].includes(typeOpen)) {
-            return areaStv.frames.find(e => e.layout === Layout.LEF);
+            return areaStv.frames.find(e => e.layout() === Layout.LEF);
         } else if (this.UPPER === typeOpen) {
-            return areaStv.frames.find(e => e.layout === Layout.TOP);
+            return areaStv.frames.find(e => e.layout() === Layout.TOP);
         } else {
-            return areaStv.frames.find(e => e.layout === Layout.LEF);
+            return areaStv.frames.find(e => e.layout() === Layout.LEF);
         }
     }
 };

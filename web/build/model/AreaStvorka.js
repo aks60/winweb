@@ -164,7 +164,7 @@ export class AreaStvorka extends AreaSimple {
             let stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
             let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
-debugger;
+
             //Высота ручки, линии открывания
             if (this.typeOpen !== TypeOpen1.EMPTY) {
                 if (UCom.isFinite(this.gson.param, PKjson.positionKnob) === false) {
@@ -177,7 +177,7 @@ debugger;
                         this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
-
+debugger;
                 //Линии гориз. открывания
                 let stvside = TypeOpen1.getKnob(this, this.typeOpen);
                 let ind = UGeo.getIndex(this.area, stvside.id);

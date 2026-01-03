@@ -1,6 +1,6 @@
 
 import {UGeo} from './uGeo.js';
-import {UseSide, Type} from '../../enums/enums.js';
+import {UseSide, Type, Layout} from '../../enums/enums.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemSimple} from './model.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
@@ -29,13 +29,13 @@ export class ElemFrame extends ElemSimple {
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                if ('BOTT' === this.layout()) {
+                if (Layout.BOT === this.layout()) {
                     this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.BOT[0], UseSide.HORIZ[0]);
-                } else if ('RIGHT' === this.layout()) {
+                } else if (Layout.RIG === this.layout()) {
                     this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.RIGHT[0], UseSide.VERT[0]);
-                } else if ('TOP' === this.layout()) {
+                } else if (Layout.TOP === this.layout()) {
                     this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.TOP[0], UseSide.HORIZ[0]);
-                } else if ('LEFT' === this.layout()) {
+                } else if (Layout.LEF === this.layout()) {
                     this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.LEFT[0], UseSide.VERT[0]);
                 } else {
                     this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);

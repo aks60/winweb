@@ -36,10 +36,10 @@ export class ElemGlass extends Com5t {
 
         } else if (this.owner.typeForm() === "TRAPEZE") {
 
-//            let insideLeft = this.winc.root.frames().get(Layout.LEFT),
+//            let insideLeft = this.winc.root.frames().get(Layout.LEF),
 //                    insideTop = this.winc.root.frames().get(Layout.TOP),
-//                    insideBott = this.winc.root.frames().get(Layout.BOTT),
-//                    insideRight = this.winc.root.frames().get(Layout.RIGHT);
+//                    insideBott = this.winc.root.frames().get(Layout.BOT),
+//                    insideRight = this.winc.root.frames().get(Layout.RIG);
 
             if (this.winc.form === 'RIGHT') {
                 draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height1 - this.winc.height2, this.y2, this.y2, this.color1Rec);

@@ -347,8 +347,8 @@ Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
 function errorLog(mes) {
-    alert(mes); 
-    //console.log(mes);
+    //alert(mes); 
+    console.log(mes);
 }
 //------------------------------------------------------------------------------
 function traverseJson(data) {
