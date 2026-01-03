@@ -48,7 +48,8 @@ export class AreaStvorka extends AreaSimple {
                 for (let i = 0; i < coo.length - 1; i++) {
 
                     //Json координаты рам створок
-                    let gson = {id: this.jsonID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
+                    let ID = this.gson.id + (0.1 + i/10);
+                    let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
                     let sideStv = new ElemFrame(this.winc, gson, this.owner);
                     sideStv.type = Type.STV_SIDE;
@@ -150,32 +151,32 @@ export class AreaStvorka extends AreaSimple {
             let frameBox = (this.winc.listElem.filter(el => el.type === Type.IMPOST).length === 0)
                     || (this.winc.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
-            let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
+            let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];           
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
             let coo = stvShell.getGeometryN(0).getCoordinates();
             for (let i = 0; i < coo.length - 1; i++) {
                 let elem = this.frames[i];
-                coo[i].z = elem[0];
+                coo[i].z = elem.id;
                 elem.setDimension(coo[i].x, coo[i].y, coo[i + 1].x, coo[i + 1].y); //запишем координаты
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            //let stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
-            //let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
-            //this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
-//
-//            //Высота ручки, линии открывания
-//            if (this.typeOpen != TypeOpen1.EMPTY) {
-//                if (isFinite(gson.param, PKjson.positionKnob) == false) {
-//
-//                    if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.MIDL.id) { //по середине
-//                        knobLayout = LayoutKnob.MIDL;
-//                        knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-//                    } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutKnob.CONST.id) { //константная
-//                        knobLayout = LayoutKnob.CONST;
-//                        knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-//                    }
-//                }
+            let stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
+            let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
+            this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
+debugger;
+            //Высота ручки, линии открывания
+            if (this.typeOpen !== TypeOpen1.EMPTY) {
+                if (UCom.isFinite(this.gson.param, PKjson.positionKnob) === false) {
+
+                    if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutKnob.MIDL.id) { //по середине
+                        this.knobLayout = LayoutKnob.MIDL;
+                        this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    } else if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutKnob.CONST.id) { //константная
+                        this.knobLayout = LayoutKnob.CONST;
+                        this.knobHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                    }
+                }
 //
 //                //Линии гориз. открывания
 //                ElemSimple stvside = TypeOpen1.getKnob(this, this.typeOpen);
@@ -186,7 +187,7 @@ export class AreaStvorka extends AreaSimple {
 //                lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
 //
 //                //Линии вертик. открывания
-//                if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
+//                if (typeOpen === TypeOpen1.LEFTUP || typeOpen === TypeOpen1.RIGHUP) {
 //                    ElemSimple stv2 = UCom.layout(this.frames, Layout.TOP);
 //                    ind = UGeo.getIndex(this.area, stv2.id);
 //                    Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
@@ -196,19 +197,19 @@ export class AreaStvorka extends AreaSimple {
 //                }
 //                //Полигон ручки
 //                double DX = 10, DY = 60;
-//                if (knobLayout == LayoutKnob.VAR && this.knobHeight != 0) {
+//                if (knobLayout === LayoutKnob.VAR && this.knobHeight != 0) {
 //                    LineSegment lineSegm = UGeo.getSegment(area, ind);
 //                    h = lineSegm.pointAlong((this.knobHeight / lineSegm.getLength())); //высота ручки на створке
 //                }
 //                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
 //                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
 //                double dx = artiklRec.getDbl(eArtikl.height) / 2;
-//                if (typeOpen == TypeOpen1.UPPER) {
-//                    h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
+//                if (typeOpen === TypeOpen1.UPPER) {
+//                    h.y = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
 //                } else {
-//                    h.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
+//                    h.x = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
 //                }
-//                if (root.type == Type.DOOR) {
+//                if (root.type === Type.DOOR) {
 //                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
 //                } else {
 //                    this.knobOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
@@ -216,13 +217,13 @@ export class AreaStvorka extends AreaSimple {
 //                //Направление открывания
 //                if (typeOpen != TypeOpen1.UPPER) {
 //                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
-//                    if (!(anglHoriz == 90 || anglHoriz == 270)) {
+//                    if (!(anglHoriz === 90 || anglHoriz === 270)) {
 //                        AffineTransformation aff = new AffineTransformation();
 //                        aff.setToRotation(Math.toRadians(anglHoriz), this.knobOpen.getCentroid().getX(), this.knobOpen.getCentroid().getY());
 //                        this.knobOpen = (Polygon) aff.transform(this.knobOpen);
 //                    }
 //                }
-//            }
+            }
         } catch (e) {
             errorLog("Error: AreaStvorka.setLocation() " + e.message);
         }

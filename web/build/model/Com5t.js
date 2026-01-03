@@ -71,8 +71,9 @@ export class Com5t {
 
     get jsonID() {
         let max = 0;
-        for (let e of this.winc.listAll)
-            Com5t.#jsonID = e.id > max ? e.id : max;
-        return ++Com5t.#jsonID;
+        for (let e of this.winc.listAll) {
+            max = e.id > max ? e.id : max;
+        }
+        return max;
     }
 }

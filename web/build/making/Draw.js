@@ -4,7 +4,7 @@ export class Draw {
     static line(winc, x1, y1, x2, y2, rgb) {
         let ctx = winc.ctx;
         ctx.save();
-        ctx.strokeStyle = "blue"; //(rgb == undefined) ? 'rgb(0,0,0)' : '#' + rgb[eColor.rgb].toString(16);
+        ctx.strokeStyle = "blue"; //(rgb === undefined) ? 'rgb(0,0,0)' : '#' + rgb[eColor.rgb].toString(16);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -99,11 +99,11 @@ export class Draw {
             ctx.lineWidth = 4;
 
             //Прорисовка стеклопакетов
-            let glass = arr.filter((v, i, arr) => v.typeForm() == "GLASS");
+            let glass = arr.filter((v, i, arr) => v.typeForm() === "GLASS");
             glass.forEach((v, k, map) => v.paint());
 
             //Прорисовка импостов
-            let cross = arr.filter((v, i, arr) => v.typeForm() == "IMPOST");
+            let cross = arr.filter((v, i, arr) => v.typeForm() === "IMPOST");
             cross.forEach((v, k, map) => v.paint());
 
 //        //Прорисовка штульпов
@@ -123,7 +123,7 @@ export class Draw {
 
 
             //Прорисовка створок
-            let stv = arr.filter((v, i, arr) => v.typeForm() == "STVORKA");
+            let stv = arr.filter((v, i, arr) => v.typeForm() === "STVORKA");
             stv.forEach((v, k, map) => v.paint());
 
             ctx.restore();

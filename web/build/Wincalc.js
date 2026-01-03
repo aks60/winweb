@@ -254,7 +254,7 @@ export class Wincalc {
         gson.childs.forEach(el => {
             if (el.form != null)
                 winc.form = el.form;
-            if (el.type == "AREA" || el.type == "ARCH" || el.type == "TRAPEZE" || el.type == "TRIANGL" || el.type == "DOOR")
+            if (el.type === "AREA" || el.type === "ARCH" || el.type === "TRAPEZE" || el.type === "TRIANGL" || el.type === "DOOR")
                 winc.setform(el, winc); //рекурсия 
         });
     }

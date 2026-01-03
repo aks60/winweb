@@ -139,20 +139,20 @@ UGeo.geoCross = (poly, line) => {
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
     try {
         const cooShell = geoShell.getCoordinates();
-        let hm = new Map();
+        let hmDist = new Map();
         //Смещения сегментов
         for (let el of list) {
             const rec = (el.artiklRec === null) ? eArtikl.vrec : el.artiklRec;
             if (opt === 0) {
-                hm.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] + amend);
+                hmDist.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] + amend);
             } else if (opt === 1) {
-                hm.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] - rec[eArtikl.size_falz] + amend);
+                hmDist.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] - rec[eArtikl.size_falz] + amend);
             }
         }
         if (cooShell.length > Com5t.MAXSIDE) {
             let id = cooShell[geoShell.getCoordinates().length / 2].z;
-            let polyCurv = UGeo.bufferCurve(geoShell, hm.get(id));
-            let polyRect = UGeo.bufferRectangl(geoShell, hm);
+            let polyCurv = UGeo.bufferCurve(geoShell, hmDist.get(id));
+            let polyRect = UGeo.bufferRectangl(geoShell, hmDist);
             let polyArch = UGeo.polyRect.union(polyCurv);
             let ring = polyArch.getInteriorRingN(0);
             let polyCurve = Com5t.gf.createPolygon(ring);
@@ -160,7 +160,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             UGeo.updateZet(polyCurve, polyRect);
             return polyCurve;
         } else {
-            let polyRect = UGeo.bufferPolygon(geoShell, hm);
+            let polyRect = UGeo.bufferPolygon(geoShell, hmDist);
             return polyRect;
         }
     } catch (e) {
