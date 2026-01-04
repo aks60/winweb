@@ -19,31 +19,6 @@ eSysprof = {
         virt[this.artikl_id] = -3;
         return virt;
     },
-
-    find(nuni, useTypeID, useSide1ID, useSide2ID) {
-        try {
-            if (nuni === -3) {
-                return vrecCust(useTypeID, UseSide.ANY[1]);
-            }
-            const arr = this.list.find(
-                    rec => rec[this.systree_id] === nuni
-                        && rec[this.use_type] === useTypeID
-                        && rec[this.use_side] !== UseSide.MANUAL[0]
-                        && (rec[this.use_side] === useSide1ID
-                                || rec[this.use_side] === useSide2ID
-                                || rec[this.use_side] === UseSide.ANY[0])
-            );
-            if (arr !== undefined) {
-                return arr;
-            } else {
-                return vrecCust(useTypeID, -1);
-            }
-
-        } catch (e) {
-            errorLog('Error: eSysprof.find() ' + e.message);
-        }
-    },
-
     find2(nuni, useTypeID) {
         try {
             if (nuni === -3) {
@@ -82,4 +57,28 @@ eSysprof = {
             errorLog('Error: eSysprof.find() ' + e.message);
         }
     },
+
+    find5(nuni, useTypeID, useSide1ID, useSide2ID) {
+        try {
+            if (nuni === -3) {
+                return vrecCust(useTypeID, UseSide.ANY[0]);
+            }
+            const arr = this.list.find(
+                    rec => rec[this.systree_id] === nuni
+                        && rec[this.use_type] === useTypeID
+                        && rec[this.use_side] !== UseSide.MANUAL[0]
+                        && (rec[this.use_side] === useSide1ID
+                                || rec[this.use_side] === useSide2ID
+                                || rec[this.use_side] === UseSide.ANY[0])
+            );
+            if (arr !== undefined) {
+                return arr;
+            } else {
+                return vrecCust(useTypeID, UseSide.ANY[0]);
+            }
+
+        } catch (e) {
+            errorLog('Error: eSysprof.find() ' + e.message);
+        }
+    }
 };

@@ -2,7 +2,8 @@
 import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
-import {Type, TypeOpen1, TypeOpen2, PKjson, LayoutHand} from '../../enums/enums.js';
+import {Type, TypeOpen1, TypeOpen2, PKjson, 
+    LayoutHand, Layout, UseSide} from '../../enums/enums.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 
@@ -49,7 +50,7 @@ export class AreaStvorka extends AreaSimple {
                 for (let i = 0; i < coo.length - 1; i++) {
 
                     //Json координаты рам створок
-                    let ID = this.gson.id + (0.1 + i/10);
+                    let ID = this.gson.id + (0.1 + i / 10);
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
                     let sideStv = new ElemFrame(this.winc, gson, this.owner);
@@ -152,7 +153,7 @@ export class AreaStvorka extends AreaSimple {
             let frameBox = (this.winc.listElem.filter(el => el.type === Type.IMPOST).length === 0)
                     || (this.winc.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
-            let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];           
+            let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
             let coo = stvShell.getGeometryN(0).getCoordinates();
             for (let i = 0; i < coo.length - 1; i++) {
@@ -178,7 +179,7 @@ export class AreaStvorka extends AreaSimple {
                         this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
                     }
                 }
-//debugger;
+
                 //Линии гориз. открывания
                 let stvside = TypeOpen1.getHand(this, this.typeOpen);
                 let ind = UGeo.getIndex(this.area, stvside.id);
@@ -187,24 +188,24 @@ export class AreaStvorka extends AreaSimple {
                 let s2 = UGeo.getSegment(this.area, ind + 1);
                 this.lineOpenHor = LineString.new([[s1.p0.x, s1.p0.y], [h.x, h.y], [s2.p1.x, s2.p1.y], [h.x, h.y]]);
 
-//                //Линии вертик. открывания
-//                if (typeOpen === TypeOpen1.LEFTUP || typeOpen === TypeOpen1.RIGHUP) {
-//                    ElemSimple stv2 = UCom.layout(this.frames, Layout.TOP);
-//                    ind = UGeo.getIndex(this.area, stv2.id);
-//                    Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
-//                    s1 = UGeo.getSegment(area, ind - 1);
-//                    s2 = UGeo.getSegment(area, ind + 1);
-//                    lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
-//                }
-//                //Полигон ручки
-//                double DX = 10, DY = 60;
-//                if (handLayout === LayoutHand.VAR && this.handHeight != 0) {
-//                    LineSegment lineSegm = UGeo.getSegment(area, ind);
-//                    h = lineSegm.pointAlong((this.handHeight / lineSegm.getLength())); //высота ручки на створке
-//                }
-//                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
-//                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-//                double dx = artiklRec.getDbl(eArtikl.height) / 2;
+                //Линии вертик. открывания
+                if (this.typeOpen === TypeOpen1.LEFTUP || this.typeOpen === TypeOpen1.RIGHUP) {
+                    let stv2 = UCom.layout(this.frames, Layout.TOP);
+                    ind = UGeo.getIndex(this.area, stv2.id);
+                    let p2 = UGeo.getSegment(this.area, ind).midPoint();
+                    s1 = UGeo.getSegment(this.area, ind - 1);
+                    s2 = UGeo.getSegment(this.area, ind + 1);
+                    this.lineOpenVer = LineString.new([[p2.x, p2.y], [s1.p0.x, s1.p0.y], [p2.x, p2.y], [s2.p1.x, s2.p1.y]]);
+                }
+                //Полигон ручки
+                let DX = 10, DY = 60;
+                if (this.handLayout === LayoutHand.VAR && this.handHeight !== 0) {
+                    let lineSegm = UGeo.getSegment(this.area, ind);
+                    h = lineSegm.pointAlong(this.handHeight / lineSegm.getLength()); //высота ручки на створке
+                }
+                //let sysprofRec = eSysprof.find5(this.winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+                //let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
+                //let dx = artiklRec[eArtikl.height] / 2;
 //                if (typeOpen === TypeOpen1.UPPER) {
 //                    h.y = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
 //                } else {

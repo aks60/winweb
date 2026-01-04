@@ -29,7 +29,7 @@ export class ElemCross extends ElemSimple {
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
-                this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
+                this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
             }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     

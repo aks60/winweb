@@ -30,15 +30,15 @@ export class ElemFrame extends ElemSimple {
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if (Layout.BOT === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.BOT[0], UseSide.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.BOT[0], UseSide.HORIZ[0]);
                 } else if (Layout.RIG === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.RIGHT[0], UseSide.VERT[0]);
+                    this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.RIGHT[0], UseSide.VERT[0]);
                 } else if (Layout.TOP === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.TOP[0], UseSide.HORIZ[0]);
+                    this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.TOP[0], UseSide.HORIZ[0]);
                 } else if (Layout.LEF === this.layout()) {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.LEFT[0], UseSide.VERT[0]);
+                    this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.LEFT[0], UseSide.VERT[0]);
                 } else {
-                    this.sysprofRec = eSysprof.find(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
+                    this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
                 }
             }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
