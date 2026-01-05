@@ -4,6 +4,7 @@ import {Type} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
+import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
@@ -200,23 +201,27 @@ export class Wincalc {
     //Рисуем элем.констр.
     paint(element) {
         //this.ctx.save();
-        if (element instanceof Polygon) {
-            const coo = element.getCoordinates(); //это массив точек
-            //this.ctx.strokeStyle = 'blue';
-            //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";
-            //this.ctx.fillStyle = '#ff0000';
-            //this.ctx.lineWidth = 8;
+        const coo = element.getCoordinates(); //это массив точек
+        
+        if (element instanceof LineString) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(coo[0].x, coo[0].y);
+            this.ctx.lineTo(coo[1].x2, coo[1].y2);
+            this.ctx.closePath();
 
+        } else if (element instanceof Polygon) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
             for (let i = 1; i < coo.length; i++)
                 this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
-            this.ctx.closePath(); //замыкаем контур
+            this.ctx.closePath(); //замыкаем контур     
 
-            this.ctx.stroke(); //рисуем контур           
         } else {
+            //this.ctx.strokeStyle = 'blue';
+            //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";            
             alert('Wincalc.paint()');
         }
+        this.ctx.stroke(); //рисуем контур 
         //this.ctx.restore();
     }
 

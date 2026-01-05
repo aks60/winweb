@@ -237,9 +237,11 @@ export class AreaStvorka extends AreaSimple {
 
     paint() {
         if (this.winc.sceleton === false) {
+            this.winc.ctx.lineWidth = 8;
+            
             if (this.handOpen !== null) {
-                //this.winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-
+                this.winc.ctx.strokeStyle = '#000000';
+                
                 if (this.lineOpenHor !== null) { //линии горизонт. открывания
                     this.winc.paint(this.lineOpenHor);
                 }
@@ -248,20 +250,9 @@ export class AreaStvorka extends AreaSimple {
                 }
                 this.colorRec = eColor.find(this.handColor);
                 let rgb = colorRec[eColor.rgb].toString(16);;
-                this.winc.ctx.fillStyle = '#' + rgb;
+                this.winc.ctx.fillStyle = '#' + rgb;               
                 this.winc.paint(this.handOpen);
-                //Shape shape = new ShapeWriter().toShape(this.handOpen);
-                //Record colorRec = eColor.find(handColor);
-                //int rgb = colorRec.getInt(eColor.rgb);
-                //winc.gc2d.setColor(new java.awt.Color(rgb));
-                //winc.gc2d.fill(shape);
-
-                if (this.timer.isRunning() === true) {
-                    this.frames.find(e => e.type === Type.STV_SIDE).forEach(e => e.timer.start());
-                }
-                this.winc.ctx.strokeStyle = '#000000';
-                this.winc.paint(this.handOpen);
-            }
+            }           
         } else {
             paintSceleton();
         }      
