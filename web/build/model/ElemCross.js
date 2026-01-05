@@ -84,6 +84,8 @@ export class ElemCross extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
+                this.winc.ctx.lineWidth = 8;
+                this.winc.ctx.strokeStyle = '#000000';                
                 const geoInne = this.owner.area.getGeometryN(1);
                 this.winc.paint(geoInne);
             }

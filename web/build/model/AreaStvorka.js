@@ -2,10 +2,12 @@
 import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
-import {Type, TypeOpen1, TypeOpen2, PKjson, 
-    LayoutHand, Layout, UseSide} from '../../enums/enums.js';
+import {Type, TypeOpen1, TypeOpen2, PKjson,
+        LayoutHand, Layout, UseSide} from '../../enums/enums.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
+import AffineTransformation from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/util/AffineTransformation.js';
+import Centroid from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Centroid.js';
 
 export class AreaStvorka extends AreaSimple {
 
@@ -203,28 +205,30 @@ export class AreaStvorka extends AreaSimple {
                     let lineSegm = UGeo.getSegment(this.area, ind);
                     h = lineSegm.pointAlong(this.handHeight / lineSegm.getLength()); //высота ручки на створке
                 }
-                //let sysprofRec = eSysprof.find5(this.winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
-                //let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
-                //let dx = artiklRec[eArtikl.height] / 2;
-//                if (typeOpen === TypeOpen1.UPPER) {
-//                    h.y = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
-//                } else {
-//                    h.x = (typeOpen === TypeOpen1.LEFT || typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
-//                }
-//                if (root.type === Type.DOOR) {
-//                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-//                } else {
-//                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-//                }
-//                //Направление открывания
-//                if (typeOpen != TypeOpen1.UPPER) {
-//                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
-//                    if (!(anglHoriz === 90 || anglHoriz === 270)) {
-//                        AffineTransformation aff = new AffineTransformation();
-//                        aff.setToRotation(Math.toRadians(anglHoriz), this.handOpen.getCentroid().getX(), this.handOpen.getCentroid().getY());
-//                        this.handOpen = (Polygon) aff.transform(this.handOpen);
-//                    }
-//                }
+                let sysprofRec = eSysprof.find5(this.winc.nuni, stvside.type[1], UseSide.ANY[1], UseSide.ANY[1]); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+                let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
+                let dx = artiklRec[eArtikl.height] / 2;
+                if (this.typeOpen === TypeOpen1.UPPER) {
+                    h.y = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
+                } else {
+                    h.x = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
+                }
+                if (this.winc.root.type === Type.DOOR) {
+                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
+                } else {
+                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
+                }
+                //Направление открывания
+                if (this.typeOpen != TypeOpen1.UPPER) {
+                    let anglHoriz = UGeo.anglHor(stvside.x1, stvside.y1, stvside.x2, stvside.y2);
+                    if (!(anglHoriz === 90 || anglHoriz === 270)) {
+                        let aff = new AffineTransformation();
+                        aff.setToRotation(UGeo.degToRad(anglHoriz),
+                                Centroid.getCentroid(this.handOpen).getX(),
+                                Centroid.getCentroid(this.handOpen).getY());
+                        this.handOpen = aff.transform(this.handOpen);
+                    }
+                }
             }
         } catch (e) {
             errorLog("Error: AreaStvorka.setLocation() " + e.message);
@@ -232,5 +236,34 @@ export class AreaStvorka extends AreaSimple {
     }
 
     paint() {
+        if (this.winc.sceleton === false) {
+            if (this.handOpen !== null) {
+                //this.winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+
+                if (this.lineOpenHor !== null) { //линии горизонт. открывания
+                    this.winc.paint(this.lineOpenHor);
+                }
+                if (this.lineOpenVer !== null) { //линии вертик. открывания
+                    this.winc.paint(this.lineOpenVer);
+                }
+                this.colorRec = eColor.find(this.handColor);
+                let rgb = colorRec[eColor.rgb].toString(16);;
+                this.winc.ctx.fillStyle = '#' + rgb;
+                this.winc.paint(this.handOpen);
+                //Shape shape = new ShapeWriter().toShape(this.handOpen);
+                //Record colorRec = eColor.find(handColor);
+                //int rgb = colorRec.getInt(eColor.rgb);
+                //winc.gc2d.setColor(new java.awt.Color(rgb));
+                //winc.gc2d.fill(shape);
+
+                if (this.timer.isRunning() === true) {
+                    this.frames.find(e => e.type === Type.STV_SIDE).forEach(e => e.timer.start());
+                }
+                this.winc.ctx.strokeStyle = '#000000';
+                this.winc.paint(this.handOpen);
+            }
+        } else {
+            paintSceleton();
+        }      
     }
 }

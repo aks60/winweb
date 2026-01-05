@@ -2,8 +2,8 @@
 import {UGeo} from './model/uGeo.js';
 import {Type} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
-import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, 
-    AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
+import {AreaSimple, AreaArch, AreaDoor, AreaRectangl,
+        AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
@@ -40,7 +40,7 @@ export class Wincalc {
         }
     }
 
-    build(script) {        
+    build(script) {
         try {
             //Инит свойств
             this.mapPardef.clear();
@@ -175,7 +175,7 @@ export class Wincalc {
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initArtikle());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
             //UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
-            
+
         } catch (e) {
             errorLog('Error: Wincalc.location() ' + e.message);
         }
@@ -202,9 +202,10 @@ export class Wincalc {
         //this.ctx.save();
         if (element instanceof Polygon) {
             const coo = element.getCoordinates(); //это массив точек
-            this.ctx.strokeStyle = 'blue';
-            this.ctx.fillStyle = '#ff0000';
-            this.ctx.lineWidth = 8;
+            //this.ctx.strokeStyle = 'blue';
+            //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";
+            //this.ctx.fillStyle = '#ff0000';
+            //this.ctx.lineWidth = 8;
 
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
