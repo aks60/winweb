@@ -189,8 +189,17 @@ export class Wincalc {
                     ? this.cnv.width / this.width() : this.cnv.height / this.height();
             this.ctx.scale(this.scale, this.scale);
 
-            this.listArea.filter(el => el.type === Type.RECTANGL).forEach((el) => el.paint());
+            //Прорисовка стеклопакетов
+            this.listArea.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
+            
+            //Прорисовка рам
             this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
+            
+            //Прорисовка профилей створок
+            let o1 = this.listElem.filter(el => el.type === Type.STV_SIDE);
+            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
+            
+            //Прорисовка импостов
             //this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
 
         } catch (e) {

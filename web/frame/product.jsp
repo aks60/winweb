@@ -56,17 +56,17 @@
             $(document).ready(function () {
                 taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
-                product.init_table($('#table1'));
-                product.load_tree($('#tree-winc'));
-                prepareToolBar();
-                let cvs = document.querySelector("#cnv");
-                cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
-                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
-                $("#spinner").spinner({
-                    spin: function (event, ui) {
-                        product.click_spinner();
-                    }
-                });
+//                product.init_table($('#table1'));
+//                product.load_tree($('#tree-winc'));
+//                prepareToolBar();
+//                let cvs = document.querySelector("#cnv");
+//                cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
+//                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
+//                $("#spinner").spinner({
+//                    spin: function (event, ui) {
+//                        product.click_spinner();
+//                    }
+//                });
             });
 
             function test() {

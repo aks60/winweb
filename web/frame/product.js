@@ -442,7 +442,7 @@ product.artikl_to_glass = function (btnSrc) {
 //==============================================================================
 //Масштабирование
 product.resize = function () {
-
+debugger;
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
         var height = window.innerHeight;

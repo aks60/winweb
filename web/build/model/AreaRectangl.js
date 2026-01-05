@@ -37,7 +37,6 @@ export class AreaRectangl extends AreaSimple {
 
     paint() {
         try {
-            super.paint();
             //console.log('Exec: AreaRectangl.paint()');
         } catch (e) {
             errorLog('Error: AreaRectangl.paint() ' + e.message);

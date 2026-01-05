@@ -100,7 +100,8 @@ order.load_table = function (table1, table2) {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    table1.jqGrid("setSelection", rowID);
+    table1.jqGrid("setSelection", 1);
+    //table1.jqGrid("setSelection", rowID);
     order.resize();
 }
 //---------------  Удаление строки таблицы  ------------------------------------
