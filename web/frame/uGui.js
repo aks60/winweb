@@ -323,7 +323,7 @@ function isEmpty(v) {
 //------------------------------------------------------------------------------            
 function findef(key, index, tname) {
     try {
-        let record = tname.list.find(rec => key === rec[index]);
+        let record = tname.list.find(rec => key == rec[index]);
         if (record !== undefined) {
             return record;
         }

@@ -33,12 +33,6 @@
 
         <script type="text/javascript">
 //------------------------------------------------------------------------------
-            order.resize = function () {
-                $("#context").css("height", window.innerHeight - 80);
-                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
-            }
-//------------------------------------------------------------------------------
             $(document).ready(function () {
                 $(window).bind('resize', () => order.resize()).trigger('resize');
                 let tab_sysprod = document.getElementById('table2');

@@ -1,3 +1,38 @@
+//-------------------- Масштабирование -----------------------------------------
+product.resize = function () {
+debugger;
+    let cnv = document.querySelector("#cnv");
+    if (cnv != null) {
+        var height = window.innerHeight;
+        $("#context").css("height", height - 82);
+
+        //Изменение размера канвы
+        cnv.width = $("#scale-cnv").width();
+        cnv.height = $("#scale-cnv").height();
+        if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
+            winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
+        $('#scale-ver').width(winCalc.height * winCalc.scale); //длина шкалы перед разворотом на 90 градусов
+
+        //Прорисовка горизонт. размерных линий, после изменения размера канвы
+        let arrHor = ($('#scale-hor input').length === 0) ? [winCalc.root] : [];
+        $('#scale-hor input').each((i, p) => arrHor.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
+        product.scale_new_input('HORIZ', arrHor);
+
+        //Прорисовка вертик. размерных линий, после изменения размера конструкции
+        let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
+        $('#scale-ver input').each((i, p) => arrVer.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
+        product.scale_new_input('VERT', arrVer);
+
+        //Прорисовка полей
+        let winWidth = $('#east').width() - 24;
+        $("div .field2[dx]").each(function (index) {
+            var width = $(this).attr('dx');
+            $(this).width(winWidth - width);
+        });
+        $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
+        $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+    }
+};
 //------------------------------------------------------------------------------
 product.init_table = function (table1) {
 
@@ -21,7 +56,7 @@ product.init_table = function (table1) {
             product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
         }
     });
-}
+};
 //------------------------------------------------------------------------------
 product.load_table = function (table1) {
     let syspar1List2 = [];
@@ -34,7 +69,7 @@ product.load_table = function (table1) {
     for (let i = 0; i < syspar1List2.length; i++) {
 
         let tr = syspar1List2[i];
-        let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] == tr[eParams.id]);
+        let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] === tr[eParams.id]);
         table1.jqGrid('addRowData', i + 1, {
 
             id: tr[eSyspar1.id],
@@ -44,7 +79,7 @@ product.load_table = function (table1) {
         });
     }
     table1.jqGrid("setSelection", 1);
-}
+};
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
     if (order.prjprodRec != null) {
@@ -52,13 +87,13 @@ product.load_tree = function (tabtree) {
         let winc = order.get_winc();
         let root = winc.root;
 
-        if (root.typeForm() == 'RECTANGL')
+        if (root.typeForm() === 'RECTANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() == 'TRAPEZE')
+        else if (root.typeForm() === 'TRAPEZE')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() == 'TRIANGL')
+        else if (root.typeForm() === 'TRIANGL')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() == 'ARCH')
+        else if (root.typeForm() === 'ARCH')
             arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'lib-img/tool/folder.gif'});
 
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
@@ -80,17 +115,17 @@ product.load_tree = function (tabtree) {
                     product.local_to_fields(node);
                 });
     }
-}
+};
 product.elements = function (com, arr) {
 
-    if (com.typeForm() == "STVORKA") {
+    if (com.typeForm() === "STVORKA") {
         arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/img/tool/folder.gif'});
         arr.push({'id': com.frames.get('BOTT').id, 'parent': com.id, 'text': 'Рама нижняя', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('RIGHT').id, 'parent': com.id, 'text': 'Рама правая', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('TOP').id, 'parent': com.id, 'text': 'Рама верхняя', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': com.frames.get('LEFT').id, 'parent': com.id, 'text': 'Рама левая', 'icon': 'lib-img/tool/leaf.gif'});
         for (let com2 of com.childs) {
-            if (com2.typeForm() == "GLASS") {
+            if (com2.typeForm() === "GLASS") {
                 arr.push({'id': com2.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
             }
         }
@@ -100,15 +135,15 @@ product.elements = function (com, arr) {
                 product.elements(com2, arr);
             } else {
                 if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
-                    let lay = (com.layout == "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
+                    let lay = (com.layout === "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'lib-img/tool/leaf.gif'});
-                } else if (com2.typeForm() == "GLASS") {
+                } else if (com2.typeForm() === "GLASS") {
                     arr.push({'id': com2.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "lib-img/tool/leaf.gif"});
                 }
             }
         }
     }
-}
+};
 //==============================================================================
 //Загрузка свойств конструкции
 product.server_to_fields = function () {
@@ -124,9 +159,9 @@ product.server_to_fields = function () {
                         let id = order.prjprodRec[ePrjprod.id];
                         let winc = order.wincalcMap.get(id);
                         for (let el of winc.listElem) {
-                            if (el.typeForm() == 'STVORKA') {
+                            if (el.typeForm() === 'STVORKA') {
                                 for (let fk in data.stvFields) {
-                                    if (fk == el.id) {
+                                    if (fk === el.id) {
 
                                         el.handleRec = data.stvFields[fk].handleRec;
                                         el.handleColor = data.stvFields[fk].handleColor;
@@ -141,8 +176,8 @@ product.server_to_fields = function () {
                         let tr = $("#tree-winc").jstree("get_selected")
                         if (tr != undefined) {
                             let nodeID = tr[0];
-                            let elem = winc.listElem.find(it => it.id == nodeID);
-                            if (elem.typeForm() == 'STVORKA') {
+                            let elem = winc.listElem.find(it => it.id === nodeID);
+                            if (elem.typeForm() === 'STVORKA') {
                                 product.local_to_fields(nodeID);
                             }
                         }
@@ -153,21 +188,21 @@ product.server_to_fields = function () {
     } catch (e) {
         console.error('Error: product.server_to_fields() ' + e.message);
     }
-}
+};
 //------------------------------------------------------------------------------
 //Загрузка тегов страницы
 product.local_to_fields = function (nodeID) {
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    if (nodeID == -2) {
+    if (nodeID === -2) {
         return;
     }
     let elem = {};
     let id = order.prjprodRec[ePrjprod.id];
     let winc = order.wincalcMap.get(id);
-    if (nodeID == -1) {
+    if (nodeID === -1) {
         elem = {type: 'DEF_PARAM'};
     } else {
-        elem = winc.listElem.find(it => it.id == nodeID);
+        elem = winc.listElem.find(it => it.id === nodeID);
     }
     //Коробка
     if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
@@ -180,16 +215,16 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-1").show();
 
         //Парам. по умолчанию
-    } else if (elem.typeForm() == "DEF_PARAM") {
+    } else if (elem.typeForm() === "DEF_PARAM") {
         product.load_table($('#table1'));
         $("#tabs-2").show();
 
         //Сторона коробки, створки
     } else if (["BOX_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
         let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
-        if (elem.typeForm() == "BOX_SIDE") {
+        if (elem.typeForm() === "BOX_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
-        } else if (elem.typeForm() == "STVORKA_SIDE") {
+        } else if (elem.typeForm() === "STVORKA_SIDE") {
             $("#tabs-3 :nth-child(1)").text('Сторона створки ' + lay[elem.layout]);
         } else {
             $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
@@ -201,11 +236,11 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-3").show();
 
         //Створка
-    } else if (elem.typeForm() == "STVORKA") {
-        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] == rec.list[eFurnituire.id]);
+    } else if (elem.typeForm() === "STVORKA") {
+        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec.list[eFurnituire.id]);
         let type_open = TypeOpen1.INVALID[1]; //сторона открывания
         for (let k in TypeOpen1) {
-            if (TypeOpen1[k][0] == elem.typeOpen) {
+            if (TypeOpen1[k][0] === elem.typeOpen) {
                 type_open = TypeOpen1[k][1];
             }
         }
@@ -223,13 +258,13 @@ product.local_to_fields = function (nodeID) {
         $("#tabs-4").show();
 
         //Стеклопакет
-    } else if (elem.typeForm() == "GLASS") {
+    } else if (elem.typeForm() === "GLASS") {
         load_tabs('tabs-5', {
             n51: elem.artiklRec[eArtikl.code], n52: elem.artiklRec[eArtikl.name], n53: elem.color1Rec[eColor.name]
         }, ['n51', 'n52', 'n53']);
         $("#tabs-5").show();
     }
-}
+};
 //------------------------------------------------------------------------------
 //Текстура изделия
 product.color_to_windows = function (btnSrc) {
@@ -238,12 +273,12 @@ product.color_to_windows = function (btnSrc) {
     let groupSet = new Set();
     let colorSet = new Set();
 
-    let groupTxt = eSystree.list.find(rec => winc.nuni == rec.list[eSystree.id])[eSystree.cgrp];
-    let groupArr = (groupTxt == null) ? null : parserInt(groupTxt);
-    let colorTxt = (btnSrc == 'n14') ? eSystree.list.find(rec => winc.nuni == rec.list[eSystree.id])[eSystree.col1]
-            : (btnSrc == 'n15') ? eSystree.list.find(rec => winc.nuni == rec.list[eSystree.id])[eSystree.col2]
-            : eSystree.list.find(rec => winc.nuni == rec.list[eSystree.id])[eSystree.col3];
-    let colorArr = (colorTxt == null) ? null : parserInt(colorTxt);
+    let groupTxt = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.cgrp];
+    let groupArr = (groupTxt === null) ? null : parserInt(groupTxt);
+    let colorTxt = (btnSrc == 'n14') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col1]
+            : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col2]
+            : eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col3];
+    let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
 
     //Поле группы текстур заполнено
     if (groupArr != null) {
@@ -252,7 +287,7 @@ product.color_to_windows = function (btnSrc) {
             let colorSet2 = new Set();
             let b = false;
             for (let rec of eColor.list) {
-                if (rec[eColor.colgrp_id] == s1) {
+                if (rec[eColor.colgrp_id] === s1) {
                     groupSet2.add(rec[eColor.colgrp_id]); //группы
                     colorSet2.add(rec); //текстуры
                     for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
@@ -262,7 +297,7 @@ product.color_to_windows = function (btnSrc) {
                     }
                 }
             }
-            if (b == false) { //если небыло пападаний то добавляем всю группу
+            if (b === false) { //если небыло пападаний то добавляем всю группу
                 groupSet.add(groupSet2);
                 colorSet.add(colorSet2);
             }
@@ -274,7 +309,7 @@ product.color_to_windows = function (btnSrc) {
             if (groupArr != null) {
 
                 for (let s1 of groupArr) { //группы
-                    if (rec[eColor.colgrp_id] == s1) {
+                    if (rec[eColor.colgrp_id] === s1) {
                         for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
                             if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
                                 groupSet.add(rec[eColor.colgrp_id]);
@@ -302,7 +337,7 @@ product.color_to_windows = function (btnSrc) {
     //} catch (e) {
     //    console.error('Error:product.color_to_windows() ' + e.message);
     //}
-}
+};
 //------------------------------------------------------------------------------
 //Сторона коробки
 product.sysprof_to_frame = function (btnSrc) {
@@ -310,18 +345,18 @@ product.sysprof_to_frame = function (btnSrc) {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let prjprodID = order.prjprodRec[ePrjprod.id];
         let winc = order.wincalcMap.get(prjprodID);
-        let elem = winc.listElem.find(it => it.id == nodeID);
+        let elem = winc.listElem.find(it => it.id === nodeID);
         let sysprofSet = new Set();
 
         //Цикл по профилям ветки 
         for (let sysprofRec of eSysprof.list) {
             //Отфильтруем подходящие по параметрам
-            if (winc.nuni == sysprofRec[eSysprof.systree_id] && Type[elem.type][1] == sysprofRec[eSysprof.use_type]) {
+            if (winc.nuni === sysprofRec[eSysprof.systree_id] && Type[elem.type][1] === sysprofRec[eSysprof.use_type]) {
                 let use_side_ID = sysprofRec[eSysprof.use_side];
-                if (use_side_ID == Layout[elem.layout][0]
-                        || ((elem.layout == 'BOTT' || elem.layout == 'TOP') && use_side_ID == UseSide.HORIZ[0])
-                        || ((elem.layout == 'RIGHT' || elem.layout == 'LEFT') && use_side_ID == UseSide.VERT[0])
-                        || use_side_ID == UseSide.ANY[0] || use_side_ID == UseSide.MANUAL[0]) {
+                if (use_side_ID === Layout[elem.layout][0]
+                        || ((elem.layout === 'BOTT' || elem.layout === 'TOP') && use_side_ID === UseSide.HORIZ[0])
+                        || ((elem.layout === 'RIGHT' || elem.layout === 'LEFT') && use_side_ID === UseSide.VERT[0])
+                        || use_side_ID === UseSide.ANY[0] || use_side_ID === UseSide.MANUAL[0]) {
 
                     sysprofSet.add(sysprofRec);
                 }
@@ -334,25 +369,25 @@ product.sysprof_to_frame = function (btnSrc) {
     } catch (e) {
         console.error('Error: product.sysprof_to_frame() ' + e.message);
     }
-}
+};
 //------------------------------------------------------------------------------
 //Фурнитура стеклопакета
 product.furniture_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/furniture.jsp');
-}
+};
 //------------------------------------------------------------------------------
 //Сторона открывания
 product.sideopen_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/sideopen.jsp');
-}
+};
 //------------------------------------------------------------------------------
 //Артикл ручки, подвеса, замка
 product.artikl_to_stvorka = function (btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/artikl.jsp');
-}
+};
 //------------------------------------------------------------------------------
 //Заполнение
 product.color_to_element = function (btnSrc) {
@@ -365,35 +400,35 @@ product.color_to_element = function (btnSrc) {
         let colorSet = new Set();
         let artiklElem = null;
 
-        if (btnSrc == 'n33')
+        if (btnSrc === 'n33')
             artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n34')
+        else if (btnSrc === 'n34')
             artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n35')
+        else if (btnSrc === 'n35')
             artiklElem = elem.artiklRec;
-        else if (btnSrc == 'n46')
+        else if (btnSrc === 'n46')
             artiklElem = elem.handleRec;
-        else if (btnSrc == 'n4A')
+        else if (btnSrc === 'n4A')
             artiklElem = elem.loopRec;
-        else if (btnSrc == 'n4C')
+        else if (btnSrc === 'n4C')
             artiklElem = elem.lockRec;
-        else if (btnSrc == 'n53')
+        else if (btnSrc === 'n53')
             artiklElem = elem.artiklRec;
 
         //Все текстуры артикула элемента конструкции
         for (let rec of eArtdet.list) {
-            if (rec.list[eArtdet.artikl_id] == artiklElem[eArtikl.id]) {
+            if (rec.list[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
                 if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
 
                     eColor.ist.forEach(colorRec => {
-                        if (colorRec[eColor.colgrp_id] == Math.abs(rec.list[eArtdet.color_fk])) {
+                        if (colorRec[eColor.colgrp_id] === Math.abs(rec.list[eArtdet.color_fk])) {
 
                             groupSet.add(Math.abs(colorRec[eColor.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] == rec3[eColor.id]);
+                    let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] === rec3[eColor.id]);
                     groupSet.add(color2Rec[eColor.colgrp_id]);
                     colorSet.add(color2Rec);
                 }
@@ -408,7 +443,7 @@ product.color_to_element = function (btnSrc) {
     } catch (e) {
         console.error('Error: product.color_to_element() ' + e.message);
     }
-}
+};
 //------------------------------------------------------------------------------
 //Заполнение
 product.artikl_to_glass = function (btnSrc) {
@@ -416,14 +451,14 @@ product.artikl_to_glass = function (btnSrc) {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
         let prjprodID = order.prjprodRec[ePrjprod.id];
         let winc = order.wincalcMap.get(prjprodID);
-        let elem = winc.listElem.find(it => it.id == nodeID);
+        let elem = winc.listElem.find(it => it.id === nodeID);
 
         //Список доступных толщин в ветке системы например 4;5;8
-        let systreeRec = eSystree.list.find(rec => winc.nuni == rec.list[eSystree.id]);
+        let systreeRec = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id]);
         if (systreeRec != undefined) {
             let depth = systreeRec[eSystree.depth];
             depth = depth.replace(/;/g, ',');
-            if (depth.charAt(depth.length - 1) == ',') {
+            if (depth.charAt(depth.length - 1) === ',') {
                 depth = depth.substring(0, depth.length - 1);
             }
             depth = depth.split(',');
@@ -438,48 +473,12 @@ product.artikl_to_glass = function (btnSrc) {
     } catch (e) {
         console.error('Error: product.artikl_to_glass() ' + e.message);
     }
-}
-//==============================================================================
-//Масштабирование
-product.resize = function () {
-debugger;
-    let cnv = document.querySelector("#cnv");
-    if (cnv != null) {
-        var height = window.innerHeight;
-        $("#context").css("height", height - 82);
-
-        //Изменение размера канвы
-        cnv.width = $("#scale-cnv").width();
-        cnv.height = $("#scale-cnv").height();
-        if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
-            winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
-        $('#scale-ver').width(winCalc.height * winCalc.scale); //длина шкалы перед разворотом на 90 градусов
-
-        //Прорисовка горизонт. размерных линий, после изменения размера канвы
-        let arrHor = ($('#scale-hor input').length == 0) ? [winCalc.root] : [];
-        $('#scale-hor input').each((i, p) => arrHor.push(winCalc.listArea.find(e => e.id == $(p).attr('areaId'))));
-        product.scale_new_input('HORIZ', arrHor);
-
-        //Прорисовка вертик. размерных линий, после изменения размера конструкции
-        let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
-        $('#scale-ver input').each((i, p) => arrVer.push(winCalc.listArea.find(e => e.id == $(p).attr('areaId'))));
-        product.scale_new_input('VERT', arrVer);
-
-        //Прорисовка полей
-        let winWidth = $('#east').width() - 24;
-        $("div .field2[dx]").each(function (index) {
-            var width = $(this).attr('dx');
-            $(this).width(winWidth - width);
-        });
-        $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
-        $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
-    }
-}
+};
 //------------------------------------------------------------------------------
 //Перерисовать при изменении размера (размер канвы тот-же)
 product.redraw = function () {
     let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-    let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
+    let prjprodRec = ePrjprod.list.find(rec => prjprodID === rec.list[ePrjprod.id]);
     let cvs = document.querySelector("#cnv");
     prjprodRec[ePrjprod.script] = JSON.stringify(winCalc.gson, (k, v) => isEmpty(v));
 
@@ -488,18 +487,18 @@ product.redraw = function () {
     order.wincalcMap.set(prjprodID, winCalc); //новый экз.  
     product.resize();
     product.local_to_fields("0");
-}
+};
 //------------------------------------------------------------------------------
 //Наполнение новыми инпутами шкалы горизонтальных и вертикальных размеров
 product.scale_new_input = function (layout, lineArea) {
     let lineArr = [];
 
     //Прорисовка горизонтальных размеров 
-    if (layout == "HORIZ") {
+    if (layout === "HORIZ") {
         lineArea.forEach((e, i) => {
 
             let inpt = document.createElement('input'); //create input
-            if ($('#scale-hor input:eq(' + i + ')').length == 1) {
+            if ($('#scale-hor input:eq(' + i + ')').length === 1) {
                 $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
             }
             $(inpt).val(e.lengthX.toFixed(1));
@@ -516,7 +515,7 @@ product.scale_new_input = function (layout, lineArea) {
         lineArr.forEach((el, i) => $('#scale-hor').append(el));
 
         //Прорисовка вертикальных размеров   
-    } else if (layout == "VERT") {
+    } else if (layout === "VERT") {
 
         lineArr.length = 0;
         let length = winCalc.gson.height * winCalc.scale;
@@ -524,7 +523,7 @@ product.scale_new_input = function (layout, lineArea) {
         lineArea.forEach((e, i) => {
 
             let inpt = document.createElement('input'); //create input           
-            if ($('#scale-ver input:eq(' + i + ')').length == 1) {
+            if ($('#scale-ver input:eq(' + i + ')').length === 1) {
                 $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
             }
             $(inpt).val(e.lengthY.toFixed(1));
@@ -540,7 +539,7 @@ product.scale_new_input = function (layout, lineArea) {
         $('#scale-ver input').each((i, el) => el.remove());
         lineArr.forEach((el, i) => $('#scale-ver').append(el));
     }
-}
+};
 //------------------------------------------------------------------------------
 //Установка цвета горизонтальных и вертикальных размеров
 product.dblclick_scale_color = function (inpt, dir) {
@@ -550,7 +549,7 @@ product.dblclick_scale_color = function (inpt, dir) {
     $(inpt).css('color', 'rgb(255, 0, 0)');
     $("#spinner").spinner("value", $(inpt).val());
 //    $('#btnResiz').focus();
-}
+};
 //------------------------------------------------------------------------------
 //Click на импосте для расчёта шкал размеров
 product.click_canvas_xy = function (canvas, event) {
@@ -559,7 +558,7 @@ product.click_canvas_xy = function (canvas, event) {
     const y = (event.clientY - rect.top) / winCalc.scale;
 
     //Если клик не на конструкции
-    if (winCalc.root.inside(x, y) == false) {
+    if (winCalc.root.inside(x, y) === false) {
         product.scale_new_input('HORIZ', [winCalc.root]);
         product.scale_new_input('VERT', [winCalc.root]);
         $("#spinner").spinner("value", 0);
@@ -568,10 +567,10 @@ product.click_canvas_xy = function (canvas, event) {
 
     } else { //На конструкции
         winCalc.listElem.forEach((e, i) => {
-            if (e.typeForm() == 'IMPOST' || e.typeForm() == 'SHTULP' || e.typeForm() == 'STOIKA') {
+            if (e.typeForm() === 'IMPOST' || e.typeForm() === 'SHTULP' || e.typeForm() === 'STOIKA') {
                 if (e.inside(x, y)) {
                     let m = winCalc.root.lineCross(e);
-                    if (e.layout == 'HORIZ') {
+                    if (e.layout === 'HORIZ') {
                         product.scale_new_input('VERT', m.reverse());
                     } else {
                         product.scale_new_input('HORIZ', m);
@@ -580,7 +579,7 @@ product.click_canvas_xy = function (canvas, event) {
             }
         });
     }
-}
+};
 //------------------------------------------------------------------------------
 //Клик на кнопке масштабирования
 product.click_btn_resiz = function () {
@@ -588,11 +587,11 @@ product.click_btn_resiz = function () {
 
     //По горизонтали  
     $('#scale-hor input').each((i, e) => {
-        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+        if ($(e).css('color') === 'rgb(255, 0, 0)') {
             ++draw;
             $('#scale-hor input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(m).css('color') === 'rgb(255, 0, 0)') {
                     area.lengthX = area.lengthX + 1;
                 } else {
                     area.lengthX = area.lengthX - 1;
@@ -603,11 +602,11 @@ product.click_btn_resiz = function () {
 
     //По вертикали
     $('#scale-ver input').each((i, e) => {
-        if ($(e).css('color') == 'rgb(255, 0, 0)') {
+        if ($(e).css('color') === 'rgb(255, 0, 0)') {
             ++draw;
             $('#scale-ver input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(m).css('color') === 'rgb(255, 0, 0)') {
                     area.lengthY = area.lengthY + 1;
                 } else {
                     area.lengthY = area.lengthY - 1;
@@ -620,20 +619,20 @@ product.click_btn_resiz = function () {
     if (draw > 0) {
         product.redraw();
     }
-}
+};
 //------------------------------------------------------------------------------
 //Клик на кнопке enter
 product.keyup_btn_enter = function (inpt, event) {
     let dv = 0;
     if (event.key === "Enter") {
-        let areas = winCalc.listArea.find(e => e.id == $(inpt).attr('areaID'));
+        let areas = winCalc.listArea.find(e => e.id === $(inpt).attr('areaID'));
 
         //По горизонтали
-        if ($(inpt).parent().attr('id') == 'scale-hor') {
+        if ($(inpt).parent().attr('id') === 'scale-hor') {
             dv = $(inpt).val() - areas.lengthX;
             $('#scale-hor input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(inpt).attr('areaID') == $(m).attr('areaID')) { //ограничение размера
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(inpt).attr('areaID') === $(m).attr('areaID')) { //ограничение размера
                     dv = (area.lengthX + dv < 200) ? 0 : dv;
                 } else {
                     dv = (area.lengthX - dv < 200) ? 0 : dv;
@@ -641,8 +640,8 @@ product.keyup_btn_enter = function (inpt, event) {
             });
             if (dv != 0)
                 $('#scale-hor input').each((i, m) => {
-                    let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                    let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                    if ($(inpt).attr('areaID') === $(m).attr('areaID')) {
                         area.lengthX = area.lengthX + dv;
                     } else {
                         area.lengthX = area.lengthX - dv;
@@ -653,8 +652,8 @@ product.keyup_btn_enter = function (inpt, event) {
         } else { //По вертикали           
             dv = $(inpt).val() - areas.lengthY;
             $('#scale-ver input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(inpt).attr('areaID') == $(m).attr('areaID')) { //ограничение размера
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(inpt).attr('areaID') === $(m).attr('areaID')) { //ограничение размера
                     dv = (area.lengthY + dv < 200) ? 0 : dv;
                 } else {
                     dv = (area.lengthY - dv < 200) ? 0 : dv;
@@ -662,8 +661,8 @@ product.keyup_btn_enter = function (inpt, event) {
             });
             if (dv != 0) {
                 $('#scale-ver input').each((i, m) => {
-                    let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') == $(m).attr('areaID')) {
+                    let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                    if ($(inpt).attr('areaID') === $(m).attr('areaID')) {
                         area.lengthY = area.lengthY + dv;
                     } else {
                         area.lengthY = area.lengthY - dv;
@@ -671,10 +670,10 @@ product.keyup_btn_enter = function (inpt, event) {
                 });
             }
         }
-        if (dv == 0) {
+        if (dv === 0) {
             alert('Внимание! Недопустимые размеры конструкции. (200мм)');
 
-            if ($(inpt).parent().attr('id') == 'scale-hor')
+            if ($(inpt).parent().attr('id') === 'scale-hor')
                 $(inpt).val(areas.lengthX.toFixed(1));
             else
                 $(inpt).val(areas.lengthX.toFixed(1));
@@ -682,7 +681,7 @@ product.keyup_btn_enter = function (inpt, event) {
             product.redraw(); //перерисовать при изменении размера
     }
     //console.log("+++ " + winCalc.heightAdd);
-}
+};
 //------------------------------------------------------------------------------
 //Клик на кнопке масштабирования
 product.click_spinner = function () {
@@ -690,13 +689,13 @@ product.click_spinner = function () {
 
     //По горизонтали  
     $('#scale-hor input').each((i, e) => {
-        if ($(e).css('color') == 'rgb(255, 0, 0)') {
-            let areas = winCalc.listArea.find(v => v.id == $(e).attr('areaID'));
+        if ($(e).css('color') === 'rgb(255, 0, 0)') {
+            let areas = winCalc.listArea.find(v => v.id === $(e).attr('areaID'));
             let dv = $("#spinner").spinner("value") - areas.lengthX;
             ++draw;
             $('#scale-hor input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(m).css('color') === 'rgb(255, 0, 0)') {
                     area.lengthX = area.lengthX + dv;
                 } else {
                     area.lengthX = area.lengthX - dv;
@@ -707,13 +706,13 @@ product.click_spinner = function () {
 
     //По вертикали
     $('#scale-ver input').each((i, e) => {
-        if ($(e).css('color') == 'rgb(255, 0, 0)') {
-            let areas = winCalc.listArea.find(v => v.id == $(e).attr('areaID'));
+        if ($(e).css('color') === 'rgb(255, 0, 0)') {
+            let areas = winCalc.listArea.find(v => v.id === $(e).attr('areaID'));
             let dv = $("#spinner").spinner("value") - areas.lengthX;
             ++draw;
             $('#scale-ver input').each((i, m) => {
-                let area = winCalc.listArea.find(v => v.id == $(m).attr('areaID'));
-                if ($(m).css('color') == 'rgb(255, 0, 0)') {
+                let area = winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
+                if ($(m).css('color') === 'rgb(255, 0, 0)') {
                     area.lengthY = area.lengthY + dv;
                 } else {
                     area.lengthY = area.lengthY - dv;
@@ -726,7 +725,7 @@ product.click_spinner = function () {
     if (draw > 0) {
         product.redraw();
     }
-}
+};
 //------------------------------------------------------------------------------
 product.update_script = function () {
     let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
@@ -743,5 +742,5 @@ product.update_script = function () {
             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
         }
     });
-}
+};
 //------------------------------------------------------------------------------
