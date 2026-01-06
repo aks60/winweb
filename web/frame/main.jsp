@@ -75,6 +75,8 @@
             import {localizeFactory, Test} from './frame/main.js';
             localizeFactory();
             //Test();
+            //debugger;
+            //UGeo.split3Polygon();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

@@ -7,6 +7,8 @@ import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+import WKTReader from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js';
+//import Polygonizer from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js';
 export let UGeo = {};
 
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
@@ -88,7 +90,7 @@ UGeo.splitPolygon = (geom, segm) => {
             UGeo.rotate(cooR);
             //cooR.push(cooR[0]);
         } //else {
-            //cooR.push(cooR[0]);
+        //cooR.push(cooR[0]);
         //}
 
         return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
@@ -236,3 +238,54 @@ UGeo.getIndex = (geo, id) => {
     }
     errorLog("Error: UGeo.getIndex()");
 };
+//UGeo.split2Polygon = () => {
+//    var reader = new jsts.io.WKTReader();
+//
+//    var a = reader.read('POLYGON((10 10, 100 10, 100 100, 10 100, 10 10))');
+//    var b = reader.read('LINESTRING(-5 15, 50 50, 55 60, 50 40, 130 50)');
+//    var union = a.getExteriorRing().union(b);
+//
+//    var polygonizer = new jsts.operation.polygonize.Polygonizer();
+//
+//    polygonizer.add(union);
+//
+//    var map = new OpenLayers.Map('map', {
+//        maxExtent: new OpenLayers.Bounds(0, 0, 200, 200),
+//        maxResolution: 100,
+//        units: 'm',
+//        controls: [new OpenLayers.Control.MousePosition(), new OpenLayers.Control.Navigation()]
+//    });
+//
+//    var layer = new OpenLayers.Layer.Vector('test', {
+//        isBaseLayer: true
+//    });
+//    map.addLayer(layer);
+//
+//    var parser = new jsts.io.OpenLayersParser();
+//
+//    var polygons = polygonizer.getPolygons();
+//    for (var i = polygons.iterator(); i.hasNext(); ) {
+//        var polygon = i.next();
+//        var feature = new OpenLayers.Feature.Vector(parser.write(polygon), null, {strokeColor: 'gray', strokeWidth: 5, fillColor: 'white'});
+//        layer.addFeatures([feature]);
+//    }
+//
+//    var feature = new OpenLayers.Feature.Vector(parser.write(b), null, {strokeColor: 'black', strokeWidth: 1, fillColor: 'red'});
+//    layer.addFeatures([feature]);
+//
+//    map.zoomToMaxExtent();
+//
+//    var control = new OpenLayers.Control.ModifyFeature(layer);
+//    map.addControl(control);
+//    control.activate();
+//};
+//UGeo.split3Polygon = () => {
+//    
+//    var reader = new WKTReader();
+//    var a = reader.read('POLYGON((10 10, 100 10, 100 100, 10 100, 10 10))');
+//    var b = reader.read('LINESTRING(-5 15, 50 50, 55 60, 50 40, 130 50)');
+//    var union = a.getExteriorRing().union(b);
+//    var polygonizer = new Polygonizer();
+//    polygonizer.add(union);   
+//    var polygons = polygonizer.getPolygons();    
+//}; 

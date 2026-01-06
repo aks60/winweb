@@ -72,8 +72,8 @@ export class ElemCross extends ElemSimple {
             const C2 = UGeo.geo2Cross(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста, обрезаем areaPadding 
-            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
-            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
+//            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
+//            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
         } catch (e) {
             errorLog("Error: ElemCross.setLocation " + e);
