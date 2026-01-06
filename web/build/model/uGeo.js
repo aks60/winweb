@@ -8,7 +8,7 @@ import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Line
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 import WKTReader from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js';
-import EdgeRing from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/EdgeRing.js';
+//import EdgeRing from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/EdgeRing.js';
 //import Polygonizer from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js';
 export let UGeo = {};
 
