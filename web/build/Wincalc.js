@@ -124,15 +124,15 @@ export class Wincalc {
                     hmDip.set(area, js);
 
                 } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type === "STOIKA") {
-//                    const cross = new ElemCross(this, js, owner);
-//                    if (js.type === "IMPOST")
-//                        cross.type = Type.IMPOST;
-//                    else if (js.type === "SHTULP")
-//                        cross.type = Type.SHTULP;
-//                    else if (js.type === "STOIKA")
-//                        cross.type = Type.STOIKA;
-//                    owner.childs.push(cross); //добавим ребёнка родителю
-//                    hmDip.set(cross, js); //погружение ареа                    
+                    const cross = new ElemCross(this, js, owner);
+                    if (js.type === "IMPOST")
+                        cross.type = Type.IMPOST;
+                    else if (js.type === "SHTULP")
+                        cross.type = Type.SHTULP;
+                    else if (js.type === "STOIKA")
+                        cross.type = Type.STOIKA;
+                    owner.childs.push(cross); //добавим ребёнка родителю
+                    hmDip.set(cross, js); //погружение ареа                    
 
                 } else if (js.type === "GLASS") {
 //                    let glass = new ElemGlass(js, this.root, this);

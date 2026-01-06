@@ -4,6 +4,7 @@ import {UCom} from '../../common/uCom.js';
 import {Layout, Type, UseSide} from '../../enums/enums.js';
 import {Com5t, ElemSimple} from './model.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemCross extends ElemSimple {
@@ -25,7 +26,7 @@ export class ElemCross extends ElemSimple {
             this.colorID2 = UCom.isFinite(this.gson.param, 'color2') ? Number(this.gson.param.color2) : this.winc.colorID2;
             this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.winc.colorID3;
             this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
-            
+
             if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
@@ -52,7 +53,6 @@ export class ElemCross extends ElemSimple {
 
     setLocation() {
         try {
-            debugger;
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
             //Пилим полигон импостом     
@@ -60,21 +60,20 @@ export class ElemCross extends ElemSimple {
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[1];
             this.owner.childs[2].area = geoSplit[2];
-//
-//            //Левый и правый сегмент вдоль импоста
-//            const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
-//            const baseSegm = new LineSegment(new Coordinate(this.x1
-//                    , this.y1), new Coordinate(this.x2, this.y2));
-//            const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
-//
-//            //Точки пересечения канвы сегментами импоста
-//            const areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
-//            const C1 = UGeo.geoCross(areaCanvas, offsetSegment[0]);
-//            const C2 = UGeo.geoCross(areaCanvas, offsetSegment[1]);
-//
-//            //Ареа импоста, обрезаем areaPadding 
-//            const areaEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-//            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
+
+            //Левый и правый сегмент вдоль импоста
+            const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
+            const baseSegm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
+            const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
+
+            //Точки пересечения канвы сегментами импоста
+            const areaCanvas = Polygon.new([[0, 0], [0, 10000], [10000, 10000], [10000, 0]]);
+            const C1 = UGeo.geo2Cross(areaCanvas, offsetSegment[0]);
+            const C2 = UGeo.geo2Cross(areaCanvas, offsetSegment[1]);
+
+            //Ареа импоста, обрезаем areaPadding 
+            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
+            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
         } catch (e) {
             errorLog("Error: ElemCross.setLocation " + e);
@@ -85,7 +84,7 @@ export class ElemCross extends ElemSimple {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
                 this.winc.ctx.lineWidth = 8;
-                this.winc.ctx.strokeStyle = '#000000';                
+                this.winc.ctx.strokeStyle = '#000000';
                 const geoInne = this.owner.area.getGeometryN(1);
                 this.winc.paint(geoInne);
             }

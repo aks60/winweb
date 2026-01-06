@@ -33,14 +33,6 @@ UGeo.arrCoord = (arr) => {
     list.push(new Coordinate(arr[0], arr[1]));
     return list;
 };
-//Список входн. параметров не замыкается начальной точкой как в jts!
-UGeo.newPolygon = (arr) => {
-    try {
-        return Com5t.gf.createPolygon(UGeo.arrCoord(arr));
-    } catch (e) {
-        errorLog("Error: UGeo.newPolygon()" + e);
-    }
-};
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
     try {
@@ -55,23 +47,23 @@ UGeo.splitPolygon = (geom, segm) => {
         const pointloc = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
 
-            let cros = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
+            let crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
             hsCheck.add(coo[i]);
-            if (cros !== null) {
+            if (crosP !== null) {
                 let line = LineString.new([coo[i - 1], coo[i]]);
-                let bool = pointloc.intersects(cros, line);
+                let bool = pointloc.intersects(crosP, line);
                 //Вставим точку в сегмент
                 if (bool === true) {
-                    crosTwo.push(cros);
-                    if (hsCheck.add(cros)) {
-                        listExt.push(cros);
+                    crosTwo.push(crosP);
+                    if (hsCheck.add(crosP)) {
+                        listExt.push(crosP);
                     }
                 }
             }
             listExt.push(coo[i]);
         }
         //Обход сегментов до и после точек пересечения
-        for (let i = 0; i < listExt.length; ++i) {
+        for (let i = 1; i < listExt.length; ++i) {
             let crd = listExt[i];
             //Проход через точку пересечения
             if (Number.isNaN(crd.z)) {
@@ -94,10 +86,10 @@ UGeo.splitPolygon = (geom, segm) => {
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
-            cooR.push(cooR[0]);
-        } else {
-            cooR.push(cooR[0]);
-        }
+            //cooR.push(cooR[0]);
+        } //else {
+            //cooR.push(cooR[0]);
+        //}
 
         return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
     } catch (e) {
@@ -113,18 +105,18 @@ UGeo.normalizeSegm = (segm) => {
     return segm;
 };
 //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
-UGeo.geoCross = (poly, line) => {
+UGeo.geo2Cross = (poly, line) => {
     try {
         poly = poly.getGeometryN(0);
-        out = new Array();
-        const c = poly.getCoordinates();
-        for (let i = 1; i < c.length; i++) {
+        let out = new Array();
+        const coo = poly.getCoordinates();
+        for (let i = 1; i < coo.length; i++) {
 
-            const segm1 = c[i - 1];
-            const segm2 = c[i];
-            const c3 = Intersection.lineSegment(line.p0, line.p1, segm1, segm2);
-            if (c3 !== null) {
-                out.push(c3);
+            const segm1 = coo[i - 1];
+            const segm2 = coo[i];
+            const cros = Intersection.intersection(line.p0, line.p1, segm1, segm2);
+            if (cros !== null) {
+                out.push(cros);
             }
         }
         if (out[0] < out[1]) {

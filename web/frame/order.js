@@ -6,7 +6,7 @@ order.resize = function () {
 }
 //----------------- Текущий WINC  ----------------------------------------------
 order.get_winc = function () {
-    if (order.wincalcMap != undefined && order.prjprodRec != undefined) {
+    if (order.wincalcMap !== undefined && order.prjprodRec !== undefined) {
         let prjprodID = order.prjprodRec[ePrjprod.id];
         return order.wincalcMap.get(prjprodID);
     }
@@ -43,7 +43,7 @@ order.init_table = function (table1, table2) {
                 table2.deleteRow(j);
             }
             //Заполним табл. конструкций            
-            let prjprodList = ePrjprod.list.filter(rec => projectRow.id === rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+            let prjprodList = ePrjprod.list.filter(rec => projectRow.id == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
             if (prjprodList.length > 0) {
                 let prjprodID = null;
                 for (let rec of prjprodList) {
@@ -106,6 +106,7 @@ order.load_table = function (table1, table2) {
         });
     }
     table1.jqGrid("setSelection", 1);
+    //$('#outbody').load('frame/product.jsp');
     //table1.jqGrid("setSelection", rowID);
     order.resize();
 };
