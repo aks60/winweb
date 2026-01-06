@@ -14,6 +14,7 @@ import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineStri
 import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js';
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
+//import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jsts/operation/polygonize/Polygonizer.js';
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 //import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
 
