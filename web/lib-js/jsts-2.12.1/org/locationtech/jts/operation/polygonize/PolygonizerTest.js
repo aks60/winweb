@@ -1,1 +1,0 @@
-export let o1 = 'AKS';

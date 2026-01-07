@@ -1,15 +1,15 @@
-import {Com5t} from './Com5t.js';
-import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
-import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js';
-import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
-import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js';
-import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
-import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
-import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-import WKTReader from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js';
-//import EdgeRing from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/EdgeRing.js';
-import PolygonizerTest from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/PolygonizerTest.js';
+import {Com5t} from './Com5t.js'
+import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js'
+import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js'
+import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js'
+import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js'
+import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js'
+import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js'
+import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js'
+import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js'
+//import WKTReader from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js'
+//import Polygonizer from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+//import {polygonize} from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation.js'
 export let UGeo = {};
 
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;

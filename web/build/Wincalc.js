@@ -131,8 +131,7 @@ export class Wincalc {
                         cross.type = Type.SHTULP;
                     else if (js.type === "STOIKA")
                         cross.type = Type.STOIKA;
-                    owner.childs.push(cross); //добавим ребёнка родителю
-                    hmDip.set(cross, js); //погружение ареа                    
+                    owner.childs.push(cross); //добавим ребёнка родителю                 
 
                 } else if (js.type === "GLASS") {
 //                    let glass = new ElemGlass(js, this.root, this);

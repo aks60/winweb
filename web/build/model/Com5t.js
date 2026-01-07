@@ -14,6 +14,7 @@ export class Com5t {
 
     id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции
+    root = null;
     owner = null; //владелец
     gson = null; //json объект элемента
     type = null; //тип элемента или окна
@@ -31,6 +32,7 @@ export class Com5t {
         try {
             this.id = gson.id;
             this.winc = winc;
+            this.root = winc.root;
             this.owner = owner;
             this.gson = gson;
             this.color1Rec = winc.color1Rec;

@@ -97,7 +97,7 @@ export function localizeFactory() {
     };
 }
 
-export function Test() {
+export function Test1() {
     try {
 //        debugger;
 //        let p1 = new Coordinate(10, 0, 1);
@@ -118,6 +118,30 @@ export function Test() {
         //alert(`Превет Test().`);
     } catch (e) {
         alert(`Ошибка: Test()  ` + e.message);
+    }
+}
+
+export function Test2() {
+// Output:
+// POLYGON((1 1,1 5,9 5,9 1,1 1))
+// POLYGON((1 5,1 9,9 9,9 5,1 5))
+
+    var reader = new jsts.io.WKTReader();
+    var writer = new jsts.io.WKTWriter();
+
+    //var a = reader.read('POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))');
+    //var b = reader.read('LINESTRING (0 20, 50 20)');
+    var a = reader.read('POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1))');
+    var b = reader.read('LINESTRING (0.5 5, 9.6 5, 9.6 3.9)');
+    var union = a.getExteriorRing().union(b);
+
+    var polygonizer = new jsts.operation.polygonize.Polygonizer();
+    polygonizer.add(union);
+
+    var polygons = polygonizer.getPolygons();
+    for (var i = polygons.iterator(); i.hasNext(); ) {
+        var polygon = i.next();
+        console.log(writer.write(polygon));
     }
 }
 

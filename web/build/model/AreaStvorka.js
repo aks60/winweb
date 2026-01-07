@@ -153,7 +153,7 @@ export class AreaStvorka extends AreaSimple {
     setLocation() {
         try {
             let frameBox = (this.winc.listElem.filter(el => el.type === Type.IMPOST).length === 0)
-                    || (this.winc.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+                    || (this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
             let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
@@ -213,7 +213,7 @@ export class AreaStvorka extends AreaSimple {
                 } else {
                     h.x = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
                 }
-                if (this.winc.root.type === Type.DOOR) {
+                if (this.root.type === Type.DOOR) {
                     this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
                 } else {
                     this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
