@@ -4,10 +4,10 @@ import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
 import {Type, TypeOpen1, TypeOpen2, PKjson,
         LayoutHand, Layout, UseSide} from '../../enums/enums.js';
-import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
-import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import AffineTransformation from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/util/AffineTransformation.js';
-import Centroid from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Centroid.js';
+//import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
+//import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
+//import AffineTransformation from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/util/AffineTransformation.js';
+//import Centroid from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Centroid.js';
 
 export class AreaStvorka extends AreaSimple {
 
@@ -188,7 +188,7 @@ export class AreaStvorka extends AreaSimple {
                 let h = UGeo.getSegment(this.area, ind).midPoint(); //высота ручки по умолчанию
                 let s1 = UGeo.getSegment(this.area, ind - 1);
                 let s2 = UGeo.getSegment(this.area, ind + 1);
-                this.lineOpenHor = LineString.new([[s1.p0.x, s1.p0.y], [h.x, h.y], [s2.p1.x, s2.p1.y], [h.x, h.y]]);
+                this.lineOpenHor = jsts.geom.LineString.new([[s1.p0.x, s1.p0.y], [h.x, h.y], [s2.p1.x, s2.p1.y], [h.x, h.y]]);
 
                 //Линии вертик. открывания
                 if (this.typeOpen === TypeOpen1.LEFTUP || this.typeOpen === TypeOpen1.RIGHUP) {
@@ -197,7 +197,7 @@ export class AreaStvorka extends AreaSimple {
                     let p2 = UGeo.getSegment(this.area, ind).midPoint();
                     s1 = UGeo.getSegment(this.area, ind - 1);
                     s2 = UGeo.getSegment(this.area, ind + 1);
-                    this.lineOpenVer = LineString.new([[p2.x, p2.y], [s1.p0.x, s1.p0.y], [p2.x, p2.y], [s2.p1.x, s2.p1.y]]);
+                    this.lineOpenVer = jsts.geom.LineString.new([[p2.x, p2.y], [s1.p0.x, s1.p0.y], [p2.x, p2.y], [s2.p1.x, s2.p1.y]]);
                 }
                 //Полигон ручки
                 let DX = 10, DY = 60;
@@ -214,18 +214,18 @@ export class AreaStvorka extends AreaSimple {
                     h.x = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
                 }
                 if (this.root.type === Type.DOOR) {
-                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
+                    this.handOpen = jsts.geom.Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
                 } else {
-                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
+                    this.handOpen = jsts.geom.Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
                 }
                 //Направление открывания
                 if (this.typeOpen != TypeOpen1.UPPER) {
                     let anglHoriz = UGeo.anglHor(stvside.x1, stvside.y1, stvside.x2, stvside.y2);
                     if (!(anglHoriz === 90 || anglHoriz === 270)) {
-                        let aff = new AffineTransformation();
+                        let aff = new jsts.geom.util.AffineTransformation();
                         aff.setToRotation(UGeo.degToRad(anglHoriz),
-                                Centroid.getCentroid(this.handOpen).getX(),
-                                Centroid.getCentroid(this.handOpen).getY());
+                                jsts.algorithm.Centroid.getCentroid(this.handOpen).getX(),
+                                jsts.algorithm.Centroid.getCentroid(this.handOpen).getY());
                         this.handOpen = aff.transform(this.handOpen);
                     }
                 }

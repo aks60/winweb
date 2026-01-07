@@ -3,9 +3,9 @@ import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
 import {Layout, Type, UseSide} from '../../enums/enums.js';
 import {Com5t, ElemSimple} from './model.js';
-import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
-import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
-import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+//import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+//import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
+//import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemCross extends ElemSimple {
 
@@ -56,23 +56,23 @@ export class ElemCross extends ElemSimple {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
             //Пилим полигон импостом     
-            let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
+            let segmImp = UGeo.normalizeSegm(jsts.geom.LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[1];
             this.owner.childs[2].area = geoSplit[2];
 
             //Левый и правый сегмент вдоль импоста
             const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
-            const baseSegm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
+            const baseSegm = jsts.geom.LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
             const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
 
             //Точки пересечения канвы сегментами импоста
-            const areaCanvas = Polygon.new([[0, 0], [0, 10000], [10000, 10000], [10000, 0]]);
+            const areaCanvas = jsts.geom.Polygon.new([[0, 0], [0, 10000], [10000, 10000], [10000, 0]]);
             const C1 = UGeo.geo2Cross(areaCanvas, offsetSegment[0]);
             const C2 = UGeo.geo2Cross(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста, обрезаем areaPadding 
-//            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
+//            const areaEnvelope = jsts.geom.Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
 //            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
         } catch (e) {

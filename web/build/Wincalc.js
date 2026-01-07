@@ -4,9 +4,9 @@ import {Type} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
-import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
-import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+//import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
+//import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
+//import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 win.build = function (canvas, script) {
     return new Wincalc(canvas).build(script);
@@ -211,13 +211,13 @@ export class Wincalc {
         //this.ctx.save();
         const coo = element.getCoordinates(); //это массив точек
         
-        if (element instanceof LineString) {
+        if (element instanceof jsts.geom.LineString) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0].x, coo[0].y);
             this.ctx.lineTo(coo[1].x2, coo[1].y2);
             this.ctx.closePath();
 
-        } else if (element instanceof Polygon) {
+        } else if (element instanceof jsts.geom.Polygon) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
             for (let i = 1; i < coo.length; i++)

@@ -7,12 +7,12 @@
 
 import {Com5t} from '../build/model/Com5t.js';
 import {UGeo} from '../build/model/uGeo.js';
-import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-import Point from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Point.js';
-import LineSegment from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
-import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js';
-import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
+//import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+//import Point from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Point.js';
+//import LineSegment from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+//import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
+//import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js';
+//import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
 //import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jsts/operation/polygonize/Polygonizer.js';
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
@@ -21,78 +21,78 @@ import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js'
 export function localizeFactory() {
 
     function mas(geo) {
-        if (geo instanceof Coordinate)
+        if (geo instanceof jsts.geom.Coordinate)
             return [geo.x, geo.y, geo.z];
         else if (geo instanceof Array)
             return geo;
         return null;
     }
 
-    Point.new = (p) => {
-        if (p instanceof Coordinate)
-            return new Point(p);
+    jsts.geom.Point.new = (p) => {
+        if (p instanceof jsts.geom.Coordinate)
+            return new jsts.geom.Point(p);
         else
-            return Coordinate.new(p[0], p[1], p[2]);
+            return jsts.geom.Coordinate.new(p[0], p[1], p[2]);
     };
 
-    Coordinate.new = (x, y, z) => {
+    jsts.geom.Coordinate.new = (x, y, z) => {
         if (z === undefined)
-            return new Coordinate(x, y);
+            return new jsts.geom.Coordinate(x, y);
         else
-            return new Coordinate(x, y, z);
+            return new jsts.geom.Coordinate(x, y, z);
     };
 
-    LineSegment.new = (p1, p2) => {
+    jsts.geom.LineSegment.new = (p1, p2) => {
         let m1 = mas(p1), m2 = mas(p2);
         let c1 = null, c2 = null;
         if (m1.length < 3)
-            c1 = Coordinate.new(m1[0], m1[1]);
+            c1 = jsts.geom.Coordinate.new(m1[0], m1[1]);
         else
-            c1 = Coordinate.new(m1[0], m1[1], m1[2]);
+            c1 = jsts.geom.Coordinate.new(m1[0], m1[1], m1[2]);
 
         if (m2.length < 3)
-            c2 = Coordinate.new(m2[0], m2[1]);
+            c2 = jsts.geom.Coordinate.new(m2[0], m2[1]);
         else
-            c2 = Coordinate.new(m2[0], m2[1], m2[2]);
+            c2 = jsts.geom.Coordinate.new(m2[0], m2[1], m2[2]);
 
-        return new LineSegment(c1, c2);
+        return new jsts.geom.LineSegment(c1, c2);
     };
 
-    LineString.new = (masArr) => {
+    jsts.geom.LineString.new = (masArr) => {
         let arr = new Array();
         for (const m of masArr) {
             let p = mas(m);
             if (p.length < 3)
-                arr.push(Coordinate.new(p[0], p[1]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1]));
             else
-                arr.push(Coordinate.new(p[0], p[1], p[2]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1], p[2]));
         }
         return  Com5t.gf.createLineString(arr);
     };
 
-    LinearRing.new = (masArr) => {
+    jsts.geom.LinearRing.new = (masArr) => {
         let arr = new Array();
         for (const m of masArr) {
             let p = mas(m);
             if (p.length < 3)
-                arr.push(Coordinate.new(p[0], p[1]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1]));
             else
-                arr.push(Coordinate.new(p[0], p[1], p[2]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1], p[2]));
         }
-        arr.push(new Coordinate(arr[0]));
+        arr.push(new jsts.geom.Coordinate(arr[0]));
         return  Com5t.gf.createLinearRing(arr);
     };
 
-    Polygon.new = (masArr) => {
+    jsts.geom.Polygon.new = (masArr) => {
         let arr = new Array();
         for (const m of masArr) {
             let p = mas(m);
             if (p.length < 3)
-                arr.push(Coordinate.new(p[0], p[1]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1]));
             else
-                arr.push(Coordinate.new(p[0], p[1], p[2]));
+                arr.push(jsts.geom.Coordinate.new(p[0], p[1], p[2]));
         }
-        arr.push(new Coordinate(arr[0]));
+        arr.push(new jsts.geom.Coordinate(arr[0]));
         return Com5t.gf.createPolygon(arr);
     };
 }
@@ -100,18 +100,18 @@ export function localizeFactory() {
 export function Test1() {
     try {
 //        debugger;
-//        let p1 = new Coordinate(10, 0, 1);
-//        let p2 = new Coordinate(100, 100, 2);
-//        let p3 = new Coordinate(5, 20, 3);
-//        let p4 = new Coordinate(5, 40, 4);
+//        let p1 = new jsts.geom.Coordinate(10, 0, 1);
+//        let p2 = new jsts.geom.Coordinate(100, 100, 2);
+//        let p3 = new jsts.geom.Coordinate(5, 20, 3);
+//        let p4 = new jsts.geom.Coordinate(5, 40, 4);
 //
-//        let c1 = new Coordinate(10, 0, 1);
-//        let c2 = new Coordinate(100, 100, 2);
-//        let x1 = LineString.new([c1, c2]);
-//        let x2 = Polygon.new([p1, p2, p3, p4]);
+//        let c1 = new jsts.geom.Coordinate(10, 0, 1);
+//        let c2 = new jsts.geom.Coordinate(100, 100, 2);
+//        let x1 = jsts.geom.LineString.new([c1, c2]);
+//        let x2 = jsts.geom.Polygon.new([p1, p2, p3, p4]);
 
-//        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
-//        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1400, 3], [1300, 0, 4]]);
+//        let o1 = jsts.geom.LineSegment.new([650, 0, 7], [650, 1400, 7]);
+//        let o2 = jsts.geom.Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1400, 3], [1300, 0, 4]]);
 //        let o3 = UGeo.splitPolygon(o2, o1);
 //        let o4 = 0;
 

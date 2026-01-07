@@ -3,7 +3,7 @@ import {UGeo} from './uGeo.js';
 import {UseSide, Type, Layout} from '../../enums/enums.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemSimple} from './model.js';
-import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+//import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemFrame extends ElemSimple {
 
@@ -60,11 +60,11 @@ export class ElemFrame extends ElemSimple {
                         this.area = UGeo.polyCurve(geoShell, geoInner, this.id);
                     } else { //полигон рамы  
                         this.area = Com5t.gf.createPolygon([
-                            Coordinate.new(this.x1, this.y1),
-                            Coordinate.new(this.x2, this.y2),
-                            Coordinate.new(cooInner[i + 1].x, cooInner[i + 1].y),
-                            Coordinate.new(cooInner[i].x, cooInner[i].y),
-                            Coordinate.new(this.x1, this.y1)]);
+                            jsts.geom.Coordinate.new(this.x1, this.y1),
+                            jsts.geom.Coordinate.new(this.x2, this.y2),
+                            jsts.geom.Coordinate.new(cooInner[i + 1].x, cooInner[i + 1].y),
+                            jsts.geom.Coordinate.new(cooInner[i].x, cooInner[i].y),
+                            jsts.geom.Coordinate.new(this.x1, this.y1)]);
                     }
                     break;
                 }
