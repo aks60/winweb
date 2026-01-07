@@ -5,16 +5,21 @@
 //https://www.clouddefense.ai/code/javascript/example/jsts
 //https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
 
-import {Com5t} from '../build/model/Com5t.js';
+import {Com5t} from '../build/model/Com5t.js'
 import {UGeo} from '../build/model/uGeo.js';
-import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
-import Point from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Point.js';
-import LineSegment from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
-import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js';
+import Coordinate from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js'
+import Point from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Point.js'
+import LineSegment from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js'
+import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js'
+import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
-//import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jsts/operation/polygonize/Polygonizer.js';
+import WKTReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js'
+import WKTWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTWriter.js'
+import UnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnionOp.js'
+import UnaryUnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnaryUnionOp.js'
+import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 //import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
 
@@ -126,16 +131,18 @@ export function Test2() {
 // POLYGON((1 1,1 5,9 5,9 1,1 1))
 // POLYGON((1 5,1 9,9 9,9 5,1 5))
 
-    var reader = new jsts.io.WKTReader();
-    var writer = new jsts.io.WKTWriter();
+    var reader = new WKTReader();
+    var writer = new WKTWriter();
 
     //var a = reader.read('POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))');
     //var b = reader.read('LINESTRING (0 20, 50 20)');
     var a = reader.read('POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1))');
     var b = reader.read('LINESTRING (0.5 5, 9.6 5, 9.6 3.9)');
-    var union = a.getExteriorRing().union(b);
 
-    var polygonizer = new jsts.operation.polygonize.Polygonizer();
+    //var union = a.getExteriorRing().union(b);
+    var union = UnionOp.union(a, b);
+
+    var polygonizer = new Polygonizer();
     polygonizer.add(union);
 
     var polygons = polygonizer.getPolygons();
