@@ -75,7 +75,7 @@
         <script type="module">
             import {localizeFactory, Test2} from './frame/main.js';
             localizeFactory();
-            //Test2();
+            Test2();
             //debugger;
             //UGeo.split3Polygon();
 
