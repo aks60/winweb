@@ -14,15 +14,15 @@ import LineString from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineStri
 import LinearRing from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 
-import WKTReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js'
-import WKTWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTWriter.js'
-import UnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnionOp.js'
-import UnaryUnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnaryUnionOp.js'
-import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
-import Geometry from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Geometry.js';
-import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
-import GeoJSONReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONReader.js';
-import GeoJSONWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONWriter.js';
+//import WKTReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js'
+//import WKTWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTWriter.js'
+//import UnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnionOp.js'
+//import UnaryUnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnaryUnionOp.js'
+//import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+//import Geometry from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Geometry.js';
+//import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
+//import GeoJSONReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONReader.js';
+//import GeoJSONWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONWriter.js';
 
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 //import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
@@ -132,35 +132,25 @@ export function Test1() {
 
 export function Test2() {
     try {
-        debugger;
-// POLYGON((1 1,1 5,9 5,9 1,1 1))
-// POLYGON((1 5,1 9,9 9,9 5,1 5))
-
         var reader = new WKTReader();
         var writer = new WKTWriter();
 
-        var a = reader.read('POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))');
-        var b = reader.read('LINESTRING (0 20, 50 20)');
-        //var a = reader.read('POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1))');
-        //var b = reader.read('LINESTRING (0.5 5, 9.6 5, 9.6 3.9)');
-        //var a = reader.read('POLYGON ((10 10, 10 40, 40 40, 40 10, 10 10))');
-        //var b = reader.read('POLYGON ((30 30, 30 60, 60 60, 60 30, 30 30))');
+        var a = reader.read('POLYGON ((2 2, 2 4, 10 4, 10 2, 2 2))');
+        var b = reader.read('POLYGON ((1 3, 1 6, 8 6, 8 3, 1 3))');
+        var c = reader.read('LINESTRING (0 3, 12 3)');
 
-        var unions = a.union();
-
-        var a1 = a.getExteriorRing();
-        var b1 = a.getExteriorRing();
-        var union = UnionOp.union(a1, b1);
-
-//        var polygonizer = new Polygonizer();
-//        polygonizer.add(union);
-//
-//        var polygons = polygonizer.getPolygons();
-//        for (var i = polygons.iterator(); i.hasNext(); ) {
-//            var polygon = i.next();
-//            console.log(writer.write(polygon));
-//        }
-//        console.log('Union Result WKT:', polygons);
+        var union = UnionOp.union(a.getExteriorRing(), c);
+        var polygonizer = new Polygonizer();
+        polygonizer.add(union);
+        var polygons = polygonizer.getPolygons();
+        
+        let set = new WeakSet(polygons.get(0).getExteriorRing());
+        let v = set.values(); 
+        for (var i = polygons.iterator(); i.hasNext(); ) {
+            var polygon = i.next();
+            console.log(writer.write(polygon));
+        }
+        console.log(writer.write(v));
 
     } catch (e) {
         alert(`Ошибка: Test2()  ` + e.message);
@@ -168,30 +158,6 @@ export function Test2() {
 }
 
 export function Test3() {
-    try {
-        const wktGeom1 = 'POLYGON ((10 10, 10 40, 40 40, 40 10, 10 10))';
-        const wktGeom2 = 'POLYGON ((30 30, 30 60, 60 60, 60 30, 30 30))';
-        const wktGeom3 = 'POLYGON ((50 50, 50 80, 80 80, 80 50, 50 50))';
-
-        var reader = new WKTReader();
-        const geom1 = reader.read(wktGeom1);
-        const geom2 = reader.read(wktGeom2);
-        const geom3 = reader.read(wktGeom3);
-
-        const geometries = [geom1, geom2, geom3];
-
-        const unionOp = new UnaryUnionOp(geometries);
-
-        const unionResult = unionOp.union();
-
-        console.log('Union Result WKT:', unionResult.toString());
-
-    } catch (e) {
-        alert(`Ошибка: Test3()  ` + e.message);
-    }
-}
-
-export function Test4() {
     let reader = new GeoJSONReader();
     let writer = new GeoJSONWriter();
 
@@ -229,7 +195,7 @@ export function Test4() {
     a = reader.read(a);
     b = reader.read(b);
 
-    var result = a.union(b);
+    var result = UnionOp.union(a, b);
 
     result = writer.write(result);
 

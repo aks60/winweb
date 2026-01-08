@@ -18,7 +18,7 @@
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
-        <script type="text/javascript" src="lib-js/jsts-2.12.1/jsts.min.js"></script>
+        <!--<script type="text/javascript" src="lib-js/jsts-2.12.1/jsts.min.js"></script>-->
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
@@ -73,11 +73,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, Test2, Test3, Test4} from './frame/main.js';
+            import {localizeFactory, Test2} from './frame/main.js';
             localizeFactory();
-            Test4();
-            //debugger;
-            //UGeo.split3Polygon();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

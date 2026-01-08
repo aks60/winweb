@@ -4,6 +4,7 @@ import {UCom} from '../../common/uCom.js';
 import {Layout, Type, UseSide} from '../../enums/enums.js';
 import {Com5t, ElemSimple} from './model.js';
 import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js';
+import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
 
@@ -57,6 +58,10 @@ export class ElemCross extends ElemSimple {
             const geoFalz = this.owner.area.getGeometryN(2);
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
+            
+            let lineImp = LineString.new([[this.x1, this.y1, this.id], [this.x2, this.y2, this.id]]);           
+            const geoTest = UGeo.split2Polygon(geoShell.copy(), lineImp);
+            
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[1];
             this.owner.childs[2].area = geoSplit[2];
