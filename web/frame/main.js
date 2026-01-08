@@ -19,6 +19,10 @@ import WKTWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTWriter.j
 import UnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnionOp.js'
 import UnaryUnionOp from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnaryUnionOp.js'
 import Polygonizer from '../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+import Geometry from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Geometry.js';
+import GeometryFactory from '../lib-js/jsts-2.12.1/org/locationtech/jts/geom/GeometryFactory.js';
+import GeoJSONReader from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONReader.js';
+import GeoJSONWriter from '../lib-js/jsts-2.12.1/org/locationtech/jts/io/GeoJSONWriter.js';
 
 //import Intersection from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js';
 //import PointLocator from '../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js';
@@ -122,35 +126,113 @@ export function Test1() {
 
         //alert(`Превет Test().`);
     } catch (e) {
-        alert(`Ошибка: Test()  ` + e.message);
+        alert(`Ошибка: Test1()  ` + e.message);
     }
 }
 
 export function Test2() {
-// Output:
+    try {
+        debugger;
 // POLYGON((1 1,1 5,9 5,9 1,1 1))
 // POLYGON((1 5,1 9,9 9,9 5,1 5))
 
-    var reader = new WKTReader();
-    var writer = new WKTWriter();
+        var reader = new WKTReader();
+        var writer = new WKTWriter();
 
-    //var a = reader.read('POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))');
-    //var b = reader.read('LINESTRING (0 20, 50 20)');
-    var a = reader.read('POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1))');
-    var b = reader.read('LINESTRING (0.5 5, 9.6 5, 9.6 3.9)');
+        var a = reader.read('POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))');
+        var b = reader.read('LINESTRING (0 20, 50 20)');
+        //var a = reader.read('POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1))');
+        //var b = reader.read('LINESTRING (0.5 5, 9.6 5, 9.6 3.9)');
+        //var a = reader.read('POLYGON ((10 10, 10 40, 40 40, 40 10, 10 10))');
+        //var b = reader.read('POLYGON ((30 30, 30 60, 60 60, 60 30, 30 30))');
 
-    //var union = a.getExteriorRing().union(b);
-    var union = UnionOp.union(a, b);
+        var unions = a.union();
 
-    var polygonizer = new Polygonizer();
-    polygonizer.add(union);
+        var a1 = a.getExteriorRing();
+        var b1 = a.getExteriorRing();
+        var union = UnionOp.union(a1, b1);
 
-    var polygons = polygonizer.getPolygons();
-    for (var i = polygons.iterator(); i.hasNext(); ) {
-        var polygon = i.next();
-        console.log(writer.write(polygon));
+//        var polygonizer = new Polygonizer();
+//        polygonizer.add(union);
+//
+//        var polygons = polygonizer.getPolygons();
+//        for (var i = polygons.iterator(); i.hasNext(); ) {
+//            var polygon = i.next();
+//            console.log(writer.write(polygon));
+//        }
+//        console.log('Union Result WKT:', polygons);
+
+    } catch (e) {
+        alert(`Ошибка: Test2()  ` + e.message);
     }
 }
 
+export function Test3() {
+    try {
+        const wktGeom1 = 'POLYGON ((10 10, 10 40, 40 40, 40 10, 10 10))';
+        const wktGeom2 = 'POLYGON ((30 30, 30 60, 60 60, 60 30, 30 30))';
+        const wktGeom3 = 'POLYGON ((50 50, 50 80, 80 80, 80 50, 50 50))';
 
+        var reader = new WKTReader();
+        const geom1 = reader.read(wktGeom1);
+        const geom2 = reader.read(wktGeom2);
+        const geom3 = reader.read(wktGeom3);
+
+        const geometries = [geom1, geom2, geom3];
+
+        const unionOp = new UnaryUnionOp(geometries);
+
+        const unionResult = unionOp.union();
+
+        console.log('Union Result WKT:', unionResult.toString());
+
+    } catch (e) {
+        alert(`Ошибка: Test3()  ` + e.message);
+    }
+}
+
+export function Test4() {
+    let reader = new GeoJSONReader();
+    let writer = new GeoJSONWriter();
+
+    var a = {"type": "Polygon", "coordinates": [[
+                [-97.82742, 30.44107],
+                [-97.82753, 30.44087],
+                [-97.82426, 30.43791],
+                [-97.82259, 30.43820],
+                [-97.82233, 30.43816],
+                [-97.82046, 30.44090],
+                [-97.82106, 30.44153],
+                [-97.82208, 30.44232],
+                [-97.82221, 30.44238],
+                [-97.82450, 30.44352],
+                [-97.82461, 30.44357],
+                [-97.82552, 30.44387],
+                [-97.82727, 30.44114],
+                [-97.82742, 30.44107]
+            ]]};
+
+    var b = {"type": "Polygon", "coordinates": [[
+                [-97.81808, 30.43962],
+                [-97.81585, 30.43878],
+                [-97.81445, 30.43504],
+                [-97.81522, 30.42965],
+                [-97.81685, 30.42817],
+                [-97.81847, 30.42851],
+                [-97.82310, 30.43025],
+                [-97.83076, 30.42995],
+                [-97.83162, 30.43439],
+                [-97.82789, 30.43968],
+                [-97.81808, 30.43962]
+            ]]};
+
+    a = reader.read(a);
+    b = reader.read(b);
+
+    var result = a.union(b);
+
+    result = writer.write(result);
+
+    console.log(result);
+}
 

@@ -73,9 +73,9 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, Test2} from './frame/main.js';
+            import {localizeFactory, Test2, Test3, Test4} from './frame/main.js';
             localizeFactory();
-            Test2();
+            Test4();
             //debugger;
             //UGeo.split3Polygon();
 
