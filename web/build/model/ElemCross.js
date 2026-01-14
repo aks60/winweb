@@ -56,15 +56,12 @@ export class ElemCross extends ElemSimple {
         try {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
+debugger;            
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
-            
-            let lineImp = LineString.new([[this.x1, this.y1, this.id], [this.x2, this.y2, this.id]]);           
-            const geoTest = UGeo.split2Polygon(geoShell.copy(), lineImp);
-            
-            const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
-            this.owner.childs[0].area = geoSplit[1];
-            this.owner.childs[2].area = geoSplit[2];
+            const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);           
+            this.owner.childs[0].area = geoSplit[0];
+            this.owner.childs[2].area = geoSplit[1];
 
             //Левый и правый сегмент вдоль импоста
             const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
@@ -77,8 +74,8 @@ export class ElemCross extends ElemSimple {
             const C2 = UGeo.geo2Cross(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста, обрезаем areaPadding 
-//            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
-//            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
+            const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
+            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
 
         } catch (e) {
             errorLog("Error: ElemCross.setLocation " + e);

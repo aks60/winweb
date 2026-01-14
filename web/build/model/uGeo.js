@@ -92,12 +92,12 @@ UGeo.splitPolygon = (geom, segm) => {
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
-            //cooR.push(cooR[0]);
-        } //else {
-        //cooR.push(cooR[0]);
-        //}
+            cooR.push(cooR[0]);
+        } else {
+            cooR.push(cooR[0]);
+        }
 
-        return [LineString.new(crosTwo), Polygon.new(cooL), Polygon.new(cooR)];
+        return [Polygon.new(cooL), Polygon.new(cooR)];
     } catch (e) {
         errorLog("Error: UGeo.splitPolygon() " + e.message);
     }
@@ -241,13 +241,4 @@ UGeo.getIndex = (geo, id) => {
         }
     }
     errorLog("Error: UGeo.getIndex()");
-};
-UGeo.split2Polygon = (poly, line) => {
-    //debugger;
-    let union = UnionOp.union(poly.getExteriorRing(), line);
-    let polygonizer = new Polygonizer();
-    polygonizer.add(union);
-    let geom = polygonizer.getPolygons();    
-    let lineImp = OverlayOp.intersection(geom.get(0), geom.get(1));
-    return [lineImp, geom.get(0), geom.get(1)];
 };
