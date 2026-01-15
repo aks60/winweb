@@ -1,4 +1,5 @@
 import {Com5t} from './Com5t.js'
+import ArrayList from '../../lib-js/jsts-2.12.1/java/util/ArrayList.js'
 import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js'
 import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js'
 import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js'
@@ -41,24 +42,23 @@ UGeo.arrCoord = (arr) => {
 };
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
+    var b = true, hsCheck = new Set();
+    let coo = geom.getGeometryN(0).copy().getCoordinates();
+    let cooL = [], cooR = [];
+    let crosTwo = [], listExt = [coo[0]];
     try {
-        var b = true, hsCheck = new Set();
-        let coo = geom.getGeometryN(0).copy().getCoordinates();
-        let cooL = [], cooR = [];
-        let crosTwo = [], listExt = [coo[0]];
         let segmImp = UGeo.normalizeSegm(LineSegment.new(
                 [segm.p0.x, segm.p0.y, segm.p0.z],
                 [segm.p1.x, segm.p1.y, segm.p1.z]));
+                
         //Вставим точки пересечения в список коорд.
         const pointloc = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
-
-            let crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двкх линии 
+            let crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
             hsCheck.add(coo[i]);
             if (crosP !== null) {
-                let line = LineString.new([coo[i - 1], coo[i]]);
-                let bool = pointloc.intersects(crosP, line);
                 //Вставим точку в сегмент
+                let bool = pointloc.intersects(crosP, LineString.new([coo[i - 1], coo[i]]));
                 if (bool === true) {
                     crosTwo.push(crosP);
                     if (hsCheck.add(crosP)) {
@@ -70,13 +70,15 @@ UGeo.splitPolygon = (geom, segm) => {
         }
         //Обход сегментов до и после точек пересечения
         for (let i = 1; i < listExt.length; ++i) {
-            let crd = listExt[i];
+            let co = listExt[i];
+            
             //Проход через точку пересечения
-            if (Number.isNaN(crd.z)) {
+            if (Number.isNaN(co.z)) {
                 b = !b; //первая точка пройдена
-                let cL = Coordinate.new(crd.x, crd.y, segmImp.p0.z);
-                let cR = Coordinate.new(crd.x, crd.y);
-                if (crosTwo[0] === crd) {
+                let cL = Coordinate.new(co.x, co.y, segmImp.p0.z);
+                let cR = Coordinate.new(co.x, co.y);
+                
+                if (crosTwo[0] === co) {
                     cL.z = segmImp.p0.z;
                     cR.z = listExt[i - 1].z;
                 } else {
@@ -85,17 +87,19 @@ UGeo.splitPolygon = (geom, segm) => {
                 }
                 cooL.push(cL);
                 cooR.push(cR);
+                
             } else { //Построение координат слева и справа от импоста
-                ((b === true) ? cooL : cooR).push(crd);
+                ((b === true) ? cooL : cooR).push(co);
             }
         }
+        debugger;
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
             cooR.push(cooR[0]);
-        } else {
-            cooR.push(cooR[0]);
-        }
+        } //else {
+        //  cooR.push(cooR[0]);
+        //}
 
         return [Polygon.new(cooL), Polygon.new(cooR)];
     } catch (e) {
