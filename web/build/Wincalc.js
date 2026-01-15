@@ -199,7 +199,7 @@ export class Wincalc {
             this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
             
             //Прорисовка импостов
-            //this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
+            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);

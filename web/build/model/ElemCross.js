@@ -7,6 +7,7 @@ import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Line
 import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+import OverlayOp from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/overlay/OverlayOp.js'
 
 export class ElemCross extends ElemSimple {
 
@@ -28,9 +29,9 @@ export class ElemCross extends ElemSimple {
             this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.winc.colorID3;
             this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
 
-            if (this.owner.sysprofRec !== null)
+            if (this.owner.sysprofRec !== null) {
                 this.sysprofRec = this.owner.sysprofRec;
-            else {
+            } else {
                 this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
             }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
@@ -56,10 +57,10 @@ export class ElemCross extends ElemSimple {
         try {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
-debugger;
+
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
-            const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);           
+            const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];
 
@@ -75,7 +76,7 @@ debugger;
 
             //Ареа импоста, обрезаем areaPadding 
             const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
-            this.area = geoFalz.intersection(areaEnvelope); //полигон элемента конструкции
+            this.area = OverlayOp.intersection(geoFalz, areaEnvelope); //полигон элемента конструкции
 
         } catch (e) {
             errorLog("Error: ElemCross.setLocation " + e);
@@ -85,23 +86,15 @@ debugger;
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
+                
                 this.winc.ctx.lineWidth = 8;
                 this.winc.ctx.strokeStyle = '#000000';
                 const geoInne = this.owner.area.getGeometryN(1);
-                this.winc.paint(geoInne);
+                let geoPaint = OverlayOp.intersection(this.area, geoInne);
+                this.winc.paint(geoPaint);
             }
         } catch (e) {
             errorLog('Error: ElemCross.paint() ' + e.message);
         }
     }
-
-    /* find_first(nuni, typ, us1) {
-     let record = eSysprof.list.find(rec => nuni == rec.list[eSysprof.systree_id]
-     && rec.list[eSysprof.use_type] == typ && UseSide.MANUAL[0] != rec.list[eSysprof.use_side]
-     && (us1 == rec.list[eSysprof.use_side] || UseSide.ANY[0] == rec.list[eSysprof.use_side]));
-     if (nuni == -3 || record == undefined) {
-     return eSysprof.virt; //[-3, 0, typ, -1, -3, -3];
-     }
-     return record;
-     } */
 }

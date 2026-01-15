@@ -42,15 +42,29 @@ eArtikl = {
             if (ID === -3) {
                 return this.vrec;
             }
-            let recordRec = this.list.find(rec => ID === rec[this.id]);
-            if (recordRec === undefined) {
-                recordRec = this.vrec;
+            let artiklRec = this.list.find(rec => ID === rec[this.id]);
+            if (artiklRec === undefined) {
+                artiklRec = this.vrec;
             }
-            if (analog === true && recordRec[this.analog_id] !== null) {
-                const _analog_id = recordRec[this.analog_id];
-                recordRec = this.list.find(rec => _analog_id === rec[this.id]);
+            if (analog === true && artiklRec[this.analog_id] !== null) {
+                const _analog_id = artiklRec[this.analog_id];
+                artiklRec = this.list.find(rec => _analog_id === rec[this.id]);
             }
-            return recordRec;
+            return artiklRec;
+        } catch (e) {
+            errorLog('Error: eArtikl.find() ' + e.message);
+        }
+    },
+    find2(code) {
+        try {
+            if ("0x0x0x0" === code) {
+                return this.vrec();
+            }
+            let artiklRec = this.list.find(rec => code === rec[this.code]);
+            if (artiklRec === undefined) {
+                artiklRec = this.vrec;
+            }
+            return artiklRec;
         } catch (e) {
             errorLog('Error: eArtikl.find() ' + e.message);
         }

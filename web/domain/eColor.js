@@ -15,10 +15,31 @@ eColor = {
     groups_id: 12, //Группа
     vrec: virtualRec(13, {1: -3, 2: 'Авторасчёт', 4: -3, 5: '000000', 14: -3}),
     find(ID) {
-        if (ID === -3) {
-            return vrec();
+        try {
+            if (ID === -3) {
+                return this.vrec;
+            }
+            let colorRec = this.list.find(el => el[1] === ID);
+            return (colorRec === undefined) ? this.vrec : colorRec;
+        } catch (e) {
+            errorLog('Error: eColor.find() ' + e.message);
         }
-        let rec = this.list.find(el => el[1] === ID);
-        return (rec === undefined) ? vrec() : rec;
+    },
+    find3(colorFK) {
+        try {
+            if (colorFK === -3) {
+                return this.vrec;
+            }
+            if (colorFK < 0) {
+                let colorRec = this.list.find(rec => rec[this.groups_id] === colorFK * -1);
+                return (colorRec === undefined) ? this.vrec : colorRec;
+
+            } else {
+                let colorRec = this.list.find(rec => rec[this.id] === colorFK);
+                return (colorRec === undefined) ? this.vrec : colorRec;
+            }
+        } catch (e) {
+            errorLog('Error: eColor.find() ' + e.message);
+        }
     }
 };

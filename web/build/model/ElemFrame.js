@@ -77,6 +77,7 @@ export class ElemFrame extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
+                
                 this.winc.ctx.lineWidth = 8;
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.paint(this.area);

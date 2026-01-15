@@ -40,8 +40,7 @@ export class AreaStvorka extends AreaSimple {
     initStvorka() {
         try {
             if (this.frames.length === 0) {
-                //owner.area - если нет полигона створки в гл.окне 
-                //this.area  - получатется при распиле owner.area импостом
+                //owner.area - если нет полигона створки в гл.окне, this.area  - получается при распиле owner.area импостом
                 let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                         || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
@@ -55,6 +54,7 @@ export class AreaStvorka extends AreaSimple {
                     let ID = this.gson.id + (0.1 + i / 10);
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
+
                     let sideStv = new ElemFrame(this.winc, gson, this.owner);
                     sideStv.type = Type.STV_SIDE;
 
@@ -68,14 +68,11 @@ export class AreaStvorka extends AreaSimple {
     }
 
     /**
-     * Фурнитура выбирается вручную из списка системы либо первая в списке
-     * системы.
-     *
+     * Фурнитура выбирается вручную из списка системы либо первая в списке системы.
      * Ручка по умолчанию из сист. фурнитуры либо если есть подбирается из
      * детализации выбр. фурн. либо выбирается вручную из ручек фыбранной
      * фурнитуры. Цвет первая запись из текстуры артикулов или подбор из текстур
      * или вручную.
-     *
      */
     initArtikle(param) {
         try {
@@ -219,7 +216,7 @@ export class AreaStvorka extends AreaSimple {
                     this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
                 }
                 //Направление открывания
-                if (this.typeOpen != TypeOpen1.UPPER) {
+                if (this.typeOpen !== TypeOpen1.UPPER) {
                     let anglHoriz = UGeo.anglHor(stvside.x1, stvside.y1, stvside.x2, stvside.y2);
                     if (!(anglHoriz === 90 || anglHoriz === 270)) {
                         let aff = new AffineTransformation();
@@ -238,10 +235,10 @@ export class AreaStvorka extends AreaSimple {
     paint() {
         if (this.winc.sceleton === false) {
             this.winc.ctx.lineWidth = 8;
-            
+
             if (this.handOpen !== null) {
                 this.winc.ctx.strokeStyle = '#000000';
-                
+
                 if (this.lineOpenHor !== null) { //линии горизонт. открывания
                     this.winc.paint(this.lineOpenHor);
                 }
@@ -249,12 +246,13 @@ export class AreaStvorka extends AreaSimple {
                     this.winc.paint(this.lineOpenVer);
                 }
                 this.colorRec = eColor.find(this.handColor);
-                let rgb = colorRec[eColor.rgb].toString(16);;
-                this.winc.ctx.fillStyle = '#' + rgb;               
+                let rgb = colorRec[eColor.rgb].toString(16);
+                ;
+                this.winc.ctx.fillStyle = '#' + rgb;
                 this.winc.paint(this.handOpen);
-            }           
+            }
         } else {
             paintSceleton();
-        }      
+        }
     }
 }

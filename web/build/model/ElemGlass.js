@@ -1,55 +1,95 @@
 
-import {Com5t} from './Com5t.js';
+import {ElemSimple} from './ElemSimple.js';
 
-export class ElemGlass extends Com5t {
+export class ElemGlass extends ElemSimple {
 
-    constructor(gson, owner, winc) {
-        super(gson, owner, winc);
+    radius = 0; //радиус стекла
+    gzazo = 0; //зазор между фальцем и стеклопакетом 
+    axisMap = new Map(); //размер от оси до стеклопакета
+    rascRec = eArtikl.vrec; //раскладка
+    rascColor = -3; //цвет раскладки
+    rascNumber = [2, 2]; //количество проёмов раскладки 
+
+    constructor(winc, gson, owner) {
+        super(winc, gson, owner);
         this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
-        this.init_constructiv();
     }
 
-    init_constructiv() {
+    initArtikle() {
 
         //Артикул стекла
-        if (this.gson.param !== undefined && this.gson.param.artglasID !== undefined)
-            this.artiklRec = eArtikl.list.find(rec => this.gson.param.artglasID === rec.list[eArtikl.id]);
-        else {
-            let systreeRec = eSystree.list.find(rec => this.winc.nuni === rec.list[eSystree.id]); //по умолчанию стеклопакет
-            this.artiklRec = eArtikl.list.find(rec => systreeRec[eSystree.glas] === rec.list[eArtikl.code]);
+        if (UCom.isFinite(this.gson.param, PKjson.artglasID)) {
+            this.artiklRec = eArtikl.find(this.gson.param[PKjson.artglasID], false);
+        } else {
+            this.sysreeRec = eSystree.find(this.winc.nuni); //по умолчанию стеклопакет
+            this.artiklRec = eArtikl.find2(sysreeRec[eSystree.glas]);
         }
+        this.artiklRecAn = this.artiklRec;
+
         //Цвет стекла
-        if (this.gson.param !== undefined && this.gson.param.colorGlass !== undefined)
-            this.color1Rec = findef(this.gson.param.colorGlass, eColor.id, eColor);
-        else {
-            let color_fk = findef(this.artiklRec[eArtikl.id], eArtdet.artikl_id, eArtdet).list[eArtdet.color_fk];
-            this.color1Rec = findef(color_fk, eColor.id, eColor);
+        if (UCom.isFinite(this.gson.param, PKjson.colorGlass)) {
+            this.colorID1 = this.gson.param[PKjson.colorGlass];
+            this.colorID2 = this.colorID1;
+            this.colorID3 = this.colorID1;
+        } else {
+            let artdetRec = eArtdet.find(this.artiklRec.getInt(eArtikl.id));
+            let colorRec = eColor.find3(artdetRec[eArtdet.color_fk]);
+            colorID1 = colorRec[eColor.id];
+            colorID2 = colorID1;
+            colorID3 = colorID1;
+        }
+
+        //Раскладка
+        if (UCom.isFinite(this.gson.param, PKjson.artiklRasc)) {
+            this.rascRec = eArtikl.find(this.gson.param[PKjson.artiklRasc], false);
+            //Текстура
+            if (UCom.isFinite(this.gson.param, PKjson.colorRasc)) {
+                this.rascColor = eColor.find(this.gson.param[PKjson.colorRasc])[eColor.id];
+            } else {
+                this.rascColor = eArtdet.find(this.rascRec[eArtikl.id])[eArtdet.color_fk]; //цвет по умолчанию
+            }
+            //Проёмы гориз.
+            if (UCom.isFinite(this.gson.param, PKjson.horRasc)) {
+                this.rascNumber[0] = this.gson.param[PKjson.horRasc];
+            }
+            //Проёмы вертик.
+            if (UCom.isFinite(this.gson.param, PKjson.verRasc)) {
+                this.rascNumber[1] = this.gson.param[PKjson.verRasc];
+            }
+        }
+    }
+
+    setLocation() {
+        try {
+            //Полигон по фальцу для прорисовки и рассчёта штапик...
+            geoFalz = this.owner.area.getGeometryN(2);
+
+            let coo = geoFalz.getCoordinates();
+            if (geoFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {
+                coo[0].z = coo[1].z;
+                coo[1].z = coo[coo.length - 2].z;
+                coo[2].z = coo[coo.length - 2].z;
+                coo[coo.length - 1].z = coo[1].z;
+            }
+        } catch (e) {
+            errorLog('Error: ElemGlass.setLocation() ' + e.message);
         }
     }
 
     paint() {
-        if (this.owner.typeForm() === "ARCH") {
-            let r = this.winc.root.radiusArch;
-            let ang1 = Math.PI + Math.acos(this.winc.width() / (r * 2));
-            let ang2 = 2 * Math.PI - Math.acos(this.winc.width() / (r * 2));
-            draw_full_arc(this.winc, this.winc.width() / 2, r, r, ang1, ang2, 0, null, this.color1Rec, true);
+        try {
+            let geoFalz = this.owner.area.getGeometryN(2);
+            if (geoFalz !== null && this.winc.sceleton === false) {
 
-        } else if (this.owner.typeForm() === "TRAPEZE") {
+                this.winc.ctx.lineWidth = 8;
+                this.winc.ctx.strokeStyle = '#000000';
+                this.winc.paint(geoFalz);
 
-//            let insideLeft = this.winc.root.frames().get(Layout.LEF),
-//                    insideTop = this.winc.root.frames().get(Layout.TOP),
-//                    insideBott = this.winc.root.frames().get(Layout.BOT),
-//                    insideRight = this.winc.root.frames().get(Layout.RIG);
-
-            if (this.winc.form === 'RIGHT') {
-                draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.y1, this.winc.height1 - this.winc.height2, this.y2, this.y2, this.color1Rec);
-
-            } else if (this.winc.form === 'LEFT') {
-                draw_full_polygon(this.winc, this.x1, this.x2, this.x2, this.x1, this.winc.height1 - this.winc.height2, this.y1, this.y2, this.y2, this.color1Rec);
+            } else if (geoFalz !== null) {
+                //
             }
-        } else {
-            draw_full_polygon(this.winc, this.x1, this.x2, this.x2,
-                    this.x1, this.y1, this.y1, this.y2, this.y2, this.color1Rec);
+        } catch (e) {
+            errorLog('Error: ElemGlass.paint() ' + e.message);
         }
     }
 }

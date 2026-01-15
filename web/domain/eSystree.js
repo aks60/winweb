@@ -15,5 +15,19 @@ eSystree = {
     types: 12, //Тип конструкции
     note: 13, //Примечание
     parent_id: 14, //Родитель
-    vrec: virtualRec(15)
+    vrec: virtualRec(15),
+    find(nuni) {
+        try {
+            if (nuni === -3) {
+                return vrec;
+            }
+            let systreeRec = this.list.find(rec => nuni === rec[this.id]);
+            if (systreeRec === undefined) {
+                systreeRec = this.vrec;
+            }
+            return systreeRec;
+        } catch (e) {
+            errorLog('Error: eSystree.find() ' + e.message);
+        }
+    }
 };
