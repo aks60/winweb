@@ -15,7 +15,7 @@ export class ElemFrame extends ElemSimple {
             super(winc, gson, owner);
             this.addListenerEvents();
         } catch (e) {
-            errorLog('Error:ElemFrame.constructor() ' + e.message);
+            errorLog('Error: ElemFrame.constructor() ' + e.message);
         }
     }
 

@@ -11,51 +11,57 @@ export class ElemGlass extends ElemSimple {
     rascNumber = [2, 2]; //количество проёмов раскладки 
 
     constructor(winc, gson, owner) {
-        super(winc, gson, owner);
-        this.dimension(owner.x1, owner.y1, owner.x2, owner.y2);
+        try {
+            super(winc, gson, owner);
+        } catch (e) {
+            errorLog('Error: ElemGlass.constructor() ' + e.message);
+        }
     }
 
     initArtikle() {
-
-        //Артикул стекла
-        if (UCom.isFinite(this.gson.param, PKjson.artglasID)) {
-            this.artiklRec = eArtikl.find(this.gson.param[PKjson.artglasID], false);
-        } else {
-            this.sysreeRec = eSystree.find(this.winc.nuni); //по умолчанию стеклопакет
-            this.artiklRec = eArtikl.find2(sysreeRec[eSystree.glas]);
-        }
-        this.artiklRecAn = this.artiklRec;
-
-        //Цвет стекла
-        if (UCom.isFinite(this.gson.param, PKjson.colorGlass)) {
-            this.colorID1 = this.gson.param[PKjson.colorGlass];
-            this.colorID2 = this.colorID1;
-            this.colorID3 = this.colorID1;
-        } else {
-            let artdetRec = eArtdet.find(this.artiklRec.getInt(eArtikl.id));
-            let colorRec = eColor.find3(artdetRec[eArtdet.color_fk]);
-            colorID1 = colorRec[eColor.id];
-            colorID2 = colorID1;
-            colorID3 = colorID1;
-        }
-
-        //Раскладка
-        if (UCom.isFinite(this.gson.param, PKjson.artiklRasc)) {
-            this.rascRec = eArtikl.find(this.gson.param[PKjson.artiklRasc], false);
-            //Текстура
-            if (UCom.isFinite(this.gson.param, PKjson.colorRasc)) {
-                this.rascColor = eColor.find(this.gson.param[PKjson.colorRasc])[eColor.id];
+        try {
+            //Артикул стекла
+            if (UCom.isFinite(this.gson.param, PKjson.artglasID)) {
+                this.artiklRec = eArtikl.find(this.gson.param[PKjson.artglasID], false);
             } else {
-                this.rascColor = eArtdet.find(this.rascRec[eArtikl.id])[eArtdet.color_fk]; //цвет по умолчанию
+                this.sysreeRec = eSystree.find(this.winc.nuni); //по умолчанию стеклопакет
+                this.artiklRec = eArtikl.find2(sysreeRec[eSystree.glas]);
             }
-            //Проёмы гориз.
-            if (UCom.isFinite(this.gson.param, PKjson.horRasc)) {
-                this.rascNumber[0] = this.gson.param[PKjson.horRasc];
+            this.artiklRecAn = this.artiklRec;
+
+            //Цвет стекла
+            if (UCom.isFinite(this.gson.param, PKjson.colorGlass)) {
+                this.colorID1 = this.gson.param[PKjson.colorGlass];
+                this.colorID2 = this.colorID1;
+                this.colorID3 = this.colorID1;
+            } else {
+                let artdetRec = eArtdet.find(this.artiklRec.getInt(eArtikl.id));
+                let colorRec = eColor.find3(artdetRec[eArtdet.color_fk]);
+                colorID1 = colorRec[eColor.id];
+                colorID2 = colorID1;
+                colorID3 = colorID1;
             }
-            //Проёмы вертик.
-            if (UCom.isFinite(this.gson.param, PKjson.verRasc)) {
-                this.rascNumber[1] = this.gson.param[PKjson.verRasc];
+
+            //Раскладка
+            if (UCom.isFinite(this.gson.param, PKjson.artiklRasc)) {
+                this.rascRec = eArtikl.find(this.gson.param[PKjson.artiklRasc], false);
+                //Текстура
+                if (UCom.isFinite(this.gson.param, PKjson.colorRasc)) {
+                    this.rascColor = eColor.find(this.gson.param[PKjson.colorRasc])[eColor.id];
+                } else {
+                    this.rascColor = eArtdet.find(this.rascRec[eArtikl.id])[eArtdet.color_fk]; //цвет по умолчанию
+                }
+                //Проёмы гориз.
+                if (UCom.isFinite(this.gson.param, PKjson.horRasc)) {
+                    this.rascNumber[0] = this.gson.param[PKjson.horRasc];
+                }
+                //Проёмы вертик.
+                if (UCom.isFinite(this.gson.param, PKjson.verRasc)) {
+                    this.rascNumber[1] = this.gson.param[PKjson.verRasc];
+                }
             }
+        } catch (e) {
+            errorLog('Error: ElemGlass.initArtikl() ' + e.message);
         }
     }
 
