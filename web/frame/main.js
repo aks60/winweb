@@ -101,7 +101,10 @@ export function localizeFactory() {
             else
                 arr.push(Coordinate.new(p[0], p[1], p[2]));
         }
-        arr.push(new Coordinate(arr[0]));
+        if (arr[0].x !== arr[arr.length - 1].x 
+                || arr[0].y !== arr[arr.length - 1].y) {
+            arr.push(new Coordinate(arr[0]));
+        }
         return Com5t.gf.createPolygon(arr);
     };
 }
@@ -143,9 +146,9 @@ export function Test2() {
         var polygonizer = new Polygonizer();
         polygonizer.add(union);
         var polygons = polygonizer.getPolygons();
-        
+
         let set = new WeakSet(polygons.get(0).getExteriorRing());
-        let v = set.values(); 
+        let v = set.values();
         for (var i = polygons.iterator(); i.hasNext(); ) {
             var polygon = i.next();
             console.log(writer.write(polygon));

@@ -1,5 +1,4 @@
 import {Com5t} from './Com5t.js'
-import ArrayList from '../../lib-js/jsts-2.12.1/java/util/ArrayList.js'
 import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js'
 import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js'
 import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js'
@@ -67,9 +66,9 @@ UGeo.splitPolygon = (geom, segm) => {
                 }
             }
             listExt.push(coo[i]);
-        }
+        }     
         //Обход сегментов до и после точек пересечения
-        for (let i = 1; i < listExt.length; ++i) {
+        for (let i = 0; i < listExt.length; ++i) {
             let co = listExt[i];
             
             //Проход через точку пересечения
@@ -91,23 +90,23 @@ UGeo.splitPolygon = (geom, segm) => {
             } else { //Построение координат слева и справа от импоста
                 ((b === true) ? cooL : cooR).push(co);
             }
-        }
-        debugger;
+        }    
+
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
             cooR.push(cooR[0]);
-        } //else {
-        //  cooR.push(cooR[0]);
-        //}
-
+        } else {
+          cooR.push(cooR[0]);
+        }
         return [Polygon.new(cooL), Polygon.new(cooR)];
+        
     } catch (e) {
         errorLog("Error: UGeo.splitPolygon() " + e.message);
     }
 };
 UGeo.rotate = (arr) => {
-    arr.push(arr.shift());
+    arr.unshift(arr.pop());
     return arr;
 }
 UGeo.normalizeSegm = (segm) => {

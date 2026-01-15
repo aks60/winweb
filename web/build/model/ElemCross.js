@@ -56,7 +56,7 @@ export class ElemCross extends ElemSimple {
         try {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
-debugger;            
+debugger;
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);           
@@ -75,7 +75,7 @@ debugger;
 
             //Ареа импоста, обрезаем areaPadding 
             const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
-            this.area = areaEnvelope.intersection(geoFalz); //полигон элемента конструкции
+            this.area = geoFalz.intersection(areaEnvelope); //полигон элемента конструкции
 
         } catch (e) {
             errorLog("Error: ElemCross.setLocation " + e);
