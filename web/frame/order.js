@@ -72,6 +72,7 @@ order.taq_parent = function (node, tag) { //рекурсия
 };
 
 order.click_table2 = function (e) {
+    debugger;
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
@@ -198,6 +199,7 @@ order.delete_table2 = function () {
 };
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.add_prjprod = function (table2, rec) {
+
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
     canvas.id = 'cnv' + rec[ePrjprod.id];
@@ -208,12 +210,13 @@ order.add_prjprod = function (table2, rec) {
     let name = document.createTextNode(rec[ePrjprod.name]);
     let script = rec[ePrjprod.script];
 
-    //Сщздание экземпрляра окна!!!
+    //Создание экземпрляра окна
     let winc = win.build(canvas, script);
-    //winc.build(script);
 
     //Массив объектов winc
-    //order.wincalcMap.set(prjprodRec[ePrjprod.id], winc);
+    if (order.prjprodRec !== undefined && order.prjprodRec !== null) {
+        order.wincalcMap.set(order.prjprodRec[ePrjprod.id], winc);
+    }
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');

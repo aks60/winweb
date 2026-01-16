@@ -1,3 +1,5 @@
+
+//import {Type} from '../enums/enums.js';
 //-------------------- Масштабирование -----------------------------------------
 product.resize = function () {
     let cnv = document.querySelector("#cnv");
@@ -12,15 +14,15 @@ product.resize = function () {
             winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
         $('#scale-ver').width(winCalc.height * winCalc.scale); //длина шкалы перед разворотом на 90 градусов
 
-        //Прорисовка горизонт. размерных линий, после изменения размера канвы
-        let arrHor = ($('#scale-hor input').length === 0) ? [winCalc.root] : [];
-        $('#scale-hor input').each((i, p) => arrHor.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
-        product.scale_new_input('HORIZ', arrHor);
-
-        //Прорисовка вертик. размерных линий, после изменения размера конструкции
-        let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
-        $('#scale-ver input').each((i, p) => arrVer.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
-        product.scale_new_input('VERT', arrVer);
+//        //Прорисовка горизонт. размерных линий, после изменения размера канвы
+//        let arrHor = ($('#scale-hor input').length === 0) ? [winCalc.root] : [];
+//        $('#scale-hor input').each((i, p) => arrHor.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
+//        product.scale_new_input('HORIZ', arrHor);
+//
+//        //Прорисовка вертик. размерных линий, после изменения размера конструкции
+//        let arrVer = ($('#scale-ver input').length == 0) ? [winCalc.root] : [];
+//        $('#scale-ver input').each((i, p) => arrVer.push(winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
+//        product.scale_new_input('VERT', arrVer);
 
         //Прорисовка полей
         let winWidth = $('#east').width() - 24;
@@ -81,19 +83,20 @@ product.load_table = function (table1) {
 };
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
+    //debugger;
     if (order.prjprodRec != null) {
         let arr = new Array();
         let winc = order.get_winc();
         let root = winc.root;
 
-        if (root.typeForm() === 'RECTANGL')
+        if (root.type === Type.RECTANGL)
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() === 'TRAPEZE')
+        else if (root.type === Type.TRAPEZE)
             arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() === 'TRIANGL')
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Треугольное окно', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.typeForm() === 'ARCH')
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Арочное окно', 'icon': 'lib-img/tool/folder.gif'});
+        else if (root.type === Type.TRIANGL)
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
+        else if (root.type === Type.ARCH)
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
 
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
@@ -145,49 +148,49 @@ product.elements = function (com, arr) {
 };
 //==============================================================================
 //Загрузка свойств конструкции
-product.server_to_fields = function () {
-    try {
-        if (order.prjprodRec != null) {
-            let prjprodID = order.prjprodRec[ePrjprod.id];
-            if (prjprodID != undefined) {
-                $.ajax({
-                    url: 'dbset?action=stvFields',
-                    data: {'prjprodID': prjprodID},
-                    success: function (data) {
-                        product.stvFields = data.stvFields;
-                        let id = order.prjprodRec[ePrjprod.id];
-                        let winc = order.wincalcMap.get(id);
-                        for (let el of winc.listElem) {
-                            if (el.typeForm() === 'STVORKA') {
-                                for (let fk in data.stvFields) {
-                                    if (fk === el.id) {
-
-                                        el.handleRec = data.stvFields[fk].handleRec;
-                                        el.handleColor = data.stvFields[fk].handleColor;
-                                        el.loopRec = data.stvFields[fk].loopRec;
-                                        el.loopColor = data.stvFields[fk].loopColor;
-                                        el.handleRec = data.stvFields[fk].handleRec;
-                                        el.lockRec = data.stvFields[fk].lockRec;
-                                    }
-                                }
-                            }
-                        }
-                        let tr = $("#tree-winc").jstree("get_selected")
-                        if (tr != undefined) {
-                            let nodeID = tr[0];
-                            let elem = winc.listElem.find(it => it.id === nodeID);
-                            if (elem.typeForm() === 'STVORKA') {
-                                product.local_to_fields(nodeID);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    } catch (e) {
-        console.error('Error: product.server_to_fields() ' + e.message);
-    }
-};
+//product.server_to_fields = function () {
+//    try {
+//        if (order.prjprodRec !== null) {
+//            let prjprodID = order.prjprodRec[ePrjprod.id];
+//            if (prjprodID !== undefined) {
+//                $.ajax({
+//                    url: 'dbset?action=stvFields',
+//                    data: {'prjprodID': prjprodID},
+//                    success: function (data) {
+//                        product.stvFields = data.stvFields;
+//                        let id = order.prjprodRec[ePrjprod.id];
+//                        let winc = order.wincalcMap.get(id);
+//                        for (let el of winc.listElem) {
+//                            if (el.typeForm() === 'STVORKA') {
+//                                for (let fk in data.stvFields) {
+//                                    if (fk === el.id) {
+//
+//                                        el.handleRec = data.stvFields[fk].handleRec;
+//                                        el.handleColor = data.stvFields[fk].handleColor;
+//                                        el.loopRec = data.stvFields[fk].loopRec;
+//                                        el.loopColor = data.stvFields[fk].loopColor;
+//                                        el.handleRec = data.stvFields[fk].handleRec;
+//                                        el.lockRec = data.stvFields[fk].lockRec;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        let tr = $("#tree-winc").jstree("get_selected")
+//                        if (tr != undefined) {
+//                            let nodeID = tr[0];
+//                            let elem = winc.listElem.find(it => it.id === nodeID);
+//                            if (elem.typeForm() === 'STVORKA') {
+//                                product.local_to_fields(nodeID);
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//    } catch (e) {
+//        console.error('Error: product.server_to_fields() ' + e.message);
+//    }
+//};
 //------------------------------------------------------------------------------
 //Загрузка тегов страницы
 product.local_to_fields = function (nodeID) {
@@ -558,25 +561,25 @@ product.click_canvas_xy = function (canvas, event) {
 
     //Если клик не на конструкции
     if (winCalc.root.inside(x, y) === false) {
-        product.scale_new_input('HORIZ', [winCalc.root]);
-        product.scale_new_input('VERT', [winCalc.root]);
-        $("#spinner").spinner("value", 0);
-        $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
-        $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
+//        product.scale_new_input('HORIZ', [winCalc.root]);
+//        product.scale_new_input('VERT', [winCalc.root]);
+//        $("#spinner").spinner("value", 0);
+//        $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
+//        $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
 
     } else { //На конструкции
-        winCalc.listElem.forEach((e, i) => {
-            if (e.typeForm() === 'IMPOST' || e.typeForm() === 'SHTULP' || e.typeForm() === 'STOIKA') {
-                if (e.inside(x, y)) {
-                    let m = winCalc.root.lineCross(e);
-                    if (e.layout === 'HORIZ') {
-                        product.scale_new_input('VERT', m.reverse());
-                    } else {
-                        product.scale_new_input('HORIZ', m);
-                    }
-                }
-            }
-        });
+//        winCalc.listElem.forEach((e, i) => {
+//            if (e.typeForm() === 'IMPOST' || e.typeForm() === 'SHTULP' || e.typeForm() === 'STOIKA') {
+//                if (e.inside(x, y)) {
+//                    let m = winCalc.root.lineCross(e);
+//                    if (e.layout === 'HORIZ') {
+//                        product.scale_new_input('VERT', m.reverse());
+//                    } else {
+//                        product.scale_new_input('HORIZ', m);
+//                    }
+//                }
+//            }
+//        });
     }
 };
 //------------------------------------------------------------------------------

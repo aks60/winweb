@@ -3,7 +3,7 @@ function printScript(winc) {
     console.log(JSON.stringify(winc.root.gson, undefined, 4));
 }
 //------------------------------------------------------------------------------
-function taqDeploy(selectors) {
+function deployTaq(selectors) {
 
     let mapobj = this;
     for (let selector of selectors) {

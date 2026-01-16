@@ -21,7 +21,7 @@
                 kits.load_table($("#table1"));
                 kits.resize();
                 prepareToolBar();
-                taqDeploy(['#dialog-card']);
+                deployTaq(['#dialog-card']);
             });
         </script>         
     </head>

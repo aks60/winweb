@@ -52,11 +52,11 @@
 
             var winCalc = null; //выбранная конструкция
 
-            product.server_to_fields();
+//            product.server_to_fields();
             $(document).ready(function () {
-                taqDeploy(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
+                deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
-//                product.init_table($('#table1'));
+                product.init_table($('#table1'));
 //                product.load_tree($('#tree-winc'));
 //                prepareToolBar();
 //                let cvs = document.querySelector("#cnv");

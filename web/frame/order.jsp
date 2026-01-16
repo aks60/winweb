@@ -44,7 +44,7 @@
 
                 $("button").button();
                 prepareToolBar();
-                taqDeploy(['#dialog-card']);
+                deployTaq(['#dialog-card']);
                 $('#n23').datepicker();
                 $('#n24').datepicker();
 
