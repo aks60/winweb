@@ -1,9 +1,15 @@
+//------------------------------------------------------------------------------
+order.taq_parent = function (node, tag) { //рекурсия
+    if (node)
+        return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
+    return null;
+};
 //-------------------- Масштабирование -----------------------------------------
 order.resize = function () {
     $("#context").css("height", window.innerHeight - 80);
     $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
-}
+};
 //----------------- Текущий WINC  ----------------------------------------------
 order.get_winc = function () {
     if (order.wincalcMap !== undefined && order.prjprodRec !== undefined) {
@@ -33,6 +39,7 @@ order.init_table = function (table1, table2) {
         ],
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
+            //debugger;
             let projectRow = table1.jqGrid('getRowData', rowid);
             order.orderID = projectRow.id;
             order.wincalcMap.clear();
@@ -49,7 +56,7 @@ order.init_table = function (table1, table2) {
                 for (let rec of prjprodList) {
 
                     //Добавим запись в таблице конструкций
-                    order.add_prjprod(table2, rec);
+                    order.load_table2(table2, rec);
                     //Выделение строки табл. конструкций
                     if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
                         prjprodID = rec[ePrjprod.id];
@@ -64,29 +71,8 @@ order.init_table = function (table1, table2) {
     });
     order.resize();
 };
-
-order.taq_parent = function (node, tag) { //рекурсия
-    if (node)
-        return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
-    return null;
-};
-
-order.click_table2 = function (e) {
-    debugger;
-    let row = order.taq_parent(e.target, 'TR');
-    if (row) {
-        let table = this;
-        let idx = table.getAttribute('activeRowIndex');
-        if (idx < table.rows.length)
-            table.rows[idx].classList.remove('activeRow');
-        row.classList.add('activeRow');
-        table.setAttribute('activeRowIndex', row.rowIndex);
-        let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
-    }
-};
 //----------------  Загрузка данных в таблицу  ---------------------------------
-order.load_table = function (table1, table2) {
+order.load_table1 = function (table1) {
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
@@ -106,10 +92,43 @@ order.load_table = function (table1, table2) {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    table1.jqGrid("setSelection", 1);
+    $(table1).jqGrid("setSelection", 1);
     //$('#outbody').load('frame/product.jsp');
     //table1.jqGrid("setSelection", rowID);
     order.resize();
+};
+//-----------------  Добавить контрукцию в таблицу  ----------------------------
+order.load_table2 = function (table2, rec) {
+    //debugger;
+    let canvas = document.createElement("canvas");
+    canvas.class = "cnv";
+    canvas.id = 'cnv' + rec[ePrjprod.id];
+    canvas.width = 68;
+    canvas.height = 68;
+
+    let id = document.createTextNode(rec[ePrjprod.id]);
+    let name = document.createTextNode(rec[ePrjprod.name]);
+    let script = rec[ePrjprod.script];
+
+    //Создание экземпрляра окна
+    let winc = win.build(canvas, script);
+
+    //Массив объектов winc
+    if (order.prjprodRec !== undefined && order.prjprodRec !== null) {
+        order.wincalcMap.set(order.prjprodRec[ePrjprod.id], winc);
+    }
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+    let tr = document.createElement('tr');
+    tr.id = 'tr' + rec[ePrjprod.id];
+    td1.appendChild(id);
+    td2.appendChild(name);
+    td3.appendChild(canvas);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    table2.appendChild(tr);
 };
 //---------------  Удаление строки таблицы  ------------------------------------
 order.delete_table1 = function (table) {
@@ -151,84 +170,6 @@ order.delete_table1 = function (table) {
             }
         });
     }
-};
-//-----------------  Удаление строки таблицы  ----------------------------------
-order.delete_table2 = function () {
-    if (order.prjprodRec != null) {
-        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
-    </span> Вы действительно хотите удалить текущую запись?");
-        $("#dialog-mes").dialog({
-            title: "Подтверждение=",
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-                "Да": function () {
-                    $.ajax({
-                        url: 'dbset?action=deletePrjprod',
-                        data: {param: JSON.stringify({id: order.prjprodRec[ePrjprod.id]})},
-                        success: (data) => {
-                            if (data.result === 'ok') {
-                                let id = 'tr' + order.prjprodRec[ePrjprod.id];
-                                var trow = document.getElementById(id);
-                                trow.remove();
-                                for (let i = 0; i < ePrjprod.list.length; ++i) {
-                                    if (ePrjprod.list[i][ePrjprod.id] === order.prjprodRec[ePrjprod.id]) {
-                                        ePrjprod.list.splice(i, 1);
-                                    }
-                                }
-                                //Перезагрузка таблицы конструкций
-                                let rowid = $("#table1").jqGrid('getGridParam', "selrow");
-                                $("#table1").jqGrid("setSelection", rowid);
-                            } else
-                                dialogMes('Сообщение', "<p>" + data.result);
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
-                        }
-                    });
-                    $(this).dialog("close");
-                },
-                Нет: function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-    }
-};
-//-----------------  Добавить контрукцию в таблицу  ----------------------------
-order.add_prjprod = function (table2, rec) {
-
-    let canvas = document.createElement("canvas");
-    canvas.class = "cnv";
-    canvas.id = 'cnv' + rec[ePrjprod.id];
-    canvas.width = 68;
-    canvas.height = 68;
-
-    let id = document.createTextNode(rec[ePrjprod.id]);
-    let name = document.createTextNode(rec[ePrjprod.name]);
-    let script = rec[ePrjprod.script];
-
-    //Создание экземпрляра окна
-    let winc = win.build(canvas, script);
-
-    //Массив объектов winc
-    if (order.prjprodRec !== undefined && order.prjprodRec !== null) {
-        order.wincalcMap.set(order.prjprodRec[ePrjprod.id], winc);
-    }
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-    let tr = document.createElement('tr');
-    tr.id = 'tr' + rec[ePrjprod.id];
-    td1.appendChild(id);
-    td2.appendChild(name);
-    td3.appendChild(canvas);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    table2.appendChild(tr);
 };
 //----------------  Вставка строки в таблицу  ----------------------------------
 order.insert_table1 = function (taq) {
@@ -276,7 +217,7 @@ order.insert_table1 = function (taq) {
                                         record[eProject.owner] = login.data.user_name;
                                         record[eProject.prjpart_id] = $("#n25").attr("fk");
                                         eProject.list.push(record);
-                                        order.load_table($("#table1"));
+                                        order.load_table1($("#table1"));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },
@@ -358,5 +299,69 @@ order.update_table1 = function (taq) {
     });
 };
 //------------------------------------------------------------------------------
+order.click_table2 = function (e) {
+    let row = order.taq_parent(e.target, 'TR');
+    if (row) {
+        let table = this;
+        let idx = table.getAttribute('activeRowIndex');
+        if (idx < table.rows.length) {
+            table.rows[idx].classList.remove('activeRow');
+        }
+        row.classList.add('activeRow');
+        table.setAttribute('activeRowIndex', row.rowIndex);
+        let prjprodID = row.cells[0].innerHTML;
+        order.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
+    }
+//    order.taq_parent = (node, tag) => { //рекурсия
+//        if (node)
+//            return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
+//        return null;
+//    };
+};
+//-----------------  Удаление строки таблицы  ----------------------------------
+order.delete_table2 = function () {
+    if (order.prjprodRec != null) {
+        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущую запись?");
+        $("#dialog-mes").dialog({
+            title: "Подтверждение=",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Да": function () {
+                    $.ajax({
+                        url: 'dbset?action=deletePrjprod',
+                        data: {param: JSON.stringify({id: order.prjprodRec[ePrjprod.id]})},
+                        success: (data) => {
+                            if (data.result === 'ok') {
+                                let id = 'tr' + order.prjprodRec[ePrjprod.id];
+                                var trow = document.getElementById(id);
+                                trow.remove();
+                                for (let i = 0; i < ePrjprod.list.length; ++i) {
+                                    if (ePrjprod.list[i][ePrjprod.id] === order.prjprodRec[ePrjprod.id]) {
+                                        ePrjprod.list.splice(i, 1);
+                                    }
+                                }
+                                //Перезагрузка таблицы конструкций
+                                let rowid = $("#table1").jqGrid('getGridParam', "selrow");
+                                $("#table1").jqGrid("setSelection", rowid);
+                            } else
+                                dialogMes('Сообщение', "<p>" + data.result);
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Нет: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+};
 
 

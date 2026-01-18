@@ -57,8 +57,8 @@
                 deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => product.resize()).trigger('resize');
                 product.init_table($('#table1'));
-//                product.load_tree($('#tree-winc'));
-//                prepareToolBar();
+                product.load_tree($('#tree-winc'));
+                prepareToolBar();
 //                let cvs = document.querySelector("#cnv");
 //                cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
 //                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
@@ -93,7 +93,7 @@
                     <div id="east2" style="margin-top: -270px; height: 268px; background: #efeffb">
 
                         <div id="tabs-1" style="padding: 0px;">  
-                            <p class="pantitle">Основные размеры*</p> 
+                            <p class="pantitle">Основные размеры</p> 
                             <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
                             <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
                             <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  

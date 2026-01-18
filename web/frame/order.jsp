@@ -34,13 +34,14 @@
         <script type="text/javascript">
 //------------------------------------------------------------------------------
             $(document).ready(function () {
+                debugger;
                 $(window).bind('resize', () => order.resize()).trigger('resize');
-                let tab_sysprod = document.getElementById('table2');
-                tab_sysprod.setAttribute('activeRowIndex', 0);
-                tab_sysprod.addEventListener('click', order.click_table2);
+                let table2 = document.getElementById('table2');
+                table2.setAttribute('activeRowIndex', 0);
+                table2.addEventListener('click', order.click_table2);
 
-                order.init_table($("#table1"), tab_sysprod);
-                order.load_table($("#table1"), tab_sysprod);
+                order.init_table($(table1), table2);
+                order.load_table1($(table1));
 
                 $("button").button();
                 prepareToolBar();

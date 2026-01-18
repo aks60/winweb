@@ -83,7 +83,7 @@ product.load_table = function (table1) {
 };
 //------------------------------------------------------------------------------
 product.load_tree = function (tabtree) {
-    //debugger;
+    debugger;
     if (order.prjprodRec != null) {
         let arr = new Array();
         let winc = order.get_winc();
