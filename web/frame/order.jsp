@@ -3,7 +3,7 @@
 <html>
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-        <script type="text/javascript" src="frame/order.js"></script> 
+        <script type="module" src="frame/order.js"></script> 
         <title>PROJECT</title>
 
         <style>
@@ -31,10 +31,11 @@
             }
         </style>        
 
-        <script type="text/javascript">
-//------------------------------------------------------------------------------
+        <script type="module">
+            import {order.resize} from './frame/order.js';
+
             $(document).ready(function () {
-                debugger;
+                //debugger;
                 $(window).bind('resize', () => order.resize()).trigger('resize');
                 let table2 = document.getElementById('table2');
                 table2.setAttribute('activeRowIndex', 0);
@@ -54,6 +55,13 @@
             });
 //------------------------------------------------------------------------------            
             function test() {
+                //debugger;
+                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
+                alert(tableRec.num_ord);
+
+//                let rowid = $("#table2").jqGrid('getGridParam', "selrow");
+//                $("#table2").jqGrid("setSelection", rowid);
             }
         </script>
     </head>

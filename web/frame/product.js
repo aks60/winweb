@@ -1,5 +1,5 @@
 
-
+import {Type} from '../enums/enums.js';
 //-------------------- Масштабирование -----------------------------------------
 product.resize = function () {
     let cnv = document.querySelector("#cnv");

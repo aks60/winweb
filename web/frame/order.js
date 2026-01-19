@@ -5,7 +5,7 @@ order.taq_parent = function (node, tag) { //рекурсия
     return null;
 };
 //-------------------- Масштабирование -----------------------------------------
-order.resize = function () {
+export function  resize = function () {
     $("#context").css("height", window.innerHeight - 80);
     $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
@@ -69,7 +69,7 @@ order.init_table = function (table1, table2) {
             $('#table2 tr > *:nth-child(1)').hide();
         }
     });
-    order.resize();
+    resize();
 };
 //----------------  Загрузка данных в таблицу  ---------------------------------
 order.load_table1 = function (table1) {
@@ -95,7 +95,7 @@ order.load_table1 = function (table1) {
     $(table1).jqGrid("setSelection", 1);
     //$('#outbody').load('frame/product.jsp');
     //table1.jqGrid("setSelection", rowID);
-    order.resize();
+    resize();
 };
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
 order.load_table2 = function (table2, rec) {
@@ -114,9 +114,8 @@ order.load_table2 = function (table2, rec) {
     let winc = win.build(canvas, script);
 
     //Массив объектов winc
-    if (order.prjprodRec !== undefined && order.prjprodRec !== null) {
-        order.wincalcMap.set(order.prjprodRec[ePrjprod.id], winc);
-    }
+    order.wincalcMap.set(rec[ePrjprod.id], winc);
+        
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
@@ -300,6 +299,7 @@ order.update_table1 = function (taq) {
 };
 //------------------------------------------------------------------------------
 order.click_table2 = function (e) {
+    //debugger;
     let row = order.taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
@@ -312,11 +312,11 @@ order.click_table2 = function (e) {
         let prjprodID = row.cells[0].innerHTML;
         order.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
     }
-//    order.taq_parent = (node, tag) => { //рекурсия
+//    taq_parent: function(node, tag) {
 //        if (node)
 //            return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
 //        return null;
-//    };
+//    }
 };
 //-----------------  Удаление строки таблицы  ----------------------------------
 order.delete_table2 = function () {
