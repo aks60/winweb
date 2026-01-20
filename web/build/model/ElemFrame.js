@@ -3,7 +3,7 @@ import {UGeo} from './uGeo.js';
 import {UseSide, Type, Layout} from '../../enums/enums.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemSimple} from './model.js';
-import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js';
+import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
 
 export class ElemFrame extends ElemSimple {
 

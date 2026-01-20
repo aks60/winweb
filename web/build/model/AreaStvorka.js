@@ -4,10 +4,10 @@ import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
 import {Type, TypeOpen1, TypeOpen2, PKjson,
         LayoutHand, Layout, UseSide} from '../../enums/enums.js';
-import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js';
-import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js';
-import AffineTransformation from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/util/AffineTransformation.js';
-import Centroid from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Centroid.js';
+import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
+import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
+import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js';
+import Centroid from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Centroid.js';
 
 export class AreaStvorka extends AreaSimple {
 

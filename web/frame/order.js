@@ -1,25 +1,27 @@
 //------------------------------------------------------------------------------
-order.taq_parent = function (node, tag) { //рекурсия
+//export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
+//------------------------------------------------------------------------------
+export function taq_parent(node, tag) { //рекурсия
     if (node)
-        return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
+        return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
     return null;
-};
+}
 //-------------------- Масштабирование -----------------------------------------
-export function  resize = function () {
+export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
     $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
-};
+}
 //----------------- Текущий WINC  ----------------------------------------------
-order.get_winc = function () {
+export function get_winc() {
     if (order.wincalcMap !== undefined && order.prjprodRec !== undefined) {
         let prjprodID = order.prjprodRec[ePrjprod.id];
         return order.wincalcMap.get(prjprodID);
     }
     return null;
-};
+}
 //-----------------  Инициализация таблицы  ------------------------------------
-order.init_table = function (table1, table2) {
+export function init_table(table1, table2) {
     table1.jqGrid({
         datatype: "local",
         gridview: true,
@@ -56,7 +58,7 @@ order.init_table = function (table1, table2) {
                 for (let rec of prjprodList) {
 
                     //Добавим запись в таблице конструкций
-                    order.load_table2(table2, rec);
+                    load_table2(table2, rec);
                     //Выделение строки табл. конструкций
                     if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
                         prjprodID = rec[ePrjprod.id];
@@ -70,9 +72,9 @@ order.init_table = function (table1, table2) {
         }
     });
     resize();
-};
+}
 //----------------  Загрузка данных в таблицу  ---------------------------------
-order.load_table1 = function (table1) {
+export function load_table1(table1) {
     let rowID = 1;
     table1.jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
@@ -96,9 +98,9 @@ order.load_table1 = function (table1) {
     //$('#outbody').load('frame/product.jsp');
     //table1.jqGrid("setSelection", rowID);
     resize();
-};
+}
 //-----------------  Добавить контрукцию в таблицу  ----------------------------
-order.load_table2 = function (table2, rec) {
+export function load_table2(table2, rec) {
     //debugger;
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
@@ -115,7 +117,7 @@ order.load_table2 = function (table2, rec) {
 
     //Массив объектов winc
     order.wincalcMap.set(rec[ePrjprod.id], winc);
-        
+
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
@@ -128,9 +130,9 @@ order.load_table2 = function (table2, rec) {
     tr.appendChild(td2);
     tr.appendChild(td3);
     table2.appendChild(tr);
-};
+}
 //---------------  Удаление строки таблицы  ------------------------------------
-order.delete_table1 = function (table) {
+export function delete_table1(table) {
     let orderRow = getSelectedRow(table);
     if (orderRow != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
@@ -169,9 +171,9 @@ order.delete_table1 = function (table) {
             }
         });
     }
-};
+}
 //----------------  Вставка строки в таблицу  ----------------------------------
-order.insert_table1 = function (taq) {
+export function insert_table1(taq) {
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = eProject.list.find(rec => orderRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
@@ -216,7 +218,7 @@ order.insert_table1 = function (taq) {
                                         record[eProject.owner] = login.data.user_name;
                                         record[eProject.prjpart_id] = $("#n25").attr("fk");
                                         eProject.list.push(record);
-                                        order.load_table1($("#table1"));
+                                        load_table1($("#table1"));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },
@@ -238,9 +240,9 @@ order.insert_table1 = function (taq) {
             dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
         }
     });
-};
+}
 //----------------  Редактирования строки таблицы  -----------------------------
-order.update_table1 = function (taq) {
+export function update_table1(taq) {
 
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = eProject.list.find(rec => orderRow.id === rec[eProject.id]);
@@ -296,11 +298,11 @@ order.update_table1 = function (taq) {
             }
         }
     });
-};
+}
 //------------------------------------------------------------------------------
-order.click_table2 = function (e) {
+export function click_table2(e) {
     //debugger;
-    let row = order.taq_parent(e.target, 'TR');
+    let row = taq_parent(e.target, 'TR');
     if (row) {
         let table = this;
         let idx = table.getAttribute('activeRowIndex');
@@ -314,12 +316,13 @@ order.click_table2 = function (e) {
     }
 //    taq_parent: function(node, tag) {
 //        if (node)
-//            return (node.tagName === tag) ? node : order.taq_parent(node.parentElement, tag);
+//            return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
 //        return null;
 //    }
-};
+}
+;
 //-----------------  Удаление строки таблицы  ----------------------------------
-order.delete_table2 = function () {
+export function delete_table2() {
     if (order.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -362,6 +365,6 @@ order.delete_table2 = function () {
             }
         });
     }
-};
+}
 
 

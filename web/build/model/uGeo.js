@@ -1,18 +1,12 @@
 import {Com5t} from './Com5t.js'
-import Intersection from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Intersection.js'
-import InteriorPoint from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/InteriorPoint.js'
-import PointLocator from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/PointLocator.js'
-import Angle from '../../lib-js/jsts-2.12.1/org/locationtech/jts/algorithm/Angle.js'
-import Polygon from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Polygon.js'
-import LineSegment from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineSegment.js'
-import LineString from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/LineString.js'
-import Coordinate from '../../lib-js/jsts-2.12.1/org/locationtech/jts/geom/Coordinate.js'
-import Polygonizer from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
-import UnionOp from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/union/UnionOp.js'
-import OverlayOp from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/overlay/OverlayOp.js'
-//import WKTWriter from '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTWriter.js'
-//import WKTReader from   '../../lib-js/jsts-2.12.1/org/locationtech/jts/io/WKTReader.js'
-//import Polygonizer from '../../lib-js/jsts-2.12.1/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
+import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
+import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
+import Angle from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Angle.js'
+import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js'
+import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js'
+import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
+import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js'
 
 export let UGeo = {};
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
@@ -102,7 +96,7 @@ UGeo.splitPolygon = (geom, segm) => {
         return [Polygon.new(cooL), Polygon.new(cooR)];
         
     } catch (e) {
-        errorLog("Error: UGeo.splitPolygon() " + e.message);
+        errorLog("Error: UGeo.splitPolygon(*) " + e.message);
     }
 };
 UGeo.rotate = (arr) => {

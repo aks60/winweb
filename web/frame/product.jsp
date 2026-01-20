@@ -48,30 +48,31 @@
                 padding: 0;
             }
         </style> 
-        <script type="text/javascript">
+        <script type="module">
+            import {resize, init_table, load_tree, click_canvas_xy, click_spinner, update_script} from './frame/product.js';
 
             var winCalc = null; //выбранная конструкция
 
-//            product.server_to_fields();
+//            server_to_fields();
             $(document).ready(function () {
                 deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-                $(window).bind('resize', () => product.resize()).trigger('resize');
-                product.init_table($('#table1'));
-                product.load_tree($('#tree-winc'));
+                $(window).bind('resize', () => resize()).trigger('resize');
+                init_table($('#table1'));
+                load_tree($('#tree-winc'));
                 prepareToolBar();
 //                let cvs = document.querySelector("#cnv");
-//                cvs.addEventListener('mousedown', (e) => product.click_canvas_xy(cvs, e));
+//                cvs.addEventListener('mousedown', (e) => click_canvas_xy(cvs, e));
 //                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
 //                $("#spinner").spinner({
 //                    spin: function (event, ui) {
-//                        product.click_spinner();
+//                        click_spinner();
 //                    }
 //                });
             });
 
             function test() {
 //                printScript(winCalc);
-//                product.update_script();
+//                update_script();
             }
         </script>
     </head>

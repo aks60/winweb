@@ -18,34 +18,33 @@
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
-        <!--<script type="text/javascript" src="lib-js/jsts-2.12.1/jsts.min.js"></script>-->
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
         <script type="module" src="./build/making/Draw.js"></script>
 
-        <script type="module" src="domain/eArtdet.js"></script>
+        <script type="module" src="./domain/eArtdet.js"></script>
         <script type="module" src="./domain/eArtikl.js"></script>
         <script type="module" src="./domain/eColor.js"></script>
-        <script type="module" src="domain/eDealer.js"></script>
-        <script type="module" src="domain/eElement.js"></script>
-        <script type="module" src="domain/eFurndet.js"></script>
-        <script type="module" src="domain/eFurniture.js"></script>
-        <script type="module" src="domain/eGroups.js"></script>
-        <script type="module" src="domain/eKitdet.js"></script>
-        <script type="module" src="domain/eKits.js"></script>
-        <script type="module" src="domain/eParams.js"></script>
-        <script type="module" src="domain/eParmap.js"></script>
-        <script type="module" src="domain/ePrjkit.js"></script>
-        <script type="module" src="domain/ePrjprod.js"></script>
-        <script type="module" src="domain/eProject.js"></script>
-        <script type="module" src="domain/eSysfurn.js"></script>
-        <script type="module" src="domain/eSyspar1.js"></script>
-        <script type="module" src="domain/eSysprod.js"></script>
-        <script type="module" src="domain/eSysprof.js"></script>
-        <script type="module" src="domain/eSyssize.js"></script>
-        <script type="module" src="domain/eSystree.js"></script>
-        <script type="module" src="domain/eSysuser.js"></script>        
+        <script type="module" src="./domain/eDealer.js"></script>
+        <script type="module" src="./domain/eElement.js"></script>
+        <script type="module" src="./domain/eFurndet.js"></script>
+        <script type="module" src="./domain/eFurniture.js"></script>
+        <script type="module" src="./domain/eGroups.js"></script>
+        <script type="module" src="./domain/eKitdet.js"></script>
+        <script type="module" src="./domain/eKits.js"></script>
+        <script type="module" src="./domain/eParams.js"></script>
+        <script type="module" src="./domain/eParmap.js"></script>
+        <script type="module" src="./domain/ePrjkit.js"></script>
+        <script type="module" src="./domain/ePrjprod.js"></script>
+        <script type="module" src="./domain/eProject.js"></script>
+        <script type="module" src="./domain/eSysfurn.js"></script>
+        <script type="module" src="./domain/eSyspar1.js"></script>
+        <script type="module" src="./domain/eSysprod.js"></script>
+        <script type="module" src="./domain/eSysprof.js"></script>
+        <script type="module" src="./domain/eSyssize.js"></script>
+        <script type="module" src="./domain/eSystree.js"></script>
+        <script type="module" src="./domain/eSysuser.js"></script>        
 
         <script type="text/javascript">
 
@@ -56,9 +55,10 @@
             var eElement;
             
             //Глобальные объекты
-            var win = {dh_frm: 64, dh_crss: 80, naxl: 12}, dbrec = {}, login = {que_requests: 2}, fio = {},
-                    users = {}, order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, product = {}, kits = {};
-            
+            var win = dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, 
+                order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, 
+                product = {}, kits = {};
+             
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});

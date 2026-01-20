@@ -32,17 +32,17 @@
         </style>        
 
         <script type="module">
-            import {order.resize} from './frame/order.js';
+            import {resize, init_table, load_table1, click_table2} from './frame/order.js';
 
             $(document).ready(function () {
                 //debugger;
-                $(window).bind('resize', () => order.resize()).trigger('resize');
+                $(window).bind('resize', () => resize()).trigger('resize');
                 let table2 = document.getElementById('table2');
                 table2.setAttribute('activeRowIndex', 0);
-                table2.addEventListener('click', order.click_table2);
+                table2.addEventListener('click', click_table2);
 
-                order.init_table($(table1), table2);
-                order.load_table1($(table1));
+                init_table($(table1), table2);
+                load_table1($(table1));
 
                 $("button").button();
                 prepareToolBar();
@@ -67,11 +67,11 @@
     </head>
     <body>        
         <div id="north">
-            <button id="btnOrder1" style="width: 128px" onClick="order.insert_table1('#dialog-card');">Добавить заказ</button>
-            <button id="btnOrder2" style="width: 128px" onClick="order.update_table1('#dialog-card');">Изменить заказ</button>
-            <button id="btnOrder3" style="width: 128px" onClick="order.delete_table1($('#table1'))">Удалить заказ</button>
+            <button id="btnOrder1" style="width: 128px" onClick="insert_table1('#dialog-card');">Добавить заказ</button>
+            <button id="btnOrder2" style="width: 128px" onClick="update_table1('#dialog-card');">Изменить заказ</button>
+            <button id="btnOrder3" style="width: 128px" onClick="delete_table1($('#table1'))">Удалить заказ</button>
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frame/dialog/systree.jsp');">Добавить констр.</button>
-            <button id="btnProd3" style="width: 128px" onClick="order.delete_table2();">Удалить констр.</button>                        
+            <button id="btnProd3" style="width: 128px" onClick="delete_table2();">Удалить констр.</button>                        
             <button id="btnProd3" style="width: 128px" onClick="test();">TEST</button>                        
         </div>     
         <div id = "context">     
