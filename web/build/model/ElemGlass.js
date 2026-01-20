@@ -68,7 +68,7 @@ export class ElemGlass extends ElemSimple {
     setLocation() {
         try {
             //Полигон по фальцу для прорисовки и рассчёта штапик...
-            geoFalz = this.owner.area.getGeometryN(2);
+            let geoFalz = this.owner.area.getGeometryN(2);
 
             let coo = geoFalz.getCoordinates();
             if (geoFalz.getEnvelopeInternal().getMaxY() <= coo[0].y) {

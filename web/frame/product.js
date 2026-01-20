@@ -1,5 +1,5 @@
 
-import {Type} from '../enums/enums.js';
+import {Type, Layout} from '../enums/enums.js';
 import {get_winc} from './order.js';
 
 //Масштабирование
@@ -88,7 +88,7 @@ export function load_table() {
 
 //Загрузка данных в tree
 export function load_tree(tabtree) {
-    debugger;
+    //debugger;
     if (order.prjprodRec != null) {
         let arr = new Array();
         let winc = get_winc();
@@ -105,10 +105,10 @@ export function load_tree(tabtree) {
 
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
-        
+
         //Рамы
         for (let el of root.frames) {
-            arr.push({'id': el.id, 'parent': -2, 'text': el.type[2], 'icon': 'lib-img/tool/leaf.gif'});
+            arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
         }
 
         elements(root, arr); //вход в рекурсию    
@@ -129,32 +129,32 @@ export function load_tree(tabtree) {
 export function elements(com, arr) {
 
     if (com.type === Type.STVORKA) {
-        arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/img/tool/folder.gif'});
-       
-       //Рамы
-        for (let el of com.frames) {  
-            arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2], 'icon': 'lib-img/tool/leaf.gif'});
+        arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
+
+        //Рамы створок
+        for (let el of com.frames) {
+            arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
         }
         //Заполнения
-        for (let el of com.childs) { 
+        for (let el of com.childs) {
             if (el.type === Type.GLASS) {
                 arr.push({'id': el.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
             }
         }
     } else {
         for (let el of com.childs) {
-            
+
             //Контейнер
-            if (['AREA', 'STVORKA'].includes(el.type, 0)) {
+            if ([Type.AREA, Type.STVORKA].includes(el.type, 0)) {
                 elements(el, arr);
-                
-            } else {                
+            } else {
                 //Импост, штульп...
-                if (["IMPOST", "SHTULP", "STOIKA"].includes(el.type, 0)) {
-                    let lay = (com.layout === "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
-                    arr.push({'id': el.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'lib-img/tool/leaf.gif'});
+                if ([Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(el.type, 0)) {
+                    arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
+
+                    //Стеклопакет
                 } else if (el.type === Type.GLASS) {
-                    arr.push({'id': el.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "lib-img/tool/leaf.gif"});
+                    arr.push({'id': el.id, 'parent': -2, 'text': el.type[2], 'icon': "lib-img/tool/leaf.gif"});
                 }
             }
         }
@@ -208,7 +208,7 @@ export function server_to_fields() {
 
 //Загрузка тегов страницы
 export function local_to_fields(nodeID) {
-    
+
 //    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
 //    if (nodeID === -2) {
 //        return;
@@ -575,14 +575,14 @@ export function click_canvas_xy(canvas, event) {
     const y = (event.clientY - rect.top) / product.winCalc.scale;
 
     //Если клик не на конструкции
-    if (product.winCalc.root.inside(x, y) === false) {
+//    if (product.winCalc.root.inside(x, y) === false) {
 //        product.scale_new_input('HORIZ', [product.winCalc.root]);
 //        product.scale_new_input('VERT', [product.winCalc.root]);
 //        $("#spinner").spinner("value", 0);
 //        $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
 //        $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
-
-    } else { //На конструкции
+//
+//    } else { //На конструкции
 //        product.winCalc.listElem.forEach((e, i) => {
 //            if (e.typeForm() === 'IMPOST' || e.typeForm() === 'SHTULP' || e.typeForm() === 'STOIKA') {
 //                if (e.inside(x, y)) {
@@ -595,7 +595,7 @@ export function click_canvas_xy(canvas, event) {
 //                }
 //            }
 //        });
-    }
+//    }
 }
 
 //Клик на кнопке масштабирования

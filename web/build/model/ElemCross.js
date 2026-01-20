@@ -15,7 +15,6 @@ export class ElemCross extends ElemSimple {
         try {
             super(winc, gson, owner);
             this.addListenerEvents();
-            this.layout = (owner.layout === Layout.VER) ? Layout.HOR : Layout.VER;
             this.anglCut = [90, 90]; //угол реза            
         } catch (e) {
             errorLog('Error: ElemCross.constructor() ' + e.message);

@@ -27,8 +27,8 @@ export class ElemSimple extends Com5t {
     moveXY(x, y) {
 
     }
-    
-    layout() {
+
+    get layout() {
         try {
             const anglHor = UGeo.anglHor(this.x1, this.y1, this.x2, this.y2);
 

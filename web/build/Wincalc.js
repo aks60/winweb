@@ -134,9 +134,9 @@ export class Wincalc {
                     owner.childs.push(cross); //добавим ребёнка родителю                 
 
                 } else if (js.type === "GLASS") {
-//                    let glass = new ElemGlass(js, this.root, this);
-//                    glass.type = Type.GLASS;
-//                    owner.childs.push(glass);
+                    let glass = new ElemGlass(this, js, owner);
+                    glass.type = Type.GLASS;
+                    owner.childs.push(glass);
                 }
             }
             //Теперь вложенные элементы
@@ -156,8 +156,10 @@ export class Wincalc {
 
             //Исключая импост створки т.к. ств. ещё не создана
             for (let elem of this.listElem) {
+                
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
+                    
                 } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {
                     elem.setLocation();
                 }
@@ -174,7 +176,7 @@ export class Wincalc {
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initArtikle());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
-            //UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.setLocation());
+            this.listElem.filter(elem => elem.type === Type.STV_SID).forEach(e => e.setLocation());
 
         } catch (e) {
             errorLog('Error: Wincalc.location() ' + e.message);
@@ -195,7 +197,6 @@ export class Wincalc {
             this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
             
             //Прорисовка профилей створок
-            let o1 = this.listElem.filter(el => el.type === Type.STV_SIDE);
             this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
             
             //Прорисовка импостов
