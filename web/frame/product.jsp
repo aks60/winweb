@@ -49,25 +49,29 @@
             }
         </style> 
         <script type="module">
-            import {resize, init_table, load_tree, click_canvas_xy, click_spinner, update_script} from './frame/product.js';
+            import {resize, server_to_fields, init_table, load_tree,
+                    click_canvas_xy, click_spinner, update_script} from './frame/product.js';
 
-            var winCalc = null; //выбранная конструкция
-
-//            server_to_fields();
+            server_to_fields();
             $(document).ready(function () {
+                
                 deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
                 $(window).bind('resize', () => resize()).trigger('resize');
-                init_table($('#table1'));
-                load_tree($('#tree-winc'));
+                product.table1 = document.getElementById('table1');
+                product.tabtree = document.getElementById('tree-winc');
+
+                init_table();
+                load_tree();
+
                 prepareToolBar();
-//                let cvs = document.querySelector("#cnv");
-//                cvs.addEventListener('mousedown', (e) => click_canvas_xy(cvs, e));
-//                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
-//                $("#spinner").spinner({
-//                    spin: function (event, ui) {
-//                        click_spinner();
-//                    }
-//                });
+                let cvs = document.querySelector("#cnv");
+                cvs.addEventListener('mousedown', (e) => click_canvas_xy(cvs, e));
+                $("#spinner").spinner({step: 0.5, numberFormat: "n"})
+                $("#spinner").spinner({
+                    spin: function (event, ui) {
+                        click_spinner();
+                    }
+                });
             });
 
             function test() {

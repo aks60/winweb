@@ -1,7 +1,8 @@
 
 import {Type} from '../enums/enums.js';
 import {get_winc} from './order.js';
-//-------------------- Масштабирование -----------------------------------------
+
+//Масштабирование
 export function resize() {
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
@@ -35,10 +36,11 @@ export function resize() {
         $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
     }
 }
-//------------------------------------------------------------------------------
-export function init_table(table1) {
 
-    table1.jqGrid({
+//Инициализация таблицы
+export function init_table() {
+
+    $(product.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -54,15 +56,16 @@ export function init_table(table1) {
         ], ondblClickRow: function (rowid) {
             $('#dialog-dic').load('frame/dialog/param.jsp');
         }, onSelectRow: function (rowid) {
-            let syspar1Row = table1.jqGrid('getRowData', rowid);
+            let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
             product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
         }
     });
 }
-//------------------------------------------------------------------------------
-export function load_table(table1) {
+
+//Загрузка данных в таблицу
+export function load_table() {
     let syspar1List2 = [];
-    table1.jqGrid('clearGridData', true);
+    $(product.table1).jqGrid('clearGridData', true);
     let winc = get_winc();
     for (let val of winc.root.pardefMap.values()) {
         syspar1List2.push(val);
@@ -72,7 +75,7 @@ export function load_table(table1) {
 
         let tr = syspar1List2[i];
         let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] === tr[eParams.id]);
-        table1.jqGrid('addRowData', i + 1, {
+        $(product.table1).jqGrid('addRowData', i + 1, {
 
             id: tr[eSyspar1.id],
             text: paramsRec[eParams.text],
@@ -80,11 +83,12 @@ export function load_table(table1) {
             fixed: tr[eSyspar1.fixed]
         });
     }
-    table1.jqGrid("setSelection", 1);
+    $(product.table1).jqGrid("setSelection", 1);
 }
-//------------------------------------------------------------------------------
+
+//Загрузка данных в tree
 export function load_tree(tabtree) {
-    //debugger;
+    debugger;
     if (order.prjprodRec != null) {
         let arr = new Array();
         let winc = get_winc();
@@ -101,61 +105,62 @@ export function load_tree(tabtree) {
 
         arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
         arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
-        for (let i = 0; i < root.frames.length; ++i) {
-            let el = root.frames[i];
+        
+        //Рамы
+        for (let el of root.frames) {
             arr.push({'id': el.id, 'parent': -2, 'text': el.type[2], 'icon': 'lib-img/tool/leaf.gif'});
         }
-//        arr.push({'id': root.frames.get('BOTT').id, 'parent': -2, 'text': 'Рама нижняя', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': root.frames.get('RIGHT').id, 'parent': -2, 'text': 'Рама правая', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': root.frames.get('TOP').id, 'parent': -2, 'text': 'Рама верхняя', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': root.frames.get('LEFT').id, 'parent': -2, 'text': 'Рама левая', 'icon': 'lib-img/tool/leaf.gif'});
 
         elements(root, arr); //вход в рекурсию    
 
-        tabtree.jstree({'core': {'data': arr}})
+        $(product.tabtree).jstree({'core': {'data': arr}})
                 .bind("loaded.jstree", function (event, data) {
                     $(this).jstree('open_node', $('#0'));
                     $(this).jstree('select_node', 0.0);
                 })
                 .bind("select_node.jstree", function (evt, data) {
-                    let node = tabtree.jstree("get_selected")[0];
+                    let node = $(product.tabtree).jstree("get_selected")[0];
                     local_to_fields(node);
                 });
     }
 }
+
+//Рекурсия элементов
 export function elements(com, arr) {
 
     if (com.type === Type.STVORKA) {
         arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/img/tool/folder.gif'});
-        for (let i = 0; i < com.frames.length; ++i) {
-            let el = com.frames[i];
+       
+       //Рамы
+        for (let el of com.frames) {  
             arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2], 'icon': 'lib-img/tool/leaf.gif'});
         }
-//        arr.push({'id': com.frames.get('BOTT').id, 'parent': com.id, 'text': 'Рама нижняя', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': com.frames.get('RIGHT').id, 'parent': com.id, 'text': 'Рама правая', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': com.frames.get('TOP').id, 'parent': com.id, 'text': 'Рама верхняя', 'icon': 'lib-img/tool/leaf.gif'});
-//        arr.push({'id': com.frames.get('LEFT').id, 'parent': com.id, 'text': 'Рама левая', 'icon': 'lib-img/tool/leaf.gif'});
-        for (let com2 of com.childs) {
-            if (com2.type === Type.GLASS) {
-                arr.push({'id': com2.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
+        //Заполнения
+        for (let el of com.childs) { 
+            if (el.type === Type.GLASS) {
+                arr.push({'id': el.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
             }
         }
     } else {
-        for (let com2 of com.childs) {
-            if (['AREA', 'STVORKA'].includes(com2.type, 0)) {
-                product.elements(com2, arr);
-            } else {
-                if (["IMPOST", "SHTULP", "STOIKA"].includes(com2.type, 0)) {
+        for (let el of com.childs) {
+            
+            //Контейнер
+            if (['AREA', 'STVORKA'].includes(el.type, 0)) {
+                elements(el, arr);
+                
+            } else {                
+                //Импост, штульп...
+                if (["IMPOST", "SHTULP", "STOIKA"].includes(el.type, 0)) {
                     let lay = (com.layout === "VERT") ? ' (горизонтальная)' : ' {вертикальная)'
-                    arr.push({'id': com2.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'lib-img/tool/leaf.gif'});
-                } else if (com2.type === Type.GLASS) {
-                    arr.push({'id': com2.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "lib-img/tool/leaf.gif"});
+                    arr.push({'id': el.id, 'parent': -2, 'text': 'Ригель, импост, стойка' + lay, 'icon': 'lib-img/tool/leaf.gif'});
+                } else if (el.type === Type.GLASS) {
+                    arr.push({'id': el.id, 'parent': -2, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': "lib-img/tool/leaf.gif"});
                 }
             }
         }
     }
 }
-//------------------------------------------------------------------------------
+
 //Загрузка свойств конструкции
 export function server_to_fields() {
 //    try {
@@ -200,7 +205,7 @@ export function server_to_fields() {
 //        console.error('Error: product.server_to_fields() ' + e.message);
 //    }
 }
-//------------------------------------------------------------------------------
+
 //Загрузка тегов страницы
 export function local_to_fields(nodeID) {
     
@@ -278,7 +283,7 @@ export function local_to_fields(nodeID) {
 //        $("#tabs-5").show();
 //    }
 }
-//------------------------------------------------------------------------------
+
 //Текстура изделия
 export function color_to_windows(btnSrc) {
     //try {
@@ -351,7 +356,7 @@ export function color_to_windows(btnSrc) {
     //    console.error('Error:product.color_to_windows() ' + e.message);
     //}
 }
-//-----------------------------------------------\
+
 export function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
@@ -382,25 +387,25 @@ export function sysprof_to_frame(btnSrc) {
         console.error('Error: product.sysprof_to_frame() ' + e.message);
     }
 }
-//------------------------------------------------------------------------------
+
 //Фурнитура стеклопакета
 export function furniture_to_stvorka(btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/furniture.jsp');
 }
-//------------------------------------------------------------------------------
+
 //Сторона открывания
 export function sideopen_to_stvorka(btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/sideopen.jsp');
 }
-//------------------------------------------------------------------------------
+
 //Артикл ручки, подвеса, замка
 export function artikl_to_stvork(btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-dic').load('frame/dialog/artikl.jsp');
 }
-//------------------------------------------------------------------------------
+
 //Заполнение
 export function color_to_element(btnSrc) {
     try {
@@ -456,7 +461,7 @@ export function color_to_element(btnSrc) {
         console.error('Error: product.color_to_element() ' + e.message);
     }
 }
-//------------------------------------------------------------------------------
+
 //Заполнение
 export function artikl_to_glass(btnSrc) {
     try {
@@ -486,7 +491,7 @@ export function artikl_to_glass(btnSrc) {
         console.error('Error: product.artikl_to_glass() ' + e.message);
     }
 }
-//------------------------------------------------------------------------------
+
 //Перерисовать при изменении размера (размер канвы тот-же)
 export function redraw() {
     let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
@@ -500,7 +505,7 @@ export function redraw() {
     resize();
     local_to_fields("0");
 }
-//------------------------------------------------------------------------------
+
 //Наполнение новыми инпутами шкалы горизонтальных и вертикальных размеров
 export function scale_new_input(layout, lineArea) {
     let lineArr = [];
@@ -552,7 +557,7 @@ export function scale_new_input(layout, lineArea) {
         lineArr.forEach((el, i) => $('#scale-ver').append(el));
     }
 }
-//------------------------------------------------------------------------------
+
 //Установка цвета горизонтальных и вертикальных размеров
 export function dblclick_scale_color(inpt, dir) {
 
@@ -562,7 +567,7 @@ export function dblclick_scale_color(inpt, dir) {
     $("#spinner").spinner("value", $(inpt).val());
 //    $('#btnResiz').focus();
 }
-//------------------------------------------------------------------------------
+
 //Click на импосте для расчёта шкал размеров
 export function click_canvas_xy(canvas, event) {
     const rect = canvas.getBoundingClientRect()
@@ -592,7 +597,7 @@ export function click_canvas_xy(canvas, event) {
 //        });
     }
 }
-//------------------------------------------------------------------------------
+
 //Клик на кнопке масштабирования
 export function click_btn_resiz() {
     let draw = 0;
@@ -632,7 +637,7 @@ export function click_btn_resiz() {
         product.redraw();
     }
 }
-//------------------------------------------------------------------------------
+
 //Клик на кнопке enter
 export function keyup_btn_enter(inpt, event) {
     let dv = 0;
@@ -694,7 +699,7 @@ export function keyup_btn_enter(inpt, event) {
     }
     //console.log("+++ " + product.winCalc.heightAdd);
 }
-//------------------------------------------------------------------------------
+
 //Клик на кнопке масштабирования
 export function click_spinner() {
     let draw = 0;
@@ -738,7 +743,8 @@ export function click_spinner() {
         product.redraw();
     }
 }
-//------------------------------------------------------------------------------
+
+//Изменение скрипта
 export function update_script() {
     let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
     let winc = order.wincalcMap.get(prjprodID);
@@ -755,4 +761,4 @@ export function update_script() {
         }
     });
 }
-//------------------------------------------------------------------------------
+

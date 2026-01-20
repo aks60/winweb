@@ -1,18 +1,17 @@
-//------------------------------------------------------------------------------
-//export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
-//------------------------------------------------------------------------------
 export function taq_parent(node, tag) { //рекурсия
     if (node)
         return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
     return null;
 }
-//-------------------- Масштабирование -----------------------------------------
+
+//Масштабирование
 export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
     $("#table1").jqGrid('setGridWidth', $("#centr").width() - 5);
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
 }
-//----------------- Текущий WINC  ----------------------------------------------
+
+//Текущий WINC 
 export function get_winc() {
     if (order.wincalcMap !== undefined && order.prjprodRec !== undefined) {
         let prjprodID = order.prjprodRec[ePrjprod.id];
@@ -20,9 +19,10 @@ export function get_winc() {
     }
     return null;
 }
-//-----------------  Инициализация таблицы  ------------------------------------
-export function init_table(table1, table2) {
-    table1.jqGrid({
+
+//Инициализация таблиц
+export function init_table() {
+    $(order.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -41,49 +41,23 @@ export function init_table(table1, table2) {
         ],
         //Загрузка таблицы 2
         onSelectRow: function (rowid) {
-            //debugger;
-            let projectRow = table1.jqGrid('getRowData', rowid);
-            order.orderID = projectRow.id;
-            order.wincalcMap.clear();
-            //Очистим таблицу конструкций
-            let j = 1;
-            let rc = table2.rows.length;
-            for (let i = j; i < rc; i++) {
-                table2.deleteRow(j);
-            }
-            //Заполним табл. конструкций            
-            let prjprodList = ePrjprod.list.filter(rec => projectRow.id == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
-            if (prjprodList.length > 0) {
-                let prjprodID = null;
-                for (let rec of prjprodList) {
-
-                    //Добавим запись в таблице конструкций
-                    load_table2(table2, rec);
-                    //Выделение строки табл. конструкций
-                    if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
-                        prjprodID = rec[ePrjprod.id];
-                    } else if (prjprodID === null) {
-                        prjprodID = rec[ePrjprod.id]; //первая конструкция
-                    }
-                }
-                document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
-            }
-            $('#table2 tr > *:nth-child(1)').hide();
+            load_table2(rowid);
         }
     });
     resize();
 }
-//----------------  Загрузка данных в таблицу  ---------------------------------
-export function load_table1(table1) {
+
+//Загрузка данных в таблицу
+export function load_table1() {
     let rowID = 1;
-    table1.jqGrid('clearGridData', true);
+    $(order.table1).jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
     for (let i = 0; i < eProject.list.length; i++) {
         let tr = eProject.list[i];
         if (tr[eProject.id] === order.orderID) {
             rowID = i + 1;
         }
-        table1.jqGrid('addRowData', i + 1, {
+        $(order.table1).jqGrid('addRowData', i + 1, {
             id: tr[eProject.id],
             num_ord: tr[eProject.num_ord],
             num_acc: tr[eProject.num_acc],
@@ -94,44 +68,72 @@ export function load_table1(table1) {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    $(table1).jqGrid("setSelection", 1);
+    $(order.table1).jqGrid("setSelection", 1);
     //$('#outbody').load('frame/product.jsp');
-    //table1.jqGrid("setSelection", rowID);
+    //$(order.table1).jqGrid("setSelection", rowID);
     resize();
 }
-//-----------------  Добавить контрукцию в таблицу  ----------------------------
-export function load_table2(table2, rec) {
-    //debugger;
-    let canvas = document.createElement("canvas");
-    canvas.class = "cnv";
-    canvas.id = 'cnv' + rec[ePrjprod.id];
-    canvas.width = 68;
-    canvas.height = 68;
 
-    let id = document.createTextNode(rec[ePrjprod.id]);
-    let name = document.createTextNode(rec[ePrjprod.name]);
-    let script = rec[ePrjprod.script];
+//Добавить контрукцию в таблицу
+export function load_table2(rowid) {
+    let projectRow = $(order.table1).jqGrid('getRowData', rowid);
+    order.orderID = projectRow.id;
+    order.wincalcMap.clear();
+    //Очистим таблицу конструкций
+    let j = 1;
+    let rc = order.table2.rows.length;
+    for (let i = j; i < rc; i++) {
+        order.table2.deleteRow(j);
+    }
+    //Заполним табл. конструкций            
+    let prjprodList = ePrjprod.list.filter(rec => projectRow.id == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+    if (prjprodList.length > 0) {
+        let prjprodID = null;
+        for (let rec of prjprodList) {
 
-    //Создание экземпрляра окна
-    let winc = win.build(canvas, script);
+            //Добавим запись в таблице конструкций
+            let canvas = document.createElement("canvas");
+            canvas.class = "cnv";
+            canvas.id = 'cnv' + rec[ePrjprod.id];
+            canvas.width = 68;
+            canvas.height = 68;
 
-    //Массив объектов winc
-    order.wincalcMap.set(rec[ePrjprod.id], winc);
+            let id = document.createTextNode(rec[ePrjprod.id]);
+            let name = document.createTextNode(rec[ePrjprod.name]);
+            let script = rec[ePrjprod.script];
 
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-    let tr = document.createElement('tr');
-    tr.id = 'tr' + rec[ePrjprod.id];
-    td1.appendChild(id);
-    td2.appendChild(name);
-    td3.appendChild(canvas);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    table2.appendChild(tr);
+            //Создание экземпрляра окна
+            let winc = win.build(canvas, script);
+
+            //Массив объектов winc
+            order.wincalcMap.set(rec[ePrjprod.id], winc);
+
+            let td1 = document.createElement('td');
+            let td2 = document.createElement('td');
+            let td3 = document.createElement('td');
+            let tr = document.createElement('tr');
+            tr.id = 'tr' + rec[ePrjprod.id];
+            td1.appendChild(id);
+            td2.appendChild(name);
+            td3.appendChild(canvas);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            order.table2.appendChild(tr);
+
+            //Выделение строки табл. конструкций
+            if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
+                prjprodID = rec[ePrjprod.id];
+            } else if (prjprodID === null) {
+                prjprodID = rec[ePrjprod.id]; //первая конструкция
+            }
+        }
+        document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
+    }
+    $('#table2 tr > *:nth-child(1)').hide();
 }
-//---------------  Удаление строки таблицы  ------------------------------------
+
+//Удаление строки таблицы
 export function delete_table1(table) {
     let orderRow = getSelectedRow(table);
     if (orderRow != null) {
@@ -172,7 +174,8 @@ export function delete_table1(table) {
         });
     }
 }
-//----------------  Вставка строки в таблицу  ----------------------------------
+
+//Вставка строки в таблицу
 export function insert_table1(taq) {
     let orderRow = getSelectedRow($("#table1"));
     let orderRec = eProject.list.find(rec => orderRow.id = rec[eProject.id]);
@@ -241,7 +244,8 @@ export function insert_table1(taq) {
         }
     });
 }
-//----------------  Редактирования строки таблицы  -----------------------------
+
+//Редактирования строки таблицы
 export function update_table1(taq) {
 
     let orderRow = getSelectedRow($("#table1"));
@@ -299,7 +303,8 @@ export function update_table1(taq) {
         }
     });
 }
-//------------------------------------------------------------------------------
+
+//Клик table2
 export function click_table2(e) {
     //debugger;
     let row = taq_parent(e.target, 'TR');
@@ -320,8 +325,8 @@ export function click_table2(e) {
 //        return null;
 //    }
 }
-;
-//-----------------  Удаление строки таблицы  ----------------------------------
+
+//Удаление строки таблицы 
 export function delete_table2() {
     if (order.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\

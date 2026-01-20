@@ -35,14 +35,16 @@
             import {resize, init_table, load_table1, click_table2} from './frame/order.js';
 
             $(document).ready(function () {
-                //debugger;
-                $(window).bind('resize', () => resize()).trigger('resize');
-                let table2 = document.getElementById('table2');
-                table2.setAttribute('activeRowIndex', 0);
-                table2.addEventListener('click', click_table2);
 
-                init_table($(table1), table2);
-                load_table1($(table1));
+                $(window).bind('resize', () => resize()).trigger('resize');
+                order.table1 = document.getElementById('table1');
+                order.table2 = document.getElementById('table2');
+                
+                order.table2.setAttribute('activeRowIndex', 0);
+                order.table2.addEventListener('click', click_table2);
+
+                init_table();
+                load_table1();
 
                 $("button").button();
                 prepareToolBar();
@@ -53,13 +55,12 @@
 //                if (product.init_table == undefined)
 //                    $('#outbody').load('frame/product.jsp');
             });
-//------------------------------------------------------------------------------            
+         
             function test() {
                 //debugger;
-                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
-                alert(tableRec.num_ord);
-
+//                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
+//                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
+//                alert(tableRec.num_ord);
 //                let rowid = $("#table2").jqGrid('getGridParam', "selrow");
 //                $("#table2").jqGrid("setSelection", rowid);
             }
