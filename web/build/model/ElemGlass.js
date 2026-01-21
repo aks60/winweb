@@ -89,8 +89,9 @@ export class ElemGlass extends ElemSimple {
             let geoFalz = this.owner.area.getGeometryN(2);
             if (geoFalz !== null && this.winc.sceleton === false) {
 
-                this.winc.ctx.lineWidth = 8;
+                this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
+                this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
                 this.winc.paint(geoFalz);
 
             } else if (geoFalz !== null) {

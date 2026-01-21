@@ -86,8 +86,9 @@ export class ElemCross extends ElemSimple {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
                 
-                this.winc.ctx.lineWidth = 8;
+                this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
+                this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
                 const geoInne = this.owner.area.getGeometryN(1);
                 let geoPaint = OverlayOp.intersection(this.area, geoInne);
                 this.winc.paint(geoPaint);

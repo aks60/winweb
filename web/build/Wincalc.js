@@ -174,9 +174,9 @@ export class Wincalc {
 
             //Создание створки
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
-            this.listElem.filter(elem => elem.type === Type.STV_SID).forEach(e => e.initArtikle());
+            this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.initArtikle());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
-            this.listElem.filter(elem => elem.type === Type.STV_SID).forEach(e => e.setLocation());
+            this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.setLocation());
 
         } catch (e) {
             errorLog('Error: Wincalc.location() ' + e.message);
@@ -191,7 +191,7 @@ export class Wincalc {
             this.ctx.scale(this.scale, this.scale);
 
             //Прорисовка стеклопакетов
-            this.listArea.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
+            this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
 
             //Прорисовка импостов
             this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
@@ -234,6 +234,7 @@ export class Wincalc {
             //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";            
             alert('Wincalc.paint()');
         }
+        this.ctx.fill();
         this.ctx.stroke(); //рисуем контур 
         //this.ctx.restore();
     }

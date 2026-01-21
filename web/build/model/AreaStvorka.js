@@ -247,12 +247,12 @@ export class AreaStvorka extends AreaSimple {
                 }
                 this.colorRec = eColor.find(this.handColor);
                 let rgb = colorRec[eColor.rgb].toString(16);
-                ;
+
                 this.winc.ctx.fillStyle = '#' + rgb;
                 this.winc.paint(this.handOpen);
             }
         } else {
-            paintSceleton();
+            errorLog('Error: AreaStvorka.paint() ' + e.message);
         }
     }
 }
