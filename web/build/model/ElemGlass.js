@@ -1,5 +1,7 @@
 
 import {ElemSimple} from './ElemSimple.js';
+import {UCom} from '../../common/uCom.js';
+import {PKjson} from '../../enums/enums.js';
 
 export class ElemGlass extends ElemSimple {
 
@@ -35,11 +37,11 @@ export class ElemGlass extends ElemSimple {
                 this.colorID2 = this.colorID1;
                 this.colorID3 = this.colorID1;
             } else {
-                let artdetRec = eArtdet.find(this.artiklRec.getInt(eArtikl.id));
+                let artdetRec = eArtdet.find(this.artiklRec[eArtikl.id]);
                 let colorRec = eColor.find3(artdetRec[eArtdet.color_fk]);
-                colorID1 = colorRec[eColor.id];
-                colorID2 = colorID1;
-                colorID3 = colorID1;
+                this.colorID1 = colorRec[eColor.id];
+                this.colorID2 = this.colorID1;
+                this.colorID3 = this.colorID1;
             }
 
             //Раскладка

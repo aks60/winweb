@@ -1,6 +1,7 @@
 
 import {Type, Layout} from '../enums/enums.js';
 import {get_winc} from './order.js';
+import {UGeo} from '../build/model/uGeo.js';
 
 //Масштабирование
 export function resize() {
@@ -39,125 +40,138 @@ export function resize() {
 
 //Инициализация таблицы
 export function init_table() {
+    try {
+        $(product.table1).jqGrid({
+            datatype: "local",
+            gridview: true,
+            rownumbers: true,
+            autowidth: true,
+            height: "auto",
+            colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
+            colModel: [
+                {name: 'id', hidden: true, key: true},
+                {name: 'text', width: 220, sorttype: "text", edittype: "button"},
+                {name: 'val', width: 180, sorttype: "text"},
+                {name: 'fixed', width: 60, sorttype: "text"}
 
-    $(product.table1).jqGrid({
-        datatype: "local",
-        gridview: true,
-        rownumbers: true,
-        autowidth: true,
-        height: "auto",
-        colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
-        colModel: [
-            {name: 'id', hidden: true, key: true},
-            {name: 'text', width: 220, sorttype: "text", edittype: "button"},
-            {name: 'val', width: 180, sorttype: "text"},
-            {name: 'fixed', width: 60, sorttype: "text"}
-
-        ], ondblClickRow: function (rowid) {
-            $('#dialog-dic').load('frame/dialog/param.jsp');
-        }, onSelectRow: function (rowid) {
-            let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-            product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
-        }
-    });
+            ], ondblClickRow: function (rowid) {
+                $('#dialog-dic').load('frame/dialog/param.jsp');
+            }, onSelectRow: function (rowid) {
+                let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
+                product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
+            }
+        });
+    } catch (e) {
+        errorLog("Error: product.init_table() " + e.message);
+    }
 }
 
 //Загрузка данных в таблицу
 export function load_table() {
-    let syspar1List2 = [];
-    $(product.table1).jqGrid('clearGridData', true);
-    let winc = get_winc();
-    for (let val of winc.root.pardefMap.values()) {
-        syspar1List2.push(val);
-    }
-    syspar1List2.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
-    for (let i = 0; i < syspar1List2.length; i++) {
+    try {
+        let syspar1List2 = [];
+        $(product.table1).jqGrid('clearGridData', true);
+        let winc = get_winc();
+        for (let val of winc.root.pardefMap.values()) {
+            syspar1List2.push(val);
+        }
+        syspar1List2.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
+        for (let i = 0; i < syspar1List2.length; i++) {
 
-        let tr = syspar1List2[i];
-        let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] === tr[eParams.id]);
-        $(product.table1).jqGrid('addRowData', i + 1, {
+            let tr = syspar1List2[i];
+            let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] === tr[eParams.id]);
+            $(product.table1).jqGrid('addRowData', i + 1, {
 
-            id: tr[eSyspar1.id],
-            text: paramsRec[eParams.text],
-            val: tr[eSyspar1.text],
-            fixed: tr[eSyspar1.fixed]
-        });
+                id: tr[eSyspar1.id],
+                text: paramsRec[eParams.text],
+                val: tr[eSyspar1.text],
+                fixed: tr[eSyspar1.fixed]
+            });
+        }
+        $(product.table1).jqGrid("setSelection", 1);
+    } catch (e) {
+        errorLog("Error: product.load_table() " + e.message);
     }
-    $(product.table1).jqGrid("setSelection", 1);
 }
 
 //Загрузка данных в tree
 export function load_tree(tabtree) {
-    //debugger;
-    if (order.prjprodRec != null) {
-        let arr = new Array();
-        let winc = get_winc();
-        let root = winc.root;
+    try {
+        if (order.prjprodRec != null) {
+            let arr = new Array();
+            let winc = get_winc();
+            let root = winc.root;
 
-        if (root.type === Type.RECTANGL)
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.type === Type.TRAPEZE)
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.type === Type.TRIANGL)
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
-        else if (root.type === Type.ARCH)
-            arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
+            if (root.type === Type.RECTANGL)
+                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
+            else if (root.type === Type.TRAPEZE)
+                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
+            else if (root.type === Type.TRIANGL)
+                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
+            else if (root.type === Type.ARCH)
+                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
 
-        arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
-        arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
+            arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
+            arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
 
-        //Рамы
-        for (let el of root.frames) {
-            arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
+            //Рамы
+            for (let el of root.frames) {
+                arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
+            }
+
+            elements(root, arr); //вход в рекурсию    
+
+            $(product.tabtree).jstree({'core': {'data': arr}})
+                    .bind("loaded.jstree", function (event, data) {
+                        $(this).jstree('open_node', $('#0'));
+                        $(this).jstree('select_node', 0.0);
+                    })
+                    .bind("select_node.jstree", function (evt, data) {
+                        let node = $(product.tabtree).jstree("get_selected")[0];
+                        local_to_fields(node);
+                    });
         }
-
-        elements(root, arr); //вход в рекурсию    
-
-        $(product.tabtree).jstree({'core': {'data': arr}})
-                .bind("loaded.jstree", function (event, data) {
-                    $(this).jstree('open_node', $('#0'));
-                    $(this).jstree('select_node', 0.0);
-                })
-                .bind("select_node.jstree", function (evt, data) {
-                    let node = $(product.tabtree).jstree("get_selected")[0];
-                    local_to_fields(node);
-                });
+    } catch (e) {
+        errorLog("Error: product.load_tree() " + e.message);
     }
 }
 
 //Рекурсия элементов
 export function elements(com, arr) {
+    try {
+        if (com.type === Type.STVORKA) {
+            arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
 
-    if (com.type === Type.STVORKA) {
-        arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
-
-        //Рамы створок
-        for (let el of com.frames) {
-            arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
-        }
-        //Заполнения
-        for (let el of com.childs) {
-            if (el.type === Type.GLASS) {
-                arr.push({'id': el.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
+            //Рамы створок
+            for (let el of com.frames) {
+                arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
             }
-        }
-    } else {
-        for (let el of com.childs) {
+            //Заполнения
+            for (let el of com.childs) {
+                if (el.type === Type.GLASS) {
+                    arr.push({'id': el.id, 'parent': com.id, 'text': 'Заполнение (Стеклопакет, стекло)', 'icon': 'lib-img/tool/leaf.gif'});
+                }
+            }
+        } else {
+            for (let el of com.childs) {
 
-            //Контейнер
-            if ([Type.AREA, Type.STVORKA].includes(el.type, 0)) {
-                elements(el, arr);
-            } else {
-                //Импост, штульп...
-                if ([Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(el.type, 0)) {
-                    arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
+                //Контейнер
+                if ([Type.AREA, Type.STVORKA].includes(el.type, 0)) {
+                    elements(el, arr);
+                } else {
+                    //Импост, штульп...
+                    if ([Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(el.type, 0)) {
+                        arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
 
-                    //Стеклопакет
-                } else if (el.type === Type.GLASS) {
-                    arr.push({'id': el.id, 'parent': -2, 'text': el.type[2], 'icon': "lib-img/tool/leaf.gif"});
+                        //Стеклопакет
+                    } else if (el.type === Type.GLASS) {
+                        arr.push({'id': el.id, 'parent': -2, 'text': el.type[2], 'icon': "lib-img/tool/leaf.gif"});
+                    }
                 }
             }
         }
+    } catch (e) {
+        errorLog("Error: product.elements() " + e.message);
     }
 }
 

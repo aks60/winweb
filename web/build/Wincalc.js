@@ -156,25 +156,25 @@ export class Wincalc {
 
             //Исключая импост створки т.к. ств. ещё не создана
             for (let elem of this.listElem) {
-                
+
                 if (elem instanceof ElemFrame) {
                     elem.setLocation();
-                    
-                } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka == false) {
+                } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka === false) {
                     elem.setLocation();
                 }
-                for (let area of this.listArea) {
-                    if (area.id != 0.0) {
-                        if (area instanceof AreaStvorka == false && area.owner instanceof AreaStvorka == false) {
-                            area.setLocation();
-                        }
+            }
+            //Исключая створку т.к. она не создана
+            for (let area of this.listArea) {
+                if (area.id != 0.0) {
+                    if (area instanceof AreaStvorka === false && area.owner instanceof AreaStvorka === false) {
+                        area.setLocation();
                     }
                 }
             }
 
             //Создание створки
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
-            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initArtikle());
+            this.listElem.filter(elem => elem.type === Type.STV_SID).forEach(e => e.initArtikle());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
             this.listElem.filter(elem => elem.type === Type.STV_SID).forEach(e => e.setLocation());
 
@@ -192,15 +192,19 @@ export class Wincalc {
 
             //Прорисовка стеклопакетов
             this.listArea.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
-            
-            //Прорисовка рам
-            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
-            
-            //Прорисовка профилей створок
-            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
-            
+
             //Прорисовка импостов
             this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
+
+            //Прорисовка рам
+            let arr = this.listElem.filter(el => el.type === Type.BOX_SIDE);
+            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
+//debugger;
+            //Прорисовка рам створок
+            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
+
+            //Прорисока фурнитуры створок
+            //this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());          
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
@@ -211,7 +215,7 @@ export class Wincalc {
     paint(element) {
         //this.ctx.save();
         const coo = element.getCoordinates(); //это массив точек
-        
+
         if (element instanceof LineString) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0].x, coo[0].y);

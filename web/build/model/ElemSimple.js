@@ -24,14 +24,10 @@ export class ElemSimple extends Com5t {
         this.timer.stop();
     }
 
-    moveXY(x, y) {
-
-    }
-
     get layout() {
         try {
             const anglHor = UGeo.anglHor(this.x1, this.y1, this.x2, this.y2);
-
+            
             if (anglHor > 315 && anglHor <= 360 || anglHor >= 0 && anglHor < 45) {
                 return (this.type === Type.IMPOST || this.type === Type.SHTULP) ? Layout.HOR : Layout.BOT;
 

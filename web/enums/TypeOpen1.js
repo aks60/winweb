@@ -12,16 +12,16 @@ export const TypeOpen1 = {
     getHand(areaStv, typeOpen) {
         if ([this.LEFT, this.LEFTUP, this.LEFMOV].includes(typeOpen)) {
             for(let e of areaStv.frames) {
-                let o1 = e.layout();
+                let o1 = e.layout;
                 let o2 = 0;
             }
-            return areaStv.frames.find(e => e.layout() === Layout.RIG);
+            return areaStv.frames.find(e => e.layout === Layout.RIG);
         } else if ([this.RIGH, this.RIGHUP, this.RIGMOV].includes(typeOpen)) {
-            return areaStv.frames.find(e => e.layout() === Layout.LEF);
+            return areaStv.frames.find(e => e.layout === Layout.LEF);
         } else if (this.UPPER === typeOpen) {
-            return areaStv.frames.find(e => e.layout() === Layout.TOP);
+            return areaStv.frames.find(e => e.layout === Layout.TOP);
         } else {
-            return areaStv.frames.find(e => e.layout() === Layout.LEF);
+            return areaStv.frames.find(e => e.layout === Layout.LEF);
         }
     }
 };
