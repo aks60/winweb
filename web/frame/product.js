@@ -223,79 +223,82 @@ export function server_to_fields() {
 //Загрузка тегов страницы
 export function local_to_fields(nodeID) {
 
-//    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-//    if (nodeID === -2) {
-//        return;
-//    }
-//    let elem = {};
-//    let id = order.prjprodRec[ePrjprod.id];
-//    let winc = order.wincalcMap.get(id);
-//    if (nodeID === -1) {
-//        elem = {type: 'DEF_PARAM'};
-//    } else {
-//        elem = winc.listElem.find(it => it.id === nodeID);
-//    }
-//    debugger;
-//    //Коробка
-//    if (["RECTANGL", "TRAPEZE", "TRIANGL", "ARCH", "DOOR"].includes(elem.type, 0)) {
-//        let typ = {RECTANGL: 'Окно четырёхугольное', TRAPEZE: 'Окно трапециидальное', TRIANGL: 'Окно треугольное', ARCH: 'Окно арочное', DOOR: 'Дверь'};
-//        $("#tabs-1 :nth-child(1)").text(typ[winc.root.type]);
-//        load_tabs('tabs-1', {
-//            n11: winc.width, n12: winc.height, n13: winc.heightAdd,
-//            n14: winc.color1Rec[eColor.name], n15: winc.color2Rec[eColor.name], n16: winc.color3Rec[eColor.name]
-//        }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
-//        $("#tabs-1").show();
-//
-//        //Парам. по умолчанию
-//    } else if (elem.typeForm() === "DEF_PARAM") {
-//        product.load_table($('#table1'));
-//        $("#tabs-2").show();
-//
-//        //Сторона коробки, створки
-//    } else if (["BOX_SIDE", "STVORKA_SIDE", "IMPOST", "SHTULP", "STOIKA"].includes(elem.type, 0)) {
-//        let lay = {BOTT: 'нижняя', RIGHT: 'правая', TOP: 'верхняя', LEFT: 'левая', VERT: 'вертикальный', HORIZ: 'горизонтальный'};
-//        if (elem.typeForm() === "BOX_SIDE") {
-//            $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + lay[elem.layout]);
-//        } else if (elem.typeForm() === "STVORKA_SIDE") {
-//            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + lay[elem.layout]);
-//        } else {
-//            $("#tabs-3 :nth-child(1)").text('Импост ' + lay[elem.layout]);
-//        }
-//        load_tabs('tabs-3', {
-//            n31: elem.artiklAn[eArtikl.code], n32: elem.artiklAn[eArtikl.name],
-//            n33: elem.color1Rec[eColor.name], n34: elem.color2Rec[eColor.name], n35: elem.color3Rec[eColor.name]
-//        }, ['n31', 'n32', 'n33', 'n34', 'n35']);
-//        $("#tabs-3").show();
-//
-//        //Створка
-//    } else if (elem.typeForm() === "STVORKA") {
-//        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec.list[eFurnituire.id]);
-//        let type_open = TypeOpen1.INVALID[1]; //сторона открывания
-//        for (let k in TypeOpen1) {
-//            if (TypeOpen1[k][0] === elem.typeOpen) {
-//                type_open = TypeOpen1[k][1];
-//            }
-//        }
-//        load_tabs('tabs-4', {
-//            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurnituire.name], n44: type_open,
-//            n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handleRec[eArtikl.name],
-//            n46: findef(elem.handleColor, eColor.id, eColor)[eColor.name],
-//            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
-//            n48: elem.handleHeight,
-//            n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
-//            n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
-//            n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
-//            n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
-//        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
-//        $("#tabs-4").show();
-//
-//        //Стеклопакет
-//    } else if (elem.typeForm() === "GLASS") {
-//        load_tabs('tabs-5', {
-//            n51: elem.artiklRec[eArtikl.code], n52: elem.artiklRec[eArtikl.name], n53: elem.color1Rec[eColor.name]
-//        }, ['n51', 'n52', 'n53']);
-//        $("#tabs-5").show();
-//    }
+    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+    if (nodeID === -2) {
+        return;
+    }
+    let elem = {};
+    let id = order.prjprodRec[ePrjprod.id];
+    let winc = order.wincalcMap.get(id);
+    if (nodeID === -1) {
+        elem = {type: Type.PARAM};
+    } else {
+        elem = winc.listElem.find(it => it.id === nodeID);
+    }
+    debugger;
+    //Коробка
+    if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
+
+        $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
+        load_tabs('tabs-1', {
+            n11: winc.width, n12: winc.height, n13: winc.heightAdd,
+            n14: winc.color1Rec[eColor.name], n15: winc.color2Rec[eColor.name], n16: winc.color3Rec[eColor.name]
+        }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
+        $("#tabs-1").show();
+
+        //Парам. по умолчанию
+    } else if (elem.type === Type.PARAM) {
+        product.load_table($('#table1'));
+        $("#tabs-2").show();
+
+        //Сторона коробки, створки
+    } else if ([Type.BOX_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
+
+        if (elem.type === Type.BOX_SIDE) {
+            $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
+
+        } else if (elem.type === Type.STVORKA_SIDE) {
+            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + elem.layout[1]);
+
+        } else {
+            $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
+        }
+        load_tabs('tabs-3', {
+            n31: elem.artiklAn[eArtikl.code], n32: elem.artiklAn[eArtikl.name],
+            n33: elem.color1Rec[eColor.name], n34: elem.color2Rec[eColor.name], n35: elem.color3Rec[eColor.name]
+        }, ['n31', 'n32', 'n33', 'n34', 'n35']);
+        $("#tabs-3").show();
+
+        //Створка
+    } else if (elem.type === Type.STVORKA) {
+
+        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec.list[eFurnituire.id]);
+        let type_open = TypeOpen1.INVALID[1]; //сторона открывания
+        for (let k in TypeOpen1) {
+            if (TypeOpen1[k][0] === elem.typeOpen) {
+                type_open = TypeOpen1[k][1];
+            }
+        }
+        load_tabs('tabs-4', {
+            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurnituire.name], n44: type_open,
+            n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handleRec[eArtikl.name],
+            n46: findef(elem.handleColor, eColor.id, eColor)[eColor.name],
+            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
+            n48: elem.handleHeight,
+            n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
+            n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
+            n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
+            n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
+        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
+        $("#tabs-4").show();
+
+        //Стеклопакет
+    } else if (elem.type === TypeGLASS) {
+        load_tabs('tabs-5', {
+            n51: elem.artiklRec[eArtikl.code], n52: elem.artiklRec[eArtikl.name], n53: elem.color1Rec[eColor.name]
+        }, ['n51', 'n52', 'n53']);
+        $("#tabs-5").show();
+    }
 }
 
 //Текстура изделия
