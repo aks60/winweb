@@ -186,8 +186,8 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            this.scale = (this.cnv.width / this.width() < this.cnv.height / this.height())
-                    ? this.cnv.width / this.width() : this.cnv.height / this.height();
+            this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
+                    ? this.cnv.width / this.width : this.cnv.height / this.height;
             this.ctx.scale(this.scale, this.scale);
 
             //Прорисовка стеклопакетов
@@ -240,11 +240,11 @@ export class Wincalc {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
-    width() {
+    get width() {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }
 
-    height() {
+    get height() {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
     }
     // </editor-fold>     

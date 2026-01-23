@@ -128,7 +128,7 @@ export function load_tree(tabtree) {
                     })
                     .bind("select_node.jstree", function (evt, data) {
                         let node = $(product.tabtree).jstree("get_selected")[0];
-                        local_to_fields(node);
+                        tree_to_tabs(node);
                     });
         }
     } catch (e) {
@@ -208,7 +208,7 @@ export function server_to_fields() {
 //                            let nodeID = tr[0];
 //                            let elem = winc.listElem.find(it => it.id === nodeID);
 //                            if (elem.typeForm() === 'STVORKA') {
-//                                product.local_to_fields(nodeID);
+//                                tree_to_tabs(nodeID);
 //                            }
 //                        }
 //                    }
@@ -221,39 +221,36 @@ export function server_to_fields() {
 }
 
 //Загрузка тегов страницы
-export function local_to_fields(nodeID) {
-
+export function tree_to_tabs(nodeID) {
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    if (nodeID === -2) {
-        return;
-    }
     let elem = {};
-    let id = order.prjprodRec[ePrjprod.id];
-    let winc = order.wincalcMap.get(id);
-    if (nodeID === -1) {
+    let prgprodID = order.prjprodRec[ePrjprod.id];
+    let winc = order.wincalcMap.get(prgprodID);
+
+    if (nodeID == -1) {
         elem = {type: Type.PARAM};
+    } else if (nodeID == 0) {
+        elem = winc.root;
     } else {
-        elem = winc.listAll.find(it => it.id === nodeID);
+        elem = winc.listAll.find(it => it.id == nodeID);
     }
-    debugger;
     //Коробка
     if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
-
         $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
         load_tabs('tabs-1', {
-            n11: winc.width, n12: winc.height, n13: winc.heightAdd,
-            n14: winc.color1Rec[eColor.name], n15: winc.color2Rec[eColor.name], n16: winc.color3Rec[eColor.name]
-        }, ['n11', 'n12', 'n13', 'n14', 'n15', 'n16']);
+            n11: winc.width, n12: winc.height, n14: eColor.find(winc.colorID1)[eColor.name],
+            n15: eColor.find(winc.colorID2)[eColor.name], n16: eColor.find(winc.colorID3)[eColor.name]
+        }, ['n11', 'n12', 'n14', 'n15', 'n16']);
         $("#tabs-1").show();
 
         //Парам. по умолчанию
     } else if (elem.type === Type.PARAM) {
-        product.load_table($('#table1'));
+            debugger;
+        load_table($('#table1'));
         $("#tabs-2").show();
 
         //Сторона коробки, створки
     } else if ([Type.BOX_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
-
         if (elem.type === Type.BOX_SIDE) {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
 
@@ -520,7 +517,7 @@ export function redraw() {
 
     order.wincalcMap.set(prjprodID, product.winCalc); //новый экз.  
     resize();
-    local_to_fields("0");
+    tree_to_tabs("0");
 }
 
 //Наполнение новыми инпутами шкалы горизонтальных и вертикальных размеров

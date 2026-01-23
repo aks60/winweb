@@ -100,8 +100,7 @@
                         <div id="tabs-1" style="padding: 0px;">  
                             <p class="pantitle">Основные размеры</p> 
                             <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
-                            <jst id="n12" type='txt' label='Высота1' width='80' width2="60"></jst><br>
-                            <jst id="n13" type='txt' label='Высота2' width='80' width2="60"></jst><br>  
+                            <jst id="n12" type='txt' label='Высота' width='80' width2="60"></jst><br>
                             <p class="pantitle">Текстура изделия</p> 
                             <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="product.color_to_windows('n14');"></jst><br>
                             <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_windows('n15');"></jst><br>
