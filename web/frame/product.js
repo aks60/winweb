@@ -233,7 +233,7 @@ export function local_to_fields(nodeID) {
     if (nodeID === -1) {
         elem = {type: Type.PARAM};
     } else {
-        elem = winc.listElem.find(it => it.id === nodeID);
+        elem = winc.listAll.find(it => it.id === nodeID);
     }
     debugger;
     //Коробка
