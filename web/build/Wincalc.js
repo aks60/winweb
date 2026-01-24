@@ -1,6 +1,7 @@
 
 import {UGeo} from './model/uGeo.js';
-import {Type} from '../enums/enums.js';
+import {UCom} from '../common/uCom.js';
+import {Type, PKjson} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
@@ -78,6 +79,7 @@ export class Wincalc {
                 this.root = new AreaDoor(this, this.gson, null);
                 this.root.type = Type.DOOR;
             }
+            this.parametr(this.gson.param);
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
 
@@ -92,7 +94,41 @@ export class Wincalc {
         }
     }
 
-    //Цыклическое заполнение root по содержимому gson 
+    //Параметры системы(технолога) + параметры менеджера
+    parametr(param) {
+                    debugger;
+        try {
+            //Параметры системы конструкции
+            eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] == this.nuni)
+                    .forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
+
+            if (UCom.isFinite(param, PKjson.ioknaParam)) {
+                //Добавим к параметрам системы конструкции параметры конкретной конструкции
+                let ioknaParamArr = param[PKjson.ioknaParam];
+                for (const ioknaID of ioknaParamArr) { //цикл по параметрам менеджера
+                    //Найдём record paramsRec и syspar1Rec;   
+                    if (ioknaID < 0) {
+                        let paramsRec = eParams.list.find(rec => rec.id == ioknaID); //параметр менеджера
+                        let syspar1Rec = this.mapPardef[paramsRec[eParams.groups_id]];
+                        if (syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
+                            syspar1Rec[eParams.text] = paramsRec[eParams.text]; //накладываем параметр менеджера
+                        }
+                    } else {
+                        let paramsRec = eParams.find(ioknaID); //параметр менеджера
+                        let syspar1Rec = this.mapPardef[paramsRec[eParams.groups_id]];
+                        if (syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
+                            let text = eColor.find(paramsRec[eParmap.color_id1])[eColor.name];
+                            syspar1Rec[eParams.text] = text; //накладываем параметр менеджера
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            errorLog('Error: Wincalc.parametr() ' + e.message);
+        }
+    }
+
+    //Цыклическое заполнение root по содержимому скрипта gson 
     creator(owner, gson) {
         try {
             let hmDip = new Map();
@@ -249,7 +285,7 @@ export class Wincalc {
     }
     // </editor-fold>     
 
-// <editor-fold defaultstate="collapsed" desc="SUPPORT"> 
+    // <editor-fold defaultstate="collapsed" desc="SUPPORT"> 
     arr_of_winc(area) {
         if (area.id == 0) {
             this.areaList.push(this.root);

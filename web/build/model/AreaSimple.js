@@ -44,7 +44,7 @@ export class AreaSimple extends Com5t {
      */
     initParametr(param) {
         try {
-            if (param !== undefined && param[PKjson.ioknaParam] !== undefined) {
+            if (UCom.isFinite(param, PKjson.ioknaParam)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 let ioknaParamArr = param[PKjson.ioknaParam];
                 for (const ioknaID of ioknaParamArr) { //цикл по пааметрам менеджера

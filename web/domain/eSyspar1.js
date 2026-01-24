@@ -6,5 +6,12 @@ eSyspar1 = {
     groups_id: 3, //Название параметра
     systree_id: 4, //Система
     fixed: 5, //Закреплено
-    vrec: virtualRec(6)
+    vrec: virtualRec(6),
+    filter(_nuni) {
+        try {
+            return list.filter(rec => rec[systree_id] == _nuni);
+        } catch (e) {
+            errorLog('Error: eSyspar1.filter() ' + e.message);
+        }
+    }
 };
