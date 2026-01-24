@@ -80,10 +80,9 @@ export function load_table2(rowid) {
     order.orderID = projectRow.id;
     order.wincalcMap.clear();
     //Очистим таблицу конструкций
-    let j = 1;
     let rc = order.table2.rows.length;
-    for (let i = j; i < rc; i++) {
-        order.table2.deleteRow(j);
+    for (let i = 1; i < rc; i++) {
+        order.table2.deleteRow(1);
     }
     //Заполним табл. конструкций            
     let prjprodList = ePrjprod.list.filter(rec => projectRow.id == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id

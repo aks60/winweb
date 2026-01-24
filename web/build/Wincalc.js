@@ -96,7 +96,6 @@ export class Wincalc {
 
     //Параметры системы(технолога) + параметры менеджера
     parametr(param) {
-                    debugger;
         try {
             //Параметры системы конструкции
             eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] == this.nuni)
@@ -108,14 +107,14 @@ export class Wincalc {
                 for (const ioknaID of ioknaParamArr) { //цикл по параметрам менеджера
                     //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
-                        let paramsRec = eParams.list.find(rec => rec.id == ioknaID); //параметр менеджера
-                        let syspar1Rec = this.mapPardef[paramsRec[eParams.groups_id]];
+                        let paramsRec = eParams.list.find(rec => rec[eParams.id] == ioknaID); //параметр менеджера
+                        let syspar1Rec = this.mapPardef.get(paramsRec[eParams.groups_id]);
                         if (syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
                             syspar1Rec[eParams.text] = paramsRec[eParams.text]; //накладываем параметр менеджера
                         }
                     } else {
                         let paramsRec = eParams.find(ioknaID); //параметр менеджера
-                        let syspar1Rec = this.mapPardef[paramsRec[eParams.groups_id]];
+                        let syspar1Rec = this.mapPardef.get(paramsRec[eParams.groups_id]);
                         if (syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
                             let text = eColor.find(paramsRec[eParmap.color_id1])[eColor.name];
                             syspar1Rec[eParams.text] = text; //накладываем параметр менеджера

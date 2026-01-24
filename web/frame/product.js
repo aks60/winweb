@@ -68,18 +68,21 @@ export function init_table() {
 
 //Загрузка данных в таблицу
 export function load_table() {
+    debugger;
     try {
         let syspar1List2 = [];
         $(product.table1).jqGrid('clearGridData', true);
         let winc = get_winc();
-        for (let val of winc.root.pardefMap.values()) {
-            syspar1List2.push(val);
+        for (let rec of winc.mapPardef.values()) {
+            syspar1List2.push(rec);
         }
         syspar1List2.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
         for (let i = 0; i < syspar1List2.length; i++) {
 
             let tr = syspar1List2[i];
-            let paramsRec = eParams.list.find(tr => tr[eSyspar1.params_id] === tr[eParams.id]);
+            
+            let paramsRec = eParams.list.find(rec => tr[eSyspar1.groups_id] === rec[eParams.id]);
+            
             $(product.table1).jqGrid('addRowData', i + 1, {
 
                 id: tr[eSyspar1.id],
@@ -245,7 +248,6 @@ export function tree_to_tabs(nodeID) {
 
         //Парам. по умолчанию
     } else if (elem.type === Type.PARAM) {
-            debugger;
         load_table($('#table1'));
         $("#tabs-2").show();
 

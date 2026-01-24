@@ -12,7 +12,6 @@ export class AreaSimple extends Com5t {
         try {
             super(winc, gson, owner);
             this.initConstructiv(gson.param);
-            this.initParametr(gson.param);
             this.winc.listArea.push(this);
             this.winc.listAll.push(this);
         } catch (e) {
@@ -35,40 +34,7 @@ export class AreaSimple extends Com5t {
             errorLog('Error: AreaSimple.initConstructiv() ' + e.message);
         }
     }
-    /**
-     * Параметры системы(технолога) + параметры менеджера В таблице syspar1 для
-     * каждой системы лежат параметры по умолчанию от технолога. К параметрам от
-     * технолога замешиваем параметры от менеджера см. скрирт, например
-     * {"ioknaParam": [-8252]}. При этом в winc.mapPardef будут изменения с
-     * учётом менеджера.
-     */
-    initParametr(param) {
-        try {
-            if (UCom.isFinite(param, PKjson.ioknaParam)) {
-                //Добавим к параметрам системы конструкции параметры конкретной конструкции
-                let ioknaParamArr = param[PKjson.ioknaParam];
-                for (const ioknaID of ioknaParamArr) { //цикл по пааметрам менеджера
-                    //Найдём record paramsRec и syspar1Rec;   
-                    if (ioknaID < 0) {
-                        let paramsRec = eParams.find(ioknaID); //параметр менеджера
-                        let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
-                        if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
-                            syspar1Rec[eParams.text] = paramsRec[eParams.text]; //накладываем параметр менеджера
-                        }
-                    } else {
-                        let paramsRec = eParams.find(ioknaID); //параметр менеджера
-                        let syspar1Rec = this.winc.mapPardef[paramsRec[eParams.groups_id]];
-                        if (syspar1Rec !== null && syspar1Rec !== undefined) { //ситуация если конструкция с nuni = -3, т.е. модели
-                            let text = eColor.find(paramsRec[eParmap.color_id1])[eColor.name];
-                            syspar1Rec[eParams.text] = text; //накладываем параметр менеджера
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            errorLog("Error: AreaSimple.initParametr() " + e);
-        }
-    }
+
     setLocation() {
         try {
             let geoShell = this.area.getGeometryN(0);
