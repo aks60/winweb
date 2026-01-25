@@ -43,7 +43,7 @@ export class AreaStvorka extends AreaSimple {
                 //owner.area - если нет полигона створки в гл.окне, this.area  - получается при распиле owner.area импостом
                 let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                         || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
-//debugger;
+
                 //Полигон створки с учётом нахлёста 
                 let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
                 let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
@@ -118,8 +118,10 @@ export class AreaStvorka extends AreaSimple {
             if (UCom.isFinite(param, PKjson.colorLock)) {
                 tis.lockColor = param[PKjson.colorLock];
             }
+            debugger;
             //Сторона открывания
             if (UCom.isFinite(param, PKjson.typeOpen)) {
+                let o1 = param[PKjson.typeOpen];
                 this.typeOpen = TypeOpen1[param[PKjson.typeOpen]];
             } else {
                 let index = this.sysfurnRec[eSysfurn.side_open];

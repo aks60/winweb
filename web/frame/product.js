@@ -1,5 +1,5 @@
 
-import {Type, Layout} from '../enums/enums.js';
+import {Type, TypeOpen1, Layout} from '../enums/enums.js';
 import {get_winc} from './order.js';
 import {UGeo} from '../build/model/uGeo.js';
 
@@ -45,14 +45,16 @@ export function init_table() {
             datatype: "local",
             gridview: true,
             rownumbers: true,
-            autowidth: true,
-            height: "auto",
+            height: 246,
+            width: null,
+            shrinkToFit: false,
+            scroll: "true",
             colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
             colModel: [
                 {name: 'id', hidden: true, key: true},
-                {name: 'text', width: 220, sorttype: "text", edittype: "button"},
-                {name: 'val', width: 180, sorttype: "text"},
-                {name: 'fixed', width: 60, sorttype: "text"}
+                {name: 'text', width: 190, sorttype: "text", edittype: "button"},
+                {name: 'val', width: 120, sorttype: "text"},
+                {name: 'fixed', width: 20, sorttype: "text"}
 
             ], ondblClickRow: function (rowid) {
                 $('#dialog-dic').load('frame/dialog/param.jsp');
@@ -68,25 +70,22 @@ export function init_table() {
 
 //Загрузка данных в таблицу
 export function load_table() {
-    debugger;
     try {
-        let syspar1List2 = [];
+        debugger;
+        let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
         let winc = get_winc();
-        for (let rec of winc.mapPardef.values()) {
-            syspar1List2.push(rec);
+        for (let syspar1Rec of winc.mapPardef.values()) {
+            syspar1List.push(syspar1Rec);
         }
-        syspar1List2.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
-        for (let i = 0; i < syspar1List2.length; i++) {
+        syspar1List.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
+        for (let i = 0; i < syspar1List.length; i++) {
+            let tr = syspar1List[i];
 
-            let tr = syspar1List2[i];
-            
-            let paramsRec = eParams.list.find(rec => tr[eSyspar1.groups_id] === rec[eParams.id]);
-            
+            let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === tr[eSyspar1.groups_id])
             $(product.table1).jqGrid('addRowData', i + 1, {
-
                 id: tr[eSyspar1.id],
-                text: paramsRec[eParams.text],
+                text: groupsRec[eGroups.name],
                 val: tr[eSyspar1.text],
                 fixed: tr[eSyspar1.fixed]
             });
@@ -226,10 +225,12 @@ export function server_to_fields() {
 //Загрузка тегов страницы
 export function tree_to_tabs(nodeID) {
     $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    let elem = {};
+    if (nodeID === "-2")
+        return;
     let prgprodID = order.prjprodRec[ePrjprod.id];
     let winc = order.wincalcMap.get(prgprodID);
 
+    let elem = {};
     if (nodeID == -1) {
         elem = {type: Type.PARAM};
     } else if (nodeID == 0) {
@@ -237,6 +238,7 @@ export function tree_to_tabs(nodeID) {
     } else {
         elem = winc.listAll.find(it => it.id == nodeID);
     }
+
     //Коробка
     if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
         $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
@@ -252,34 +254,39 @@ export function tree_to_tabs(nodeID) {
         $("#tabs-2").show();
 
         //Сторона коробки, створки
-    } else if ([Type.BOX_SIDE, Type.STVORKA_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
+    } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
+
         if (elem.type === Type.BOX_SIDE) {
             $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
 
-        } else if (elem.type === Type.STVORKA_SIDE) {
+        } else if (elem.type === Type.STV_SIDE) {
             $("#tabs-3 :nth-child(1)").text('Сторона створки ' + elem.layout[1]);
 
         } else {
             $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
         }
+        let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
+        let color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2);
+        let color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
         load_tabs('tabs-3', {
-            n31: elem.artiklAn[eArtikl.code], n32: elem.artiklAn[eArtikl.name],
-            n33: elem.color1Rec[eColor.name], n34: elem.color2Rec[eColor.name], n35: elem.color3Rec[eColor.name]
+            n31: elem.artiklRecAn[eArtikl.code], n32: elem.artiklRecAn[eArtikl.name],
+            n33: color1Rec[eColor.name], n34: color2Rec[eColor.name], n35: color3Rec[eColor.name]
         }, ['n31', 'n32', 'n33', 'n34', 'n35']);
         $("#tabs-3").show();
 
         //Створка
     } else if (elem.type === Type.STVORKA) {
-
-        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec.list[eFurnituire.id]);
-        let type_open = TypeOpen1.INVALID[1]; //сторона открывания
-        for (let k in TypeOpen1) {
+//debugger;
+        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
+        let type_open = TypeOpen1.EMPTY[2]; //сторона открывания
+        let o1 = elem.typeOpen;
+        for (let k in TypeOpen1) {  
             if (TypeOpen1[k][0] === elem.typeOpen) {
-                type_open = TypeOpen1[k][1];
+                type_open = TypeOpen1[k][2];
             }
         }
         load_tabs('tabs-4', {
-            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurnituire.name], n44: type_open,
+            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurniture.name], n44: type_open,
             n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handleRec[eArtikl.name],
             n46: findef(elem.handleColor, eColor.id, eColor)[eColor.name],
             n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],

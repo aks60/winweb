@@ -24,9 +24,9 @@ export class Com5t {
     artiklRec = null; //мат.средства
     artiklRecAn = null; //аналог.мат.средств    
 
-    color1Rec = null; //базовый
-    color2Rec = null; //внутренний
-    color3Rec = null; //внешний
+    colorID1 = null; //базовый
+    colorID2 = null; //внутренний
+    colorID3 = null; //внешний
 
     constructor(winc, gson, owner) {
         try {
@@ -35,9 +35,6 @@ export class Com5t {
             this.root = winc.root;
             this.owner = owner;
             this.gson = gson;
-            this.color1Rec = winc.color1Rec;
-            this.color2Rec = winc.color2Rec;
-            this.color3Rec = winc.color3Rec;
         } catch (e) {
             errorLog('Error: Com5t.constructor() ' + e.message);
         }

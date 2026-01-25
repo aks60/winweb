@@ -23,5 +23,13 @@ export const TypeOpen1 = {
         } else {
             return areaStv.frames.find(e => e.layout === Layout.LEF);
         }
-    }
+    },
+    getTypeOpen(ID) {
+        for (let it of this.values()) {
+            if (it[0] === ID) {
+                return it;
+            }
+        }
+        return undefined;
+    }    
 };

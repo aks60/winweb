@@ -107,7 +107,7 @@
                             <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_windows('n16');"></jst><br>
                         </div>
                         <div id="tabs-2" style="padding: 0px; display: none;">   
-                            <table id="table1"  class="ui-jqgrid-btable"></table> 
+                            <table id="table1"  class="ui-jqgrid-btable"></table>
                         </div>
 
                         <div id="tabs-3" style="padding: 0px; display: none;">
