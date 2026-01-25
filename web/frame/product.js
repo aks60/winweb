@@ -1,5 +1,5 @@
 
-import {Type, TypeOpen1, Layout} from '../enums/enums.js';
+import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
 import {get_winc} from './order.js';
 import {UGeo} from '../build/model/uGeo.js';
 
@@ -276,22 +276,32 @@ export function tree_to_tabs(nodeID) {
 
         //Створка
     } else if (elem.type === Type.STVORKA) {
-//debugger;
+        
         let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
-        let type_open = TypeOpen1.EMPTY[2]; //сторона открывания
-        let o1 = elem.typeOpen;
-        for (let k in TypeOpen1) {  
-            if (TypeOpen1[k][0] === elem.typeOpen) {
-                type_open = TypeOpen1[k][2];
-            }
-        }
+        let env = elem.area.getGeometryN(0).getEnvelopeInternal();
+
+        let n41 = env.getWidth();
+        let n42 = env.getHeight();
+        let n43 = furnitureRec[eFurniture.name];
+        let n44 = elem.typeOpen[2];
+        let n45 = elem.handRec[eArtikl.code] + ' ÷ ' + elem.handRec[eArtikl.name];
+        let n46 = findef(elem.handColor, eColor.id, eColor)[eColor.name];
+        let n47 = elem.handLayout[1];
+        
+        debugger;
+        
+        let n48 = elem.handHeight;
+        let n49 = elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name];
+        let n4A = findef(elem.loopColor, eColor.id, eColor)[eColor.name];
+        let n4B = elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name];
+        let n4C = findef(elem.lockColor, eColor.id, eColor)[eColor.name];
+
         load_tabs('tabs-4', {
-            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurniture.name], n44: type_open,
-            n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handleRec[eArtikl.name],
-            n46: findef(elem.handleColor, eColor.id, eColor)[eColor.name],
-            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handleLayout],
-            n48: elem.handleHeight,
-            n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
+            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurniture.name], n44: elem.typeOpen[2],
+            n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handRec[eArtikl.name],
+            n46: findef(elem.handColor, eColor.id, eColor)[eColor.name],
+            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handLayout],
+            n48: elem.handHeight, n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
             n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
             n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
             n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],

@@ -11,10 +11,6 @@ export const TypeOpen1 = {
     REQUEST: [16, "Запрос", "Не определено"],
     getHand(areaStv, typeOpen) {
         if ([this.LEFT, this.LEFTUP, this.LEFMOV].includes(typeOpen)) {
-            for(let e of areaStv.frames) {
-                let o1 = e.layout;
-                let o2 = 0;
-            }
             return areaStv.frames.find(e => e.layout === Layout.RIG);
         } else if ([this.RIGH, this.RIGHUP, this.RIGMOV].includes(typeOpen)) {
             return areaStv.frames.find(e => e.layout === Layout.LEF);
@@ -24,12 +20,13 @@ export const TypeOpen1 = {
             return areaStv.frames.find(e => e.layout === Layout.LEF);
         }
     },
-    getTypeOpen(ID) {
-        for (let it of this.values()) {
-            if (it[0] === ID) {
-                return it;
-            }
+    typeOpen(ID) {
+        for (let key in this) {
+           if(this[key][0] == ID) {
+              return this[key];
+           }
         }
-        return undefined;
     }    
 };
+Object.defineProperty(TypeOpen1 , "getHand", { enumerable: false });
+Object.defineProperty(TypeOpen1 , "typeOpen", { enumerable: false });

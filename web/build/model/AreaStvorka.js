@@ -116,13 +116,11 @@ export class AreaStvorka extends AreaSimple {
             }
             //Текстура замка
             if (UCom.isFinite(param, PKjson.colorLock)) {
-                tis.lockColor = param[PKjson.colorLock];
+                this.lockColor = param[PKjson.colorLock];
             }
-            debugger;
             //Сторона открывания
             if (UCom.isFinite(param, PKjson.typeOpen)) {
-                let o1 = param[PKjson.typeOpen];
-                this.typeOpen = TypeOpen1[param[PKjson.typeOpen]];
+                this.typeOpen = TypeOpen1.typeOpen(param[PKjson.typeOpen]);
             } else {
                 let index = this.sysfurnRec[eSysfurn.side_open];
                 this.typeOpen = (index === TypeOpen2.REQ[0]) ? this.typeOpen

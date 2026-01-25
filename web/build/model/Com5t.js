@@ -51,7 +51,14 @@ export class Com5t {
     color() {
         return (this.timer.timerId !== null) ? [255, 120, 0] : this.color2Rec[eColor.rgb];
     }
+    
+    width() {
+        return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
+    }
 
+    height() {
+        return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
+    }
     get x1() {
         return this.gson.x1;
     }
