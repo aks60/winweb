@@ -234,12 +234,12 @@ export class Wincalc {
             //Прорисовка рам
             let arr = this.listElem.filter(el => el.type === Type.BOX_SIDE);
             this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
-//debugger;
+
             //Прорисовка рам створок
             this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
 
             //Прорисока фурнитуры створок
-            //this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());          
+            this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
@@ -253,9 +253,10 @@ export class Wincalc {
 
         if (element instanceof LineString) {
             this.ctx.beginPath();
-            this.ctx.moveTo(coo[0].x, coo[0].y);
-            this.ctx.lineTo(coo[1].x2, coo[1].y2);
-            this.ctx.closePath();
+            this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
+            for (let i = 0; i < coo.length; i++)
+                this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
+            this.ctx.closePath(); //замыкаем контур   
 
         } else if (element instanceof Polygon) {
             this.ctx.beginPath();

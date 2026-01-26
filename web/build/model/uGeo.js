@@ -221,7 +221,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     return coord;
 };
 UGeo.getSegment = (poly, index) => {
-    //poly = poly.getGeometryN(0);
+    poly = poly.getGeometryN(0);
     let coo = structuredClone(poly.getCoordinates());
     coo.length = coo.length - 1;
     index = (index >= coo.length) ? index - coo.length : index;

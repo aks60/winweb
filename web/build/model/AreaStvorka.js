@@ -234,7 +234,7 @@ export class AreaStvorka extends AreaSimple {
 
     paint() {
         if (this.winc.sceleton === false) {
-            this.winc.ctx.lineWidth = 8;
+            this.winc.ctx.lineWidth = 4;
 
             if (this.handOpen !== null) {
                 this.winc.ctx.strokeStyle = '#000000';
@@ -246,8 +246,7 @@ export class AreaStvorka extends AreaSimple {
                     this.winc.paint(this.lineOpenVer);
                 }
                 this.colorRec = eColor.find(this.handColor);
-                let rgb = colorRec[eColor.rgb].toString(16);
-
+                let rgb = this.colorRec[eColor.rgb].toString(16);
                 this.winc.ctx.fillStyle = '#' + rgb;
                 this.winc.paint(this.handOpen);
             }
