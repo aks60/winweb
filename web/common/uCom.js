@@ -41,17 +41,3 @@ UCom.getJson = (json1, json2) => {
 UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
-
-UCom.layout = (list, layout) => {
-    try {
-        let elem = list.filter(e => e.layout === layout);
-        return elem;
-
-    } catch (e) {
-        errorLog("Error: UCom.layout()");
-    }
-    return null;
-}
-
-
-

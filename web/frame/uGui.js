@@ -155,11 +155,9 @@ function card_deploy2(taq, type) {
     }
 }
 //------------------------------------------------------------------------------
-function load_tabs(selector, record, fields) {
-
-    for (let field of fields) {
-        let value = record[field];
-        $("#" + field).val(value);
+function load_tabs(records) {
+    for(let key in records) {
+        $("#" + key).val(records[key]);
     }
 }
 //------------------------------------------------------------------------------

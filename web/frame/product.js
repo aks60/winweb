@@ -224,170 +224,159 @@ export function server_to_fields() {
 
 //Загрузка тегов страницы
 export function tree_to_tabs(nodeID) {
-    $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
-    if (nodeID === "-2")
-        return;
-    let prgprodID = order.prjprodRec[ePrjprod.id];
-    let winc = order.wincalcMap.get(prgprodID);
+    try {
+        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+        if (nodeID !== '-2') {
+            let prgprodID = order.prjprodRec[ePrjprod.id];
+            let winc = order.wincalcMap.get(prgprodID);
+            let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
+                    ? winc.root  : winc.listAll.find(it => it.id === Number(nodeID));
 
-    let elem = {};
-    if (nodeID == -1) {
-        elem = {type: Type.PARAM};
-    } else if (nodeID == 0) {
-        elem = winc.root;
-    } else {
-        elem = winc.listAll.find(it => it.id == nodeID);
-    }
+            //Коробка
+            if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
+                $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
+                load_tabs({
+                    n11: winc.width,
+                    n12: winc.height,
+                    n14: eColor.find(winc.colorID1)[eColor.name],
+                    n15: eColor.find(winc.colorID2)[eColor.name],
+                    n16: eColor.find(winc.colorID3)[eColor.name]
+                });
+                $("#tabs-1").show();
 
-    //Коробка
-    if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
-        $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
-        load_tabs('tabs-1', {
-            n11: winc.width, n12: winc.height, n14: eColor.find(winc.colorID1)[eColor.name],
-            n15: eColor.find(winc.colorID2)[eColor.name], n16: eColor.find(winc.colorID3)[eColor.name]
-        }, ['n11', 'n12', 'n14', 'n15', 'n16']);
-        $("#tabs-1").show();
+                //Парам. по умолчанию
+            } else if (elem.type === Type.PARAM) {
+                load_table($('#table1'));
+                $("#tabs-2").show();
 
-        //Парам. по умолчанию
-    } else if (elem.type === Type.PARAM) {
-        load_table($('#table1'));
-        $("#tabs-2").show();
+                //Сторона коробки, створки
+            } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
+                if (elem.type === Type.BOX_SIDE) {
+                    $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
+                } else if (elem.type === Type.STV_SIDE) {
+                    $("#tabs-3 :nth-child(1)").text('Сторона створки ' + elem.layout[1]);
+                } else {
+                    $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
+                }
+                let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1),
+                        color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2),
+                        color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
+                load_tabs({
+                    n31: elem.artiklRecAn[eArtikl.code],
+                    n32: elem.artiklRecAn[eArtikl.name],
+                    n33: color1Rec[eColor.name],
+                    n34: color2Rec[eColor.name],
+                    n35: color3Rec[eColor.name]
+                });
+                $("#tabs-3").show();
 
-        //Сторона коробки, створки
-    } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
+                //Створка
+            } else if (elem.type === Type.STVORKA) {
+                let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
+                let env = elem.area.getGeometryN(0).getEnvelopeInternal();
+                load_tabs({
+                    n41: env.getWidth(),
+                    n42: env.getHeight(),
+                    n43: furnitureRec[eFurniture.name],
+                    n44: elem.typeOpen[2],
+                    n45: elem.handRec[eArtikl.code] + ' ÷ ' + elem.handRec[eArtikl.name],
+                    n46: findef(elem.handColor, eColor.id, eColor)[eColor.name],
+                    n47: elem.handLayout[1],
+                    n48: elem.handHeight,
+                    n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
+                    n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
+                    n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
+                    n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
+                });
+                $("#tabs-4").show();
 
-        if (elem.type === Type.BOX_SIDE) {
-            $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
-
-        } else if (elem.type === Type.STV_SIDE) {
-            $("#tabs-3 :nth-child(1)").text('Сторона створки ' + elem.layout[1]);
-
-        } else {
-            $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
+                //Стеклопакет
+            } else if (elem.type === Type.GLASS) {
+                let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);        
+                load_tabs({
+                    n51: elem.artiklRec[eArtikl.code],
+                    n52: elem.artiklRec[eArtikl.name],
+                    n53: color1Rec[eColor.name]
+                });
+                $("#tabs-5").show();
+            }
         }
-        let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
-        let color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2);
-        let color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
-        load_tabs('tabs-3', {
-            n31: elem.artiklRecAn[eArtikl.code], n32: elem.artiklRecAn[eArtikl.name],
-            n33: color1Rec[eColor.name], n34: color2Rec[eColor.name], n35: color3Rec[eColor.name]
-        }, ['n31', 'n32', 'n33', 'n34', 'n35']);
-        $("#tabs-3").show();
-
-        //Створка
-    } else if (elem.type === Type.STVORKA) {
-        
-        let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
-        let env = elem.area.getGeometryN(0).getEnvelopeInternal();
-
-        let n41 = env.getWidth();
-        let n42 = env.getHeight();
-        let n43 = furnitureRec[eFurniture.name];
-        let n44 = elem.typeOpen[2];
-        let n45 = elem.handRec[eArtikl.code] + ' ÷ ' + elem.handRec[eArtikl.name];
-        let n46 = findef(elem.handColor, eColor.id, eColor)[eColor.name];
-        let n47 = elem.handLayout[1];
-        
-        debugger;
-        
-        let n48 = elem.handHeight;
-        let n49 = elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name];
-        let n4A = findef(elem.loopColor, eColor.id, eColor)[eColor.name];
-        let n4B = elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name];
-        let n4C = findef(elem.lockColor, eColor.id, eColor)[eColor.name];
-
-        load_tabs('tabs-4', {
-            n41: elem.width, n42: elem.height, n43: furnitureRec[eFurniture.name], n44: elem.typeOpen[2],
-            n45: elem.handleRec[eArtikl.code] + ' ÷ ' + elem.handRec[eArtikl.name],
-            n46: findef(elem.handColor, eColor.id, eColor)[eColor.name],
-            n47: {MIDL: 'По середине', CONST: 'Константная', VARIAT: 'Установлена'}[elem.handLayout],
-            n48: elem.handHeight, n49: elem.loopRec[eArtikl.code] + ' ÷ ' + elem.loopRec[eArtikl.name],
-            n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
-            n4B: elem.lockRec[eArtikl.code] + ' ÷ ' + elem.lockRec[eArtikl.name],
-            n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
-        }, ['n41', 'n42', 'n43', 'n44', 'n45', 'n46', 'n47', 'n48', 'n49', 'n4A', 'n4B', 'n4C']);
-        $("#tabs-4").show();
-
-        //Стеклопакет
-    } else if (elem.type === TypeGLASS) {
-        load_tabs('tabs-5', {
-            n51: elem.artiklRec[eArtikl.code], n52: elem.artiklRec[eArtikl.name], n53: elem.color1Rec[eColor.name]
-        }, ['n51', 'n52', 'n53']);
-        $("#tabs-5").show();
+    } catch (e) {
+        errorLog('Error: product.tree_to_fields() ' + e.message);
     }
 }
 
 //Текстура изделия
 export function color_to_windows(btnSrc) {
-    //try {
-    let winc = order.wincalcMap.get(order.prjprodRec[ePrjprod.id]);
-    let groupSet = new Set();
-    let colorSet = new Set();
+    try {
+        let winc = order.wincalcMap.get(order.prjprodRec[ePrjprod.id]);
+        let groupSet = new Set();
+        let colorSet = new Set();
 
-    let groupTxt = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.cgrp];
-    let groupArr = (groupTxt === null) ? null : parserInt(groupTxt);
-    let colorTxt = (btnSrc == 'n14') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col1]
-            : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col2]
-            : eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col3];
-    let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
+        let groupTxt = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.cgrp];
+        let groupArr = (groupTxt === null) ? null : parserInt(groupTxt);
+        let colorTxt = (btnSrc == 'n14') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col1]
+                : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col2]
+                : eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col3];
+        let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
 
-    //Поле группы текстур заполнено
-    if (groupArr != null) {
-        for (let s1 of groupArr) { //группы
-            let groupSet2 = new Set();
-            let colorSet2 = new Set();
-            let b = false;
-            for (let rec of eColor.list) {
-                if (rec[eColor.colgrp_id] === s1) {
-                    groupSet2.add(rec[eColor.colgrp_id]); //группы
-                    colorSet2.add(rec); //текстуры
-                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                        if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-                            b = true;
-                        }
-                    }
-                }
-            }
-            if (b === false) { //если небыло пападаний то добавляем всю группу
-                groupSet.add(groupSet2);
-                colorSet.add(colorSet2);
-            }
-        }
-    }
-    //Поле текстур заполнено
-    if (colorArr.length != 0) {
-        for (let rec of eColor.list) {
-            if (groupArr != null) {
-
-                for (let s1 of groupArr) { //группы
+        //Поле группы текстур заполнено
+        if (groupArr != null) {
+            for (let s1 of groupArr) { //группы
+                let groupSet2 = new Set();
+                let colorSet2 = new Set();
+                let b = false;
+                for (let rec of eColor.list) {
                     if (rec[eColor.colgrp_id] === s1) {
-                        for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                        groupSet2.add(rec[eColor.colgrp_id]); //группы
+                        colorSet2.add(rec); //текстуры
+                        for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
                             if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-                                groupSet.add(rec[eColor.colgrp_id]);
-                                colorSet.add(rec);
+                                b = true;
                             }
                         }
                     }
                 }
-            } else {
-                for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-                    if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-                        groupSet.add(rec[eColor.colgrp_id]);
-                        colorSet.add(rec);
+                if (b === false) { //если небыло пападаний то добавляем всю группу
+                    groupSet.add(groupSet2);
+                    colorSet.add(colorSet2);
+                }
+            }
+        }
+        //Поле текстур заполнено
+        if (colorArr.length != 0) {
+            for (let rec of eColor.list) {
+                if (groupArr != null) {
+
+                    for (let s1 of groupArr) { //группы
+                        if (rec[eColor.colgrp_id] === s1) {
+                            for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                                if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
+                                    groupSet.add(rec[eColor.colgrp_id]);
+                                    colorSet.add(rec);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                        if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
+                            groupSet.add(rec[eColor.colgrp_id]);
+                            colorSet.add(rec);
+                        }
                     }
                 }
             }
         }
-    }
-    dbrec.parent = 'winc';
-    product.groupSet = groupSet;
-    product.colorArr = Array.from(colorSet);
-    product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frame/dialog/color.jsp');
+        dbrec.parent = 'winc';
+        product.groupSet = groupSet;
+        product.colorArr = Array.from(colorSet);
+        product.buttonSrc = btnSrc;
+        $('#dialog-dic').load('frame/dialog/color.jsp');
 
-    //} catch (e) {
-    //    console.error('Error:product.color_to_windows() ' + e.message);
-    //}
+    } catch (e) {
+        errorLog('Error: product.color_to_windows() ' + e.message);
+    }
 }
 
 export function sysprof_to_frame(btnSrc) {

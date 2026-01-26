@@ -189,8 +189,8 @@ export class AreaStvorka extends AreaSimple {
 
                 //Линии вертик. открывания
                 if (this.typeOpen === TypeOpen1.LEFTUP || this.typeOpen === TypeOpen1.RIGHUP) {
-                    let stv2 = UCom.layout(this.frames, Layout.TOP);
-                    ind = UGeo.getIndex(this.area, stv2.id);
+                    stvside = this.frames.find(el => el.layout === Layout.TOP);
+                    ind = UGeo.getIndex(this.area, stvside.id);
                     let p2 = UGeo.getSegment(this.area, ind).midPoint();
                     s1 = UGeo.getSegment(this.area, ind - 1);
                     s2 = UGeo.getSegment(this.area, ind + 1);
