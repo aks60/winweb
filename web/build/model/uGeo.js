@@ -7,6 +7,8 @@ import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js'
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js'
+import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js'
+
 
 export let UGeo = {};
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
@@ -43,7 +45,7 @@ UGeo.splitPolygon = (geom, segm) => {
         let segmImp = UGeo.normalizeSegm(LineSegment.new(
                 [segm.p0.x, segm.p0.y, segm.p0.z],
                 [segm.p1.x, segm.p1.y, segm.p1.z]));
-                
+
         //Вставим точки пересечения в список коорд.
         const pointloc = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
@@ -60,17 +62,17 @@ UGeo.splitPolygon = (geom, segm) => {
                 }
             }
             listExt.push(coo[i]);
-        }     
+        }
         //Обход сегментов до и после точек пересечения
         for (let i = 0; i < listExt.length; ++i) {
             let co = listExt[i];
-            
+
             //Проход через точку пересечения
             if (Number.isNaN(co.z)) {
                 b = !b; //первая точка пройдена
                 let cL = Coordinate.new(co.x, co.y, segmImp.p0.z);
                 let cR = Coordinate.new(co.x, co.y);
-                
+
                 if (crosTwo[0] === co) {
                     cL.z = segmImp.p0.z;
                     cR.z = listExt[i - 1].z;
@@ -80,21 +82,21 @@ UGeo.splitPolygon = (geom, segm) => {
                 }
                 cooL.push(cL);
                 cooR.push(cR);
-                
+
             } else { //Построение координат слева и справа от импоста
                 ((b === true) ? cooL : cooR).push(co);
             }
-        }    
+        }
 
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
             cooR.push(cooR[0]);
         } else {
-          cooR.push(cooR[0]);
+            cooR.push(cooR[0]);
         }
         return [Polygon.new(cooL), Polygon.new(cooR)];
-        
+
     } catch (e) {
         errorLog("Error: UGeo.splitPolygon(*) " + e.message);
     }
@@ -238,4 +240,24 @@ UGeo.getIndex = (geo, id) => {
         }
     }
     errorLog("Error: UGeo.getIndex()");
+};
+/**
+ * Размерные линии
+ *
+ * @param midle
+ * @param tipX - точка поворота
+ * @param tipY - точка поворота
+ * @param angl - угол поворота
+ * @param length - длина линии
+ * @return
+ */
+UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
+
+    let dx = (midle === false) ? 0 : 16;
+    let tip = LineString.new([
+        [tipX - length, tipY], [tipX, tipY],
+        [tipX - dx, tipY - 16], [tipX, tipY], [tipX - dx, tipY + 16]]);
+    let aff = new AffineTransformation();
+    aff.setToRotation(Math.toRadians(angl), tipX, tipY);
+    return aff.transform(tip);
 };

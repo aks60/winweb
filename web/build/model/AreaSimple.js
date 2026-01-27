@@ -1,6 +1,7 @@
 
 import {Com5t} from './Com5t.js';
 import {UCom} from '../../common/uCom.js';
+import {UGeo} from './uGeo.js';
 import {PKjson} from '/winweb/enums/PKjson.js';
 import {Type} from '../../enums/enums.js';
 
@@ -98,8 +99,8 @@ export class AreaSimple extends Com5t {
                             hsVer.add(elem5e.y1());
                         }
                     }
-                    let listHor = new Array(hsHor);
-                    let listVer = new Array(hsVer);
+                    let listHor = [...hsHor];
+                    let listVer = [...hsVer];
                     listHor.sort((a, b) => b - a);
                     listVer.sort((a, b) => b - a);
 
@@ -107,43 +108,40 @@ export class AreaSimple extends Com5t {
                     //winc.gc2d.setFont(font);
                     const sizeFont = UCom.scaleFont(this.winc.scale);
                     this.winc.ctx.font = `bold ${sizeFont}px sans-serif`; //размер шрифта
-                    let orig = this.winc.ctx.getTransform();
- debugger;                   
-                    let txt2D = this.winc.ctx.font.getStringBounds("999.99", this.winc.ctx.getFontRenderContext());
+                    let orig = this.winc.ctx.getTransform();                   
+                    let txt2D = this.winc.ctx.measureText("999.99"); //this.winc.ctx.font.getStringBounds("999.99", this.winc.ctx.getFontRenderContext());
 
                     //По горизонтали
-                    /*for (int i = 1; i < listHor.size(); ++i) {
-                        double dx = listHor.get(i) - listHor.get(i - 1);
+                    for (let i = 1; i < listHor.length; ++i) {
+                        let dx = listHor[i] - listHor[i - 1];
                         if (Math.abs(dx) > 0.04) {
 
-                            String txt = UCom.format(dx, -1); //текст разм.линии
-                            Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
-                            double tail[] = {listHor.get(i - 1), listHor.get(i)}; //x1, x2 хвост вращения вектора
-                            int len = (int) Math.ceil(((dx) - (rec2D.getWidth() + 10)) / 2); //длина до начала(конца) текста
-                            double length = Math.round(dx); //длина вектора
-
+                            const txt = dx.toFixed(1); //текст разм.линии
+                            let rec2D = this.winc.ctx.measureText(txt); //font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                            let tail = [listHor[i - 1], listHor[i]]; //x1, x2 хвост вращения вектора
+                            let len = Math.ceil((Number(dx) - (rec2D.width + 10)) / 2); //длина до начала(конца) текста
+                            let length = Math.round(dx); //длина вектора
+debugger;
                             //Размерные линии
-                            Geometry lineTip1 = UGeo.lineTip((i == 1), tail[0], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 180, len);
-                            Shape shape = new ShapeWriter().toShape(lineTip1);
-                            winc.gc2d.draw(shape);
-                            Geometry lineTip2 = UGeo.lineTip((i == (listHor.size() - 1)), tail[1], frameEnvelope.getMaxY() + rec2D.getHeight() / 2, 0, len);
-                            shape = new ShapeWriter().toShape(lineTip2);
-                            winc.gc2d.draw(shape);
+                            let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + rec2D.height / 2, 180, len);
+                            this.winc.paint(lineTip1);
+                            let lineTip2 = UGeo.lineTip((i === (listHor.length - 1)), tail[1], frameEnvelope.getMaxY() + rec2D.height / 2, 0, len);
+                            this.winc.paint(lineTip2);
 
                             //Текст на линии
-                            double pxy[] = {listHor.get(i - 1) + len + 8, frameEnvelope.getMaxY() + txt2D.getHeight() * .86}; //точка начала текста
-                            if (length < txt2D.getWidth()) {
-                                pxy[1] = pxy[1] + txt2D.getHeight() / 2;
-                                winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
+                            let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + txt2D.height * .86]; //точка начала текста
+                            if (length < txt2D.width) {
+                                pxy[1] = pxy[1] + txt2D.height / 2;
+                                //winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                             } else {
-                                winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                                //winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                             }
-                            winc.gc2d.setTransform(orig);
+                            this.winc.ctx.setTransform(orig);
                         }
                     }
 
                     //По вертикали
-                    for (int i = 1; i < listVer.size(); ++i) {
+                    /*for (int i = 1; i < listVer.size(); ++i) {
                         double dy = listVer.get(i) - listVer.get(i - 1);
                         if (Math.abs(dy) > 0.04) {
 
