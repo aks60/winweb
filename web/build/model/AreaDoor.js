@@ -13,7 +13,7 @@ export class AreaDoor extends AreaSimple {
 
     setLocation() {
         try {
-            console.log('Exec: AreaDoor.setLocation()');
+            super.paint();
         } catch (e) {
             errorLog('Error: AreaDoor.setLocation() ' + e.message);
         }

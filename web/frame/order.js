@@ -305,7 +305,6 @@ export function update_table1(taq) {
 
 //Клик table2
 export function click_table2(e) {
-    //debugger;
     let row = taq_parent(e.target, 'TR');
     if (row) {
         let table = this;

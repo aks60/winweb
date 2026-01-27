@@ -241,6 +241,11 @@ export class Wincalc {
             //Прорисока фурнитуры створок
             this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
 
+            //Размерные линии
+            if (this.scale > .1) {
+                this.root.paint();
+            }
+
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }

@@ -71,7 +71,6 @@ export function init_table() {
 //Загрузка данных в таблицу
 export function load_table() {
     try {
-        debugger;
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
         let winc = get_winc();

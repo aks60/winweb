@@ -5,15 +5,15 @@ export class AreaTrapeze extends AreaSimple {
 
     constructor() {
         try {
-        alrt('new AreaTrapeze');
+            alrt('new AreaTrapeze');
         } catch (e) {
             errorLog('Error: AreaSimple.constructor() ' + e.message);
-        }        
+        }
     }
 
     setLocation() {
         try {
-            //console.log('Exec: AreaTrapeze.setLocation()');
+            super.paint();
         } catch (e) {
             errorLog('Error: AreaTrapeze.setLocation() ' + e.message);
         }

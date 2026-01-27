@@ -55,7 +55,6 @@
             });
          
             function test() {
-                //debugger;
 //                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
 //                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
 //                alert(tableRec.num_ord);

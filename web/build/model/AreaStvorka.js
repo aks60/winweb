@@ -76,7 +76,6 @@ export class AreaStvorka extends AreaSimple {
      */
     initArtikle(param) {
         try {
-            //debugger;
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
             if (UCom.isFinite(param, PKjson.sysfurnID)) {

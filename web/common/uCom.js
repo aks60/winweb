@@ -41,3 +41,15 @@ UCom.getJson = (json1, json2) => {
 UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
+
+UCom.scaleFont = (scale) => {
+    if (scale > .44) {
+        return 50;
+    } else if (scale > .24) {
+        return 55;
+    } else if (scale > .18) {
+        return 62;
+    } else {
+        return 64;
+    }
+}

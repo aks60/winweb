@@ -10,13 +10,13 @@ export class AreaArch extends AreaSimple {
             errorLog('Error: AreaArch.constructor() ' + e.message);
         }
     }
-    
+
     setLocation() {
         try {
-            console.log('Exec: AreaArch.setLocation()');
+            super.paint();
         } catch (e) {
             errorLog('Error: AreaArch.setLocation() ' + e.message);
         }
-    }    
+    }
 }
 

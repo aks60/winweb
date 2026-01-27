@@ -1,6 +1,8 @@
 
 import {Com5t} from './Com5t.js';
+import {UCom} from '../../common/uCom.js';
 import {PKjson} from '/winweb/enums/PKjson.js';
+import {Type} from '../../enums/enums.js';
 
 export class AreaSimple extends Com5t {
 
@@ -48,66 +50,69 @@ export class AreaSimple extends Com5t {
 
     paint() {
         try {
-           /* if (winc.sceleton == false) {
-                if (this.type != Type.STVORKA) {
-                    if (listenerPassEdit != null) {
-                        listenerPassEdit.paint();
-                    }
-                    winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-                    Envelope frameEnvelope = winc.root.area.getGeometryN(0).getEnvelopeInternal();
-                    HashSet<Double> hsHor = new HashSet<Double>(), hsVer = new HashSet<Double>();
-                    if (this.type != Type.DOOR) {
+            if (this.winc.sceleton === false) {
+                if (this.type !== Type.STVORKA) {
+                    //if (listenerPassEdit != null) {
+                    //    listenerPassEdit.paint();
+                    //}
+                    this.winc.ctx.strokeStyle = '#000000';
+                    let frameEnvelope = this.winc.root.area.getGeometryN(0).getEnvelopeInternal();
+                    let hsHor = new Set(), hsVer = new Set();
+                    if (this.type !== Type.DOOR) {
 
-                        for (AreaSimple area5e : winc.listArea) {
-                            Geometry frameBox = (area5e.type == Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);
-                            Coordinate coo[] = frameBox.getCoordinates();
+                        for (let area5e of this.winc.listArea) {
+                            let frameBox = (area5e.type === Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);
+                            let coo = frameBox.getCoordinates();
 
-                            if (this instanceof AreaArch) {
-                                Geometry geo1 = this.area.getGeometryN(0);
-                                Envelope env = geo1.getEnvelopeInternal();
-                                hsVer.add(env.getMinY());
-                            }
-                            for (int i = 1; i < coo.length; i++) {
-                                Coordinate c1 = coo[i - 1], c2 = coo[i];
+                            //if (this instanceof AreaArch) {
+                            //    Geometry geo1 = this.area.getGeometryN(0);
+                            //    Envelope env = geo1.getEnvelopeInternal();
+                            //    hsVer.add(env.getMinY());
+                            //}
+                            for (let i = 1; i < coo.length; i++) {
+                                let c1 = coo[i - 1], c2 = coo[i];
 
-                                if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
+                                if (c2.z !== c1.z && Math.abs(c2.x - c1.x) > 0.09) {
                                     hsHor.add(c2.x);
                                 }
-                                if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
+                                if (c2.z !== c1.z && Math.abs(c2.y - c1.y) > 0.09) {
                                     hsVer.add(c2.y);
                                 }
                             }
 
                         }
                     } else {
-                        Geometry geoShell = this.area.getGeometryN(0);
-                        Coordinate cooShell[] = geoShell.getCoordinates();
-                        for (int i = 1; i < cooShell.length; i++) {
-                            Coordinate c1 = cooShell[i - 1], c2 = cooShell[i];
+                        let geoShell = this.area.getGeometryN(0);
+                        let cooShell = geoShell.getCoordinates();
+                        for (let i = 1; i < cooShell.length; i++) {
+                            let c1 = cooShell[i - 1], c2 = cooShell[i];
 
-                            if (c2.z != c1.z && Math.abs(c2.x - c1.x) > 0.09) {
+                            if (c2.z !== c1.z && Math.abs(c2.x - c1.x) > 0.09) {
                                 hsHor.add(c2.x);
                             }
-                            if (c2.z != c1.z && Math.abs(c2.y - c1.y) > 0.09) {
+                            if (c2.z !== c1.z && Math.abs(c2.y - c1.y) > 0.09) {
                                 hsVer.add(c2.y);
                             }
                         }
-                        for (ElemSimple elem5e : UCom.filter(winc.listElem, Type.IMPOST)) {
+                        for (let elem5e of winc.listElem.filter(el =>el.type === Type.IMPOST)) {
                             hsVer.add(elem5e.y1());
                         }
                     }
-                    List<Double> listHor = new ArrayList<Double>(hsHor);
-                    List<Double> listVer = new ArrayList<Double>(hsVer);
-                    Collections.sort(listHor);
-                    Collections.sort(listVer);
+                    let listHor = new Array(hsHor);
+                    let listVer = new Array(hsVer);
+                    listHor.sort((a, b) => b - a);
+                    listVer.sort((a, b) => b - a);
 
-                    Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
-                    winc.gc2d.setFont(font);
-                    AffineTransform orig = winc.gc2d.getTransform();
-                    Rectangle2D txt2D = font.getStringBounds("999.99", winc.gc2d.getFontRenderContext());
+                    //Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
+                    //winc.gc2d.setFont(font);
+                    const sizeFont = UCom.scaleFont(this.winc.scale);
+                    this.winc.ctx.font = `bold ${sizeFont}px sans-serif`; //размер шрифта
+                    let orig = this.winc.ctx.getTransform();
+ debugger;                   
+                    let txt2D = this.winc.ctx.font.getStringBounds("999.99", this.winc.ctx.getFontRenderContext());
 
                     //По горизонтали
-                    for (int i = 1; i < listHor.size(); ++i) {
+                    /*for (int i = 1; i < listHor.size(); ++i) {
                         double dx = listHor.get(i) - listHor.get(i - 1);
                         if (Math.abs(dx) > 0.04) {
 
@@ -166,11 +171,15 @@ export class AreaSimple extends Com5t {
                             }
                             winc.gc2d.setTransform(orig);
                         }
-                    }
+                    }*/
                 }
-            } else if (this.area != null) {
-                paintSceleton();
-            }*/
+            } else if (this.area !== null) {
+                /*winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+                for (int i = 0; i < 3; ++i) {
+                    Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
+                    winc.gc2d.draw(shape);
+                }*/
+            }
         } catch (e) {
             errorLog('Error: AreaSimple.paint() ' + e.message);
         }
