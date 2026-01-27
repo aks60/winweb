@@ -123,15 +123,17 @@ export class AreaSimple extends Com5t {
                             let length = Math.round(dx); //длина вектора
 debugger;
                             //Размерные линии
-                            let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + rec2D.height / 2, 180, len);
+                            let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + sizeFont / 2, 180, len);
                             this.winc.paint(lineTip1);
-                            let lineTip2 = UGeo.lineTip((i === (listHor.length - 1)), tail[1], frameEnvelope.getMaxY() + rec2D.height / 2, 0, len);
+                            let lineTip2 = UGeo.lineTip((i === (listHor.length - 1)), tail[1], frameEnvelope.getMaxY() + sizeFont / 2, 0, len);
                             this.winc.paint(lineTip2);
 
                             //Текст на линии
-                            let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + txt2D.height * .86]; //точка начала текста
+                            let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + sizeFont * .86]; //точка начала текста
                             if (length < txt2D.width) {
-                                pxy[1] = pxy[1] + txt2D.height / 2;
+                                pxy[1] = pxy[1] + sizeFont / 2;
+                                this.winc.ctx.fillText("Hello World!", 10, 50); 
+                                //ctx.strokeText(text, x, y, [maxWidth])
                                 //winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                             } else {
                                 //winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
