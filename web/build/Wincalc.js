@@ -258,24 +258,24 @@ export class Wincalc {
 
         if (element instanceof LineString) {
             this.ctx.beginPath();
-            this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
-            for (let i = 0; i < coo.length; i++)
+            this.ctx.moveTo(coo[0].x, coo[0].y); //перемещаемся к первой точке
+            for (let i = 1; i < coo.length; i++)
                 this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
-            this.ctx.closePath(); //замыкаем контур   
+            this.ctx.closePath();
 
         } else if (element instanceof Polygon) {
             this.ctx.beginPath();
-            this.ctx.moveTo(coo[0][0], coo[0][1]); //перемещаемся к первой точке
+            this.ctx.moveTo(coo[0].x, coo[0].y); //перемещаемся к первой точке
             for (let i = 1; i < coo.length; i++)
                 this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
-            this.ctx.closePath(); //замыкаем контур     
+            this.ctx.closePath(); //замыкаем контур 
+            this.ctx.fill();
 
         } else {
             //this.ctx.strokeStyle = 'blue';
             //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";            
             alert('Wincalc.paint()');
         }
-        this.ctx.fill();
         this.ctx.stroke(); //рисуем контур 
         //this.ctx.restore();
     }

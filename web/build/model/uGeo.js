@@ -252,14 +252,18 @@ UGeo.getIndex = (geo, id) => {
  * @return
  */
 UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
-
-    let dx = (midle === false) ? 0 : 16;
-    let tip = LineString.new([
-        [tipX - length, tipY], [tipX, tipY],
-        [tipX - dx, tipY - 16], [tipX, tipY], [tipX - dx, tipY + 16]]);
-    let aff = new AffineTransformation();
-    aff.setToRotation(Math.toRadians(angl), tipX, tipY);
-    return aff.transform(tip);
+    try {
+        let dx = (midle === false) ? 0 : 16;
+        let tip = LineString.new([
+            [tipX - length, tipY], [tipX, tipY],
+            [tipX - dx, tipY - 16], [tipX, tipY], 
+            [tipX - dx, tipY + 16]]);
+        let aff = new AffineTransformation();
+        aff.setToRotation(Math.toRadians(angl), tipX, tipY);
+        return aff.transform(tip);
+    } catch (e) {
+        errorLog("Error: UGeo.lineTip() " + e.message);
+    }
 };
 UGeo.drawVec = (context, fromX, fromY, toX, toY) => {
     const headLength = 10; // Длина наконечника стрелки

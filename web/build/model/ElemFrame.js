@@ -1,6 +1,6 @@
 
 import {UGeo} from './uGeo.js';
-import {UseSide, Type, Layout} from '../../enums/enums.js';
+import {UseSide, Type, Layout, PKjson} from '../../enums/enums.js';
 import {UCom} from '../../common/uCom.js';
 import {Com5t, ElemSimple} from './model.js';
 import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
@@ -24,9 +24,11 @@ export class ElemFrame extends ElemSimple {
             this.colorID1 = (UCom.isFinite(this.gson.param, 'color1')) ? Number(this.gson.param.color1) : this.winc.colorID1;
             this.colorID2 = (UCom.isFinite(this.gson.param, 'color2')) ? Number(this.gson.param.color2) : this.winc.colorID2;
             this.colorID3 = (UCom.isFinite(this.gson.param, 'color3')) ? Number(this.gson.param.color3) : this.winc.colorID3;
-            this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
 
-            if (this.owner.sysprofRec !== null)
+            if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) {
+                this.sysprofRec = eSysprof.find3(Number(this.gson.param[PKjson.sysprofID]));
+
+            } else if (this.owner.sysprofRec !== null)
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if (Layout.BOT === this.layout) {
@@ -77,7 +79,7 @@ export class ElemFrame extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
-                
+
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);

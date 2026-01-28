@@ -42,19 +42,19 @@ eSysprof = {
             }
             return mapPrio.get(minLevel);
         } catch (e) {
-            errorLog('Error: eSysprof.find() ' + e.message);
+            errorLog('Error: eSysprof.find2() ' + e.message);
         }
     },
 
     find3(ID) {
         try {
-            let sysprof = this.list.find(rec => rec.id === ID);
-            if (this.sysprof === undefined) {
-                this.sysprof = this.vrec;
+            let sysprofRec = this.list.find(rec => rec[this.id] === ID);
+            if (sysprofRec === undefined) {
+                sysprofRec = this.vrec;
             }
-            return this.sysprof;
+            return sysprofRec;
         } catch (e) {
-            errorLog('Error: eSysprof.find() ' + e.message);
+            errorLog('Error: eSysprof.find3() ' + e.message);
         }
     },
 
@@ -78,7 +78,7 @@ eSysprof = {
             }
 
         } catch (e) {
-            errorLog('Error: eSysprof.find() ' + e.message);
+            errorLog('Error: eSysprof.find5() ' + e.message);
         }
     }
 };
