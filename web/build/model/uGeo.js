@@ -1,4 +1,5 @@
 import {Com5t} from './Com5t.js'
+//import GeometryFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
 import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
 import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
@@ -254,33 +255,14 @@ UGeo.getIndex = (geo, id) => {
 UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
     try {
         let dx = (midle === false) ? 0 : 16;
-        let tip = LineString.new([
-            [tipX - length, tipY], [tipX, tipY],
-            [tipX - dx, tipY - 16], [tipX, tipY], 
-            [tipX - dx, tipY + 16]]);
+        let line1 = LineString.new([[tipX - length, tipY], [tipX, tipY]]);
+        let line2 = LineString.new([[tipX - dx, tipY - 16], [tipX, tipY], [tipX - dx, tipY + 16]]);
+        let geometry = Com5t.gf.createMultiLineString([line1, line2]);
         let aff = new AffineTransformation();
         aff.setToRotation(Math.toRadians(angl), tipX, tipY);
-        return aff.transform(tip);
+        let geom = aff.transform(geometry);
+        return geom;
     } catch (e) {
         errorLog("Error: UGeo.lineTip() " + e.message);
     }
-};
-UGeo.drawVec = (context, fromX, fromY, toX, toY) => {
-    const headLength = 10; // Длина наконечника стрелки
-    const angle = Math.atan2(toY - fromY, toX - fromX);
-
-    context.beginPath();
-    context.moveTo(fromX, fromY);
-    context.lineTo(toX, toY);
-
-    // Рисуем наконечник стрелки
-    context.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6),
-            toY - headLength * Math.sin(angle - Math.PI / 6));
-    context.moveTo(toX, toY);
-    context.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6),
-            toY - headLength * Math.sin(angle + Math.PI / 6));
-
-    context.strokeStyle = 'blue'; // Цвет вектора
-    context.lineWidth = 2;
-    context.stroke();
 };

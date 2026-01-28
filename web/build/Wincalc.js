@@ -222,7 +222,7 @@ export class Wincalc {
     draw() {
         try {
             this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
-                    ? this.cnv.width / this.width : this.cnv.height / this.height;
+                    ? this.cnv.width / (this.width + 80) : this.cnv.height / (this.height + 80);     
             this.ctx.scale(this.scale, this.scale);
 
             //Прорисовка стеклопакетов
@@ -252,23 +252,23 @@ export class Wincalc {
     }
 
     //Рисуем элем.констр.
-    paint(element) {
+    paint(geometry) {
         //this.ctx.save();
-        const coo = element.getCoordinates(); //это массив точек
+        const coo = geometry.getCoordinates(); //это массив точек
 
-        if (element instanceof LineString) {
+        if (geometry instanceof LineString) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0].x, coo[0].y); //перемещаемся к первой точке
             for (let i = 1; i < coo.length; i++)
                 this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
-            this.ctx.closePath();
+            //this.ctx.closePath();
 
-        } else if (element instanceof Polygon) {
+        } else if (geometry instanceof Polygon) {
             this.ctx.beginPath();
             this.ctx.moveTo(coo[0].x, coo[0].y); //перемещаемся к первой точке
             for (let i = 1; i < coo.length; i++)
                 this.ctx.lineTo(coo[i].x, coo[i].y); //рисуем линии
-            this.ctx.closePath(); //замыкаем контур 
+            //this.ctx.closePath(); //замыкаем контур 
             this.ctx.fill();
 
         } else {

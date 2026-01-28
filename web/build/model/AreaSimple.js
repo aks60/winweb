@@ -120,70 +120,63 @@ export class AreaSimple extends Com5t {
                         if (Math.abs(dx) > 0.04) {
 
                             const txt = dx.toFixed(1); //текст разм.линии
-                            let metricNumb = this.winc.ctx.measureText(txt); //font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
+                            let metricNumb = this.winc.ctx.measureText(txt); //логические границы строки
                             let tail = [listHor[i - 1], listHor[i]]; //x1, x2 хвост вращения вектора
                             let len = Math.ceil((Number(dx) - (metricNumb.width + 10)) / 2); //длина до начала(конца) текста
                             let length = Math.round(dx); //длина вектора
                             debugger;
                             //Размерные линии
-                            let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + heightTxt / 2, 180, len);
-                            this.winc.paint(lineTip1);
-                            
-                            //let o1 = LineString.new([[5, 1399],[599, 1399]]);
-                            //this.winc.paint(o1);
-                            
-                            let lineTip2 = UGeo.lineTip((i === (listHor.length - 1)), tail[1], frameEnvelope.getMaxY() + heightTxt / 2, 0, len);
-                            //this.winc.paint(lineTip2);
+                            let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + heightTxt, 180, len);
+                            this.winc.paint(lineTip1.getGeometryN(0));
+                            this.winc.paint(lineTip1.getGeometryN(1));
 
-                            //let testLine = LineString.new([[0, 0], [600, 20]]);
-                            //this.winc.paint(testLine);
+                            let lineTip2 = UGeo.lineTip((i === (listHor.length - 1)), tail[1], frameEnvelope.getMaxY() + heightTxt, 0, len);
+                            this.winc.paint(lineTip2.getGeometryN(0));
+                            this.winc.paint(lineTip2.getGeometryN(1));
 
                             //Текст на линии
                             let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt * .86]; //точка начала текста
                             if (length < metricTxt.width) {
-                                pxy[1] = pxy[1] + heightTxt / 2;                                
+                                pxy[1] = pxy[1] + heightTxt / 2;
                                 //ctx.strokeText(text, x, y, [maxWidth])
                                 //winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                             } else {
                                 //winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
                             }
-                            //this.winc.ctx.font = `bold 40px sans-serif`; //размер шрифта
-                            //this.winc.ctx.fillText("Hello World!", 10, 500, 400);
-                            
                             this.winc.ctx.setTransform(orig);
                         }
                     }
 
                     //По вертикали
-                    /*for (int i = 1; i < listVer.size(); ++i) {
-                     double dy = listVer.get(i) - listVer.get(i - 1);
-                     if (Math.abs(dy) > 0.04) {
-                     
-                     String txt = UCom.format(dy, -1); //текст разм.линии
-                     Rectangle2D rec2D = font.getStringBounds(txt, winc.gc2d.getFontRenderContext()); //логические границы строки
-                     int tail[] = {(int) Math.ceil(listVer.get(i - 1)), (int) Math.ceil(listVer.get(i))};  //y1, y2 хвост вращения вектора
-                     int len = (int) Math.round((dy - rec2D.getWidth() - 10) / 2); //длина до начала(конца) текста
-                     double length = Math.round(dy); //длина вектора
-                     
-                     //Размерные линии
-                     Geometry lineTip1 = UGeo.lineTip((i == 1), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[0], -90, len);
-                     Shape shape = new ShapeWriter().toShape(lineTip1);
-                     winc.gc2d.draw(shape);
-                     Geometry lineTip2 = UGeo.lineTip((i == (listVer.size() - 1)), frameEnvelope.getMaxX() + rec2D.getHeight() / 2, tail[1], 90, len);
-                     shape = new ShapeWriter().toShape(lineTip2);
-                     winc.gc2d.draw(shape);
-                     
-                     //Текст на линии
-                     double pxy[] = {frameEnvelope.getMaxX() + txt2D.getHeight() - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
-                     if (length < (txt2D.getWidth())) {
-                     winc.gc2d.drawString(txt, (int) (pxy[0] + 4), (int) (pxy[1] - txt2D.getHeight() / 2));
-                     } else {
-                     winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
-                     winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
-                     }
-                     winc.gc2d.setTransform(orig);
-                     }
-                     }*/
+                    for (let i = 1; i < listVer.length; ++i) {
+                        let dy = listVer[i] - listVer[i - 1];
+                        if (Math.abs(dy) > 0.04) {
+
+                            const txt = dy.toFixed(1); //текст разм.линии
+                            let metricNumb = this.winc.ctx.measureText(txt); //логические границы строки
+                            let tail = [listVer[i - 1], listVer[i]]; //y1, y2 хвост вращения вектора
+                            let len = Math.ceil((Number(dy) - (metricNumb.width - 10)) / 2); //длина до начала(конца) текста
+                            let length = Math.round(dy); //длина вектора
+
+                            //Размерные линии
+                            let lineTip1 = UGeo.lineTip((i === 1), frameEnvelope.getMaxX() + heightTxt, tail[0], -90, len);
+                            this.winc.paint(lineTip1.getGeometryN(0));
+                            this.winc.paint(lineTip1.getGeometryN(1));
+                            let lineTip2 = UGeo.lineTip((i === (listVer.length - 1)), frameEnvelope.getMaxX() + heightTxt, tail[1], 90, len);
+                            this.winc.paint(lineTip2.getGeometryN(0));
+                            this.winc.paint(lineTip2.getGeometryN(1));
+
+                            //Текст на линии
+//                     let pxy = {frameEnvelope.getMaxX() + heightTxt - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
+//                     if (length < (metricNumb.width)) {
+//                         this.winc.gc2d.drawString(txt,  (pxy[0] + 4), (pxy[1] - heightTxt / 2));
+//                     } else {
+//                         this.winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
+//                         this.winc.gc2d.drawString(txt, pxy[0], (int) pxy[1]);
+//                     }
+//                         this.winc.gc2d.setTransform(orig);
+                        }
+                    }
                 }
             } else if (this.area !== null) {
                 /*winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
