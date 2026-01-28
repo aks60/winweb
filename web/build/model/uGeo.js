@@ -261,3 +261,22 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
     aff.setToRotation(Math.toRadians(angl), tipX, tipY);
     return aff.transform(tip);
 };
+UGeo.drawVec = (context, fromX, fromY, toX, toY) => {
+    const headLength = 10; // Длина наконечника стрелки
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+
+    context.beginPath();
+    context.moveTo(fromX, fromY);
+    context.lineTo(toX, toY);
+
+    // Рисуем наконечник стрелки
+    context.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6),
+            toY - headLength * Math.sin(angle - Math.PI / 6));
+    context.moveTo(toX, toY);
+    context.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6),
+            toY - headLength * Math.sin(angle + Math.PI / 6));
+
+    context.strokeStyle = 'blue'; // Цвет вектора
+    context.lineWidth = 2;
+    context.stroke();
+};
