@@ -138,6 +138,9 @@ export class AreaSimple extends Com5t {
                             let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt * .86]; //точка начала текста
                             if (length < metricTxt.width) {
                                 pxy[1] = pxy[1] + heightTxt / 2;
+                               //this.winc.ctx.font = `bold 40px sans-serif`; //размер шрифта
+                                //this.winc.ctx.fillText("Hello World!", 10, 500, 400);
+                                                            
                                 //ctx.strokeText(text, x, y, [maxWidth])
                                 //winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
                             } else {
