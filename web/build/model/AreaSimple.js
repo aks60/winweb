@@ -135,7 +135,6 @@ export class AreaSimple extends Com5t {
                             //Текст на линии
                             let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt + 12];// * .86]; //точка начала текста
                             this.winc.ctx.fillStyle = "#000000";
-                            this.winc.ctx.fillText(sizeFont, 100, 500);
                             if (length < metricTxt.width) {
                                 pxy[1] = pxy[1] + heightTxt / 2;
                                 this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
