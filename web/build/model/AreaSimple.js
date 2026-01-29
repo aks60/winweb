@@ -1,5 +1,5 @@
 
-import {Com5t} from './Com5t.js';
+import {AreaArch, Com5t} from './model.js';
 import {UCom} from '../../common/uCom.js';
 import {UGeo} from './uGeo.js';
 import {PKjson} from '/winweb/enums/PKjson.js';
@@ -52,6 +52,7 @@ export class AreaSimple extends Com5t {
 
     paint() {
         try {
+            this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
                     //if (listenerPassEdit != null) {
@@ -66,11 +67,11 @@ export class AreaSimple extends Com5t {
                             let frameBox = (area5e.type === Type.STVORKA) ? area5e.area.getGeometryN(3) : area5e.area.getGeometryN(0);
                             let coo = frameBox.getCoordinates();
 
-                            //if (this instanceof AreaArch) {
-                            //    Geometry geo1 = this.area.getGeometryN(0);
-                            //    Envelope env = geo1.getEnvelopeInternal();
-                            //    hsVer.add(env.getMinY());
-                            //}
+                            if (this instanceof AreaArch) {
+                                let geo1 = this.area.getGeometryN(0);
+                                let env = geo1.getEnvelopeInternal();
+                                hsVer.add(env.getMinY());
+                            }
                             for (let i = 1; i < coo.length; i++) {
                                 let c1 = coo[i - 1], c2 = coo[i];
 
@@ -105,14 +106,11 @@ export class AreaSimple extends Com5t {
                     listHor.sort((a, b) => a - b);
                     listVer.sort((a, b) => a - b);
 
-                    //Font font = new Font("Dialog", 0, UCom.scaleFont(winc.scale)); //размер шрифта (см. canvas)
-                    //winc.gc2d.setFont(font);
                     const sizeFont = UCom.scaleFont(this.winc.scale);
                     this.winc.ctx.font = `bold ${sizeFont}px sans-serif`; //размер шрифта
-                    let orig = this.winc.ctx.getTransform();
+                    //let orig = this.winc.ctx.getTransform();
                     let metricTxt = this.winc.ctx.measureText("999.99");
                     const heightTxt = metricTxt.actualBoundingBoxAscent + metricTxt.actualBoundingBoxDescent;
-
 
                     //По горизонтали
                     for (let i = 1; i < listHor.length; ++i) {
@@ -124,7 +122,7 @@ export class AreaSimple extends Com5t {
                             let tail = [listHor[i - 1], listHor[i]]; //x1, x2 хвост вращения вектора
                             let len = Math.ceil((Number(dx) - (metricNumb.width + 10)) / 2); //длина до начала(конца) текста
                             let length = Math.round(dx); //длина вектора
-                            debugger;
+
                             //Размерные линии
                             let lineTip1 = UGeo.lineTip((i === 1), tail[0], frameEnvelope.getMaxY() + heightTxt, 180, len);
                             this.winc.paint(lineTip1.getGeometryN(0));
@@ -135,18 +133,16 @@ export class AreaSimple extends Com5t {
                             this.winc.paint(lineTip2.getGeometryN(1));
 
                             //Текст на линии
-                            let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt * .86]; //точка начала текста
+                            let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt + 12];// * .86]; //точка начала текста
+                            this.winc.ctx.fillStyle = "#000000";
+                            this.winc.ctx.fillText(sizeFont, 100, 500);
                             if (length < metricTxt.width) {
                                 pxy[1] = pxy[1] + heightTxt / 2;
-                               //this.winc.ctx.font = `bold 40px sans-serif`; //размер шрифта
-                                //this.winc.ctx.fillText("Hello World!", 10, 500, 400);
-                                                            
-                                //ctx.strokeText(text, x, y, [maxWidth])
-                                //winc.gc2d.drawString(txt, (int) pxy[0], (int) (pxy[1]));
+                                this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
                             } else {
-                                //winc.gc2d.drawString(txt, (int) pxy[0], (int) pxy[1]);
+                                this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
                             }
-                            this.winc.ctx.setTransform(orig);
+                            //this.winc.ctx.setTransform(orig);
                         }
                     }
 
@@ -170,24 +166,25 @@ export class AreaSimple extends Com5t {
                             this.winc.paint(lineTip2.getGeometryN(1));
 
                             //Текст на линии
-//                     let pxy = {frameEnvelope.getMaxX() + heightTxt - 6, listVer.get(i) - len}; //точка врашения и начала текста                    
-//                     if (length < (metricNumb.width)) {
-//                         this.winc.gc2d.drawString(txt,  (pxy[0] + 4), (pxy[1] - heightTxt / 2));
-//                     } else {
-//                         this.winc.gc2d.rotate(Math.toRadians(-90), pxy[0], pxy[1]);
-//                         this.winc.gc2d.drawString(txt, pxy[0], (int) pxy[1]);
-//                     }
-//                         this.winc.gc2d.setTransform(orig);
+                            let pxy = [frameEnvelope.getMaxX() + heightTxt - 6, listVer[i] - len]; //точка врашения и начала текста                    
+                            if (length < (metricNumb.width)) {
+                                this.winc.ctx.fillText(txt, (pxy[0] + 4), pxy[1] - heightTxt / 2);
+                            } else {
+                                this.winc.ctx.translate(pxy[0], pxy[1]);
+                                this.winc.ctx.rotate(Math.toRadians(-90));
+                                this.winc.ctx.fillText(txt, 0, 20);
+                            }
+                            //this.winc.ctx.setTransform(orig);
                         }
                     }
                 }
             } else if (this.area !== null) {
-                /*winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-                 for (int i = 0; i < 3; ++i) {
-                 Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
-                 winc.gc2d.draw(shape);
-                 }*/
+                this.winc.ctx.strokeStyle = "#0000FF";
+                for (let i = 0; i < 3; ++i) {
+                    this.winc.paint(this.area.getGeometryN(i));
+                }
             }
+            this.winc.ctx.restore();
         } catch (e) {
             errorLog('Error: AreaSimple.paint() ' + e.message);
         }

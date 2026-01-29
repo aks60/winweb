@@ -253,7 +253,7 @@ export class Wincalc {
 
     //Рисуем элем.констр.
     paint(geometry) {
-        //this.ctx.save();
+        this.ctx.save();
         const coo = geometry.getCoordinates(); //это массив точек
 
         if (geometry instanceof LineString) {
@@ -277,7 +277,7 @@ export class Wincalc {
             alert('Wincalc.paint()');
         }
         this.ctx.stroke(); //рисуем контур 
-        //this.ctx.restore();
+        this.ctx.restore();
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 

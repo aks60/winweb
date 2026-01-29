@@ -45,7 +45,7 @@ UCom.isFinite = (key1, key2) => {
 UCom.scaleFont = (scale) => {
     if (scale > .44) {
         return 30;
-    } else if (scale > .24) {
+    } else if (scale > .34) {
         return 40;
     } else if (scale > .18) {
         return 45;
