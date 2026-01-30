@@ -27,7 +27,7 @@ export class ElemSimple extends Com5t {
         try {
             //this.timer.setRepeats(false);
 
-            this.keyPressed = (evt) => {
+            let keyPressed = (evt) => {
                 /*if (this.area != null && passMask[1] > 0) {
                  LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                  int key = evt.getKeyCode();
@@ -82,7 +82,7 @@ export class ElemSimple extends Com5t {
                  timer.stop();
                  timer.start();*/
             };
-            this.mousePressed = (evt) => {
+            let mousePressed = (evt) => {
                 if (this.area != null) {
                     this.pointPress = evt.getPoint();
                     let wincPress = new Coordinate((evt.getX() - Canvas.translate[0])
@@ -115,7 +115,7 @@ export class ElemSimple extends Com5t {
                     this.winc.cnv.repaint();
                 }
             };
-            this.mouseDragge = (evt) => {
+            let mouseDragge = (evt) => {
                 /*if (this.area != null) {
                  double X = 0, Y = 0;
                  double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
