@@ -39,6 +39,36 @@ export class Com5t {
             errorLog('Error: Com5t.constructor() ' + e.message);
         }
     }
+    //Перемещение на канве
+    translate(gson, dx, dy) {
+        if (gson.childs !== null) {
+            let dX = (dx === 0) ? 0 : dx / this.winc.scale;
+            let dY = (dy === 0) ? 0 : dy / this.winc.scale;
+            for (let gs of gson.childs) {
+                if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(gs.type)) {
+                    if (dX !== 0) {
+                        gs.x1 += dX;
+                        gs.x2 += dX;
+                    }
+                    if (dY !== 0) {
+                        gs.y1 += dY;
+                        gs.y2 += dY;
+                    }
+                } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(gs.type)) {
+                    if (dX !== 0) {
+                        gs.x1 += +dX;
+                    }
+                    if (dY !== 0) {
+                        gs.y1 += dY;
+                    }
+                }
+                if ([Type.AREA, Type.STVORKA].contains(gs.type)) {
+                    translate(gs, dx, dy);
+                }
+            }
+        }
+    }
+    
     //Длина компонента
     length() {
         if (this.gson.h !== undefined) {
@@ -51,7 +81,7 @@ export class Com5t {
     color() {
         //return (this.timer.timerId !== null) ? [255, 120, 0] : this.color2Rec[eColor.rgb];
     }
-    
+
     width() {
         return (this.x2 > this.x1) ? this.x2 - this.x1 : this.x1 - this.x2;
     }
@@ -66,7 +96,9 @@ export class Com5t {
     get y1() {
         return this.gson.y1;
     }
-
+    get h() {
+        return this.gson.h;
+    }
     get x2() {
         return this.gson.x2;
     }
@@ -74,6 +106,26 @@ export class Com5t {
     get y2() {
         return this.gson.y2;
     }
+
+    set x1(v) {
+        this.gson.x1 = v;
+    }
+
+    set y1(v) {
+        this.gson.y1 = v;
+    }
+
+    set h(v) {
+        this.gson.h = v;
+    }
+
+    set x2(v) {
+        this.gson.x2 = v;
+    }
+
+    set y2(v) {
+        this.gson.y2 = v;
+    }   
 
     get jsonID() {
         let max = 0;

@@ -268,17 +268,17 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
 };
 UGeo.inside = (poly, point) => {
     let inside = false;
-    let coo = poly.getCoordinates();
-    let x = point.x, y = point.y;
-    for (let i = 0, j = coo.length - 1; i < coo.length; j = i++) {
-        let xi = coo[i][0], yi = coo[i][1];
-        let xj = coo[j][0], yj = coo[j][1];
+    const coo = poly.getCoordinates();
+    const x = point.x, y = point.y;
 
-        let intersect = ((yi > y) !== (yj > y))
+    for (let i = 1, j = coo.length - 1; i < coo.length; j = i++) {
+        let xi = coo[i].x, yi = coo[i].y
+        let xj = coo[j].x, yj = coo[j].y;
+
+        const intersect = ((yi > y) !== (yj > y))
                 && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
         if (intersect)
             inside = !inside;
     }
-
     return inside;
 };

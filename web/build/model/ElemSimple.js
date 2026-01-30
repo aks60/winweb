@@ -87,10 +87,8 @@ export class ElemSimple extends Com5t {
             };
             let mousePressed = (evt) => {
                 if (this.area !== null) {
-                    debugger;
-                    this.pointPress = [evt.clientX, evt.clientY];
-                    let wincPress = Coordinate.new((evt.clientX - this.translate[0])
-                            / this.winc.scale, (evt.clientY - this.translate[1]) / this.winc.scale);
+                    //console.log('AKSENOV');
+                    let wincPress = Coordinate.new(evt.clientX, evt.clientY);
                     let inside = UGeo.inside(this.area, wincPress);
 
                     //Если клик внутри контура
@@ -120,60 +118,93 @@ export class ElemSimple extends Com5t {
                 }
             };
             let mouseDragge = (evt) => {
-                /*if (this.area != null) {
-                 double X = 0, Y = 0;
-                 double W = winc.canvas.getWidth(), H = winc.canvas.getHeight();
-                 double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
-                 double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
-                 
-                 //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
-                 if (passMask[1] > 1) {
-                 pointPress = evt.getPoint();
-                 
-                 if (passMask[0] == 0) { //начало вектора
-                 X = dX / winc.scale + x1();
-                 Y = dY / winc.scale + y1();
-                 moveXY(X, Y);
-                 
-                 } else if (passMask[0] == 1) { //конец вектора
-                 X = dX / winc.scale + x2();
-                 Y = dY / winc.scale + y2();
-                 moveXY(X, Y);
-                 
-                 } else if (passMask[0] == 2) { //середина вектора
-                 X = dX / winc.scale + x2();
-                 Y = dY / winc.scale + y2();
-                 if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
-                 if (this.h() != null) {
-                 this.h(this.h() - dY / winc.scale);
-                 } else {
-                 this.y1(Y);
-                 this.y2(Y);
-                 }
-                 }
-                 if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
-                 if (this.h() != null) {
-                 this.h(this.h() - dX / winc.scale);
-                 } else {
-                 this.x1(X);
-                 this.x2(X);
-                 }
-                 }
-                 }
-                 if (X < 0 || Y < 0) {
-                 winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                 }
-                 }
-                 }*/
+                if (this.area !== null) {
+                    let X = 0, Y = 0;
+                    let W = this.winc.cnv.width, H = this.winc.cnv.height;
+                    let dX = evt.clientX - this.pointPress[0]; //прирощение по горизонтали
+                    let dY = evt.clientY - this.pointPress[1]; //прирощение по вертикали 
+
+                    //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
+                    if (this.passMask[1] > 1) {
+                        this.pointPress = [evt.clientX, evt.clientY];
+
+                        if (this.passMask[0] === 0) { //начало вектора
+                            X = dX / this.winc.scale + this.x1;
+                            Y = dY / this.winc.scale + this.y1;
+                            this.moveXY(X, Y);
+
+                        } else if (this.passMask[0] === 1) { //конец вектора
+                            X = dX / this.winc.scale + this.x2;
+                            Y = dY / this.winc.scale + this.y2;
+                            this.moveXY(X, Y);
+
+                        } else if (this.passMask[0] === 2) { //середина вектора
+                            X = dX / this.winc.scale + this.x2;
+                            Y = dY / this.winc.scale + this.y2;
+                            if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
+                                if (this.h !== null) {
+                                    this.h(this.h - dY / this.winc.scale);
+                                } else {
+                                    this.y1(Y);
+                                    this.y2(Y);
+                                }
+                            }
+                            if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
+                                if (this.h() !== null) {
+                                    this.h(this.h() - dX / this.winc.scale);
+                                } else {
+                                    this.x1(X);
+                                    this.x2(X);
+                                }
+                            }
+                        }
+                        if (X < 0 || Y < 0) {
+                            this.translate(this.winc.gson, Math.abs(dX), Math.abs(dY));
+                        }
+                    }
+                }
             };
 
             //this.winc.cnv.keyboardPressed.addEventListener("keydown", keyPressed);
             this.winc.cnv.addEventListener("mousedown", mousePressed);
-            //this.winc.cnv.mouseDragged.addEventListener("mousemove", mouseDragge);
+            this.winc.cnv.addEventListener("mousemove", mouseDragge);
 
         } catch (e) {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }
+    }
+    moveXY(x, y) {
+
+        if (x > 0 || y > 0) {
+            if ([Layout.BOT, Layout.HOR].includes(this.layout)) {
+                if (this.passMask[0] === 0) {
+                    this.y1(y);
+                } else if (this.passMask[0] === 1) {
+                    this.y2(y);
+                }
+            } else if ([Layout.RIG].includes(this.layout)) {
+                if (this.passMask[0] === 0) {
+                    this.x1(x);
+                } else if (this.passMask[0] === 1) {
+                    this.x2(x);
+                }
+            } else if ([Layout.TOP].includes(this.layout)) {
+                if (this.passMask[0] === 0) {
+                    this.y1(y);
+                } else if (this.passMask[0] === 1) {
+                    this.y2(y);
+                }
+            } else if ([Layout.LEF, Layout.VER].includes(this.layout)) {
+                if (this.passMask[0] === 0) {
+                    this.x1(x);
+                } else if (this.passMask[0] === 1) {
+                    this.x2(x);
+                }
+            }
+        }
+//        if(this instanceof ElemCross) {
+//            UGeo.normalizeElem(this);
+//        }        
     }
 
     get layout() {
