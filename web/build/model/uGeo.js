@@ -266,3 +266,19 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
         errorLog("Error: UGeo.lineTip() " + e.message);
     }
 };
+UGeo.inside = (poly, point) => {
+    let inside = false;
+    let coo = poly.getCoordinates();
+    let x = point[0], y = point[1];
+    for (let i = 0, j = coo.length - 1; i < coo.length; j = i++) {
+        let xi = coo[i][0], yi = coo[i][1];
+        let xj = coo[j][0], yj = coo[j][1];
+
+        let intersect = ((yi > y) !== (yj > y))
+                && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect)
+            inside = !inside;
+    }
+
+    return inside;
+};

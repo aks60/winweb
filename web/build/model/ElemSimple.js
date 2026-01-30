@@ -4,21 +4,24 @@ import {Timer} from '../../common/Timer.js';
 import {Com5t} from './Com5t.js';
 import {Layout, Type} from '../../enums/enums.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
+import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
+//import Point from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Point.js';
 
 export class ElemSimple extends Com5t {
 
     betweenHoriz = [0, 0]; //угол между векторами   
-    pointPress = null;
+    translate = [2, 2];
+    pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     delta = 3;
     SIZE = 20;
-    timer = new Timer(() => alert('exec Timer()'), 160);
+    //timer = new Timer(() => alert('exec Timer()'), 9160);
     //timer = setTimeout(() => {console.log("Stop timer.");}, 160);
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
 
-        this.timer.pause();
+        //this.timer.pause();
         winc.listElem.push(this);
         winc.listAll.push(this);
     }
@@ -83,14 +86,15 @@ export class ElemSimple extends Com5t {
                  timer.start();*/
             };
             let mousePressed = (evt) => {
-                if (this.area != null) {
-                    this.pointPress = evt.getPoint();
-                    let wincPress = new Coordinate((evt.getX() - Canvas.translate[0])
-                            / this.winc.scale, (evt.getY() - Canvas.translate[1]) / this.winc.scale);
-                    let b = this.area.contains(Point.new(this.wincPress));
+                if (this.area !== null) {
+                    debugger;
+                    this.pointPress = [evt.clientX, evt.clientY];
+                    let wincPress = Coordinate.new((evt.clientX - this.translate[0])
+                            / this.winc.scale, (evt.clientY - this.translate[1]) / this.winc.scale);
+                    let inside = UGeo.inside(this.area, wincPress);
 
                     //Если клик внутри контура
-                    if (b === true) {
+                    if (inside === true) {
                         ++this.passMask[1];
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                         const coeff = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
@@ -108,11 +112,11 @@ export class ElemSimple extends Com5t {
                             this.passMask[0] = 2;
                         }
                     } else { //Промах, всё обнуляю
-                        this.passMask = UCom.getArr(0, 0);
+                        this.passMask = [0, 0];
                         this.root.listenerPassEdit = null;
                     }
-                    this.winc.cnv.requestFocusInWindow();
-                    this.winc.cnv.repaint();
+                    //this.winc.cnv.requestFocusInWindow();
+                    //this.winc.cnv.repaint();
                 }
             };
             let mouseDragge = (evt) => {
@@ -163,9 +167,9 @@ export class ElemSimple extends Com5t {
                  }*/
             };
 
-            this.winc.keyboardPressed.addEventListener("keydown", keyPressed);
-            this.winc.mousePressed.addEventListener("mousedown", mousePressed);
-            this.winc.mouseDragged.addEventListener("mousemove", mouseDragge);
+            //this.winc.cnv.keyboardPressed.addEventListener("keydown", keyPressed);
+            this.winc.cnv.addEventListener("mousedown", mousePressed);
+            //this.winc.cnv.mouseDragged.addEventListener("mousemove", mouseDragge);
 
         } catch (e) {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
