@@ -1,5 +1,6 @@
 
 export class Timer {
+    
     constructor(callback, delay) {
         this.callback = callback;
         this.remaining = delay;

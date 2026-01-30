@@ -28,6 +28,10 @@ export class Wincalc {
     colorID1; //цвет базовый
     colorID2; //цвет внутр.
     colorID3; //цвет внещний 
+    actionEvent = {};
+    keyboardPressed = [];
+    mousePressed = [];
+    mouseDragged = [];    
     root; //объектная модель конструкции
     cnv; //канва рисования 2d
     sceleton = false; //см. paint
