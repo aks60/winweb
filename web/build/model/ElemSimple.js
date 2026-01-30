@@ -5,7 +5,6 @@ import {Com5t} from './Com5t.js';
 import {Layout, Type} from '../../enums/enums.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
-//import Point from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Point.js';
 
 export class ElemSimple extends Com5t {
 
