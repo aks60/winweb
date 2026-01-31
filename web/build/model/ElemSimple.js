@@ -117,6 +117,7 @@ export class ElemSimple extends Com5t {
                 }
             };
             let mouseDragge = (evt) => {
+                debugger;
                 if (this.area !== null) {
                     let X = 0, Y = 0;
                     let W = this.winc.cnv.width, H = this.winc.cnv.height;
