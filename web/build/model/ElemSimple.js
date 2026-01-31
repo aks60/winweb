@@ -173,6 +173,7 @@ export class ElemSimple extends Com5t {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }
     }
+
     moveXY(x, y) {
 
         if (x > 0 || y > 0) {
@@ -230,7 +231,60 @@ export class ElemSimple extends Com5t {
     }
 
     paint() {
+        if (this.winc.sceleton === false) {
+            if (this.area !== null) {
+                if (this.passMask[1] > 0) {
 
+                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
+                        this.winc.ctx.strokeStyle = '#ff0000';
+                        this.winc.ctx.fillStyle = '#ff0000';
+                        this.winc.ctx.beginPath();
+
+                        //Хвост вектора, точка круг
+                        if (this.passMask[0] === 0) {
+                            this.winc.ctx.arc(this.x1 - SIZE / 2, this.y1 - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                            this.winc.ctx.fill();
+
+                            //Начало вектора. точка круг
+                        } else if (this.passMask[0] === 1) {
+                            this.winc.ctx.arc(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                            this.winc.ctx.fill();
+
+                            //Середина вектора. точка квадрат
+                        } else if (this.passMask[0] === 2) {
+                            if (this.h !== null) { //арка
+                                //List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
+                                //        .stream().filter(c -> c.z == this.id).collect(toList());
+                                //int i = list.size() / 2; //index середины дуги
+                                //Coordinate c1 = list.get(i), c2 = list.get(i + 1);
+                                //Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
+                                //Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                //this.winc.gc2d.draw(rec);
+
+                            } else {
+                                let smid = new LineSegment(this.x1, this.y1, this.x2, this.y2).midPoint();
+                                this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                            }
+                        }
+                        this.winc.ctx.closePath();
+                    };
+                }
+            }
+        } else if (this.area !== null) {
+            //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
+            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
+            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
+
+            //this.winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
+            //this.winc.gc2d.fill(shape1);
+            //this./winc.gc2d.fill(shape2);
+            //this.winc.gc2d.fill(shape3);
+
+            //this.winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+            //this.winc.gc2d.draw(shape1);
+            //this.winc.gc2d.draw(shape2);
+            //this.winc.gc2d.draw(shape3);            
+        }
     }
 
     setDimension(x1, y1, x2, y2) {

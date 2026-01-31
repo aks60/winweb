@@ -68,7 +68,7 @@ export class Com5t {
             }
         }
     }
-    
+
     //Длина компонента
     length() {
         if (this.gson.h !== undefined) {
@@ -89,6 +89,8 @@ export class Com5t {
     height() {
         return (this.y2 > this.y1) ? this.y2 - this.y1 : this.y1 - this.y2;
     }
+
+    // <editor-fold defaultstate="collapsed" desc="GET-SET">
     get x1() {
         return this.gson.x1;
     }
@@ -125,7 +127,7 @@ export class Com5t {
 
     set y2(v) {
         this.gson.y2 = v;
-    }   
+    }
 
     get jsonID() {
         let max = 0;
@@ -134,4 +136,5 @@ export class Com5t {
         }
         return max;
     }
+    // </editor-fold>  
 }

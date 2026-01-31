@@ -90,6 +90,7 @@ export class ElemFrame extends ElemSimple {
         }
     }
 
+// <editor-fold defaultstate="collapsed" desc="GET-SET">
     get x2() {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
@@ -107,6 +108,25 @@ export class ElemFrame extends ElemSimple {
         }
         return null;
     }
+
+    set x2(v) {
+        for (let i = 0; i < this.owner.frames.length; i++) {
+            if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
+                this.owner.frames[(i === owner.frames.length - 1) ? 0 : i + 1].x1(v);
+                return;
+            }
+        }
+    }
+
+    set y2(v) {
+        for (let i = 0; i < this.owner.frames.length; i++) {
+            if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
+                this.owner.frames[(i === owner.frames.length - 1) ? 0 : i + 1].y1(v);
+                return;
+            }
+        }
+    }
+    // </editor-fold>  
 }
 
 
