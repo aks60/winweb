@@ -79,7 +79,7 @@ export class ElemFrame extends ElemSimple {
     paint() {
         try {
             if (this.area !== null && this.winc.sceleton === false) {
-
+                super.paint();
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
@@ -112,7 +112,7 @@ export class ElemFrame extends ElemSimple {
     set x2(v) {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
-                this.owner.frames[(i === owner.frames.length - 1) ? 0 : i + 1].x1(v);
+                this.owner.frames[(i === this.owner.frames.length - 1) ? 0 : i + 1].x1 = v;
                 return;
             }
         }
@@ -121,7 +121,7 @@ export class ElemFrame extends ElemSimple {
     set y2(v) {
         for (let i = 0; i < this.owner.frames.length; i++) {
             if (this.owner.frames[i].x1 === this.x1 && this.owner.frames[i].y1 === this.y1) {
-                this.owner.frames[(i === owner.frames.length - 1) ? 0 : i + 1].y1(v);
+                this.owner.frames[(i === this.owner.frames.length - 1) ? 0 : i + 1].y1 = v;
                 return;
             }
         }

@@ -52,12 +52,13 @@ export class AreaSimple extends Com5t {
 
     paint() {
         try {
+            //debugger;
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
-                    //if (listenerPassEdit != null) {
-                    //    listenerPassEdit.paint();
-                    //}
+                    if (this.listenerPassEdit != null) {
+                        this.listenerPassEdit();
+                    }
                     this.winc.ctx.strokeStyle = '#000000';
                     let frameEnvelope = this.winc.root.area.getGeometryN(0).getEnvelopeInternal();
                     let hsHor = new Set(), hsVer = new Set();

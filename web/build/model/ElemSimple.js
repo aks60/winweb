@@ -9,7 +9,6 @@ import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coord
 export class ElemSimple extends Com5t {
 
     betweenHoriz = [0, 0]; //угол между векторами   
-    translate = [2, 2];
     pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     delta = 3;
@@ -78,7 +77,7 @@ export class ElemSimple extends Com5t {
                  }
                  }
                  if (X < 0 || Y < 0) {
-                 winc.gson.translate(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                 this.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                  }
                  }
                  timer.stop();
@@ -117,7 +116,7 @@ export class ElemSimple extends Com5t {
                 }
             };
             let mouseDragge = (evt) => {
-                debugger;
+                //debugger;
                 if (this.area !== null) {
                     let X = 0, Y = 0;
                     let W = this.winc.cnv.width, H = this.winc.cnv.height;
@@ -143,23 +142,24 @@ export class ElemSimple extends Com5t {
                             Y = dY / this.winc.scale + this.y2;
                             if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
                                 if (this.h !== null) {
-                                    this.h(this.h - dY / this.winc.scale);
+                                    this.h = (this.h - dY / this.winc.scale);
                                 } else {
-                                    this.y1(Y);
-                                    this.y2(Y);
+                                    this.y1 = Y;
+                                    this.y2 = Y;
                                 }
                             }
                             if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                if (this.h() !== null) {
-                                    this.h(this.h() - dX / this.winc.scale);
+                                if (this.h !== null) {
+                                    this.h = (this.h - dX / this.winc.scale);
                                 } else {
-                                    this.x1(X);
-                                    this.x2(X);
+                                    this.x1 = X;
+                                    this.x2 = X;
                                 }
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            this.translate(this.winc.gson, Math.abs(dX), Math.abs(dY));
+                            debugger;
+                            this.winresize(this.winc.gson, Math.abs(dX), Math.abs(dY));
                         }
                     }
                 }
@@ -179,27 +179,27 @@ export class ElemSimple extends Com5t {
         if (x > 0 || y > 0) {
             if ([Layout.BOT, Layout.HOR].includes(this.layout)) {
                 if (this.passMask[0] === 0) {
-                    this.y1(y);
+                    this.y1 = y;
                 } else if (this.passMask[0] === 1) {
-                    this.y2(y);
+                    this.y2 = y;
                 }
             } else if ([Layout.RIG].includes(this.layout)) {
                 if (this.passMask[0] === 0) {
-                    this.x1(x);
+                    this.x1 = x;
                 } else if (this.passMask[0] === 1) {
-                    this.x2(x);
+                    this.x2 = x;
                 }
             } else if ([Layout.TOP].includes(this.layout)) {
                 if (this.passMask[0] === 0) {
-                    this.y1(y);
+                    this.y1 = y;
                 } else if (this.passMask[0] === 1) {
-                    this.y2(y);
+                    this.y2 = y;
                 }
             } else if ([Layout.LEF, Layout.VER].includes(this.layout)) {
                 if (this.passMask[0] === 0) {
-                    this.x1(x);
+                    this.x1 = x;
                 } else if (this.passMask[0] === 1) {
-                    this.x2(x);
+                    this.x2 = x;
                 }
             }
         }
@@ -231,11 +231,12 @@ export class ElemSimple extends Com5t {
     }
 
     paint() {
+        //debugger;
         if (this.winc.sceleton === false) {
             if (this.area !== null) {
                 if (this.passMask[1] > 0) {
-
                     this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
+                        debugger;
                         this.winc.ctx.strokeStyle = '#ff0000';
                         this.winc.ctx.fillStyle = '#ff0000';
                         this.winc.ctx.beginPath();

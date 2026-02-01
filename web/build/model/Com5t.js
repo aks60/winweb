@@ -1,7 +1,9 @@
 
+import {UCom} from '../../common/uCom.js';
 import PrecisionModel from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/PrecisionModel.js';
 import GeometryFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
+import {Type} from '../../enums/enums.js';
 
 export class Com5t {
 
@@ -39,13 +41,14 @@ export class Com5t {
             errorLog('Error: Com5t.constructor() ' + e.message);
         }
     }
+    
     //Перемещение на канве
-    translate(gson, dx, dy) {
+    winresize(gson, dx, dy) {
         if (gson.childs !== null) {
             let dX = (dx === 0) ? 0 : dx / this.winc.scale;
             let dY = (dy === 0) ? 0 : dy / this.winc.scale;
             for (let gs of gson.childs) {
-                if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(gs.type)) {
+                if (UCom.includes([Type.IMPOST, Type.STOIKA, Type.SHTULP], gs.type)) {
                     if (dX !== 0) {
                         gs.x1 += dX;
                         gs.x2 += dX;
@@ -54,7 +57,7 @@ export class Com5t {
                         gs.y1 += dY;
                         gs.y2 += dY;
                     }
-                } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(gs.type)) {
+                } else if (UCom.includes([Type.BOX_SIDE, Type.STV_SIDE], gs.type)) {
                     if (dX !== 0) {
                         gs.x1 += +dX;
                     }
@@ -62,8 +65,8 @@ export class Com5t {
                         gs.y1 += dY;
                     }
                 }
-                if ([Type.AREA, Type.STVORKA].contains(gs.type)) {
-                    translate(gs, dx, dy);
+                if (UCom.includes([Type.AREA, Type.STVORKA], gs.type)) {
+                    winresize(gs, dx, dy);
                 }
             }
         }
@@ -78,6 +81,7 @@ export class Com5t {
             console.log('Com5t.length() - функция не реализована');
         }
     }
+    
     color() {
         //return (this.timer.timerId !== null) ? [255, 120, 0] : this.color2Rec[eColor.rgb];
     }

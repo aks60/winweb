@@ -27,7 +27,6 @@ UCom.findJson = (id, data) => {
     }
     return obj;
 };
-
 UCom.getJson = (json1, json2) => {
     if (json1 === undefined) {
         return undefined;
@@ -37,11 +36,9 @@ UCom.getJson = (json1, json2) => {
         return json1[json2];
     }
 };
-
 UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
-
 UCom.scaleFont = (scale) => {
     if (scale > .44) {
         return 30;
@@ -53,3 +50,11 @@ UCom.scaleFont = (scale) => {
         return 50;
     }
 }
+UCom.includes = (keys, name) => {
+    for (let key in keys) {
+        if (key === name) {
+            return true;
+        }
+    }
+    return false;
+};
