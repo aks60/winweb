@@ -31,7 +31,7 @@ export class Wincalc {
     actionEvent = {};
     root; //объектная модель конструкции
     cnv; //канва рисования 2d
-    dXY = 18; //коррекция разм. линий
+    dXY = 40; //коррекция разм. линий
     sceleton = false; //см. paint
     ctx; //графический контекст 2d    
 
