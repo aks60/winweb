@@ -9,8 +9,8 @@
         <style>
             #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
-                border: 0;
-                /*border: 1px solid #00f;*/
+                /*border: 0;*/
+                border: 4px solid #00f;
             }
             #scale-hor {
                 width: 100%;

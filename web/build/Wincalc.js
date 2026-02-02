@@ -227,26 +227,26 @@ export class Wincalc {
                     ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
             this.ctx.scale(this.scale, this.scale);
 
-            //Прорисовка стеклопакетов
-            this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
-
-            //Прорисовка импостов
-            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
-
-            //Прорисовка рам
-            let arr = this.listElem.filter(el => el.type === Type.BOX_SIDE);
-            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
-
-            //Прорисовка рам створок
-            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
-
-            //Прорисока фурнитуры створок
-            this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
-
-            //Размерные линии
-            if (this.scale > .1) {
-                this.root.paint();
-            }
+//            //Прорисовка стеклопакетов
+//            this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
+//
+//            //Прорисовка импостов
+//            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
+//
+//            //Прорисовка рам
+//            let arr = this.listElem.filter(el => el.type === Type.BOX_SIDE);
+//            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
+//
+//            //Прорисовка рам створок
+//            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
+//
+//            //Прорисока фурнитуры створок
+//            this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
+//
+//            //Размерные линии
+//            if (this.scale > .1) {
+//                this.root.paint();
+//            }
 
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
