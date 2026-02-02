@@ -298,7 +298,7 @@ UGeo.inside = (poly, point) => {
 };  
 
 //Перемещение точек на канве (изменение размера окна)
-UGeo.winresize = (gson, dx, dy, scale) => {
+UGeo.winresiz = (gson, dx, dy, scale) => {
         if (gson.childs !== null) {
             let dX = (dx === 0) ? 0 : dx / scale;
             let dY = (dy === 0) ? 0 : dy / scale;
@@ -321,7 +321,7 @@ UGeo.winresize = (gson, dx, dy, scale) => {
                     }
                 }
                 if (UCom.includes([Type.AREA, Type.STVORKA], gs.type)) {
-                    UGeo.winresize(gs, dx, dy, scale);
+                    UGeo.winresiz(gs, dx, dy, scale);
                 }
             }
         }

@@ -77,7 +77,7 @@ export class ElemSimple extends Com5t {
                  }
                  }
                  if (X < 0 || Y < 0) {
-                 UGeo.winresize(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                 UGeo.winresiz(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                  }
                  }
                  timer.stop();
@@ -159,7 +159,7 @@ export class ElemSimple extends Com5t {
                         }
                         if (X < 0 || Y < 0) {
                             debugger;
-                            UGeo.winresize(this.winc.gson, Math.abs(dX), Math.abs(dY), this.winc.scale);
+                            UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), this.winc.scale);
                         }
                     }
                 }
