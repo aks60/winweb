@@ -280,10 +280,9 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
     }
 };
 
-UGeo.inside = (poly, point) => {
+UGeo.inside = (poly, x, y) => {
     let inside = false;
     const coo = poly.getCoordinates();
-    const x = point.x, y = point.y;
 
     for (let i = 1, j = coo.length - 1; i < coo.length; j = i++) {
         let xi = coo[i].x, yi = coo[i].y

@@ -11,7 +11,6 @@ export class ElemSimple extends Com5t {
     betweenHoriz = [0, 0]; //угол между векторами   
     pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
-    delta = 3;
     SIZE = 20;
     //timer = new Timer(() => alert('exec Timer()'), 9160);
     //timer = setTimeout(() => {console.log("Stop timer.");}, 160);
@@ -28,7 +27,7 @@ export class ElemSimple extends Com5t {
         try {
             //this.timer.setRepeats(false);
 
-            let keyPressed = (evt) => {
+            this.winc.cnv.addEventListener("keydown", (evt) => {
                 /*if (this.area != null && passMask[1] > 0) {
                  LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                  int key = evt.getKeyCode();
@@ -82,18 +81,24 @@ export class ElemSimple extends Com5t {
                  }
                  timer.stop();
                  timer.start();*/
-            };
-            let mousePressed = (evt) => {
+            });
+            this.winc.cnv.addEventListener("mousedown", (evt) => {
                 if (this.area !== null) {
-                    //console.log('AKSENOV');
-                    let wincPress = Coordinate.new(evt.clientX, evt.clientY);
-                    let inside = UGeo.inside(this.area, wincPress);
+                    
+                    if(this.id === 1) 
+                           debugger;
+                    console.log('AKSENOV mousedown_' + this.id);
+                    
+                    let wincPress2 = Coordinate.new(evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
+                    let inside2 = UGeo.inside(this.area, evt.clientX, evt.clientY);
+                    let wincPress = Coordinate.new(evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
+                    let inside = UGeo.inside(this.area, evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
 
                     //Если клик внутри контура
                     if (inside === true) {
                         ++this.passMask[1];
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
-                        const coeff = segm.segmentFraction(wincPress); //доля расстояния (в [0,0, 1,0] ) вдоль этого отрезка.
+                        const coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
 
                         if (coeff < .33) { //кликнул начало вектора
                             this.passMask[1] = (this.passMask[0] !== 0) ? 1 : this.passMask[1];
@@ -114,8 +119,9 @@ export class ElemSimple extends Com5t {
                     //this.winc.cnv.requestFocusInWindow();
                     //this.winc.cnv.repaint();
                 }
-            };
-            let mouseDragge = (evt) => {
+            });
+            this.winc.cnv.addEventListener("mousemove", (evt) => {
+                let o1 = this.id;
                 //debugger;
                 if (this.area !== null) {
                     let X = 0, Y = 0;
@@ -158,17 +164,13 @@ export class ElemSimple extends Com5t {
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            debugger;
+                            console.log('AKSENOF UGeo.winresiz()');
                             UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), this.winc.scale);
                         }
                     }
                 }
-            };
-
-            //this.winc.cnv.keyboardPressed.addEventListener("keydown", keyPressed);
-            this.winc.cnv.addEventListener("mousedown", mousePressed);
-            this.winc.cnv.addEventListener("mousemove", mouseDragge);
-
+            });
+            
         } catch (e) {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }
@@ -236,19 +238,19 @@ export class ElemSimple extends Com5t {
             if (this.area !== null) {
                 if (this.passMask[1] > 0) {
                     this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
-                        debugger;
+                        //debugger;
                         this.winc.ctx.strokeStyle = '#ff0000';
                         this.winc.ctx.fillStyle = '#ff0000';
                         this.winc.ctx.beginPath();
 
                         //Хвост вектора, точка круг
                         if (this.passMask[0] === 0) {
-                            this.winc.ctx.arc(this.x1 - SIZE / 2, this.y1 - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                            this.winc.ctx.arc(this.x1 - this.SIZE / 2, this.y1 - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
                             this.winc.ctx.fill();
 
                             //Начало вектора. точка круг
                         } else if (this.passMask[0] === 1) {
-                            this.winc.ctx.arc(this.x2() - SIZE / 2, this.y2() - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                            this.winc.ctx.arc(this.x2() - this.SIZE / 2, this.y2() - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
                             this.winc.ctx.fill();
 
                             //Середина вектора. точка квадрат
@@ -259,12 +261,12 @@ export class ElemSimple extends Com5t {
                                 //int i = list.size() / 2; //index середины дуги
                                 //Coordinate c1 = list.get(i), c2 = list.get(i + 1);
                                 //Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
-                                //Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                //Rectangle2D rec = new Rectangle2D.Double(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
                                 //this.winc.gc2d.draw(rec);
 
                             } else {
                                 let smid = new LineSegment(this.x1, this.y1, this.x2, this.y2).midPoint();
-                                this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                this.winc.ctx.fillRect(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
                             }
                         }
                         this.winc.ctx.closePath();
