@@ -42,36 +42,6 @@ export class Com5t {
         }
     }
     
-    //Перемещение на канве
-    winresize(gson, dx, dy) {
-        if (gson.childs !== null) {
-            let dX = (dx === 0) ? 0 : dx / this.winc.scale;
-            let dY = (dy === 0) ? 0 : dy / this.winc.scale;
-            for (let gs of gson.childs) {
-                if (UCom.includes([Type.IMPOST, Type.STOIKA, Type.SHTULP], gs.type)) {
-                    if (dX !== 0) {
-                        gs.x1 += dX;
-                        gs.x2 += dX;
-                    }
-                    if (dY !== 0) {
-                        gs.y1 += dY;
-                        gs.y2 += dY;
-                    }
-                } else if (UCom.includes([Type.BOX_SIDE, Type.STV_SIDE], gs.type)) {
-                    if (dX !== 0) {
-                        gs.x1 += +dX;
-                    }
-                    if (dY !== 0) {
-                        gs.y1 += dY;
-                    }
-                }
-                if (UCom.includes([Type.AREA, Type.STVORKA], gs.type)) {
-                    winresize(gs, dx, dy);
-                }
-            }
-        }
-    }
-
     //Длина компонента
     length() {
         if (this.gson.h !== undefined) {

@@ -20,12 +20,15 @@ UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
     return (ang > 0) ? 360 - ang : Math.abs(ang);
 };
+
 UGeo.degToRad = (degrees) => {
     return degrees * (Math.PI / 180);
 };
+
 UGeo.radToDeg = (rad) => {
     return rad / (Math.PI / 180);
 };
+
 //Список входн. параметров не замыкается начальной точкой как в jts!
 UGeo.arrCoord = (arr) => {
     let list = new Array();
@@ -35,6 +38,7 @@ UGeo.arrCoord = (arr) => {
     list.push(new Coordinate(arr[0], arr[1]));
     return list;
 };
+
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
     var b = true, hsCheck = new Set();
@@ -101,14 +105,17 @@ UGeo.splitPolygon = (geom, segm) => {
         errorLog("Error: UGeo.splitPolygon(*) " + e.message);
     }
 };
+
 UGeo.rotate = (arr) => {
     arr.unshift(arr.pop());
     return arr;
 }
+
 UGeo.normalizeSegm = (segm) => {
     segm.normalize();
     return segm;
 };
+
 //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
 UGeo.geo2Cross = (poly, line) => {
     try {
@@ -134,6 +141,7 @@ UGeo.geo2Cross = (poly, line) => {
         errorLog("Error: UGeo.geoCross()" + e);
     }
 };
+
 UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
     try {
         const cooShell = geoShell.getCoordinates();
@@ -165,6 +173,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
         errorLog("Error: uGeo.bufferGeometry() " + e);
     }
 };
+
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
         let listBuffer = new Array();
@@ -194,11 +203,13 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         errorLog("Error: UGeo.bufferPolygon() " + e.message);
     }
 };
+
 UGeo.offsetSegm = (lineSegm, offsetDistance) => {
     let offset0 = UGeo.pointAlongOffset(lineSegm, 0, offsetDistance);
     let offset1 = UGeo.pointAlongOffset(lineSegm, 1, offsetDistance);
     return new LineSegment(offset0, offset1);
 };
+
 UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let segx = lineSegm.p0.x + segmentLengthFraction * (lineSegm.p1.x - lineSegm.p0.x);
@@ -222,6 +233,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
     coord.setZ(segz);
     return coord;
 };
+
 UGeo.getSegment = (poly, index) => {
     poly = poly.getGeometryN(0);
     let coo = structuredClone(poly.getCoordinates());
@@ -232,6 +244,7 @@ UGeo.getSegment = (poly, index) => {
 
     return new LineSegment(coo[j], coo[k]);
 };
+
 UGeo.getIndex = (geo, id) => {
     let coo = geo.getGeometryN(0).getCoordinates();
     for (let i = 0; i < coo.length - 1; i++) {
@@ -241,6 +254,7 @@ UGeo.getIndex = (geo, id) => {
     }
     errorLog("Error: UGeo.getIndex()");
 };
+
 /**
  * Размерные линии
  *
@@ -265,6 +279,7 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
         errorLog("Error: UGeo.lineTip() " + e.message);
     }
 };
+
 UGeo.inside = (poly, point) => {
     let inside = false;
     const coo = poly.getCoordinates();
@@ -280,4 +295,34 @@ UGeo.inside = (poly, point) => {
             inside = !inside;
     }
     return inside;
-};
+};  
+
+//Перемещение точек на канве (изменение размера окна)
+UGeo.winresize = (gson, dx, dy, scale) => {
+        if (gson.childs !== null) {
+            let dX = (dx === 0) ? 0 : dx / scale;
+            let dY = (dy === 0) ? 0 : dy / scale;
+            for (let gs of gson.childs) {
+                if (UCom.includes([Type.IMPOST, Type.STOIKA, Type.SHTULP], gs.type)) {
+                    if (dX !== 0) {
+                        gs.x1 += dX;
+                        gs.x2 += dX;
+                    }
+                    if (dY !== 0) {
+                        gs.y1 += dY;
+                        gs.y2 += dY;
+                    }
+                } else if (UCom.includes([Type.BOX_SIDE, Type.STV_SIDE], gs.type)) {
+                    if (dX !== 0) {
+                        gs.x1 += +dX;
+                    }
+                    if (dY !== 0) {
+                        gs.y1 += dY;
+                    }
+                }
+                if (UCom.includes([Type.AREA, Type.STVORKA], gs.type)) {
+                    UGeo.winresize(gs, dx, dy, scale);
+                }
+            }
+        }
+    };
