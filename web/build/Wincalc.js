@@ -223,8 +223,11 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            this.scale = ((this.cnv.width - this.dXY) / this.height < (this.cnv.height - this.dXY) / this.height)
-                    ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
+            this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
+                    ? this.cnv.width / (this.width + 80) : this.cnv.height / (this.height + 80); 
+                    
+            //this.scale = ((this.cnv.width - this.dXY) / this.height < (this.cnv.height - this.dXY) / this.height)
+                    //? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
             this.ctx.scale(this.scale, this.scale);
 
             //Прорисовка стеклопакетов
