@@ -32,7 +32,7 @@
             }
             #scale-ver input {
             }
-/*            #scale-hor input, #scale-ver input {
+            #scale-hor input, #scale-ver input {
                 text-align: center;
                 font-weight: bold;
                 font-size: 16px;
@@ -40,7 +40,7 @@
                 border: 0;
                 border-left: 2px solid #00f;
                 border-right: 2px solid #00f;
-            }*/
+            }
             #spinner {
                 width: 80px;
                 font-size: 16px;
