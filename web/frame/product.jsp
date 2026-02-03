@@ -7,42 +7,47 @@
         <script type="module" src="frame/product.js"></script>
         <title>PRODUCT</title>
         <style>
-            #centr {
-                height: 100%;
-                width: 100%; 
-                padding: 0;
-                margin: 0;                
-                border: 1px solid #ff0000;
+            #scale-hor, #scale-ver, #scale-cnv {
                 display: inline-block;
+                border: 0;
+                /*border: 1px solid #00f;*/
             }
-            #east {
-                
-            }
-            #tabs_1, tabs_2, tabs_3, tabs_4, tabs_5 {
-                padding: 0px;
-            }
-             #scale-hor, #scale-ver, #scale-cnv {
-                border: 1px solid #0000ff;
-            }  
             #scale-hor {
                 width: 100%;
                 height: 24px;
-            }  
+            }
             #scale-ver {
-                /*transform: rotate(-90deg);*/
-                /*transform-origin: right 0px;*/
-                /*position: absolute;*/
-                /*width: 100%;*/
+                transform: rotate(-90deg);
+                transform-origin: right 0px;
+                position: absolute;
                 height: 24px;
-            }  
+            }
             #scale-cnv {
+                width: calc(100% - 32px);
+                height: calc(100% - 34px);
+                margin-left: 30px;
+            }
+            #scale-hor input{
+                margin-top: 14px;
+            }
+            #scale-ver input {
+            }
+/*            #scale-hor input, #scale-ver input {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16px;
+                height: 12px;
+                border: 0;
+                border-left: 2px solid #00f;
+                border-right: 2px solid #00f;
+            }*/
+            #spinner {
+                width: 80px;
+                font-size: 16px;
+                font-weight: bold;
                 padding: 0;
-                margin: 0;
-                width: calc(100% - 62px);
-                height: calc(100% - 80px);
-                margin-left: 0px;
-            }            
-        </style> 
+            }
+        </style>  
         <script type="module">
             import {resize, server_to_fields, init_table, load_tree,
                     click_canvas_xy, click_spinner, update_script} from './frame/product.js';
