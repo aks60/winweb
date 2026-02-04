@@ -16,7 +16,7 @@
                 width:100%;
                 height:24px;
             }
-            #id2 {
+            #centr {
                 top: 60px;
                 margin-top: -4px;
                 width: calc(100% - 8px);
@@ -42,7 +42,7 @@
                 right: 0px;
                 bottom: 0px;
             }
-            #id3 {
+            #south {
                 display: inlin-block;
                 bottom: 4px;
                 width: calc(100% - 12px);
@@ -77,7 +77,7 @@
         <div id='north' style=''>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div>  
-        <div id='id2' class='abs' style=''>
+        <div id='centr' class='abs' style=''>
             <div id='id2-1' class='abs' style=''>
             </div>
             <div id='id2-2' class='abs' style=''>
@@ -136,7 +136,7 @@
                 <div id="tree-winc"></div>
             </div>       
         </div>  
-        <div id='id3' class='abs' style=''>
+        <div id='south' class='abs' style=''>
             Итого: 
         </div>  
     </body>
