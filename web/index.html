@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Привет Аксёноф!</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jquery-ui-1.13/redmond/jquery-ui.css">          
-        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jqgrid-4.6.3/ui.jqgrid.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jstree-3.3.12/themes/default/style.min.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/menu.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/html-ui.css">
-
-        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.js"></script>                               
-        <script type="text/javascript" src="lib-js/jquery-ui-1.13/jquery-ui.js"></script> 
-        <script type="text/javascript" src="lib-js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
-
-        <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
-        <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
-        <!--<script type="text/javascript" src="lib-js/jsts-2.11.2/jsts.min.js"></script>-->
-
-        <script type="text/javascript" src="frame/uGui.js"></script>
-        <script type="module" src="build/Wincalc.js"></script>
-        <!--<script type="module" src="build/making/Draw.js"></script>-->
-
-        <!--        <script type="module" src="domain/eArtdet.js"></script>
-                <script type="module" src="domain/eArtikl.js"></script>
-                <script type="module" src="domain/eColor.js"></script>
-                <script type="module" src="domain/eDealer.js"></script>
-                <script type="module" src="domain/eElement.js"></script>
-                <script type="module" src="domain/eFurndet.js"></script>
-                <script type="module" src="domain/eFurniture.js"></script>
-                <script type="module" src="domain/eGroups.js"></script>
-                <script type="module" src="domain/eKitdet.js"></script>
-                <script type="module" src="domain/eKits.js"></script>
-                <script type="module" src="domain/eParams.js"></script>
-                <script type="module" src="domain/eParmap.js"></script>
-                <script type="module" src="domain/ePrjkit.js"></script>
-                <script type="module" src="domain/ePrjprod.js"></script>
-                <script type="module" src="domain/eProject.js"></script>
-                <script type="module" src="domain/eSysfurn.js"></script>
-                <script type="module" src="domain/eSyspar1.js"></script>
-                <script type="module" src="domain/eSysprod.js"></script>
-                <script type="module" src="domain/eSysprof.js"></script>
-                <script type="module" src="domain/eSyssize.js"></script>
-                <script type="module" src="domain/eSystree.js"></script>
-                <script type="module" src="domain/eSysuser.js"></script>         -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>JS Bin</title>
+        <style>
+            .abs {
+                position: absolute;
+                border: 1px solid #00f;
+            }
+            #id1 {
+                border: 1px solid #00f;
+                width:100%;
+                height:30px;
+            }
+            #id2 {
+                top: 44px;
+                margin-top: -4px;
+                width: calc(100% - 12px);
+                height: calc(100% - 68px);
+            }
+            #id2-1 {
+                width: 30px;
+                height: 100%;
+            }
+            #id2-2 {
+                width: calc(100% - 424px);
+                height: 100%;
+                left: 32px;
+            }
+            #id2-3 {
+                width: 388px;
+                height: 50%;
+                right: 0px;
+            }
+            #id2-4 {
+                width: 388px;
+                height: 50%;
+                right: 0px;
+                bottom: 0px;
+            }
+            #id3 {
+                display: inlin-block;
+                bottom: 0px;
+                width: calc(100% - 12px);
+                height:24px
+            }
+        </style>
     </head>
     <body>
-        <div>Привет Aksenof!</div>
-        <script type="module">
-            import {localizeFactory} from './frame/main.js';
-            localizeFactory();
-        </script>         
+        <div id='id1' style=''>ID1
+        </div>  
+        <div id='id2' class='abs' style=''>
+            <div id='id2-1' class='abs' style=''>ID2-1
+            </div>
+            <div id='id2-2' class='abs' style=''>ID2-2
+            </div> 
+            <div id='id2-3' class='abs' style=''>ID2-3
+            </div>   
+            <div id='id2-4' class='abs' style=''>ID2-4
+            </div>       
+        </div>  
+        <div id='id3' class='abs' style=''>ID3
+        </div>   
     </body>
 </html>

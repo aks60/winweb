@@ -7,12 +7,12 @@ import {UGeo} from '../build/model/uGeo.js';
 export function resize() {
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
-        var height = window.innerHeight;
-        $("#context").css("height", height - 82);
+        //var height = window.innerHeight;
+        //$("#context").css("height", height - 82);
 
         //Изменение размера канвы
-        cnv.width = $("#scale-cnv").width();
-        cnv.height = $("#scale-cnv").height();
+        cnv.width = $("#cnv").width();
+        cnv.height = $("#cnv").height();
         if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
             product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
         $('#scale-ver').width(product.winCalc.height * product.winCalc.scale); //длина шкалы перед разворотом на 90 градусов
@@ -33,8 +33,8 @@ export function resize() {
             var width = $(this).attr('dx');
             $(this).width(winWidth - width);
         });
-        $("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
-        $("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+        //$("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
+        //$("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
     }
 }
 
@@ -527,98 +527,6 @@ export function redraw() {
     tree_to_tabs("0");
 }
 
-//Наполнение новыми инпутами шкалы горизонтальных и вертикальных размеров
-export function scale_new_input(layout, lineArea) {
-    let lineArr = [];
-
-    //Прорисовка горизонтальных размеров 
-    if (layout === "HORIZ") {
-        lineArea.forEach((e, i) => {
-
-            let inpt = document.createElement('input'); //create input
-            if ($('#scale-hor input:eq(' + i + ')').length === 1) {
-                $(inpt).css("color", $('#scale-hor input:eq(' + i + ')').css("color"));
-            }
-            $(inpt).val(e.lengthX.toFixed(1));
-            $(inpt).attr('areaID', e.id);
-            $(inpt).width(e.width * product.winCalc.scale - 8);
-            inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'HORIZ'));
-            inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
-            if (i === 0) {
-                $(inpt).css('margin-left', 30 + lineArea[i].x1 * product.winCalc.scale);
-            }
-            lineArr.push(inpt);
-        });
-        $('#scale-hor input').each((i, el) => el.remove());
-        lineArr.forEach((el, i) => $('#scale-hor').append(el));
-
-        //Прорисовка вертикальных размеров   
-    } else if (layout === "VERT") {
-
-        lineArr.length = 0;
-        let length = product.winCalc.gson.height * product.winCalc.scale;
-        $('#scale-ver').css('left', -1 * length); //влево после разворота на -90 градусов 
-        lineArea.forEach((e, i) => {
-
-            let inpt = document.createElement('input'); //create input           
-            if ($('#scale-ver input:eq(' + i + ')').length === 1) {
-                $(inpt).css("color", $('#scale-ver input:eq(' + i + ')').css("color"));
-            }
-            $(inpt).val(e.lengthY.toFixed(1));
-            $(inpt).attr('areaID', e.id);
-            $(inpt).width(e.lengthY * product.winCalc.scale - 10);
-            inpt.addEventListener('dblclick', () => product.dblclick_scale_color(inpt, 'VERT'));
-            inpt.addEventListener("keydown", (event) => product.keyup_btn_enter(inpt, event));
-            if (i === 0) {
-                $(inpt).css('margin-left', (product.winCalc.height - e.y2) * product.winCalc.scale);
-            }
-            lineArr.push(inpt);
-        });
-        $('#scale-ver input').each((i, el) => el.remove());
-        lineArr.forEach((el, i) => $('#scale-ver').append(el));
-    }
-}
-
-//Установка цвета горизонтальных и вертикальных размеров
-export function dblclick_scale_color(inpt, dir) {
-
-    $('#scale-ver input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
-    $('#scale-hor input').each((i, el) => $(el).css('color', 'rgb(0, 0, 0)'));
-    $(inpt).css('color', 'rgb(255, 0, 0)');
-    $("#spinner").spinner("value", $(inpt).val());
-//    $('#btnResiz').focus();
-}
-
-//Click на импосте для расчёта шкал размеров
-export function click_canvas_xy(canvas, event) {
-    const rect = canvas.getBoundingClientRect()
-    const x = (event.clientX - rect.left) / product.winCalc.scale;
-    const y = (event.clientY - rect.top) / product.winCalc.scale;
-
-    //Если клик не на конструкции
-//    if (product.winCalc.root.inside(x, y) === false) {
-//        product.scale_new_input('HORIZ', [product.winCalc.root]);
-//        product.scale_new_input('VERT', [product.winCalc.root]);
-//        $("#spinner").spinner("value", 0);
-//        $('#scale-hor input').css('color', 'rgb(0, 0, 0)');
-//        $('#scale-ver input').css('color', 'rgb(0, 0, 0)');
-//
-//    } else { //На конструкции
-//        product.winCalc.listElem.forEach((e, i) => {
-//            if (e.typeForm() === 'IMPOST' || e.typeForm() === 'SHTULP' || e.typeForm() === 'STOIKA') {
-//                if (e.inside(x, y)) {
-//                    let m = product.winCalc.root.lineCross(e);
-//                    if (e.layout === 'HORIZ') {
-//                        product.scale_new_input('VERT', m.reverse());
-//                    } else {
-//                        product.scale_new_input('HORIZ', m);
-//                    }
-//                }
-//            }
-//        });
-//    }
-}
-
 //Клик на кнопке масштабирования
 export function click_btn_resiz() {
     let draw = 0;
@@ -719,50 +627,6 @@ export function keyup_btn_enter(inpt, event) {
             product.redraw(); //перерисовать при изменении размера
     }
     //console.log("+++ " + product.winCalc.heightAdd);
-}
-
-//Клик на кнопке масштабирования
-export function click_spinner() {
-    let draw = 0;
-
-    //По горизонтали  
-    $('#scale-hor input').each((i, e) => {
-        if ($(e).css('color') === 'rgb(255, 0, 0)') {
-            let areas = product.winCalc.listArea.find(v => v.id === $(e).attr('areaID'));
-            let dv = $("#spinner").spinner("value") - areas.lengthX;
-            ++draw;
-            $('#scale-hor input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(m).css('color') === 'rgb(255, 0, 0)') {
-                    area.lengthX = area.lengthX + dv;
-                } else {
-                    area.lengthX = area.lengthX - dv;
-                }
-            });
-        }
-    });
-
-    //По вертикали
-    $('#scale-ver input').each((i, e) => {
-        if ($(e).css('color') === 'rgb(255, 0, 0)') {
-            let areas = product.winCalc.listArea.find(v => v.id === $(e).attr('areaID'));
-            let dv = $("#spinner").spinner("value") - areas.lengthX;
-            ++draw;
-            $('#scale-ver input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(m).css('color') === 'rgb(255, 0, 0)') {
-                    area.lengthY = area.lengthY + dv;
-                } else {
-                    area.lengthY = area.lengthY - dv;
-                }
-            });
-        }
-    });
-
-    //Перерисовать при изменении размера
-    if (draw > 0) {
-        product.redraw();
-    }
 }
 
 //Изменение скрипта
