@@ -8,28 +8,14 @@ export function resize() {
     debugger;
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
-        //var height = window.innerHeight;
-        //$("#context").css("height", height - 82);
 
         //Изменение размера канвы
         cnv.width = $("#cnv").width();
         cnv.height = $("#cnv").height();
         
-        console.log(cnv.width + ' - ' + cnv.height );
-        
-        if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
+        //Перерисовка конструкции на канве, после изменения размера канвы
+        if (order.prjprodRec != null) 
             product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
-        $('#scale-ver').width(product.winCalc.height * product.winCalc.scale); //длина шкалы перед разворотом на 90 градусов
-
-//        //Прорисовка горизонт. размерных линий, после изменения размера канвы
-//        let arrHor = ($('#scale-hor input').length === 0) ? [product.winCalc.root] : [];
-//        $('#scale-hor input').each((i, p) => arrHor.push(product.winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
-//        product.scale_new_input('HORIZ', arrHor);
-//
-//        //Прорисовка вертик. размерных линий, после изменения размера конструкции
-//        let arrVer = ($('#scale-ver input').length == 0) ? [product.winCalc.root] : [];
-//        $('#scale-ver input').each((i, p) => arrVer.push(product.winCalc.listArea.find(e => e.id === $(p).attr('areaId'))));
-//        product.scale_new_input('VERT', arrVer);
 
         //Прорисовка полей
         let winWidth = $('#east').width() - 24;
@@ -37,8 +23,8 @@ export function resize() {
             var width = $(this).attr('dx');
             $(this).width(winWidth - width);
         });
-        //$("#table1").jqGrid('setGridWidth', $("#east2").width() - 4);
-        //$("#table1").jqGrid('setGridHeight', $("#east2").height() - 24);
+        $("#table1").jqGrid('setGridWidth', $("#east1").width() - 8);
+        $("#table1").jqGrid('setGridHeight', $("#east1").height() - 24);
     }
 }
 
@@ -50,7 +36,6 @@ export function init_table() {
             gridview: true,
             rownumbers: true,
             height: 246,
-            width: null,
             shrinkToFit: false,
             scroll: "true",
             colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],

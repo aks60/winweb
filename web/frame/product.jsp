@@ -11,32 +11,33 @@
                 position: absolute;
                 border: 1px solid #00f;
             }
-            #id1 {
+            #north {
                 border: 1px solid #00f;
-                width:100%;
-                height:24px;
             }
-            #id2 {
+            #context {
                 top: 60px;
-                margin-top: -4px;
-                width: calc(100% - 8px);
+                margin-top: -4px;                
                 height: calc(100% - 80px);
             }
-            #id2-1 {
+            #west1 {
+                background: #efeffb;
                 width: 30px;
                 height: 100%;
             }
-            #id2-2 {
+            #west2 {
                 width: calc(100% - 424px);
                 height: 100%;
                 left: 32px;
             }
-            #id2-3 {
+            #east1 {
+                background: #efeffb;
                 width: 388px;
                 height: 50%;
                 right: 0px;
             }
-            #id2-4 {
+            
+            #east2 {
+                background: #efeffb;
                 width: 388px;
                 height: 50%;
                 right: 0px;
@@ -44,9 +45,7 @@
             }
             #south {
                 display: inlin-block;
-                bottom: 4px;
-                width: calc(100% - 12px);
-                height:16px
+                bottom: 2px;
             }
         </style>
         <script type="module">
@@ -68,22 +67,23 @@
             });
 
             function test() {
-//                printScript(winCalc);
-//                update_script();
+                //let winc = get_winc();
+                //winc.scale = win.scale - .05;
+                //product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
             }
         </script>        
     </head>
     <body>
-        <div id='id1' style=''>
+        <div id='north' style=''>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div>  
-        <div id='id2' class='abs' style=''>
-            <div id='id2-1' class='abs' style=''>
+        <div id='context' class='abs' style=''>
+            <div id='west1' class='abs' style=''>
             </div>
-            <div id='id2-2' class='abs' style=''>
-                <canvas id="cnv"></canvas>  
+            <div id='west2' class='abs' style=''>
+                <canvas id="cnv"  style='width: 100%; height: 100%;'></canvas>  
             </div> 
-            <div id='id2-3' class='abs' style=''>
+            <div id='east1' class='abs' style=''>
 
                 <div id="tabs-1" style="padding: 0px;">  
                     <p class="pantitle">Основные размеры</p> 
@@ -132,7 +132,7 @@
                     <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click="product.color_to_element('n53');"></jst><br>
                 </div>                
             </div>   
-            <div id='id2-4' class='abs' style=''>
+            <div id='east2' class='abs' style=''>
                 <div id="tree-winc"></div>
             </div>       
         </div>  

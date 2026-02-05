@@ -82,12 +82,12 @@
             </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%"> 
 
-                <div id="centr" style="height: 100%; width: 100%; margin-top: 2px;">
+                <div id="centr" style="height: 100%; width: 100%; margin-top: 0px;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
                 <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">
                     <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px; background: #efeffb">
-                        <!--<canvas id="cnv" style="border:2px solid black;" width="468" height="154"></canvas>-->
+                        <canvas id="cnv" style="border:2px solid black;" width="468" height="154"></canvas>
                         <table id="table3"  class="ui-jqgrid-btable"></table>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">

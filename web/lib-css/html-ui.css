@@ -3,31 +3,35 @@ html, body {
     margin: 0;
 }
 
-#context {
-    /*border: 2px solid #0000ff;*/
-    width: calc(100% - 2px);
-}
-
 #north { 
     background-repeat:repeat-x;
     background-image:url('../lib-img/shadow4.jpg');
-    width: calc(100% - 4px);
+    width: calc(100% - 2px);
     height: 28px;
+}
+
+#context {
+    border: 0 !important;
+    width: calc(100% - 2px);
+}
+
+#midl { 
+    border: 0 !important; 
 }
 
 #south { 
     background-repeat:repeat-x;
     background-image:url('../lib-img/shadow2.jpg'); 
-    width: calc(100% - 4px);
+    width: calc(100% - 2px);
     height: 18px;
 }
 
-#north, #west, #west2, #centr, #centr2, #east, #east2, #east3, #south {  
+#north, 
+#west, #west1, #west2, west3, 
+#centr, 
+#east, #east1, #east2, #east3, 
+#south {  
     border: 1px solid #ccc; 
-}
-
-#midl { 
-    border: 0 !important; 
 }
 
 .ui-dialog-buttonpane {

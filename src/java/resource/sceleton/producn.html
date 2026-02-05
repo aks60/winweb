@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>JS Bin</title>
+        <style>
+            .abs {
+                position: absolute;
+                border: 1px solid #00f;
+            }
+            #id1 {
+                border: 1px solid #00f;
+                width:100%;
+                height:30px;
+            }
+            #id2 {
+                top: 44px;
+                margin-top: -4px;
+                width: calc(100% - 12px);
+                height: calc(100% - 68px);
+            }
+            #id2-1 {
+                width: 30px;
+                height: 100%;
+            }
+            #id2-2 {
+                width: calc(100% - 424px);
+                height: 100%;
+                left: 32px;
+            }
+            #id2-3 {
+                width: 388px;
+                height: 50%;
+                right: 0px;
+            }
+            #id2-4 {
+                width: 388px;
+                height: 50%;
+                right: 0px;
+                bottom: 0px;
+            }
+            #id3 {
+                display: inlin-block;
+                bottom: 0px;
+                width: calc(100% - 12px);
+                height:24px
+            }
+        </style>
+    </head>
+    <body>
+        <div id='id1' style=''>ID1
+        </div>  
+        <div id='id2' class='abs' style=''>
+            <div id='id2-1' class='abs' style=''>ID2-1
+            </div>
+            <div id='id2-2' class='abs' style=''>ID2-2
+            </div> 
+            <div id='id2-3' class='abs' style=''>ID2-3
+            </div>   
+            <div id='id2-4' class='abs' style=''>ID2-4
+            </div>       
+        </div>  
+        <div id='id3' class='abs' style=''>ID3
+        </div>   
+    </body>
+</html>
