@@ -56,7 +56,7 @@
             var eElement;
 
             //Глобальные объекты
-            var win = {}, dbrec = {}, login = {que_requests: 2}, fio = {}, users = {},
+            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {},
                     order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null},
                     product = {}, kits = {};
 

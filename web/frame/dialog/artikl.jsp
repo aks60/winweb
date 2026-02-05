@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ARTIKL</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             var TYPE = ["", "Профили", "Аксессуары", "Погонаж", "Инструмент", "Заполнения"];
 //------------------------------------------------------------------------------            
@@ -143,7 +144,7 @@
 
                         //Запишем скрипт в локальн. бд 
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = win.build(winc.cnv, prjprodRec[ePrjprod.script]);
+                        let winc2 = Wincalc.new(winc.cnv, prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных

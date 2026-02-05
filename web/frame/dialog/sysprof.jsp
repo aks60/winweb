@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SYSPROF</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());
@@ -99,7 +100,7 @@
                 //Запишем профиль в локальн. бд
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
+                let iwincalc = Wincalc.new(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных

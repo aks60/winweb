@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SIDEOPEN</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #pan-sideopen").width());
@@ -86,7 +87,7 @@
                 elem.gson.param.typeOpen = tableRec.id; //запишем тип открывания
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
+                let iwincalc = Wincalc.new(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных

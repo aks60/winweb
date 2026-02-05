@@ -25,7 +25,7 @@ export class ElemSimple extends Com5t {
 
     addListenerEvents() {
         try {
-            if (this.cnv.width < 100 && this.cnv.height < 100) {
+            if (this.winc.cnv.width < 100 && this.winc.cnv.height < 100) {
                 return;
             }
             this.winc.cnv.addEventListener("keydown", (evt) => {

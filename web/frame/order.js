@@ -1,3 +1,5 @@
+import {Wincalc} from '../build/Wincalc.js';
+
 export function taq_parent(node, tag) { //рекурсия
     if (node)
         return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
@@ -102,7 +104,7 @@ export function load_table2(rowid) {
             let script = rec[ePrjprod.script];
 
             //Создание экземпрляра окна
-            let winc = win.build(canvas, script);
+            let winc = Wincalc.new(canvas, script);
 
             //Массив объектов winc
             order.wincalcMap.set(rec[ePrjprod.id], winc);

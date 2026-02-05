@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FURNITURE</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #pan-furniture").width());
@@ -98,7 +99,7 @@
                 elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = win.build(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
+                let iwincalc = Wincalc.new(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных

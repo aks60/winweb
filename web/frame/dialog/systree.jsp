@@ -30,7 +30,8 @@
             }
         </style> 
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             var sysprodID = -1;
 //------------------------------------------------------------------------------            
@@ -183,7 +184,7 @@
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 table.appendChild(tr);
-                win.build(canvas, script);
+                Wincalc.new(canvas, script);
             }
 //------------------------------------------------------------------------------
             function event_clicked(e) {

@@ -2,6 +2,7 @@
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
 import {get_winc} from './order.js';
 import {UGeo} from '../build/model/uGeo.js';
+import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
 //Масштабирование
@@ -16,7 +17,7 @@ export function resize() {
 
         //Перерисовка конструкции на канве, после изменения размера канвы
         if (order.prjprodRec != null)
-            product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
+            product.winCalc = Wincalc.new(cnv, order.prjprodRec[ePrjprod.script]);
 
         //Прорисовка полей
         let winWidth = $('#east').width() - 24;
@@ -510,7 +511,7 @@ export function redraw() {
     let cvs = document.querySelector("#cnv");
     prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson, (k, v) => isEmpty(v));
 
-    product.winCalc = win.build(cvs, prjprodRec[ePrjprod.script]);
+    product.winCalc = Wincalc.new(cvs, prjprodRec[ePrjprod.script]);
 
     order.wincalcMap.set(prjprodID, product.winCalc); //новый экз.  
     resize();

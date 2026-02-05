@@ -9,10 +9,6 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
 
-win.build = function (canvas, script) {
-    return new Wincalc(canvas).build(script);
-};
-
 export class Wincalc {
     id; //id конструкции
     nuni; //код системы  
@@ -328,6 +324,10 @@ export class Wincalc {
     }
 // </editor-fold> 
 }
+
+Wincalc.new = function (canvas, script) {
+    return new Wincalc(canvas).build(script);
+};
 
 
 

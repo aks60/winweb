@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>COLOR</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {Wincalc} from '../../build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
@@ -166,7 +167,7 @@
                         //Запишем скрипт в локальн. бд
                         let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = win.build(document.querySelector("#cnv"), prjprodRec[ePrjprod.script]);
+                        let winc2 = Wincalc.new(document.querySelector("#cnv"), prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
