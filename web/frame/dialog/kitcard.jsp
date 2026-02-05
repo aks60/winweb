@@ -90,7 +90,7 @@
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
                 for (let i = 0; i < ePrjkit.list.length; i++) {
-                    let tr =ePrjkit.list[i].list;
+                    let tr = ePrjkit.list[i].list;
                     table1.jqGrid('addRowData', i + 1, {
                         id: tr[KITS.id],
                         categ: tr[KITS.categ],
@@ -103,8 +103,8 @@
 //------------------------------------------------------------------------------
             function save_table(table2) {
                 try {
-                    for (let kitdetRec of kitdetList) {                       
-                        $.ajax({ //запишем комплект в серверную базу данных
+                    for (let kitdetRec of kitdetList) {
+                        $.ajax({//запишем комплект в серверную базу данных
                             url: 'dbset?action=insertKits',
                             data: {
                                 param: JSON.stringify({

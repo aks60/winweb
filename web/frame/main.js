@@ -12,7 +12,6 @@ import LineSegment from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSeg
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
-
 //import {UGeo} from '../build/model/uGeo.js';
 //import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 //import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
@@ -99,7 +98,7 @@ export function localizeFactory() {
             else
                 arr.push(Coordinate.new(p[0], p[1], p[2]));
         }
-        if (arr[0].x !== arr[arr.length - 1].x 
+        if (arr[0].x !== arr[arr.length - 1].x
                 || arr[0].y !== arr[arr.length - 1].y) {
             arr.push(new Coordinate(arr[0]));
         }

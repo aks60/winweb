@@ -156,7 +156,7 @@ function card_deploy2(taq, type) {
 }
 //------------------------------------------------------------------------------
 function load_tabs(records) {
-    for(let key in records) {
+    for (let key in records) {
         $("#" + key).val(records[key]);
     }
 }

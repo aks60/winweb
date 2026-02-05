@@ -119,7 +119,7 @@
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = table2.jqGrid('getRowData', rowid); //record справочника
-                    
+
                     if ($('#outbody title').text() == 'PRODUCT') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
@@ -205,9 +205,9 @@
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                             }
                         });
-                        
-                        
-                    } else if($('#outbody title').text() == 'KITS') {
+
+
+                    } else if ($('#outbody title').text() == 'KITS') {
                         if (kits.buttonSrc == 'n53') {
                             $("#n53").val(colorRow.name);
                             $("#n53").attr("fk", colorRow.id);

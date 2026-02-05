@@ -52,7 +52,6 @@ export class AreaSimple extends Com5t {
 
     paint() {
         try {
-            //debugger;
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {

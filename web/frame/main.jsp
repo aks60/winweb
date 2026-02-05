@@ -54,12 +54,12 @@
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser;
             var eElement;
-            
+
             //Глобальные объекты
-            var win = dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, 
-                order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null}, 
-                product = {}, kits = {};
-             
+            var win = {}, dbrec = {}, login = {que_requests: 2}, fio = {}, users = {},
+                    order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null},
+                    product = {}, kits = {};
+
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
@@ -87,11 +87,11 @@
                     $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"),
                     $.post("dbset?action=syssizeList")
                 ]).then(p => {
-                    eSystree.list = p[0], eSysprod.list = p[1], eColor.list = p[2], eArtikl.list = p[3], eArtdet.list = p[4], eFurniture.list = p[5], 
-                    eFurndet.list = p[6], ePrjprod.list = p[7], eSysfurn.list = p[8], eSysprof.list = p[9], eSyspar1.list = p[10], eParams.list = p[11], 
-                    eGroups.list = p[12], eProject.list = p[13], eDealer.list = p[14], eKits.list = p[15], eKitdet.list = p[16], ePrjkit.list = p[17],
-                    eSyssize.list = p[18];
-                    
+                    eSystree.list = p[0], eSysprod.list = p[1], eColor.list = p[2], eArtikl.list = p[3], eArtdet.list = p[4], eFurniture.list = p[5],
+                            eFurndet.list = p[6], ePrjprod.list = p[7], eSysfurn.list = p[8], eSysprof.list = p[9], eSyspar1.list = p[10], eParams.list = p[11],
+                            eGroups.list = p[12], eProject.list = p[13], eDealer.list = p[14], eKits.list = p[15], eKitdet.list = p[16], ePrjkit.list = p[17],
+                            eSyssize.list = p[18];
+
                     login.init_login();
                     login.user_connect();
 

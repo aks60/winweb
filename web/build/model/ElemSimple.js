@@ -25,8 +25,9 @@ export class ElemSimple extends Com5t {
 
     addListenerEvents() {
         try {
-            //this.timer.setRepeats(false);
-
+            if (this.cnv.width < 100 && this.cnv.height < 100) {
+                return;
+            }
             this.winc.cnv.addEventListener("keydown", (evt) => {
                 /*if (this.area != null && passMask[1] > 0) {
                  LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
@@ -87,7 +88,7 @@ export class ElemSimple extends Com5t {
                     
                     if(this.id === 1) 
                            debugger;
-                    console.log('AKSENOV mousedown_' + this.id);
+                    //console.log('AKSENOV mousedown_' + this.id);
                     
                     let wincPress2 = Coordinate.new(evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
                     let inside2 = UGeo.inside(this.area, evt.clientX, evt.clientY);

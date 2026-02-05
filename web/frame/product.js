@@ -2,19 +2,20 @@
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
 import {get_winc} from './order.js';
 import {UGeo} from '../build/model/uGeo.js';
+import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
 //Масштабирование
 export function resize() {
-    debugger;
+    //debugger;
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
 
         //Изменение размера канвы
         cnv.width = $("#cnv").width();
         cnv.height = $("#cnv").height();
-        
+
         //Перерисовка конструкции на канве, после изменения размера канвы
-        if (order.prjprodRec != null) 
+        if (order.prjprodRec != null)
             product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
 
         //Прорисовка полей
@@ -218,7 +219,7 @@ export function tree_to_tabs(nodeID) {
             let prgprodID = order.prjprodRec[ePrjprod.id];
             let winc = order.wincalcMap.get(prgprodID);
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
-                    ? winc.root  : winc.listAll.find(it => it.id === Number(nodeID));
+                    ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
 
             //Коробка
             if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
@@ -280,7 +281,7 @@ export function tree_to_tabs(nodeID) {
 
                 //Стеклопакет
             } else if (elem.type === Type.GLASS) {
-                let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);        
+                let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
                 load_tabs({
                     n51: elem.artiklRec[eArtikl.code],
                     n52: elem.artiklRec[eArtikl.name],
@@ -634,5 +635,9 @@ export function update_script() {
             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
         }
     });
+}
+
+export function test() {
+    product.winCalc.paint(LineString.new([[0,100], [2000,100]]));  
 }
 

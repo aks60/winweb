@@ -179,7 +179,7 @@ kits.artikl_to_kit = function (btnSrc) {
 kits.color_to_kit = function (btnSrc) {
     try {
         let groupSet = new Set();
-        let colorSet = new Set();        
+        let colorSet = new Set();
         let prjkitRow = getSelectedRow($('#table1'));
         let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec.list[ePrjkit.id]);
         for (let rec of eArtdet.list) {
@@ -199,9 +199,9 @@ kits.color_to_kit = function (btnSrc) {
                     colorSet.add(color2Rec);
                 }
             }
-        }  
+        }
         kits.groupSet = groupSet;
-        kits.colorArr = Array.from(colorSet);        
+        kits.colorArr = Array.from(colorSet);
         kits.buttonSrc = btnSrc;
         $('#dialog-dic').load('frame/dialog/color.jsp');
 

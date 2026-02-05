@@ -39,7 +39,7 @@
                 $(window).bind('resize', () => resize()).trigger('resize');
                 order.table1 = document.getElementById('table1');
                 order.table2 = document.getElementById('table2');
-                
+
                 order.table2.setAttribute('activeRowIndex', 0);
                 order.table2.addEventListener('click', click_table2);
 
@@ -53,7 +53,7 @@
                 $('#n24').datepicker();
 
             });
-         
+
             function test() {
 //                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
 //                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника

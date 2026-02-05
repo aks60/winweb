@@ -52,7 +52,7 @@
         </div>
 
         <script type="text/javascript">
-           function init_menu() {
+            function init_menu() {
                 $("#nav2 > li > a").click(function (e) { // binding onclick
                     if ($(this).parent().hasClass('selected')) {
                         $("#nav2 .selected div div").slideUp(100); // hiding popups

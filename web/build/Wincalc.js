@@ -223,11 +223,13 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
-                    ? this.cnv.width / (this.width + 80) : this.cnv.height / (this.height + 80); 
-                    
-            //this.scale = ((this.cnv.width - this.dXY) / this.height < (this.cnv.height - this.dXY) / this.height)
-                    //? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
+            if (this.cnv.width < 100 && this.cnv.height < 100) {
+                this.scale = (this.cnv.width / this.height < this.cnv.height / this.height)
+                        ? this.cnv.width / this.width : this.cnv.height / this.height;
+            } else {
+                this.scale = ((this.cnv.width - this.dXY) / this.height < (this.cnv.height - this.dXY) / this.height)
+                        ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
+            }
             this.ctx.scale(this.scale, this.scale);
 
             //Прорисовка стеклопакетов
@@ -250,7 +252,6 @@ export class Wincalc {
             if (this.scale > .1) {
                 this.root.paint();
             }
-
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }
@@ -259,6 +260,7 @@ export class Wincalc {
     //Рисуем элем.констр.
     paint(geometry) {
         this.ctx.save();
+        //geometry = LineString.new([[0,300], [2000,300]]); //Test
         const coo = geometry.getCoordinates(); //это массив точек
 
         if (geometry instanceof LineString) {

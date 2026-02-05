@@ -169,8 +169,8 @@
                             $("#n52").val(artiklRow.name);
                             $("#n51").attr("fk", artiklRow.id);
                             $("#n52").attr("fk", artiklRow.id);
-                            
-                            
+
+
                         } else {
                             $.ajax({//запишем комплект в серверную базу данных
                                 url: 'dbset?action=insertKits',
@@ -178,7 +178,7 @@
                                     param: JSON.stringify({
                                         color1_id: artiklRec[eArtikl.color1_id],
                                         color2_id: artiklRec[eArtikl.color2_id],
-                                        color3_id: artiklRec[eArtikl.color3_id],                        
+                                        color3_id: artiklRec[eArtikl.color3_id],
                                         artikl_id: artiklRec[eArtikl.id],
                                         prjprod_id: order.prjprodRec[ePrjprod.id]
                                     })

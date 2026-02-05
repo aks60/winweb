@@ -9,14 +9,14 @@
         <style>
             .abs {
                 position: absolute;
-                border: 1px solid #00f;
+                /*border: 1px solid #00f;*/
             }
             #north {
-                border: 1px solid #00f;
+                /*border: 1px solid #00f;*/
             }
             #context {
                 top: 60px;
-                margin-top: -4px;                
+                margin-top: -4px;
                 height: calc(100% - 80px);
             }
             #west1 {
@@ -35,7 +35,7 @@
                 height: 50%;
                 right: 0px;
             }
-            
+
             #east2 {
                 background: #efeffb;
                 width: 388px;
@@ -50,7 +50,7 @@
         </style>
         <script type="module">
             import {resize, server_to_fields, init_table, load_tree,
-                    update_script} from './frame/product.js';
+                    update_script, test} from './frame/product.js';
 
             server_to_fields();
             $(document).ready(function () {
@@ -64,18 +64,13 @@
                 load_tree();
 
                 prepareToolBar();
-            });
-
-            function test() {
-                //let winc = get_winc();
-                //winc.scale = win.scale - .05;
-                //product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
-            }
-        </script>        
+                document.getElementById('btnTest').addEventListener('click', test );
+            });    
+        </script>  
     </head>
     <body>
         <div id='north' style=''>
-            <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
+            <button id="btnTest" style="width: 48px; margin-left: 40px;">TEST</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>

@@ -33,21 +33,21 @@
                             let rowid = table.jqGrid('getGridParam', "selrow");
                             let paramsRow = table.jqGrid('getRowData', rowid);
                             let paramsRec = eParams.list.find(rec => paramsRow.id == rec.list[eParams.id]);
-                            let paramDef = paramsRow.id;                            
+                            let paramDef = paramsRow.id;
                             let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
                             let winc = order.wincalcMap.get(order.prjprodRec[ePrjprod.id]);
                             let titleID1 = paramsRec[eParams.params_id];
                             winc.gson.param = (winc.gson.param == undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;
-                            for(let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
-                                
-                              let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec.list[eParams.id])[eParams.params_id];
-                              if(titleID1 == titleID2) {
-                                  winc.gson.param.ioknaParam.splice(i, 1);
-                              }
+                            for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
+
+                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec.list[eParams.id])[eParams.params_id];
+                                if (titleID1 == titleID2) {
+                                    winc.gson.param.ioknaParam.splice(i, 1);
+                                }
                             }
                             winc.gson.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
-                            
+
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=updateScript',
                                 data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => isEmpty(v))})},
@@ -55,7 +55,7 @@
                                     if (data.result == 'ok') {
                                         winc.root.init_pardef_map();
                                         product.load_table($('#table1'));
-                                    } else 
+                                    } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },
                                 error: function () {
@@ -92,7 +92,7 @@
                     table.jqGrid('addRowData', i + 1, {
                         id: tr[eParams.id],
                         text: tr[eParams.text]
-                        //text: tr[eParams.params_id]
+                                //text: tr[eParams.params_id]
                     });
                 }
                 table.jqGrid("setSelection", 1);

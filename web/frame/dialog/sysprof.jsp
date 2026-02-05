@@ -10,7 +10,7 @@
             function resize() {
                 $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());
                 $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #pan-sysprof").height() - 24);
-            }            
+            }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
@@ -117,7 +117,7 @@
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                     }
                 });
-            }            
+            }
 //------------------------------------------------------------------------------
             let use_name = (v) => {
                 for (let k in UseSide) {
