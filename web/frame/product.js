@@ -5,6 +5,7 @@ import {UGeo} from '../build/model/uGeo.js';
 
 //Масштабирование
 export function resize() {
+    debugger;
     let cnv = document.querySelector("#cnv");
     if (cnv != null) {
         //var height = window.innerHeight;
@@ -13,6 +14,9 @@ export function resize() {
         //Изменение размера канвы
         cnv.width = $("#cnv").width();
         cnv.height = $("#cnv").height();
+        
+        console.log(cnv.width + ' - ' + cnv.height );
+        
         if (order.prjprodRec != null) //Перерисовка конструкции на канве, после изменения размера канвы
             product.winCalc = win.build(cnv, order.prjprodRec[ePrjprod.script]);
         $('#scale-ver').width(product.winCalc.height * product.winCalc.scale); //длина шкалы перед разворотом на 90 градусов

@@ -11,12 +11,12 @@
                 position: absolute;
                 border: 1px solid #00f;
             }
-            #north {
+            #id1 {
                 border: 1px solid #00f;
                 width:100%;
                 height:24px;
             }
-            #centr {
+            #id2 {
                 top: 60px;
                 margin-top: -4px;
                 width: calc(100% - 8px);
@@ -74,10 +74,10 @@
         </script>        
     </head>
     <body>
-        <div id='north' style=''>
+        <div id='id1' style=''>
             <button id="btnTest" style="width: 48px; margin-left: 40px;" onClick="test();">TEST</button>
         </div>  
-        <div id='centr' class='abs' style=''>
+        <div id='id2' class='abs' style=''>
             <div id='id2-1' class='abs' style=''>
             </div>
             <div id='id2-2' class='abs' style=''>
