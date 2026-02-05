@@ -639,6 +639,6 @@ export function update_script() {
 }
 
 export function test() {
-    product.winCalc.paint(LineString.new([[0,100], [2000,100]]));  
+    product.winCalc.paint(LineString.new([[0,100], [1300,100]]));  
 }
 

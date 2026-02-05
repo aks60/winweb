@@ -85,16 +85,14 @@ export class ElemSimple extends Com5t {
             });
             this.winc.cnv.addEventListener("mousedown", (evt) => {
                 if (this.area !== null) {
-                    
-                    if(this.id === 1) 
-                           debugger;
-                    //console.log('AKSENOV mousedown_' + this.id);
-                    
-                    let wincPress2 = Coordinate.new(evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
-                    let inside2 = UGeo.inside(this.area, evt.clientX, evt.clientY);
-                    let wincPress = Coordinate.new(evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
-                    let inside = UGeo.inside(this.area, evt.clientX / this.winc.scale, evt.clientY / this.winc.scale);
-
+                    if (this.id === 1) {
+                        debugger;
+                    }                    
+                    let wincPress = Coordinate.new(evt.offsetX / this.winc.scale, evt.offsetY / this.winc.scale);
+                    let inside = UGeo.inside(this.area, evt.offsetX / this.winc.scale, evt.offsetY / this.winc.scale);
+                    if (this.id === 1 && inside === true) {
+                        //debugger;
+                    }
                     //Если клик внутри контура
                     if (inside === true) {
                         ++this.passMask[1];
@@ -122,17 +120,17 @@ export class ElemSimple extends Com5t {
                 }
             });
             this.winc.cnv.addEventListener("mousemove", (evt) => {
-                let o1 = this.id;
+                //console.log(evt.offsetX  + ' - ' + evt.offsetY);
                 //debugger;
                 if (this.area !== null) {
                     let X = 0, Y = 0;
                     let W = this.winc.cnv.width, H = this.winc.cnv.height;
-                    let dX = evt.clientX - this.pointPress[0]; //прирощение по горизонтали
-                    let dY = evt.clientY - this.pointPress[1]; //прирощение по вертикали 
+                    let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
+                    let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
 
                     //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                     if (this.passMask[1] > 1) {
-                        this.pointPress = [evt.clientX, evt.clientY];
+                        this.pointPress = [evt.offsetX, evt.offsetY];
 
                         if (this.passMask[0] === 0) { //начало вектора
                             X = dX / this.winc.scale + this.x1;
@@ -171,7 +169,7 @@ export class ElemSimple extends Com5t {
                     }
                 }
             });
-            
+
         } catch (e) {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }

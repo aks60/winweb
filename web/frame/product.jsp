@@ -25,8 +25,8 @@
                 height: 100%;
             }
             #west2 {
-                width: calc(100% - 424px);
-                height: 100%;
+                width: calc(100% - 434px);
+                height: calc(100% - 5px);
                 left: 32px;
             }
             #east1 {
@@ -60,12 +60,17 @@
                 product.table1 = document.getElementById('table1');
                 product.tabtree = document.getElementById('tree-winc');
 
+//                let cnv = document.querySelector("#cnv");
+//                cnv.addEventListener("mousemove", (evt) => {
+//                    console.log(evt.offsetX + ' offset ' + evt.offsetY);
+//                });
+
                 init_table();
                 load_tree();
 
                 prepareToolBar();
-                document.getElementById('btnTest').addEventListener('click', test );
-            });    
+                document.getElementById('btnTest').addEventListener('click', test);
+            });
         </script>  
     </head>
     <body>
@@ -76,7 +81,7 @@
             <div id='west1' class='abs' style=''>
             </div>
             <div id='west2' class='abs' style=''>
-                <canvas id="cnv"  style='width: 100%; height: 100%;'></canvas>  
+                <canvas id="cnv"  style='width: 100%; height: 100%; border: 4px solid #f00;'></canvas>  
             </div> 
             <div id='east1' class='abs' style=''>
 
