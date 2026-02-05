@@ -4,64 +4,66 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>JS Bin</title>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/html-ui.css">
+        
         <style>
             .abs {
                 position: absolute;
                 border: 1px solid #00f;
             }
-            #id1 {
+            #north {
                 border: 1px solid #00f;
-                width:100%;
-                height:30px;
             }
-            #id2 {
-                top: 44px;
+            #context {
+                top: 60px;
                 margin-top: -4px;
-                width: calc(100% - 12px);
-                height: calc(100% - 68px);
+                height: calc(100% - 80px);
             }
-            #id2-1 {
+            #west1 {
+                background: #efeffb;
                 width: 30px;
                 height: 100%;
             }
-            #id2-2 {
+            #west2 {
                 width: calc(100% - 424px);
                 height: 100%;
                 left: 32px;
             }
-            #id2-3 {
+            #east1 {
+                background: #efeffb;
                 width: 388px;
                 height: 50%;
                 right: 0px;
             }
-            #id2-4 {
+
+            #east2 {
+                background: #efeffb;
                 width: 388px;
                 height: 50%;
                 right: 0px;
                 bottom: 0px;
             }
-            #id3 {
+            #south {
                 display: inlin-block;
-                bottom: 0px;
-                width: calc(100% - 12px);
-                height:24px
+                bottom: 2px;
             }
         </style>
     </head>
     <body>
-        <div id='id1' style=''>ID1
+        <div id='north' style=''>ID1
         </div>  
-        <div id='id2' class='abs' style=''>
-            <div id='id2-1' class='abs' style=''>ID2-1
+        <div id='context' class='abs' style=''>
+            <div id='west1' class='abs' style=''>ID2-1
             </div>
-            <div id='id2-2' class='abs' style=''>ID2-2
+            <div id='west2' class='abs' style=''>ID2-2
             </div> 
-            <div id='id2-3' class='abs' style=''>ID2-3
+            <div id='east1' class='abs' style=''>ID2-3
             </div>   
-            <div id='id2-4' class='abs' style=''>ID2-4
+            <div id='east2' class='abs' style=''>ID2-4
             </div>       
         </div>  
-        <div id='id3' class='abs' style=''>ID3
+        <div id='south' class='abs' style=''>ID3
         </div>   
     </body>
 </html>
