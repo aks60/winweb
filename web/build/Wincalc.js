@@ -218,7 +218,7 @@ export class Wincalc {
 
     //Рисуем конструкцию
     draw() {
-        try {
+        try {           
             if (this.cnv.width < 100 && this.cnv.height < 100) {
                 this.scale = (this.cnv.width / this.height < this.cnv.height / this.height)
                         ? this.cnv.width / this.width : this.cnv.height / this.height;
@@ -227,6 +227,8 @@ export class Wincalc {
                         ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
             }
             this.ctx.scale(this.scale, this.scale);
+            //this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+            
 
             //Прорисовка стеклопакетов
             this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());

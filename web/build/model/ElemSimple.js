@@ -12,164 +12,165 @@ export class ElemSimple extends Com5t {
     pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
     SIZE = 20;
-    //timer = new Timer(() => alert('exec Timer()'), 9160);
-    //timer = setTimeout(() => {console.log("Stop timer.");}, 160);
+    timerID = 0; //таймер
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
 
-        //this.timer.pause();
+
         winc.listElem.push(this);
         winc.listAll.push(this);
     }
 
     addListenerEvents() {
         try {
-            if (this.winc.cnv.width < 100 && this.winc.cnv.height < 100) {
-                return;
-            }
-            this.winc.cnv.addEventListener("keydown", (evt) => {
-                /*if (this.area != null && passMask[1] > 0) {
-                 LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                 int key = evt.getKeyCode();
-                 //double dxy = (timer.isRunning() == true) ? 0.14 + winc.scale : 0.1 * winc.scale;
-                 double dxy = (timer.isRunning() == true) ? 0.04 : 0.1 * winc.scale;
-                 double X = 0, Y = 0, dX = 0, dY = 0;
-                 
-                 if (key == KeyEvent.VK_UP) {
-                 dY = -dxy;
-                 } else if (key == KeyEvent.VK_DOWN) {
-                 dY = dxy;
-                 } else if (key == KeyEvent.VK_LEFT) {
-                 dX = -dxy;
-                 } else if (key == KeyEvent.VK_RIGHT) {
-                 dX = dxy;
-                 }
-                 //Кликнул начало вектора
-                 if (passMask[0] == 0) {
-                 X = dX / winc.scale + this.x1();
-                 Y = dY / winc.scale + this.y1();
-                 moveXY(X, Y);
-                 
-                 //Кликнул конец вектора
-                 } else if (passMask[0] == 1) {
-                 X = dX / winc.scale + this.x2();
-                 Y = dY / winc.scale + this.y2();
-                 moveXY(X, Y);
-                 
-                 //Кликнул по середине вектора 
-                 } else if (passMask[0] == 2) {
-                 
-                 if (this.h() != null) {
-                 this.h(this.h() - dY / winc.scale);
-                 } else {
-                 X = dX / winc.scale + this.x2();
-                 Y = dY / winc.scale + this.y2();
-                 
-                 if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(this.layout())) {
-                 this.y1(Y);
-                 this.y2(Y);
-                 }
-                 if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(this.layout())) {
-                 this.x1(X);
-                 this.x2(X);
-                 }
-                 }
-                 }
-                 if (X < 0 || Y < 0) {
-                 UGeo.winresiz(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                 }
-                 }
-                 timer.stop();
-                 timer.start();*/
-            });
-            this.winc.cnv.addEventListener("mousedown", (evt) => {
-                if (this.area !== null) {
-                    if (this.id === 1) {
-                        debugger;
-                    }                    
-                    let wincPress = Coordinate.new(evt.offsetX / this.winc.scale, evt.offsetY / this.winc.scale);
-                    let inside = UGeo.inside(this.area, evt.offsetX / this.winc.scale, evt.offsetY / this.winc.scale);
-                    if (this.id === 1 && inside === true) {
-                        //debugger;
-                    }
-                    //Если клик внутри контура
-                    if (inside === true) {
-                        ++this.passMask[1];
-                        let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
-                        const coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
+            if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
+                
+                this.winc.cnv.addEventListener("keydown", (evt) => {
+                    let scale = this.winc.scale;
+                    if (this.area !== null && this.passMask[1] > 0) {
+                        let segm = LineSegment.new([this.x1(), this.y1()], [this.x2(), this.y2()]);
+                        let key = evt.key;
+                        let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
+                        let X = 0, Y = 0, dX = 0, dY = 0;
 
-                        if (coeff < .33) { //кликнул начало вектора
-                            this.passMask[1] = (this.passMask[0] !== 0) ? 1 : this.passMask[1];
-                            this.passMask[0] = 0;
-
-                        } else if (coeff > .67) {//кликнул конец вектора
-                            this.passMask[1] = (this.passMask[0] !== 1) ? 1 : this.passMask[1];
-                            this.passMask[0] = 1;
-
-                        } else {//кликнул по середине вектора                 
-                            this.passMask[1] = (this.passMask[0] !== 2) ? 1 : this.passMask[1];
-                            this.passMask[0] = 2;
+                        if (key === 'ArrowUp') {
+                            dY = -dxy;
+                        } else if (key === 'ArrowDown') {
+                            dY = dxy;
+                        } else if (key === 'ArrowLeft') {
+                            dX = -dxy;
+                        } else if (key === 'ArrowRight') {
+                            dX = dxy;
                         }
-                    } else { //Промах, всё обнуляю
-                        this.passMask = [0, 0];
-                        this.root.listenerPassEdit = null;
-                    }
-                    //this.winc.cnv.requestFocusInWindow();
-                    //this.winc.cnv.repaint();
-                }
-            });
-            this.winc.cnv.addEventListener("mousemove", (evt) => {
-                //console.log(evt.offsetX  + ' - ' + evt.offsetY);
-                //debugger;
-                if (this.area !== null) {
-                    let X = 0, Y = 0;
-                    let W = this.winc.cnv.width, H = this.winc.cnv.height;
-                    let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
-                    let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
-
-                    //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
-                    if (this.passMask[1] > 1) {
-                        this.pointPress = [evt.offsetX, evt.offsetY];
-
-                        if (this.passMask[0] === 0) { //начало вектора
-                            X = dX / this.winc.scale + this.x1;
-                            Y = dY / this.winc.scale + this.y1;
+                        //Кликнул начало вектора
+                        if (this.passMask[0] === 0) {
+                            X = dX / scale + this.x1;
+                            Y = dY / scale + this.y1;
                             this.moveXY(X, Y);
 
-                        } else if (this.passMask[0] === 1) { //конец вектора
-                            X = dX / this.winc.scale + this.x2;
-                            Y = dY / this.winc.scale + this.y2;
+                            //Кликнул конец вектора
+                        } else if (this.passMask[0] === 1) {
+                            X = dX / scale + this.x2;
+                            Y = dY / scale + this.y2;
                             this.moveXY(X, Y);
 
-                        } else if (this.passMask[0] === 2) { //середина вектора
-                            X = dX / this.winc.scale + this.x2;
-                            Y = dY / this.winc.scale + this.y2;
-                            if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
-                                if (this.h !== null) {
-                                    this.h = (this.h - dY / this.winc.scale);
-                                } else {
-                                    this.y1 = Y;
-                                    this.y2 = Y;
+                            //Кликнул по середине вектора 
+                        } else if (this.passMask[0] === 2) {
+
+                            if (this.h !== null) {
+                                this.h(this.h() - dY / scale);
+                            } else {
+                                X = dX / scale + this.x2;
+                                Y = dY / scale + this.y2;
+
+                                if (Y > 0 && UCom.includes([Layout.BOT, Layout.TOP, Layout.HOR], this.layout)) {
+                                    this.y1(Y);
+                                    this.y2(Y);
                                 }
-                            }
-                            if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                if (this.h !== null) {
-                                    this.h = (this.h - dX / this.winc.scale);
-                                } else {
-                                    this.x1 = X;
-                                    this.x2 = X;
+                                if (X > 0 && UCom.includes([Layout.LEF, Layout.RIG, Layout.VER], this.layout)) {
+                                    this.x1(X);
+                                    this.x2(X);
                                 }
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            console.log('AKSENOF UGeo.winresiz()');
-                            UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), this.winc.scale);
+                            UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
                     }
-                }
-            });
+                    clearTimeout(this.timerID); //остановка
+                    this.timerID = setTimeout(null, 160); //запуск
+                });
+                this.winc.cnv.addEventListener("mousedown", (evt) => {
+                    let scale = this.winc.scale;
+                    console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+                    
+                    if (this.area !== null) {
+                        if (this.id === 1) {
+                            debugger;
+                        }
+                        let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
+                        let inside = UGeo.inside(this.area, evt.offsetX / scale, evt.offsetY / scale);
+                        if (this.id === 1 && inside === true) {
+                            //debugger;
+                        }
+                        //Если клик внутри контура
+                        if (inside === true) {
+                            ++this.passMask[1];
+                            let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
+                            const coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
 
+                            if (coeff < .33) { //кликнул начало вектора
+                                this.passMask[1] = (this.passMask[0] !== 0) ? 1 : this.passMask[1];
+                                this.passMask[0] = 0;
+
+                            } else if (coeff > .67) {//кликнул конец вектора
+                                this.passMask[1] = (this.passMask[0] !== 1) ? 1 : this.passMask[1];
+                                this.passMask[0] = 1;
+
+                            } else {//кликнул по середине вектора                 
+                                this.passMask[1] = (this.passMask[0] !== 2) ? 1 : this.passMask[1];
+                                this.passMask[0] = 2;
+                            }
+                        } else { //Промах, всё обнуляю
+                            this.passMask = [0, 0];
+                            this.root.listenerPassEdit = null;
+                        }
+                        this.winc.cnv.focus();
+                        //this.winc.draw();
+                    }
+                });
+                this.winc.cnv.addEventListener("mousemove", (evt) => {
+                    let scale = this.winc.scale;
+                    //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+                    if (this.area !== null) {
+                        let X = 0, Y = 0;
+                        let W = this.winc.cnv.width, H = this.winc.cnv.height;
+                        let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
+                        let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
+
+                        //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
+                        if (this.passMask[1] > 1) {
+                            this.pointPress = [evt.offsetX, evt.offsetY];
+
+                            if (this.passMask[0] === 0) { //начало вектора
+                                X = dX / scale + this.x1;
+                                Y = dY / scale + this.y1;
+                                this.moveXY(X, Y);
+
+                            } else if (this.passMask[0] === 1) { //конец вектора
+                                X = dX / scale + this.x2;
+                                Y = dY / scale + this.y2;
+                                this.moveXY(X, Y);
+
+                            } else if (this.passMask[0] === 2) { //середина вектора
+                                X = dX / scale + this.x2;
+                                Y = dY / scale + this.y2;
+                                if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
+                                    if (this.h !== null) {
+                                        this.h = (this.h - dY / scale);
+                                    } else {
+                                        this.y1 = Y;
+                                        this.y2 = Y;
+                                    }
+                                }
+                                if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
+                                    if (this.h !== null) {
+                                        this.h = (this.h - dX / scale);
+                                    } else {
+                                        this.x1 = X;
+                                        this.x2 = X;
+                                    }
+                                }
+                            }
+                            if (X < 0 || Y < 0) {
+                                console.log('AKSENOF UGeo.winresiz()');
+                                UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                            }
+                        }
+                    }
+                });
+            }
         } catch (e) {
             errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }

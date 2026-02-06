@@ -61,8 +61,8 @@
                 product.tabtree = document.getElementById('tree-winc');
 
 //                let cnv = document.querySelector("#cnv");
-//                cnv.addEventListener("mousemove", (evt) => {
-//                    console.log(evt.offsetX + ' offset ' + evt.offsetY);
+//                cnv.addEventListener("keydown", (evt) => {
+//                    console.log(evt.key);
 //                });
 
                 init_table();
@@ -81,7 +81,7 @@
             <div id='west1' class='abs' style=''>
             </div>
             <div id='west2' class='abs' style=''>
-                <canvas id="cnv"  style='width: 100%; height: 100%; border: 4px solid #f00;'></canvas>  
+                <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 1px solid #ccc;'></canvas>  
             </div> 
             <div id='east1' class='abs' style=''>
 
