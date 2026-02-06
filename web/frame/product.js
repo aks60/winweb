@@ -5,29 +5,43 @@ import {UGeo} from '../build/model/uGeo.js';
 import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
+//Создание конструкции
+export function winclacNew() {
+
+    let cnv = document.getElementById("cnv");
+    //cnv.width = $("#cnv").width();
+    //cnv.height = $("#cnv").height();
+    
+    if (order.prjprodRec != null) {
+        product.winCalc = Wincalc.new(cnv, order.prjprodRec[ePrjprod.script]);
+    }
+    console.log(cnv.width + ' 1 ' + cnv.height);
+}
+
 //Масштабирование
 export function resize() {
-    //debugger;
-    let cnv = document.querySelector("#cnv");
-    if (cnv != null) {
+    let cnv = document.getElementById("cnv");
 
-        //Изменение размера канвы
-        cnv.width = $("#cnv").width();
-        cnv.height = $("#cnv").height();
+    console.log(product.winCalc.cnv.width + ' 2 ' + product.winCalc.cnv.height);
 
-        //Перерисовка конструкции на канве, после изменения размера канвы
-        if (order.prjprodRec != null)
-            product.winCalc = Wincalc.new(cnv, order.prjprodRec[ePrjprod.script]);
+    //Изменение размера канвы
+    product.winCalc.cnv.width = cnv.width;//$("#cnv").width();
+    product.winCalc.cnv.height = cnv.height;//$("#cnv").height();
 
-        //Прорисовка полей
-        let winWidth = $('#east').width() - 24;
-        $("div .field2[dx]").each(function (index) {
-            var width = $(this).attr('dx');
-            $(this).width(winWidth - width);
-        });
-        $("#table1").jqGrid('setGridWidth', $("#east1").width() - 8);
-        $("#table1").jqGrid('setGridHeight', $("#east1").height() - 24);
-    }
+    //Перерисовка конструкции на канве, после изменения размера канвы
+    product.winCalc.location();
+    product.winCalc.draw();
+
+    //Прорисовка полей
+    let winWidth = $('#east').width() - 24;
+    $("div .field2[dx]").each(function (index) {
+        var width = $(this).attr('dx');
+        $(this).width(winWidth - width);
+    });
+    $("#table1").jqGrid('setGridWidth', $("#east1").width() - 8);
+    $("#table1").jqGrid('setGridHeight', $("#east1").height() - 24);
+
+    console.log(product.winCalc.cnv.width + ' 2 ' + product.winCalc.cnv.height);
 }
 
 //Инициализация таблицы
@@ -165,51 +179,6 @@ export function elements(com, arr) {
     } catch (e) {
         errorLog("Error: product.elements() " + e.message);
     }
-}
-
-//Загрузка свойств конструкции
-export function server_to_fields() {
-//    try {
-//        if (order.prjprodRec !== null) {
-//            let prjprodID = order.prjprodRec[ePrjprod.id];
-//            if (prjprodID !== undefined) {
-//                $.ajax({
-//                    url: 'dbset?action=stvFields',
-//                    data: {'prjprodID': prjprodID},
-//                    success: function (data) {
-//                        product.stvFields = data.stvFields;
-//                        let id = order.prjprodRec[ePrjprod.id];
-//                        let winc = order.wincalcMap.get(id);
-//                        for (let el of winc.listElem) {
-//                            if (el.typeForm() === 'STVORKA') {
-//                                for (let fk in data.stvFields) {
-//                                    if (fk === el.id) {
-//
-//                                        el.handleRec = data.stvFields[fk].handleRec;
-//                                        el.handleColor = data.stvFields[fk].handleColor;
-//                                        el.loopRec = data.stvFields[fk].loopRec;
-//                                        el.loopColor = data.stvFields[fk].loopColor;
-//                                        el.handleRec = data.stvFields[fk].handleRec;
-//                                        el.lockRec = data.stvFields[fk].lockRec;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        let tr = $("#tree-winc").jstree("get_selected")
-//                        if (tr != undefined) {
-//                            let nodeID = tr[0];
-//                            let elem = winc.listElem.find(it => it.id === nodeID);
-//                            if (elem.typeForm() === 'STVORKA') {
-//                                tree_to_tabs(nodeID);
-//                            }
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//    } catch (e) {
-//        console.error('Error: product.server_to_fields() ' + e.message);
-//    }
 }
 
 //Загрузка тегов страницы
@@ -504,122 +473,6 @@ export function artikl_to_glass(btnSrc) {
     }
 }
 
-//Перерисовать при изменении размера (размер канвы тот-же)
-export function redraw() {
-    let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-    let prjprodRec = ePrjprod.list.find(rec => prjprodID === rec.list[ePrjprod.id]);
-    let cvs = document.querySelector("#cnv");
-    prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson, (k, v) => isEmpty(v));
-
-    product.winCalc = Wincalc.new(cvs, prjprodRec[ePrjprod.script]);
-
-    order.wincalcMap.set(prjprodID, product.winCalc); //новый экз.  
-    resize();
-    tree_to_tabs("0");
-}
-
-//Клик на кнопке масштабирования
-export function click_btn_resiz() {
-    let draw = 0;
-
-    //По горизонтали  
-    $('#scale-hor input').each((i, e) => {
-        if ($(e).css('color') === 'rgb(255, 0, 0)') {
-            ++draw;
-            $('#scale-hor input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(m).css('color') === 'rgb(255, 0, 0)') {
-                    area.lengthX = area.lengthX + 1;
-                } else {
-                    area.lengthX = area.lengthX - 1;
-                }
-            });
-        }
-    });
-
-    //По вертикали
-    $('#scale-ver input').each((i, e) => {
-        if ($(e).css('color') === 'rgb(255, 0, 0)') {
-            ++draw;
-            $('#scale-ver input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(m).css('color') === 'rgb(255, 0, 0)') {
-                    area.lengthY = area.lengthY + 1;
-                } else {
-                    area.lengthY = area.lengthY - 1;
-                }
-            });
-        }
-    });
-
-    //Перерисовать при изменении размера
-    if (draw > 0) {
-        product.redraw();
-    }
-}
-
-//Клик на кнопке enter
-export function keyup_btn_enter(inpt, event) {
-    let dv = 0;
-    if (event.key === "Enter") {
-        let areas = product.winCalc.listArea.find(e => e.id === $(inpt).attr('areaID'));
-
-        //По горизонтали
-        if ($(inpt).parent().attr('id') === 'scale-hor') {
-            dv = $(inpt).val() - areas.lengthX;
-            $('#scale-hor input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(inpt).attr('areaID') === $(m).attr('areaID')) { //ограничение размера
-                    dv = (area.lengthX + dv < 200) ? 0 : dv;
-                } else {
-                    dv = (area.lengthX - dv < 200) ? 0 : dv;
-                }
-            });
-            if (dv != 0)
-                $('#scale-hor input').each((i, m) => {
-                    let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') === $(m).attr('areaID')) {
-                        area.lengthX = area.lengthX + dv;
-                    } else {
-                        area.lengthX = area.lengthX - dv;
-                    }
-                });
-
-
-        } else { //По вертикали           
-            dv = $(inpt).val() - areas.lengthY;
-            $('#scale-ver input').each((i, m) => {
-                let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                if ($(inpt).attr('areaID') === $(m).attr('areaID')) { //ограничение размера
-                    dv = (area.lengthY + dv < 200) ? 0 : dv;
-                } else {
-                    dv = (area.lengthY - dv < 200) ? 0 : dv;
-                }
-            });
-            if (dv != 0) {
-                $('#scale-ver input').each((i, m) => {
-                    let area = product.winCalc.listArea.find(v => v.id === $(m).attr('areaID'));
-                    if ($(inpt).attr('areaID') === $(m).attr('areaID')) {
-                        area.lengthY = area.lengthY + dv;
-                    } else {
-                        area.lengthY = area.lengthY - dv;
-                    }
-                });
-            }
-        }
-        if (dv === 0) {
-            alert('Внимание! Недопустимые размеры конструкции. (200мм)');
-
-            if ($(inpt).parent().attr('id') === 'scale-hor')
-                $(inpt).val(areas.lengthX.toFixed(1));
-            else
-                $(inpt).val(areas.lengthX.toFixed(1));
-        } else
-            product.redraw(); //перерисовать при изменении размера
-    }
-    //console.log("+++ " + product.winCalc.heightAdd);
-}
-
 //Изменение скрипта
 export function update_script() {
     let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
@@ -639,6 +492,8 @@ export function update_script() {
 }
 
 export function test() {
-    product.winCalc.paint(LineString.new([[0,100], [1300,100]]));  
+    //product.winCalc.paint(LineString.new([[0,100], [1300,100]]));  
+    product.winCalc.draw();
+    console.log(product.winCalc.cnv.width + ' test ' + product.winCalc.cnv.height);
 }
 

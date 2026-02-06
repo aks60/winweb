@@ -49,21 +49,16 @@
             }
         </style>
         <script type="module">
-            import {resize, server_to_fields, init_table, load_tree,
+            import {winclacNew, resize, init_table, load_tree,
                     update_script, test} from './frame/product.js';
 
-            server_to_fields();
             $(document).ready(function () {
 
                 deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-                $(window).bind('resize', () => resize()).trigger('resize');
+                winclacNew();
+                //$(window).bind('resize', () => resize()).trigger('resize');
                 product.table1 = document.getElementById('table1');
                 product.tabtree = document.getElementById('tree-winc');
-
-//                let cnv = document.querySelector("#cnv");
-//                cnv.addEventListener("keydown", (evt) => {
-//                    console.log(evt.key);
-//                });
 
                 init_table();
                 load_tree();

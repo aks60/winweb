@@ -87,13 +87,11 @@ export class ElemSimple extends Com5t {
                     
                     if (this.area !== null) {
                         if (this.id === 1) {
-                            debugger;
+                            //debugger;
                         }
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
                         let inside = UGeo.inside(this.area, evt.offsetX / scale, evt.offsetY / scale);
-                        if (this.id === 1 && inside === true) {
-                            //debugger;
-                        }
+                        
                         //Если клик внутри контура
                         if (inside === true) {
                             ++this.passMask[1];
@@ -237,8 +235,8 @@ export class ElemSimple extends Com5t {
         if (this.winc.sceleton === false) {
             if (this.area !== null) {
                 if (this.passMask[1] > 0) {
-                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
-                        //debugger;
+                    debugger;
+                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!                        
                         this.winc.ctx.strokeStyle = '#ff0000';
                         this.winc.ctx.fillStyle = '#ff0000';
                         this.winc.ctx.beginPath();

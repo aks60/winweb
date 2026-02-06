@@ -25,16 +25,17 @@ export class Wincalc {
     colorID2; //цвет внутр.
     colorID3; //цвет внещний 
     actionEvent = {};
-    root; //объектная модель конструкции
-    cnv; //канва рисования 2d
+    root; //объектная модель конструкции 
     dXY = 40; //коррекция разм. линий
     sceleton = false; //см. paint
-    ctx; //графический контекст 2d    
+    _cnv; //канва рисования 2d
+    _ctx; //графический контекст 2d     
+      
 
     constructor(canvas) {
         try {
-            this.cnv = canvas;
-            this.ctx = canvas.getContext('2d');
+            this._cnv = canvas;
+            this._ctx = canvas.getContext('2d');
         } catch (e) {
             errorLog('Error: Wincalc.constructor() ' + e.message);
         }
@@ -227,7 +228,7 @@ export class Wincalc {
                         ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
             }
             this.ctx.scale(this.scale, this.scale);
-            //this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+            this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
             
 
             //Прорисовка стеклопакетов
@@ -286,6 +287,14 @@ export class Wincalc {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
+    get cnv() {
+        return this._cnv;
+    }
+    
+    get ctx() {
+        return this._ctx;
+    }
+    
     get width() {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }
