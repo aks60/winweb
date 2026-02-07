@@ -55,7 +55,7 @@ export class AreaSimple extends Com5t {
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
-                    if (this.listenerPassEdit != null) {
+                    if (this.listenerPassEdit !== null) {
                         this.listenerPassEdit();
                     }
                     this.winc.ctx.strokeStyle = '#000000';
@@ -141,7 +141,6 @@ export class AreaSimple extends Com5t {
                             } else {
                                 this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
                             }
-                            //this.winc.ctx.setTransform(orig);
                         }
                     }
 
@@ -173,7 +172,6 @@ export class AreaSimple extends Com5t {
                                 this.winc.ctx.rotate(Math.toRadians(-90));
                                 this.winc.ctx.fillText(txt, 0, 20);
                             }
-                            //this.winc.ctx.setTransform(orig);
                         }
                     }
                 }

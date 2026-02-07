@@ -23,13 +23,13 @@ export class ElemSimple extends Com5t {
     }
 
     addListenerEvents() {
-        try {
-            if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
-                
+        if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
+            try {
+
                 this.winc.cnv.addEventListener("keydown", (evt) => {
                     let scale = this.winc.scale;
                     if (this.area !== null && this.passMask[1] > 0) {
-                        let segm = LineSegment.new([this.x1(), this.y1()], [this.x2(), this.y2()]);
+                        let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                         let key = evt.key;
                         let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
                         let X = 0, Y = 0, dX = 0, dY = 0;
@@ -81,17 +81,18 @@ export class ElemSimple extends Com5t {
                     clearTimeout(this.timerID); //остановка
                     this.timerID = setTimeout(null, 160); //запуск
                 });
+                
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     let scale = this.winc.scale;
-                    console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
-                    
+                    //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+
                     if (this.area !== null) {
                         if (this.id === 1) {
                             //debugger;
                         }
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
                         let inside = UGeo.inside(this.area, evt.offsetX / scale, evt.offsetY / scale);
-                        
+
                         //Если клик внутри контура
                         if (inside === true) {
                             ++this.passMask[1];
@@ -118,6 +119,7 @@ export class ElemSimple extends Com5t {
                         //this.winc.draw();
                     }
                 });
+                
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
                     let scale = this.winc.scale;
                     //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
@@ -162,15 +164,14 @@ export class ElemSimple extends Com5t {
                                 }
                             }
                             if (X < 0 || Y < 0) {
-                                console.log('AKSENOF UGeo.winresiz()');
                                 UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                             }
                         }
                     }
                 });
+            } catch (e) {
+                errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
             }
-        } catch (e) {
-            errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
         }
     }
 
@@ -234,9 +235,10 @@ export class ElemSimple extends Com5t {
         //debugger;
         if (this.winc.sceleton === false) {
             if (this.area !== null) {
-                if (this.passMask[1] > 0) {
+                if (this.passMask[1] > 0) {  
                     debugger;
-                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!                        
+                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
+                        debugger;
                         this.winc.ctx.strokeStyle = '#ff0000';
                         this.winc.ctx.fillStyle = '#ff0000';
                         this.winc.ctx.beginPath();

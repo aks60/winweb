@@ -39,6 +39,10 @@ export class Wincalc {
             errorLog('Error: Wincalc.constructor() ' + e.message);
         }
     }
+    
+    static new (canvas, script) {
+        return new Wincalc(canvas).build(script);
+    } 
 
     build(script) {
         try {
@@ -258,7 +262,6 @@ export class Wincalc {
     //Рисуем элем.констр.
     paint(geometry) {
         this.ctx.save();
-        //geometry = LineString.new([[0,300], [2000,300]]); //Test
         const coo = geometry.getCoordinates(); //это массив точек
 
         if (geometry instanceof LineString) {
@@ -334,10 +337,6 @@ export class Wincalc {
     }
 // </editor-fold> 
 }
-
-Wincalc.new = function (canvas, script) {
-    return new Wincalc(canvas).build(script);
-};
 
 
 

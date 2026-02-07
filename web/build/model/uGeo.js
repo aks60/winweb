@@ -1,4 +1,6 @@
 import {Com5t} from './Com5t.js'
+import {UCom} from '../../common/uCom.js';
+import {Type} from '../../enums/enums.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
 import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
 import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
