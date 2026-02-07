@@ -10,19 +10,19 @@ export function wincalcNew() {
     if (order.prjprodRec != null) {
         let cnv = document.getElementById("cnv");
         let script = order.prjprodRec[ePrjprod.script];
-        cnv.width = cnv.offsetWidth;
-        cnv.height = cnv.offsetHeight;        
+        //cnv.width = cnv.offsetWidth;
+        //cnv.height = cnv.offsetHeight;        
         product.winCalc = Wincalc.new(cnv, script);
     }
 }
 
 //Масштабирование
 export function resize() {
-    let cnv = document.getElementById("cnv");
+    //let cnv = document.getElementById("cnv");
     
     //Изменение размера канвы
-    product.winCalc.cnv.width = cnv.offsetWidth;
-    product.winCalc.cnv.height = cnv.offsetHeight; 
+    product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
+    product.winCalc.cnv.height =product.winCalc.cnv.offsetHeight; 
     
     //Перерисовка конструкции на канве, после изменения размера канвы
     product.winCalc.location();
@@ -486,13 +486,9 @@ export function update_script() {
 }
 
 export function test() {
-    resize();
-    /*let cnv = document.getElementById("cnv");
-     product.winCalc.cnv.width = cnv.offsetWidth;
-     product.winCalc.cnv.height = cnv.offsetHeight;    
-     console.log(product.winCalc.cnv.width + ' 9.1 ' + product.winCalc.cnv.height);
-     console.log($("#cnv").width() + ' 9.2 ' + $("#cnv").height());
+     resize();
+     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
+     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
      product.winCalc.draw();
-     console.log(product.winCalc.cnv.width + ' 9 ' + product.winCalc.cnv.height);*/
 }
 

@@ -59,7 +59,7 @@ export class ElemSimple extends Com5t {
                         } else if (this.passMask[0] === 2) {
 
                             if (this.h !== null) {
-                                this.h(this.h() - dY / scale);
+                                this.h(this.h - dY / scale);
                             } else {
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
@@ -81,15 +81,13 @@ export class ElemSimple extends Com5t {
                     clearTimeout(this.timerID); //остановка
                     this.timerID = setTimeout(null, 160); //запуск
                 });
-                
+
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     let scale = this.winc.scale;
                     //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
 
                     if (this.area !== null) {
-                        if (this.id === 1) {
-                            //debugger;
-                        }
+
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
                         let inside = UGeo.inside(this.area, evt.offsetX / scale, evt.offsetY / scale);
 
@@ -116,10 +114,12 @@ export class ElemSimple extends Com5t {
                             this.root.listenerPassEdit = null;
                         }
                         this.winc.cnv.focus();
-                        //this.winc.draw();
+                        this.winc.cnv.width = this.winc.cnv.offsetWidth;
+                        this.winc.cnv.height = this.winc.cnv.offsetHeight;
+                        this.winc.draw();
                     }
                 });
-                
+
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
                     let scale = this.winc.scale;
                     //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
@@ -169,6 +169,7 @@ export class ElemSimple extends Com5t {
                         }
                     }
                 });
+
             } catch (e) {
                 errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
             }
@@ -232,15 +233,12 @@ export class ElemSimple extends Com5t {
     }
 
     paint() {
-        //debugger;
         if (this.winc.sceleton === false) {
             if (this.area !== null) {
-                if (this.passMask[1] > 0) {  
-                    debugger;
+                if (this.passMask[1] > 0) {
                     this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
-                        debugger;
-                        this.winc.ctx.strokeStyle = '#ff0000';
-                        this.winc.ctx.fillStyle = '#ff0000';
+                        this.winc.ctx.strokeStyle = '#f00';
+                        this.winc.ctx.fillStyle = '#f00';
                         this.winc.ctx.beginPath();
 
                         //Хвост вектора, точка круг
@@ -250,19 +248,17 @@ export class ElemSimple extends Com5t {
 
                             //Начало вектора. точка круг
                         } else if (this.passMask[0] === 1) {
-                            this.winc.ctx.arc(this.x2() - this.SIZE / 2, this.y2() - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
+                            this.winc.ctx.arc(this.x2 - this.SIZE / 2, this.y2 - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
                             this.winc.ctx.fill();
 
                             //Середина вектора. точка квадрат
                         } else if (this.passMask[0] === 2) {
-                            if (this.h !== null) { //арка
-                                //List<Coordinate> list = Arrays.asList(owner.area.getGeometryN(0).getCoordinates())
-                                //        .stream().filter(c -> c.z == this.id).collect(toList());
-                                //int i = list.size() / 2; //index середины дуги
-                                //Coordinate c1 = list.get(i), c2 = list.get(i + 1);
-                                //Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
-                                //Rectangle2D rec = new Rectangle2D.Double(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
-                                //this.winc.gc2d.draw(rec);
+                            if (this.h !== undefined) { //арка
+                                let list = this.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z == this.id);
+                                let i = list.size() / 2; //index середины дуги
+                                let c1 = list[i], c2 = list[i + 1];
+                                let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();
+                                this.winc.ctx.fillRect(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
 
                             } else {
                                 let smid = new LineSegment(this.x1, this.y1, this.x2, this.y2).midPoint();
