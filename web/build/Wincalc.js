@@ -30,7 +30,6 @@ export class Wincalc {
     sceleton = false; //см. paint
     _cnv; //канва рисования 2d
     _ctx; //графический контекст 2d     
-      
 
     constructor(canvas) {
         try {
@@ -219,7 +218,7 @@ export class Wincalc {
 
     //Рисуем конструкцию
     draw() {
-        try {           
+        try {
             if (this.cnv.width < 100 && this.cnv.height < 100) {
                 this.scale = (this.cnv.width / this.height < this.cnv.height / this.height)
                         ? this.cnv.width / this.width : this.cnv.height / this.height;
@@ -229,7 +228,7 @@ export class Wincalc {
             }
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
-            
+
 
             //Прорисовка стеклопакетов
             this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
@@ -290,11 +289,11 @@ export class Wincalc {
     get cnv() {
         return this._cnv;
     }
-    
+
     get ctx() {
         return this._ctx;
     }
-    
+
     get width() {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getWidth();
     }

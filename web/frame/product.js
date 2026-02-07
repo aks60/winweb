@@ -6,32 +6,28 @@ import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
 //Создание конструкции
-export function winclacNew() {
-
-    let cnv = document.getElementById("cnv");
-    //cnv.width = $("#cnv").width();
-    //cnv.height = $("#cnv").height();
-    
+export function wincalcNew() {
     if (order.prjprodRec != null) {
-        product.winCalc = Wincalc.new(cnv, order.prjprodRec[ePrjprod.script]);
+        let cnv = document.getElementById("cnv");
+        let script = order.prjprodRec[ePrjprod.script];
+        cnv.width = cnv.offsetWidth;
+        cnv.height = cnv.offsetHeight;        
+        product.winCalc = Wincalc.new(cnv, script);
     }
-    console.log(cnv.width + ' 1 ' + cnv.height);
 }
 
 //Масштабирование
 export function resize() {
     let cnv = document.getElementById("cnv");
-
-    console.log(product.winCalc.cnv.width + ' 2 ' + product.winCalc.cnv.height);
-
+    
     //Изменение размера канвы
-    product.winCalc.cnv.width = cnv.width;//$("#cnv").width();
-    product.winCalc.cnv.height = cnv.height;//$("#cnv").height();
-
+    product.winCalc.cnv.width = cnv.offsetWidth;
+    product.winCalc.cnv.height = cnv.offsetHeight; 
+    
     //Перерисовка конструкции на канве, после изменения размера канвы
     product.winCalc.location();
     product.winCalc.draw();
-
+    
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
     $("div .field2[dx]").each(function (index) {
@@ -40,8 +36,6 @@ export function resize() {
     });
     $("#table1").jqGrid('setGridWidth', $("#east1").width() - 8);
     $("#table1").jqGrid('setGridHeight', $("#east1").height() - 24);
-
-    console.log(product.winCalc.cnv.width + ' 2 ' + product.winCalc.cnv.height);
 }
 
 //Инициализация таблицы
@@ -492,8 +486,13 @@ export function update_script() {
 }
 
 export function test() {
-    //product.winCalc.paint(LineString.new([[0,100], [1300,100]]));  
-    product.winCalc.draw();
-    console.log(product.winCalc.cnv.width + ' test ' + product.winCalc.cnv.height);
+    resize();
+    /*let cnv = document.getElementById("cnv");
+     product.winCalc.cnv.width = cnv.offsetWidth;
+     product.winCalc.cnv.height = cnv.offsetHeight;    
+     console.log(product.winCalc.cnv.width + ' 9.1 ' + product.winCalc.cnv.height);
+     console.log($("#cnv").width() + ' 9.2 ' + $("#cnv").height());
+     product.winCalc.draw();
+     console.log(product.winCalc.cnv.width + ' 9 ' + product.winCalc.cnv.height);*/
 }
 

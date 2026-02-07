@@ -49,14 +49,14 @@
             }
         </style>
         <script type="module">
-            import {winclacNew, resize, init_table, load_tree,
+            import {wincalcNew, resize, init_table, load_tree,
                     update_script, test} from './frame/product.js';
 
             $(document).ready(function () {
 
                 deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-                winclacNew();
-                //$(window).bind('resize', () => resize()).trigger('resize');
+                wincalcNew();
+                $(window).bind('resize', resize); //.trigger('resize');
                 product.table1 = document.getElementById('table1');
                 product.tabtree = document.getElementById('tree-winc');
 
