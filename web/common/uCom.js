@@ -50,11 +50,3 @@ UCom.scaleFont = (scale) => {
         return 50;
     }
 }
-UCom.includes = (keys, name) => {
-    for (let key in keys) {
-        if (key === name) {
-            return true;
-        }
-    }
-    return false;
-};

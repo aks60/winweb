@@ -19,15 +19,15 @@ export function wincalcNew() {
 //Масштабирование
 export function resize() {
     //let cnv = document.getElementById("cnv");
-    
+
     //Изменение размера канвы
     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
-    product.winCalc.cnv.height =product.winCalc.cnv.offsetHeight; 
-    
+    product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;
+
     //Перерисовка конструкции на канве, после изменения размера канвы
     product.winCalc.location();
     product.winCalc.draw();
-    
+
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
     $("div .field2[dx]").each(function (index) {
@@ -486,9 +486,13 @@ export function update_script() {
 }
 
 export function test() {
-     resize();
-     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
-     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
-     product.winCalc.draw();
+
+    let frm3 = product.winCalc.root.frames[3];
+    frm3.x1 = frm3.x1 + 3;
+    frm3.y1 = frm3.y1 - 3;
+//     resize();
+//     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
+//     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
+//     product.winCalc.draw();
 }
 

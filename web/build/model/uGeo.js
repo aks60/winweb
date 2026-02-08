@@ -303,26 +303,26 @@ UGeo.winresiz = (gson, dx, dy, scale) => {
         if (gson.childs !== null) {
             let dX = (dx === 0) ? 0 : dx / scale;
             let dY = (dy === 0) ? 0 : dy / scale;
-            for (let gs of gson.childs) {
-                if (UCom.includes([Type.IMPOST, Type.STOIKA, Type.SHTULP], gs.type)) {
+            for (let child of gson.childs) {
+                if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(child.type)) {
                     if (dX !== 0) {
-                        gs.x1 += dX;
-                        gs.x2 += dX;
+                        child.x1 += dX;
+                        child.x2 += dX;
                     }
                     if (dY !== 0) {
-                        gs.y1 += dY;
-                        gs.y2 += dY;
+                        child.y1 += dY;
+                        child.y2 += dY;
                     }
-                } else if (UCom.includes([Type.BOX_SIDE, Type.STV_SIDE], gs.type)) {
+                } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(child.type)) {
                     if (dX !== 0) {
-                        gs.x1 += +dX;
+                        child.x1 += +dX;
                     }
                     if (dY !== 0) {
-                        gs.y1 += dY;
+                        child.y1 += dY;
                     }
                 }
-                if (UCom.includes([Type.AREA, Type.STVORKA], gs.type)) {
-                    UGeo.winresiz(gs, dx, dy, scale);
+                if ([Type.AREA, Type.STVORKA].includes(child.type)) {
+                    UGeo.winresiz(child, dx, dy, scale);
                 }
             }
         }

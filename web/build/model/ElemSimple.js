@@ -64,11 +64,11 @@ export class ElemSimple extends Com5t {
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
 
-                                if (Y > 0 && UCom.includes([Layout.BOT, Layout.TOP, Layout.HOR], this.layout)) {
+                                if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
                                     this.y1(Y);
                                     this.y2(Y);
                                 }
-                                if (X > 0 && UCom.includes([Layout.LEF, Layout.RIG, Layout.VER], this.layout)) {
+                                if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
                                     this.x1(X);
                                     this.x2(X);
                                 }
@@ -121,17 +121,17 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
-                    let scale = this.winc.scale;
-                    //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+                    let scale = this.winc.scale;                    
                     if (this.area !== null) {
                         let X = 0, Y = 0;
                         let W = this.winc.cnv.width, H = this.winc.cnv.height;
                         let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
                         let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
-
+//if(this.id === 3) debugger;
                         //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                         if (this.passMask[1] > 1) {
                             this.pointPress = [evt.offsetX, evt.offsetY];
+                            console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
 
                             if (this.passMask[0] === 0) { //начало вектора
                                 X = dX / scale + this.x1;
@@ -255,7 +255,7 @@ export class ElemSimple extends Com5t {
                         } else if (this.passMask[0] === 2) {
                             if (this.h !== undefined) { //арка
                                 let list = this.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z == this.id);
-                                let i = list.size() / 2; //index середины дуги
+                                let i = list.length / 2; //index середины дуги
                                 let c1 = list[i], c2 = list[i + 1];
                                 let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();
                                 this.winc.ctx.fillRect(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
