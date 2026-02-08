@@ -53,13 +53,14 @@ UGeo.splitPolygon = (geom, segm) => {
                 [segm.p1.x, segm.p1.y, segm.p1.z]));
 
         //Вставим точки пересечения в список коорд.
-        const pointloc = new PointLocator();
+        const pointlocator = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
             let crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
             hsCheck.add(coo[i]);
             if (crosP !== null) {
                 //Вставим точку в сегмент
-                let bool = pointloc.intersects(crosP, LineString.new([coo[i - 1], coo[i]]));
+                let bool = pointlocator.intersects(crosP, LineString.new([coo[i - 1], coo[i]]));
+                
                 if (bool === true) {
                     crosTwo.push(crosP);
                     if (hsCheck.add(crosP)) {
@@ -282,7 +283,10 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
     }
 };
 
-UGeo.inside = (poly, x, y) => {
+/*
+ * Точка внутри многоугольника.
+ */
+UGeo.insidePoly = (poly, x, y) => {
     let inside = false;
     const coo = poly.getCoordinates();
 

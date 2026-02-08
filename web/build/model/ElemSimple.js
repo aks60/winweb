@@ -88,7 +88,7 @@ export class ElemSimple extends Com5t {
                     if (this.area !== null) {
 
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
-                        let inside = UGeo.inside(this.area, evt.offsetX / scale, evt.offsetY / scale);
+                        let inside = UGeo.insidePoly(this.area, evt.offsetX / scale, evt.offsetY / scale);
 
                         //Если клик внутри контура
                         if (inside === true) {
