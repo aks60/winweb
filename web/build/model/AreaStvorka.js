@@ -39,28 +39,29 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
-            if (this.frames.length === 0) {
-                //owner.area - если нет полигона створки в гл.окне, this.area  - получается при распиле owner.area импостом
-                let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
-                        || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+            console.log('ID=' + this.id);
+            
+            this.frames.length === 0;
+            //owner.area - если нет полигона створки в гл.окне, this.area  - получается при распиле owner.area импостом
+            let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
+                    || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
-                //Полигон створки с учётом нахлёста 
-                let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
-                let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
-                let coo = stvShell.getGeometryN(0).getCoordinates();
-                for (let i = 0; i < coo.length - 1; i++) {
+            //Полигон створки с учётом нахлёста 
+            let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
+            let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            let coo = stvShell.getGeometryN(0).getCoordinates();
+            for (let i = 0; i < coo.length - 1; i++) {
 
-                    //Json координаты рам створок
-                    let ID = this.gson.id + (0.1 + i / 10);
-                    let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
-                    gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
+                //Json координаты рам створок
+                let ID = this.gson.id + (0.1 + i / 10);
+                let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
+                gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
 
-                    let sideStv = new ElemFrame(this.winc, gson, this);
-                    sideStv.type = Type.STV_SIDE;
+                let sideStv = new ElemFrame(this.winc, gson, this);
+                sideStv.type = Type.STV_SIDE;
 
-                    this.frames.push(sideStv);
-                    coo[i].z = sideStv.id;
-                }
+                this.frames.push(sideStv);
+                coo[i].z = sideStv.id;
             }
         } catch (e) {
             errorLog("Error: AreaStvorka.initStvorka() " + e.message);
