@@ -485,17 +485,26 @@ export function update_script() {
     });
 }
 
-export function test() {
+export function test1() {
 
-    let frm = product.winCalc.root.frames[2];
-    frm.x1 = frm.x1 + 4;
-    //frm.y1 = frm.y1 - 1;
-    
+    let frm = product.winCalc.root.frames[0];
+    frm.x2 = frm.x2 + 8;
+    //frm.y2 = frm.y2 - 8;
+
     //wincalcNew();
     resize();
-    
+
 //     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
 //     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
 //     product.winCalc.draw();
+}
+
+export function test2() {
+    let winc = product.winCalc;
+    //winc.ctx.save();
+    winc.ctx.clearRect(0, 0, winc.cnv.offsetWidth/winc.scale, winc.cnv.offsetHeight/winc.scale);
+    //winc.ctx.restore();
+    
+    //resize();
 }
 

@@ -50,7 +50,7 @@
         </style>
         <script type="module">
             import {wincalcNew, resize, init_table, load_tree,
-                    update_script, test} from './frame/product.js';
+                    update_script, test1, test2} from './frame/product.js';
 
             $(document).ready(function () {
 
@@ -64,13 +64,15 @@
                 load_tree();
 
                 prepareToolBar();
-                document.getElementById('btnTest').addEventListener('click', test);
+                document.getElementById('btnTest1').addEventListener('click', test1);
+                document.getElementById('btnTest2').addEventListener('click', test2);
             });
         </script>  
     </head>
     <body>
         <div id='north' style=''>
-            <button id="btnTest" style="width: 48px; margin-left: 40px;">TEST</button>
+            <button id="btnTest1" style="width: 48px; margin-left: 40px;">TEST</button>
+            <button id="btnTest2" style="width: 48px; margin-left: 40px;">TEST</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>

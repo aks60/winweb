@@ -39,12 +39,12 @@ export class Wincalc {
             errorLog('Error: Wincalc.constructor() ' + e.message);
         }
     }
-    
+
     static new (canvas, script) {
-     canvas.width = canvas.offsetWidth;
-     canvas.height = canvas.offsetHeight;         
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
         return new Wincalc(canvas).build(script);
-    } 
+    }
 
     build(script) {
         try {

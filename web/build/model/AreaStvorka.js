@@ -39,7 +39,7 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
-            console.log('ID=' + this.id);
+            //console.log('ID=' + this.id);
             
             this.frames.length === 0;
             //owner.area - если нет полигона створки в гл.окне, this.area  - получается при распиле owner.area импостом
