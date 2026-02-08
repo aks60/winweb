@@ -488,9 +488,10 @@ export function update_script() {
 export function test() {
 
     let frm = product.winCalc.root.frames[2];
-    frm.x1 = frm.x1 + 8;
-    frm.y1 = frm.y1 - 3;
+    frm.x1 = frm.x1 + 4;
+    //frm.y1 = frm.y1 - 1;
     
+    //wincalcNew();
     resize();
     
 //     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;

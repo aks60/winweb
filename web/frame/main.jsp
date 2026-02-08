@@ -11,13 +11,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/html-ui.css">
 
-        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.js"></script>                               
-        <script type="text/javascript" src="lib-js/jquery-ui-1.13/jquery-ui.js"></script> 
+        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.min.js"></script>                               
+        <script type="text/javascript" src="lib-js/jquery-ui-1.13/jquery-ui.min.js"></script> 
         <script type="text/javascript" src="lib-js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
 
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
-        <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.js"></script> 
-        <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.js"></script>
+        <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script> 
+        <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.min.js"></script>
         <!--<script type="text/javascript" src="lib-js/jsts-2.12.1/jsts-min.js"></script>-->
 
         <script type="text/javascript" src="frame/uGui.js"></script>
