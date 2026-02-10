@@ -25,6 +25,7 @@ export function resize() {
     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;
 
     //Перерисовка конструкции на канве, после изменения размера канвы
+    //product.winCalc.build(product.winCalc.gson);
     product.winCalc.location();
     product.winCalc.draw();
 
@@ -487,11 +488,10 @@ export function update_script() {
 
 export function test1() {
 
-    let frm = product.winCalc.root.frames[0];
-    frm.x2 = frm.x2 + 8;
-    //frm.y2 = frm.y2 - 8;
+    let frm = product.winCalc.root.frames[2];
+    frm.x = frm.x2 + 8;
+    UGeo.moveXY(frm, frm.x, 0);
 
-    //wincalcNew();
     resize();
 
 //     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
@@ -501,10 +501,11 @@ export function test1() {
 
 export function test2() {
     let winc = product.winCalc;
-    //winc.ctx.save();
+    //console.log(winc.gson);
     winc.ctx.clearRect(0, 0, winc.cnv.offsetWidth/winc.scale, winc.cnv.offsetHeight/winc.scale);
-    //winc.ctx.restore();
-    
-    //resize();
+}
+
+export function test3() {
+    resize();
 }
 

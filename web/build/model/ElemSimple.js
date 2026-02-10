@@ -46,13 +46,13 @@ export class ElemSimple extends Com5t {
                         if (this.passMask[0] === 0) {
                             X = dX / scale + this.x1;
                             Y = dY / scale + this.y1;
-                            this.moveXY(X, Y);
+                            UGeo.moveXY(this, X, Y);
 
                             //Кликнул конец вектора
                         } else if (this.passMask[0] === 1) {
                             X = dX / scale + this.x2;
                             Y = dY / scale + this.y2;
-                            this.moveXY(X, Y);
+                            UGeo.moveXY(this, X, Y);
 
                             //Кликнул по середине вектора 
                         } else if (this.passMask[0] === 2) {
@@ -74,7 +74,7 @@ export class ElemSimple extends Com5t {
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
                     }
                     clearTimeout(this.timerID); //остановка
@@ -135,12 +135,12 @@ export class ElemSimple extends Com5t {
                             if (this.passMask[0] === 0) { //начало вектора
                                 X = dX / scale + this.x1;
                                 Y = dY / scale + this.y1;
-                                this.moveXY(X, Y);
+                                UGeo.moveXY(this, X, Y);
 
                             } else if (this.passMask[0] === 1) { //конец вектора
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
-                                this.moveXY(X, Y);
+                                Ugeo.moveXY(this, X, Y);
 
                             } else if (this.passMask[0] === 2) { //середина вектора
                                 X = dX / scale + this.x2;
@@ -163,7 +163,7 @@ export class ElemSimple extends Com5t {
                                 }
                             }
                             if (X < 0 || Y < 0) {
-                                UGeo.winresiz(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                                UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                             }
                         }
                     }
@@ -173,40 +173,6 @@ export class ElemSimple extends Com5t {
                 errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
             }
         }
-    }
-
-    moveXY(x, y) {
-
-        if (x > 0 || y > 0) {
-            if ([Layout.BOT, Layout.HOR].includes(this.layout)) {
-                if (this.passMask[0] === 0) {
-                    this.y1 = y;
-                } else if (this.passMask[0] === 1) {
-                    this.y2 = y;
-                }
-            } else if ([Layout.RIG].includes(this.layout)) {
-                if (this.passMask[0] === 0) {
-                    this.x1 = x;
-                } else if (this.passMask[0] === 1) {
-                    this.x2 = x;
-                }
-            } else if ([Layout.TOP].includes(this.layout)) {
-                if (this.passMask[0] === 0) {
-                    this.y1 = y;
-                } else if (this.passMask[0] === 1) {
-                    this.y2 = y;
-                }
-            } else if ([Layout.LEF, Layout.VER].includes(this.layout)) {
-                if (this.passMask[0] === 0) {
-                    this.x1 = x;
-                } else if (this.passMask[0] === 1) {
-                    this.x2 = x;
-                }
-            }
-        }
-//        if(this instanceof ElemCross) {
-//            UGeo.normalizeElem(this);
-//        }        
     }
 
     get layout() {

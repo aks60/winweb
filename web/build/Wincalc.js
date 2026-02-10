@@ -12,7 +12,8 @@ import Coordinate from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordina
 export class Wincalc {
     id; //id конструкции
     nuni; //код системы  
-    gson; //объектная модель конструкции
+    script; //json мщдель конструкции
+    gson; //object модель конструкции
     mapPardef = new Map();  //пар. по умолчанию + наложенные пар. клиента
     listArea = new Array(); //список ареа.
     listElem = new Array(); //список элем.

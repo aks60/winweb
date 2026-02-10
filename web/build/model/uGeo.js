@@ -1,6 +1,6 @@
 import {Com5t} from './Com5t.js'
 import {UCom} from '../../common/uCom.js';
-import {Type} from '../../enums/enums.js';
+import {Type, Layout} from '../../enums/enums.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
 import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
 import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
@@ -302,8 +302,8 @@ UGeo.insidePoly = (poly, x, y) => {
     return inside;
 };  
 
-//Перемещение точек на канве (изменение размера окна)
-UGeo.winresiz = (gson, dx, dy, scale) => {
+//Переьещение gson (точек на канве)
+UGeo.moveGson = (gson, dx, dy, scale) => {
         if (gson.childs !== null) {
             let dX = (dx === 0) ? 0 : dx / scale;
             let dY = (dy === 0) ? 0 : dy / scale;
@@ -326,8 +326,40 @@ UGeo.winresiz = (gson, dx, dy, scale) => {
                     }
                 }
                 if ([Type.AREA, Type.STVORKA].includes(child.type)) {
-                    UGeo.winresiz(child, dx, dy, scale);
+                    UGeo.moveGson(child, dx, dy, scale);
                 }
             }
         }
     };
+
+//Перемещение точек на канве (изменение размера окна)
+UGeo.moveXY = (el, x, y) => {
+
+        if (x > 0 || y > 0) {
+            if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
+                if (el.passMask[0] === 0) {
+                    el.y1 = y;
+                } else if (el.passMask[0] === 1) {
+                    el.y2 = y;
+                }
+            } else if ([Layout.RIG].includes(el.layout)) {
+                if (el.passMask[0] === 0) {
+                    el.x1 = x;
+                } else if (el.passMask[0] === 1) {
+                    el.x2 = x;
+                }
+            } else if ([Layout.TOP].includes(el.layout)) {
+                if (el.passMask[0] === 0) {
+                    el.y1 = y;
+                } else if (el.passMask[0] === 1) {
+                    el.y2 = y;
+                }
+            } else if ([Layout.LEF, Layout.VER].includes(el.layout)) {
+                if (el.passMask[0] === 0) {
+                    el.x1 = x;
+                } else if (el.passMask[0] === 1) {
+                    el.x2 = x;
+                }
+            }
+        }       
+    }    
