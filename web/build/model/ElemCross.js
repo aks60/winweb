@@ -9,6 +9,8 @@ import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.
 import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
 import OverlayOp from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/overlay/OverlayOp.js'
 
+import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
+
 export class ElemCross extends ElemSimple {
 
     constructor(winc, gson, owner) {
@@ -59,6 +61,9 @@ export class ElemCross extends ElemSimple {
 
             //Пилим полигон импостом     
             let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
+            
+            console.log(new WKTWriter().write(geoShell.copy())); 
+            
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];

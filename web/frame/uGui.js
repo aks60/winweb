@@ -1,8 +1,8 @@
-//------------------------------------------------------------------------------
+
 function printScript(winc) {
     console.log(JSON.stringify(winc.root.gson, undefined, 4));
 }
-//------------------------------------------------------------------------------
+
 function deployTaq(selectors) {
 
     let mapobj = this;
@@ -62,6 +62,7 @@ function deployTaq(selectors) {
         });
     }
 }
+
 function card_deploy2(taq, type) {
     let
             title2 = $(taq).attr('card_title'),
@@ -154,13 +155,13 @@ function card_deploy2(taq, type) {
         });
     }
 }
-//------------------------------------------------------------------------------
+
 function load_tabs(records) {
     for (let key in records) {
         $("#" + key).val(records[key]);
     }
 }
-//------------------------------------------------------------------------------
+
 function formatDate2(d) {
 
     let dd = d.getDate();
@@ -173,7 +174,7 @@ function formatDate2(d) {
     }
     return dd + '.' + mm + '.' + d.getFullYear();
 }
-//------------------------------------------------------------------------------
+
 function prepareToolBar() {
 
     $("#btnOrder1").button({icons: {primary: "ui-icon-plus"}});
@@ -191,7 +192,7 @@ function prepareToolBar() {
     //$("#tab-2").button({icons: {primary: "ui-icon-star"}});
     //$("#tab-3").button({icons: {primary: "ui-icon-star"}});
 }
-//------------------------------------------------------------------------------
+
 //Диалог окна  сообщений
 function dialogSec(mes) {
     $("#dialog-mes").html(mes);
@@ -200,7 +201,7 @@ function dialogSec(mes) {
     });
     setTimeout("$('#dialog-mes').dialog('close');", 600);
 }
-//------------------------------------------------------------------------------
+
 //Диалог окна  сообщений
 function dialogMes(title, mes) {
     $("#dialog-mes").html("<p>" + mes);
@@ -214,7 +215,7 @@ function dialogMes(title, mes) {
                     $(this).dialog("close");
                 }}]});
 }
-//------------------------------------------------------------------------------
+
 //Диалог окна прогрес сохранения
 //TODO доработать прогресс
 function dialogPrg2() {
@@ -246,7 +247,7 @@ function dialogPrg2() {
         }
     }
 }
-//------------------------------------------------------------------------------
+
 //Прогресс бар
 function dialogPrg(mes) {
     $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
@@ -274,7 +275,7 @@ function dialogPrg(mes) {
     });
     setTimeout("$('#dialog-mes').dialog('close');", 2600);
 }
-//------------------------------------------------------------------------------
+
 //1;79-10;0-10 => [1,1,79,10,0,10]
 function  parserInt(txt) {
     if (txt == undefined || txt == null) {
@@ -306,7 +307,7 @@ function  parserInt(txt) {
     }
     return arrList;
 }
-//------------------------------------------------------------------------------     
+   
 function isEmpty(v) {
 
     if (v === "" || v === undefined || v === null)
@@ -318,7 +319,7 @@ function isEmpty(v) {
             return v;
     }
 }
-//------------------------------------------------------------------------------            
+          
 function findef(key, index, tname) {
     try {
         let record = tname.list.find(rec => key == rec[index]);
@@ -331,16 +332,17 @@ function findef(key, index, tname) {
         errorLog('Error: uGui.findef() ' + e.message);
     }
 }
-//------------------------------------------------------------------------------    
+  
 function getSelectedRow(table) {
     let rowid = table.jqGrid('getGridParam', "selrow");
     return (rowid) ? table.jqGrid('getRowData', rowid) : null;
 }
-//------------------------------------------------------------------------------
+
 //Для совместимости java и JavaScript
 Math.toDegrees = function (x) {
     return 180 / Math.PI * x;
 };
+
 Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
@@ -349,7 +351,7 @@ function errorLog(mes) {
     //alert(mes); 
     console.log(mes);
 }
-//------------------------------------------------------------------------------
+
 function traverseJson(data) {
     if (typeof data === 'object' && data !== null) {
         // Если это массив
@@ -369,4 +371,4 @@ function traverseJson(data) {
     // console.log('Примитивное значение:', data);
     //}
 }
-//------------------------------------------------------------------------------
+

@@ -486,10 +486,10 @@ export function update_script() {
 
 export function test1() {
 
-    let frm = product.winCalc.root.frames[3];
+    let frm = product.winCalc.root.frames[1];
     let x = 0;//frm.y1 + 8;
-    let y = frm.y1 + 8;
-    UGeo.moveXY(frm, x, y);
+    frm.y2 = frm.y2 - 8;
+    //UGeo.movePoint(frm, frm.x2, frm.y2);
     product.winCalc.resize();
 
 //     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;

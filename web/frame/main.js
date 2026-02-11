@@ -6,6 +6,7 @@
 //https://gist.github.com/ThomasG77/d66f1040960646abf56c90ae5e759b8a
 
 import {Com5t} from '../build/model/Com5t.js'
+import {UGeo} from '../build/model/uGeo.js'
 import Coordinate from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js'
 import Point from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Point.js'
 import LineSegment from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js'
@@ -13,8 +14,8 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 //import {UGeo} from '../build/model/uGeo.js';
-//import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
-//import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
+import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
+import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import UnaryUnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnaryUnionOp.js'
 //import Geometry from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Geometry.js';
@@ -107,25 +108,17 @@ export function localizeFactory() {
 }
 
 export function Test1() {
-//    try {
-//        let p1 = new Coordinate(10, 0, 1);
-//        let p2 = new Coordinate(100, 100, 2);
-//        let p3 = new Coordinate(5, 20, 3);
-//        let p4 = new Coordinate(5, 40, 4);
-//
-//        let c1 = new Coordinate(10, 0, 1);
-//        let c2 = new Coordinate(100, 100, 2);
-//        let x1 = LineString.new([c1, c2]);
-//        let x2 = Polygon.new([p1, p2, p3, p4]);
-//
-//        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
-//        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1400, 3], [1300, 0, 4]]);
-//        let o3 = UGeo.splitPolygon(o2, o1);
-//        let o4 = 0;
-//
-//    } catch (e) {
-//        alert(`Ошибка: Test1()  ` + e.message);
-//    }
+    try {
+        let reader = new WKTReader();
+        let writer = new WKTWriter();
+        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
+        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1360.6060606060603, 3], [1300, 0, 4], [0, 0, 1]]);
+        let o3 = UGeo.splitPolygon(o2, o1);
+        console.log(writer.write(o3[0]));
+
+    } catch (e) {
+        alert(`Ошибка: Test1()  ` + e.message);
+    }
 }
 
 export function Test2() {

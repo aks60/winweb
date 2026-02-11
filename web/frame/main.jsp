@@ -74,8 +74,9 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, Test2} from './frame/main.js';
+            import {localizeFactory, Test1} from './frame/main.js';
             localizeFactory();
+            Test1();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

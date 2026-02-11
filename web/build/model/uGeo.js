@@ -43,6 +43,7 @@ UGeo.arrCoord = (arr) => {
 
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
+    
     var b = true, hsCheck = new Set();
     let coo = geom.getGeometryN(0).copy().getCoordinates();
     let cooL = [], cooR = [];
@@ -94,7 +95,7 @@ UGeo.splitPolygon = (geom, segm) => {
                 ((b === true) ? cooL : cooR).push(co);
             }
         }
-
+debugger;
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
@@ -333,7 +334,7 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
     };
 
 //Перемещение точек на канве (изменение размера окна)
-UGeo.moveXY = (el, x, y) => {
+UGeo.movePoint = (el, x, y) => {
 
         if (x > 0 || y > 0) {
             if ([Layout.BOT, Layout.HOR].includes(el.layout)) {

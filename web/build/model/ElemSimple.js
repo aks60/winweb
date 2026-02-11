@@ -9,13 +9,12 @@ export class ElemSimple extends Com5t {
 
     betweenHoriz = [0, 0]; //угол между векторами   
     pointPress = [0, 0]; //координаты клика на канве
-    passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина вектора, [1] > 0 -вешаем обр. прорисовки кружка и разр. редактиров. x,y
+    passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина, [1] > 0 -вешаем обр. прорисовки кружка и разреш. редактиров. x,y
     SIZE = 20;
     timerID = 0; //таймер
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
-
 
         winc.listElem.push(this);
         winc.listAll.push(this);
@@ -24,7 +23,6 @@ export class ElemSimple extends Com5t {
     addListenerEvents() {
         if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
             try {
-
                 this.winc.cnv.addEventListener("keydown", (evt) => {
                     if (this.area !== null && this.passMask[1] > 0) {
 
@@ -47,13 +45,13 @@ export class ElemSimple extends Com5t {
                         if (this.passMask[0] === 0) {
                             X = dX / scale + this.x1;
                             Y = dY / scale + this.y1;
-                            UGeo.moveXY(this, X, Y);
+                            UGeo.movePoint(this, X, Y);
 
                             //Кликнул конец вектора
                         } else if (this.passMask[0] === 1) {
                             X = dX / scale + this.x2;
                             Y = dY / scale + this.y2;
-                            UGeo.moveXY(this, X, Y);
+                            UGeo.movePoint(this, X, Y);
 
                             //Кликнул по середине вектора 
                         } else if (this.passMask[0] === 2) {
@@ -84,7 +82,7 @@ export class ElemSimple extends Com5t {
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-                        
+
                         let scale = this.winc.scale;
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
@@ -119,28 +117,30 @@ export class ElemSimple extends Com5t {
                     }
                 });
 
-                this.winc.cnv.addEventListener("mousemove", (evt) => {
-                    //Фильтр движухи откл. когда passMask[1] > 1
-                    if (this.passMask[1] > 1 && this.area !== null) {
+                this.winc.cnv.addEventListener("mouseup", (evt) => {
+                    this.passMask[1] = 0;
+                });
 
-                        let scale = this.winc.scale;                        
+                this.winc.cnv.addEventListener("mousemove", (evt) => {
+
+                    //Фильтр движухи откл. когда passMask[1] > 1
+                    if (this.passMask[1] > 0 && this.area !== null) {
+
+                        let scale = this.winc.scale;
                         let X = 0, Y = 0;
                         let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
                         let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
                         this.pointPress = [evt.offsetX, evt.offsetY]; //новое положение клика точки
 
-                        if (this.id === 3)
-                            debugger;
-
                         if (this.passMask[0] === 0) { //начало вектора
                             X = dX / scale + this.x1;
                             Y = dY / scale + this.y1;
-                            UGeo.moveXY(this, X, Y);
+                            UGeo.movePoint(this, X, Y);
 
                         } else if (this.passMask[0] === 1) { //конец вектора
                             X = dX / scale + this.x2;
                             Y = dY / scale + this.y2;
-                            UGeo.moveXY(this, X, Y);
+                            UGeo.movePoint(this, X, Y);
 
                         } else if (this.passMask[0] === 2) { //середина вектора
                             X = dX / scale + this.x2;
@@ -168,7 +168,7 @@ export class ElemSimple extends Com5t {
                         this.winc.resize();
                     }
                 });
-                
+
             } catch (e) {
                 errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
             }
