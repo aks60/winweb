@@ -47,12 +47,12 @@ export class AreaStvorka extends AreaSimple {
             let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             let coo = stvShell.getGeometryN(0).getCoordinates();
-            let num = this.frames.length;
+            let count = this.frames.length;
             for (let i = 0; i < coo.length - 1; i++) {
 
                 //Координаты рам створок
                 let ID = this.gson.id + (0.1 + i / 10);
-                if (num > 0) {
+                if (count > 0) {
                     let sideStv = this.frames.find(el => el.id === ID);
                     sideStv.x1 = coo[i].x;
                     sideStv.y1 = coo[i].y;

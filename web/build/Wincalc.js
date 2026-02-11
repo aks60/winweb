@@ -223,6 +223,14 @@ export class Wincalc {
         }
     }
 
+//Пересчитать и перерисовать
+    resize() {
+        this.cnv.width = this.cnv.offsetWidth;
+        this.cnv.height = this.cnv.offsetHeight;
+        product.winCalc.location();
+        product.winCalc.draw();
+    }
+
     //Рисуем конструкцию
     draw() {
         try {

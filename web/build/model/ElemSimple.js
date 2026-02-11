@@ -26,8 +26,9 @@ export class ElemSimple extends Com5t {
             try {
 
                 this.winc.cnv.addEventListener("keydown", (evt) => {
-                    let scale = this.winc.scale;
                     if (this.area !== null && this.passMask[1] > 0) {
+
+                        let scale = this.winc.scale;
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                         let key = evt.key;
                         let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
@@ -82,11 +83,10 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
-                    let scale = this.winc.scale;
-                    //console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
-
                     if (this.area !== null) {
-
+                        
+                        let scale = this.winc.scale;
+                        this.pointPress = [evt.offsetX, evt.offsetY];
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
                         let inside = UGeo.insidePoly(this.area, evt.offsetX / scale, evt.offsetY / scale);
 
@@ -120,55 +120,55 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
-                    let scale = this.winc.scale;                    
-                    if (this.area !== null) {
+                    //Фильтр движухи откл. когда passMask[1] > 1
+                    if (this.passMask[1] > 1 && this.area !== null) {
+
+                        let scale = this.winc.scale;                        
                         let X = 0, Y = 0;
-                        let W = this.winc.cnv.width, H = this.winc.cnv.height;
                         let dX = evt.offsetX - this.pointPress[0]; //прирощение по горизонтали
                         let dY = evt.offsetY - this.pointPress[1]; //прирощение по вертикали 
-//if(this.id === 3) debugger;
-                        //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
-                        if (this.passMask[1] > 1) {
-                            this.pointPress = [evt.offsetX, evt.offsetY];
-//console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+                        this.pointPress = [evt.offsetX, evt.offsetY]; //новое положение клика точки
 
-                            if (this.passMask[0] === 0) { //начало вектора
-                                X = dX / scale + this.x1;
-                                Y = dY / scale + this.y1;
-                                UGeo.moveXY(this, X, Y);
+                        if (this.id === 3)
+                            debugger;
 
-                            } else if (this.passMask[0] === 1) { //конец вектора
-                                X = dX / scale + this.x2;
-                                Y = dY / scale + this.y2;
-                                Ugeo.moveXY(this, X, Y);
+                        if (this.passMask[0] === 0) { //начало вектора
+                            X = dX / scale + this.x1;
+                            Y = dY / scale + this.y1;
+                            UGeo.moveXY(this, X, Y);
 
-                            } else if (this.passMask[0] === 2) { //середина вектора
-                                X = dX / scale + this.x2;
-                                Y = dY / scale + this.y2;
-                                if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
-                                    if (this.h !== null) {
-                                        this.h = (this.h - dY / scale);
-                                    } else {
-                                        this.y1 = Y;
-                                        this.y2 = Y;
-                                    }
-                                }
-                                if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                    if (this.h !== null) {
-                                        this.h = (this.h - dX / scale);
-                                    } else {
-                                        this.x1 = X;
-                                        this.x2 = X;
-                                    }
+                        } else if (this.passMask[0] === 1) { //конец вектора
+                            X = dX / scale + this.x2;
+                            Y = dY / scale + this.y2;
+                            UGeo.moveXY(this, X, Y);
+
+                        } else if (this.passMask[0] === 2) { //середина вектора
+                            X = dX / scale + this.x2;
+                            Y = dY / scale + this.y2;
+                            if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
+                                if (this.h !== null) {
+                                    this.h = (this.h - dY / scale);
+                                } else {
+                                    this.y1 = Y;
+                                    this.y2 = Y;
                                 }
                             }
-                            if (X < 0 || Y < 0) {
-                                UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                            if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
+                                if (this.h !== null) {
+                                    this.h = (this.h - dX / scale);
+                                } else {
+                                    this.x1 = X;
+                                    this.x2 = X;
+                                }
                             }
                         }
+                        if (X < 0 || Y < 0) {
+                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                        }
+                        this.winc.resize();
                     }
                 });
-
+                
             } catch (e) {
                 errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
             }

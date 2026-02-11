@@ -486,11 +486,11 @@ export function update_script() {
 
 export function test1() {
 
-    let frm = product.winCalc.root.frames[2];
-    frm.x = frm.x2 + 8;
-    UGeo.moveXY(frm, frm.x, 0);
-
-    resize();
+    let frm = product.winCalc.root.frames[3];
+    let x = 0;//frm.y1 + 8;
+    let y = frm.y1 + 8;
+    UGeo.moveXY(frm, x, y);
+    product.winCalc.resize();
 
 //     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
 //     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
@@ -504,6 +504,6 @@ export function test2() {
 }
 
 export function test3() {
-    resize();
+    product.winCalc.resize();
 }
 
