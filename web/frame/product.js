@@ -9,10 +9,8 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 export function wincalcNew() {
     if (order.prjprodRec != null) {
         let cnv = document.getElementById("cnv");
-        let script = order.prjprodRec[ePrjprod.script];
-        //cnv.width = cnv.offsetWidth;
-        //cnv.height = cnv.offsetHeight;        
-        product.winCalc = Wincalc.new(cnv, script);
+        let script = order.prjprodRec[ePrjprod.script];        
+        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight,  script);
     }
 }
 

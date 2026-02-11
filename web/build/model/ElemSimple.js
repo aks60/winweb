@@ -130,7 +130,7 @@ export class ElemSimple extends Com5t {
                         //Фильтр движухи вкл-ся когда passMask[1] > 1 !!! 
                         if (this.passMask[1] > 1) {
                             this.pointPress = [evt.offsetX, evt.offsetY];
-                            console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
+//console.log(evt.offsetX / scale + ' <> ' + evt.offsetY / scale);
 
                             if (this.passMask[0] === 0) { //начало вектора
                                 X = dX / scale + this.x1;

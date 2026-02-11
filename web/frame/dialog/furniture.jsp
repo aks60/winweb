@@ -99,7 +99,7 @@
                 elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = Wincalc.new(winc.cnv, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
+                let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 $.ajax({//запишем профиль в серверную базу данных

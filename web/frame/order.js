@@ -96,15 +96,15 @@ export function load_table2(rowid) {
             let canvas = document.createElement("canvas");
             canvas.class = "cnv";
             canvas.id = 'cnv' + rec[ePrjprod.id];
-            canvas.width = 68;
-            canvas.height = 68;
+            //canvas.width = 68;
+            //canvas.height = 68;
 
             let id = document.createTextNode(rec[ePrjprod.id]);
             let name = document.createTextNode(rec[ePrjprod.name]);
             let script = rec[ePrjprod.script];
 
             //Создание экземпрляра окна
-            let winc = Wincalc.new(canvas, script);
+            let winc = Wincalc.new(canvas, 68, 68, script);
 
             //Массив объектов winc
             order.wincalcMap.set(rec[ePrjprod.id], winc);

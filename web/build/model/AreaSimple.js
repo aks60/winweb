@@ -45,6 +45,7 @@ export class AreaSimple extends Com5t {
             let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 0);
             let geoFalz = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
+
         } catch (e) {
             errorLog('Error: AreaSimple.setLocation() ' + e.message);
         }

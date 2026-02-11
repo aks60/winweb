@@ -144,7 +144,7 @@
 
                         //Запишем скрипт в локальн. бд 
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = Wincalc.new(winc.cnv, prjprodRec[ePrjprod.script]);
+                        let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных

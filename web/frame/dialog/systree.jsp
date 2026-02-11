@@ -184,7 +184,7 @@
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 table.appendChild(tr);
-                Wincalc.new(canvas, script);
+                Wincalc.new(canvas, canvas.offsetWidth, canvas.offsetHeight, script);
             }
 //------------------------------------------------------------------------------
             function event_clicked(e) {

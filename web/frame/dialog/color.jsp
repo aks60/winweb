@@ -166,8 +166,9 @@
 
                         //Запишем скрипт в локальн. бд
                         let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                        let cnv = document.getElementById("cnv");
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = Wincalc.new(document.querySelector("#cnv"), prjprodRec[ePrjprod.script]);
+                        let winc2 = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, prjprodRec[ePrjprod.script]);
                         order.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных

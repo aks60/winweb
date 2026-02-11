@@ -41,9 +41,9 @@ export class Wincalc {
         }
     }
 
-    static new (canvas, script) {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+    static new (canvas, width, height, script) {
+        canvas.width = width;
+        canvas.height = height;
         return new Wincalc(canvas).build(script);
     }
 
