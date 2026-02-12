@@ -76,7 +76,7 @@
         <script type="module">
             import {localizeFactory, Test1} from './frame/main.js';
             localizeFactory();
-            Test1();
+            //Test1();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
@@ -94,7 +94,7 @@
                             eSyssize.list = p[18];
 
                     login.init_login();
-                    //login.user_connect();
+                    login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

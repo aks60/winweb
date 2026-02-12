@@ -2,8 +2,10 @@ import {Com5t} from './Com5t.js'
 import {UCom} from '../../common/uCom.js';
 import {Type, Layout} from '../../enums/enums.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
-import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
-import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
+//import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
+//import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
+//import PointLocation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocation.js'
+import CGAlgorithmsDD from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/CGAlgorithmsDD.js'
 import Angle from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Angle.js'
 import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js'
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js'
@@ -12,7 +14,6 @@ import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coord
 import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js'
 import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
-
 
 export let UGeo = {};
 UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
@@ -45,19 +46,19 @@ UGeo.arrCoord = (arr) => {
 
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
-    
+
     var b = true, hsCheck = new Set();
     let coo = geom.getGeometryN(0).copy().getCoordinates();
-    
-    segm.p0.x = Math.round(segm.p0.x);
-    segm.p0.y = Math.round(segm.p0.y);
-    segm.p1.x = Math.round(segm.p1.x);
-    segm.p1.y = Math.round(segm.p1.y);
-    for (var c of coo) {
-        c.x = Math.round(c.x);
-        c.y = Math.round(c.y);
-    }
-    
+
+//    segm.p0.x = Math.round(segm.p0.x);
+//    segm.p0.y = Math.round(segm.p0.y);
+//    segm.p1.x = Math.round(segm.p1.x);
+//    segm.p1.y = Math.round(segm.p1.y);
+//    for (var c of coo) {
+//        c.x = Math.round(c.x);
+//        c.y = Math.round(c.y);
+//    }
+
     let cooL = [], cooR = [];
     let crosTwo = [], listExt = [coo[0]];
     try {
@@ -66,19 +67,14 @@ UGeo.splitPolygon = (geom, segm) => {
                 [segm.p1.x, segm.p1.y, segm.p1.z]));
 
         //Вставим точки пересечения в список коорд.
-        const pointlocator = new PointLocator();
         for (let i = 1; i < coo.length; i++) {
-            let crosP = Intersection.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
+            let crosP = CGAlgorithmsDD.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
             hsCheck.add(coo[i]);
             if (crosP !== null) {
                 //Вставим точку в сегмент
-                let bool = pointlocator.intersects(crosP, LineString.new([coo[i - 1], coo[i]]));
-                
-                if (bool === true) {
-                    crosTwo.push(crosP);
-                    if (hsCheck.add(crosP)) {
-                        listExt.push(crosP);
-                    }
+                crosTwo.push(crosP);
+                if (hsCheck.add(crosP)) {
+                    listExt.push(crosP);
                 }
             }
             listExt.push(coo[i]);
@@ -115,6 +111,8 @@ UGeo.splitPolygon = (geom, segm) => {
         } else {
             cooR.push(cooR[0]);
         }
+        UGeo.PRINT(Polygon.new(cooL))
+        UGeo.PRINT(Polygon.new(cooR))
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
@@ -313,72 +311,72 @@ UGeo.insidePoly = (poly, x, y) => {
             inside = !inside;
     }
     return inside;
-};  
+};
 
 //Переьещение gson (точек на канве)
 UGeo.moveGson = (gson, dx, dy, scale) => {
-        if (gson.childs !== null) {
-            let dX = (dx === 0) ? 0 : dx / scale;
-            let dY = (dy === 0) ? 0 : dy / scale;
-            for (let child of gson.childs) {
-                if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(child.type)) {
-                    if (dX !== 0) {
-                        child.x1 += dX;
-                        child.x2 += dX;
-                    }
-                    if (dY !== 0) {
-                        child.y1 += dY;
-                        child.y2 += dY;
-                    }
-                } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(child.type)) {
-                    if (dX !== 0) {
-                        child.x1 += +dX;
-                    }
-                    if (dY !== 0) {
-                        child.y1 += dY;
-                    }
+    if (gson.childs !== null) {
+        let dX = (dx === 0) ? 0 : dx / scale;
+        let dY = (dy === 0) ? 0 : dy / scale;
+        for (let child of gson.childs) {
+            if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(child.type)) {
+                if (dX !== 0) {
+                    child.x1 += dX;
+                    child.x2 += dX;
                 }
-                if ([Type.AREA, Type.STVORKA].includes(child.type)) {
-                    UGeo.moveGson(child, dx, dy, scale);
+                if (dY !== 0) {
+                    child.y1 += dY;
+                    child.y2 += dY;
+                }
+            } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(child.type)) {
+                if (dX !== 0) {
+                    child.x1 += +dX;
+                }
+                if (dY !== 0) {
+                    child.y1 += dY;
                 }
             }
+            if ([Type.AREA, Type.STVORKA].includes(child.type)) {
+                UGeo.moveGson(child, dx, dy, scale);
+            }
         }
-    };
+    }
+};
 
 //Перемещение точек на канве (изменение размера окна)
 UGeo.movePoint = (el, x, y) => {
-        x = Math.round(x);
-        y = Math.round(y);
-        if (x > 0 || y > 0) {
-            if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
-                if (el.passMask[0] === 0) {
-                    el.y1 = y;
-                } else if (el.passMask[0] === 1) {
-                    el.y2 = y;
-                }
-            } else if ([Layout.RIG].includes(el.layout)) {
-                if (el.passMask[0] === 0) {
-                    el.x1 = x;
-                } else if (el.passMask[0] === 1) {
-                    el.x2 = x;
-                }
-            } else if ([Layout.TOP].includes(el.layout)) {
-                if (el.passMask[0] === 0) {
-                    el.y1 = y;
-                } else if (el.passMask[0] === 1) {
-                    el.y2 = y;
-                }
-            } else if ([Layout.LEF, Layout.VER].includes(el.layout)) {
-                if (el.passMask[0] === 0) {
-                    el.x1 = x;
-                } else if (el.passMask[0] === 1) {
-                    el.x2 = x;
-                }
+    x = Math.round(x);
+    y = Math.round(y);
+    if (x > 0 || y > 0) {
+        if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
+            if (el.passMask[0] === 0) {
+                el.y1 = y;
+            } else if (el.passMask[0] === 1) {
+                el.y2 = y;
             }
-        }       
-    }    
+        } else if ([Layout.RIG].includes(el.layout)) {
+            if (el.passMask[0] === 0) {
+                el.x1 = x;
+            } else if (el.passMask[0] === 1) {
+                el.x2 = x;
+            }
+        } else if ([Layout.TOP].includes(el.layout)) {
+            if (el.passMask[0] === 0) {
+                el.y1 = y;
+            } else if (el.passMask[0] === 1) {
+                el.y2 = y;
+            }
+        } else if ([Layout.LEF, Layout.VER].includes(el.layout)) {
+            if (el.passMask[0] === 0) {
+                el.x1 = x;
+            } else if (el.passMask[0] === 1) {
+                el.x2 = x;
+            }
+        }
+    }
+}
 
 UGeo.PRINT = (geom) => {
     let writer = new WKTWriter();
-    console.log(writer.write(geom));    
+    console.log(writer.write(geom));
 }
