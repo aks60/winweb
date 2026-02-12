@@ -9,6 +9,8 @@ import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineS
 import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js';
 import Centroid from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Centroid.js';
 
+import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
+
 export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
@@ -46,26 +48,32 @@ export class AreaStvorka extends AreaSimple {
             //Полигон створки с учётом нахлёста 
             let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+//            {
+//                if(stvShell.getCoordinates().length < 5) {
+//                    debugger;
+//                    let stv = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0);
+//                    
+//                }
+//                let o2 = new WKTReader().read('POLYGON Z ((0 0 1, 0 1400 2, 650 1134 7, 650 0 4, 0 0 1))');
+//                let o3 = UGeo.bufferGeometry(o2, this.winc.listElem, -28, 0);
+//                UGeo.PRINT(o3, 'TEST-');
+//            }
             let coo = stvShell.getGeometryN(0).getCoordinates();
-            let count = this.frames.length;
-            //if(coo.length < 5)  debugger;
-            //console.log(coo.length);
+            let numb = this.frames.length;
 
+            //console.log(this.winc.listElem.length + ' ' + dh);
+            //UGeo.PRINT(frameBox, 'Box-' + frameBox.getCoordinates().length + '-');
+            //UGeo.PRINT(stvShell, 'Stv-' + coo.length + '-');
+            
             for (let i = 0; i < coo.length - 1; i++) {
 
                 //Координаты рам створок
                 let ID = this.gson.id + (0.1 + i / 10);
-                if (count > 0) {                   
-                        let sideStv = this.frames.find(el => el.id === ID);
-                     try {    
+                if (numb > 0) {                   
+                        let sideStv = this.frames.find(el => el.id === ID); 
                         sideStv.x1 = coo[i].x;
                         sideStv.y1 = coo[i].y;
-                        coo[i].z = sideStv.id;
-                        UGeo.PRINT(stvShell);  
-                    } catch (e) {
-                        debugger;
-                    }
-
+                        coo[i].z = sideStv.id; 
                 } else {
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson

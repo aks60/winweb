@@ -20,6 +20,15 @@ UGeo.segRighShell = new LineSegment(), UGeo.segRighInner = null;
 UGeo.segLeftShell = new LineSegment(), UGeo.segLeftInner = null;
 UGeo.cross = new Coordinate();
 
+
+UGeo.PRINT = (geom, pref) => {
+    let writer = new WKTWriter();
+    if (pref === undefined)
+        console.log(writer.write(geom));
+    else
+        console.log(pref + writer.write(geom));
+};
+
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
@@ -100,11 +109,11 @@ UGeo.splitPolygon = (geom, segm) => {
         } else {
             cooR.push(cooR[0]);
         }
-        if(cooL.length < 4 || cooR.length < 4) {
-            debugger;
+        if (cooL.length < 4 || cooR.length < 4) {
+            //debugger;
         }
-        UGeo.PRINT(Polygon.new(cooL));
-        UGeo.PRINT(Polygon.new(cooR));
+        //UGeo.PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
+        //UGeo.PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
@@ -180,6 +189,34 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
     }
 };
 
+UGeo.bufferPolygon2 = (geoShell, hmDist) => {
+    try {
+        let listBuffer = new Array();
+        let coo = geoShell.getCoordinates();
+        for (let i = 1; i < coo.length - 1; i++) {
+
+            //Перебор левого и правого сегмента от точки пересечения 
+            const ID1 = coo[i-1].z;
+            UGeo.segRighShell.setCoordinates(new Coordinate(coo[i-1]), new Coordinate(coo[i]));
+            UGeo.segRighInner = UGeo.offsetSegm(UGeo.segRighShell, -hmDist.get(ID1));
+            const ID2 = coo[i].z;
+            UGeo.segLeftShell.setCoordinates(new Coordinate(coo[i]), new Coordinate(coo[i + 1]));
+            UGeo.segLeftInner = UGeo.offsetSegm(UGeo.segLeftShell, -hmDist.get(ID2));
+            //Точка пересечения сегментов
+            let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+            //let cross = CGAlgorithmsDD.intersection(UGeo.segLeftInner.p0, UGeo.segLeftInner.p1, UGeo.segRighInner.p0, UGeo.segRighInner.p1);
+            if (cross !== null) {
+                cross.z = coo[i].z;
+                let p = new Coordinate(cross.x, cross.y, cross.z);
+                listBuffer.push(p);
+            }
+        }
+        listBuffer.push(listBuffer[0]);
+        return  Com5t.gf.createPolygon(listBuffer);
+    } catch (e) {
+        errorLog("Error: UGeo.bufferPolygon() " + e.message);
+    }
+};
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
         let listBuffer = new Array();
@@ -197,6 +234,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             UGeo.segLeftInner = UGeo.offsetSegm(UGeo.segLeftShell, -hmDist.get(id2));
             //Точка пересечения сегментов
             let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+            //let cross = CGAlgorithmsDD.intersection(UGeo.segLeftInner.p0, UGeo.segLeftInner.p1, UGeo.segRighInner.p0, UGeo.segRighInner.p1);
             if (cross !== null) {
                 cross.z = listShell[i].z;
                 let p = new Coordinate(cross.x, cross.y, cross.z);
@@ -366,9 +404,4 @@ UGeo.movePoint = (el, x, y) => {
             }
         }
     }
-}
-
-UGeo.PRINT = (geom) => {
-    let writer = new WKTWriter();
-    console.log(writer.write(geom));
-}
+};
