@@ -23,7 +23,7 @@ import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.j
 //import GeoJSONReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/GeoJSONReader.js';
 //import GeoJSONWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/GeoJSONWriter.js';
 //import Intersection from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js';
-//import PointLocator from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js';
+import Orientation from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
 
 export function localizeFactory() {
 
@@ -119,17 +119,11 @@ export function Test1() {
 //        UGeo.PRINT(o3[1]);
         debugger;
         let test = Coordinate.new(650, 1400);
-        let cross = jsts.algorithm.Intersection.intersection(Coordinate.new(650, 1400),
-                Coordinate.new(650, 0), Coordinate.new(0, 1000), Coordinate.new(1300, 1000));
+        //let cross = jsts.algorithm.Intersection.intersection(Coordinate.new(650, 1400),
+                //Coordinate.new(650, 0), Coordinate.new(0, 100), Coordinate.new(1300, 100));
         
-        var reader = new jsts.io.WKTReader();
-        var a = reader.read('POINT (-20 0)');
-        var b = reader.read('POINT (20 0)');
-        var intersection = a.intersection(b);
-        var difference = a.difference(b);
-        var union = a.union(b);
-        let x = 0;
-
+       let m = Orientation.index(Coordinate.new(650, 1400), Coordinate.new(650, 0),  Coordinate.new(0, 100));
+       let h = 0;
     } catch (e) {
         errorLog('Error: Test1()  ' + e.message);
     }
