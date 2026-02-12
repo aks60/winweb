@@ -18,7 +18,7 @@
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.min.js"></script>
-        <!--<script type="text/javascript" src="lib-js/jsts-2.12.1/jsts-min.js"></script>-->
+        <script type="text/javascript" src="lib-js/jsts-2.11.2/jsts-min.js"></script>
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
@@ -76,7 +76,7 @@
         <script type="module">
             import {localizeFactory, Test1} from './frame/main.js';
             localizeFactory();
-            //Test1();
+            Test1();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
@@ -94,7 +94,7 @@
                             eSyssize.list = p[18];
 
                     login.init_login();
-                    login.user_connect();
+                    //login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

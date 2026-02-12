@@ -110,13 +110,25 @@ export function localizeFactory() {
 export function Test1() {
     try {
         //debugger;
-        var reader = new WKTReader();
-        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
-        //let o1 = reader.read('LINESTRING Z (650 0 7, 650 1400 7)');
-        let o2 = reader.read('POLYGON Z ((0 0 1, 0 1400 2, 1302 1195 3, 1300 0 4, 0 0 1))');
-        let o3 = UGeo.splitPolygon(o2, o1);
-        UGeo.PRINT(o3[0]);
-        UGeo.PRINT(o3[1]);
+//        var reader = new WKTReader();
+//        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
+//        //let o1 = reader.read('LINESTRING Z (650 0 7, 650 1400 7)');
+//        let o2 = reader.read('POLYGON Z ((0 0 1, 0 1400 2, 1302 1195 3, 1300 0 4, 0 0 1))');
+//        let o3 = UGeo.splitPolygon(o2, o1);
+//        UGeo.PRINT(o3[0]);
+//        UGeo.PRINT(o3[1]);
+        debugger;
+        let test = Coordinate.new(650, 1400);
+        let cross = jsts.algorithm.Intersection.intersection(Coordinate.new(650, 1400),
+                Coordinate.new(650, 0), Coordinate.new(0, 1000), Coordinate.new(1300, 1000));
+        
+        var reader = new jsts.io.WKTReader();
+        var a = reader.read('POINT (-20 0)');
+        var b = reader.read('POINT (20 0)');
+        var intersection = a.intersection(b);
+        var difference = a.difference(b);
+        var union = a.union(b);
+        let x = 0;
 
     } catch (e) {
         errorLog('Error: Test1()  ' + e.message);

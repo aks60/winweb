@@ -70,6 +70,9 @@ UGeo.splitPolygon = (geom, segm) => {
             let crosP = CGAlgorithmsDD.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
             hsCheck.add(coo[i]);
             if (crosP !== null) {
+                if (crosP.y < 0) {
+                    debugger;
+                }
                 crosTwo.push(crosP); //вставим точку в сегмент
                 if (hsCheck.add(crosP)) {
                     listExt.push(crosP);
@@ -112,8 +115,8 @@ UGeo.splitPolygon = (geom, segm) => {
         if (cooL.length < 4 || cooR.length < 4) {
             //debugger;
         }
-        //UGeo.PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
-        //UGeo.PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
+        UGeo.PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
+        UGeo.PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
@@ -196,8 +199,8 @@ UGeo.bufferPolygon2 = (geoShell, hmDist) => {
         for (let i = 1; i < coo.length - 1; i++) {
 
             //Перебор левого и правого сегмента от точки пересечения 
-            const ID1 = coo[i-1].z;
-            UGeo.segRighShell.setCoordinates(new Coordinate(coo[i-1]), new Coordinate(coo[i]));
+            const ID1 = coo[i - 1].z;
+            UGeo.segRighShell.setCoordinates(new Coordinate(coo[i - 1]), new Coordinate(coo[i]));
             UGeo.segRighInner = UGeo.offsetSegm(UGeo.segRighShell, -hmDist.get(ID1));
             const ID2 = coo[i].z;
             UGeo.segLeftShell.setCoordinates(new Coordinate(coo[i]), new Coordinate(coo[i + 1]));
@@ -233,8 +236,8 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             UGeo.segLeftShell.setCoordinates(new Coordinate(listShell[i]), new Coordinate(listShell[k]));
             UGeo.segLeftInner = UGeo.offsetSegm(UGeo.segLeftShell, -hmDist.get(id2));
             //Точка пересечения сегментов
-            let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
-            //let cross = CGAlgorithmsDD.intersection(UGeo.segLeftInner.p0, UGeo.segLeftInner.p1, UGeo.segRighInner.p0, UGeo.segRighInner.p1);
+            //let cross = UGeo.segLeftInner.intersection(UGeo.segRighInner);
+            let cross = CGAlgorithmsDD.intersection(UGeo.segLeftInner.p0, UGeo.segLeftInner.p1, UGeo.segRighInner.p0, UGeo.segRighInner.p1);
             if (cross !== null) {
                 cross.z = listShell[i].z;
                 let p = new Coordinate(cross.x, cross.y, cross.z);
