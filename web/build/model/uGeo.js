@@ -49,16 +49,6 @@ UGeo.splitPolygon = (geom, segm) => {
 
     var b = true, hsCheck = new Set();
     let coo = geom.getGeometryN(0).copy().getCoordinates();
-
-//    segm.p0.x = Math.round(segm.p0.x);
-//    segm.p0.y = Math.round(segm.p0.y);
-//    segm.p1.x = Math.round(segm.p1.x);
-//    segm.p1.y = Math.round(segm.p1.y);
-//    for (var c of coo) {
-//        c.x = Math.round(c.x);
-//        c.y = Math.round(c.y);
-//    }
-
     let cooL = [], cooR = [];
     let crosTwo = [], listExt = [coo[0]];
     try {
@@ -71,8 +61,7 @@ UGeo.splitPolygon = (geom, segm) => {
             let crosP = CGAlgorithmsDD.intersection(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]); //точка пересечения двух линии 
             hsCheck.add(coo[i]);
             if (crosP !== null) {
-                //Вставим точку в сегмент
-                crosTwo.push(crosP);
+                crosTwo.push(crosP); //вставим точку в сегмент
                 if (hsCheck.add(crosP)) {
                     listExt.push(crosP);
                 }
@@ -111,8 +100,11 @@ UGeo.splitPolygon = (geom, segm) => {
         } else {
             cooR.push(cooR[0]);
         }
-        UGeo.PRINT(Polygon.new(cooL))
-        UGeo.PRINT(Polygon.new(cooR))
+        if(cooL.length < 4 || cooR.length < 4) {
+            debugger;
+        }
+        UGeo.PRINT(Polygon.new(cooL));
+        UGeo.PRINT(Polygon.new(cooR));
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {

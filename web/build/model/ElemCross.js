@@ -60,11 +60,7 @@ export class ElemCross extends ElemSimple {
             const geoFalz = this.owner.area.getGeometryN(2);
 
             //Пилим полигон импостом     
-            let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));
-            
-            //UGeo.PRINT(geoShell.copy()); 
-            //UGeo.PRINT(LineString.new([[this.x1, this.y1, this.id], [this.x2, this.y2, this.id]])); 
-            
+            let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));            
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];

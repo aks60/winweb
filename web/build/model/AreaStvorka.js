@@ -48,15 +48,24 @@ export class AreaStvorka extends AreaSimple {
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             let coo = stvShell.getGeometryN(0).getCoordinates();
             let count = this.frames.length;
+            //if(coo.length < 5)  debugger;
+            //console.log(coo.length);
+
             for (let i = 0; i < coo.length - 1; i++) {
 
                 //Координаты рам створок
                 let ID = this.gson.id + (0.1 + i / 10);
-                if (count > 0) {
-                    let sideStv = this.frames.find(el => el.id === ID);
-                    sideStv.x1 = coo[i].x;
-                    sideStv.y1 = coo[i].y;
-                    coo[i].z = sideStv.id;
+                if (count > 0) {                   
+                        let sideStv = this.frames.find(el => el.id === ID);
+                     try {    
+                        sideStv.x1 = coo[i].x;
+                        sideStv.y1 = coo[i].y;
+                        coo[i].z = sideStv.id;
+                        UGeo.PRINT(stvShell);  
+                    } catch (e) {
+                        debugger;
+                    }
+
                 } else {
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
