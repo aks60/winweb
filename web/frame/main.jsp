@@ -94,7 +94,7 @@
                             eSyssize.list = p[18];
 
                     login.init_login();
-                    login.user_connect();
+                    //login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

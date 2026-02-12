@@ -10,6 +10,8 @@ import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Line
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js'
 import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js'
+import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
+import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 
 
 export let UGeo = {};
@@ -46,6 +48,16 @@ UGeo.splitPolygon = (geom, segm) => {
     
     var b = true, hsCheck = new Set();
     let coo = geom.getGeometryN(0).copy().getCoordinates();
+    
+    segm.p0.x = Math.round(segm.p0.x);
+    segm.p0.y = Math.round(segm.p0.y);
+    segm.p1.x = Math.round(segm.p1.x);
+    segm.p1.y = Math.round(segm.p1.y);
+    for (var c of coo) {
+        c.x = Math.round(c.x);
+        c.y = Math.round(c.y);
+    }
+    
     let cooL = [], cooR = [];
     let crosTwo = [], listExt = [coo[0]];
     try {
@@ -95,7 +107,7 @@ UGeo.splitPolygon = (geom, segm) => {
                 ((b === true) ? cooL : cooR).push(co);
             }
         }
-debugger;
+
         //Построение 'пятой' точки
         if (segmImp.p0.y !== segmImp.p1.y) {
             UGeo.rotate(cooR);
@@ -335,7 +347,8 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
 
 //Перемещение точек на канве (изменение размера окна)
 UGeo.movePoint = (el, x, y) => {
-
+        x = Math.round(x);
+        y = Math.round(y);
         if (x > 0 || y > 0) {
             if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
                 if (el.passMask[0] === 0) {
@@ -364,3 +377,8 @@ UGeo.movePoint = (el, x, y) => {
             }
         }       
     }    
+
+UGeo.PRINT = (geom) => {
+    let writer = new WKTWriter();
+    console.log(writer.write(geom));    
+}

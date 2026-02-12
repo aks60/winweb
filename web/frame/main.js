@@ -109,15 +109,17 @@ export function localizeFactory() {
 
 export function Test1() {
     try {
-        let reader = new WKTReader();
-        let writer = new WKTWriter();
+        debugger;
+        var reader = new WKTReader();
         let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
-        let o2 = Polygon.new([[0, 0, 1], [0, 1400, 2], [1300, 1360.6060606060603, 3], [1300, 0, 4], [0, 0, 1]]);
+        //let o1 = reader.read('LINESTRING Z (650 0 7, 650 1400 7)');
+        let o2 = reader.read('POLYGON Z ((0 0 1, 0 1400 2, 1302 1195 3, 1300 0 4, 0 0 1))');
         let o3 = UGeo.splitPolygon(o2, o1);
-        console.log(writer.write(o3[0]));
+        UGeo.PRINT(o3[0]);
+        UGeo.PRINT(o3[1]);
 
     } catch (e) {
-        alert(`Ошибка: Test1()  ` + e.message);
+        errorLog('Error: Test1()  ' + e.message);
     }
 }
 
