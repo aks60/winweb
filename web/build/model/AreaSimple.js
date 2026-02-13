@@ -5,6 +5,7 @@ import {UGeo} from './uGeo.js';
 import {PKjson} from '/winweb/enums/PKjson.js';
 import {Type} from '../../enums/enums.js';
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
+import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 
 export class AreaSimple extends Com5t {
 
@@ -57,7 +58,7 @@ export class AreaSimple extends Com5t {
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
 
-                    //Точки движения
+                    //Точки движения сегментов
                     for (let el of this.frames) {
                         if (el.passMask[1] > 0) {
                             
@@ -86,7 +87,7 @@ export class AreaSimple extends Com5t {
                                     this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
 
                                 } else {
-                                    let smid = new LineSegment(el.x1, el.y1, el.x2, el.y2).midPoint();
+                                    let smid = LineSegment.new([el.x1, el.y1], [el.x2, el.y2]).midPoint();
                                     this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
                                 }
                             }
