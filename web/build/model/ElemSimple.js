@@ -10,7 +10,6 @@ export class ElemSimple extends Com5t {
     betweenHoriz = [0, 0]; //угол между векторами   
     pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина, [1] > 0 -вешаем обр. прорисовки кружка и разреш. редактиров. x,y
-    SIZE = 20;
     timerID = 0; //таймер
 
     constructor(winc, gson, owner) {
