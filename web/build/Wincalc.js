@@ -263,6 +263,9 @@ export class Wincalc {
             //Размерные линии
             if (this.scale > .1) {
                 this.root.paint();
+//                for(let frm of this.root.frames) {
+//                    frm.paint();
+//                }
             }
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);

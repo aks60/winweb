@@ -10,7 +10,6 @@ export class AreaSimple extends Com5t {
 
     frames = new Array(); //список рам 
     childs = new Array(); //дети
-    listenerPassEdit = null; //для прорисовки точек движения сегментов
 
     constructor(winc, gson, owner) {
         try {
@@ -51,14 +50,50 @@ export class AreaSimple extends Com5t {
         }
     }
 
+    //Прорисовка размерных линий и точек изменения размера
     paint() {
         try {
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
-                    if (this.listenerPassEdit !== null) {
-                        this.listenerPassEdit();
+
+                    //Точки движения
+                    for (let el of this.frames) {
+                        if (el.passMask[1] > 0) {
+                            
+                            this.winc.ctx.strokeStyle = '#f00';
+                            this.winc.ctx.fillStyle = '#f00';
+                            this.winc.ctx.beginPath();
+
+                            //Хвост вектора, точка круг
+                            if (el.passMask[0] === 0) {
+                                this.winc.ctx.arc(el.x1 - el.SIZE / 2, el.y1 - el.SIZE / 2, el.SIZE, 0, 2 * Math.PI);
+                                this.winc.ctx.fill();
+
+                                //Начало вектора. точка круг
+                            } else if (el.passMask[0] === 1) {
+                                this.winc.ctx.arc(el.x2 - el.SIZE / 2, el.y2 - el.SIZE / 2, el.SIZE, 0, 2 * Math.PI);
+                                this.winc.ctx.fill();
+
+                                //Середина вектора. точка квадрат
+                            } else if (el.passMask[0] === 2) {
+                                if (el.h !== undefined) { //арка
+                                    let list = el.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z == el.id);
+                                    let i = list.length / 2; //index середины дуги
+                                    let c1 = list[i], c2 = list[i + 1];
+                                    let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();
+                                    this.winc.ctx.fillRect(smid.x - el.SIZE / 2, smid.y - el.SIZE / 2, el.SIZE, el.SIZE);
+
+                                } else {
+                                    let smid = new LineSegment(el.x1, el.y1, el.x2, el.y2).midPoint();
+                                    this.winc.ctx.fillRect(smid.x - el.SIZE / 2, smid.y - el.SIZE / 2, el.SIZE, el.SIZE);
+                                }
+                            }
+                            this.winc.ctx.closePath();
+                        }
                     }
+                    
+                    //Размерные линии
                     this.winc.ctx.strokeStyle = '#000000';
                     let frameEnvelope = this.winc.root.area.getGeometryN(0).getEnvelopeInternal();
                     let hsHor = new Set(), hsVer = new Set();

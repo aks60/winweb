@@ -108,7 +108,6 @@ export class ElemSimple extends Com5t {
                             }
                         } else { //Промах, всё обнуляю
                             this.passMask = [0, 0];
-                            this.root.listenerPassEdit = null;
                         }
                         this.winc.cnv.focus();
                         this.winc.cnv.width = this.winc.cnv.offsetWidth;
@@ -200,43 +199,6 @@ export class ElemSimple extends Com5t {
     }
 
     paint() {
-        if (this.winc.sceleton === false) {
-            if (this.area !== null) {
-                if (this.passMask[1] > 0) {
-                    this.root.listenerPassEdit = () => {  //вешаем глобальный обработчик!
-                        this.winc.ctx.strokeStyle = '#f00';
-                        this.winc.ctx.fillStyle = '#f00';
-                        this.winc.ctx.beginPath();
-
-                        //Хвост вектора, точка круг
-                        if (this.passMask[0] === 0) {
-                            this.winc.ctx.arc(this.x1 - this.SIZE / 2, this.y1 - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
-                            this.winc.ctx.fill();
-
-                            //Начало вектора. точка круг
-                        } else if (this.passMask[0] === 1) {
-                            this.winc.ctx.arc(this.x2 - this.SIZE / 2, this.y2 - this.SIZE / 2, this.SIZE, 0, 2 * Math.PI);
-                            this.winc.ctx.fill();
-
-                            //Середина вектора. точка квадрат
-                        } else if (this.passMask[0] === 2) {
-                            if (this.h !== undefined) { //арка
-                                let list = this.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z == this.id);
-                                let i = list.length / 2; //index середины дуги
-                                let c1 = list[i], c2 = list[i + 1];
-                                let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();
-                                this.winc.ctx.fillRect(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
-
-                            } else {
-                                let smid = new LineSegment(this.x1, this.y1, this.x2, this.y2).midPoint();
-                                this.winc.ctx.fillRect(smid.x - this.SIZE / 2, smid.y - this.SIZE / 2, this.SIZE, this.SIZE);
-                            }
-                        }
-                        this.winc.ctx.closePath();
-                    };
-                }
-            }
-        } 
     }
 }
 
