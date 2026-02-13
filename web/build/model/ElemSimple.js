@@ -82,15 +82,15 @@ export class ElemSimple extends Com5t {
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-                        console.log([evt.offsetX/this.winc.scale, evt.offsetY/this.winc.scale]);
                         let scale = this.winc.scale;
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
                         let inside = UGeo.insidePoly(this.area, evt.offsetX / scale, evt.offsetY / scale);
 
                         //Если клик внутри контура
-                        if (inside === true) {
+                        if (inside === true) {                                                       
                             ++this.passMask[1];
+                            
                             let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                             const coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
 
@@ -118,15 +118,14 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mouseup", (evt) => {
-                    console.log([evt.offsetX/this.winc.scale, evt.offsetY/this.winc.scale]);
-                    this.passMask[1] = 0;
-                    
+                    if(this.passMask[1] > 1) {
+                      this.passMask[1] = 1;  
+                    }
                 });
 
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
-
                     //Фильтр движухи откл. когда passMask[1] > 1
-                    if (this.passMask[1] > 0 && this.area !== null) {
+                    if (this.passMask[1] > 1 && this.area !== null) {
 
                         let scale = this.winc.scale;
                         let X = 0, Y = 0;
@@ -145,10 +144,11 @@ export class ElemSimple extends Com5t {
                             UGeo.movePoint(this, X, Y);
 
                         } else if (this.passMask[0] === 2) { //середина вектора
+                            debugger;
                             X = dX / scale + this.x2;
                             Y = dY / scale + this.y2;
                             if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
-                                if (this.h !== null) {
+                                if (this.h !== undefined) {
                                     this.h = (this.h - dY / scale);
                                 } else {
                                     this.y1 = Y;
@@ -156,7 +156,7 @@ export class ElemSimple extends Com5t {
                                 }
                             }
                             if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                if (this.h !== null) {
+                                if (this.h !== undefined) {
                                     this.h = (this.h - dX / scale);
                                 } else {
                                     this.x1 = X;
@@ -236,28 +236,7 @@ export class ElemSimple extends Com5t {
                     };
                 }
             }
-        } else if (this.area !== null) {
-            //Shape shape1 = new ShapeWriter().toShape(this.area.getGeometryN(0));
-            //Shape shape2 = new ShapeWriter().toShape(this.area.getGeometryN(1));
-            //Shape shape3 = new ShapeWriter().toShape(this.area.getGeometryN(2));
-
-            //this.winc.gc2d.setColor(new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb)));
-            //this.winc.gc2d.fill(shape1);
-            //this./winc.gc2d.fill(shape2);
-            //this.winc.gc2d.fill(shape3);
-
-            //this.winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-            //this.winc.gc2d.draw(shape1);
-            //this.winc.gc2d.draw(shape2);
-            //this.winc.gc2d.draw(shape3);            
-        }
-    }
-
-    setDimension(x1, y1, x2, y2) {
-        this.gson.x1 = x1;
-        this.gson.y1 = y1;
-        this.gson.x2 = x2;
-        this.gson.y2 = y2;
+        } 
     }
 }
 

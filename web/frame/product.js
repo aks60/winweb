@@ -16,16 +16,10 @@ export function wincalcNew() {
 
 //Масштабирование
 export function resize() {
-    //let cnv = document.getElementById("cnv");
+    let winc = product.winCalc;
+    let cnv = document.getElementById("cnv");
 
-    //Изменение размера канвы
-    product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
-    product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;
-
-    //Перерисовка конструкции на канве, после изменения размера канвы
-    //product.winCalc.build(product.winCalc.gson);
-    product.winCalc.location();
-    product.winCalc.draw();
+    winc.resize(); //(cnv.offsetWidth, cnv.offsetHeight, winc.gson);
 
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
@@ -485,25 +479,20 @@ export function update_script() {
 }
 
 export function test1() {
-
-    let frm = product.winCalc.root.frames[1];
+    let winc = product.winCalc;
+    let frm = winc.root.frames[1];
     let x = 0;//frm.y1 + 8;
     frm.y2 = frm.y2 - 8;
-    //UGeo.movePoint(frm, frm.x2, frm.y2);
-    product.winCalc.resize();
-
-//     product.winCalc.cnv.width = product.winCalc.cnv.offsetWidth;
-//     product.winCalc.cnv.height = product.winCalc.cnv.offsetHeight;    
-//     product.winCalc.draw();
+    winc.resize();
 }
 
 export function test2() {
     let winc = product.winCalc;
-    //console.log(winc.gson);
     winc.ctx.clearRect(0, 0, winc.cnv.offsetWidth/winc.scale, winc.cnv.offsetHeight/winc.scale);
 }
 
 export function test3() {
-    product.winCalc.resize();
+    let winc = product.winCalc;
+    winc.resize();
 }
 

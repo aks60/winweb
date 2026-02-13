@@ -47,6 +47,14 @@ export class Wincalc {
         return new Wincalc(canvas).build(script);
     }
 
+    //Пересчитать и перерисовать
+    resize() {
+        this.cnv.width = this.cnv.offsetWidth;
+        this.cnv.height = this.cnv.offsetHeight;
+        product.winCalc.location();
+        product.winCalc.draw();
+    }
+
     build(script) {
         try {
             //Инит свойств
@@ -290,14 +298,6 @@ export class Wincalc {
         this.ctx.restore();
     }
 
-    //Пересчитать и перерисовать
-    resize() {
-        this.cnv.width = this.cnv.offsetWidth;
-        this.cnv.height = this.cnv.offsetHeight;
-        product.winCalc.location();
-        product.winCalc.draw();
-    }
-
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     get cnv() {
         return this._cnv;
@@ -315,35 +315,34 @@ export class Wincalc {
         return this.root.area.getGeometryN(0).getEnvelopeInternal().getHeight();
     }
     // </editor-fold>     
-
-    // <editor-fold defaultstate="collapsed" desc="ARCHIVE"> 
-    arr_of_winc(area) {
-        if (area.id == 0) {
-            this.areaList.push(this.root);
-        }
-        if (area.frames !== null) {
-            this.elemList.push(area);
-            for (let frm of area.frames.values())
-                this.elemList.push(frm);
-        }
-        for (let com of area.childs) {
-            if (com instanceof Area) {
-                this.areaList.push(com);
-                this.arr_of_winc(com);
-            } else {
-                this.elemList.push(com);
-            }
-        }
-    }
-
-    //Поднять elem.form до Wincalc.form
-    setform(gson, winc) {
-        gson.childs.forEach(el => {
-            if (el.form != null)
-                winc.form = el.form;
-            if (el.type === "AREA" || el.type === "ARCH" || el.type === "TRAPEZE" || el.type === "TRIANGL" || el.type === "DOOR")
-                winc.setform(el, winc); //рекурсия 
-        });
-    }
-// </editor-fold> 
 }
+// <editor-fold defaultstate="collapsed" desc="XLAM"> 
+//    arr_of_winc(area) {
+//        if (area.id == 0) {
+//            this.areaList.push(this.root);
+//        }
+//        if (area.frames !== null) {
+//            this.elemList.push(area);
+//            for (let frm of area.frames.values())
+//                this.elemList.push(frm);
+//        }
+//        for (let com of area.childs) {
+//            if (com instanceof Area) {
+//                this.areaList.push(com);
+//                this.arr_of_winc(com);
+//            } else {
+//                this.elemList.push(com);
+//            }
+//        }
+//    }
+//
+//    //Поднять elem.form до Wincalc.form
+//    setform(gson, winc) {
+//        gson.childs.forEach(el => {
+//            if (el.form != null)
+//                winc.form = el.form;
+//            if (el.type === "AREA" || el.type === "ARCH" || el.type === "TRAPEZE" || el.type === "TRIANGL" || el.type === "DOOR")
+//                winc.setform(el, winc); //рекурсия 
+//        });
+//    }
+// </editor-fold> 

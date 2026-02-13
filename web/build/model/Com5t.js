@@ -9,10 +9,7 @@ export class Com5t {
 
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
-    static #jsonID = 0;
     static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий    
-    //static gsf = new GeometricShapeFactory(gf);
-    //static aff = new AffineTransformation();    
 
     id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции
@@ -41,7 +38,7 @@ export class Com5t {
             errorLog('Error: Com5t.constructor() ' + e.message);
         }
     }
-    
+
     //Длина компонента
     length() {
         if (this.gson.h !== undefined) {
@@ -51,7 +48,7 @@ export class Com5t {
             console.log('Com5t.length() - функция не реализована');
         }
     }
-    
+
     color() {
         //return (this.timer.timerId !== null) ? [255, 120, 0] : this.color2Rec[eColor.rgb];
     }
@@ -102,13 +99,14 @@ export class Com5t {
     set y2(v) {
         this.gson.y2 = v;
     }
-
-    get jsonID() {
-        let max = 0;
-        for (let e of this.winc.listAll) {
-            max = e.id > max ? e.id : max;
-        }
-        return max;
-    }
-    // </editor-fold>  
+    // </editor-fold>   
 }
+// <editor-fold defaultstate="collapsed" desc="XLAM"> 
+//    get jsonIdMax() {
+//        let max = 0;
+//        for (let e of this.winc.listAll) {
+//            max = e.id > max ? e.id : max;
+//        }
+//        return max;
+//    }
+// </editor-fold> 

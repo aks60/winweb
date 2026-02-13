@@ -106,8 +106,8 @@ UGeo.splitPolygon = (geom, segm) => {
         if (cooL.length < 4 || cooR.length < 4) {
             //debugger;
         }
-        PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
-        PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
+        //PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
+        //PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
