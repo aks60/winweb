@@ -223,14 +223,6 @@ export class Wincalc {
         }
     }
 
-//Пересчитать и перерисовать
-    resize() {
-        this.cnv.width = this.cnv.offsetWidth;
-        this.cnv.height = this.cnv.offsetHeight;
-        product.winCalc.location();
-        product.winCalc.draw();
-    }
-
     //Рисуем конструкцию
     draw() {
         try {
@@ -299,6 +291,14 @@ export class Wincalc {
         this.ctx.restore();
     }
 
+    //Пересчитать и перерисовать
+    resize() {
+        this.cnv.width = this.cnv.offsetWidth;
+        this.cnv.height = this.cnv.offsetHeight;
+        product.winCalc.location();
+        product.winCalc.draw();
+    }
+
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     get cnv() {
         return this._cnv;
@@ -317,7 +317,7 @@ export class Wincalc {
     }
     // </editor-fold>     
 
-    // <editor-fold defaultstate="collapsed" desc="SUPPORT"> 
+    // <editor-fold defaultstate="collapsed" desc="ARCHIVE"> 
     arr_of_winc(area) {
         if (area.id == 0) {
             this.areaList.push(this.root);

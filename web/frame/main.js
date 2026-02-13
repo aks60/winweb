@@ -14,8 +14,8 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 //import {UGeo} from '../build/model/uGeo.js';
-import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
-import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
+//import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
+//import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import UnaryUnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnaryUnionOp.js'
 //import Geometry from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Geometry.js';
@@ -23,7 +23,7 @@ import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.j
 //import GeoJSONReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/GeoJSONReader.js';
 //import GeoJSONWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/GeoJSONWriter.js';
 //import Intersection from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js';
-import Orientation from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
+//import Orientation from '../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
 
 export function localizeFactory() {
 
@@ -108,7 +108,7 @@ export function localizeFactory() {
 }
 
 export function Test1() {
-    try {
+//    try {
         //debugger;
 //        var reader = new WKTReader();
 //        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
@@ -117,16 +117,9 @@ export function Test1() {
 //        let o3 = UGeo.splitPolygon(o2, o1);
 //        UGeo.PRINT(o3[0]);
 //        UGeo.PRINT(o3[1]);
-        debugger;
-        let test = Coordinate.new(650, 1400);
-        //let cross = jsts.algorithm.Intersection.intersection(Coordinate.new(650, 1400),
-                //Coordinate.new(650, 0), Coordinate.new(0, 100), Coordinate.new(1300, 100));
-        
-       let m = Orientation.index(Coordinate.new(650, 1400), Coordinate.new(650, 0),  Coordinate.new(0, 100));
-       let h = 0;
-    } catch (e) {
-        errorLog('Error: Test1()  ' + e.message);
-    }
+//    } catch (e) {
+//        errorLog('Error: Test1()  ' + e.message);
+//    }
 }
 
 export function Test2() {
