@@ -81,15 +81,18 @@ export class ElemSimple extends Com5t {
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
+                        
                         let scale = this.winc.scale;
-                        this.pointPress = [evt.offsetX, evt.offsetY];
-                        let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
-                        let inside = UGeo.insidePoly(this.area, evt.offsetX / scale, evt.offsetY / scale);
+                        let X = (evt.offsetX - Com5t.TRANS) / scale;
+                        let Y = (evt.offsetY - Com5t.TRANS) / scale;
+                        this.pointPress = [X, Y];
+                        let wincPress = Coordinate.new(X, Y);
+                        let inside = UGeo.insidePoly(this.area, X, Y);
 
                         //Если клик внутри контура
-                        if (inside === true) {                                                       
+                        if (inside === true) {
                             ++this.passMask[1];
-                            
+
                             let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                             const coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
 
@@ -116,8 +119,8 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mouseup", (evt) => {
-                    if(this.passMask[1] > 1) {
-                      this.passMask[1] = 1;  
+                    if (this.passMask[1] > 1) {
+                        this.passMask[1] = 1;
                     }
                 });
 

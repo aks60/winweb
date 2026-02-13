@@ -62,7 +62,7 @@ export class AreaSimple extends Com5t {
                     for (let el of this.frames) {
                         if (el.passMask[1] > 0) {
                             
-                            let SIZE = 20;
+                            let SIZE = 10;
                             this.winc.ctx.strokeStyle = '#f00';
                             this.winc.ctx.fillStyle = '#f00';
                             this.winc.ctx.beginPath();
@@ -80,7 +80,7 @@ export class AreaSimple extends Com5t {
                                 //Середина вектора. точка квадрат
                             } else if (el.passMask[0] === 2) {
                                 if (el.h !== undefined) { //арка
-                                    let list = el.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z == el.id);
+                                    let list = el.owner.area.getGeometryN(0).getCoordinates().filter(c => c.z === el.id);
                                     let i = list.length / 2; //index середины дуги
                                     let c1 = list[i], c2 = list[i + 1];
                                     let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();

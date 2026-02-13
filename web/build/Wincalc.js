@@ -24,8 +24,7 @@ export class Wincalc {
     syssizRec; //системные константы
     colorID1; //цвет базовый
     colorID2; //цвет внутр.
-    colorID3; //цвет внещний 
-    actionEvent = {};
+    colorID3; //цвет внещний     
     root; //объектная модель конструкции 
     dXY = 40; //коррекция разм. линий
     sceleton = false; //см. paint
@@ -234,6 +233,9 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
+            this.ctx.save();
+            this.ctx.translate(8, 8);
+            
             if (this.cnv.width < 100 && this.cnv.height < 100) {
                 this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
                         ? this.cnv.width / this.width : this.cnv.height / this.height;
@@ -263,10 +265,9 @@ export class Wincalc {
             //Размерные линии
             if (this.scale > .1) {
                 this.root.paint();
-//                for(let frm of this.root.frames) {
-//                    frm.paint();
-//                }
             }
+            this.ctx.restore();
+            
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }
