@@ -82,7 +82,7 @@ export class ElemSimple extends Com5t {
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-
+                        console.log([evt.offsetX/this.winc.scale, evt.offsetY/this.winc.scale]);
                         let scale = this.winc.scale;
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let wincPress = Coordinate.new(evt.offsetX / scale, evt.offsetY / scale);
@@ -118,6 +118,7 @@ export class ElemSimple extends Com5t {
                 });
 
                 this.winc.cnv.addEventListener("mouseup", (evt) => {
+                    console.log([evt.offsetX/this.winc.scale, evt.offsetY/this.winc.scale]);
                     this.passMask[1] = 0;
                     
                 });
