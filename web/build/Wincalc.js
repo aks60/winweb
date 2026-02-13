@@ -348,6 +348,3 @@ export class Wincalc {
     }
 // </editor-fold> 
 }
-
-
-

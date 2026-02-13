@@ -19,14 +19,6 @@ import Distance from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Di
 
 export let UGeo = {};
 
-UGeo.PRINT = (geom, prefix) => {
-    let writer = new WKTWriter();
-    if (prefix === undefined)
-        console.log(writer.write(geom));
-    else
-        console.log(prefix + writer.write(geom));
-};
-
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
     let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
@@ -114,8 +106,8 @@ UGeo.splitPolygon = (geom, segm) => {
         if (cooL.length < 4 || cooR.length < 4) {
             //debugger;
         }
-        //UGeo.PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
-        //UGeo.PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
+        PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
+        PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {

@@ -119,6 +119,7 @@ export class ElemSimple extends Com5t {
 
                 this.winc.cnv.addEventListener("mouseup", (evt) => {
                     this.passMask[1] = 0;
+                    
                 });
 
                 this.winc.cnv.addEventListener("mousemove", (evt) => {

@@ -48,13 +48,11 @@
         <script type="module" src="./domain/eSysuser.js"></script>        
 
         <script type="text/javascript">
-
             //Поля таблиц
             var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser;
-            var eElement;
-
+            var eElement, PRINT;
             //Глобальные объекты
             var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {},
                     order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null},
@@ -74,7 +72,8 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, Test1} from './frame/main.js';
+            import {localizeFactory, println, Test1} from './frame/main.js';
+            PRINT = println;
             localizeFactory();
             //Test1();
 

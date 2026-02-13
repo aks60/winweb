@@ -13,9 +13,9 @@ import LineSegment from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSeg
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
-//import {UGeo} from '../build/model/uGeo.js';
+import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
+
 //import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
-//import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import UnaryUnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnaryUnionOp.js'
 //import Geometry from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Geometry.js';
@@ -107,16 +107,25 @@ export function localizeFactory() {
     };
 }
 
+export function println(geom, prefix) {
+    let writer = new WKTWriter();
+    
+    if (prefix === undefined)
+        console.log(writer.write(geom));
+    else
+        console.log(prefix + writer.write(geom));
+}
+
 export function Test1() {
 //    try {
-        //debugger;
+    //debugger;
 //        var reader = new WKTReader();
 //        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
 //        //let o1 = reader.read('LINESTRING Z (650 0 7, 650 1400 7)');
 //        let o2 = reader.read('POLYGON Z ((0 0 1, 0 1400 2, 1302 1195 3, 1300 0 4, 0 0 1))');
 //        let o3 = UGeo.splitPolygon(o2, o1);
-//        UGeo.PRINT(o3[0]);
-//        UGeo.PRINT(o3[1]);
+//        PRINT(o3[0]);
+//        PRINT(o3[1]);
 //    } catch (e) {
 //        errorLog('Error: Test1()  ' + e.message);
 //    }
