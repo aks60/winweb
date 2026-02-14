@@ -25,7 +25,7 @@ export class ElemSimple extends Com5t {
                 this.winc.cnv.addEventListener("keydown", (evt) => {
                     
                     if (this.area !== null && this.passMask[1] > 0) {
-debugger;
+
                         let scale = this.winc.scale;
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                         let key = evt.key;

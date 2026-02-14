@@ -1,4 +1,4 @@
-let P604005 = {
+export let P604005 = {
   "version": "2.0",
   "prj": 604005,
   "pid": 427833,

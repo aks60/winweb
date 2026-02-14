@@ -3,7 +3,7 @@ import {UGeo} from './model/uGeo.js';
 import {UCom} from '../common/uCom.js';
 import {Type, PKjson} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
-import {AreaSimple, AreaArch, AreaDoor, AreaRectangl,
+import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, AreaTrapeze,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';

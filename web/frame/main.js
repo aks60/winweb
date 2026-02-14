@@ -118,7 +118,6 @@ export function println(geom, prefix) {
 
 export function Test1() {
 //    try {
-    //debugger;
 //        var reader = new WKTReader();
 //        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
 //        //let o1 = reader.read('LINESTRING Z (650 0 7, 650 1400 7)');

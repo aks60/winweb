@@ -246,10 +246,10 @@ UGeo.updateZet = (arc, rec) => {
     let cooRec = rec.getCoordinates();
 
     for (let i = 0; i < cooArc.length - 1; i++) {
-        if (cooArc[i].z % 1 != 0) {
+        if (cooArc[i].z % 1 !== 0) {
             for (let j = 1; j < cooRec.length; j++) {
 
-                if (PointLocation.isOnSegment(cooArc[i], cooRec[j - 1], cooRec[j])) {
+                if (PointLocation.isOnLine(cooArc[i], [cooRec[j - 1], cooRec[j]])) {
                     if (pass === false) {
 
                         cooArc[i].z = cooRec[j].z;
