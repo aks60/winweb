@@ -57,11 +57,9 @@ export class AreaSimple extends Com5t {
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
-
-                    //Точки движения сегментов
-                    for (let el of this.frames) {
+                    for (let el of this.frames) { //Точки движения сегментов
                         if (el.passMask[1] > 0) {
-                            
+
                             let SIZE = 10;
                             this.winc.ctx.strokeStyle = '#f00';
                             this.winc.ctx.fillStyle = '#f00';
@@ -94,7 +92,7 @@ export class AreaSimple extends Com5t {
                             this.winc.ctx.closePath();
                         }
                     }
-                    
+
                     //Размерные линии
                     this.winc.ctx.strokeStyle = '#000000';
                     let frameEnvelope = this.winc.root.area.getGeometryN(0).getEnvelopeInternal();
@@ -120,7 +118,6 @@ export class AreaSimple extends Com5t {
                                     hsVer.add(c2.y);
                                 }
                             }
-
                         }
                     } else {
                         let geoShell = this.area.getGeometryN(0);
@@ -144,9 +141,9 @@ export class AreaSimple extends Com5t {
                     listHor.sort((a, b) => a - b);
                     listVer.sort((a, b) => a - b);
 
-                    const sizeFont = UCom.scaleFont(this.winc.scale);
-                    this.winc.ctx.font = `bold ${sizeFont}px sans-serif`; //размер шрифта
-                    //let orig = this.winc.ctx.getTransform();
+                    const font = UCom.scaleFont(this.winc.scale);
+                    this.winc.ctx.font = `bold ${font}px sans-serif`; //размер шрифта
+                    let matrix = this.winc.ctx.getTransform();
                     let metricTxt = this.winc.ctx.measureText("999.99");
                     const heightTxt = metricTxt.actualBoundingBoxAscent + metricTxt.actualBoundingBoxDescent;
 
@@ -158,7 +155,7 @@ export class AreaSimple extends Com5t {
                             const txt = dx.toFixed(1); //текст разм.линии
                             let metricNumb = this.winc.ctx.measureText(txt); //логические границы строки
                             let tail = [listHor[i - 1], listHor[i]]; //x1, x2 хвост вращения вектора
-                            let len = Math.ceil((Number(dx) - (metricNumb.width + 10)) / 2); //длина до начала(конца) текста
+                            let len = Math.ceil((Number(dx) - (metricNumb.width + 14)) / 2); //длина до начала(конца) текста
                             let length = Math.round(dx); //длина вектора
 
                             //Размерные линии
@@ -174,11 +171,12 @@ export class AreaSimple extends Com5t {
                             let pxy = [listHor[i - 1] + len + 8, frameEnvelope.getMaxY() + heightTxt + 12];// * .86]; //точка начала текста
                             this.winc.ctx.fillStyle = "#000000";
                             if (length < metricTxt.width) {
-                                pxy[1] = pxy[1] + heightTxt / 2;
+                                pxy[1] = pxy[1] + heightTxt;
                                 this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
                             } else {
                                 this.winc.ctx.fillText(txt, pxy[0], pxy[1]);
                             }
+                            this.winc.ctx.setTransform(matrix);
                         }
                     }
 
@@ -190,7 +188,7 @@ export class AreaSimple extends Com5t {
                             const txt = dy.toFixed(1); //текст разм.линии
                             let metricNumb = this.winc.ctx.measureText(txt); //логические границы строки
                             let tail = [listVer[i - 1], listVer[i]]; //y1, y2 хвост вращения вектора
-                            let len = Math.ceil((Number(dy) - (metricNumb.width - 10)) / 2); //длина до начала(конца) текста
+                            let len = Math.ceil((Number(dy) - (metricNumb.width + 4)) / 2); //длина до начала(конца) текста
                             let length = Math.round(dy); //длина вектора
 
                             //Размерные линии
@@ -202,15 +200,16 @@ export class AreaSimple extends Com5t {
                             this.winc.paint(lineTip2.getGeometryN(1));
 
                             //Текст на линии
-                            let pxy = [frameEnvelope.getMaxX() + heightTxt - 6, listVer[i] - len]; //точка врашения и начала текста                    
+                            let pxy = [frameEnvelope.getMaxX() + heightTxt + 4, listVer[i] - len]; //точка врашения и начала текста                    
                             if (length < (metricNumb.width)) {
-                                this.winc.ctx.fillText(txt, (pxy[0] + 4), pxy[1] - heightTxt / 2);
+                                this.winc.ctx.fillText(txt, (pxy[0] + 4), pxy[1] - heightTxt);
                             } else {
                                 this.winc.ctx.translate(pxy[0], pxy[1]);
                                 this.winc.ctx.rotate(Math.toRadians(-90));
-                                this.winc.ctx.fillText(txt, 0, 20);
+                                this.winc.ctx.fillText(txt, 0, 8);
                             }
                         }
+                        this.winc.ctx.setTransform(matrix);
                     }
                 }
             } else if (this.area !== null) {
