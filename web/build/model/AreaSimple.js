@@ -69,12 +69,12 @@ export class AreaSimple extends Com5t {
 
                             //Хвост вектора, точка круг
                             if (el.passMask[0] === 0) {
-                                this.winc.ctx.arc(el.x1 - SIZE / 2, el.y1 - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                                this.winc.ctx.arc(el.x1, el.y1, SIZE, 0, 2 * Math.PI);
                                 this.winc.ctx.fill();
 
                                 //Начало вектора. точка круг
                             } else if (el.passMask[0] === 1) {
-                                this.winc.ctx.arc(el.x2 - SIZE / 2, el.y2 - SIZE / 2, SIZE, 0, 2 * Math.PI);
+                                this.winc.ctx.arc(el.x2, el.y2, SIZE, 0, 2 * Math.PI);
                                 this.winc.ctx.fill();
 
                                 //Середина вектора. точка квадрат
@@ -88,7 +88,7 @@ export class AreaSimple extends Com5t {
 
                                 } else {
                                     let smid = LineSegment.new([el.x1, el.y1], [el.x2, el.y2]).midPoint();
-                                    this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    this.winc.ctx.fillRect(smid.x - SIZE, smid.y - SIZE, SIZE * 2, SIZE * 2);
                                 }
                             }
                             this.winc.ctx.closePath();

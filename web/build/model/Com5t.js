@@ -7,7 +7,7 @@ import {Type} from '../../enums/enums.js';
 
 export class Com5t {
 
-    static TRANS = 4;
+    static TRANS = 2;
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
     static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий    

@@ -234,7 +234,7 @@ export class Wincalc {
     draw() {
         try {
             this.ctx.save();
-            this.ctx.translate(8, 8);
+            this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
             
             if (this.cnv.width < 100 && this.cnv.height < 100) {
                 this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)

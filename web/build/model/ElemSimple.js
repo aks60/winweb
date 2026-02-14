@@ -85,8 +85,8 @@ export class ElemSimple extends Com5t {
                         let scale = this.winc.scale;
                         let X = (evt.offsetX - Com5t.TRANS) / scale;
                         let Y = (evt.offsetY - Com5t.TRANS) / scale;
-                        this.pointPress = [X, Y];
                         let wincPress = Coordinate.new(X, Y);
+                        this.pointPress = [evt.offsetX, evt.offsetY];
                         let inside = UGeo.insidePoly(this.area, X, Y);
 
                         //Если клик внутри контура
