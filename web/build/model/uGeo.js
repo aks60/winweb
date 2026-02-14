@@ -43,6 +43,42 @@ UGeo.arrCoord = (arr) => {
     return list;
 };
 
+//Арка полигона
+UGeo.polyCurve = (geoShell, geoInner, ID) => {
+
+    let cooShell = geoShell.getCoordinates();
+    let cooInner = geoInner.getCoordinates();
+    let listFrame = new Array();
+
+    for (let j = 0; j < cooShell.length; j++) {
+        if (cooShell[j].z === ID) {
+            listFrame.push(cooShell[j]);
+        }
+    }
+    listFrame.push(cooInner[0]); //посл.точка арки
+    for (let k = cooInner.length - 1; k >= 0; k--) {
+        if (cooInner[k].z == ID) {
+            listFrame.push(cooInner[k]);
+        }
+    }
+
+    listFrame.push(listFrame.get(0));
+    return Com5t.gf.createPolygon(listFrame); //полигон рамы арки
+};
+
+//Длина арки
+UGeo.lengthCurve = (geo, id) => {
+
+    let coo = geo.getCoordinates();
+    let width = 0;
+    for (let j = 1; j < coo.length; j++) {
+        if (coo[j - 1].z == id) {
+            width += coo[j - 1].distance(coo[j]);
+        }
+    }
+    return width;
+};
+
 //Пилим многоугольник
 UGeo.splitPolygon = (geom, segm) => {
 
@@ -61,9 +97,6 @@ UGeo.splitPolygon = (geom, segm) => {
             let crosP = UGeo.intersectionLS(segmImp.p0, segmImp.p1, coo[i - 1], coo[i]) //точка пересечения прямой и отрезка           
             hsCheck.add(coo[i]);
             if (crosP !== null) {
-                if (crosP.y < 0) {
-                    debugger;
-                }
                 crosTwo.push(crosP); //вставим точку в сегмент
                 if (hsCheck.add(crosP)) {
                     listExt.push(crosP);
@@ -102,9 +135,6 @@ UGeo.splitPolygon = (geom, segm) => {
             cooR.push(cooR[0]);
         } else {
             cooR.push(cooR[0]);
-        }
-        if (cooL.length < 4 || cooR.length < 4) {
-            //debugger;
         }
         //PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
         //PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
@@ -152,7 +182,7 @@ UGeo.normalizeSegm = (segm) => {
 };
 
 //Пересечение сегмента(линии) импоста с сегментами(отрезками) многоугольника
-UGeo.geo2Cross = (poly, line) => {
+UGeo.crossGeoOfLine = (poly, line) => {
     try {
         poly = poly.getGeometryN(0);
         let out = new Array();
@@ -173,7 +203,7 @@ UGeo.geo2Cross = (poly, line) => {
         }
         return out;
     } catch (e) {
-        errorLog("Error: UGeo.geoCross()" + e);
+        errorLog("Error: UGeo.crossGeoOfLine()" + e);
     }
 };
 
@@ -208,6 +238,138 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
         errorLog("Error: uGeo.bufferGeometry() " + e);
     }
 };
+
+//При слиянии двух полигонов появляются точки соединения с непонятным Z значением
+UGeo.updateZet = (arc, rec) => {
+    let pass = false;
+    let cooArc = arc.getCoordinates();
+    let cooRec = rec.getCoordinates();
+
+    for (let i = 0; i < cooArc.length - 1; i++) {
+        if (cooArc[i].z % 1 != 0) {
+            for (let j = 1; j < cooRec.length; j++) {
+
+                if (PointLocation.isOnSegment(cooArc[i], cooRec[j - 1], cooRec[j])) {
+                    if (pass === false) {
+
+                        cooArc[i].z = cooRec[j].z;
+                    } else {
+                        cooArc[i].z = cooRec[j - 1].z;
+                    }
+                    pass = true;
+                    break;
+                }
+            }
+        }
+    }
+    cooArc[cooArc.length - 1].z = cooArc[0].z;
+};
+
+UGeo.bufferRectangl = (geoShell, hmDist) => {
+    let segmRighShell = new LineSegment(), segmRighInner = null;
+    let segmLeftShell = new LineSegment(), segmLeftInner = null;
+    let result = Com5t.gf.createPolygon();
+    let set = new Set();
+    let listBuffer = new Array();
+    let listShell = new Array();
+    let cooShell = geoShell.getCoordinates();
+    try {
+        for (let i = 0; i < cooShell.length; i++) {
+            if (set.add(cooShell[i].z)) {
+                listShell.push(cooShell[i]);
+            }
+        }
+        hmDist.set(4.0, 0.0); //такая вот фича!
+
+        for (let i = 0; i < listShell.size(); i++) {
+
+            //Перебор левого и правого сегмента от точки пересечения 
+            let j = (i === 0) ? listShell.size() - 1 : i - 1;
+            let id1 = listShell[j].z;
+            segmRighShell.setCoordinates(listShell[j], listShell[i]);
+            segmRighInner = segmentOffset(segmRighShell, -hmDist[id1]);
+
+            segmRighInner.p0.z = segmRighShell.p0.z;
+            segmRighInner.p1.z = segmRighShell.p1.z;
+
+            let k = (i === listShell.size() - 1) ? 0 : i + 1;
+            let id2 = listShell[i].z;
+            segmLeftShell.setCoordinates(listShell[i], listShell[k]);
+            segmLeftInner = segmentOffset(segmLeftShell, -hmDist[id2]);
+
+            //Точка пересечения сегментов
+            let cross = segmLeftInner.lineIntersection(segmRighInner);
+
+            if (cross !== null) {
+                cross.z = listShell[i].z;
+                listBuffer.push(cross);
+            }
+        }
+        listBuffer.reverse();
+        let listOut = [listShell];
+        listOut.push(...listBuffer);
+        listOut.push(listOut[0]);
+        let geoBuffer = Com5t.gf.createPolygon(...listOut);
+
+        result = geoBuffer;
+
+    } catch (e) {
+        errorLog("Error: UGeo.bufferRectangl() " + e);
+    }
+};
+
+UGeo.bufferCurve = (geoShell, dist) => {
+
+    let segmRighShell = new LineSegment(), segmRighInner = null;
+    let segmLeftShell = new LineSegment(), segmLeftInner = null;
+    let cross = null;
+    let result = Com5t.gf.createPolygon();
+    let cooShell = geoShell.getCoordinates();
+    let ID = cooShell[cooShell.length / 2].z;
+
+    let listInner = new Array();
+    let listShell = [...cooShell].filter(c => c.z === ID);
+
+    try {
+        for (let i = 1; i < listShell.length; i++) {
+
+            //Перебор левого и правого сегмента от точки пересечения
+            if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+                segmRighShell.setCoordinates(listShell[i - 1], listShell[i]);
+                segmRighInner = segmentOffset(segmRighShell, -dist);
+            }
+            if (i < Com5t.MAXSIDE || (cross !== null && i > Com5t.MAXSIDE)) {
+                let j = (i === listShell.size() - 1) ? 1 : i + 1;
+                segmLeftShell.setCoordinates(listShell[i], listShell[j]);
+                segmLeftInner = segmentOffset(segmLeftShell, -dist);
+            }
+
+            //Коррекция первой и последней точки дуги
+            if (i === 1) {
+                segmRighInner.p0.z = ID;
+                listInner.push(segmRighInner.p0);
+            }
+            //Точка пересечения сегментов
+            cross = CGAlgorithmsDD.intersection(segmLeftInner.p0, segmLeftInner.p1, segmRighInner.p0, segmRighInner.p1);
+
+            if (cross !== null) { //заполнение очереди
+                cross.z = ID;
+                listInner.push(cross);
+            }
+            if (i === listShell.size() - 2) {
+                segmLeftInner.p1.z = ID;
+                listInner.push(segmLeftInner.p1);
+            }
+        }
+        listInner.reverse();
+        listInner.push(...listShell);
+        listInner.set(0, listInner[listInner.size() - 1]);
+        result = Com5t.gf.createPolygon(...listInner);
+
+    } catch (e) {
+        errorLog("Ошибка:UGeo.bufferCurve() " + e);
+    }
+}
 
 UGeo.bufferPolygon = (geoShell, hmDist) => {
     try {
@@ -368,8 +530,6 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
 
 //Перемещение точек на канве (изменение размера окна)
 UGeo.movePoint = (el, x, y) => {
-    x = Math.round(x);
-    y = Math.round(y);
     if (x > 0 || y > 0) {
         if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
             if (el.passMask[0] === 0) {

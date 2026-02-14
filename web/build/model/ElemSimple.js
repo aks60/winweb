@@ -23,8 +23,9 @@ export class ElemSimple extends Com5t {
         if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
             try {
                 this.winc.cnv.addEventListener("keydown", (evt) => {
+                    
                     if (this.area !== null && this.passMask[1] > 0) {
-
+debugger;
                         let scale = this.winc.scale;
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
                         let key = evt.key;
@@ -55,19 +56,19 @@ export class ElemSimple extends Com5t {
                             //Кликнул по середине вектора 
                         } else if (this.passMask[0] === 2) {
 
-                            if (this.h !== null) {
+                            if (this.h !== undefined) {
                                 this.h(this.h - dY / scale);
                             } else {
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
 
                                 if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
-                                    this.y1(Y);
-                                    this.y2(Y);
+                                    this.y1 = Y;
+                                    this.y2 = Y;
                                 }
                                 if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                    this.x1(X);
-                                    this.x2(X);
+                                    this.x1 = X;
+                                    this.x2 = X;
                                 }
                             }
                         }
@@ -77,6 +78,7 @@ export class ElemSimple extends Com5t {
                     }
                     clearTimeout(this.timerID); //остановка
                     this.timerID = setTimeout(null, 160); //запуск
+                    this.winc.resize();
                 });
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
@@ -145,7 +147,6 @@ export class ElemSimple extends Com5t {
                             UGeo.movePoint(this, X, Y);
 
                         } else if (this.passMask[0] === 2) { //середина вектора
-                            debugger;
                             X = dX / scale + this.x2;
                             Y = dY / scale + this.y2;
                             if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {

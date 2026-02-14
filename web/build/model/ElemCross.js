@@ -72,8 +72,8 @@ export class ElemCross extends ElemSimple {
 
             //Точки пересечения канвы сегментами импоста
             const areaCanvas = Polygon.new([[0, 0], [0, 10000], [10000, 10000], [10000, 0]]);
-            const C1 = UGeo.geo2Cross(areaCanvas, offsetSegment[0]);
-            const C2 = UGeo.geo2Cross(areaCanvas, offsetSegment[1]);
+            const C1 = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[0]);
+            const C2 = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[1]);
 
             //Ареа импоста, обрезаем areaPadding 
             const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
