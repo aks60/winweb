@@ -57,7 +57,9 @@ export class AreaSimple extends Com5t {
             this.winc.ctx.save();
             if (this.winc.sceleton === false) {
                 if (this.type !== Type.STVORKA) {
-                    for (let el of this.frames) { //Точки движения сегментов
+                    let elems = this.winc.listElem.filter(e => e.type === Type.BOX_SIDE ||
+                                e.type === Type.IMPOST || e.type === Type.SHTULP);
+                    for (let el of elems) { //Точки движения сегментов
                         if (el.passMask[1] > 0) {
 
                             let SIZE = 10;
