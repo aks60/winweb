@@ -320,13 +320,13 @@ function isEmpty(v) {
     }
 }
           
-function findef(key, index, tname) {
+function findef(key, index, domain) {
     try {
-        let record = tname.list.find(rec => key == rec[index]);
+        let record = domain.list.find(rec => key == rec[index]);
         if (record !== undefined) {
             return record;
         }
-        return tname.vrec;
+        return domain.vrec;
 
     } catch (e) {
         errorLog('Error: uGui.findef() ' + e.message);

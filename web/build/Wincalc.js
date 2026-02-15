@@ -70,9 +70,9 @@ export class Wincalc {
             let sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
             let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
             this.syssizRec = eSyssize.find(artiklRec); //системные константы
-            this.colorID1 = findef(this.gson.color1, eColor.id, eColor)[eColor.id];
-            this.colorID2 = findef(this.gson.color2, eColor.id, eColor)[eColor.id];
-            this.colorID3 = findef(this.gson.color3, eColor.id, eColor)[eColor.id];
+            this.colorID1 = (this.gson.color1 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color1;
+            this.colorID2 = (this.gson.color2 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color2;
+            this.colorID3 = (this.gson.color3 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color3;
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {

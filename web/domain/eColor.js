@@ -25,6 +25,27 @@ eColor = {
             errorLog('Error: eColor.find() ' + e.message);
         }
     },
+    //Текстура профиля или текстура заполнения изделия (неокрашенные)
+    find2(artiklID) {
+        try {
+            let artdetList = eArtdet.list.filter(rec => rec[eArtdet.artikl_id] == artiklID);           
+            //Цикл по ARTDET определённого артикула
+            for (let artdetRec of artdetList) {
+                if (artdetRec[eArtdet.color_fk] >= 0) {
+                    if (1 === artdetRec[eArtdet.mark_c1]
+                            && (1 === artdetRec[eArtdet.mark_c1] || 1 === artdetRec[eArtdet.mark_c2])
+                            && (1 === artdetRec[eArtdet.mark_c1] || 1 === artdetRec[eArtdet.mark_c3])) {
+
+                        return artdetRec[eArtdet.color_fk];
+                    }
+                }
+            }
+            return -3;
+
+        } catch (e) {
+            errorLog('Error: eColor.find2() ' + e.message);
+        }
+    },
     find3(colorFK) {
         try {
             if (colorFK === -3) {

@@ -70,7 +70,7 @@ export function load_table1() {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    $(order.table1).jqGrid("setSelection", 1);
+    $(order.table1).jqGrid("setSelection", 2);
     //$('#outbody').load('frame/product.jsp');
     //$(order.table1).jqGrid("setSelection", rowID);
     resize();
@@ -130,8 +130,8 @@ export function load_table2(rowid) {
             }
         }
         document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
+        $("#table2").jqGrid("setSelection", 2);
     }
-    $('#table2 tr > *:nth-child(1)').hide();
 }
 
 //Удаление строки таблицы
