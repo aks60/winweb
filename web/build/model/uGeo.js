@@ -412,9 +412,9 @@ UGeo.newLineArch = (x1, x2, y, h, z) => {
         let coord = Coordinate.new(x1 + (x2 - x1) / 2 - R, y - h);
         Com5t.gsf.setBase(coord);
         let ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
-        let lm = ls.getCoordinates();
-        lm.forEach(c => c.z = z);
-        return Com5t.gf.createLineString(lm);
+        let lc = ls.getCoordinates();
+        lc.forEach(c => c.z = z);
+        return Com5t.gf.createLineString(lc);
     } catch (e) {
         errorLog("Error: UGeo.lineArch() " + e.message);
     }
