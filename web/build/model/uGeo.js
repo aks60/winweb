@@ -21,15 +21,15 @@ export let UGeo = {};
 
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
-    let ang = UGeo.radToDeg(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
+    let ang = UGeo.toDegrees(Angle.angle(new Coordinate(x1, y1), new Coordinate(x2, y2)));
     return (ang > 0) ? 360 - ang : Math.abs(ang);
 };
 
-UGeo.degToRad = (degrees) => {
+UGeo.toRadians = (degrees) => {
     return degrees * (Math.PI / 180);
 };
 
-UGeo.radToDeg = (rad) => {
+UGeo.toDegrees = (rad) => {
     return rad / (Math.PI / 180);
 };
 
@@ -400,6 +400,23 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         return  Com5t.gf.createPolygon(listBuffer);
     } catch (e) {
         errorLog("Error: UGeo.bufferPolygon() " + e.message);
+    }
+};
+
+UGeo.newLineArch = (x1, x2, y, h, z) => {
+    try {
+        let R = (Math.pow((x2 - x1) / 2, 2) + Math.pow(h, 2)) / (2 * h);  //R = (L2 + H2) / 2H - радиус арки
+        let angl = Math.PI / 2 - Math.asin((x2 - x1) / (R * 2));
+        Com5t.gsf.setSize(2 * R);
+        Com5t.gsf.setNumPoints(Com5t.MAXPOINT);
+        let coord = Coordinate.new(x1 + (x2 - x1) / 2 - R, y - h);
+        Com5t.gsf.setBase(coord);
+        let ls = Com5t.gsf.createArc(Math.PI + angl, Math.PI - 2 * angl).reverse();
+        let lm = ls.getCoordinates();
+        lm.forEach(c => c.z = z);
+        return Com5t.gf.createLineString(lm);
+    } catch (e) {
+        errorLog("Error: UGeo.lineArch() " + e.message);
     }
 };
 

@@ -229,7 +229,7 @@ export class AreaStvorka extends AreaSimple {
                     let anglHoriz = UGeo.anglHor(stvside.x1, stvside.y1, stvside.x2, stvside.y2);
                     if (!(anglHoriz === 90 || anglHoriz === 270)) {
                         let aff = new AffineTransformation();
-                        aff.setToRotation(UGeo.degToRad(anglHoriz),
+                        aff.setToRotation(UGeo.toRadians(anglHoriz),
                                 Centroid.getCentroid(this.handOpen).getX(),
                                 Centroid.getCentroid(this.handOpen).getY());
                         this.handOpen = aff.transform(this.handOpen);

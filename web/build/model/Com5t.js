@@ -2,6 +2,8 @@
 import {UCom} from '../../common/uCom.js';
 import PrecisionModel from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/PrecisionModel.js';
 import GeometryFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
+import GeometricShapeFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/util/GeometricShapeFactory.js';
+import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 import {Type} from '../../enums/enums.js';
 
@@ -10,7 +12,9 @@ export class Com5t {
     static TRANS = 2;
     static MAXSIDE = 200;
     static MAXPOINT = 1000;
-    static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий    
+    static gf = new GeometryFactory(new PrecisionModel()); //фабрика геометрий   
+    static gsf = new GeometricShapeFactory(Com5t.gf);
+    static aff = new AffineTransformation();
 
     id = null; //идентификатор элемента
     winc = null; //главн. класс калькуляции

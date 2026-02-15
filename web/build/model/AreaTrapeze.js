@@ -12,7 +12,7 @@ export class AreaTrapeze extends AreaSimple {
                 this.owner = this;
 
         } catch (e) {
-            errorLog('Error:AreaRectangl.constructor() ' + e.message);
+            errorLog('Error:AreaTrapeze.constructor() ' + e.message);
         }
     }
 
@@ -32,5 +32,13 @@ export class AreaTrapeze extends AreaSimple {
             errorLog('Error: AreaTrapeze.setLocation() ' + e.message);
         }
     }
+    
+    paint() {
+        try {
+            super.paint();
+        } catch (e) {
+            errorLog('Error: AreaTrapeze.paint() ' + e.message);
+        }
+    }    
 }
 

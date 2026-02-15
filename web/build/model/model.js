@@ -9,7 +9,7 @@ import {ElemSimple} from './ElemSimple.js';
 import {ElemCross} from './ElemCross.js';
 import {ElemFrame} from './ElemFrame.js';
 import {ElemGlass} from './ElemGlass.js';
-export {AreaArch, AreaDoor, AreaRectangl, AreaSimple, AreaStvorka, 
-    AreaTrapeze, Com5t, ElemSimple, ElemCross, ElemFrame, ElemGlass};
+export {AreaArch, AreaTrapeze, AreaDoor, AreaRectangl, AreaStvorka, AreaSimple,
+        Com5t, ElemSimple, ElemCross, ElemFrame, ElemGlass};
 
 
