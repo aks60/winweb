@@ -18,6 +18,7 @@ import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.j
 //import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import UnaryUnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnaryUnionOp.js'
+//import CascadedPolygonUnion from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/CascadedPolygonUnion.js';
 //import Geometry from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Geometry.js';
 //import GeometryFactory from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
 //import GeoJSONReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/GeoJSONReader.js';
@@ -117,6 +118,7 @@ export function println(geom, prefix) {
 }
 
 export function Test1() {
+    
 //    try {
 //        var reader = new WKTReader();
 //        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
@@ -136,7 +138,7 @@ export function Test2() {
 //        var writer = new WKTWriter();
 //
 //        var a = reader.read('POLYGON ((2 2, 2 4, 10 4, 10 2, 2 2))');
-//        var b = reader.read('POLYGON ((1 3, 1 6, 8 6, 8 3, 1 3))');
+//        var b = reader.read('POLYGON ((1 3, 1 6, 8 6, 8 3, 1 3))');       
 //        var c = reader.read('LINESTRING (0 3, 12 3)');
 //
 //        var union = UnionOp.union(a.getExteriorRing(), c);

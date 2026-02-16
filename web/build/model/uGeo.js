@@ -16,6 +16,8 @@ import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReade
 import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 import Orientation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
 import Distance from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Distance.js';
+//import CascadedPolygonUnion from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/CascadedPolygonUnion.js';
+import UnionInteracting from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionInteracting.js';
 
 export let UGeo = {};
 
@@ -224,7 +226,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             let id = cooShell[geoShell.getCoordinates().length / 2].z;
             let polyCurv = UGeo.bufferCurve(geoShell, hmDist.get(id));
             let polyRect = UGeo.bufferRectangl(geoShell, hmDist);
-            let polyArch = UGeo.polyRect.union(polyCurv);
+            let polyArch = UnionInteracting.union(polyCurv, polyRect);
             let ring = polyArch.getInteriorRingN(0);
             let polyCurve = Com5t.gf.createPolygon(ring);
             polyCurve.normalize();
@@ -305,7 +307,8 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
             }
         }
         listBuffer.reverse();
-        let listOut = [listShell];
+        let listOut = [];
+        listOut.push(...listShell);
         listOut.push(...listBuffer);
         listOut.push(listOut[0]);
         let result = Com5t.gf.createPolygon([...listOut]);

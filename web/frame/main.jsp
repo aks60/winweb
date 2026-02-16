@@ -72,10 +72,10 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, println, Test1} from './frame/main.js';
+            import {localizeFactory, println, Test2} from './frame/main.js';
             PRINT = println;
             localizeFactory();
-            //Test1();
+            //Test2();
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([
