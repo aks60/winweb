@@ -274,7 +274,8 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
     let cooShell = geoShell.getCoordinates();
     try {
         for (let i = 0; i < cooShell.length; i++) {
-            if (set.add(cooShell[i].z)) {
+            if (set.has(cooShell[i].z) === false) {
+                set.add(cooShell[i].z);
                 listShell.push(cooShell[i]);
             }
         }
@@ -284,10 +285,9 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
 
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 1 : i - 1;
-            let id1 = listShell[j].z;
-            segmRighShell.setCoordinates(listShell[j], listShell[i]);
+            const id1 = listShell[j].z;
+            segmRighShell.setCoordinates(listShell[j], listShell[i]);          
             segmRighInner = UGeo.offsetSegm(segmRighShell, -hmDist.get(id1));
-
             segmRighInner.p0.z = segmRighShell.p0.z;
             segmRighInner.p1.z = segmRighShell.p1.z;
 
@@ -297,8 +297,8 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
             segmLeftInner = UGeo.offsetSegm(segmLeftShell, -hmDist.get(id2));
 
             //Точка пересечения сегментов
-            let cross = segmLeftInner.lineIntersection(segmRighInner);
-
+            //let cross = segmLeftInner.lineIntersection(segmRighInner);
+            let cross = CGAlgorithmsDD.intersection(segmLeftInner.p0, segmLeftInner.p1, segmRighInner.p0, segmRighInner.p1);
             if (cross !== null) {
                 cross.z = listShell[i].z;
                 listBuffer.push(cross);
@@ -380,12 +380,14 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 2 : i - 1;
             const id1 = listShell[j].z;
-            segmRighShell.setCoordinates(new Coordinate(listShell[j]), new Coordinate(listShell[i]));
+            segmRighShell.setCoordinates(listShell[j], listShell[i]);
             segmRighInner = UGeo.offsetSegm(segmRighShell, -hmDist.get(id1));
+            
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
-            segmLeftShell.setCoordinates(new Coordinate(listShell[i]), new Coordinate(listShell[k]));
+            segmLeftShell.setCoordinates(listShell[i], listShell[k]);
             segmLeftInner = UGeo.offsetSegm(segmLeftShell, -hmDist.get(id2));
+            
             //Точка пересечения сегментов
             let cross = CGAlgorithmsDD.intersection(segmLeftInner.p0, segmLeftInner.p1, segmRighInner.p0, segmRighInner.p1);
             if (cross !== null) {
