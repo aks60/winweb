@@ -3,6 +3,7 @@ import {UGeo} from './uGeo.js';
 //import {AreaSimple, Com5t} from './module.js';
 import {AreaSimple} from './AreaSimple.js';
 import {Com5t} from './Com5t.js';
+import Coordinate from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 
 export class AreaArch extends AreaSimple {
@@ -55,8 +56,8 @@ export class AreaArch extends AreaSimple {
 
             //Аrea рамы 
             let geoShell = Com5t.gf.createPolygon(listShell);
-            let geoInner = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 0);
-            let geoFalz = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 1);
+            let geoInner = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 0);
+            let geoFalz = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
         } catch (e) {
             errorLog('Error: AreaArch.setLocation() ' + e.message);

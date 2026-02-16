@@ -144,18 +144,8 @@ export class Wincalc {
         try {
             let hmDip = new Map();
             for (let js of gson.childs) {
-                if (js.type === "BOX_SIDE") {
-                    const box = new ElemFrame(this, js, owner);
-                    box.type = Type.BOX_SIDE;
-                    this.root.frames.push(box); //добавим ребёнка родителю
 
-                } else if (js.type === "STVORKA") {
-                    let stv = new AreaStvorka(this, js, owner);
-                    stv.type = Type.STVORKA;
-                    owner.childs.push(stv);
-                    hmDip.set(stv, js);
-
-                } else if (js.type === "AREA" || js.type === "ARCH" || js.type === "TRAPEZE" || js.type === "TRIANGL" || js.type === "DOOR") {
+                if (["ARCH", "TRAPEZE", "TRIANGL", "DOOR", "AREA"].includes(js.type)) {
                     let area = new AreaSimple(this, js, owner);
                     if (js.type === "AREA")
                         area.type = Type.AREA;
@@ -169,6 +159,17 @@ export class Wincalc {
                         area.type = Type.DOOR;
                     owner.childs.push(area);
                     hmDip.set(area, js);
+
+                } else if (js.type === "BOX_SIDE") {
+                    const box = new ElemFrame(this, js, owner);
+                    box.type = Type.BOX_SIDE;
+                    this.root.frames.push(box); //добавим ребёнка родителю
+
+                } else if (js.type === "STVORKA") {
+                    let stv = new AreaStvorka(this, js, owner);
+                    stv.type = Type.STVORKA;
+                    owner.childs.push(stv);
+                    hmDip.set(stv, js);
 
                 } else if (js.type === "IMPOST" || js.type === "SHTULP" || js.type === "STOIKA") {
                     const cross = new ElemCross(this, js, owner);
@@ -235,7 +236,7 @@ export class Wincalc {
         try {
             this.ctx.save();
             this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
-            
+
             if (this.cnv.width < 100 && this.cnv.height < 100) {
                 this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
                         ? this.cnv.width / this.width : this.cnv.height / this.height;
@@ -267,7 +268,7 @@ export class Wincalc {
                 this.root.paint();
             }
             this.ctx.restore();
-            
+
         } catch (e) {
             errorLog('Error: Wincalc.draw() ' + e.message);
         }

@@ -268,7 +268,6 @@ UGeo.updateZet = (arc, rec) => {
 UGeo.bufferRectangl = (geoShell, hmDist) => {
     let segmRighShell = new LineSegment(), segmRighInner = null;
     let segmLeftShell = new LineSegment(), segmLeftInner = null;
-    let result = Com5t.gf.createPolygon();
     let set = new Set();
     let listBuffer = new Array();
     let listShell = new Array();
@@ -281,21 +280,21 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
         }
         hmDist.set(4.0, 0.0); //такая вот фича!
 
-        for (let i = 0; i < listShell.size(); i++) {
+        for (let i = 0; i < listShell.length; i++) {
 
             //Перебор левого и правого сегмента от точки пересечения 
-            let j = (i === 0) ? listShell.size() - 1 : i - 1;
+            let j = (i === 0) ? listShell.length - 1 : i - 1;
             let id1 = listShell[j].z;
             segmRighShell.setCoordinates(listShell[j], listShell[i]);
-            segmRighInner = segmentOffset(segmRighShell, -hmDist[id1]);
+            segmRighInner = UGeo.offsetSegm(segmRighShell, -hmDist.get(id1));
 
             segmRighInner.p0.z = segmRighShell.p0.z;
             segmRighInner.p1.z = segmRighShell.p1.z;
 
-            let k = (i === listShell.size() - 1) ? 0 : i + 1;
+            let k = (i === listShell.length - 1) ? 0 : i + 1;
             let id2 = listShell[i].z;
             segmLeftShell.setCoordinates(listShell[i], listShell[k]);
-            segmLeftInner = segmentOffset(segmLeftShell, -hmDist[id2]);
+            segmLeftInner = UGeo.offsetSegm(segmLeftShell, -hmDist.get(id2));
 
             //Точка пересечения сегментов
             let cross = segmLeftInner.lineIntersection(segmRighInner);
@@ -309,9 +308,8 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
         let listOut = [listShell];
         listOut.push(...listBuffer);
         listOut.push(listOut[0]);
-        let geoBuffer = Com5t.gf.createPolygon(...listOut);
-
-        result = geoBuffer;
+        let result = Com5t.gf.createPolygon([...listOut]);
+        return result;
 
     } catch (e) {
         errorLog("Error: UGeo.bufferRectangl() " + e);
@@ -322,26 +320,25 @@ UGeo.bufferCurve = (geoShell, dist) => {
 
     let segmRighShell = new LineSegment(), segmRighInner = null;
     let segmLeftShell = new LineSegment(), segmLeftInner = null;
-    let cross = null;
-    let result = Com5t.gf.createPolygon();
+    let cross = new Coordinate();
     let cooShell = geoShell.getCoordinates();
     let ID = cooShell[cooShell.length / 2].z;
 
     let listInner = new Array();
-    let listShell = [...cooShell].filter(c => c.z === ID);
+    let listShell = cooShell.filter(c => c.z === ID);
 
     try {
         for (let i = 1; i < listShell.length; i++) {
 
             //Перебор левого и правого сегмента от точки пересечения
-            if (i > Com5t.MAXSIDE || (cross != null && i < Com5t.MAXSIDE)) {
+            if (i > Com5t.MAXSIDE || (cross !== null && i < Com5t.MAXSIDE)) {
                 segmRighShell.setCoordinates(listShell[i - 1], listShell[i]);
-                segmRighInner = segmentOffset(segmRighShell, -dist);
+                segmRighInner = UGeo.offsetSegm(segmRighShell, -dist);
             }
             if (i < Com5t.MAXSIDE || (cross !== null && i > Com5t.MAXSIDE)) {
-                let j = (i === listShell.size() - 1) ? 1 : i + 1;
+                let j = (i === listShell.length - 1) ? 1 : i + 1;
                 segmLeftShell.setCoordinates(listShell[i], listShell[j]);
-                segmLeftInner = segmentOffset(segmLeftShell, -dist);
+                segmLeftInner = UGeo.offsetSegm(segmLeftShell, -dist);
             }
 
             //Коррекция первой и последней точки дуги
@@ -356,16 +353,17 @@ UGeo.bufferCurve = (geoShell, dist) => {
                 cross.z = ID;
                 listInner.push(cross);
             }
-            if (i === listShell.size() - 2) {
+            if (i === listShell.length - 2) {
                 segmLeftInner.p1.z = ID;
                 listInner.push(segmLeftInner.p1);
             }
         }
         listInner.reverse();
         listInner.push(...listShell);
-        listInner.set(0, listInner[listInner.size() - 1]);
-        result = Com5t.gf.createPolygon(...listInner);
-
+        listInner[0] = listInner[listInner.length - 1];               
+        let result = Com5t.gf.createPolygon([...listInner]);
+        return result; 
+        
     } catch (e) {
         errorLog("Ошибка:UGeo.bufferCurve() " + e);
     }
@@ -575,3 +573,10 @@ UGeo.movePoint = (el, x, y) => {
         }
     }
 };
+
+UGeo.segmentOffset = (segShell, dxy) =>  {
+        let segInner = segShell.offset(dxy);
+        segInner.p0.z = segShell.p0.z;
+        segInner.p1.z = segShell.p1.z;
+        return segInner;
+    }
