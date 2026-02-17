@@ -11,7 +11,7 @@ export class ElemSimple extends Com5t {
     pointPress = [0, 0]; //координаты клика на канве
     passMask = [0, 0]; //маска редактир. [0]=0 -начало, [0]=1 -конец, [0]=2 -середина, [1] > 0 -вешаем обр. прорисовки кружка и разреш. редактиров. x,y
     timerID = 0; //таймер
-
+    count = 0;
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
 
@@ -23,15 +23,16 @@ export class ElemSimple extends Com5t {
         if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
             try {
                 this.winc.cnv.addEventListener("keydown", (evt) => {
-                    
+
                     if (this.area !== null && this.passMask[1] > 0) {
 
+                        let key = evt.key;
                         let scale = this.winc.scale;
                         let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
-                        let key = evt.key;
+                        //При нажатой клавише this.timerID всегда > 0
                         let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
-                        let X = 0, Y = 0, dX = 0, dY = 0;
 
+                        let X = 0, Y = 0, dX = 0, dY = 0;
                         if (key === 'ArrowUp') {
                             dY = -dxy;
                         } else if (key === 'ArrowDown') {
@@ -57,7 +58,7 @@ export class ElemSimple extends Com5t {
                         } else if (this.passMask[0] === 2) {
 
                             if (this.h !== undefined) {
-                                this.h = (this.h - dY / scale);
+                                this.h = this.h - dY / scale;
                             } else {
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
@@ -75,15 +76,15 @@ export class ElemSimple extends Com5t {
                         if (X < 0 || Y < 0) {
                             UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
+                        this.winc.resize();
+                        clearTimeout(this.timerID); //остановка
+                        this.timerID = setTimeout(null, 10); //запуск
                     }
-                    clearTimeout(this.timerID); //остановка
-                    this.timerID = setTimeout(null, 160); //запуск
-                    this.winc.resize();
                 });
 
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-                        
+
                         let scale = this.winc.scale;
                         let X = (evt.offsetX - Com5t.TRANS) / scale;
                         let Y = (evt.offsetY - Com5t.TRANS) / scale;
