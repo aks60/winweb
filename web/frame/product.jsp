@@ -78,7 +78,7 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
-                  <button id="btnReset" style="width: 32px; margin-top: 20px">Test</button>
+                  <button id="btnReset" class="jqButton" style="width: 24px; margin-top: 20px; margin-left: 0px""></button>
             </div>
             <div id='west2' class='abs' style=''>
                 <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 1px solid #ccc;'></canvas>  
