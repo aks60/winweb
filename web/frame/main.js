@@ -13,10 +13,11 @@ import LineSegment from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSeg
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
-import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
-
+//import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 //import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
+//import Polygonizer from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/polygonize/Polygonizer.js'
+
 //import UnaryUnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnaryUnionOp.js'
 //import CascadedPolygonUnion from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/CascadedPolygonUnion.js';
 //import Geometry from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Geometry.js';
@@ -133,7 +134,8 @@ export function Test1() {
 }
 
 export function Test2() {
-//    try {
+    try {
+//        debugger;
 //        var reader = new WKTReader();
 //        var writer = new WKTWriter();
 //
@@ -141,22 +143,24 @@ export function Test2() {
 //        var b = reader.read('POLYGON ((1 3, 1 6, 8 6, 8 3, 1 3))');       
 //        var c = reader.read('LINESTRING (0 3, 12 3)');
 //
-//        var union = UnionOp.union(a.getExteriorRing(), c);
-//        var polygonizer = new Polygonizer();
-//        polygonizer.add(union);
-//        var polygons = polygonizer.getPolygons();
-//
+//        var union = UnionOp.union(a, b);
+//        console.log(writer.write(union));
+        
+        //var polygonizer = new Polygonizer();
+        //polygonizer.add(union);
+        //var polygons = polygonizer.getPolygons();
+
 //        let set = new WeakSet(polygons.get(0).getExteriorRing());
 //        let v = set.values();
 //        for (var i = polygons.iterator(); i.hasNext(); ) {
 //            var polygon = i.next();
-//            console.log(writer.write(polygon));
+//            console.log(writer.write(polygons));
 //        }
 //        console.log(writer.write(v));
-//
-//    } catch (e) {
-//        alert(`Ошибка: Test2()  ` + e.message);
-//    }
+
+    } catch (e) {
+        alert(`Ошибка: Test2()  ` + e.message);
+    }
 }
 
 export function Test3() {

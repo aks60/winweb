@@ -55,7 +55,7 @@ export class ElemFrame extends ElemSimple {
         try {
             let geoShell = this.owner.area.getGeometryN(0), geoInner = this.owner.area.getGeometryN(1); //внешн. и внутр. ареа арки.
             let cooShell = geoShell.getCoordinates(), cooInner = geoInner.getCoordinates();
-if(this.id === 4) debugger;
+
             for (let i = 0; i < cooShell.length; i++) {
                 if (cooShell[i].z === this.id) {
                     if (this.gson.h !== undefined) { //полигон арки

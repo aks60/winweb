@@ -4,7 +4,7 @@ import {Type, Layout} from '../../enums/enums.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
 //import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
 //import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
-//import PointLocation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocation.js'
+import PointLocation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocation.js'
 import CGAlgorithmsDD from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/CGAlgorithmsDD.js'
 import Angle from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Angle.js'
 import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js'
@@ -16,8 +16,9 @@ import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReade
 import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 import Orientation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
 import Distance from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Distance.js';
+import UnionOp from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import CascadedPolygonUnion from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/CascadedPolygonUnion.js';
-import UnionInteracting from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionInteracting.js';
+//import UnionInteracting from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionInteracting.js';
 
 export let UGeo = {};
 
@@ -59,12 +60,12 @@ UGeo.polyCurve = (geoShell, geoInner, ID) => {
     }
     listFrame.push(cooInner[0]); //посл.точка арки
     for (let k = cooInner.length - 1; k >= 0; k--) {
-        if (cooInner[k].z == ID) {
+        if (cooInner[k].z === ID) {
             listFrame.push(cooInner[k]);
         }
     }
 
-    listFrame.push(listFrame.get(0));
+    listFrame.push(listFrame[0]);
     return Com5t.gf.createPolygon(listFrame); //полигон рамы арки
 };
 
@@ -226,7 +227,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             let id = cooShell[geoShell.getCoordinates().length / 2].z;
             let polyCurv = UGeo.bufferCurve(geoShell, hmDist.get(id));
             let polyRect = UGeo.bufferRectangl(geoShell, hmDist);
-            let polyArch = UnionInteracting.union(polyCurv, polyRect);
+            let polyArch = UnionOp.union(polyCurv, polyRect);
             let ring = polyArch.getInteriorRingN(0);
             let polyCurve = Com5t.gf.createPolygon(ring);
             polyCurve.normalize();

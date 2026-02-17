@@ -57,7 +57,7 @@ export class ElemSimple extends Com5t {
                         } else if (this.passMask[0] === 2) {
 
                             if (this.h !== undefined) {
-                                this.h(this.h - dY / scale);
+                                this.h = (this.h - dY / scale);
                             } else {
                                 X = dX / scale + this.x2;
                                 Y = dY / scale + this.y2;
