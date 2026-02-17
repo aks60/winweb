@@ -84,7 +84,7 @@ export class AreaSimple extends Com5t {
                                     let i = list.length / 2; //index середины дуги
                                     let c1 = list[i], c2 = list[i + 1];
                                     let smid = LineSegment.new([c1.x, c1.y], [c2.x, c2.y]).midPoint();
-                                    this.winc.ctx.fillRect(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    this.winc.ctx.fillRect(smid.x - SIZE, smid.y - SIZE, SIZE * 2, SIZE * 2);
 
                                 } else {
                                     let smid = LineSegment.new([el.x1, el.y1], [el.x2, el.y2]).midPoint();
@@ -144,7 +144,7 @@ export class AreaSimple extends Com5t {
                     listVer.sort((a, b) => a - b);
 
                     const font = UCom.scaleFont(this.winc.scale);
-                    this.winc.ctx.font = `bold ${font}px sans-serif`; //размер шрифта
+                    this.winc.ctx.font = `normal ${font}px sans-serif`; //размер шрифта
                     let matrix = this.winc.ctx.getTransform();
                     let metricTxt = this.winc.ctx.measureText("999.99");
                     const heightTxt = metricTxt.actualBoundingBoxAscent + metricTxt.actualBoundingBoxDescent;

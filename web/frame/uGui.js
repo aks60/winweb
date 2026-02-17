@@ -187,6 +187,7 @@ function prepareToolBar() {
     $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
     $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
+    $("#btnReset").button({icons: {primary: "ui-icon-star"}});
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
     //$("#tab-2").button({icons: {primary: "ui-icon-star"}});

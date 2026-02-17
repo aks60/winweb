@@ -32,14 +32,14 @@
             #east1 {
                 background: #efeffb;
                 width: 388px;
-                height: 50%;
+                height: 270px;
                 right: 0px;
             }
 
             #east2 {
                 background: #efeffb;
                 width: 388px;
-                height: 50%;
+                height: calc(100% - 270px);
                 right: 0px;
                 bottom: 0px;
             }
@@ -78,6 +78,7 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
+                  <button id="btnReset" style="width: 32px; margin-top: 20px">Test</button>
             </div>
             <div id='west2' class='abs' style=''>
                 <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 1px solid #ccc;'></canvas>  
