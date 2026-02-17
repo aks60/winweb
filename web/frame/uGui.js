@@ -187,7 +187,12 @@ function prepareToolBar() {
     $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
     $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
-    $("#btnReset").button({icons: {primary: "ui-icon-star"}});
+    $("#btnReset").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
+    $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
+    $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
+    $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
+    $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
+    $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
     //$("#tab-2").button({icons: {primary: "ui-icon-star"}});

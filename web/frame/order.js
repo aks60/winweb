@@ -70,7 +70,7 @@ export function load_table1() {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    $(order.table1).jqGrid("setSelection", 2);
+    $(order.table1).jqGrid("setSelection", 1);
     //$('#outbody').load('frame/product.jsp');
     //$(order.table1).jqGrid("setSelection", rowID);
     resize();

@@ -47,6 +47,13 @@
                 display: inlin-block;
                 bottom: 2px;
             }
+            .toolWest1 {
+                width: 24px;
+                margin-top: 10px;
+                margin-left: 3px;
+                padding-left: 2px;
+                /*text-align: left;*/
+            }
         </style>
         <script type="module">
             import {wincalcNew, resize, init_table, load_tree,
@@ -78,7 +85,12 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
-                  <button id="btnReset" class="jqButton" style="width: 24px; margin-top: 20px; margin-left: 0px""></button>
+                <button id="btnReset" class="toolWest1"></button>
+                <button id="btnTop" class="toolWest1"></button>
+                <button id="btnBot" class="toolWest1"></button>
+                <button id="btnLef" class="toolWest1"></button>
+                <button id="btnRig" class="toolWest1"></button>
+                <button id="btnSceleton" class="toolWest1"></button>
             </div>
             <div id='west2' class='abs' style=''>
                 <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 1px solid #ccc;'></canvas>  
