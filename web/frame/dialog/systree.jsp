@@ -6,26 +6,26 @@
         <title>SYSTREE</title>
 
         <style>
-            #tab2-systree tr:hover {
+            #tab2-tree tr:hover {
                 background:#E2EEFF;
             }
-            #tab2-systree .activeRow, #tab2-systree .activeRow:hover {
+            #tab2-tree .activeRow, #tab2-tree .activeRow:hover {
                 background:#6598C7;
                 color:#fff;
             }
-            #tab2-systree tr {
+            #tab2-tree tr {
                 height: 68px;
             }
-            #tab2-systree tr > *:nth-child(1) {
+            #tab2-tree tr > *:nth-child(1) {
                 display: none !important;
             }
-            #tab2-systree tr > *:nth-child(2) {
+            #tab2-tree tr > *:nth-child(2) {
                 width: 390px !important;
             }
-            #tab2-systree tr > *:nth-child(3) {
+            #tab2-tree tr > *:nth-child(3) {
                 width: 68px !important;
             }
-            #tab2-systree tr > *:nth-child(4) {
+            #tab2-tree tr > *:nth-child(4) {
                 display: none !important;
             }
         </style>  
