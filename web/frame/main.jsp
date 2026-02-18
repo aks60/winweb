@@ -76,6 +76,7 @@
             PRINT = println;
             localizeFactory();
             //Test2();
+//            $('#dialog-dic').dialog({autoOpen: false});
 
             $("#outbody").load('frame/login.jsp', function () {
                 Promise.all([

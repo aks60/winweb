@@ -6,7 +6,7 @@
         <title>COLOR</title>
 
         <script type="module">
-            import {Wincalc} from '../../build/Wincalc.js';
+            import {Wincalc} from './build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());

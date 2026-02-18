@@ -28,31 +28,44 @@
             #tab2-systree tr > *:nth-child(4) {
                 display: none !important;
             }
-        </style> 
-
+        </style>     
         <script type="module">
-            import {Wincalc} from '../../build/Wincalc.js';
-//------------------------------------------------------------------------------
+            import {Wincalc} from './build/Wincalc.js';
+            import {Test2} from './frame/main.js';
             var sysprodID = -1;
-//------------------------------------------------------------------------------            
+
             function resize() {
-                $("#tab1-systree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
-                $("#tab1-systree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
+                $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
+                $("#tab1-tree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
             }
-//------------------------------------------------------------------------------
+
             $(document).ready(function () {
+                //alert('$(document).ready-2');
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
-                let tab_sysprod = document.getElementById('tab2-systree');
-                tab_sysprod.setAttribute('activeRowIndex', 0);
-                tab_sysprod.addEventListener('click', event_clicked);
+                var tab1Tree = document.getElementById('tab1-tree');
+                var tab2Tree = document.getElementById('tab2-tree');
+                tab2Tree.setAttribute('activeRowIndex', 0);
+                tab2Tree.addEventListener('click', event_clicked);
                 init_dialog($("#dialog-dic"));
-                init_table($("#tab1-systree"), tab_sysprod);
-                load_table($("#tab1-systree"), tab_sysprod);
+                init_table(tab1Tree, tab2Tree);
+                load_table(tab1Tree);
                 resize();
+                
+                //const myButton = document.getElementById('btnTest1');
+                //myButton.addEventListener('click', Test2);
+//                myButton.addEventListener('click', function () {
+//                    alert('Кнопка нажата!');
+//                });
             });
-//------------------------------------------------------------------------------
+            
+//            function test1() {
+////                $("#tab2-tree").jqGrid('clearGridData');
+////                $("#tab2-tree").trigger("reloadGrid");
+//                console.log('aks7');
+//            }
+
             function init_dialog(dialogTaq) {
 
                 dialogTaq.dialog({
@@ -75,7 +88,7 @@
                                             let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
                                                 sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
                                             ePrjprod.list.push(record);
-                                            order.add_prjprod(document.getElementById('table2'), record);
+                                            order.add_prjprod(tab2Tree, record);
 
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);
@@ -93,10 +106,10 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
+
             function init_table(table1, table2) {
 
-                table1.jqGrid({
+                $(table1).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория'],
                     colModel: [
@@ -112,54 +125,56 @@
                     ExpandColumn: 'name',
                     ExpandColClick: true,
                     onSelectRow: function (rowid) {
-                        //Очистим таблицу конструкций
-                        let j = 1;
-                        let rc = table2.rows.length;
-                        for (let i = j; i < rc; i++) {
-                            table2.deleteRow(j);
-                        }
-                        //Заполним табл. конструкций 
-                        let systreeRec = table1.jqGrid('getRowData', rowid);
-                        if (systreeRec.isLeaf == 'true') {
-                            let sysprodList = eSysprod.list.filter(rec => systreeRec.id == rec.list[eSysprod.systree_id]);
-                            if (sysprodList.length > 0) {
-                                prjprodID = null;
-                                for (let rec of sysprodList) {
 
-                                    //Новая запись в таблице конструкций
-                                    add_clone(table2, rec);
-                                    //Первая конструкция
-                                    if (prjprodID == null) {
-                                        prjprodID = rec.list[eSysprod.id];
+                        $("#tab2-tree").jqGrid('clearGridData');
+                        //$(table2).jqGrid("clearGridData", true); //очистим таблицу конструкций
+                        //Очистим таблицу конструкций
+                        //debugger;
+                        //$(table2).jqGrid('clearGridData', true).trigger('reloadGrid');
+//                        let j = 1;
+//                        let rc = table2.rows.length;
+//                        for (let i = j; i < rc; i++) {
+//                            $(table2).deleteRow(j);
+//                        }
+                        //Заполним табл. конструкций 
+                        let systreeRec = $(table1).jqGrid('getRowData', rowid);
+                        if (systreeRec.isLeaf === 'true') {
+                            let sysprodList = eSysprod.list.filter(rec => systreeRec.id == rec[eSysprod.systree_id]);
+                            if (sysprodList.length > 0) {
+                                let prjprodID = null;
+
+                                for (let rec of sysprodList) {
+                                    add_clone(table2, rec); //новая запись в таблице конструкций                                    
+                                    if (prjprodID === null) {
+                                        prjprodID = rec[eSysprod.id]; //первая конструкция
                                     }
                                 }
-                                //Программный клик на первой конструкции
-                                document.getElementById('cnv' + prjprodID).click();
+                                document.getElementById('cnv' + prjprodID).click(); //программный клик на первой записи (конструкции)
                             }
                         }
                         $('#tab2-systree tr > *:nth-child(1)').hide();
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function load_table(table1, table2) {
 
-                table1.jqGrid('clearGridData', true);
+            function load_table(table1) {
+
+                $(table1).jqGrid('clearGridData', true);
                 $.ajax({
                     url: 'systree?action=sysTree',
                     success: function (data) {
-                        table1[0].addJSONData({
+                        $(table1)[0].addJSONData({
                             total: 1,
                             page: 1,
                             records: data.sysTree.length,
                             rows: data.sysTree
                         });
-                        table1.jqGrid("setSelection", 1);
+                        $(table1).jqGrid("setSelection", 1);
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function add_clone(table, sysprodRec) {
+
+            function add_clone(table2, sysprodRec) {
 
                 let id = document.createTextNode(sysprodRec[eSysprod.id]);
                 let name = document.createTextNode(sysprodRec[eSysprod.name]);
@@ -183,10 +198,10 @@
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
-                table.appendChild(tr);
+                table2.appendChild(tr);
                 Wincalc.new(canvas, canvas.offsetWidth, canvas.offsetHeight, script);
             }
-//------------------------------------------------------------------------------
+
             function event_clicked(e) {
                 let row = parentTag(e.target, 'TR');
                 if (row) {
@@ -197,24 +212,24 @@
                     sysprodID = row.cells[0].innerHTML;
                 }
             }
-//------------------------------------------------------------------------------
+
             function parentTag(node, tag) {
                 if (node)
                     return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
                 return null;
             }
-//------------------------------------------------------------------------------
         </script> 
     </head> 
-    <body> 
+    <body>                      
+        <button id="btnTest1" style="width: 128px;">TEST*</button>                                
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
             <div id="pan1-systree" style="height: 99.6%; width: 99%;">
-                <table id="tab1-systree"  class="ui-jqgrid-btable"></table> 
+                <table id="tab1-tree"  class="ui-jqgrid-btable"></table> 
             </div>
 
             <div id="pan2-systree" style="position: absolute; overflow-y: auto;  height: 99.6%; width: 290px; top: 0; right: -300px;">
-                <table id="tab2-systree" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
+                <table id="tab2-tree" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
                     <tr style="height: 22px; background-color: #e7f4f9">
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            

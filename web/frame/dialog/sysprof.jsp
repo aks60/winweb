@@ -6,7 +6,7 @@
         <title>SYSPROF</title>
 
         <script type="module">
-            import {Wincalc} from '../../build/Wincalc.js';
+            import {Wincalc} from './build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());

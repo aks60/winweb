@@ -135,6 +135,7 @@ export function Test1() {
 
 export function Test2() {
     try {
+        console.log('aks60');
 //        debugger;
 //        var reader = new WKTReader();
 //        var writer = new WKTWriter();

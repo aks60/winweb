@@ -6,7 +6,7 @@
         <title>FURNITURE</title>
 
         <script type="module">
-            import {Wincalc} from '../../build/Wincalc.js';
+            import {Wincalc} from './build/Wincalc.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #pan-furniture").width());
