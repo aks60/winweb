@@ -38,6 +38,7 @@
 
             #east2 {
                 background: #efeffb;
+                overflow-y: auto; 
                 width: 388px;
                 height: calc(100% - 270px);
                 right: 0px;

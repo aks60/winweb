@@ -264,7 +264,7 @@ export class Wincalc {
             this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
 
             //Размерные линии
-            if (this.scale > .1) {
+            if (this.scale > .2) {
                 this.root.paint();
             }
             this.ctx.restore();
