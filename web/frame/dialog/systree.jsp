@@ -33,10 +33,11 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
+            
             var sysprodID = -1;
-
             var tab1Tree = document.getElementById('tab1-tree');
             var tab2Tree = document.getElementById('tab2-tree');
+            
             tab2Tree.setAttribute('activeRowIndex', 0);
             tab2Tree.addEventListener('click', event_clicked);
             init_dialog($("#dialog-dic"));
