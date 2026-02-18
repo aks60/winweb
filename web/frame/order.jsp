@@ -34,32 +34,28 @@
         <script type="module">
             import {resize, init_table, load_table1, click_table2} from './frame/order.js';
 
-            $(document).ready(function () {
+            $(window).bind('resize', () => resize()).trigger('resize');
+            order.table1 = document.getElementById('table1');
+            order.table2 = document.getElementById('table2');
 
-                $(window).bind('resize', () => resize()).trigger('resize');
-                order.table1 = document.getElementById('table1');
-                order.table2 = document.getElementById('table2');
+            order.table2.setAttribute('activeRowIndex', 0);
+            order.table2.addEventListener('click', click_table2);
 
-                order.table2.setAttribute('activeRowIndex', 0);
-                order.table2.addEventListener('click', click_table2);
+            init_table();
+            load_table1();
 
-                init_table();
-                load_table1();
-
-                $("button").button();
-                prepareToolBar();
-                deployTaq(['#dialog-card']);
-                $('#n23').datepicker();
-                $('#n24').datepicker();
-
-                document.getElementById('btnTest1').addEventListener('click', test1);
-            });
+            $("button").button();
+            prepareToolBar();
+            deployTaq(['#dialog-card']);
+            $('#n23').datepicker();
+            $('#n24').datepicker();
+            document.getElementById('btnTest1').addEventListener('click', test1);
 
             function test1() {
-                console.log('xaxaxa');
+                alert('xaxaxa');
                 //$("#table1").jqGrid('clearGridData');
                 //$("#table1").trigger("reloadGrid");
-                
+
 //                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
 //                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
 //                alert(tableRec.num_ord);
@@ -75,7 +71,7 @@
             <button id="btnOrder3" style="width: 128px" onClick="delete_table1($('#table1'))">Удалить заказ</button>
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frame/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="delete_table2();">Удалить констр.</button>                        
-            <button id="btnTest1" style="width: 128px">TEST</button>                        
+            <button id="btnTest1">TEST*</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card" card_width="416" card_height="230" style="display: none;">

@@ -28,43 +28,35 @@
             #tab2-systree tr > *:nth-child(4) {
                 display: none !important;
             }
-        </style>     
+        </style>  
+        
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
             var sysprodID = -1;
 
+            var tab1Tree = document.getElementById('tab1-tree');
+            var tab2Tree = document.getElementById('tab2-tree');
+            tab2Tree.setAttribute('activeRowIndex', 0);
+            tab2Tree.addEventListener('click', event_clicked);
+            init_dialog($("#dialog-dic"));
+            init_table();
+            load_table1();
+            resize();
+            
+            $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                resize();
+            });
+            
+            document.getElementById('btnTest1k').addEventListener('click', test1);
+            function test1() {
+
+            }
+            
             function resize() {
                 $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
                 $("#tab1-tree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
             }
-
-            $(document).ready(function () {
-                //alert('$(document).ready-2');
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                var tab1Tree = document.getElementById('tab1-tree');
-                var tab2Tree = document.getElementById('tab2-tree');
-                tab2Tree.setAttribute('activeRowIndex', 0);
-                tab2Tree.addEventListener('click', event_clicked);
-                init_dialog($("#dialog-dic"));
-                init_table(tab1Tree, tab2Tree);
-                load_table(tab1Tree);
-                resize();
-                
-                //const myButton = document.getElementById('btnTest1');
-                //myButton.addEventListener('click', Test2);
-//                myButton.addEventListener('click', function () {
-//                    alert('Кнопка нажата!');
-//                });
-            });
-            
-//            function test1() {
-////                $("#tab2-tree").jqGrid('clearGridData');
-////                $("#tab2-tree").trigger("reloadGrid");
-//                console.log('aks7');
-//            }
 
             function init_dialog(dialogTaq) {
 
@@ -107,9 +99,9 @@
                 });
             }
 
-            function init_table(table1, table2) {
+            function init_table() {
 
-                $(table1).jqGrid({
+                $(tab1Tree).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Категория'],
                     colModel: [
@@ -125,56 +117,54 @@
                     ExpandColumn: 'name',
                     ExpandColClick: true,
                     onSelectRow: function (rowid) {
-
-                        $("#tab2-tree").jqGrid('clearGridData');
-                        //$(table2).jqGrid("clearGridData", true); //очистим таблицу конструкций
-                        //Очистим таблицу конструкций
-                        //debugger;
-                        //$(table2).jqGrid('clearGridData', true).trigger('reloadGrid');
-//                        let j = 1;
-//                        let rc = table2.rows.length;
-//                        for (let i = j; i < rc; i++) {
-//                            $(table2).deleteRow(j);
-//                        }
-                        //Заполним табл. конструкций 
-                        let systreeRec = $(table1).jqGrid('getRowData', rowid);
-                        if (systreeRec.isLeaf === 'true') {
-                            let sysprodList = eSysprod.list.filter(rec => systreeRec.id == rec[eSysprod.systree_id]);
-                            if (sysprodList.length > 0) {
-                                let prjprodID = null;
-
-                                for (let rec of sysprodList) {
-                                    add_clone(table2, rec); //новая запись в таблице конструкций                                    
-                                    if (prjprodID === null) {
-                                        prjprodID = rec[eSysprod.id]; //первая конструкция
-                                    }
-                                }
-                                document.getElementById('cnv' + prjprodID).click(); //программный клик на первой записи (конструкции)
-                            }
-                        }
-                        $('#tab2-systree tr > *:nth-child(1)').hide();
+                        load_table2(rowid);
                     }
                 });
             }
 
-            function load_table(table1) {
+            function load_table1() {
 
-                $(table1).jqGrid('clearGridData', true);
+                $(tab1Tree).jqGrid('clearGridData', true);
                 $.ajax({
                     url: 'systree?action=sysTree',
                     success: function (data) {
-                        $(table1)[0].addJSONData({
+                        $(tab1Tree)[0].addJSONData({
                             total: 1,
                             page: 1,
                             records: data.sysTree.length,
                             rows: data.sysTree
                         });
-                        $(table1).jqGrid("setSelection", 1);
+                        $(tab1Tree).jqGrid("setSelection", 1);
                     }
                 });
             }
 
-            function add_clone(table2, sysprodRec) {
+            function load_table2(rowid) {
+                //Очистим таблицу конструкций
+                let rs = tab2Tree.rows.length;
+                for (let i = 1; i < rs; i++) {
+                    tab2Tree.deleteRow(1);
+                }
+                //Заполним табл. конструкций 
+                let systreeRec = $(tab1Tree).jqGrid('getRowData', rowid);
+                if (systreeRec.isLeaf === 'true') {
+                    let sysprodList = eSysprod.list.filter(rec => systreeRec.id == rec[eSysprod.systree_id]);
+                    if (sysprodList.length > 0) {
+                        let prjprodID = null;
+
+                        for (let rec of sysprodList) {
+                            add_clone(rec); //новая запись в таблице конструкций                                    
+                            if (prjprodID === null) {
+                                prjprodID = rec[eSysprod.id]; //первая конструкция
+                            }
+                        }
+                        document.getElementById('cnv' + prjprodID).click(); //программный клик на первой записи (конструкции)
+                    }
+                }
+                $('#tab2-systree tr > *:nth-child(1)').hide();
+            }
+
+            function add_clone(sysprodRec) {
 
                 let id = document.createTextNode(sysprodRec[eSysprod.id]);
                 let name = document.createTextNode(sysprodRec[eSysprod.name]);
@@ -198,7 +188,7 @@
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
-                table2.appendChild(tr);
+                tab2Tree.appendChild(tr);
                 Wincalc.new(canvas, canvas.offsetWidth, canvas.offsetHeight, script);
             }
 
@@ -219,9 +209,10 @@
                 return null;
             }
         </script> 
+        
     </head> 
     <body>                      
-        <button id="btnTest1" style="width: 128px;">TEST*</button>                                
+        <button id="btnTest1k" style="width: 128px;">TEST</button>                                
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
             <div id="pan1-systree" style="height: 99.6%; width: 99%;">
