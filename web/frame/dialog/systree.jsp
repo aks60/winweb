@@ -89,6 +89,7 @@
                                         })},
                                     success: (data) => {
                                         if (data.result === 'ok') {
+                                            debugger;
                                             prjprodRec[ePrjprod.id] = data.id;
                                             ePrjprod.list.push(prjprodRec);
                                             add_prjprodRec(tab2Tree, prjprodRec);
