@@ -19,7 +19,7 @@ kits.init_table = function (table) {
             {name: 'numb', width: 60, sorttype: "text"}
         ]
     });
-}
+};
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
@@ -42,7 +42,7 @@ kits.load_table = function (table) {
         }
         table.jqGrid("setSelection", 1);
     }
-}
+};
 //------------------------------------------------------------------------------
 kits.insert_table = function (table) {
 
@@ -52,7 +52,7 @@ kits.insert_table = function (table) {
     } else {
         $('#dialog-dic').load('frame/dialog/kitcard.jsp');
     }
-}
+};
 //------------------------------------------------------------------------------
 kits.insert2_table = function (table) {
     try {
@@ -61,7 +61,7 @@ kits.insert2_table = function (table) {
     } catch (e) {
         console.error('Error: kits.insert2_table() ' + e.message);
     }
-}
+};
 //------------  Редактирования строки таблицы  ---------------------------------
 kits.update_table = function (taq) {
 
@@ -123,7 +123,7 @@ kits.update_table = function (taq) {
             }
         }
     });
-}
+};
 //------------------------------------------------------------------------------
 kits.delete_table = function (table) {
 
@@ -164,7 +164,7 @@ kits.delete_table = function (table) {
             }
         }
     });
-}
+};
 //------------------------------------------------------------------------------
 kits.artikl_to_kit = function (btnSrc) {
     try {
@@ -174,7 +174,7 @@ kits.artikl_to_kit = function (btnSrc) {
     } catch (e) {
         console.error('Error: kits.artikl_to_kit() ' + e.message);
     }
-}
+};
 //-----------------------  Заполнение  -----------------------------------------
 kits.color_to_kit = function (btnSrc) {
     try {
@@ -208,5 +208,5 @@ kits.color_to_kit = function (btnSrc) {
     } catch (e) {
         console.error('Error: kits.color_to_kit() ' + e.message);
     }
-}
+};
 //------------------------------------------------------------------------------

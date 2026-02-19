@@ -39,6 +39,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
+//            import {add_prjprodRec} from '../order.js';
 
             var sysprodID = -1;
             var tab1Tree = document.getElementById('tab1-tree');
@@ -69,8 +70,8 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let orderRow = getSelectedRow($("#table1"));
-                            let sysprodRec = eSysprod.ist.find(rec => sysprodID == rec.list[eSysprod.id]);
+                            let orderRow = getSelectedRow($(tab1Tree));
+                            let sysprodRec = eSysprod.list.find(rec => sysprodID == rec[eSysprod.id]);
                             if (sysprodRec != undefined) {
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
@@ -82,7 +83,7 @@
                                             let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
                                                 sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
                                             ePrjprod.list.push(record);
-                                            order.add_prjprod(tab2Tree, record);
+                                            add_prjprod(tab2Tree, orderRow.id);
 
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);

@@ -56,7 +56,7 @@ login.user_connect = function () {
             dialogMes('Сообщение', 'Ошибка авторизации пользователя');
         }
     });
-}
+};
 //---------------  Проверка корректности ввода учётной записи  -----------------
 login.token_check = function () {
 
@@ -90,7 +90,7 @@ login.token_check = function () {
             }
         }
     });
-}
+};
 //------------------  Отправим учётку, получим случайное сообщение  ------------
 login.token_connect = function () {
     var login = document.getElementById('token_login').value;
@@ -108,7 +108,7 @@ login.token_connect = function () {
             }
         });
     }
-}
+};
 //------------- Подписание сообщения сервера закрытым ключём токена  -----------
 login.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
@@ -143,7 +143,7 @@ login.token_sign = function (random) {
             });
         }
     }
-}
+};
 //---------------  получение списка учёных записей токена  ---------------------
 login.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
@@ -166,7 +166,7 @@ login.token_refresh = function () {
     } else {
         document.all.mesCell.innerHTML = err[ret];
     }
-}
+};
 //------------------------------------------------------------------------------
 login.add_item = function (oListbox, text, value, isDefaultSelected, isSelected) {
     var oOption = document.createElement("option");
@@ -177,4 +177,4 @@ login.add_item = function (oListbox, text, value, isDefaultSelected, isSelected)
     else if (isSelected)
         oOption.selected = true;
     oListbox.appendChild(oOption);
-}
+};
