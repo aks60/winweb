@@ -1,5 +1,4 @@
 import {Wincalc} from '../build/Wincalc.js';
-
 export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
 
 export function taq_parent(node, tag) { //рекурсия
@@ -81,7 +80,7 @@ export function load_table1() {
 
 //Добавить контрукцию в таблицу
 export function load_table2(orderID) {
-    
+
     //Очистим списки
     order.wincalcMap.clear();
     let rc = order.table2.rows.length;
@@ -309,6 +308,12 @@ export function update_table1(taq) {
             }
         }
     });
+}
+
+//Клик table2
+export function click_table1(e) {
+    let projectRow = getSelectedRow($(order.table1));
+    order.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
 }
 
 //Клик table2

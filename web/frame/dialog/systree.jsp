@@ -46,7 +46,7 @@
             var tab2Tree = document.getElementById('tab2-tree');
 
             tab2Tree.setAttribute('activeRowIndex', 0);
-            tab2Tree.addEventListener('click', event_clicked);
+            tab2Tree.addEventListener('click', click_table2);
             init_dialog($("#dialog-dic"));
             init_table();
             load_table1();
@@ -70,20 +70,28 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let orderRow = getSelectedRow($(tab1Tree));
                             let sysprodRec = eSysprod.list.find(rec => sysprodID == rec[eSysprod.id]);
                             if (sysprodRec != undefined) {
+                                let prjprodRec = ePrjprod.vrec;
+                                prjprodRec[ePrjprod.up] = 'SEL';                                
+                                prjprodRec[ePrjprod.name] = sysprodRec[eSysprod.name];
+                                prjprodRec[ePrjprod.script] = sysprodRec[eSysprod.script];
+                                prjprodRec[ePrjprod.project_id] = order.projectRec[eProject.id];
+                                prjprodRec[ePrjprod.systree_id] = sysprodRec[eSysprod.systree_id];
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
                                     url: 'dbset?action=insertPrjprod',
-                                    data: {param: JSON.stringify({name: sysprodRec[eSysprod.name], script: sysprodRec[eSysprod.script],
-                                            projectID: orderRow.id, systreeID: sysprodRec[eSysprod.systree_id]})},
+                                    data: {param: JSON.stringify({
+                                            name: prjprodRec[ePrjprod.name],
+                                            script: prjprodRec[ePrjprod.script],
+                                            projectID: prjprodRec[ePrjprod.project_id],
+                                            systreeID: prjprodRec[ePrjprod.systree_id]
+                                        })},
                                     success: (data) => {
-                                        if (data.result == 'ok') {
-                                            let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
-                                                sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
-                                            ePrjprod.list.push(record);
-                                            add_prjprodRec(tab2Tree, orderRow.id);
+                                        if (data.result === 'ok') {
+                                            prjprodRec[ePrjprod.id] = data.id;
+                                            ePrjprod.list.push(prjprodRec);
+                                            add_prjprodRec(tab2Tree, prjprodRec);
 
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);
@@ -195,7 +203,7 @@
                 Wincalc.new(canvas, canvas.offsetWidth, canvas.offsetHeight, script);
             }
 
-            function event_clicked(e) {
+            function click_table2(e) {
                 let row = parentTag(e.target, 'TR');
                 if (row) {
                     let table = this, idx = table.getAttribute('activeRowIndex');
