@@ -7,15 +7,21 @@
         <title>PROJECT</title>
 
         <style>
+            #table2  {
+                border-collapse: collapse;
+            }
+            #table2 tr {
+                height: 68px;
+            }
+            #table2 td {
+                border: 1px solid #79b7e7;
+            }
             #table2 tr:hover {
                 background:#E2EEFF;
             }
             #table2 .activeRow, #table2 .activeRow:hover {
                 background:#6598C7;
                 color:#fff;
-            }
-            #table2 tr {
-                height: 68px;
             }
             #table2 tr > *:nth-child(1) {
                 display: none !important;
@@ -71,7 +77,7 @@
             <button id="btnOrder3" style="width: 128px" onClick="delete_table1($('#table1'))">Удалить заказ</button>
             <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frame/dialog/systree.jsp');">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px" onClick="delete_table2();">Удалить констр.</button>                        
-            <button id="btnTest1">TEST*</button>                        
+            <button id="btnTest1">TEST</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card" card_width="416" card_height="230" style="display: none;">
@@ -91,7 +97,7 @@
                         <table id="table3"  class="ui-jqgrid-btable"></table>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
-                        <table id="table2" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
+                        <table id="table2">
                             <tr style="height: 22px; background-color: #e7f4f9">
                                 <th></th><th>Наименование</th><th>Изображение</th></tr>
                         </table>                         

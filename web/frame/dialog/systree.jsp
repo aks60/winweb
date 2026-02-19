@@ -6,15 +6,21 @@
         <title>SYSTREE</title>
 
         <style>
+            #tab2-tree  {
+                border-collapse: collapse;
+            }
+            #tab2-tree tr {
+                height: 68px;
+            }
+            #tab2-tree td {
+                border: 1px solid #79b7e7;
+            }
             #tab2-tree tr:hover {
                 background:#E2EEFF;
             }
             #tab2-tree .activeRow, #tab2-tree .activeRow:hover {
                 background:#6598C7;
                 color:#fff;
-            }
-            #tab2-tree tr {
-                height: 68px;
             }
             #tab2-tree tr > *:nth-child(1) {
                 display: none !important;
@@ -29,31 +35,26 @@
                 display: none !important;
             }
         </style>  
-        
+
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
-            
+
             var sysprodID = -1;
             var tab1Tree = document.getElementById('tab1-tree');
             var tab2Tree = document.getElementById('tab2-tree');
-            
+
             tab2Tree.setAttribute('activeRowIndex', 0);
             tab2Tree.addEventListener('click', event_clicked);
             init_dialog($("#dialog-dic"));
             init_table();
             load_table1();
             resize();
-            
+
             $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                 resize();
             });
-            
-            document.getElementById('btnTest1k').addEventListener('click', test1);
-            function test1() {
 
-            }
-            
             function resize() {
                 $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
                 $("#tab1-tree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
@@ -209,11 +210,14 @@
                     return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
                 return null;
             }
+
+
+            //document.getElementById('btnTest1k').addEventListener('click', () => alert('ok'));
         </script> 
-        
+
     </head> 
     <body>                      
-        <button id="btnTest1k" style="width: 128px;">TEST</button>                                
+        <!--<button id="btnTest1k" style="width: 128px;">TEST</button>-->                                
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
             <div id="pan1-systree" style="height: 99.6%; width: 99%;">
@@ -221,7 +225,7 @@
             </div>
 
             <div id="pan2-systree" style="position: absolute; overflow-y: auto;  height: 99.6%; width: 290px; top: 0; right: -300px;">
-                <table id="tab2-tree" border="1" cellspacing="0" cellpadding="0" bordercolor='#79b7e7'>
+                <table id="tab2-tree">
                     <tr style="height: 22px; background-color: #e7f4f9">
                         <th></th><th>Наименование</th><th>Изображение</th></tr>
                 </table>            
