@@ -39,6 +39,7 @@
 
         <script type="module">
             import {resize, init_table, load_table1, click_table2} from './frame/order.js';
+            import {order} from './frame/order.js';
 
             $(window).bind('resize', () => resize()).trigger('resize');
             order.table1 = document.getElementById('table1');

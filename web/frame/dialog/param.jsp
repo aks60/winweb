@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>PARAM</title>
 
-        <script type="text/javascript">
+        <script type="module">
+            import {product} from './frame/product.js';
 //------------------------------------------------------------------------------            
             function resize() {
                 $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #pan-param").width());

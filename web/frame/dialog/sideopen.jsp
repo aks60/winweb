@@ -7,6 +7,7 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
+            import {order} from './frame/order.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #pan-sideopen").width());

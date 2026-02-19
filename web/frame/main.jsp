@@ -54,9 +54,7 @@
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser;
             var eElement, PRINT;
             //Глобальные объекты
-            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {},
-                    order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null},
-                    product = {}, kits = {};
+            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {};
 
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});

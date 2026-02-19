@@ -38,7 +38,7 @@
 
             #east2 {
                 background: #efeffb;
-                overflow-y: auto; 
+                overflow-y: auto;
                 width: 388px;
                 height: calc(100% - 270px);
                 right: 0px;
@@ -59,6 +59,7 @@
         <script type="module">
             import {wincalcNew, resize, init_table, load_tree,
                     update_script, test1, test2, test3} from './frame/product.js';
+            import {product} from './frame/product.js';
 
             $(document).ready(function () {
 

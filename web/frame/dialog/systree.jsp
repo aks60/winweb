@@ -39,7 +39,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
-//            import {add_prjprodRec} from '../order.js';
+            import {order, add_prjprodRec} from './frame/order.js';
 
             var sysprodID = -1;
             var tab1Tree = document.getElementById('tab1-tree');
@@ -83,7 +83,7 @@
                                             let record = ['SEL', data.id, 0, sysprodRec[eSysprod.name],
                                                 sysprodRec[eSysprod.script], orderRow.id, sysprodRec[eSysprod.systree_id]];
                                             ePrjprod.list.push(record);
-                                            add_prjprod(tab2Tree, orderRow.id);
+                                            add_prjprodRec(tab2Tree, orderRow.id);
 
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);

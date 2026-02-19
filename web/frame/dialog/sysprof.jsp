@@ -7,6 +7,8 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
+            import {order} from './frame/order.js';
+            import {product} from './frame/product.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());

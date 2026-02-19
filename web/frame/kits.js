@@ -1,4 +1,6 @@
-//------------------------------------------------------------------------------
+
+import {order} from './frame/order.js';
+
 kits.init_table = function (table) {
     table.jqGrid({
         datatype: "local",

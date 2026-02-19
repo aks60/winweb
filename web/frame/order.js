@@ -1,4 +1,7 @@
 import {Wincalc} from '../build/Wincalc.js';
+
+export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
+
 export function taq_parent(node, tag) { //рекурсия
     if (node)
         return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);

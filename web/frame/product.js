@@ -1,9 +1,11 @@
 
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
-import {get_winc} from './order.js';
+import {order, get_winc} from './order.js';
 import {UGeo} from '../build/model/uGeo.js';
 import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
+
+export let product = {};
 
 //Создание конструкции
 export function wincalcNew() {

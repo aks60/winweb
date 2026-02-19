@@ -4,7 +4,10 @@
     <head style="margin: 0; padding: 0;">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>KITCARD</title>
-        <script type="text/javascript">
+        <script type="module">
+            
+            import {Wincalc} from './build/Wincalc.js';
+            import {order} from './frame/order.js';
 //------------------------------------------------------------------------------
             var kitdetList = null;
 //------------------------------------------------------------------------------
