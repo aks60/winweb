@@ -304,6 +304,22 @@ export class Wincalc {
         this.ctx.restore();
     }
 
+    ajax() {
+        for(const dataSet of [eProject, ePrjprod]) {
+            const obj = {};
+            for(let record of dataSet.list) {
+                if(record[dataSet.up] === 'INS') {
+                    obj.url = 'dbset?action=insertPrjprod';
+                    
+                } else if(record[dataSet.up] === 'UPD') {
+                    
+                } else if(record[dataSet.up] === 'DEL') {
+                    
+                }                   
+            }  
+        }            
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     get cnv() {
         return this._cnv;
