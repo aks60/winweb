@@ -1,12 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
 
-export function taq_parent(node, tag) { //рекурсия
-    if (node)
-        return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
-    return null;
-}
-
 //Масштабирование
 export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
@@ -43,9 +37,8 @@ export function init_table() {
             {name: 'prjpart_id', hidden: true}
         ],
         //Загрузка таблицы 2
-        onSelectRow: function (rowid) {
-            let projectRow = $(order.table1).jqGrid('getRowData', rowid);
-            load_table2(projectRow.id);
+        onSelectRow: function (rowid, status, e) {
+            click_table1(rowid, status, e);
         }
     });
     resize();
@@ -309,13 +302,11 @@ export function update_table1(taq) {
 }
 
 //Клик table2
-export function click_table1(e) {
-    debugger;
-    //let projectRow = getSelectedRow($(order.table1));
-    let rowid = $(order.table1).jqGrid('getGridParam', "selrow");
-    let projectRow = (rowid) ? $(order.table1).jqGrid('getRowData', rowid) : null;    
+export function click_table1(rowid, status, e) {
+    
+    let projectRow = (rowid) ? $(order.table1).jqGrid('getRowData', rowid) : null;
+    load_table2(projectRow.id);
     order.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
-    console.log(order.projectRec[1]);
 }
 
 //Клик table2
@@ -332,11 +323,12 @@ export function click_table2(e) {
         let prjprodID = row.cells[0].innerHTML;
         order.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
     }
-//    taq_parent: function(node, tag) {
-//        if (node)
-//            return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
-//        return null;
-//    }
+}
+
+function taq_parent(node, tag) { //рекурсия
+    if (node)
+        return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
+    return null;
 }
 
 //Удаление строки таблицы 

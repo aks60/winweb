@@ -45,8 +45,7 @@
             order.table1 = document.getElementById('table1');
             order.table2 = document.getElementById('table2');
 
-            order.table1.addEventListener('click', click_table1);
-            order.table2.setAttribute('activeRowIndex', 0);
+            order.table2.setAttribute('activeRowIndex', 1);
             order.table2.addEventListener('click', click_table2);
 
             init_table();
