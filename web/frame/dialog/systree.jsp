@@ -81,12 +81,7 @@
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
                                     url: 'dbset?action=insertPrjprod',
-                                    data: {param: JSON.stringify({
-                                            name: prjprodRec[ePrjprod.name],
-                                            script: prjprodRec[ePrjprod.script],
-                                            projectID: prjprodRec[ePrjprod.project_id],
-                                            systreeID: prjprodRec[ePrjprod.systree_id]
-                                        })},
+                                    data: {param: JSON.stringify(prjprodRec)},
                                     success: (data) => {
                                         if (data.result === 'ok') {
                                             debugger;

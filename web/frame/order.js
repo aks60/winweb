@@ -73,7 +73,6 @@ export function load_table1() {
         });
     }
     $(order.table1).jqGrid("setSelection", 1);
-    //$('#outbody').load('frame/product.jsp');
     //$(order.table1).jqGrid("setSelection", rowID);
     resize();
 }
@@ -103,7 +102,6 @@ export function load_table2(orderID) {
             }
         }
         document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
-        $("#table2").jqGrid("setSelection", 2);
     }
 }
 
@@ -312,8 +310,12 @@ export function update_table1(taq) {
 
 //Клик table2
 export function click_table1(e) {
-    let projectRow = getSelectedRow($(order.table1));
+    debugger;
+    //let projectRow = getSelectedRow($(order.table1));
+    let rowid = $(order.table1).jqGrid('getGridParam', "selrow");
+    let projectRow = (rowid) ? $(order.table1).jqGrid('getRowData', rowid) : null;    
     order.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+    console.log(order.projectRec[1]);
 }
 
 //Клик table2

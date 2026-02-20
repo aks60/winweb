@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
 import domain.eElement;
 import domain.eSyssize;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -212,18 +213,9 @@ public class Dbset {
     public static JSONObject insertPrjprod(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONObject obj = (JSONObject) JSONValue.parse(param);
-
-            Query qPrjprod = new Query(ePrjprod.values());
-            Record record = new Record();
-            record.add("INS");
-            record.add(Connect.genId(ePrjprod.up));
-            record.add(0);
-            record.add(obj.get("name"));
-            record.add(obj.get("script"));
-            record.add(obj.get("projectID"));
-            record.add(obj.get("systreeID"));
-            qPrjprod.insert2(record);
+            Record record = gson.fromJson(param, Record.class);
+            record.set(ePrjprod.id, Connect.genId(ePrjprod.up));
+            new Query(ePrjprod.values()).insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
 
         } catch (SQLException e) {
