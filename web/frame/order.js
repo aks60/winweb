@@ -1,5 +1,5 @@
 import {Wincalc} from '../build/Wincalc.js';
-export let order = {orderID: 16767, wincalcMap: new Map(), prjprodRec: null};
+export let order = {wincalcMap: new Map(), prjprodRec: null};
 
 //Масштабирование
 export function  resize() {
@@ -38,7 +38,7 @@ export function init_table() {
         ],
         //Загрузка таблицы 2
         onSelectRow: function (rowid, status, e) {
-            click_table1(rowid, status, e);
+            click_table1(rowid);
         }
     });
     resize();
@@ -46,14 +46,11 @@ export function init_table() {
 
 //Загрузка данных в таблицу
 export function load_table1() {
-    let rowID = 1;
+
     $(order.table1).jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
     for (let i = 0; i < eProject.list.length; i++) {
         let tr = eProject.list[i];
-        if (tr[eProject.id] === order.orderID) {
-            rowID = i + 1;
-        }
         $(order.table1).jqGrid('addRowData', i + 1, {
             id: tr[eProject.id],
             num_ord: tr[eProject.num_ord],
@@ -86,7 +83,7 @@ export function load_table2(orderID) {
         for (let rec of prjprodList) {
 
             //Добавим запись в домен ePrjprod
-            add_prjprodRec(order.table2, rec);
+            insert_table2(order.table2, rec);
             //Выделение строки табл. конструкций
             if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
                 prjprodID = rec[ePrjprod.id];
@@ -96,38 +93,6 @@ export function load_table2(orderID) {
         }
         document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
     }
-}
-
-//Добавим запись в домен ePrjprod
-export function add_prjprodRec(table, prjprodRec) {
-
-    //Добавим запись в таблице конструкций
-    let canvas = document.createElement("canvas");
-    canvas.class = "cnv";
-    canvas.id = 'cnv' + prjprodRec[ePrjprod.id];
-
-    let id = document.createTextNode(prjprodRec[ePrjprod.id]);
-    let name = document.createTextNode(prjprodRec[ePrjprod.name]);
-    let script = prjprodRec[ePrjprod.script];
-
-    //Создание экземпрляра окна
-    let winc = Wincalc.new(canvas, 68, 68, script);
-
-    //Массив объектов winc
-    order.wincalcMap.set(prjprodRec[ePrjprod.id], winc);
-
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-    let tr = document.createElement('tr');
-    tr.id = 'tr' + prjprodRec[ePrjprod.id];
-    td1.appendChild(id);
-    td2.appendChild(name);
-    td3.appendChild(canvas);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    table.appendChild(tr);
 }
 
 //Удаление строки таблицы
@@ -302,11 +267,42 @@ export function update_table1(taq) {
 }
 
 //Клик table2
-export function click_table1(rowid, status, e) {
-    
+export function click_table1(rowid) {
+    debugger;
     let projectRow = (rowid) ? $(order.table1).jqGrid('getRowData', rowid) : null;
     load_table2(projectRow.id);
     order.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+}
+
+//Добавим запись в домен ePrjprod
+export function insert_table2(table, prjprodRec) {
+
+    //Добавим запись в таблице конструкций
+    let prjprodID = prjprodRec[ePrjprod.id];
+    let canvas = document.createElement("canvas");
+    canvas.class = "cnv";
+    canvas.id = 'cnv' + prjprodID;
+
+    let id = document.createTextNode(prjprodID);
+    let name = document.createTextNode(prjprodRec[ePrjprod.name]);
+    let script = prjprodRec[ePrjprod.script];
+
+    //Создание экземпрляра окна
+    let winc = Wincalc.new(canvas, 68, 68, script);
+    order.wincalcMap.set(prjprodID, winc); //массив объектов winc
+
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+    let tr = document.createElement('tr');
+    tr.id = 'tr' + prjprodID;
+    td1.appendChild(id);
+    td2.appendChild(name);
+    td3.appendChild(canvas);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    table.appendChild(tr);
 }
 
 //Клик table2

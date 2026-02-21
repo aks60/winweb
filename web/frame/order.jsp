@@ -38,7 +38,8 @@
         </style>        
 
         <script type="module">
-            import {resize, init_table, load_table1, click_table1, click_table2} from './frame/order.js';
+            import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1, click_table1,
+                    load_table2, delete_table2, click_table2} from './frame/order.js';
             import {order} from './frame/order.js';
 
             $(window).bind('resize', () => resize()).trigger('resize');
@@ -59,15 +60,16 @@
             document.getElementById('btnTest1').addEventListener('click', test1);
 
             function test1() {
-                alert('xaxaxa');
-                //$("#table1").jqGrid('clearGridData');
-                //$("#table1").trigger("reloadGrid");
-
+                $('#dialog-dic').load('frame/dialog/systree.jsp');
+                load_table2(order.projectRec[eProject.id]);
+//                let id = order.projectRec[eProject.id];
+                //load_table2(order.projectRec[eProject.id]);
+//                //$("#table1").jqGrid('clearGridData');
+//                //$("#table1").trigger("reloadGrid");
+//
 //                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
 //                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
-//                alert(tableRec.num_ord);
-//                let rowid = $("#table2").jqGrid('getGridParam', "selrow");
-//                $("#table2").jqGrid("setSelection", rowid);
+//                console.log(tableRec);
             }
         </script>
     </head>
