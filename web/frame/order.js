@@ -1,4 +1,5 @@
 import {Wincalc} from '../build/Wincalc.js';
+
 export let order = {wincalcMap: new Map(), prjprodRec: null};
 
 //Масштабирование
@@ -85,7 +86,7 @@ export function load_table2(orderID) {
             //Добавим запись в домен ePrjprod
             insert_table2(order.table2, rec);
             //Выделение строки табл. конструкций
-            if (order.prjprodRec != null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
+            if (order.prjprodRec !== null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
                 prjprodID = rec[ePrjprod.id];
             } else if (prjprodID === null) {
                 prjprodID = rec[ePrjprod.id]; //первая конструкция
@@ -97,6 +98,7 @@ export function load_table2(orderID) {
 
 //Удаление строки таблицы
 export function delete_table1(table) {
+    
     let orderRow = getSelectedRow(table);
     if (orderRow != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
@@ -139,7 +141,8 @@ export function delete_table1(table) {
 
 //Вставка строки в таблицу
 export function insert_table1(taq) {
-    let orderRow = getSelectedRow($("#table1"));
+    
+    let orderRow = getSelectedRow($(order.table1));
     let orderRec = eProject.list.find(rec => orderRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
@@ -329,6 +332,7 @@ function taq_parent(node, tag) { //рекурсия
 
 //Удаление строки таблицы 
 export function delete_table2() {
+
     if (order.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -360,7 +364,7 @@ export function delete_table2() {
                                 dialogMes('Сообщение', "<p>" + data.result);
                         },
                         error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервер");
+                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
                         }
                     });
                     $(this).dialog("close");

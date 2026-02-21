@@ -57,7 +57,14 @@
             deployTaq(['#dialog-card']);
             $('#n23').datepicker();
             $('#n24').datepicker();
-            document.getElementById('btnTest1').addEventListener('click', test1);
+
+            document.getElementById('btnOrder1').addEventListener('click', () => insert_table1('#dialog-card'));
+            document.getElementById('btnOrder2').addEventListener('click', () => update_table1('#dialog-card'));
+            document.getElementById('btnOrder3').addEventListener('click', () => delete_table1($('#table1')));
+            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
+            document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
+            document.getElementById('btnOrder1').addEventListener('click', test1);
+
 
             function test1() {
                 $('#dialog-dic').load('frame/dialog/systree.jsp');
@@ -75,11 +82,12 @@
     </head>
     <body>        
         <div id="north">
-            <button id="btnOrder1" style="width: 128px" onClick="insert_table1('#dialog-card');">Добавить заказ</button>
-            <button id="btnOrder2" style="width: 128px" onClick="update_table1('#dialog-card');">Изменить заказ</button>
-            <button id="btnOrder3" style="width: 128px" onClick="delete_table1($('#table1'))">Удалить заказ</button>
-            <button id="btnProd1" style="width: 136px; margin-left: 60px;" onClick="$('#dialog-dic').load('frame/dialog/systree.jsp');">Добавить констр.</button>
-            <button id="btnProd3" style="width: 128px" onClick="delete_table2();">Удалить констр.</button>                        
+            <button id="btnOrder1" style="width: 128px">Добавить заказ</button>
+            <button id="btnOrder2" style="width: 128px">Изменить заказ</button>
+            <button id="btnOrder3" style="width: 128px">Удалить заказ</button>
+            &emsp;&emsp;&emsp;
+            <button id="btnProd1" style="width: 136px">Добавить констр.</button>
+            <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
             <button id="btnTest1">TEST</button>                        
         </div>     
         <div id = "context">     
