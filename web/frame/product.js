@@ -1,6 +1,6 @@
 
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
-import {order, get_winc} from './order.js';
+import {project, get_winc} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
 import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
@@ -9,9 +9,9 @@ export let product = {};
 
 //Создание конструкции
 export function wincalcNew() {
-    if (order.prjprodRec != null) {
+    if (project.prjprodRec != null) {
         let cnv = document.getElementById("cnv");
-        let script = order.prjprodRec[ePrjprod.script];        
+        let script = project.prjprodRec[ePrjprod.script];        
         product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight,  script);
     }
 }
@@ -92,7 +92,7 @@ export function load_table() {
 //Загрузка данных в tree
 export function load_tree(tabtree) {
     try {
-        if (order.prjprodRec != null) {
+        if (project.prjprodRec != null) {
             let arr = new Array();
             let winc = get_winc();
             let root = winc.root;
@@ -175,8 +175,8 @@ export function tree_to_tabs(nodeID) {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
         if (nodeID !== '-2') {
-            let prgprodID = order.prjprodRec[ePrjprod.id];
-            let winc = order.wincalcMap.get(prgprodID);
+            let prgprodID = project.prjprodRec[ePrjprod.id];
+            let winc = project.wincalcMap.get(prgprodID);
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
                     ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
 
@@ -257,7 +257,7 @@ export function tree_to_tabs(nodeID) {
 //Текстура изделия
 export function color_to_windows(btnSrc) {
     try {
-        let winc = order.wincalcMap.get(order.prjprodRec[ePrjprod.id]);
+        let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
         let groupSet = new Set();
         let colorSet = new Set();
 
@@ -330,8 +330,8 @@ export function color_to_windows(btnSrc) {
 export function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let prjprodID = order.prjprodRec[ePrjprod.id];
-        let winc = order.wincalcMap.get(prjprodID);
+        let prjprodID = project.prjprodRec[ePrjprod.id];
+        let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);
         let sysprofSet = new Set();
 
@@ -380,8 +380,8 @@ export function artikl_to_stvork(btnSrc) {
 export function color_to_element(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let prjprodID = order.prjprodRec[ePrjprod.id];
-        let winc = order.wincalcMap.get(prjprodID);
+        let prjprodID = project.prjprodRec[ePrjprod.id];
+        let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id == nodeID);
         let groupSet = new Set();
         let colorSet = new Set();
@@ -436,8 +436,8 @@ export function color_to_element(btnSrc) {
 export function artikl_to_glass(btnSrc) {
     try {
         let nodeID = $("#tree-winc").jstree("get_selected")[0];
-        let prjprodID = order.prjprodRec[ePrjprod.id];
-        let winc = order.wincalcMap.get(prjprodID);
+        let prjprodID = project.prjprodRec[ePrjprod.id];
+        let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);
 
         //Список доступных толщин в ветке системы например 4;5;8
@@ -464,8 +464,8 @@ export function artikl_to_glass(btnSrc) {
 
 //Изменение скрипта
 export function update_script() {
-    let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-    let winc = order.wincalcMap.get(prjprodID);
+    let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+    let winc = project.wincalcMap.get(prjprodID);
 
     $.ajax({//запишем профиль в серверную базу данных
         url: 'dbset?action=updateScript',

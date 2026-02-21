@@ -1,6 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 
-export let order = {wincalcMap: new Map(), prjprodRec: null};
+export let project = {wincalcMap: new Map(), prjprodRec: null};
 
 //Масштабирование
 export function  resize() {
@@ -11,16 +11,16 @@ export function  resize() {
 
 //Текущий WINC 
 export function get_winc() {
-    if (order.wincalcMap !== undefined && order.prjprodRec !== undefined) {
-        let prjprodID = order.prjprodRec[ePrjprod.id];
-        return order.wincalcMap.get(prjprodID);
+    if (project.wincalcMap !== undefined && project.prjprodRec !== undefined) {
+        let prjprodID = project.prjprodRec[ePrjprod.id];
+        return project.wincalcMap.get(prjprodID);
     }
     return null;
 }
 
 //Инициализация таблиц
 export function init_table() {
-    $(order.table1).jqGrid({
+    $(project.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -48,11 +48,11 @@ export function init_table() {
 //Загрузка данных в таблицу
 export function load_table1() {
 
-    $(order.table1).jqGrid('clearGridData', true);
+    $(project.table1).jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
     for (let i = 0; i < eProject.list.length; i++) {
         let tr = eProject.list[i];
-        $(order.table1).jqGrid('addRowData', i + 1, {
+        $(project.table1).jqGrid('addRowData', i + 1, {
             id: tr[eProject.id],
             num_ord: tr[eProject.num_ord],
             num_acc: tr[eProject.num_acc],
@@ -63,8 +63,8 @@ export function load_table1() {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    $(order.table1).jqGrid("setSelection", 1);
-    //$(order.table1).jqGrid("setSelection", rowID);
+    $(project.table1).jqGrid("setSelection", 1);
+    //$(project.table1).jqGrid("setSelection", rowID);
     resize();
 }
 
@@ -72,10 +72,10 @@ export function load_table1() {
 export function load_table2(orderID) {
 
     //Очистим списки
-    order.wincalcMap.clear();
-    let rc = order.table2.rows.length;
+    project.wincalcMap.clear();
+    let rc = project.table2.rows.length;
     for (let i = 1; i < rc; i++) {
-        order.table2.deleteRow(1);
+        project.table2.deleteRow(1);
     }
     //Заполним табл. конструкций            
     let prjprodList = ePrjprod.list.filter(rec => orderID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
@@ -84,9 +84,9 @@ export function load_table2(orderID) {
         for (let rec of prjprodList) {
 
             //Добавим запись в домен ePrjprod
-            insert_table2(order.table2, rec);
+            insert_table2(project.table2, rec);
             //Выделение строки табл. конструкций
-            if (order.prjprodRec !== null && order.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
+            if (project.prjprodRec !== null && project.prjprodRec[ePrjprod.id] === rec[ePrjprod.id]) {
                 prjprodID = rec[ePrjprod.id];
             } else if (prjprodID === null) {
                 prjprodID = rec[ePrjprod.id]; //первая конструкция
@@ -142,7 +142,7 @@ export function delete_table1(table) {
 //Вставка строки в таблицу
 export function insert_table1(taq) {
     
-    let orderRow = getSelectedRow($(order.table1));
+    let orderRow = getSelectedRow($(project.table1));
     let orderRec = eProject.list.find(rec => orderRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
@@ -272,9 +272,9 @@ export function update_table1(taq) {
 //Клик table2
 export function click_table1(rowid) {
     debugger;
-    let projectRow = (rowid) ? $(order.table1).jqGrid('getRowData', rowid) : null;
+    let projectRow = (rowid) ? $(project.table1).jqGrid('getRowData', rowid) : null;
     load_table2(projectRow.id);
-    order.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+    project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
 }
 
 //Добавим запись в домен ePrjprod
@@ -292,7 +292,7 @@ export function insert_table2(table, prjprodRec) {
 
     //Создание экземпрляра окна
     let winc = Wincalc.new(canvas, 68, 68, script);
-    order.wincalcMap.set(prjprodID, winc); //массив объектов winc
+    project.wincalcMap.set(prjprodID, winc); //массив объектов winc
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
@@ -320,7 +320,7 @@ export function click_table2(e) {
         row.classList.add('activeRow');
         table.setAttribute('activeRowIndex', row.rowIndex);
         let prjprodID = row.cells[0].innerHTML;
-        order.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
+        project.prjprodRec = findef(prjprodID, ePrjprod.id, ePrjprod);
     }
 }
 
@@ -333,7 +333,7 @@ function taq_parent(node, tag) { //рекурсия
 //Удаление строки таблицы 
 export function delete_table2() {
 
-    if (order.prjprodRec != null) {
+    if (project.prjprodRec != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
         $("#dialog-mes").dialog({
@@ -346,14 +346,14 @@ export function delete_table2() {
                 "Да": function () {
                     $.ajax({
                         url: 'dbset?action=deletePrjprod',
-                        data: {param: JSON.stringify({id: order.prjprodRec[ePrjprod.id]})},
+                        data: {param: JSON.stringify({id: project.prjprodRec[ePrjprod.id]})},
                         success: (data) => {
                             if (data.result === 'ok') {
-                                let id = 'tr' + order.prjprodRec[ePrjprod.id];
+                                let id = 'tr' + project.prjprodRec[ePrjprod.id];
                                 var trow = document.getElementById(id);
                                 trow.remove();
                                 for (let i = 0; i < ePrjprod.list.length; ++i) {
-                                    if (ePrjprod.list[i][ePrjprod.id] === order.prjprodRec[ePrjprod.id]) {
+                                    if (ePrjprod.list[i][ePrjprod.id] === project.prjprodRec[ePrjprod.id]) {
                                         ePrjprod.list.splice(i, 1);
                                     }
                                 }

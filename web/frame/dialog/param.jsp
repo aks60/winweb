@@ -35,8 +35,8 @@
                             let paramsRow = table.jqGrid('getRowData', rowid);
                             let paramsRec = eParams.list.find(rec => paramsRow.id == rec.list[eParams.id]);
                             let paramDef = paramsRow.id;
-                            let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                            let winc = order.wincalcMap.get(order.prjprodRec[ePrjprod.id]);
+                            let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                            let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
                             let titleID1 = paramsRec[eParams.params_id];
                             winc.gson.param = (winc.gson.param == undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;

@@ -7,7 +7,7 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
-            import {order} from './frame/order.js';
+            import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 //------------------------------------------------------------------------------
             function resize() {
@@ -126,8 +126,8 @@
                     if ($('#outbody title').text() == 'PRODUCT') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                        let winc = order.wincalcMap.get(prjprodID);
+                        let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                        let winc = project.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
                         let param = elem.gson.param;
                         if (elem.gson.param == undefined) {
@@ -171,7 +171,7 @@
                         let cnv = document.getElementById("cnv");
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         let winc2 = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, prjprodRec[ePrjprod.script]);
-                        order.wincalcMap.set(prjprodID, winc2); //новый экз.
+                        project.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({

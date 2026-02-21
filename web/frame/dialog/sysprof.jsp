@@ -7,7 +7,7 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
-            import {order} from './frame/order.js';
+            import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 //------------------------------------------------------------------------------
             function resize() {
@@ -63,8 +63,8 @@
             function load_table(table) {
 
                 table.jqGrid('clearGridData', true);
-                let id = order.prjprodRec[eSysprof.id];
-                let winc = order.wincalcMap.get(id);
+                let id = project.prjprodRec[eSysprof.id];
+                let winc = project.wincalcMap.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
@@ -84,9 +84,9 @@
                 let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                 let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
-                let winc = order.wincalcMap.get(prjprodID);
+                let winc = project.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 if (elem.gson.param == undefined) {
                     elem.gson.param = {};
@@ -103,7 +103,7 @@
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                 let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
-                order.wincalcMap.set(prjprodID, iwincalc); //новый экз.
+                project.wincalcMap.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({

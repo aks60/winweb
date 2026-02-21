@@ -39,7 +39,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
-            import {order, load_table2 as order_load_table2} from './frame/order.js';
+            import {project, load_table2 as order_load_table2} from './frame/project.js';
 
             var sysprodID = -1;
             var tab1Tree = document.getElementById('tab1-tree');
@@ -76,7 +76,7 @@
                                 prjprodRec[ePrjprod.up] = 'SEL';                                
                                 prjprodRec[ePrjprod.name] = sysprodRec[eSysprod.name];
                                 prjprodRec[ePrjprod.script] = sysprodRec[eSysprod.script];
-                                prjprodRec[ePrjprod.project_id] = order.projectRec[eProject.id];
+                                prjprodRec[ePrjprod.project_id] = project.projectRec[eProject.id];
                                 prjprodRec[ePrjprod.systree_id] = sysprodRec[eSysprod.systree_id];
 
                                 $.ajax({//Запишем скрипт в серверную базу данных
@@ -86,7 +86,7 @@
                                         if (data.result === 'ok') {
                                             prjprodRec[ePrjprod.id] = data.id;
                                             ePrjprod.list.push(prjprodRec);
-                                            order_load_table2(order.projectRec[eProject.id]);
+                                            order_load_table2(project.projectRec[eProject.id]);
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);
                                     },

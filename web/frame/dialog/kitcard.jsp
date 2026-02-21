@@ -7,7 +7,7 @@
         <script type="module">
             
             import {Wincalc} from './build/Wincalc.js';
-            import {order} from './frame/order.js';
+            import {project} from './frame/project.js';
 //------------------------------------------------------------------------------
             var kitdetList = null;
 //------------------------------------------------------------------------------
@@ -115,7 +115,7 @@
                                     color2_id: kitdetRec[eKitdet.color2_id],
                                     color3_id: kitdetRec[eKitdet.color3_id],
                                     artikl_id: kitdetRec[eKitdet.artikl_id],
-                                    prjprod_id: order.prjprodRec[ePrjprod.id]
+                                    prjprod_id: project.prjprodRec[ePrjprod.id]
                                 })
                             },
                             success: (data) => {

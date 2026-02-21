@@ -7,7 +7,7 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
-            import {order} from './frame/order.js';
+            import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 //------------------------------------------------------------------------------
             var TYPE = ["", "Профили", "Аксессуары", "Погонаж", "Инструмент", "Заполнения"];
@@ -112,10 +112,10 @@
                         let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                         let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                        let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
                         let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
 
-                        let winc = order.wincalcMap.get(prjprodID);
+                        let winc = project.wincalcMap.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
                         elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
 
@@ -147,7 +147,7 @@
                         //Запишем скрипт в локальн. бд 
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, prjprodRec[ePrjprod.script]);
-                        order.wincalcMap.set(prjprodID, winc2); //новый экз.
+                        project.wincalcMap.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -183,7 +183,7 @@
                                         color2_id: artiklRec[eArtikl.color2_id],
                                         color3_id: artiklRec[eArtikl.color3_id],
                                         artikl_id: artiklRec[eArtikl.id],
-                                        prjprod_id: order.prjprodRec[ePrjprod.id]
+                                        prjprod_id: project.prjprodRec[ePrjprod.id]
                                     })
                                 },
                                 success: (data) => {
@@ -222,8 +222,8 @@
                 let pkSet = new Set();
                 let artiklArr = eArtikl.list.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = order.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                let winc = order.wincalcMap.get(prjprodID);
+                let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+                let winc = project.wincalcMap.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 for (let furndetRec1 of eFurndet.list) {
                     if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {

@@ -1,5 +1,5 @@
 
-import {order} from './frame/order.js';
+import {project} from './frame/project.js';
 
 kits.init_table = function (table) {
     table.jqGrid({
@@ -25,8 +25,8 @@ kits.init_table = function (table) {
 //------------------------------------------------------------------------------
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
-    if (order.wincalcMap.size != 0) {
-        kits.prjkitList = ePrjkit.list.filter(rec => order.prjprodRec[ePrjprod.id] == rec.list[ePrjkit.prjprod_id]);
+    if (project.wincalcMap.size != 0) {
+        kits.prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] == rec.list[ePrjkit.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
             let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
@@ -48,7 +48,7 @@ kits.load_table = function (table) {
 //------------------------------------------------------------------------------
 kits.insert_table = function (table) {
 
-    if (order.wincalcMap.size == 0) {
+    if (project.wincalcMap.size == 0) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
 
     } else {

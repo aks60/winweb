@@ -27,7 +27,7 @@ login.init_login = function () {
                 $("#outbody").load('frame/users.jsp');
             } else {
                 $("#mainmenu").load('frame/menu.jsp');
-                $("#outbody").load('frame/order.jsp');
+                $("#outbody").load('frame/project.jsp');
             }
         } else {
             login.que_requests = 1;
