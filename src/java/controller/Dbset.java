@@ -142,7 +142,7 @@ public class Dbset {
         }
     }
 
-    public static JSONObject insertOrder(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);
@@ -163,7 +163,7 @@ public class Dbset {
         }
     }
 
-    public static JSONObject updateOrder(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject updateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
             JSONArray arr = (JSONArray) JSONValue.parse(param);
@@ -223,7 +223,7 @@ public class Dbset {
         }
     }
 
-    public static JSONObject deleteOrder(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject deleteProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
             JSONObject obj = (JSONObject) JSONValue.parse(param);

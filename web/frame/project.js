@@ -1,5 +1,4 @@
 import {Wincalc} from '../build/Wincalc.js';
-
 export let project = {wincalcMap: new Map(), prjprodRec: null};
 
 //Масштабирование
@@ -98,7 +97,7 @@ export function load_table2(projectID) {
 
 //Удаление строки таблицы
 export function delete_table1(table) {
-    
+
     let projectRow = getSelectedRow(table);
     if (projectRow != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
@@ -141,15 +140,15 @@ export function delete_table1(table) {
 
 //Вставка строки в таблицу
 export function insert_table1(taq) {
-    
+
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => projectRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
-        url: 'dbset?action=genidOrder',
+        url: 'dbset?action=genidProject',
         data: {param: JSON.stringify({})},
-        success: (dat) => {
-            if (dat.result === 'ok') {
-                $("#n21").val(dat.id);
+        success: (datkey) => {
+            if (datkey.result === 'ok') {
+                $("#n21").val(datkey.id);
                 $("#n22").val('');
                 $("#n23").val(formatDate2(new Date()));
                 $("#n24").val('');
@@ -157,7 +156,7 @@ export function insert_table1(taq) {
                 $("#n25").attr("fk", '-3');
                 //Открытие диалога insert
                 $(taq).dialog({
-                    title: "Карточка ввода нового заказа",
+                    title: "Карточка ввода нового проекта",
                     width: $(taq).attr('card_width'),
                     height: $(taq).attr('card_height'),
                     modal: true,
@@ -169,15 +168,21 @@ export function insert_table1(taq) {
                                 return;
                             }
                             $.ajax({//запишем заказ в серверную базу данных
-                                url: 'dbset?action=insertOrder',
-                                data: {param: JSON.stringify({id: dat.id, num_ord: $("#n21").val(), num_acc: $("#n22").val(), manager: login.data.user_fio,
-                                        date4: $("#n23").val(), date6: $("#n24").val(), prjpart_id: $("#n25").attr("fk")})},
+                                url: 'dbset?action=insertProject',
+                                data: {param: JSON.stringify({
+                                        id: datkey.id,
+                                        num_ord: $("#n21").val(),
+                                        num_acc: $("#n22").val(),
+                                        manager: login.data.user_fio,
+                                        date4: $("#n23").val(),
+                                        date6: $("#n24").val(),
+                                        prjpart_id: $("#n25").attr("fk")})},
                                 success: (data) => {
 
                                     if (data.result === 'ok') {
-                                        let record = new Array(41);
+                                        let record = eProject.vrec();
                                         record[0] = 'SEL';
-                                        record[eProject.id] = dat.id;
+                                        record[eProject.id] = datkey.id;
                                         record[eProject.num_ord] = $("#n21").val();
                                         record[eProject.num_acc] = $("#n22").val();
                                         record[eProject.manager] = login.data.user_fio;
@@ -186,7 +191,7 @@ export function insert_table1(taq) {
                                         record[eProject.owner] = login.data.user_name;
                                         record[eProject.prjpart_id] = $("#n25").attr("fk");
                                         eProject.list.push(record);
-                                        load_table1($("#table1"));
+                                        load_table1($(project.table1));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },

@@ -97,24 +97,24 @@ public class DbsetCont extends HttpServlet {
                     JSONObject output = Dbset.insertPrjprod(request, response);
                     out.write(JSONObject.toJSONString(output));
 
-                } else if (action.equalsIgnoreCase("genidOrder")) {
+                } else if (action.equalsIgnoreCase("genidProject")) {
                     out.write(JSONObject.toJSONString(
                             new JSONObject(Map.of("result", "ok", "id", Connect.genId(eProject.up)))));
 
-                } else if (action.equalsIgnoreCase("insertOrder")) {
-                    JSONObject output = Dbset.insertOrder(request, response);
+                } else if (action.equalsIgnoreCase("insertProject")) {
+                    JSONObject output = Dbset.insertProject(request, response);
                     out.write(JSONObject.toJSONString(output));
 
-                } else if (action.equalsIgnoreCase("updateOrder")) {
-                    JSONObject output = Dbset.updateOrder(request, response);
+                } else if (action.equalsIgnoreCase("updateProject")) {
+                    JSONObject output = Dbset.updateProject(request, response);
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("insertKits")) {
                     JSONObject output = Dbset.insertKits(request, response);
                     out.write(JSONObject.toJSONString(output));
 
-                } else if (action.equalsIgnoreCase("deleteOrder")) {
-                    JSONObject output = Dbset.deleteOrder(request, response);
+                } else if (action.equalsIgnoreCase("deleteProject")) {
+                    JSONObject output = Dbset.deleteProject(request, response);
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("updatePrjkit")) {
