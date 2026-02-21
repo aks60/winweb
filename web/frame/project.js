@@ -69,7 +69,7 @@ export function load_table1() {
 }
 
 //Добавить контрукцию в таблицу
-export function load_table2(orderID) {
+export function load_table2(projectID) {
 
     //Очистим списки
     project.wincalcMap.clear();
@@ -78,7 +78,7 @@ export function load_table2(orderID) {
         project.table2.deleteRow(1);
     }
     //Заполним табл. конструкций            
-    let prjprodList = ePrjprod.list.filter(rec => orderID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
     if (prjprodList.length > 0) {
         let prjprodID = null;
         for (let rec of prjprodList) {
@@ -99,8 +99,8 @@ export function load_table2(orderID) {
 //Удаление строки таблицы
 export function delete_table1(table) {
     
-    let orderRow = getSelectedRow(table);
-    if (orderRow != null) {
+    let projectRow = getSelectedRow(table);
+    if (projectRow != null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущий заказ?");
         $("#dialog-mes").dialog({
@@ -113,12 +113,12 @@ export function delete_table1(table) {
                 "Да": function () {
                     $.ajax({
                         url: 'dbset?action=deleteOrder',
-                        data: {param: JSON.stringify({id: orderRow.id})},
+                        data: {param: JSON.stringify({id: projectRow.id})},
                         success: (data) => {
                             if (data.result === 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < eProject.list.length; ++i) {
-                                    if (orderRow.id === eProject.list[i][eProject.id]) {
+                                    if (projectRow.id === eProject.list[i][eProject.id]) {
                                         eProject.list.splice(i, 1);
                                     }
                                 }
@@ -142,8 +142,8 @@ export function delete_table1(table) {
 //Вставка строки в таблицу
 export function insert_table1(taq) {
     
-    let orderRow = getSelectedRow($(project.table1));
-    let orderRec = eProject.list.find(rec => orderRow.id = rec[eProject.id]);
+    let projectRow = getSelectedRow($(project.table1));
+    let projectRec = eProject.list.find(rec => projectRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidOrder',
         data: {param: JSON.stringify({})},
@@ -213,14 +213,14 @@ export function insert_table1(taq) {
 //Редактирования строки таблицы
 export function update_table1(taq) {
 
-    let orderRow = getSelectedRow($("#table1"));
-    let orderRec = eProject.list.find(rec => orderRow.id === rec[eProject.id]);
-    $("#n21").val(orderRow.num_ord);
-    $("#n22").val(orderRow.num_acc);
-    $("#n23").val(orderRow.date4);
-    $("#n24").val(orderRow.date6);
-    $("#n25").val(orderRow.partner);
-    $("#n25").attr("fk", orderRow.prjpart_id);
+    let projectRow = getSelectedRow($("#table1"));
+    let projectRec = eProject.list.find(rec => projectRow.id === rec[eProject.id]);
+    $("#n21").val(projectRow.num_ord);
+    $("#n22").val(projectRow.num_acc);
+    $("#n23").val(projectRow.date4);
+    $("#n24").val(projectRow.date6);
+    $("#n25").val(projectRow.partner);
+    $("#n25").attr("fk", projectRow.prjpart_id);
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
         width: $(taq).attr('card_width'),
@@ -230,28 +230,28 @@ export function update_table1(taq) {
         buttons: {
             "Применить": function () {
 
-                orderRec[0] = 'UPD';
-                orderRec[eProject.num_ord] = $("#n21").val();
-                orderRec[eProject.num_acc] = $("#n22").val();
-                orderRec[eProject.manager] = login.data.user_fio;
-                orderRec[eProject.date4] = $("#n23").val();
-                orderRec[eProject.date6] = $("#n24").val();
-                orderRec[eProject.owner] = login.data.user_name;
-                orderRec[eProject.prjpart_id] = $("#n25").attr("fk");
+                projectRec[0] = 'UPD';
+                projectRec[eProject.num_ord] = $("#n21").val();
+                projectRec[eProject.num_acc] = $("#n22").val();
+                projectRec[eProject.manager] = login.data.user_fio;
+                projectRec[eProject.date4] = $("#n23").val();
+                projectRec[eProject.date6] = $("#n24").val();
+                projectRec[eProject.owner] = login.data.user_name;
+                projectRec[eProject.prjpart_id] = $("#n25").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateOrder',
-                    data: {param: JSON.stringify(orderRec)},
+                    data: {param: JSON.stringify(projectRec)},
                     success: (data) => {
                         if (data.result === 'ok') {
                             let rowid = $('#table1').jqGrid('getGridParam', "selrow");
                             $('#table1').jqGrid('setRowData', rowid, {
-                                id: orderRec[eProject.id],
-                                num_ord: orderRec[eProject.num_ord],
-                                num_acc: orderRec[eProject.num_acc],
-                                date4: orderRec[eProject.date4],
-                                date6: orderRec[eProject.date6],
-                                partner: findef(orderRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
-                                manager: orderRec[eProject.manager]
+                                id: projectRec[eProject.id],
+                                num_ord: projectRec[eProject.num_ord],
+                                num_acc: projectRec[eProject.num_acc],
+                                date4: projectRec[eProject.date4],
+                                date6: projectRec[eProject.date6],
+                                partner: findef(projectRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
+                                manager: projectRec[eProject.manager]
                             });
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
