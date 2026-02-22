@@ -177,9 +177,9 @@ function formatDate2(d) {
 
 function prepareToolBar() {
 
-    $("#btnOrder1").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnOrder2").button({icons: {primary: "ui-icon-pencil"}});
-    $("#btnOrder3").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
     $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
     $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});

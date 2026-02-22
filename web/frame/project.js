@@ -111,7 +111,7 @@ export function delete_table1(table) {
             buttons: {
                 "Да": function () {
                     $.ajax({
-                        url: 'dbset?action=deleteOrder',
+                        url: 'dbset?action=deleteProject',
                         data: {param: JSON.stringify({id: projectRow.id})},
                         success: (data) => {
                             if (data.result === 'ok') {
@@ -218,8 +218,8 @@ export function insert_table1(taq) {
 //Редактирования строки таблицы
 export function update_table1(taq) {
 
-    let projectRow = getSelectedRow($("#table1"));
-    let projectRec = eProject.list.find(rec => projectRow.id === rec[eProject.id]);
+    let projectRow = getSelectedRow($(project.table1));
+    let projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
     $("#n21").val(projectRow.num_ord);
     $("#n22").val(projectRow.num_acc);
     $("#n23").val(projectRow.date4);
@@ -244,12 +244,12 @@ export function update_table1(taq) {
                 projectRec[eProject.owner] = login.data.user_name;
                 projectRec[eProject.prjpart_id] = $("#n25").attr("fk");
                 $.ajax({
-                    url: 'dbset?action=updateOrder',
+                    url: 'dbset?action=updateProject',
                     data: {param: JSON.stringify(projectRec)},
                     success: (data) => {
                         if (data.result === 'ok') {
-                            let rowid = $('#table1').jqGrid('getGridParam', "selrow");
-                            $('#table1').jqGrid('setRowData', rowid, {
+                            let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
+                            $(project.table1).jqGrid('setRowData', rowid, {
                                 id: projectRec[eProject.id],
                                 num_ord: projectRec[eProject.num_ord],
                                 num_acc: projectRec[eProject.num_acc],

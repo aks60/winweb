@@ -58,12 +58,12 @@
             $('#n23').datepicker();
             $('#n24').datepicker();
 
-            document.getElementById('btnOrder1').addEventListener('click', () => insert_table1('#dialog-card'));
-            document.getElementById('btnOrder2').addEventListener('click', () => update_table1('#dialog-card'));
-            document.getElementById('btnOrder3').addEventListener('click', () => delete_table1($('#table1')));
+            document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card'));
+            document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card'));
+            document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
-            document.getElementById('btnOrder1').addEventListener('click', test1);
+            document.getElementById('btnTest1').addEventListener('click', test1);
 
 
             function test1() {
@@ -80,9 +80,9 @@
     </head>
     <body>        
         <div id="north">
-            <button id="btnOrder1" style="width: 128px">Добавить заказ</button>
-            <button id="btnOrder2" style="width: 128px">Изменить заказ</button>
-            <button id="btnOrder3" style="width: 128px">Удалить заказ</button>
+            <button id="btnProj1" style="width: 128px">Добавить заказ</button>
+            <button id="btnProj2" style="width: 128px">Изменить заказ</button>
+            <button id="btnProj3" style="width: 128px">Удалить заказ</button>
             &emsp;&emsp;&emsp;
             <button id="btnProd1" style="width: 136px">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
