@@ -23,20 +23,20 @@ function deployTaq(selectors) {
                 }
                 
                 if (type == 'ref') {
-                    output = "<input id='" + num + "' class='field' type='text' style='width: 40px; display: none;'>";
+                    output = "<input id=`{num}` class='field' type='text' style='width: 40px; display: none;'>";
 
                 } else if (type == 'txt') {
                     let height = +$(elem).attr('height');
                     let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
                     let readonly = ($(elem).attr('nul') == 'r') ? 'readonly' : '';
-                    output = "<p class='field' style='width: " + width + "px; height: " + height + "px;'>" + label
-                            + "</p><input id='" + num + "' class='field' type='text' " + dx + " style='width: " + width2 + "px; height: " + height + "px;' " + readonly + ">";
+                    output = `<p class='field' style='width: ${width}px; height: ${height}px;'>` + label
+                            + `</p><input id='${num}' class='field' type='text' ${dx} style='width: ${width2}px; height: ${height}px;' ${readonly}>`;
 
                 } else if (type == 'btn') {
                     let dx = (width2 == null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') == 'w') ? '' : 'readonly';
-                    output = "<p class='field' style='width: " + width + "px;'>" + label + "</p>"
+                    output = `<p class='field' style='width: ${width}px;'>${label}</p>`
                             + "<input id='" + num + "' class='field' type='text' " + dx + " style='width: " + width2 + "px;' sp='' " + readonly + ">"
                             + "<input class='field' type='button' style='height: 18px;' value='---' onclick=\" " + src + " \">";
 
