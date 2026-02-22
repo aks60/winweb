@@ -7,8 +7,8 @@ function deployTaq(selectors) {
     let mapobj = this;
     for (let selector of selectors) {
         $(selector + ' jst').each(function (index, elem) {
-
-            let output = '';;
+            
+            let output = '';
             let width = $(elem).attr('width');
             let width2 = $(elem).attr('width2');
             let label = $(elem).attr('label');
@@ -21,7 +21,7 @@ function deployTaq(selectors) {
                 if ($(elem).attr('nul') === '*') {
                     label = label + "<span class='nul'>*</span>";
                 }
-                
+
                 if (type === 'ref') {
                     output = "<input id=`{num}` class='field' type='text' style='width: 40px; display: none;'>";
 

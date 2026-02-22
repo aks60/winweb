@@ -51,6 +51,7 @@
 
             init_table();
             load_table1();
+            $(project.table1).jqGrid('setSelection', 3);
 
             $("button").button();
             prepareToolBar();
@@ -65,7 +66,7 @@
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
             document.getElementById('btnTest1').addEventListener('click', test);
 
-
+console.log(7777777);
             function test() {
             }
         </script>
