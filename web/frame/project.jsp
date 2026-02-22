@@ -64,18 +64,10 @@
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
-            document.getElementById('btnTest1').addEventListener('click', test1);
+            document.getElementById('btnTest1').addEventListener('click', test);
 
 
-            function test1() {
-//                let id = project.projectRec[eProject.id];
-                //load_table2(project.projectRec[eProject.id]);
-//                //$("#table1").jqGrid('clearGridData');
-//                //$("#table1").trigger("reloadGrid");
-//
-//                let rowid = $("#table1").jqGrid('getGridParam', "selrow"); //index профиля из справочника
-//                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
-//                console.log(tableRec);
+            function test() {
             }
         </script>
         <script type="text/javascript">

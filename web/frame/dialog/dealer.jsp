@@ -66,7 +66,7 @@
                     $(tabDealer).jqGrid('addRowData', i + 1, {
                         id: tr[eDealer.id],
                         partner: tr[eDealer.partner],
-                        manager: tr[eDealer.manager]});
+                        manager: tr[eDealer.login]});
                 }
                 $(tabDealer).jqGrid("setSelection", 1);
             }
