@@ -38,7 +38,6 @@
         </style>        
 
         <script type="module">
-            //TODO При добавлении проекта строка отобр. только через перезагрузку
             import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1, click_table1,
                     load_table2, delete_table2, click_table2} from './frame/project.js';
             import {project} from './frame/project.js';
@@ -85,9 +84,10 @@
             <button id="btnTest1">TEST</button>                        
         </div>     
         <div id = "context">     
-            <div id="dialog-card" card_width="416" card_height="230" style="display: none;">
+            <div id="dialog-card" card_width="416" card_height="230" style="display: none;">                
                 <jst id="n21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>
-                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst><br>
+                <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst>
+                <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#n22').val($('#n21').val());"><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
                 <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
                 <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-dic').load('frame/dialog/dealer.jsp');"></jst><br>

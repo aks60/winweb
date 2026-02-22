@@ -145,18 +145,10 @@ public class Dbset {
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONObject obj = (JSONObject) JSONValue.parse(param);
-            Query qProject = new Query(eProject.values());
-            Record record = eProject.up.newRecord("INS");
-            record.set(eProject.id, format4(obj, eProject.id));
-            record.set(eProject.num_ord, format4(obj, eProject.num_ord));
-            record.set(eProject.num_acc, format4(obj, eProject.num_acc));
-            record.set(eProject.manager, format4(obj, eProject.manager));
-            record.set(eProject.date4, (obj.get(eProject.date4.name()).equals("")) ? null : obj.get(eProject.date4.name()));
-            record.set(eProject.date6, (obj.get(eProject.date6.name()).equals("")) ? null : obj.get(eProject.date6.name()));
-            record.set(eProject.prjpart_id, format4(obj, eProject.prjpart_id));
-            qProject.insert2(record);
-            return new JSONObject(App.asMap("result", "ok"));
+            Record record = gson.fromJson(param, Record.class);
+            record.set(eProject.id, Connect.genId(eProject.up));
+            new Query(eProject.values()).insert2(record);
+            return new JSONObject(App.asMap("result", "ok", "id", record.getInt(eProject.id)));
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));

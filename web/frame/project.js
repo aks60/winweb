@@ -163,34 +163,26 @@ export function insert_table1(taq) {
                     resizable: false,
                     buttons: {
                         "Применить": function () {
-                            if ($("#n25").attr("fk") === -3) {
+                            let projectRec = eProject.vrec;
+                            projectRec[0] = 'SEL';
+                            projectRec[eProject.id] = datkey.id;
+                            projectRec[eProject.num_ord] = $("#n21").val();
+                            projectRec[eProject.num_acc] = $("#n22").val();
+                            projectRec[eProject.manager] = login.data.user_fio;
+                            projectRec[eProject.date4] = $("#n23").val();
+                            projectRec[eProject.date6] = $("#n24").val();
+                            projectRec[eProject.owner] = login.data.user_name;
+                            projectRec[eProject.prjpart_id] = $("#n25").attr("fk");
+                            if ($("#n25").attr("fk") === '-3') {
                                 dialogMes('Сообщение', "<p>Контрагент не установлен");
                                 return;
                             }
                             $.ajax({//запишем заказ в серверную базу данных
                                 url: 'dbset?action=insertProject',
-                                data: {param: JSON.stringify({
-                                        id: datkey.id,
-                                        num_ord: $("#n21").val(),
-                                        num_acc: $("#n22").val(),
-                                        manager: login.data.user_fio,
-                                        date4: $("#n23").val(),
-                                        date6: $("#n24").val(),
-                                        prjpart_id: $("#n25").attr("fk")})},
+                                data: {param: JSON.stringify(projectRec)},
                                 success: (data) => {
-
                                     if (data.result === 'ok') {
-                                        let record = eProject.vrec();
-                                        record[0] = 'SEL';
-                                        record[eProject.id] = datkey.id;
-                                        record[eProject.num_ord] = $("#n21").val();
-                                        record[eProject.num_acc] = $("#n22").val();
-                                        record[eProject.manager] = login.data.user_fio;
-                                        record[eProject.date4] = $("#n23").val();
-                                        record[eProject.date6] = $("#n24").val();
-                                        record[eProject.owner] = login.data.user_name;
-                                        record[eProject.prjpart_id] = $("#n25").attr("fk");
-                                        eProject.list.push(record);
+                                        eProject.list.push(projectRec);
                                         load_table1($(project.table1));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
@@ -276,7 +268,7 @@ export function update_table1(taq) {
 
 //Клик table2
 export function click_table1(rowid) {
- 
+
     let projectRow = (rowid) ? $(project.table1).jqGrid('getRowData', rowid) : null;
     load_table2(projectRow.id);
     project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
