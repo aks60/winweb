@@ -61,22 +61,20 @@
                     update_script, test1, test2, test3} from './frame/product.js';
             import {product} from './frame/product.js';
 
-            $(document).ready(function () {
+            deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
+            wincalcNew();
+            $(window).bind('resize', resize); //.trigger('resize');
+            product.table1 = document.getElementById('table1');
+            product.tabtree = document.getElementById('tree-winc');
 
-                deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-                wincalcNew();
-                $(window).bind('resize', resize); //.trigger('resize');
-                product.table1 = document.getElementById('table1');
-                product.tabtree = document.getElementById('tree-winc');
+            init_table();
+            load_tree();
 
-                init_table();
-                load_tree();
+            prepareToolBar();
+            document.getElementById('btnTest1').addEventListener('click', test1);
+            document.getElementById('btnTest2').addEventListener('click', test2);
+            document.getElementById('btnTest3').addEventListener('click', test3);
 
-                prepareToolBar();
-                document.getElementById('btnTest1').addEventListener('click', test1);
-                document.getElementById('btnTest2').addEventListener('click', test2);
-                document.getElementById('btnTest3').addEventListener('click', test3);
-            });
         </script>  
     </head>
     <body>

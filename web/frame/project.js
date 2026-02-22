@@ -1,6 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 export let project = {wincalcMap: new Map(), prjprodRec: null};
-
+//TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
 export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
@@ -276,7 +276,7 @@ export function update_table1(taq) {
 
 //Клик table2
 export function click_table1(rowid) {
-    debugger;
+ 
     let projectRow = (rowid) ? $(project.table1).jqGrid('getRowData', rowid) : null;
     load_table2(projectRow.id);
     project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);

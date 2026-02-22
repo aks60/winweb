@@ -52,9 +52,7 @@
             load_table1();
             resize();
 
-            $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                resize();
-            });
+            $("#dialog-dic").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
                 $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());

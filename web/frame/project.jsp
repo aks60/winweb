@@ -38,6 +38,7 @@
         </style>        
 
         <script type="module">
+            //TODO При добавлении проекта строка отобр. только через перезагрузку
             import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1, click_table1,
                     load_table2, delete_table2, click_table2} from './frame/project.js';
             import {project} from './frame/project.js';
@@ -76,6 +77,9 @@
 //                let tableRec = $("#table1").jqGrid('getRowData', rowid);  //record справочника
 //                console.log(tableRec);
             }
+        </script>
+        <script type="text/javascript">
+            
         </script>
     </head>
     <body>        

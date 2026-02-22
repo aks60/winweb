@@ -5,24 +5,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>DEALER</title>
 
-        <script type="text/javascript">
-//------------------------------------------------------------------------------
+        <script type="module">
+
+            let tabDealer = document.getElementById('tab-dealer');
+
             function resize() {
-                $("#tab-dealer").jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
-                $("#tab-dealer").jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
+                $(tabDealer).jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
+                $(tabDealer).jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
             }
-//------------------------------------------------------------------------------
-            $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                init_dialog($("#tab-dealer"));
-                init_table($("#tab-dealer"));
-                load_table($("#tab-dealer"));
-                resize();
-            });
-//------------------------------------------------------------------------------
-            function init_dialog(table) {
+            $("#dialog-dic").unbind().bind("dialogresize", (event, ui) => resize());
+            
+            init_dialog();
+            init_table();
+            load_table();
+            resize();
+
+            function init_dialog() {
 
                 $("#dialog-dic").dialog({
                     title: "Справочник-",
@@ -31,7 +29,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let dealerRow = getSelectedRow($("#tab-dealer"));
+                            let dealerRow = getSelectedRow($(tabDealer));
                             $('#n25').val(dealerRow.partner);
                             $('#n25').attr("fk", dealerRow.id);
                             $("#dialog-dic").dialog("close");
@@ -42,10 +40,10 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function init_table(table) {
 
-                table.jqGrid({
+            function init_table() {
+
+                $(tabDealer).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Контрагент', 'Дилер'],
                     colModel: [
@@ -54,25 +52,25 @@
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        let dealerRow = getSelectedRow($("#tab-dealer"));
+                        let dealerRow = getSelectedRow($(tabDealer));
                         $('#n25').val(dealerRow.partner);
                         $('#n25').attr("fk", dealerRow.id);
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
-//------------------------------------------------------------------------------ 
-            function load_table(table) {
+
+            function load_table() {
                 for (let i = 0; i < eDealer.list.length; i++) {
-                    let tr = eDealer.list[i].list;
-                    table.jqGrid('addRowData', i + 1, {
+                    let tr = eDealer.list[i];
+                    $(tabDealer).jqGrid('addRowData', i + 1, {
                         id: tr[eDealer.id],
                         partner: tr[eDealer.partner],
                         manager: tr[eDealer.manager]});
                 }
-                table.jqGrid("setSelection", 1);
+                $(tabDealer).jqGrid("setSelection", 1);
             }
-//------------------------------------------------------------------------------
+
         </script>        
     </head>
     <body>
