@@ -53,7 +53,7 @@
             load_table1();
 
             $("button").button();
-            prepareToolBar();
+            prepareTool();
             deployTaq(['#dialog-card']);
             $('#n23').datepicker();
             $('#n24').datepicker();

@@ -116,13 +116,13 @@ export function load_tree(tabtree) {
 
             elements(root, arr); //вход в рекурсию    
 
-            $(product.tabtree).jstree({'core': {'data': arr}})
+            $(product.table2).jstree({'core': {'data': arr}})
                     .bind("loaded.jstree", function (event, data) {
                         $(this).jstree('open_node', $('#0'));
                         $(this).jstree('select_node', 0.0);
                     })
                     .bind("select_node.jstree", function (evt, data) {
-                        let node = $(product.tabtree).jstree("get_selected")[0];
+                        let node = $(product.table2).jstree("get_selected")[0];
                         tree_to_tabs(node);
                     });
         }
@@ -329,7 +329,7 @@ export function color_to_windows(btnSrc) {
 
 export function sysprof_to_frame(btnSrc) {
     try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
         let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);
@@ -379,7 +379,7 @@ export function artikl_to_stvork(btnSrc) {
 //Заполнение
 export function color_to_element(btnSrc) {
     try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
         let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id == nodeID);
@@ -435,7 +435,7 @@ export function color_to_element(btnSrc) {
 //Заполнение
 export function artikl_to_glass(btnSrc) {
     try {
-        let nodeID = $("#tree-winc").jstree("get_selected")[0];
+        let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
         let winc = project.wincalcMap.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);

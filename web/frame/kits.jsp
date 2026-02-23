@@ -20,7 +20,7 @@
                 kits.init_table($("#table1"));
                 kits.load_table($("#table1"));
                 kits.resize();
-                prepareToolBar();
+                prepareTool();
                 deployTaq(['#dialog-card']);
             });
         </script>         

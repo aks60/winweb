@@ -180,7 +180,7 @@ function formatDate2(d) {
     return dd + '.' + mm + '.' + d.getFullYear();
 }
 
-function prepareToolBar() {
+function prepareTool() {
 
     $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});

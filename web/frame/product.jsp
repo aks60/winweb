@@ -65,12 +65,12 @@
             wincalcNew();
             $(window).bind('resize', resize); //.trigger('resize');
             product.table1 = document.getElementById('table1');
-            product.tabtree = document.getElementById('tree-winc');
+            product.table2 = document.getElementById('table2');
 
             init_table();
             load_tree();
 
-            prepareToolBar();
+            prepareTool();
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
             document.getElementById('btnTest3').addEventListener('click', test3);
@@ -145,7 +145,7 @@
                 </div>                
             </div>   
             <div id='east2' class='abs' style=''>
-                <div id="tree-winc"></div>
+                <div id="table2"></div>
             </div>       
         </div>  
         <div id='south' class='abs' style=''>
