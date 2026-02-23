@@ -30,9 +30,12 @@
                 width: 390px !important;
             }
             #table2 tr > *:nth-child(3) {
-                width: 68px !important;
+                width: 30px !important;
             }
             #table2 tr > *:nth-child(4) {
+                width: 68px !important;
+            }
+            #table2 tr > *:nth-child(5) {
                 display: none !important;
             }
         </style>        
@@ -103,7 +106,8 @@
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <table id="table2">
                             <tr style="height: 22px; background-color: #e7f4f9">
-                                <th></th><th>Наименование</th><th>Изображение</th></tr>
+                                <th></th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
+                            </tr>
                         </table>                         
                     </div>
                 </div>

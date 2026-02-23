@@ -287,6 +287,7 @@ export function insert_table2(table, prjprodRec) {
 
     let id = document.createTextNode(prjprodID);
     let name = document.createTextNode(prjprodRec[ePrjprod.name]);
+    let num = document.createTextNode(prjprodRec[ePrjprod.num]);
     let script = prjprodRec[ePrjprod.script];
 
     //Создание экземпрляра окна
@@ -296,14 +297,17 @@ export function insert_table2(table, prjprodRec) {
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
+    let td4 = document.createElement('td');
     let tr = document.createElement('tr');
     tr.id = 'tr' + prjprodID;
     td1.appendChild(id);
     td2.appendChild(name);
-    td3.appendChild(canvas);
+    td3.appendChild(num);
+    td4.appendChild(canvas);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
+    tr.appendChild(td4);
     table.appendChild(tr);
 }
 
