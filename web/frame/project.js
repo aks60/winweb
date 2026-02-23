@@ -1,5 +1,8 @@
 import {Wincalc} from '../build/Wincalc.js';
-export let project = {wincalcMap: new Map(), prjprodRec: null};
+export let project = {wincalcMap: new Map(), prjprodRec: null, table1rowID: 1};
+
+console.log('project.js=' + project.table1rowID);
+
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
 export function  resize() {
@@ -62,8 +65,8 @@ export function load_table1() {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    $(project.table1).jqGrid("setSelection", 1);
-    //$(project.table1).jqGrid("setSelection", rowID);
+    console.log('load_table1=' + project.table1rowID);
+    //$(project.table1).jqGrid("setSelection", project.table1rowID);
     resize();
 }
 
@@ -268,10 +271,15 @@ export function update_table1(taq) {
 
 //Клик table2
 export function click_table1(rowid) {
-
+    if (rowid !== '1') {
+        project.table1rowID = rowid;
+        $(project.table1).jqGrid("setSelection", project.table1rowID);
+    }
     let projectRow = (rowid) ? $(project.table1).jqGrid('getRowData', rowid) : null;
     load_table2(projectRow.id);
     project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+
+    console.log('click_table1=' + project.table1rowID);
 }
 
 //Добавим запись в домен ePrjprod

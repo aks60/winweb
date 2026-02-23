@@ -4,18 +4,17 @@ function printScript(winc) {
 }
 
 function deployTaq(selectors) {
-    let mapobj = this;
     for (let selector of selectors) {
         $(selector + ' jst').each(function (index, elem) {
             
             let output = '';
-            let width = $(elem).attr('width');
-            let width2 = $(elem).attr('width2');
+            let width = $(elem).attr('width'); //ширина 1 элемента
+            let width2 = $(elem).attr('width2'); //ширина 2 элемента
             let label = $(elem).attr('label');
-            let num = $(elem).attr('id');
+            let key = $(elem).attr('id');
             let type = $(elem).attr('type');
 
-            if (typeof (num) === 'undefined') {
+            if (typeof (key) === 'undefined') {
                 console.log("НЕУДАЧА! поле = " + $(elem).html());
             } else {
                 if ($(elem).attr('nul') === '*') {
@@ -27,21 +26,21 @@ function deployTaq(selectors) {
 
                 } else if (type === 'txt') {
                     let height = +$(elem).attr('height');
-                    let dx = (width2 === null) ? " dx='" + (+$(elem).attr('dx') + 14) + "'" : "";
+                    let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 14}'` : ""; //отступ от правого края элемента (ширина 2 элемента)
                     let readonly = ($(elem).attr('nul') === 'r') ? 'readonly' : '';
                     output = `<p class='field' style='width: ${width}px; height: ${height}px;'>` + label
-                            + `</p><input id='${num}' class='field' type='text' ${dx} style='width: ${width2}px; height: ${height}px;' ${readonly}>`;
+                            + `</p><input id='${key}' class='field' type='text' ${dx} style='width: ${width2}px; height: ${height}px;' ${readonly}>`;
 
                 } else if (type === 'btn') {
-                    let dx = (width2 === null) ? " dx='" + (+$(elem).attr('dx') + 42) + "'" : "";
+                    let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 42}'` : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') === 'w') ? '' : 'readonly';
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
-                            + `<input id='${num}' class='field' type='text' ${dx} style='width: ${width2}px;' sp='' ${readonly}>`
+                            + `<input id='${key}' class='field' type='text' ${dx} style='width: ${width2}px;' sp='' ${readonly}>`
                             + `<input class='field' type='button' style='height: 18px;' value='---' onclick=\" ${src} \">`;
 
                 } else if (type === 'btn2') { //background: #eee
-                    let dx = (width2 === null) ? " dx='" + (+$(elem).attr('dx') + 16) + "'" : "";
+                    let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 16}'` : "";
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') === 'w') ? '' : 'readonly';
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
@@ -50,17 +49,17 @@ function deployTaq(selectors) {
                 } else if (type === 'date') {
                     let src = $(elem).attr('click');
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
-                            + `<input id='${num}' class='field' type='text' style='width: 80px;'>`
+                            + `<input id='${key}' class='field' type='text' style='width: 80px;'>`
                             + `<input class='field' type='button' style='height: 18px;' value='---' onclick=\" ${src} \">`;
 
                 } else if (type === 'area') {
-                    let dx = (width2 === null) ? " dx='" + (+$(elem).attr('dx') + 8) + "'" : "";
+                    let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 8}'` : "";
                     let height = +$(elem).attr('height');
                     if (typeof (label) === 'undefined') {
-                        output = `<div><textarea id='${num}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
+                        output = `<div><textarea id='${key}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
                     } else {
                         output = `<div><p class='field' style='width: ${width}px; height: ${height + 1}px;'>` + label
-                                + `</p><textarea id='${num}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
+                                + `</p><textarea id='${key}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
                     }
                 }
                 $(elem).replaceWith(output);

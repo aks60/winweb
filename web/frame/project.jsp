@@ -42,6 +42,8 @@
                     load_table2, delete_table2, click_table2} from './frame/project.js';
             import {project} from './frame/project.js';
 
+console.log('1=' + project.table1rowID);
+
             $(window).bind('resize', () => resize()).trigger('resize');
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
@@ -51,7 +53,7 @@
 
             init_table();
             load_table1();
-            $(project.table1).jqGrid('setSelection', 3);
+            $(project.table1).jqGrid('setSelection', 1);
 
             $("button").button();
             prepareToolBar();
@@ -66,7 +68,8 @@
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
             document.getElementById('btnTest1').addEventListener('click', test);
 
-console.log(7777777);
+            console.log('9=' + project.table1rowID);
+
             function test() {
             }
         </script>
