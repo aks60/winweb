@@ -75,6 +75,10 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
             document.getElementById('btnTest3').addEventListener('click', test3);
 
+            function test4() {
+            }
+            function test5() {
+            }
         </script>  
     </head>
     <body>

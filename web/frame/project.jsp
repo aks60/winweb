@@ -7,6 +7,10 @@
         <title>PROJECT</title>
 
         <style>
+            .selected {
+                background-color: #ff0000; /* Цвет выделения */
+                /*background-color: #d1e7dd;  Цвет выделения */
+            }            
             #table2  {
                 border-collapse: collapse;
             }
@@ -66,9 +70,29 @@
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
-            document.getElementById('btnTest1').addEventListener('click', test);
+            document.getElementById('btnTest1').addEventListener('click', test1);
+            document.getElementById('btnTest2').addEventListener('click', test2);
 
-            function test() {
+            function test1() {
+                debugger;
+                let o1 = document.querySelectorAll('table2 tr');
+                document.querySelectorAll('table2 tr').forEach(row => {
+                    row.addEventListener('click', function () {
+                        console.log('xxxxxxxxxxxxxxxx');
+//                        debugger;
+//                        // Удаляем класс у всех
+//                        document.querySelectorAll('table2 tr').forEach(r => r.classList.remove('selected'));
+//                        // Добавляем к текущей
+//                        this.classList.add('selected');
+                    });
+                });
+            }
+            function test2() {
+                const selectedRow = document.querySelector('table2 tr.selected');
+                if (selectedRow) {
+                    console.log(selectedRow.innerText); // Получить текст строки
+                    console.log(selectedRow.dataset.id); // Получить ID из data-атрибута
+                }
             }
         </script>
         <script type="text/javascript">
@@ -84,6 +108,7 @@
             <button id="btnProd1" style="width: 136px">Добавить констр.</button>
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
             <button id="btnTest1">TEST</button>                        
+            <button id="btnTest2">TEST</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card" card_width="416" card_height="230" style="display: none;">                
