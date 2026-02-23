@@ -42,8 +42,6 @@
                     load_table2, delete_table2, click_table2} from './frame/project.js';
             import {project} from './frame/project.js';
 
-console.log('1=' + project.table1rowID);
-
             $(window).bind('resize', () => resize()).trigger('resize');
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
@@ -53,7 +51,6 @@ console.log('1=' + project.table1rowID);
 
             init_table();
             load_table1();
-            $(project.table1).jqGrid('setSelection', 1);
 
             $("button").button();
             prepareToolBar();
@@ -67,8 +64,6 @@ console.log('1=' + project.table1rowID);
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
             document.getElementById('btnTest1').addEventListener('click', test);
-
-            console.log('9=' + project.table1rowID);
 
             function test() {
             }
