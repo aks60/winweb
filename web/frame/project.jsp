@@ -10,7 +10,7 @@
             .selected {
                 background-color: #ff0000; /* Цвет выделения */
                 /*background-color: #d1e7dd;  Цвет выделения */
-            }            
+            }
             #table2  {
                 border-collapse: collapse;
             }
@@ -74,21 +74,44 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
-                debugger;
-                let o1 = document.querySelectorAll('table2 tr');
-                document.querySelectorAll('table2 tr').forEach(row => {
-                    row.addEventListener('click', function () {
-                        console.log('xxxxxxxxxxxxxxxx');
-//                        debugger;
+                
+//                document.querySelectorAll('#table2 tr').forEach(row => {
+//                    row.addEventListener('click', function () {
 //                        // Удаляем класс у всех
-//                        document.querySelectorAll('table2 tr').forEach(r => r.classList.remove('selected'));
+//                        document.querySelectorAll('#table2 tr').forEach(r => r.classList.remove('selected'));
 //                        // Добавляем к текущей
 //                        this.classList.add('selected');
-                    });
+//                    });
+//                });
+
+                document.getElementById("#table2").addEventListener("click", function (event) {
+                    //Найдите ближайший элемент <tr> к области, на которую был сделан щелчок.
+                    const clickedRow = event.target.closest("tr");
+
+                    //Убедитесь, что на строку действительно был нажат клик, и она является частью элемента `tbody`.
+                    if (clickedRow && clickedRow.parentNode.tagName === "TBODY") {
+                        // Access the dataset property
+                        const name = clickedRow.dataset.name;
+                        const id = clickedRow.dataset.id;
+
+                        //Необязательно: добавьте класс 'selected' для стилизации или отслеживания выбранной строки.
+                        //Удалите класс 'selected' из ранее выбранной строки (если таковая имеется).
+                        const previouslySelected = document.querySelector("#myTable .selected");
+                        if (previouslySelected) {
+                            previouslySelected.classList.remove("selected");
+                        }
+                        //Добавьте класс 'selected' к выбранной строке.
+                        clickedRow.classList.add("selected");
+
+
+                        // Use the data
+                        //const outputElement = document.getElementById("output");
+                        //outputElement.textContent = `Selected Row Data: Name - ${name}, ID - ${id}`;
+                    }
                 });
             }
             function test2() {
-                const selectedRow = document.querySelector('table2 tr.selected');
+                const selectedRow = document.querySelector('#table2 tr.selected');
                 if (selectedRow) {
                     console.log(selectedRow.innerText); // Получить текст строки
                     console.log(selectedRow.dataset.id); // Получить ID из data-атрибута
@@ -96,7 +119,7 @@
             }
         </script>
         <script type="text/javascript">
-            
+
         </script>
     </head>
     <body>        
@@ -131,7 +154,7 @@
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <table id="table2">
                             <tr style="height: 22px; background-color: #e7f4f9">
-                                <th></th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
+                                <th>id</th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
                             </tr>
                         </table>                         
                     </div>

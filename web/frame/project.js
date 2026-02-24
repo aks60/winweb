@@ -308,10 +308,10 @@ export function insert_table2(table, prjprodRec) {
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
-    tr.addEventListener('click', function () {
-        document.querySelectorAll('table2 tr').forEach(r => r.classList.remove('selected')); //удаляем класс у всех       
-        this.classList.add('selected'); //добавляем к текущей строки класс
-    });
+//    tr.addEventListener('click', function () {
+//        document.querySelectorAll('table2 tr').forEach(r => r.classList.remove('selected')); //удаляем класс у всех       
+//        this.classList.add('selected'); //добавляем к текущей строки класс
+//    });
     table.appendChild(tr);
 }
 
