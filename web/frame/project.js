@@ -324,7 +324,7 @@ export function insert_table2(table, prjprodRec) {
 //Редактирования строки таблицы
 export function update_table2(taq) {
     
-    const prjprodRow = document.querySelector('#table2 tr.selected');
+    const prjprodRow = document.querySelector('#table2 tr.selected');    
     $("#n31").val(prjprodRow.dataset.num);
     $("#n32").val(prjprodRow.dataset.name);
 
@@ -337,33 +337,23 @@ export function update_table2(taq) {
         resizable: false,
         buttons: {
             "Применить": function () {
-
-//                projectRec[0] = 'UPD';
-//                projectRec[eProject.num_ord] = $("#n21").val();
-//                projectRec[eProject.num_acc] = $("#n22").val();
-//
-//                $.ajax({
-//                    url: 'dbset?action=updateProject',
-//                    data: {param: JSON.stringify(projectRec)},
-//                    success: (data) => {
-//                        if (data.result === 'ok') {
-//                            let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
-//                            $(project.table1).jqGrid('setRowData', rowid, {
-//                                id: projectRec[eProject.id],
-//                                num_ord: projectRec[eProject.num_ord],
-//                                num_acc: projectRec[eProject.num_acc],
-//                                date4: projectRec[eProject.date4],
-//                                date6: projectRec[eProject.date6],
-//                                partner: findef(projectRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
-//                                manager: projectRec[eProject.manager]
-//                            });
-//                        } else
-//                            dialogMes('Сообщение', "<p>" + data.result);
-//                    },
-//                    error: () => {
-//                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-//                    }
-//                });
+                let prjprodRec = ePrjprod.list.find(rec => projectRow.dataset.id == rec[ePrjprod.id]);
+                prjprodRec[0] = 'UPD';
+                prjprodRec[ePrjprod.num] = prjprodRow.dataset.num;
+                prjprodRec[ePrjprod.name] = prjprodRow.dataset.name;
+                $.ajax({
+                    url: 'dbset?action=updateProject',
+                    data: {param: JSON.stringify(prjprodRec)},
+                    success: (data) => {
+                        if (data.result === 'ok') {
+                            
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
                 $(this).dialog("close");
             },
             "Отменить": function () {
