@@ -7,10 +7,6 @@
         <title>PROJECT</title>
 
         <style>
-            .selected {
-                background-color: #ff0000; /* Цвет выделения */
-                /*background-color: #d1e7dd;  Цвет выделения */
-            }
             #table2  {
                 border-collapse: collapse;
             }
@@ -46,7 +42,7 @@
 
         <script type="module">
             import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1, click_table1,
-                    load_table2, delete_table2, click_table2} from './frame/project.js';
+                    load_table2, update_table2, delete_table2, click_table2} from './frame/project.js';
             import {project} from './frame/project.js';
 
             $(window).bind('resize', () => resize()).trigger('resize');
@@ -61,60 +57,29 @@
 
             $("button").button();
             prepareTool();
-            deployTaq(['#dialog-card']);
+            deployTaq(['#dialog-card1, #dialog-card2']);
             $('#n23').datepicker();
             $('#n24').datepicker();
 
-            document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card'));
-            document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card'));
+            document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card1'));
+            document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card1'));
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
+            document.getElementById('btnProd2').addEventListener('click', () => update_table2('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
-                
-//                document.querySelectorAll('#table2 tr').forEach(row => {
-//                    row.addEventListener('click', function () {
-//                        // Удаляем класс у всех
-//                        document.querySelectorAll('#table2 tr').forEach(r => r.classList.remove('selected'));
-//                        // Добавляем к текущей
-//                        this.classList.add('selected');
-//                    });
-//                });
-
-                document.getElementById("#table2").addEventListener("click", function (event) {
-                    //Найдите ближайший элемент <tr> к области, на которую был сделан щелчок.
-                    const clickedRow = event.target.closest("tr");
-
-                    //Убедитесь, что на строку действительно был нажат клик, и она является частью элемента `tbody`.
-                    if (clickedRow && clickedRow.parentNode.tagName === "TBODY") {
-                        // Access the dataset property
-                        const name = clickedRow.dataset.name;
-                        const id = clickedRow.dataset.id;
-
-                        //Необязательно: добавьте класс 'selected' для стилизации или отслеживания выбранной строки.
-                        //Удалите класс 'selected' из ранее выбранной строки (если таковая имеется).
-                        const previouslySelected = document.querySelector("#myTable .selected");
-                        if (previouslySelected) {
-                            previouslySelected.classList.remove("selected");
-                        }
-                        //Добавьте класс 'selected' к выбранной строке.
-                        clickedRow.classList.add("selected");
-
-
-                        // Use the data
-                        //const outputElement = document.getElementById("output");
-                        //outputElement.textContent = `Selected Row Data: Name - ${name}, ID - ${id}`;
-                    }
-                });
             }
             function test2() {
                 const selectedRow = document.querySelector('#table2 tr.selected');
                 if (selectedRow) {
-                    console.log(selectedRow.innerText); // Получить текст строки
+                    //console.log(selectedRow.innerText); // Получить текст строки
                     console.log(selectedRow.dataset.id); // Получить ID из data-атрибута
+                    console.log(selectedRow.dataset.name); // Получить ID из data-атрибута
+                    console.log(selectedRow.dataset.num); // Получить ID из data-атрибута
+                    console.log(selectedRow.dataset.script); // Получить ID из data-атрибута
                 }
             }
         </script>
@@ -129,18 +94,23 @@
             <button id="btnProj3" style="width: 128px">Удалить заказ</button>
             &emsp;&emsp;&emsp;
             <button id="btnProd1" style="width: 136px">Добавить констр.</button>
+            <button id="btnProd2" style="width: 136px">Изменить констр.</button>
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
             <button id="btnTest1">TEST</button>                        
             <button id="btnTest2">TEST</button>                        
         </div>     
         <div id = "context">     
-            <div id="dialog-card" card_width="416" card_height="230" style="display: none;">                
+            <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                
                 <jst id="n21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>
                 <jst id="n22" type='txt' label='Номер счёта' width='80' width2="120"></jst>
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#n22').val($('#n21').val());"><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
                 <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
                 <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-dic').load('frame/dialog/dealer.jsp');"></jst><br>
+            </div>
+            <div id="dialog-card2" card_width="416" card_height="230" style="display: none;">                
+                <jst id="n31" type='txt' label='Количество' width='80' width2="40"></jst><br>
+                <jst id="n32" type='area' label='Наименование конструкции' width='80' height='80' width2="290" resize=none;></jst>
             </div>
             <div id="midl" style="position: relative; margin-right: 480px; height: 100%"> 
 
@@ -153,9 +123,12 @@
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
                         <table id="table2">
-                            <tr style="height: 22px; background-color: #e7f4f9">
-                                <th>id</th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
-                            </tr>
+                            <thead>
+                                <tr style="height: 22px; background-color: #e7f4f9">
+                                    <th>id</th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
                         </table>                         
                     </div>
                 </div>

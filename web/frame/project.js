@@ -1,4 +1,5 @@
 import {Wincalc} from '../build/Wincalc.js';
+import {product} from './product.js';
 export let project = {wincalcMap: new Map(), prjprodRec: null, table1rowID: 1};
 
 //TODO При удалении проекта таблица 2 не удаляется
@@ -280,39 +281,96 @@ export function click_table1(rowid) {
 export function insert_table2(table, prjprodRec) {
 
     //Добавим запись в таблице конструкций
-    let prjprodID = prjprodRec[ePrjprod.id];
+    let ID = prjprodRec[ePrjprod.id];
     let canvas = document.createElement("canvas");
     canvas.class = "cnv";
-    canvas.id = 'cnv' + prjprodID;
-
-    let id = document.createTextNode(prjprodID);
-    let name = document.createTextNode(prjprodRec[ePrjprod.name]);
-    let num = document.createTextNode(prjprodRec[ePrjprod.num]);
-    let script = prjprodRec[ePrjprod.script];
+    canvas.id = 'cnv' + ID;
 
     //Создание экземпрляра окна
-    let winc = Wincalc.new(canvas, 68, 68, script);
-    project.wincalcMap.set(prjprodID, winc); //массив объектов winc
+    let winc = Wincalc.new(canvas, 68, 68, prjprodRec[ePrjprod.script]);
+    project.wincalcMap.set(ID, winc); //массив объектов winc
+
+    let nodeId = document.createTextNode(ID);
+    let nodeName = document.createTextNode(prjprodRec[ePrjprod.name]);
+    let nodeNum = document.createTextNode(prjprodRec[ePrjprod.num]);
 
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
     let td4 = document.createElement('td');
     let tr = document.createElement('tr');
-    tr.id = 'tr' + prjprodID;
-    td1.appendChild(id);
-    td2.appendChild(name);
-    td3.appendChild(num);
+    tr.id = 'tr' + ID;
+    td1.appendChild(nodeId);
+    td2.appendChild(nodeName);
+    td3.appendChild(nodeNum);
     td4.appendChild(canvas);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
-//    tr.addEventListener('click', function () {
-//        document.querySelectorAll('table2 tr').forEach(r => r.classList.remove('selected')); //удаляем класс у всех       
-//        this.classList.add('selected'); //добавляем к текущей строки класс
-//    });
-    table.appendChild(tr);
+
+    tr.setAttribute('data-id', ID);
+    tr.setAttribute('data-name', prjprodRec[ePrjprod.name]);
+    tr.setAttribute('data-num', prjprodRec[ePrjprod.num]);
+    tr.setAttribute('data-script', prjprodRec[ePrjprod.script]);
+    tr.addEventListener('click', function () {
+        document.querySelectorAll('#table2 tr').forEach(r => r.classList.remove('selected')); //удаляем класс у всех
+        this.classList.add('selected'); //добавляем к текущей
+    });
+    let table2body = document.querySelector('#table2 tbody');
+    table2body.appendChild(tr);
+}
+
+//Редактирования строки таблицы
+export function update_table2(taq) {
+debugger;
+    const prjprodRow = document.querySelector('#table2 tr.selected');
+    $("#n31").val(prjprodRow.dataset.num);
+    $("#n32").val(prjprodRow.dataset.name);
+
+
+    $(taq).dialog({//открытие диалога insert
+        title: "Карточка редактирования заказа",
+        width: $(taq).attr('card_width'),
+        height: $(taq).attr('card_height'),
+        modal: true,
+        resizable: false,
+        buttons: {
+            "Применить": function () {
+
+//                projectRec[0] = 'UPD';
+//                projectRec[eProject.num_ord] = $("#n21").val();
+//                projectRec[eProject.num_acc] = $("#n22").val();
+//
+//                $.ajax({
+//                    url: 'dbset?action=updateProject',
+//                    data: {param: JSON.stringify(projectRec)},
+//                    success: (data) => {
+//                        if (data.result === 'ok') {
+//                            let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
+//                            $(project.table1).jqGrid('setRowData', rowid, {
+//                                id: projectRec[eProject.id],
+//                                num_ord: projectRec[eProject.num_ord],
+//                                num_acc: projectRec[eProject.num_acc],
+//                                date4: projectRec[eProject.date4],
+//                                date6: projectRec[eProject.date6],
+//                                partner: findef(projectRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
+//                                manager: projectRec[eProject.manager]
+//                            });
+//                        } else
+//                            dialogMes('Сообщение', "<p>" + data.result);
+//                    },
+//                    error: () => {
+//                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+//                    }
+//                });
+                $(this).dialog("close");
+            },
+            "Отменить": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 }
 
 //Клик table2

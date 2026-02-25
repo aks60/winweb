@@ -55,11 +55,12 @@ function deployTaq(selectors) {
                 } else if (type === 'area') {
                     let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 8}'` : "";
                     let height = +$(elem).attr('height');
+                    let resize = $(elem).attr('resize');
                     if (typeof (label) === 'undefined') {
                         output = `<div><textarea id='${key}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
                     } else {
                         output = `<div><p class='field' style='width: ${width}px; height: ${height + 1}px;'>` + label
-                                + `</p><textarea id='${key}' class='field' ${dx} style='width: ${width2}px; height: ${height}px;'></textarea></div>`;
+                                + `</p><textarea id='${key}' class='field' ${dx} style='width: ${width2}px; height: ${height}px; resize: ${resize};'></textarea></div>`;
                     }
                 }
                 $(elem).replaceWith(output);
