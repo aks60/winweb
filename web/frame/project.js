@@ -323,7 +323,7 @@ export function insert_table2(table, prjprodRec) {
 
 //Редактирования строки таблицы
 export function update_table2(taq) {
-debugger;
+    
     const prjprodRow = document.querySelector('#table2 tr.selected');
     $("#n31").val(prjprodRow.dataset.num);
     $("#n32").val(prjprodRow.dataset.name);

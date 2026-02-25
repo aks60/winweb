@@ -72,6 +72,7 @@
                             if (sysprodRec != undefined) {
                                 let prjprodRec = ePrjprod.vrec;
                                 prjprodRec[ePrjprod.up] = 'SEL';                                
+                                prjprodRec[ePrjprod.num] = 1;
                                 prjprodRec[ePrjprod.name] = sysprodRec[eSysprod.name];
                                 prjprodRec[ePrjprod.script] = sysprodRec[eSysprod.script];
                                 prjprodRec[ePrjprod.project_id] = project.projectRec[eProject.id];

@@ -73,14 +73,6 @@
             function test1() {
             }
             function test2() {
-                const selectedRow = document.querySelector('#table2 tr.selected');
-                if (selectedRow) {
-                    //console.log(selectedRow.innerText); // Получить текст строки
-                    console.log(selectedRow.dataset.id); // Получить ID из data-атрибута
-                    console.log(selectedRow.dataset.name); // Получить ID из data-атрибута
-                    console.log(selectedRow.dataset.num); // Получить ID из data-атрибута
-                    console.log(selectedRow.dataset.script); // Получить ID из data-атрибута
-                }
             }
         </script>
         <script type="text/javascript">
