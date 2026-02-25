@@ -52,6 +52,7 @@
             $(window).bind('resize', () => resize()).trigger('resize');
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
+            project.table3 = document.getElementById('table3');
 
             project.table2.setAttribute('activeRowIndex', 1);
             project.table2.addEventListener('click', click_table2);

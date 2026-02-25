@@ -31,8 +31,8 @@ export function init_table() {
             {name: 'id', hidden: true, key: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
             {name: 'num_acc', width: 80, sorttype: "text"},
-            {name: 'date4', width: 80, sorttype: "text"},
-            {name: 'date6', width: 80, sorttype: "text"},
+            {name: 'date4', width: 80, sorttype: "date"},
+            {name: 'date6', width: 80, sorttype: "date"},
             {name: 'partner', width: 220, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"},
             {name: 'prjpart_id', hidden: true}
@@ -42,10 +42,28 @@ export function init_table() {
             click_table1(rowid);
         }
     });
+    $(project.table3).jqGrid({
+        datatype: "local",
+        gridview: true,
+        rownumbers: true,
+        autowidth: true,
+        height: 'auto',
+        colNames: ['id', 'Наименование', 'Кол-во', 'Изображение'],
+        colModel: [
+            {name: 'id', hidden: true, key: true},
+            {name: 'name', width: 220, sortable: false},
+            {name: 'num', width: 24, sortable: false},
+            {name: 'image', width: 68, sortable: false, formatter: function (cellvalue, options, rowObject) {
+                    return '<canvas id="cnv' + options.rowId + '" width="68" height="68"></canvas>';
+                }
+            }
+        ]
+        //gridComplete: function () {}
+    });
     resize();
 }
 
-//Загрузка данных в таблицу
+//Загрузка лроектов в таблицу
 export function load_table1() {
 
     $(project.table1).jqGrid('clearGridData', true);
@@ -67,7 +85,7 @@ export function load_table1() {
     $(project.table1).jqGrid("setSelection", project.table1rowID);
 }
 
-//Добавить контрукцию в таблицу
+//Загрузка конструкций в таблицу
 export function load_table2(projectID) {
 
     //Очистим списки
@@ -92,6 +110,28 @@ export function load_table2(projectID) {
             }
         }
         document.getElementById('cnv' + prjprodID).click(); //программный клик на конструкции
+    }
+}
+
+//Загрузка конструкций в таблицу
+export function load_table3(projectID) {
+
+    project.wincalcMap.clear();
+    $(project.table3).jqGrid('clearGridData', true);          
+    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+    for (let i = 0; i < prjprodList.length; ++i) {
+        
+        let prjprodRec = prjprodList[i];
+        $(project.table3).jqGrid('addRowData', i + 1, {
+            id: prjprodRec[ePrjprod.id],
+            name: prjprodRec[ePrjprod.name],
+            num: prjprodRec[ePrjprod.num]
+        });
+
+        let canvas = document.getElementById('cnv' + (i + 1));
+        let script = prjprodRec[ePrjprod.script];
+        let winc = Wincalc.new(canvas, 68, 68, script);
+        project.wincalcMap.set(prjprodRec[ePrjprod.id], winc);        
     }
 }
 
@@ -274,6 +314,7 @@ export function click_table1(rowid) {
     project.table1rowID = rowid;
 
     load_table2(projectRow.id);
+    load_table3(projectRow.id);
 }
 
 //Добавим запись в домен ePrjprod
