@@ -165,7 +165,7 @@ export function delete_table1(table) {
 
 //Вставка строки в таблицу
 export function insert_table1(taq) {
-
+debugger;
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => projectRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
@@ -179,6 +179,9 @@ export function insert_table1(taq) {
                 $("#n24").val('');
                 $("#n25").val('');
                 $("#n25").attr("fk", '-3');
+                
+                let o1 = $(taq).attr('card_width');
+                
                 //Открытие диалога insert
                 $(taq).dialog({
                     title: "Карточка ввода нового проекта",
