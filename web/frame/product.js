@@ -90,7 +90,7 @@ export function load_table1() {
 }
 
 //Загрузка данных в tree
-export function load_tree(tabtree) {
+export function load_table2(tabtree) {
     debugger;
     try {
         if (project.prjprodRec != null) {
@@ -128,7 +128,7 @@ export function load_tree(tabtree) {
                     });
         }
     } catch (e) {
-        errorLog("Error: product.load_tree() " + e.message);
+        errorLog("Error: product.load_table2() " + e.message);
     }
 }
 

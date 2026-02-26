@@ -55,7 +55,7 @@
 
             $("button").button();
             prepareTool();
-            deployTaq(['#dialog-card1, #dialog-card2']);
+            deployTaq(['#dialog-card1', '#dialog-card2']);
             $('#n23').datepicker();
             $('#n24').datepicker();
 

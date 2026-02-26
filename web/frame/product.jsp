@@ -57,7 +57,7 @@
             }
         </style>
         <script type="module">
-            import {wincalcNew, resize, init_table, load_tree,
+            import {wincalcNew, resize, init_table, load_table2,
                     update_script, test1, test2, test3} from './frame/product.js';
             import {product} from './frame/product.js';
 
@@ -68,7 +68,7 @@
             product.table2 = document.getElementById('table2');
 
             init_table();
-            load_tree();
+            load_table2();
 
             prepareTool();
             document.getElementById('btnTest1').addEventListener('click', test1);
