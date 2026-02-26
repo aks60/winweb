@@ -39,7 +39,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Test2} from './frame/main.js';
-            import {project, load_table2 as project_load_table2} from './frame/project.js';
+            import {project, load_table3 as project_load_table3} from './frame/project.js';
 
             var sysprodID = -1;
             var tab1Tree = document.getElementById('tab1-tree');
@@ -85,7 +85,7 @@
                                         if (data.result === 'ok') {
                                             prjprodRec[ePrjprod.id] = data.id;
                                             ePrjprod.list.push(prjprodRec);
-                                            project_load_table2(project.projectRec[eProject.id]);
+                                            project_load_table3();
                                         } else
                                             dialogMes('Сообщение', "<p>" + data.result);
                                     },
