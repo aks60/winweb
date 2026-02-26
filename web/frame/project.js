@@ -42,7 +42,7 @@ export function init_table() {
             let projectRow = $(project.table1).jqGrid('getRowData', rowid);
             project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
             project.table1rowID = rowid;
-            load_table3(projectRow.id);   //загрузка таблицы 3         
+            load_table3();   //загрузка таблицы 3         
         }
     });
     $(project.table3).jqGrid({
@@ -61,7 +61,7 @@ export function init_table() {
                 }
             }
         ],
-        onSelectRow: function (rowid, status, e) {            
+        onSelectRow: function (rowid, status, e) {
             let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
             project.prjprodRec = ePrjprod.list.find(rec => prjprodRow.id == rec[ePrjprod.id]);
             project.table3rowID = rowid;
@@ -98,8 +98,8 @@ export function load_table2(projectID) {
 }
 
 //Загрузка конструкций в таблицу
-export function load_table3(projectID) {
-
+export function load_table3() {
+    let projectID = project.projectRec[eProject.id];
     project.wincalcMap.clear();
     $(project.table3).jqGrid('clearGridData', true);
     let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
@@ -120,52 +120,9 @@ export function load_table3(projectID) {
     $(project.table3).jqGrid("setSelection", project.table3rowID);
 }
 
-//Удаление строки таблицы
-export function delete_table1(table) {
-
-    let projectRow = getSelectedRow(table);
-    if (projectRow != null) {
-        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
-    </span> Вы действительно хотите удалить текущий заказ?");
-        $("#dialog-mes").dialog({
-            title: "Подтверждение",
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-                "Да": function () {
-                    $.ajax({
-                        url: 'dbset?action=deleteProject',
-                        data: {param: JSON.stringify({id: projectRow.id})},
-                        success: (data) => {
-                            if (data.result === 'ok') {
-                                table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
-                                for (let i = 0; i < eProject.list.length; ++i) {
-                                    if (projectRow.id === eProject.list[i][eProject.id]) {
-                                        eProject.list.splice(i, 1);
-                                    }
-                                }
-                            } else
-                                dialogMes('Сообщение', "<p>" + data.result);
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
-                        }
-                    });
-                    $(this).dialog("close");
-                },
-                Нет: function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-    }
-}
-
 //Вставка строки в таблицу
 export function insert_table1(taq) {
-debugger;
+
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => projectRow.id = rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
@@ -179,9 +136,9 @@ debugger;
                 $("#n24").val('');
                 $("#n25").val('');
                 $("#n25").attr("fk", '-3');
-                
+
                 let o1 = $(taq).attr('card_width');
-                
+
                 //Открытие диалога insert
                 $(taq).dialog({
                     title: "Карточка ввода нового проекта",
@@ -236,7 +193,7 @@ debugger;
 }
 
 //Редактирования строки таблицы
-export function update_table1(taq) {
+export function update_table1(dialogCard) {
 
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
@@ -246,10 +203,10 @@ export function update_table1(taq) {
     $("#n24").val(projectRow.date6);
     $("#n25").val(projectRow.partner);
     $("#n25").attr("fk", projectRow.prjpart_id);
-    $(taq).dialog({//открытие диалога insert
+    $(dialogCard).dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
-        width: $(taq).attr('card_width'),
-        height: $(taq).attr('card_height'),
+        width: $(dialogCard).attr('card_width'),
+        height: $(dialogCard).attr('card_height'),
         modal: true,
         resizable: false,
         buttons: {
@@ -294,6 +251,49 @@ export function update_table1(taq) {
     });
 }
 
+//Удаление строки таблицы
+export function delete_table1(table) {
+
+    let projectRow = getSelectedRow(table);
+    if (projectRow != null) {
+        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущий заказ?");
+        $("#dialog-mes").dialog({
+            title: "Подтверждение",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Да": function () {
+                    $.ajax({
+                        url: 'dbset?action=deleteProject',
+                        data: {param: JSON.stringify({id: projectRow.id})},
+                        success: (data) => {
+                            if (data.result === 'ok') {
+                                table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
+                                for (let i = 0; i < eProject.list.length; ++i) {
+                                    if (projectRow.id === eProject.list[i][eProject.id]) {
+                                        eProject.list.splice(i, 1);
+                                    }
+                                }
+                            } else
+                                dialogMes('Сообщение', "<p>" + data.result);
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Нет: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+}
+
 //Добавим запись в домен ePrjprod
 export function insert_table3(table, prjprodRec) {
 }
@@ -301,9 +301,8 @@ export function insert_table3(table, prjprodRec) {
 //Редактирования строки таблицы
 export function update_table3(taq) {
 
-    const prjprodRow = document.querySelector('#table2 tr.selected');
-    $("#n31").val(prjprodRow.dataset.num);
-    $("#n32").val(prjprodRow.dataset.name);
+    $("#n31").val(project.prjprodRec[ePrjprod.num]);
+    $("#n32").val(project.prjprodRec[ePrjprod.name]);
 
 
     $(taq).dialog({//открытие диалога insert
@@ -314,16 +313,15 @@ export function update_table3(taq) {
         resizable: false,
         buttons: {
             "Применить": function () {
-                let prjprodRec = ePrjprod.list.find(rec => projectRow.dataset.id == rec[ePrjprod.id]);
-                prjprodRec[0] = 'UPD';
-                prjprodRec[ePrjprod.num] = prjprodRow.dataset.num;
-                prjprodRec[ePrjprod.name] = prjprodRow.dataset.name;
+                project.prjprodRec[0] = 'UPD';
+                project.prjprodRec[ePrjprod.num] = $("#n31").val();
+                project.prjprodRec[ePrjprod.name] = $("#n32").val();
                 $.ajax({
-                    url: 'dbset?action=updateProject',
-                    data: {param: JSON.stringify(prjprodRec)},
+                    url: 'dbset?action=updatePrjprod',
+                    data: {param: JSON.stringify(project.prjprodRec)},
                     success: (data) => {
                         if (data.result === 'ok') {
-
+                            load_table3();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -343,48 +341,41 @@ export function update_table3(taq) {
 //Удаление строки таблицы 
 export function delete_table3() {
 
-    if (project.prjprodRec != null) {
-        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
-        $("#dialog-mes").dialog({
-            title: "Подтверждение=",
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-                "Да": function () {
-                    $.ajax({
-                        url: 'dbset?action=deletePrjprod',
-                        data: {param: JSON.stringify({id: project.prjprodRec[ePrjprod.id]})},
-                        success: (data) => {
-                            if (data.result === 'ok') {
-                                let id = 'tr' + project.prjprodRec[ePrjprod.id];
-                                var trow = document.getElementById(id);
-                                trow.remove();
-                                for (let i = 0; i < ePrjprod.list.length; ++i) {
-                                    if (ePrjprod.list[i][ePrjprod.id] === project.prjprodRec[ePrjprod.id]) {
-                                        ePrjprod.list.splice(i, 1);
-                                    }
+    $("#dialog-mes").dialog({
+        title: "Подтверждение=",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Да": function () {
+                $.ajax({
+                    url: 'dbset?action=deletePrjprod',
+                    data: {param: JSON.stringify({id: project.prjprodRec[ePrjprod.id]})},
+                    success: (data) => {
+                        if (data.result === 'ok') {
+                            for (let i = 0; i < ePrjprod.list.length; ++i) {
+                                if (ePrjprod.list[i][ePrjprod.id] === project.prjprodRec[ePrjprod.id]) {
+                                    ePrjprod.list.splice(i, 1);
                                 }
-                                //Перезагрузка таблицы конструкций
-                                let rowid = $("#table1").jqGrid('getGridParam', "selrow");
-                                $("#table1").jqGrid("setSelection", rowid);
-                            } else
-                                dialogMes('Сообщение', "<p>" + data.result);
-                        },
-                        error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
-                        }
-                    });
-                    $(this).dialog("close");
-                },
-                Нет: function () {
-                    $(this).dialog("close");
-                }
+                            }
+                            load_table3();
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            Нет: function () {
+                $(this).dialog("close");
             }
-        });
-    }
+        }
+    });
 }
 
 

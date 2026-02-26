@@ -176,6 +176,24 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
+    
+    public static JSONObject updatePrjprod(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String param = request.getParameter("param");
+            JSONArray arr = (JSONArray) JSONValue.parse(param);
+            int id = Integer.valueOf(arr.get(ePrjprod.id.ordinal()).toString());
+            Record record = ePrjprod.find(id);
+            record.set(ePrjprod.up, "UPD");
+            record.set(ePrjprod.num, format3(arr, ePrjprod.num));
+            record.set(ePrjprod.name, format3(arr, ePrjprod.name));
+            Query qPrjprod = new Query(ePrjprod.values());
+            qPrjprod.update2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
 
     public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
         try {

@@ -90,3 +90,9 @@ p.field {
     padding-top: 1px;
 }
 
+.ui-jqgrid tr.jqgrow td {
+    white-space: normal !important;
+    height: auto; /* высота строки подстроится под контент */
+    padding: 2px; /* отступы для красоты */
+}
+
