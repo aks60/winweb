@@ -37,10 +37,9 @@ export function init_table() {
             {name: 'partner', width: 220, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"},
             {name: 'prjpart_id', hidden: true}
-        ],
-        //Загрузка таблицы 2
+        ],        
         onSelectRow: function (rowid, status, e) {
-            click_table1(rowid);
+            click_table1(rowid); //загрузка таблицы 2
         }
     });
     $(project.table3).jqGrid({
@@ -58,7 +57,11 @@ export function init_table() {
                     return '<canvas id="cnv' + options.rowId + '" width="68" height="68"></canvas>';
                 }
             }
-        ]
+        ],
+        onSelectRow: function (rowid, status, e) {
+            let projectRow = project.table1.jqGrid('getRowData', rowid);
+            project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+        }        
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
     resize();
