@@ -1,6 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {product} from './product.js';
-export let project = {wincalcMap: new Map(), prjprodRec: null, table1rowID: 1};
+export let project = {wincalcMap: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
 
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
@@ -37,9 +37,12 @@ export function init_table() {
             {name: 'partner', width: 220, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"},
             {name: 'prjpart_id', hidden: true}
-        ],        
+        ],
         onSelectRow: function (rowid, status, e) {
-            click_table1(rowid); //загрузка таблицы 2
+            let projectRow = $(project.table1).jqGrid('getRowData', rowid);
+            project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+            project.table1rowID = rowid;
+            load_table3(projectRow.id);   //загрузка таблицы 3         
         }
     });
     $(project.table3).jqGrid({
@@ -58,10 +61,11 @@ export function init_table() {
                 }
             }
         ],
-        onSelectRow: function (rowid, status, e) {
+        onSelectRow: function (rowid, status, e) {            
             let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
             project.prjprodRec = ePrjprod.list.find(rec => prjprodRow.id == rec[ePrjprod.id]);
-        }        
+            project.table3rowID = rowid;
+        }
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
     resize();
@@ -97,10 +101,10 @@ export function load_table2(projectID) {
 export function load_table3(projectID) {
 
     project.wincalcMap.clear();
-    $(project.table3).jqGrid('clearGridData', true);          
+    $(project.table3).jqGrid('clearGridData', true);
     let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
     for (let i = 0; i < prjprodList.length; ++i) {
-        
+
         let prjprodRec = prjprodList[i];
         $(project.table3).jqGrid('addRowData', i + 1, {
             id: prjprodRec[ePrjprod.id],
@@ -111,7 +115,7 @@ export function load_table3(projectID) {
         let canvas = document.getElementById('cnv' + (i + 1));
         let script = prjprodRec[ePrjprod.script];
         let winc = Wincalc.new(canvas, 68, 68, script);
-        project.wincalcMap.set(prjprodRec[ePrjprod.id], winc);        
+        project.wincalcMap.set(prjprodRec[ePrjprod.id], winc);
     }
     $(project.table3).jqGrid("setSelection", project.table3rowID);
 }
@@ -287,24 +291,14 @@ export function update_table1(taq) {
     });
 }
 
-//Клик table2
-export function click_table1(rowid) {
-
-    let projectRow = $(project.table1).jqGrid('getRowData', rowid);
-    project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
-    project.table1rowID = rowid;
-
-    load_table3(projectRow.id);
-}
-
 //Добавим запись в домен ePrjprod
 export function insert_table3(table, prjprodRec) {
 }
 
 //Редактирования строки таблицы
 export function update_table3(taq) {
-    
-    const prjprodRow = document.querySelector('#table2 tr.selected');    
+
+    const prjprodRow = document.querySelector('#table2 tr.selected');
     $("#n31").val(prjprodRow.dataset.num);
     $("#n32").val(prjprodRow.dataset.name);
 
@@ -326,7 +320,7 @@ export function update_table3(taq) {
                     data: {param: JSON.stringify(prjprodRec)},
                     success: (data) => {
                         if (data.result === 'ok') {
-                            
+
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
