@@ -59,8 +59,8 @@ export function init_table() {
             }
         ],
         onSelectRow: function (rowid, status, e) {
-            let projectRow = project.table1.jqGrid('getRowData', rowid);
-            project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+            let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
+            project.prjprodRec = ePrjprod.list.find(rec => prjprodRow.id == rec[ePrjprod.id]);
         }        
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
@@ -113,6 +113,7 @@ export function load_table3(projectID) {
         let winc = Wincalc.new(canvas, 68, 68, script);
         project.wincalcMap.set(prjprodRec[ePrjprod.id], winc);        
     }
+    $(project.table3).jqGrid("setSelection", project.table3rowID);
 }
 
 //Удаление строки таблицы
