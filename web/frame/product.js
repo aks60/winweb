@@ -63,7 +63,7 @@ export function init_table() {
 }
 
 //Загрузка данных в таблицу
-export function load_table() {
+export function load_table1() {
     try {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
@@ -85,12 +85,13 @@ export function load_table() {
         }
         $(product.table1).jqGrid("setSelection", 1);
     } catch (e) {
-        errorLog("Error: product.load_table() " + e.message);
+        errorLog("Error: product.load_table1() " + e.message);
     }
 }
 
 //Загрузка данных в tree
 export function load_tree(tabtree) {
+    debugger;
     try {
         if (project.prjprodRec != null) {
             let arr = new Array();
@@ -194,7 +195,7 @@ export function tree_to_tabs(nodeID) {
 
                 //Парам. по умолчанию
             } else if (elem.type === Type.PARAM) {
-                load_table($('#table1'));
+                load_table1($('#table1'));
                 $("#tabs-2").show();
 
                 //Сторона коробки, створки

@@ -42,16 +42,13 @@
 
         <script type="module">
             import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1, click_table1,
-                    load_table2, update_table2, delete_table2, click_table2} from './frame/project.js';
+                    load_table3, update_table3, delete_table3} from './frame/project.js';
             import {project} from './frame/project.js';
 
             $(window).bind('resize', () => resize()).trigger('resize');
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
             project.table3 = document.getElementById('table3');
-
-            project.table2.setAttribute('activeRowIndex', 1);
-            project.table2.addEventListener('click', click_table2);
 
             init_table();
             load_table1();
@@ -66,8 +63,8 @@
             document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card1'));
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
-            document.getElementById('btnProd2').addEventListener('click', () => update_table2('#dialog-card2'));
-            document.getElementById('btnProd3').addEventListener('click', () => delete_table2());
+            document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
+            document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
 
@@ -112,17 +109,10 @@
                 </div>
                 <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -480px; bottom: 0;">
                     <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px; background: #efeffb">
-                        <table id="table3"  class="ui-jqgrid-btable"></table>
+                        <table id="table2"  class="ui-jqgrid-btable"></table>
                     </div>
                     <div id="east3" style="overflow-y: auto; height: 100%; background: #efeffb">
-                        <table id="table2">
-                            <thead>
-                                <tr style="height: 22px; background-color: #e7f4f9">
-                                    <th>id</th><th>Наименование</th><th>Кол-во</th><th>Изображение</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>                         
+                        <table id="table3"  class="ui-jqgrid-btable"></table>                       
                     </div>
                 </div>
             </div>

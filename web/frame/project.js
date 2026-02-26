@@ -294,7 +294,7 @@ export function click_table1(rowid) {
 }
 
 //Добавим запись в домен ePrjprod
-export function insert_table2(table, prjprodRec) {
+export function insert_table3(table, prjprodRec) {
 }
 
 //Редактирования строки таблицы
@@ -337,16 +337,6 @@ export function update_table3(taq) {
             }
         }
     });
-}
-
-//Клик table2
-export function click_table3(e) {
-}
-
-function taq_parent(node, tag) { //рекурсия
-    if (node)
-        return (node.tagName === tag) ? node : taq_parent(node.parentElement, tag);
-    return null;
 }
 
 //Удаление строки таблицы 
