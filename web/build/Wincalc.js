@@ -48,15 +48,13 @@ export class Wincalc {
     }
 
     //Пересчитать и перерисовать
-    resize(gui) {
+    resize() {
         this.cnv.width = this.cnv.offsetWidth;
         this.cnv.height = this.cnv.offsetHeight;
         product.winCalc.location();
         product.winCalc.draw();
-        if (gui !== undefined) {
-            $('#n11').val(Math.round(this.width));
-            $('#n12').val(Math.round(this.height));
-        }
+        $('#n11').val(Math.round(this.width));
+        $('#n12').val(Math.round(this.height));
     }
 
     build(script) {

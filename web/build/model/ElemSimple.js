@@ -76,7 +76,7 @@ export class ElemSimple extends Com5t {
                         if (X < 0 || Y < 0) {
                             UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
-                        this.winc.resize('gui');
+                        this.winc.resize();
                         clearTimeout(this.timerID); //остановка
                         this.timerID = setTimeout(null, 10); //запуск
                     }
@@ -170,7 +170,7 @@ export class ElemSimple extends Com5t {
                         if (X < 0 || Y < 0) {
                             UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
-                        this.winc.resize('gui');
+                        this.winc.resize();
                     }
                 });
 
