@@ -91,7 +91,6 @@ export function load_table1() {
 
 //Загрузка данных в tree
 export function load_table2(tabtree) {
-    debugger;
     try {
         if (project.prjprodRec != null) {
             let arr = new Array();
@@ -257,6 +256,7 @@ export function tree_to_tabs(nodeID) {
 
 //Текстура изделия
 export function color_to_windows(btnSrc) {
+    debugger;
     try {
         let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
         let groupSet = new Set();
@@ -324,7 +324,7 @@ export function color_to_windows(btnSrc) {
         $('#dialog-dic').load('frame/dialog/color.jsp');
 
     } catch (e) {
-        errorLog('Error: product.color_to_windows() ' + e.message);
+        errorLog('Error: color_to_windows() ' + e.message);
     }
 }
 
@@ -479,23 +479,5 @@ export function update_script() {
             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
         }
     });
-}
-
-export function test1() {
-    let winc = product.winCalc;
-    let frm = winc.root.frames[1];
-    let x = 0;//frm.y1 + 8;
-    frm.y2 = frm.y2 - 8;
-    winc.resize();
-}
-
-export function test2() {
-    let winc = product.winCalc;
-    winc.ctx.clearRect(0, 0, winc.cnv.offsetWidth/winc.scale, winc.cnv.offsetHeight/winc.scale);
-}
-
-export function test3() {
-    let winc = product.winCalc;
-    winc.resize();
 }
 

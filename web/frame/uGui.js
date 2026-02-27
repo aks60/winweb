@@ -36,7 +36,7 @@ function deployTaq(selectors) {
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') === 'w') ? '' : 'readonly';
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
-                            + `<input id='${key}' class='field' type='text' ${dx} style='width: ${width2}px;' sp='' ${readonly}>`
+                            + `<input id='${key}' class='field' type='text' ${dx} style='width: ${width2}px;' ${readonly}>`
                             + `<input class='field' type='button' style='height: 18px;' value='---' onclick=\" ${src} \">`;
 
                 } else if (type === 'btn2') { //background: #eee
@@ -44,7 +44,7 @@ function deployTaq(selectors) {
                     let src = $(elem).attr('click');
                     let readonly = ($(elem).attr('nul') === 'w') ? '' : 'readonly';
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
-                            + `<input id='" + num + "' class='field' type='text' ${dx} style='width: ${width2}px;' sp='' ${readonly}>`;
+                            + `<input id='" + num + "' class='field' type='text' ${dx} style='width: ${width2}px;' ${readonly}>`;
 
                 } else if (type === 'date') {
                     let src = $(elem).attr('click');

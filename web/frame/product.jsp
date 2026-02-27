@@ -57,9 +57,8 @@
             }
         </style>
         <script type="module">
-            import {wincalcNew, resize, init_table, load_table2,
-                    update_script, test1, test2, test3} from './frame/product.js';
-            import {product} from './frame/product.js';
+            import {product, wincalcNew, resize, init_table, load_table2,
+                    update_script, color_to_windows} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
             wincalcNew();
@@ -71,13 +70,16 @@
             load_table2();
 
             prepareTool();
+            document.getElementById('n14').addEventListener('click', color_to_windows('n14'));
+            document.getElementById('n15').addEventListener('click', color_to_windows('n15'));
+            document.getElementById('n16').addEventListener('click', color_to_windows('n16'));
+            
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
-            document.getElementById('btnTest3').addEventListener('click', test3);
 
-            function test4() {
+            function test1() {
             }
-            function test5() {
+            function test2() {
             }
         </script>  
     </head>
@@ -85,7 +87,6 @@
         <div id='north' style=''>
             <button id="btnTest1" style="width: 48px; margin-left: 40px;">TEST</button>
             <button id="btnTest2" style="width: 48px; margin-left: 40px;">TEST</button>
-            <button id="btnTest3" style="width: 48px; margin-left: 40px;">TEST</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
@@ -103,12 +104,12 @@
 
                 <div id="tabs-1" style="padding: 0px;">  
                     <p class="pantitle">Основные размеры</p> 
-                    <jst id="n11" type='txt' label='Ширина' width='80' width2="60"></jst><br>
-                    <jst id="n12" type='txt' label='Высота' width='80' width2="60"></jst><br>
+                    <jst id="n11" type='txt' label='Ширина' width='80' width2="60" nul='r'></jst><br>
+                    <jst id="n12" type='txt' label='Высота' width='80' width2="60" nul='r'></jst><br>
                     <p class="pantitle">Текстура изделия</p> 
-                    <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="product.color_to_windows('n14');"></jst><br>
-                    <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_windows('n15');"></jst><br>
-                    <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_windows('n16');"></jst><br>
+                    <jst id="n14" type='btn' label='Основная' width='80' width2="260"></jst><br>
+                    <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>
+                    <jst id="n16" type='btn' label='Внещняя' width='80' width2="260"></jst><br>
                 </div>
 
                 <div id="tabs-2" style="padding: 0px; display: none;">   
