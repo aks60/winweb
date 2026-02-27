@@ -7,12 +7,6 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 
 export let product = {};
 
-//export function listener() {
-//    product.winCalc.onMove = () => {
-//        $('#n11').val(product.winCalc.width);
-//        $('#n12').val(product.winCalc.height);
-//    };
-//}
 //Создание конструкции
 export function wincalcNew() {
     if (project.prjprodRec != null) {
