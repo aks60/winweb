@@ -70,9 +70,9 @@
             load_table2();
 
             prepareTool();
-            document.getElementById('n14').addEventListener('click', color_to_windows('n14'));
-            document.getElementById('n15').addEventListener('click', color_to_windows('n15'));
-            document.getElementById('n16').addEventListener('click', color_to_windows('n16'));
+            document.querySelector('#n14 + input').addEventListener('click', () => color_to_windows('n14'));
+            document.querySelector('#n15 + input').addEventListener('click', () => color_to_windows('n15'));
+            document.querySelector('#n16 + input').addEventListener('click', () => alert(777));
             
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
