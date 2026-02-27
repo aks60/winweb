@@ -262,11 +262,11 @@ export function color_to_windows(btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();
 
-        let groupTxt = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.cgrp];
-        let groupArr = (groupTxt === null) ? null : parserInt(groupTxt);
-        let colorTxt = (btnSrc == 'n14') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col1]
-                : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col2]
-                : eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id])[eSystree.col3];
+        let groupTxt = eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.cgrp];
+        let groupArr = (groupTxt === undefined) ? null : parserInt(groupTxt);
+        let colorTxt = (btnSrc === 'n14') ? eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col1]
+                : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col2]
+                : eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col3];
         let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
 
         //Поле группы текстур заполнено
