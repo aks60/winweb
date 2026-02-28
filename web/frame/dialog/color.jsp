@@ -9,23 +9,26 @@
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-//------------------------------------------------------------------------------
+            
+            var tab1Color = document.getElementById('tab1-color');
+            var tab2Color = document.getElementById('tab2-color');            
+
             function resize() {
-                $("#tab1-color").jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
-                $("#tab1-color").jqGrid('setGridHeight', $("#dialog-dic #pan1-color").height() - 20);
-                $("#tab2-color").jqGrid('setGridWidth', $("#dialog-dic #pan2-color").width());
-                $("#tab2-color").jqGrid('setGridHeight', $("#dialog-dic #pan2-color").height() - 20);
+                $(tab1Color).jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
+                $(tab1Color).jqGrid('setGridHeight', $("#dialog-dic #pan1-color").height() - 20);
+                $(tab2Color).jqGrid('setGridWidth', $("#dialog-dic #pan2-color").width());
+                $(tab2Color).jqGrid('setGridHeight', $("#dialog-dic #pan2-color").height() - 20);
             }
-//------------------------------------------------------------------------------
+
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
-                init_dialog($("#tab1-color"), $("#tab2-color"));
-                init_table($("#tab1-color"), $("#tab2-color"));
-                load_table($("#tab1-color"), $("#tab2-color"))
+                init_dialog($(tab1Color), $(tab2Color));
+                init_table($(tab1Color), $(tab2Color));
+                load_table($(tab1Color), $(tab2Color))
             });
-//------------------------------------------------------------------------------
+
             function init_dialog(table1, table2) {
                 $("#dialog-dic").dialog({
                     title: "Справочник текстур",
@@ -43,7 +46,7 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
+
             function init_table(table1, table2) {
 
                 table1.jqGrid({
@@ -98,7 +101,7 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
+
             function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
@@ -117,7 +120,7 @@
                 table1.jqGrid("setSelection", 1);
                 resize();
             }
-//------------------------------------------------------------------------------
+
             function save_table(table2) {
                 try {
                     let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
