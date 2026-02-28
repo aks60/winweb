@@ -9,7 +9,7 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            let parID = "<%= request.getParameter("param")%>";
+            let level = "<%= request.getParameter("level")%>";
             var tab1Color = document.getElementById('tab1-color');
             var tab2Color = document.getElementById('tab2-color');
 
@@ -25,10 +25,11 @@
             });
             init_dialog();
             init_table();
-            if (parID === '1')
+            if (level === '1') {
                 load1_table();
-            else if (parID === '2')
+            } else if (level === '2') {
                 load2_table();
+            }
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({
@@ -106,18 +107,18 @@
             function load1_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 $(tab2Color).jqGrid('clearGridData', true);
-//                let base = ($('#body-jsp title').text() == 'KITS') ? kits : product;
-//                if (base.groupSet.size > 0) {
-//
-//                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
-//                    for (let i = 0; i < groupList.length; i++) {
-//                        let tr = groupList[i];
-//                        $(tab1Color).jqGrid('addRowData', i + 1, {
-//                            id: tr[GROUP.id],
-//                            name: tr[GROUP.name]
-//                        });
-//                    }
-//                }
+                let base = ($('#body-jsp title').text() == 'KITS') ? kits : product;
+                if (base.groupSet.size > 0) {
+
+                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
+                    for (let i = 0; i < groupList.length; i++) {
+                        let tr = groupList[i];
+                        $(tab1Color).jqGrid('addRowData', i + 1, {
+                            id: tr[GROUP.id],
+                            name: tr[GROUP.name]
+                        });
+                    }
+                }
                 $(tab1Color).jqGrid("setSelection", 1);
                 resize();
             }
@@ -252,6 +253,137 @@
                     console.error('Error: color.rec_dialog_save() ' + e.message);
                 }
             }
+
+
+            //Текстура изделия
+            function color1_list(colorNum) {
+                try {
+                    let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
+                    let groupSet = new Set();
+                    let colorSet = new Set();
+
+                    let groupTxt = eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.cgrp];
+                    let groupArr = (groupTxt === undefined) ? null : parserInt(groupTxt);
+                    let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
+                    let colorTxt = (colorNum === 'n14') ? systreeRec[eSystree.col1]
+                            : (colorNum === 'n15') ? systreeRec[eSystree.col2] : systreeRec[eSystree.col3];
+                    let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
+
+                    //Поле группы текстур заполнено
+                    if (groupArr != null) {
+                        for (let s1 of groupArr) { //группы
+                            let groupSet2 = new Set();
+                            let colorSet2 = new Set();
+                            let b = false;
+                            for (let rec of eColor.list) {
+                                if (rec[eColor.colgrp_id] === s1) {
+                                    groupSet2.add(rec[eColor.colgrp_id]); //группы
+                                    colorSet2.add(rec); //текстуры
+                                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                                        if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
+                                            b = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (b === false) { //если небыло пападаний то добавляем всю группу
+                                groupSet.add(groupSet2);
+                                colorSet.add(colorSet2);
+                            }
+                        }
+                    }
+                    //Поле текстур заполнено
+                    if (colorArr.length != 0) {
+                        for (let rec of eColor.list) {
+                            if (groupArr != null) {
+
+                                for (let s1 of groupArr) { //группы
+                                    if (rec[eColor.colgrp_id] === s1) {
+                                        for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
+                                            if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
+                                                groupSet.add(rec[eColor.colgrp_id]);
+                                                colorSet.add(rec);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
+                                    if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
+                                        groupSet.add(rec[eColor.colgrp_id]);
+                                        colorSet.add(rec);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    dbrec.parent = 'winc';
+                    product.groupSet = groupSet;
+                    product.colorArr = Array.from(colorSet);
+                    product.buttonSrc = colorNum;
+                    $('#dialog-jsp').load('frame/dialog/color.jsp?param=1');
+
+                } catch (e) {
+                    errorLog('Error: color_to_windows() ' + e.message);
+                }
+            }
+
+            //Заполнение
+            export function color2_list(btnSrc) {
+                try {
+                    let nodeID = $(product.table2).jstree("get_selected")[0];
+                    let prjprodID = project.prjprodRec[ePrjprod.id];
+                    let winc = project.wincalcMap.get(prjprodID);
+                    let elem = winc.listElem.find(it => it.id == nodeID);
+                    let groupSet = new Set();
+                    let colorSet = new Set();
+                    let artiklElem = null;
+
+                    if (btnSrc === 'n33')
+                        artiklElem = elem.artiklRec;
+                    else if (btnSrc === 'n34')
+                        artiklElem = elem.artiklRec;
+                    else if (btnSrc === 'n35')
+                        artiklElem = elem.artiklRec;
+                    else if (btnSrc === 'n46')
+                        artiklElem = elem.handleRec;
+                    else if (btnSrc === 'n4A')
+                        artiklElem = elem.loopRec;
+                    else if (btnSrc === 'n4C')
+                        artiklElem = elem.lockRec;
+                    else if (btnSrc === 'n53')
+                        artiklElem = elem.artiklRec;
+
+                    //Все текстуры артикула элемента конструкции
+                    for (let rec of eArtdet.list) {
+                        if (rec.list[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
+                            if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
+
+                                eColor.ist.forEach(colorRec => {
+                                    if (colorRec[eColor.colgrp_id] === Math.abs(rec.list[eArtdet.color_fk])) {
+
+                                        groupSet.add(Math.abs(colorRec[eColor.colgrp_id]));
+                                        colorSet.add(colorRec);
+                                    }
+                                });
+                            } else { //текстура color_fk 
+                                let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] === rec3[eColor.id]);
+                                groupSet.add(color2Rec[eColor.colgrp_id]);
+                                colorSet.add(color2Rec);
+                            }
+                        }
+                    }
+                    dbrec.parent = 'elem';
+                    product.groupSet = groupSet;
+                    product.colorArr = Array.from(colorSet);
+                    product.buttonSrc = btnSrc;
+                    $('#dialog-jsp').load('frame/dialog/color.jsp');
+
+                } catch (e) {
+                    console.error('Error: product.color_to_element() ' + e.message);
+                }
+            }
+
         </script>         
     </head>
     <body>

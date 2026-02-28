@@ -11,8 +11,8 @@ export let product = {};
 export function wincalcNew() {
     if (project.prjprodRec != null) {
         let cnv = document.getElementById("cnv");
-        let script = project.prjprodRec[ePrjprod.script];        
-        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight,  script);
+        let script = project.prjprodRec[ePrjprod.script];
+        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, script);
     }
 }
 
@@ -254,80 +254,6 @@ export function tree_to_tabs(nodeID) {
     }
 }
 
-//Текстура изделия
-export function color_to_windows(btnSrc) {
-//    debugger;
-   try {
-//        let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
-//        let groupSet = new Set();
-//        let colorSet = new Set();
-//
-//        let groupTxt = eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.cgrp];
-//        let groupArr = (groupTxt === undefined) ? null : parserInt(groupTxt);
-//        let colorTxt = (btnSrc === 'n14') ? eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col1]
-//                : (btnSrc === 'n15') ? eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col2]
-//                : eSystree.list.find(rec => winc.nuni == rec[eSystree.id])[eSystree.col3];
-//        let colorArr = (colorTxt === null) ? null : parserInt(colorTxt);
-//
-//        //Поле группы текстур заполнено
-//        if (groupArr != null) {
-//            for (let s1 of groupArr) { //группы
-//                let groupSet2 = new Set();
-//                let colorSet2 = new Set();
-//                let b = false;
-//                for (let rec of eColor.list) {
-//                    if (rec[eColor.colgrp_id] === s1) {
-//                        groupSet2.add(rec[eColor.colgrp_id]); //группы
-//                        colorSet2.add(rec); //текстуры
-//                        for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-//                            if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-//                                b = true;
-//                            }
-//                        }
-//                    }
-//                }
-//                if (b === false) { //если небыло пападаний то добавляем всю группу
-//                    groupSet.add(groupSet2);
-//                    colorSet.add(colorSet2);
-//                }
-//            }
-//        }
-//        //Поле текстур заполнено
-//        if (colorArr.length != 0) {
-//            for (let rec of eColor.list) {
-//                if (groupArr != null) {
-//
-//                    for (let s1 of groupArr) { //группы
-//                        if (rec[eColor.colgrp_id] === s1) {
-//                            for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
-//                                if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-//                                    groupSet.add(rec[eColor.colgrp_id]);
-//                                    colorSet.add(rec);
-//                                }
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    for (let i = 0; i < colorArr.length; i = i + 2) { //тестуры
-//                        if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-//                            groupSet.add(rec[eColor.colgrp_id]);
-//                            colorSet.add(rec);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        dbrec.parent = 'winc';
-//        product.groupSet = groupSet;
-//        product.colorArr = Array.from(colorSet);
-//        product.buttonSrc = btnSrc;
-        $('#dialog-jsp').load('frame/dialog/color.jsp?param=1');
-
-    } catch (e) {
-        errorLog('Error: color_to_windows() ' + e.message);
-    }
-}
-
 export function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $(product.table2).jstree("get_selected")[0];
@@ -375,62 +301,6 @@ export function sideopen_to_stvorka(btnSrc) {
 export function artikl_to_stvork(btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-}
-
-//Заполнение
-export function color_to_element(btnSrc) {
-    try {
-        let nodeID = $(product.table2).jstree("get_selected")[0];
-        let prjprodID = project.prjprodRec[ePrjprod.id];
-        let winc = project.wincalcMap.get(prjprodID);
-        let elem = winc.listElem.find(it => it.id == nodeID);
-        let groupSet = new Set();
-        let colorSet = new Set();
-        let artiklElem = null;
-
-        if (btnSrc === 'n33')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc === 'n34')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc === 'n35')
-            artiklElem = elem.artiklRec;
-        else if (btnSrc === 'n46')
-            artiklElem = elem.handleRec;
-        else if (btnSrc === 'n4A')
-            artiklElem = elem.loopRec;
-        else if (btnSrc === 'n4C')
-            artiklElem = elem.lockRec;
-        else if (btnSrc === 'n53')
-            artiklElem = elem.artiklRec;
-
-        //Все текстуры артикула элемента конструкции
-        for (let rec of eArtdet.list) {
-            if (rec.list[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
-                if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
-
-                    eColor.ist.forEach(colorRec => {
-                        if (colorRec[eColor.colgrp_id] === Math.abs(rec.list[eArtdet.color_fk])) {
-
-                            groupSet.add(Math.abs(colorRec[eColor.colgrp_id]));
-                            colorSet.add(colorRec);
-                        }
-                    });
-                } else { //текстура color_fk 
-                    let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] === rec3[eColor.id]);
-                    groupSet.add(color2Rec[eColor.colgrp_id]);
-                    colorSet.add(color2Rec);
-                }
-            }
-        }
-        dbrec.parent = 'elem';
-        product.groupSet = groupSet;
-        product.colorArr = Array.from(colorSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-jsp').load('frame/dialog/color.jsp');
-
-    } catch (e) {
-        console.error('Error: product.color_to_element() ' + e.message);
-    }
 }
 
 //Заполнение

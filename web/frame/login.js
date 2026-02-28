@@ -26,7 +26,7 @@ login.init_login = function () {
             if (login.data.role == 'RDB$ADMIN') {
                 $("#body-jsp").load('frame/users.jsp');
             } else {
-                $("#mainmenu").load('frame/menu.jsp');
+                $("#menu-main").load('frame/menu.jsp');
                 $("#body-jsp").load('frame/project.jsp');
             }
         } else {
@@ -131,7 +131,7 @@ login.token_sign = function (random) {
                 },
                 success: function (data) {
                     if (data.result == 'true') {
-                        $('#mainmenu').show();
+                        $('#menu-main').show();
                         if (data.role == 'YO_HO1_RW' || data.role == 'YO_HO2_RW') {
                             $('.manager').show();
                         }
