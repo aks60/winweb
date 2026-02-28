@@ -3,15 +3,15 @@
 <html>
     <head style="margin: 0; padding: 0;">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>COLOR</title>
-
+        <title>COLOR</title>  
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            
+
+            let parID = "<%= request.getParameter("param")%>";
             var tab1Color = document.getElementById('tab1-color');
-            var tab2Color = document.getElementById('tab2-color');            
+            var tab2Color = document.getElementById('tab2-color');
 
             function resize() {
                 $(tab1Color).jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
@@ -20,16 +20,21 @@
                 $(tab2Color).jqGrid('setGridHeight', $("#dialog-dic #pan2-color").height() - 20);
             }
 
+            //TODO $(document).ready(function () {
             $(document).ready(function () {
                 $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
-                init_dialog($(tab1Color), $(tab2Color));
-                init_table($(tab1Color), $(tab2Color));
-                load_table($(tab1Color), $(tab2Color))
+                init_dialog();
+                init_table();
+                if (parID === '1')
+                    load1_table();
+                else
+                    load2_table();
+
             });
 
-            function init_dialog(table1, table2) {
+            function init_dialog() {
                 $("#dialog-dic").dialog({
                     title: "Справочник текстур",
                     width: 400,
@@ -37,7 +42,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save_table(table2);
+                            save_table();
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -47,9 +52,9 @@
                 });
             }
 
-            function init_table(table1, table2) {
+            function init_table() {
 
-                table1.jqGrid({
+                $(tab1Color).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Группы текстур'],
                     colModel: [
@@ -57,38 +62,38 @@
                         {name: 'name', width: 360}
                     ],
                     onSelectRow: function (rowid) {
-                        table2.jqGrid("clearGridData", true);
-                        let colgrpRow = table1.jqGrid('getRowData', rowid);
+                        $(tab2Color).jqGrid("clearGridData", true);
+                        let colgrpRow = $(tab1Color).jqGrid('getRowData', rowid);
                         let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                         if (base.colorArr.length == 0) {
 
                             let colorList = eColor.list.filter(rec => colgrpRow.id == rec.list[eColor.colgrp_id]);
                             for (let i = 0; i < colorList.length; i++) {
                                 let colorRec = colorList[i];
-                                table2.jqGrid('addRowData', i + 1, {
+                                $(tab2Color).jqGrid('addRowData', i + 1, {
                                     id: colorRec[eColor.id],
                                     name: colorRec[eColor.name]
                                 });
                                 let rgb = '#' + colorRec[eColor.rgb].toString(16);
-                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                                $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         } else {
                             let colorArr = base.colorArr.filter(rec => colgrpRow.id == rec.list[eColor.colgrp_id]);
                             for (let i = 0; i < colorArr.length; i++) {
                                 let colorRec = colorArr[i];
-                                table2.jqGrid('addRowData', i + 1, {
+                                $(tab2Color).jqGrid('addRowData', i + 1, {
                                     id: colorRec[eColor.id],
                                     name: colorRec[eColor.name]
                                 });
                                 let rgb = '#' + colorRec[eColor.rgb].toString(16);
-                                table2.jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                                $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                             }
                         }
-                        table2.jqGrid("setSelection", 1);
+                        $(tab2Color).jqGrid("setSelection", 1);
                         resize();
                     }
                 });
-                table2.jqGrid({
+                $(tab2Color).jqGrid({
                     datatype: "local",
                     colNames: ['Код', 'Описание текстур'],
                     colModel: [
@@ -96,35 +101,54 @@
                         {name: 'name', width: 340}
                     ],
                     ondblClickRow: function (rowId) {
-                        save_table(table2);
+                        save_table();
                         $("#dialog-dic").dialog("close");
                     }
                 });
             }
 
-            function load_table(table1, table2) {
-                table1.jqGrid('clearGridData', true);
-                table2.jqGrid('clearGridData', true);
+            function load1_table() {
+                $(tab1Color).jqGrid('clearGridData', true);
+                $(tab2Color).jqGrid('clearGridData', true);
                 let base = ($('#outbody title').text() == 'KITS') ? kits : product;
                 if (base.groupSet.size > 0) {
 
                     let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
                     for (let i = 0; i < groupList.length; i++) {
                         let tr = groupList[i];
-                        table1.jqGrid('addRowData', i + 1, {
+                        $(tab1Color).jqGrid('addRowData', i + 1, {
                             id: tr[GROUP.id],
                             name: tr[GROUP.name]
                         });
                     }
                 }
-                table1.jqGrid("setSelection", 1);
+                $(tab1Color).jqGrid("setSelection", 1);
                 resize();
             }
 
-            function save_table(table2) {
+            function load2_table() {
+                $(tab1Color).jqGrid('clearGridData', true);
+                $(tab2Color).jqGrid('clearGridData', true);
+                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+                if (base.groupSet.size > 0) {
+
+                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
+                    for (let i = 0; i < groupList.length; i++) {
+                        let tr = groupList[i];
+                        $(tab1Color).jqGrid('addRowData', i + 1, {
+                            id: tr[GROUP.id],
+                            name: tr[GROUP.name]
+                        });
+                    }
+                }
+                $(tab1Color).jqGrid("setSelection", 1);
+                resize();
+            }
+
+            function save_table() {
                 try {
-                    let rowid = table2.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                    let colorRow = table2.jqGrid('getRowData', rowid); //record справочника
+                    let rowid = $(tab2Color).jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                    let colorRow = $(tab2Color).jqGrid('getRowData', rowid); //record справочника
 
                     if ($('#outbody title').text() == 'PRODUCT') {
 
@@ -232,7 +256,6 @@
                     console.error('Error: color.rec_dialog_save() ' + e.message);
                 }
             }
-//------------------------------------------------------------------------------
         </script>         
     </head>
     <body>
