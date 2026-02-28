@@ -20,19 +20,15 @@
                 $(tab2Color).jqGrid('setGridHeight', $("#dialog-dic #pan2-color").height() - 20);
             }
 
-            //TODO $(document).ready(function () {
-            $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                init_dialog();
-                init_table();
-                if (parID === '1')
-                    load1_table();
-                else
-                    load2_table();
-
+            $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                resize();
             });
+            init_dialog();
+            init_table();
+            if (parID === '1')
+                load1_table();
+            else if (parID === '2')
+                load2_table();
 
             function init_dialog() {
                 $("#dialog-dic").dialog({
@@ -110,18 +106,18 @@
             function load1_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 $(tab2Color).jqGrid('clearGridData', true);
-                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
-                if (base.groupSet.size > 0) {
-
-                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
-                    for (let i = 0; i < groupList.length; i++) {
-                        let tr = groupList[i];
-                        $(tab1Color).jqGrid('addRowData', i + 1, {
-                            id: tr[GROUP.id],
-                            name: tr[GROUP.name]
-                        });
-                    }
-                }
+//                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+//                if (base.groupSet.size > 0) {
+//
+//                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
+//                    for (let i = 0; i < groupList.length; i++) {
+//                        let tr = groupList[i];
+//                        $(tab1Color).jqGrid('addRowData', i + 1, {
+//                            id: tr[GROUP.id],
+//                            name: tr[GROUP.name]
+//                        });
+//                    }
+//                }
                 $(tab1Color).jqGrid("setSelection", 1);
                 resize();
             }
@@ -129,18 +125,18 @@
             function load2_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 $(tab2Color).jqGrid('clearGridData', true);
-                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
-                if (base.groupSet.size > 0) {
-
-                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
-                    for (let i = 0; i < groupList.length; i++) {
-                        let tr = groupList[i];
-                        $(tab1Color).jqGrid('addRowData', i + 1, {
-                            id: tr[GROUP.id],
-                            name: tr[GROUP.name]
-                        });
-                    }
-                }
+//                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+//                if (base.groupSet.size > 0) {
+//
+//                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
+//                    for (let i = 0; i < groupList.length; i++) {
+//                        let tr = groupList[i];
+//                        $(tab1Color).jqGrid('addRowData', i + 1, {
+//                            id: tr[GROUP.id],
+//                            name: tr[GROUP.name]
+//                        });
+//                    }
+//                }
                 $(tab1Color).jqGrid("setSelection", 1);
                 resize();
             }
