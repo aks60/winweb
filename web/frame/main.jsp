@@ -64,8 +64,8 @@
     </head>
     <body>
         <div id="mainmenu"></div>
-        <div id="outbody"></div>  
-        <div id="dialog-dic"></div> 
+        <div id="body-jsp"></div>  
+        <div id="dialog-jsp"></div> 
         <div id="dialog-mes" title="Сообщение"></div>
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
@@ -75,7 +75,7 @@
             localizeFactory();
             //Test2();
 
-            $("#outbody").load('frame/login.jsp', function () {
+            $("#body-jsp").load('frame/login.jsp', function () {
                 Promise.all([
                     $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
                     $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),

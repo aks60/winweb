@@ -10,10 +10,10 @@
             let tabDealer = document.getElementById('tab-dealer');
 
             function resize() {
-                $(tabDealer).jqGrid('setGridWidth', $("#dialog-dic #pan-dealer").width());
-                $(tabDealer).jqGrid('setGridHeight', $("#dialog-dic #pan-dealer").height() - 24);
+                $(tabDealer).jqGrid('setGridWidth', $("#dialog-jsp #pan-dealer").width());
+                $(tabDealer).jqGrid('setGridHeight', $("#dialog-jsp #pan-dealer").height() - 24);
             }
-            $("#dialog-dic").unbind().bind("dialogresize", (event, ui) => resize());
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
             
             init_dialog();
             init_table();
@@ -22,7 +22,7 @@
 
             function init_dialog() {
 
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Справочник-",
                     width: 500,
                     height: 500,
@@ -32,7 +32,7 @@
                             let dealerRow = getSelectedRow($(tabDealer));
                             $('#n25').val(dealerRow.partner);
                             $('#n25').attr("fk", dealerRow.id);
-                            $("#dialog-dic").dialog("close");
+                            $("#dialog-jsp").dialog("close");
                         },
                         "Закрыть": function () {
                             $(this).dialog("close");
@@ -55,7 +55,7 @@
                         let dealerRow = getSelectedRow($(tabDealer));
                         $('#n25').val(dealerRow.partner);
                         $('#n25').attr("fk", dealerRow.id);
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }

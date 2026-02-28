@@ -12,10 +12,10 @@
             var kitdetList = null;
 //------------------------------------------------------------------------------
             function resize() {
-                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan1-kitcard").width() - 4);
-                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan1-kitcard").height() - 24);
-                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-dic #pan2-kitcard").width() - 4);
-                $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-dic #pan2-kitcard").height() - 24);
+                $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan1-kitcard").width() - 4);
+                $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-jsp #pan1-kitcard").height() - 24);
+                $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan2-kitcard").width() - 4);
+                $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-jsp #pan2-kitcard").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
@@ -23,14 +23,14 @@
                 init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
                 load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
 
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 resize();
             });
 //------------------------------------------------------------------------------
             function init_dialog(table1, table2) {
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Справочник  комплектов",
                     width: 500,
                     height: 500,

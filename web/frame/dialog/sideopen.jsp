@@ -10,12 +10,12 @@
             import {project} from './frame/project.js';
 //------------------------------------------------------------------------------
             function resize() {
-                $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-dic #pan-sideopen").width());
-                $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-dic #pan-sideopen").height() - 24);
+                $("#tab-sideopen").jqGrid('setGridWidth', $("#dialog-jsp #pan-sideopen").width());
+                $("#tab-sideopen").jqGrid('setGridHeight', $("#dialog-jsp #pan-sideopen").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 init_dialog($("#tab-sideopen"));
@@ -25,7 +25,7 @@
             });
 //------------------------------------------------------------------------------
             function init_dialog(table) {
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Направление открывания",
                     width: 400,
                     height: 400,
@@ -55,7 +55,7 @@
                         {name: 'name', width: 400, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         save_table(table);
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }

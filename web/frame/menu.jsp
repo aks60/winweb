@@ -15,9 +15,9 @@
             <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">
-                    <li><a onClick="$('#outbody').load('frame/project.jsp');">Заказы</a></li>
-                    <li><a onClick="$('#outbody').load('frame/product.jsp');">Изделия</a></li>
-                    <li><a onClick="$('#outbody').load('frame/kits.jsp');">Комплекты</a></li>
+                    <li><a onClick="$('#body-jsp').load('frame/project.jsp');">Заказы</a></li>
+                    <li><a onClick="$('#body-jsp').load('frame/product.jsp');">Изделия</a></li>
+                    <li><a onClick="$('#body-jsp').load('frame/kits.jsp');">Комплекты</a></li>
                     <li><a>Отчеты</a>
                         <div class="subs">
                             <div>

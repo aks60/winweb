@@ -10,12 +10,12 @@
             import {project} from './frame/project.js';
 //------------------------------------------------------------------------------
             function resize() {
-                $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-dic #pan-furniture").width());
-                $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-dic #pan-furniture").height() - 24);
+                $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-jsp #pan-furniture").width());
+                $("#tab-furniture").jqGrid('setGridHeight', $("#dialog-jsp #pan-furniture").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 init_dialog($("#tab-furniture"));
@@ -27,7 +27,7 @@
 //------------------------------------------------------------------------------
             function init_dialog(table) {
 
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Фурнитура системы",
                     width: 400,
                     height: 480,
@@ -57,7 +57,7 @@
                         {name: 'name', width: 360, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         save_table(table);
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }

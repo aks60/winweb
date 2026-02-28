@@ -24,10 +24,10 @@ login.init_login = function () {
     if (login.que_requests == 0 && login.data != undefined) {
         if (login.data.result == 'true') {
             if (login.data.role == 'RDB$ADMIN') {
-                $("#outbody").load('frame/users.jsp');
+                $("#body-jsp").load('frame/users.jsp');
             } else {
                 $("#mainmenu").load('frame/menu.jsp');
-                $("#outbody").load('frame/project.jsp');
+                $("#body-jsp").load('frame/project.jsp');
             }
         } else {
             login.que_requests = 1;
@@ -135,7 +135,7 @@ login.token_sign = function (random) {
                         if (data.role == 'YO_HO1_RW' || data.role == 'YO_HO2_RW') {
                             $('.manager').show();
                         }
-                        $("#outbody").load('frame/patt/simpl3.jsp')
+                        $("#body-jsp").load('frame/patt/simpl3.jsp')
                     } else {
                         dialogMes('Сообщение', data.result);
                     }

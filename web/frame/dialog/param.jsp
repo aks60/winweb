@@ -9,12 +9,12 @@
             import {product} from './frame/product.js';
 //------------------------------------------------------------------------------            
             function resize() {
-                $("#tab-param").jqGrid('setGridWidth', $("#dialog-dic #pan-param").width());
-                $("#tab-param").jqGrid('setGridHeight', $("#dialog-dic #pan-param").height() - 24);
+                $("#tab-param").jqGrid('setGridWidth', $("#dialog-jsp #pan-param").width());
+                $("#tab-param").jqGrid('setGridHeight', $("#dialog-jsp #pan-param").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 init_dialog($("#tab-param"));
@@ -24,7 +24,7 @@
             });
 //------------------------------------------------------------------------------            
             function init_dialog(table) {
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Справочник параметров",
                     width: 400,
                     height: 400,

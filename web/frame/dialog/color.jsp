@@ -14,13 +14,13 @@
             var tab2Color = document.getElementById('tab2-color');
 
             function resize() {
-                $(tab1Color).jqGrid('setGridWidth', $("#dialog-dic #pan1-color").width());
-                $(tab1Color).jqGrid('setGridHeight', $("#dialog-dic #pan1-color").height() - 20);
-                $(tab2Color).jqGrid('setGridWidth', $("#dialog-dic #pan2-color").width());
-                $(tab2Color).jqGrid('setGridHeight', $("#dialog-dic #pan2-color").height() - 20);
+                $(tab1Color).jqGrid('setGridWidth', $("#dialog-jsp #pan1-color").width());
+                $(tab1Color).jqGrid('setGridHeight', $("#dialog-jsp #pan1-color").height() - 20);
+                $(tab2Color).jqGrid('setGridWidth', $("#dialog-jsp #pan2-color").width());
+                $(tab2Color).jqGrid('setGridHeight', $("#dialog-jsp #pan2-color").height() - 20);
             }
 
-            $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+            $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                 resize();
             });
             init_dialog();
@@ -31,7 +31,7 @@
                 load2_table();
 
             function init_dialog() {
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Справочник текстур",
                     width: 400,
                     height: 500,
@@ -60,7 +60,7 @@
                     onSelectRow: function (rowid) {
                         $(tab2Color).jqGrid("clearGridData", true);
                         let colgrpRow = $(tab1Color).jqGrid('getRowData', rowid);
-                        let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+                        let base = ($('#body-jsp title').text() == 'KITS') ? kits : product;
                         if (base.colorArr.length == 0) {
 
                             let colorList = eColor.list.filter(rec => colgrpRow.id == rec.list[eColor.colgrp_id]);
@@ -98,7 +98,7 @@
                     ],
                     ondblClickRow: function (rowId) {
                         save_table();
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }
@@ -106,7 +106,7 @@
             function load1_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 $(tab2Color).jqGrid('clearGridData', true);
-//                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+//                let base = ($('#body-jsp title').text() == 'KITS') ? kits : product;
 //                if (base.groupSet.size > 0) {
 //
 //                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
@@ -125,7 +125,7 @@
             function load2_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 $(tab2Color).jqGrid('clearGridData', true);
-//                let base = ($('#outbody title').text() == 'KITS') ? kits : product;
+//                let base = ($('#body-jsp title').text() == 'KITS') ? kits : product;
 //                if (base.groupSet.size > 0) {
 //
 //                    let groupList = eGroup.list.filter(rec => base.groupSet.has(rec.list[GROUP.id]));
@@ -146,7 +146,7 @@
                     let rowid = $(tab2Color).jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = $(tab2Color).jqGrid('getRowData', rowid); //record справочника
 
-                    if ($('#outbody title').text() == 'PRODUCT') {
+                    if ($('#body-jsp title').text() == 'PRODUCT') {
 
                         let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
@@ -234,7 +234,7 @@
                         });
 
 
-                    } else if ($('#outbody title').text() == 'KITS') {
+                    } else if ($('#body-jsp title').text() == 'KITS') {
                         if (kits.buttonSrc == 'n53') {
                             $("#n53").val(colorRow.name);
                             $("#n53").attr("fk", colorRow.id);

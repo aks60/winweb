@@ -52,13 +52,13 @@ kits.insert_table = function (table) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
 
     } else {
-        $('#dialog-dic').load('frame/dialog/kitcard.jsp');
+        $('#dialog-jsp').load('frame/dialog/kitcard.jsp');
     }
 };
 //------------------------------------------------------------------------------
 kits.insert2_table = function (table) {
     try {
-        $('#dialog-dic').load('frame/dialog/artikl.jsp');
+        $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
         console.error('Error: kits.insert2_table() ' + e.message);
@@ -171,7 +171,7 @@ kits.delete_table = function (table) {
 kits.artikl_to_kit = function (btnSrc) {
     try {
         kits.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frame/dialog/artikl.jsp');
+        $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
         console.error('Error: kits.artikl_to_kit() ' + e.message);
@@ -205,7 +205,7 @@ kits.color_to_kit = function (btnSrc) {
         kits.groupSet = groupSet;
         kits.colorArr = Array.from(colorSet);
         kits.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frame/dialog/color.jsp');
+        $('#dialog-jsp').load('frame/dialog/color.jsp');
 
     } catch (e) {
         console.error('Error: kits.color_to_kit() ' + e.message);

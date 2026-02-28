@@ -51,7 +51,7 @@ export function init_table() {
                 {name: 'fixed', width: 20, sorttype: "text"}
 
             ], ondblClickRow: function (rowid) {
-                $('#dialog-dic').load('frame/dialog/param.jsp');
+                $('#dialog-jsp').load('frame/dialog/param.jsp');
             }, onSelectRow: function (rowid) {
                 let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
                 product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
@@ -321,7 +321,7 @@ export function color_to_windows(btnSrc) {
 //        product.groupSet = groupSet;
 //        product.colorArr = Array.from(colorSet);
 //        product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frame/dialog/color.jsp?param=1');
+        $('#dialog-jsp').load('frame/dialog/color.jsp?param=1');
 
     } catch (e) {
         errorLog('Error: color_to_windows() ' + e.message);
@@ -352,7 +352,7 @@ export function sysprof_to_frame(btnSrc) {
         }
         product.sysprofArr = Array.from(sysprofSet);
         product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frame/dialog/sysprof.jsp');
+        $('#dialog-jsp').load('frame/dialog/sysprof.jsp');
 
     } catch (e) {
         console.error('Error: product.sysprof_to_frame() ' + e.message);
@@ -362,19 +362,19 @@ export function sysprof_to_frame(btnSrc) {
 //Фурнитура стеклопакета
 export function furniture_to_stvorka(btnSrc) {
     product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frame/dialog/furniture.jsp');
+    $('#dialog-jsp').load('frame/dialog/furniture.jsp');
 }
 
 //Сторона открывания
 export function sideopen_to_stvorka(btnSrc) {
     product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frame/dialog/sideopen.jsp');
+    $('#dialog-jsp').load('frame/dialog/sideopen.jsp');
 }
 
 //Артикл ручки, подвеса, замка
 export function artikl_to_stvork(btnSrc) {
     product.buttonSrc = btnSrc;
-    $('#dialog-dic').load('frame/dialog/artikl.jsp');
+    $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 }
 
 //Заполнение
@@ -426,7 +426,7 @@ export function color_to_element(btnSrc) {
         product.groupSet = groupSet;
         product.colorArr = Array.from(colorSet);
         product.buttonSrc = btnSrc;
-        $('#dialog-dic').load('frame/dialog/color.jsp');
+        $('#dialog-jsp').load('frame/dialog/color.jsp');
 
     } catch (e) {
         console.error('Error: product.color_to_element() ' + e.message);
@@ -455,7 +455,7 @@ export function artikl_to_glass(btnSrc) {
 
             product.artiklArr = artiklList;
             product.buttonSrc = btnSrc;
-            $('#dialog-dic').load('frame/dialog/artikl.jsp');
+            $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
         }
     } catch (e) {

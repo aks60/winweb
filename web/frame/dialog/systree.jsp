@@ -47,16 +47,16 @@
 
             tab2Tree.setAttribute('activeRowIndex', 0);
             tab2Tree.addEventListener('click', click_table2);
-            init_dialog($("#dialog-dic"));
+            init_dialog($("#dialog-jsp"));
             init_table();
             load_table1();
             resize();
 
-            $("#dialog-dic").unbind().bind("dialogresize", (event, ui) => resize());
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
-                $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-dic #midl #pan1-systree").width());
-                $("#tab1-tree").jqGrid('setGridHeight', $("#dialog-dic #midl #pan1-systree").height() - 26);
+                $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-jsp #midl #pan1-systree").width());
+                $("#tab1-tree").jqGrid('setGridHeight', $("#dialog-jsp #midl #pan1-systree").height() - 26);
             }
 
             function init_dialog(dialogTaq) {

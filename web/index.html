@@ -23,12 +23,12 @@
         <script type="module">
            // $(function () {
 
-                $('#dialog-dic').dialog({
+                $('#dialog-jsp').dialog({
                     autoOpen: false
                 });
                 $('#btnOpen').button().click(function (e) {
-                    $('#dialog-dic').dialog("open")
-                    $('#dialog-dic').load('frame/dialog/JSPTest.jsp');
+                    $('#dialog-jsp').dialog("open")
+                    $('#dialog-jsp').load('frame/dialog/JSPTest.jsp');
                 });
 
            // });
@@ -41,7 +41,7 @@
         </script>   
     </head>
     <body>
-        <div id="dialog-dic" title="Диалоговое окно">
+        <div id="dialog-jsp" title="Диалоговое окно">
         </div>
         <button id='btnOpen'>Показать диалоговое окно</button>
     </body>

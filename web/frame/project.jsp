@@ -62,7 +62,7 @@
             document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card1'));
             document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card1'));
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
-            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-dic').load('frame/dialog/systree.jsp'));
+            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnTest1').addEventListener('click', test1);
@@ -96,7 +96,7 @@
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#n22').val($('#n21').val());"><br>
                 <jst id="n23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
                 <jst id="n24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
-                <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-dic').load('frame/dialog/dealer.jsp');"></jst><br>
+                <jst id="n25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-jsp').load('frame/dialog/dealer.jsp');"></jst><br>
             </div>
             <div id="dialog-card2" card_width="416" card_height="230" style="display: none;">                
                 <jst id="n31" type='txt' label='Количество' width='80' width2="40"></jst><br>

@@ -11,12 +11,12 @@
             import {product} from './frame/product.js';
 //------------------------------------------------------------------------------
             function resize() {
-                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-dic #pan-sysprof").width());
-                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-dic #pan-sysprof").height() - 24);
+                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-jsp #pan-sysprof").width());
+                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-jsp #pan-sysprof").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 init_dialog($("#tab-sysprof"));
@@ -26,7 +26,7 @@
             });
 //------------------------------------------------------------------------------
             function init_dialog(table) {
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Профили системы",
                     width: 450,
                     height: 400,
@@ -55,7 +55,7 @@
                         {name: 'name', width: 340, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         save_table(table);
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }

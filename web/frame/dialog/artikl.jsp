@@ -13,12 +13,12 @@
             var TYPE = ["", "Профили", "Аксессуары", "Погонаж", "Инструмент", "Заполнения"];
 //------------------------------------------------------------------------------            
             function resize() {
-                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-dic #pan-artikl").width());
-                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-dic #pan-artikl").height() - 24);
+                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
+                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
             }
 //------------------------------------------------------------------------------
             $(document).ready(function () {
-                $("#dialog-dic").unbind().bind("dialogresize", function (event, ui) {
+                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
                     resize();
                 });
                 init_dialog($("#tab-artikl"));
@@ -29,7 +29,7 @@
 //------------------------------------------------------------------------------
             function  init_dialog(table) {
 
-                $("#dialog-dic").dialog({
+                $("#dialog-jsp").dialog({
                     title: "Справочник артикулов",
                     width: 600,
                     height: 500,
@@ -59,7 +59,7 @@
 
                     ], ondblClickRow: function (rowid) {
                         save_table(table);
-                        $("#dialog-dic").dialog("close");
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }
@@ -67,7 +67,7 @@
             function load_table(table) {
                 table.jqGrid('clearGridData', true);
 
-                if ($('#outbody title').text() == 'PRODUCT') {
+                if ($('#body-jsp title').text() == 'PRODUCT') {
                     //Стеклопакет
                     if (product.buttonSrc == 'n51') {
                         for (let i = 0; i < product.artiklArr.length; i++) {
@@ -92,7 +92,7 @@
 
                     }
 
-                } else if ($('#outbody title').text() == 'KITS') {
+                } else if ($('#body-jsp title').text() == 'KITS') {
                     for (let i = 0; i < eArtikl.list.length; i++) {
                         let tr = eArtikl.list[i];
                         table.jqGrid('addRowData', i + 1, {
@@ -107,7 +107,7 @@
 //------------------------------------------------------------------------------
             function save_table(table) {
                 try {
-                    if ($('#outbody title').text() == 'PRODUCT') {
+                    if ($('#body-jsp title').text() == 'PRODUCT') {
 
                         let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
                         let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
@@ -163,7 +163,7 @@
                         });
 
 
-                    } else if ($('#outbody title').text() == 'KITS') {
+                    } else if ($('#body-jsp title').text() == 'KITS') {
                         let artiklRow = getSelectedRow(table);
                         let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec.list[eArtikl.id]);
 
