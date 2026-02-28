@@ -57,8 +57,8 @@
             }
         </style>
         <script type="module">
-            import {product, wincalcNew, resize, init_table, load_table2,
-                    update_script, color_to_windows} from './frame/product.js';
+            import {product, wincalcNew, resize, init_table,
+                    load_table2, update_script} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
             wincalcNew();
@@ -70,10 +70,10 @@
             load_table2();
 
             prepareTool();
-            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=1'));
-            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=2'));
-            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=3'));
-            
+            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n14"'));
+            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n15"'));
+            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n16"'));
+
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
 
