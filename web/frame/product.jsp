@@ -70,9 +70,9 @@
             load_table2();
 
             prepareTool();
-            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n14"'));
-            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n15"'));
-            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color="n16"'));
+            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=n14'));
+            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=n15'));
+            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?level=1&color=n16'));
 
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);

@@ -83,12 +83,12 @@
                 $(tab1Color).jqGrid('clearGridData', true);
                 if (groupSet.size > 0) {
 
-                    let groupList = eGroup.list.filter(rec => groupSet.has(rec[GROUP.id]));
-                    for (let i = 0; i < groupList.length; i++) {
-                        let tr = groupList[i];
+                    let groupsList = eGroups.list.filter(rec => groupSet.has(rec[eGroups.id]));
+                    for (let i = 0; i < groupsList.length; i++) {
+                        let tr = groupsList[i];
                         $(tab1Color).jqGrid('addRowData', i + 1, {
-                            id: tr[GROUP.id],
-                            name: tr[GROUP.name]
+                            id: tr[eGroups.id],
+                            name: tr[eGroups.name]
                         });
                     }
                 }
@@ -208,8 +208,7 @@
                                     else if (product.buttonSrc == 'n4C')
                                         $("#n4C").val(colorRow.name);
                                     else if (product.buttonSrc == 'n53')
-                                        $("#n53").val(colorRow.name);
-
+                                        $("#n53").val(colorRow.name);                                    
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -250,7 +249,7 @@
                                 (colorNum === 'n14') ? systreeRec[eSystree.col1] :
                                 (colorNum === 'n15') ? systreeRec[eSystree.col2] :
                                 systreeRec[eSystree.col3];
-                    colorArr = (colorEnum === null) ? null : UGui.parserInt(colorEnum);
+                    colorArr = (colorEnum === null) ? null : parserInt(colorEnum);
 
                     //Поле текстур заполнено                  
                     for (let rec of eColor.list) {
@@ -267,7 +266,7 @@
                         }
                     }
                 } catch (e) {
-                    errorLog('Error: color_to_windows() ' + e.message);
+                    errorLog('Error: color.color1_list() ' + e.message);
                 }
             }
 
@@ -315,7 +314,7 @@
                         }
                     }
                 } catch (e) {
-                    console.error('Error: product.color_to_element() ' + e.message);
+                    console.error('Error: color.color2_list() ' + e.message);
                 }
             }
 

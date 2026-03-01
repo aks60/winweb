@@ -41,9 +41,8 @@
         </style>        
 
         <script type="module">
-            import {resize, init_table, load_table1, insert_table1, update_table1, delete_table1,
+            import {project, resize, init_table, load_table1, insert_table1, update_table1, delete_table1,
                     load_table3, update_table3, delete_table3} from './frame/project.js';
-            import {project} from './frame/project.js';
 
             $(window).bind('resize', () => resize()).trigger('resize');
             project.table1 = document.getElementById('table1');
