@@ -106,17 +106,17 @@
                 let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
                 let colorList = eColor.list.filter(rec => groupsRow.id == rec[eColor.groups_id]);
 
-                for (let i = 0; i < colorList.length; i++) {
+                for (let i = 0, k = 1; i < colorList.length; i++) {
                     let colorRec = colorList[i];
 
                     if (colorArr.length == 0) {
-                        $(tab2Color).jqGrid('addRowData', i + 1, {
+                        $(tab2Color).jqGrid('addRowData', ++k, {
                             id: colorRec[eColor.id],
                             name: colorRec[eColor.name]
                         });
                     } else {
                         if (colorSet.has(colorRec[eColor.id]))
-                            $(tab2Color).jqGrid('addRowData', i + 1, {
+                            $(tab2Color).jqGrid('addRowData', ++k, {
                                 id: colorRec[eColor.id],
                                 name: colorRec[eColor.name]
                             });
@@ -256,7 +256,7 @@
 
                     //Поле текстур заполнено                  
                     for (let colorRec of eColor.list) {
-                        
+
                         if (colorArr.length != 0) {
                             for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
                                 if (colorRec[eColor.id] >= colorArr[i] && colorRec[eColor.id] <= colorArr[i + 1]) {
