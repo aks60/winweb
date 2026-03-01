@@ -62,7 +62,6 @@
                         {name: 'name', width: 360}
                     ],
                     onSelectRow: function (rowid, status, e) {
-                        //console.log('onSelectRow:');
                         load2_table(rowid);
                     }
                 });
@@ -99,14 +98,11 @@
             }
 
             function load2_table(rowid) {
-
-                //console.log('load2_table()');
-
                 $(tab2Color).jqGrid('clearGridData', true);
                 let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
                 let colorList = eColor.list.filter(rec => groupsRow.id == rec[eColor.groups_id]);
 
-                for (let i = 0, k = 1; i < colorList.length; i++) {
+                for (let i = 0, k = 0; i < colorList.length; i++) {
                     let colorRec = colorList[i];
 
                     if (colorArr.length == 0) {
@@ -241,9 +237,6 @@
 
             //Текстура изделия
             function color1_list(colorNum) {
-
-                //console.log('color1_list()');
-
                 try {
                     let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
