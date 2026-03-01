@@ -30,7 +30,7 @@
             if (levelNum === '1') {
                 color1_list();
             } else if (levelNum === '2') {
-                color2_list();                
+                color2_list();
             }
             load1_table();
 
@@ -61,7 +61,8 @@
                         {name: 'id', hidden: true, key: true},
                         {name: 'name', width: 360}
                     ],
-                    onSelectRow: function (rowid) {
+                    onSelectRow: function (rowid, status, e) {
+                        //console.log('onSelectRow:');
                         load2_table(rowid);
                     }
                 });
@@ -77,6 +78,7 @@
                         $("#dialog-jsp").dialog("close");
                     }
                 });
+                resize();
             }
 
             function load1_table() {
@@ -92,39 +94,38 @@
                         });
                     }
                 }
+                //resize();
                 $(tab1Color).jqGrid("setSelection", 1);
-                resize();
             }
 
             function load2_table(rowid) {
-                $(tab2Color).jqGrid("clearGridData", true);
-                let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
-                if (colorArr.length == 0) {
 
-                    let colorList = eColor.list.filter(rec => groupsRow.id == rec[eColor.groups_id]);
-                    for (let i = 0; i < colorList.length; i++) {
-                        let colorRec = colorList[i];
+                //console.log('load2_table()');
+
+                $(tab2Color).jqGrid('clearGridData', true);
+                let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
+                let colorList = eColor.list.filter(rec => groupsRow.id == rec[eColor.groups_id]);
+
+                for (let i = 0; i < colorList.length; i++) {
+                    let colorRec = colorList[i];
+
+                    if (colorArr.length == 0) {
                         $(tab2Color).jqGrid('addRowData', i + 1, {
                             id: colorRec[eColor.id],
                             name: colorRec[eColor.name]
                         });
-                        let rgb = '#' + colorRec[eColor.rgb].toString(16);
-                        $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
+                    } else {
+                        if (colorSet.has(colorRec[eColor.id]))
+                            $(tab2Color).jqGrid('addRowData', i + 1, {
+                                id: colorRec[eColor.id],
+                                name: colorRec[eColor.name]
+                            });
                     }
-                } else {
-                    colorArr = colorArr.filter(rec => groupsRow.id == rec[eColor.groups_id]);
-                    for (let i = 0; i < colorArr.length; i++) {
-                        let colorRec = colorArr[i];
-                        $(tab2Color).jqGrid('addRowData', i + 1, {
-                            id: colorRec[eColor.id],
-                            name: colorRec[eColor.name]
-                        });
-                        let rgb = '#' + colorRec[eColor.rgb].toString(16);
-                        $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
-                    }
+                    let rgb = '#' + colorRec[eColor.rgb].toString(16);
+                    $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                 }
-                $(tab2Color).jqGrid("setSelection", 1);
                 resize();
+                $(tab2Color).jqGrid("setSelection", 1);
             }
 
             function save_table() {
@@ -154,25 +155,25 @@
                         }
 
                         //Запишем текстуру в параметр
-                        if (product.buttonSrc == 'n14')
+                        if (colorNum === 'n14')
                             winc.gson.color1 = colorRow.id;
-                        else if (product.buttonSrc == 'n15')
+                        else if (colorNum === 'n15')
                             winc.gson.color2 = colorRow.id;
-                        else if (product.buttonSrc == 'n16')
+                        else if (colorNum === 'n16')
                             winc.gson.color3 = colorRow.id;
-                        else if (product.buttonSrc == 'n33')
+                        else if (colorNum === 'n33')
                             param.colorID1 = colorRow.id;
-                        else if (product.buttonSrc == 'n34')
+                        else if (colorNum === 'n34')
                             param.colorID2 = colorRow.id;
-                        else if (product.buttonSrc == 'n35')
+                        else if (colorNum === 'n35')
                             param.colorID3 = colorRow.id;
-                        else if (product.buttonSrc == 'n46')
+                        else if (colorNum === 'n46')
                             elem.gson.param.colorHandl = colorRow.id;
-                        else if (product.buttonSrc == 'n4A')
+                        else if (colorNum === 'n4A')
                             elem.gson.param.colorLoop = colorRow.id;
-                        else if (product.buttonSrc == 'n4C')
+                        else if (colorNum === 'n4C')
                             elem.gson.param.colorLock = colorRow.id;
-                        else if (product.buttonSrc == 'n53')
+                        else if (colorNum === 'n53')
                             elem.gson.param.colorGlass = colorRow.id;
 
                         //Запишем скрипт в локальн. бд
@@ -189,26 +190,26 @@
                             success: function (data) {
                                 if (data.result == 'ok') {
                                     //Запишем выбранную запись в тег страницы
-                                    if (product.buttonSrc == 'n14')
+                                    if (colorNum === 'n14')
                                         $("#n14").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n15')
+                                    else if (colorNum === 'n15')
                                         $("#n15").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n16')
+                                    else if (colorNum === 'n16')
                                         $("#n16").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n33')
+                                    else if (colorNum === 'n33')
                                         $("#n33").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n34')
+                                    else if (colorNum === 'n34')
                                         $("#n34").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n35')
+                                    else if (colorNum === 'n35')
                                         $("#n35").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n46')
+                                    else if (colorNum === 'n46')
                                         $("#n46").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n4A')
+                                    else if (colorNum === 'n4A')
                                         $("#n4A").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n4C')
+                                    else if (colorNum === 'n4C')
                                         $("#n4C").val(colorRow.name);
-                                    else if (product.buttonSrc == 'n53')
-                                        $("#n53").val(colorRow.name);                                    
+                                    else if (colorNum === 'n53')
+                                        $("#n53").val(colorRow.name);
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -220,27 +221,29 @@
 
 
                     } else if ($('#body-jsp title').text() == 'KITS') {
-                        if (kits.buttonSrc == 'n53') {
+                        if (colorNum === 'n53') {
                             $("#n53").val(colorRow.name);
                             $("#n53").attr("fk", colorRow.id);
 
-                        } else if (kits.buttonSrc == 'n54') {
+                        } else if (colorNum === 'n54') {
                             $("#n54").val(colorRow.name);
                             $("#n54").attr("fk", colorRow.id);
 
-                        } else if (kits.buttonSrc == 'n55') {
+                        } else if (colorNum === 'n55') {
                             $("#n55").val(colorRow.name);
                             $("#n55").attr("fk", colorRow.id);
                         }
                     }
                 } catch (e) {
-                    console.error('Error: color.rec_dialog_save() ' + e.message);
+                    errorLog('Error: color.rec_dialog_save() ' + e.message);
                 }
             }
 
             //Текстура изделия
             function color1_list(colorNum) {
-                debugger;
+
+                //console.log('color1_list()');
+
                 try {
                     let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
@@ -252,17 +255,18 @@
                     colorArr = (colorEnum === null) ? null : parserInt(colorEnum);
 
                     //Поле текстур заполнено                  
-                    for (let rec of eColor.list) {
+                    for (let colorRec of eColor.list) {
+                        
                         if (colorArr.length != 0) {
                             for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
-                                if (rec[eColor.id] >= colorArr[i] && rec[eColor.id] <= colorArr[i + 1]) {
-                                    groupSet.add(rec[eColor.groups_id]);
-                                    colorSet.add(rec);
+                                if (colorRec[eColor.id] >= colorArr[i] && colorRec[eColor.id] <= colorArr[i + 1]) {
+                                    groupSet.add(colorRec[eColor.groups_id]);
+                                    colorSet.add(colorRec[eColor.id]);
                                 }
                             }
                         } else {
-                            groupSet.add(rec[eColor.colgrp_id]);
-                            colorSet.add(rec);
+                            groupSet.add(colorRec[eColor.groups_id]);
+                            colorSet.add(colorRec[eColor.id]);
                         }
                     }
                 } catch (e) {
@@ -295,26 +299,26 @@
                         artiklElem = elem.artiklRec;
 
                     //Все текстуры артикула элемента конструкции
-                    for (let rec of eArtdet.list) {
-                        if (rec.list[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
-                            if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
+                    for (let artdetRec of eArtdet.list) {
+                        if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
+                            if (artdetRec[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
 
-                                eColor.ist.forEach(colorRec => {
-                                    if (colorRec[eColor.groups_id] === Math.abs(rec.list[eArtdet.color_fk])) {
+                                for (let colorRec of eColor.ist) {
+                                    if (colorRec[eColor.groups_id] === Math.abs(artdetRec[eArtdet.color_fk])) {
 
                                         groupSet.add(Math.abs(colorRec[eColor.groups_id]));
-                                        colorSet.add(colorRec);
+                                        colorSet.add(colorRec[eColor.id]);
                                     }
-                                });
+                                }
                             } else { //текстура color_fk 
-                                let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] === rec3[eColor.id]);
+                                let color2Rec = eColor.list.find(rec3 => artdetRec[eArtdet.color_fk] === rec3[eColor.id]);
                                 groupSet.add(color2Rec[eColor.groups_id]);
-                                colorSet.add(color2Rec);
+                                colorSet.add(colorRec[eColor.id]);
                             }
                         }
                     }
                 } catch (e) {
-                    console.error('Error: color.color2_list() ' + e.message);
+                    errorLog('Error: color.color2_list() ' + e.message);
                 }
             }
 

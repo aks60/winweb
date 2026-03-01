@@ -75,7 +75,7 @@ export function load_table1() {
         for (let i = 0; i < syspar1List.length; i++) {
             let tr = syspar1List[i];
 
-            let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === tr[eSyspar1.groups_id])
+            let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === tr[eSyspar1.groups_id]);
             $(product.table1).jqGrid('addRowData', i + 1, {
                 id: tr[eSyspar1.id],
                 text: groupsRec[eGroups.name],
