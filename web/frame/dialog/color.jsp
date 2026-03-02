@@ -9,7 +9,8 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            let groupSet = new Set(), colorSet = new Set(), colorArr = [];
+            let groupSet = new Set(), colorSet = new Set();
+            let colorFilter = []; //пример [1009,1009,1200,12380]
             let levelNum = "<%= request.getParameter("level")%>";
             let colorNum = "<%= request.getParameter("color")%>";
             var tab1Color = document.getElementById('tab1-color');
@@ -105,7 +106,7 @@
                 for (let i = 0, k = 0; i < colorList.length; i++) {
                     let colorRec = colorList[i];
 
-                    if (colorArr.length == 0) {
+                    if (colorFilter.length == 0) {
                         $(tab2Color).jqGrid('addRowData', ++k, {
                             id: colorRec[eColor.id],
                             name: colorRec[eColor.name]
@@ -122,6 +123,76 @@
                 }
                 resize();
                 $(tab2Color).jqGrid("setSelection", 1);
+            }
+
+            //Текстура изделия
+            function color1_list() {
+                try {
+                    let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
+                    let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
+                    if (systreeRec !== undefined)
+                        var colorEnum =
+                                (colorNum === 'n14') ? systreeRec[eSystree.col1] :
+                                (colorNum === 'n15') ? systreeRec[eSystree.col2] :
+                                systreeRec[eSystree.col3];
+                    colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
+
+                    //Поле фильтр текстур заполнено  
+                    if (colorFilter.length != 0) {
+                        for (let colorRec of eColor.list) {
+                            for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
+                                if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
+                                    groupSet.add(colorRec[eColor.groups_id]);
+                                    colorSet.add(colorRec[eColor.id]);
+                                }
+                            }
+                        }
+                        //Фильтр по таблице ARTDET
+                    } else {
+                        color2_list(colorNum);
+                    }
+
+                } catch (e) {
+                    errorLog('Error: color.color1_list() ' + e.message);
+                }
+            }
+
+            //Текстура элементов конструкции по таблице цветов ARTDET
+            function color2_list() {
+                try {
+                    let nodeID = $(product.table2).jstree("get_selected")[0];
+                    debugger;
+                    let prjprodID = project.prjprodRec[ePrjprod.id];
+                    let winc = project.wincalcMap.get(prjprodID);
+                    if (nodeID === '0') {
+                        var elem = winc;
+                    } else {
+                        var elem = winc.listElem.find(it => it.id == nodeID);
+                    }
+                    let artiklElem = artikl_elem(colorNum, elem);
+
+                    //Все текстуры артикула элемента конструкции
+                    for (let artdetRec of eArtdet.list) {
+                        if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
+                            if (artdetRec[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
+
+                                for (let colorRec of eColor.ist) {
+                                    if (colorRec[eColor.groups_id] === Math.abs(artdetRec[eArtdet.color_fk])) {
+
+                                        groupSet.add(Math.abs(colorRec[eColor.groups_id]));
+                                        colorSet.add(colorRec[eColor.id]);
+                                    }
+                                }
+                            } else { //текстура color_fk 
+                                let color2Rec = eColor.list.find(rec3 => artdetRec[eArtdet.color_fk] === rec3[eColor.id]);
+                                groupSet.add(color2Rec[eColor.groups_id]);
+                                colorSet.add(colorRec[eColor.id]);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    errorLog('Error: color.color2_list() ' + e.message);
+                }
             }
 
             function save_table() {
@@ -235,84 +306,29 @@
                 }
             }
 
-            //Текстура изделия
-            function color1_list(colorNum) {
-                try {
-                    let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
-                    let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
-                    if (systreeRec !== undefined)
-                        var colorEnum =
-                                (colorNum === 'n14') ? systreeRec[eSystree.col1] :
-                                (colorNum === 'n15') ? systreeRec[eSystree.col2] :
-                                systreeRec[eSystree.col3];
-                    colorArr = (colorEnum === null) ? null : parserInt(colorEnum);
-
-                    //Поле текстур заполнено                  
-                    for (let colorRec of eColor.list) {
-
-                        if (colorArr.length != 0) {
-                            for (let i = 0; i < colorArr.length; i = i + 2) { //текстуры
-                                if (colorRec[eColor.id] >= colorArr[i] && colorRec[eColor.id] <= colorArr[i + 1]) {
-                                    groupSet.add(colorRec[eColor.groups_id]);
-                                    colorSet.add(colorRec[eColor.id]);
-                                }
-                            }
-                        } else {
-                            groupSet.add(colorRec[eColor.groups_id]);
-                            colorSet.add(colorRec[eColor.id]);
-                        }
-                    }
-                } catch (e) {
-                    errorLog('Error: color.color1_list() ' + e.message);
-                }
-            }
-
-            //Текстура элемента конструкции
-            function color2_list(colorNum) {
-                try {
-                    let nodeID = $(product.table2).jstree("get_selected")[0];
-                    let prjprodID = project.prjprodRec[ePrjprod.id];
-                    let winc = project.wincalcMap.get(prjprodID);
-                    let elem = winc.listElem.find(it => it.id == nodeID);
-                    let artiklElem = null;
-
-                    if (colorNum === 'n33')
-                        artiklElem = elem.artiklRec;
-                    else if (colorNum === 'n34')
-                        artiklElem = elem.artiklRec;
-                    else if (colorNum === 'n35')
-                        artiklElem = elem.artiklRec;
-                    else if (colorNum === 'n46')
-                        artiklElem = elem.handleRec;
-                    else if (colorNum === 'n4A')
-                        artiklElem = elem.loopRec;
-                    else if (colorNum === 'n4C')
-                        artiklElem = elem.lockRec;
-                    else if (colorNum === 'n53')
-                        artiklElem = elem.artiklRec;
-
-                    //Все текстуры артикула элемента конструкции
-                    for (let artdetRec of eArtdet.list) {
-                        if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
-                            if (artdetRec[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
-
-                                for (let colorRec of eColor.ist) {
-                                    if (colorRec[eColor.groups_id] === Math.abs(artdetRec[eArtdet.color_fk])) {
-
-                                        groupSet.add(Math.abs(colorRec[eColor.groups_id]));
-                                        colorSet.add(colorRec[eColor.id]);
-                                    }
-                                }
-                            } else { //текстура color_fk 
-                                let color2Rec = eColor.list.find(rec3 => artdetRec[eArtdet.color_fk] === rec3[eColor.id]);
-                                groupSet.add(color2Rec[eColor.groups_id]);
-                                colorSet.add(colorRec[eColor.id]);
-                            }
-                        }
-                    }
-                } catch (e) {
-                    errorLog('Error: color.color2_list() ' + e.message);
-                }
+            function artikl_elem(colorNum, elem) {
+                if (colorNum === 'n14')
+                    return elem.artiklRec;
+                else if (colorNum === 'n15')
+                    return elem.artiklRec;
+                else if (colorNum === 'n16')
+                    return elem.artiklRec;
+                else if (colorNum === 'n33')
+                    return elem.artiklRec;
+                else if (colorNum === 'n34')
+                    return elem.artiklRec;
+                else if (colorNum === 'n35')
+                    return elem.artiklRec;
+                else if (colorNum === 'n46')
+                    return elem.handleRec;
+                else if (colorNum === 'n4A')
+                    return elem.loopRec;
+                else if (colorNum === 'n4C')
+                    return elem.lockRec;
+                else if (colorNum === 'n53')
+                    return elem.artiklRec;
+                else
+                    return null;
             }
 
         </script>         

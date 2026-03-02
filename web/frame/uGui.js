@@ -290,7 +290,7 @@ function dialogPrg(mes) {
 
 //1;79-10;0-10 => [1,1,79,10,0,10]
 function  parserInt(txt) {
-    if (txt == undefined || txt == null) {
+    if (txt === undefined || txt === null || txt === '') {
         return [];
     }
     let arrList = new Array();
