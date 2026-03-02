@@ -125,11 +125,14 @@
                 try {
                     let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
-                    if (systreeRec !== undefined)
-                        var colorEnum =
-                                (colorNum === 'n14') ? systreeRec[eSystree.col1] :
-                                (colorNum === 'n15') ? systreeRec[eSystree.col2] :
-                                systreeRec[eSystree.col3];
+                    var colorEnum =
+                            (colorNum === 'n14') ? systreeRec[eSystree.col1] :
+                            (colorNum === 'n15') ? systreeRec[eSystree.col2] :
+                            systreeRec[eSystree.col3];
+                    var indexMark =
+                            (colorNum === 'n14') ? eArtdet.mark_c1 :
+                            (colorNum === 'n15') ? eArtdet.mark_c2 :
+                            eArtdet.mark_c3;
                     colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
                     let eColorList = [...eColor.list];
 
@@ -139,8 +142,6 @@
                         for (let colorRec of eColor.list) {
                             for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
                                 if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
-                                    groupSet.add(colorRec[eColor.groups_id]);
-                                    colorSet.add(colorRec[eColor.id]);
                                     eColorList.push(colorRec);
                                 }
                             }
@@ -154,15 +155,21 @@
                     //Все текстуры артикула элемента конструкции
                     for (let artdetRec of eArtdet.list) {
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
-                            for (let colorRec of eColorList) {
-                                    
-                                if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
-                                    groupSet.add(colorRec[eColor.groups_id]);
-                                    colorSet.add(colorRec[eColor.id]);
+                            if (artdetRec[indexMark] == '1') { //фильтр стороны  
+                                
+                                    if (artdetRec[eArtdet.id] === 17707)
+                                        debugger;                                
+                                
+                                for (let colorRec of eColorList) {
 
-                                } else if (colorRec[eColor.id] === Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
-                                    groupSet.add(colorRec[eColor.groups_id]);
-                                    colorSet.add(colorRec[eColor.id]);
+                                    if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
+                                        groupSet.add(colorRec[eColor.groups_id]);
+                                        colorSet.add(colorRec[eColor.id]);
+
+                                    } else if (colorRec[eColor.id] === Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
+                                        groupSet.add(colorRec[eColor.groups_id]);
+                                        colorSet.add(colorRec[eColor.id]);
+                                    }
                                 }
                             }
                         }
