@@ -156,10 +156,6 @@
                     for (let artdetRec of eArtdet.list) {
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
                             if (artdetRec[indexMark] == '1') { //фильтр стороны  
-                                
-                                    if (artdetRec[eArtdet.id] === 17707)
-                                        debugger;                                
-                                
                                 for (let colorRec of eColorList) {
 
                                     if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
