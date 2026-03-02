@@ -141,7 +141,7 @@
                                 if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
                                     groupSet.add(colorRec[eColor.groups_id]);
                                     colorSet.add(colorRec[eColor.id]);
-                                    eColorList.add(colorRec);
+                                    eColorList.push(colorRec);
                                 }
                             }
                         }
@@ -155,12 +155,12 @@
                     for (let artdetRec of eArtdet.list) {
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
                             for (let colorRec of eColorList) {
-
-                                if (colorRec[eColor.groups_id] == artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
+                                    
+                                if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
                                     groupSet.add(colorRec[eColor.groups_id]);
                                     colorSet.add(colorRec[eColor.id]);
 
-                                } else if (colorRec[eColor.id] == Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
+                                } else if (colorRec[eColor.id] === Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
                                     groupSet.add(colorRec[eColor.groups_id]);
                                     colorSet.add(colorRec[eColor.id]);
                                 }
