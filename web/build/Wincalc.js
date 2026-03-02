@@ -22,6 +22,7 @@ export class Wincalc {
     listAll = new Array();  //список всех компонентов (area + elem)
     listKit = new Array();  //комплектация   
     scale = 1; //коэффициент сжатия
+    artiklRec; //первый артикул из сист. профилей
     syssizRec; //системные константы
     colorID1; //цвет базовый
     colorID2; //цвет внутр.
@@ -71,11 +72,11 @@ export class Wincalc {
             this.id = this.gson.id;
             this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
             let sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
-            let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
-            this.syssizRec = eSyssize.find(artiklRec); //системные константы
-            this.colorID1 = (this.gson.color1 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color1;
-            this.colorID2 = (this.gson.color2 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color2;
-            this.colorID3 = (this.gson.color3 === -3) ? eColor.find2(artiklRec[eArtikl.id]) : this.gson.color3;
+            this.artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
+            this.syssizRec = eSyssize.find(this.artiklRec); //системные константы
+            this.colorID1 = (this.gson.color1 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color1;
+            this.colorID2 = (this.gson.color2 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color2;
+            this.colorID3 = (this.gson.color3 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color3;
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
