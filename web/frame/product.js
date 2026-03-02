@@ -122,8 +122,8 @@ export function load_table2(tabtree) {
                         $(this).jstree('select_node', 0.0);
                     })
                     .bind("select_node.jstree", function (evt, data) {
-                        let node = $(product.table2).jstree("get_selected")[0];
-                        tree_to_tabs(node);
+                        //product.clickNode = data.node;
+                        tree_to_tabs(data.node.id);
                     });
         }
     } catch (e) {
@@ -179,6 +179,7 @@ export function tree_to_tabs(nodeID) {
             let winc = project.wincalcMap.get(prgprodID);
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
                     ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
+            product.clickNodeElem = elem;        
 
             //Коробка
             if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {

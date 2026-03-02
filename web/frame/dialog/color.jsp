@@ -9,9 +9,12 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            let groupSet = new Set(), colorSet = new Set();
+            let groupSet = new Set(); 
+            let colorSet = new Set();
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
             let colorNum = "<%= request.getParameter("color")%>";
+            let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
+            let elem = product.clickNodeElem;
             var tab1Color = document.getElementById('tab1-color');
             var tab2Color = document.getElementById('tab2-color');
 
@@ -123,7 +126,6 @@
             //Текстура изделия
             function color_set() {
                 try {
-                    let winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
                     var colorEnum =
                             (colorNum === 'n14') ? systreeRec[eSystree.col1] :
@@ -148,9 +150,7 @@
                         }
                     }
                     //Текстура по таблице цветов ARTDET
-                    let nodeID = $(product.table2).jstree("get_selected")[0];
-                    var elem = (nodeID === '0') ? winc : winc.listElem.find(it => it.id == nodeID);
-                    let artiklElem = artikl_elem(colorNum, elem);
+                    let artiklElem = get_artikl_elem(colorNum, elem.winc);
 
                     //Все текстуры артикула элемента конструкции
                     for (let artdetRec of eArtdet.list) {
@@ -181,48 +181,20 @@
                     let rowid = $(tab2Color).jqGrid('getGridParam', "selrow"); //index профиля из справочника
                     let colorRow = $(tab2Color).jqGrid('getRowData', rowid); //record справочника
 
-                    if ($('#body-jsp title').text() == 'PRODUCT') {
+                    //Изделия
+                    if ($('#body-jsp title').text() === 'PRODUCT') {
 
-                        let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                        let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                        let winc = project.wincalcMap.get(prjprodID);
-                        let elem = winc.listElem.find(it => it.id == elemID);
-                        let param = elem.gson.param;
-                        if (elem.gson.param == undefined) {
+                        if (elem.gson.param === undefined) {
                             elem.gson.param = {};
-                            param = elem.gson.param;
                         }
-                        if (elem.typeForm() == 'STVORKA_SIDE') {
-                            let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
-                            if (elem.gson.param[sideLayout] == undefined) {
+                        if (elem.type === 'STV_SIDE') {
+                            let sideLayout = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][Layout[elem.layout][0]];
+                            if (elem.gson.param[sideLayout] === undefined) {
                                 elem.gson.param[sideLayout] = {};
-                                param = elem.gson.param[sideLayout];
-                            } else {
-                                param = elem.gson.param[sideLayout];
-                            }
+                            } 
                         }
 
-                        //Запишем текстуру в параметр
-                        if (colorNum === 'n14')
-                            winc.gson.color1 = colorRow.id;
-                        else if (colorNum === 'n15')
-                            winc.gson.color2 = colorRow.id;
-                        else if (colorNum === 'n16')
-                            winc.gson.color3 = colorRow.id;
-                        else if (colorNum === 'n33')
-                            param.colorID1 = colorRow.id;
-                        else if (colorNum === 'n34')
-                            param.colorID2 = colorRow.id;
-                        else if (colorNum === 'n35')
-                            param.colorID3 = colorRow.id;
-                        else if (colorNum === 'n46')
-                            elem.gson.param.colorHandl = colorRow.id;
-                        else if (colorNum === 'n4A')
-                            elem.gson.param.colorLoop = colorRow.id;
-                        else if (colorNum === 'n4C')
-                            elem.gson.param.colorLock = colorRow.id;
-                        else if (colorNum === 'n53')
-                            elem.gson.param.colorGlass = colorRow.id;
+                        set_color_gson(winc, colorRow.id); //запишем текстуру в gson
 
                         //Запишем скрипт в локальн. бд
                         let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
@@ -237,27 +209,7 @@
                             data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[ePrjprod.script]})},
                             success: function (data) {
                                 if (data.result == 'ok') {
-                                    //Запишем выбранную запись в тег страницы
-                                    if (colorNum === 'n14')
-                                        $("#n14").val(colorRow.name);
-                                    else if (colorNum === 'n15')
-                                        $("#n15").val(colorRow.name);
-                                    else if (colorNum === 'n16')
-                                        $("#n16").val(colorRow.name);
-                                    else if (colorNum === 'n33')
-                                        $("#n33").val(colorRow.name);
-                                    else if (colorNum === 'n34')
-                                        $("#n34").val(colorRow.name);
-                                    else if (colorNum === 'n35')
-                                        $("#n35").val(colorRow.name);
-                                    else if (colorNum === 'n46')
-                                        $("#n46").val(colorRow.name);
-                                    else if (colorNum === 'n4A')
-                                        $("#n4A").val(colorRow.name);
-                                    else if (colorNum === 'n4C')
-                                        $("#n4C").val(colorRow.name);
-                                    else if (colorNum === 'n53')
-                                        $("#n53").val(colorRow.name);
+                                    set_value_html(colorRow.name);
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -268,7 +220,8 @@
                         });
 
 
-                    } else if ($('#body-jsp title').text() == 'KITS') {
+                        //Комплекты
+                    } else if ($('#body-jsp title').text() === 'KITS') {
                         if (colorNum === 'n53') {
                             $("#n53").val(colorRow.name);
                             $("#n53").attr("fk", colorRow.id);
@@ -286,8 +239,58 @@
                     errorLog('Error: color.rec_dialog_save() ' + e.message);
                 }
             }
+            
+            //Запишем текстуру в html
+            function set_value_html(name) {               
+                if (colorNum === 'n14')
+                    $("#n14").val(name);
+                else if (colorNum === 'n15')
+                    $("#n15").val(name);
+                else if (colorNum === 'n16')
+                    $("#n16").val(name);
+                else if (colorNum === 'n33')
+                    $("#n33").val(name);
+                else if (colorNum === 'n34')
+                    $("#n34").val(name);
+                else if (colorNum === 'n35')
+                    $("#n35").val(name);
+                else if (colorNum === 'n46')
+                    $("#n46").val(name);
+                else if (colorNum === 'n4A')
+                    $("#n4A").val(name);
+                else if (colorNum === 'n4C')
+                    $("#n4C").val(name);
+                else if (colorNum === 'n53')
+                    $("#n53").val(name);
+            }
 
-            function artikl_elem(colorNum, elem) {
+            //Запишем текстуру в скрипт
+            function set_color_gson(winc, id) {
+
+                if (colorNum === 'n14')
+                    winc.gson.color1 = id;
+                else if (colorNum === 'n15')
+                    winc.gson.color2 = id;
+                else if (colorNum === 'n16')
+                    winc.gson.color3 = id;
+                else if (colorNum === 'n33')
+                    elem.gson.param.colorID1 = id;
+                else if (colorNum === 'n34')
+                    elem.gson.param.colorID2 = id;
+                else if (colorNum === 'n35')
+                    elem.gson.param.colorID3 = id;
+                else if (colorNum === 'n46')
+                    elem.gson.param.colorHandl = id;
+                else if (colorNum === 'n4A')
+                    elem.gson.param.colorLoop = id;
+                else if (colorNum === 'n4C')
+                    elem.gson.param.colorLock = id;
+                else if (colorNum === 'n53')
+                    elem.gson.param.colorGlass = id;
+            }
+
+            //Получить артикул элемента конструкции
+            function get_artikl_elem(colorNum, elem) {
                 if (colorNum === 'n14')
                     return elem.artiklRec;
                 else if (colorNum === 'n15')
