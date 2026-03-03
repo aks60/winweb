@@ -68,8 +68,10 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
+                //enterFullscreen();
             }
             function test2() {
+                //closeFullscreen();
             }
         </script>
         <script type="text/javascript">

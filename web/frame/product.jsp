@@ -76,7 +76,7 @@
             document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n33'));
             document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n34'));
             document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n35'));
-            document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n45'));
+            document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n46'));
             document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4A'));
             document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4C'));
             document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n53'));

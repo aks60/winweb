@@ -127,10 +127,11 @@
             //Текстура изделия
             function color_set() {
                 try {
+                    let eColorList = [...eColor.list];
                     let colorEnum = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
-                    
-                    if (['n14', 'n33'].includes(colorNum)) {
+
+                    if (['n14', 'n33', 'n46', 'n4A', 'n4C'].includes(colorNum)) {
                         colorEnum = systreeRec[eSystree.col1];
                         indexMark = eArtdet.mark_c1;
                     } else if (['n15', 'n34'].includes(colorNum)) {
@@ -139,26 +140,26 @@
                     } else if (['n16', 'n35'].includes(colorNum)) {
                         colorEnum = systreeRec[eSystree.col3];
                         indexMark = eArtdet.mark_c3;
-                    }
-                    colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
-                    let eColorList = [...eColor.list];
+                    }                                        
 
                     //Текстура по фильтрам цветов SYSTREE.COL
-                    if (colorFilter.length !== 0) {
-                        eColorList.length = 0;
-                        for (let colorRec of eColor.list) {
-                            for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
-                                if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
-                                    eColorList.push(colorRec);
+                    if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST].includes(elem.type)) {
+                        colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
+                        if (colorFilter.length !== 0) {
+                            eColorList.length = 0;
+                            for (let colorRec of eColor.list) {
+                                for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
+                                    if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
+                                        eColorList.push(colorRec);
+                                    }
                                 }
                             }
                         }
                     }
-                    //Текстура по таблице цветов ARTDET
-                    let artiklElem = get_artikl_elem();
-
-                    //Все текстуры артикула элемента конструкции
-                    for (let artdetRec of eArtdet.list) {
+                    
+                    //Текстура по таблице цветов ARTDET                 
+                    let artiklElem = get_artikl_elem();                                    
+                    for (let artdetRec of eArtdet.list) { //все текстуры артикула элемента конструкции
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
                             if (artdetRec[indexMark] == '1') { //фильтр стороны  
                                 for (let colorRec of eColorList) {
@@ -312,7 +313,7 @@
                 else if (colorNum === 'n35')
                     return elem.artiklRec;
                 else if (colorNum === 'n46')
-                    return elem.handleRec;
+                    return elem.handRec;
                 else if (colorNum === 'n4A')
                     return elem.loopRec;
                 else if (colorNum === 'n4C')
