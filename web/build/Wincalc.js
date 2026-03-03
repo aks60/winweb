@@ -22,11 +22,7 @@ export class Wincalc {
     listAll = new Array();  //список всех компонентов (area + elem)
     listKit = new Array();  //комплектация   
     scale = 1; //коэффициент сжатия
-    artiklRec; //первый артикул из сист. профилей
-    syssizRec; //системные константы
-    colorID1; //цвет базовый
-    colorID2; //цвет внутр.
-    colorID3; //цвет внещний     
+    syssizRec; //системные константы   
     root; //объектная модель конструкции 
     dXY = 40; //коррекция разм. линий
     sceleton = false; //см. paint
@@ -68,16 +64,6 @@ export class Wincalc {
             this.gson = JSON.parse(script);      //объектная модель конструкции
             //this.setform(gson, this);             //форма конструкции, см. класс Area                   
 
-            //Инит конструктива
-            this.id = this.gson.id;
-            this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
-            let sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
-            this.artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
-            this.syssizRec = eSyssize.find(this.artiklRec); //системные константы
-            this.colorID1 = (this.gson.color1 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color1;
-            this.colorID2 = (this.gson.color2 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color2;
-            this.colorID3 = (this.gson.color3 === -3) ? eColor.find2(this.artiklRec[eArtikl.id]) : this.gson.color3;
-
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
                 this.root = new AreaRectangl(this, this.gson, null);
@@ -95,6 +81,16 @@ export class Wincalc {
                 this.root = new AreaDoor(this, this.gson, null);
                 this.root.type = Type.DOOR;
             }
+            //Инит конструктива
+            this.id = this.gson.id;
+            this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
+            this.root.sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
+            this.root.artiklRec = eArtikl.find(this.root.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
+            this.syssizRec = eSyssize.find(this.root.artiklRec); //системные константы
+            this.root.colorID1 = (this.gson.color1 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
+            this.root.colorID2 = (this.gson.color2 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
+            this.root.colorID3 = (this.gson.color3 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
+            
             this.parametr(this.gson.param);
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    

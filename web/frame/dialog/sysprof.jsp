@@ -95,7 +95,7 @@
                     elem.gson.param.sysprofID = tableRec.id; //запишем профиль в скрипт
 
                 } else { //створка       
-                    let sideLayout = ["", "stvorkaBottom", "stvorkaRight", "stvorkaTop", "stvorkaLeft"][Layout[elem.layout][0]];
+                    let sideLayout = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][Layout[elem.layout][0]];
                     elem.gson.param[sideLayout] = {sysprofID: tableRec.id};
                 }
 

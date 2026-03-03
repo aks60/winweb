@@ -25,9 +25,9 @@ export class ElemCross extends ElemSimple {
 
     initArtikle() {
         try {
-            this.colorID1 = UCom.isFinite(this.gson.param, 'color1') ? Number(this.gson.param.color1) : this.winc.colorID1;
-            this.colorID2 = UCom.isFinite(this.gson.param, 'color2') ? Number(this.gson.param.color2) : this.winc.colorID2;
-            this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.winc.colorID3;
+            this.colorID1 = UCom.isFinite(this.gson.param, 'color1') ? Number(this.gson.param.color1) : this.root.colorID1;
+            this.colorID2 = UCom.isFinite(this.gson.param, 'color2') ? Number(this.gson.param.color2) : this.root.colorID2;
+            this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.root.colorID3;
             this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
 
             if (this.owner.sysprofRec !== null) {

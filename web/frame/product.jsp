@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <script type="text/javascript" src="lib-js/jquery-ui-1.13/i18n/jquery.ui.datepicker-ru.min.js"></script>
         <script type="module" src="frame/product.js"></script>
-        <title>PROJECT</title>
+        <title>PRODUCT</title>
         <style>
             .abs {
                 position: absolute;
@@ -69,10 +69,17 @@
             init_table();
             load_table2();
 
-            prepareTool();
+            prepareTool();           
             document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n14'));
             document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n15'));
             document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n16'));
+            document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n33'));
+            document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n34'));
+            document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n35'));
+            document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n45'));
+            document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4A'));
+            document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4C'));
+            document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n53'));
 
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
@@ -121,9 +128,9 @@
                     <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="product.sysprof_to_frame('n31');"></jst><br>
                     <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                     <p class="pantitle">Текстура изделия</p>  
-                    <jst id="n33" type='btn' label='Основная' width='80' width2="260" click="product.color_to_element('n33');"></jst><br>                          
-                    <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="product.color_to_element('n34');"></jst><br>                          
-                    <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="product.color_to_element('n35');"></jst><br>                          
+                    <jst id="n33" type='btn' label='Основная' width='80' width2="260"></jst><br>                          
+                    <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>                          
+                    <jst id="n35" type='btn' label='Внещняя' width='80' width2="260"></jst><br>                          
                 </div>
 
                 <div id="tabs-4" style="padding: 0px; display: none;">
@@ -133,20 +140,20 @@
                     <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="product.furniture_to_stvorka('n43');"></jst><br>                          
                     <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click="product.sideopen_to_stvorka('n44')"></jst><br>
                     <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n45');"></jst><br>
-                    <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click="product.color_to_element('n46');"></jst><br>                            
+                    <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220"></jst><br>                            
                     <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                     <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
                     <jst id="n49" type='btn' label='Подвес (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
-                    <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220" click="product.color_to_element('n4A');"></jst><br>
+                    <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220"></jst><br>
                     <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
-                    <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click="product.color_to_element('n4C');"></jst><br>
+                    <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220"></jst><br>
                 </div>
 
                 <div id="tabs-5" style="padding: 0px; display: none;">
                     <p class="pantitle">Заполнение</p> 
                     <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="product.artikl_to_glass('n51');"></jst><br>
                     <jst id="n52" type='txt' label='Название' width='80' width2="288"></jst><br>
-                    <jst id="n53" type='btn' label='Цвет' width='80' width2="260" click="product.color_to_element('n53');"></jst><br>
+                    <jst id="n53" type='btn' label='Цвет' width='80' width2="260"></jst><br>
                 </div>                
             </div>   
             <div id='east2' class='abs' style=''>
