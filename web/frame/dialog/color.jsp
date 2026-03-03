@@ -7,17 +7,21 @@
         <script type="module">
             import {Type} from './enums/Type.js';
             import {Wincalc} from './build/Wincalc.js';
+            ;
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
+
             let groupSet = new Set();
             let colorSet = new Set();
+            let eColorList = new Array();
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
             const colorNum = "<%= request.getParameter("color")%>";
             const winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
             const elem = product.clickNodeElem;
             const tab1Color = document.getElementById('tab1-color');
             const tab2Color = document.getElementById('tab2-color');
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
                 $(tab1Color).jqGrid('setGridWidth', $("#dialog-jsp #pan1-color").width());
@@ -25,10 +29,6 @@
                 $(tab2Color).jqGrid('setGridWidth', $("#dialog-jsp #pan2-color").width());
                 $(tab2Color).jqGrid('setGridHeight', $("#dialog-jsp #pan2-color").height() - 20);
             }
-
-            $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
-                resize();
-            });
             init_dialog();
             init_table();
             color_set();
@@ -83,51 +83,37 @@
             function load1_table() {
                 $(tab1Color).jqGrid('clearGridData', true);
                 if (groupSet.size > 0) {
-
                     let groupsList = eGroups.list.filter(rec => groupSet.has(rec[eGroups.id]));
-                    for (let i = 0; i < groupsList.length; i++) {
-                        let tr = groupsList[i];
+                    groupsList.forEach((tr, i) => {
+
                         $(tab1Color).jqGrid('addRowData', i + 1, {
                             id: tr[eGroups.id],
                             name: tr[eGroups.name]
                         });
-                    }
+                    });
                 }
-                //resize();
                 $(tab1Color).jqGrid("setSelection", 1);
             }
 
             function load2_table(rowid) {
                 $(tab2Color).jqGrid('clearGridData', true);
                 let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
-                let colorList = eColor.list.filter(rec => groupsRow.id == rec[eColor.groups_id]);
+                let colorList = eColorList.filter(rec => groupsRow.id == rec[eColor.groups_id] && colorSet.has(rec[eColor.id]));
+                colorList.forEach((tr, i) => {
 
-                for (let i = 0, k = 0; i < colorList.length; i++) {
-                    let colorRec = colorList[i];
-
-                    if (colorFilter.length == 0) {
-                        $(tab2Color).jqGrid('addRowData', ++k, {
-                            id: colorRec[eColor.id],
-                            name: colorRec[eColor.name]
-                        });
-                    } else {
-                        if (colorSet.has(colorRec[eColor.id]))
-                            $(tab2Color).jqGrid('addRowData', ++k, {
-                                id: colorRec[eColor.id],
-                                name: colorRec[eColor.name]
-                            });
-                    }
-                    let rgb = '#' + colorRec[eColor.rgb].toString(16);
+                    $(tab2Color).jqGrid('addRowData', i + 1, {
+                        id: tr[eColor.id],
+                        name: tr[eColor.name]
+                    });
+                    let rgb = '#' + tr[eColor.rgb].toString(16);
                     $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
-                }
-                resize();
+                });
                 $(tab2Color).jqGrid("setSelection", 1);
             }
 
             //Текстура изделия
             function color_set() {
                 try {
-                    let eColorList = [...eColor.list];
                     let colorEnum = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
 
@@ -140,13 +126,12 @@
                     } else if (['n16', 'n35'].includes(colorNum)) {
                         colorEnum = systreeRec[eSystree.col3];
                         indexMark = eArtdet.mark_c3;
-                    }                                        
+                    }
 
                     //Текстура по фильтрам цветов SYSTREE.COL
                     if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST].includes(elem.type)) {
                         colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
                         if (colorFilter.length !== 0) {
-                            eColorList.length = 0;
                             for (let colorRec of eColor.list) {
                                 for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
                                     if (colorRec[eColor.id] >= colorFilter[i] && colorRec[eColor.id] <= colorFilter[i + 1]) {
@@ -156,19 +141,26 @@
                             }
                         }
                     }
-                    
-                    //Текстура по таблице цветов ARTDET                 
-                    let artiklElem = get_artikl_elem();                                    
-                    for (let artdetRec of eArtdet.list) { //все текстуры артикула элемента конструкции
+                    if (eColorList.length === 0) { //если фильтра нет
+                        eColorList = eColor.list;
+                    }
+
+                    //Артикул элемента
+                    let artiklElem = get_artikl_elem();
+
+                    //Текстура по таблице цветов ARTDET                                                                        
+                    for (let artdetRec of eArtdet.list) { //все текстуры артикула элемента конструкции                     
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
                             if (artdetRec[indexMark] == '1') { //фильтр стороны  
                                 for (let colorRec of eColorList) {
 
                                     if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
+                                        //if(colorRec[eColor.id] == 1010) debugger;
                                         groupSet.add(colorRec[eColor.groups_id]);
                                         colorSet.add(colorRec[eColor.id]);
 
                                     } else if (colorRec[eColor.id] === Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
+                                        //if(colorRec[eColor.id] == 1010) debugger;
                                         groupSet.add(colorRec[eColor.groups_id]);
                                         colorSet.add(colorRec[eColor.id]);
                                     }
@@ -176,7 +168,6 @@
                             }
                         }
                     }
-
                 } catch (e) {
                     errorLog('Error: color.color_set() ' + e.message);
                 }
@@ -322,9 +313,6 @@
                     return elem.artiklRec;
                 else
                     return null;
-            }
-
-            function get_param_filter() {
             }
 
         </script>         
