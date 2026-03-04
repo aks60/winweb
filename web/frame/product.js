@@ -2,27 +2,14 @@
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
 import {project} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
-import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
 export let product = {};
 
-//Создание конструкции
-export function wincalcNew() {
-    if (project.prjprodRec != null) {
-        let cnv = document.getElementById("cnv");
-        let script = project.prjprodRec[ePrjprod.script];
-        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, script);
-    }
-}
-
 //Масштабирование
 export function resize() {
-    let winc = product.winCalc;
-    let cnv = document.getElementById("cnv");
-
-    winc.resize();
-
+    
+    product.winCalc.resize();
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
     $("div .field2[dx]").each(function (index) {

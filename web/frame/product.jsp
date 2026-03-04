@@ -57,19 +57,25 @@
             }
         </style>
         <script type="module">
-            import {product, wincalcNew, resize, init_table,
-                    load_table2, update_script} from './frame/product.js';
+            import {project} from './frame/project.js';
+            import {Wincalc} from './build/Wincalc.js';
+            import {product, resize, init_table, load_table2,
+                    update_script} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-            wincalcNew();
             $(window).bind('resize', resize); //.trigger('resize');
+
+            //Создание конструкции
+            let cnv = document.getElementById("cnv");
+            let script = project.prjprodRec[ePrjprod.script];
+            product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, script);
+
             product.table1 = document.getElementById('table1');
             product.table2 = document.getElementById('table2');
-
             init_table();
             load_table2();
 
-            prepareTool();           
+            prepareTool();
             document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n14'));
             document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n15'));
             document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n16'));

@@ -183,17 +183,19 @@
                         set_color_gson(Number(colorRow.id)); //запишем текстуру в gson
                         set_color_html(colorRow.name); //запишем текстуру в html
 
-//                        //Запишем скрипт в локальн. бд
-//                        let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
-//                        let cnv = document.getElementById("cnv");
-//                        prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-//                        let winc2 = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, prjprodRec[ePrjprod.script]);
-//                        project.wincalcMap.set(prjprodID, winc2); //новый экз.
-//
-//                        //Запишем скрипт в серверную базу данных
+                        //Запишем скрипт в локальн. бд
+                        let cnv = document.getElementById("cnv");
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson);
+                        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
+                        project.wincalcMap.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
+
+                        //Запишем скрипт в серверную базу данных
 //                        $.ajax({
 //                            url: 'dbset?action=updateScript',
-//                            data: {param: JSON.stringify({id: prjprodID, script: prjprodRec[ePrjprod.script]})},
+//                            data: {param: JSON.stringify({
+//                                    id: project.prjprodRec[ePrjprod.id], 
+//                                    script: project.prjprodRec[ePrjprod.script]
+//                                })},
 //                            success: function (data) {
 //                                
 //                                if (data.result == 'ok') {
