@@ -1,6 +1,6 @@
 
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
-import {project, get_winc} from './project.js';
+import {project} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
 import {Wincalc} from '../build/Wincalc.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
@@ -21,7 +21,7 @@ export function resize() {
     let winc = product.winCalc;
     let cnv = document.getElementById("cnv");
 
-    winc.resize(); //(cnv.offsetWidth, cnv.offsetHeight, winc.gson);
+    winc.resize();
 
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
@@ -67,8 +67,7 @@ export function load_table1() {
     try {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
-        let winc = get_winc();
-        for (let syspar1Rec of winc.mapPardef.values()) {
+        for (let syspar1Rec of product.winCalc.mapPardef.values()) {
             syspar1List.push(syspar1Rec);
         }
         syspar1List.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
@@ -94,8 +93,7 @@ export function load_table2(tabtree) {
     try {
         if (project.prjprodRec != null) {
             let arr = new Array();
-            let winc = get_winc();
-            let root = winc.root;
+            let root = product.winCalc.root;
 
             if (root.type === Type.RECTANGL)
                 arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
@@ -175,8 +173,7 @@ export function tree_to_tabs(nodeID) {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
         if (nodeID !== '-2') {
-            let prgprodID = project.prjprodRec[ePrjprod.id];
-            let winc = project.wincalcMap.get(prgprodID);
+            let winc = product.winCalc;
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
                     ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
             product.clickNodeElem = elem;        

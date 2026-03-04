@@ -10,15 +10,6 @@ export function  resize() {
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
 }
 
-//Текущий WINC 
-export function get_winc() {
-    if (project.wincalcMap !== undefined && project.prjprodRec !== undefined) {
-        let prjprodID = project.prjprodRec[ePrjprod.id];
-        return project.wincalcMap.get(prjprodID);
-    }
-    return null;
-}
-
 //Инициализация таблиц
 export function init_table() {
     $(project.table1).jqGrid({

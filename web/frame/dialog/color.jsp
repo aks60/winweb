@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>COLOR</title>  
         <script type="module">
-            import {Type} from './enums/Type.js';
+            import {Type, Layout} from './enums/enums.js';
+            import {UCom} from './common/uCom.js';
             import {Wincalc} from './build/Wincalc.js';
-            ;
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
@@ -17,7 +17,7 @@
             let eColorList = new Array();
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
             const colorNum = "<%= request.getParameter("color")%>";
-            const winc = project.wincalcMap.get(project.prjprodRec[ePrjprod.id]);
+            const winc = product.winCalc;
             const elem = product.clickNodeElem;
             const tab1Color = document.getElementById('tab1-color');
             const tab2Color = document.getElementById('tab2-color');
@@ -180,19 +180,8 @@
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
-//                        if (elem.gson.param === undefined) {
-//                            elem.gson.param = {};
-//                        }
-//                        if (elem.type === Type.STV_SIDE) {
-//                            let sideLayout = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][Layout[elem.layout][0]];
-//                            if (elem.gson.param[sideLayout] === undefined) {
-//                                elem.gson.param[sideLayout] = {};
-//                            } 
-//                        }
-
-                        set_color_gson(colorRow.id); //запишем текстуру в gson
-
-                        set_color_html(colorRow.name);
+                        set_color_gson(Number(colorRow.id)); //запишем текстуру в gson
+                        set_color_html(colorRow.name); //запишем текстуру в html
 
 //                        //Запишем скрипт в локальн. бд
 //                        let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
@@ -220,21 +209,20 @@
 
 
                         //Комплекты
+                    } else if ($('#body-jsp title').text() === 'KITS') {
+                        if (colorNum === 'n53') {
+                            $("#n53").val(colorRow.name);
+                            $("#n53").attr("fk", colorRow.id);
+
+                        } else if (colorNum === 'n54') {
+                            $("#n54").val(colorRow.name);
+                            $("#n54").attr("fk", colorRow.id);
+
+                        } else if (colorNum === 'n55') {
+                            $("#n55").val(colorRow.name);
+                            $("#n55").attr("fk", colorRow.id);
+                        }
                     }
-//                    else if ($('#body-jsp title').text() === 'KITS') {
-//                        if (colorNum === 'n53') {
-//                            $("#n53").val(colorRow.name);
-//                            $("#n53").attr("fk", colorRow.id);
-//
-//                        } else if (colorNum === 'n54') {
-//                            $("#n54").val(colorRow.name);
-//                            $("#n54").attr("fk", colorRow.id);
-//
-//                        } else if (colorNum === 'n55') {
-//                            $("#n55").val(colorRow.name);
-//                            $("#n55").attr("fk", colorRow.id);
-//                        }
-//                    }
                 } catch (e) {
                     errorLog('Error: save_table() ' + e.message);
                 }
@@ -266,27 +254,37 @@
 
             //Запишем текстуру в скрипт
             function set_color_gson(colorID) {
-debugger;
-                if (colorNum === 'n14')
-                    winc.gson.color1 = colorID;
-                else if (colorNum === 'n15')
-                    winc.gson.color2 = colorID;
-                else if (colorNum === 'n16')
-                    winc.gson.color3 = colorID;
-                else if (colorNum === 'n33')
-                    elem.gson.param.colorID1 = colorID;
-                else if (colorNum === 'n34')
-                    elem.gson.param.colorID2 = colorID;
-                else if (colorNum === 'n35')
-                    elem.gson.param.colorID3 = colorID;
-                else if (colorNum === 'n46')
-                    elem.gson.param.colorHandl = colorID;
-                else if (colorNum === 'n4A')
-                    elem.gson.param.colorLoop = colorID;
-                else if (colorNum === 'n4C')
-                    elem.gson.param.colorLock = colorID;
-                else if (colorNum === 'n53')
-                    elem.gson.param.colorGlass = colorID;
+
+                if (elem.type === Type.STV_SIDE) {
+                    let sideStv = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][elem.layout[0]];
+                    if (colorNum === 'n33')
+                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID1'], colorID);
+                    else if (colorNum === 'n34')
+                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID2'], colorID);
+                    else if (colorNum === 'n35')
+                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID3'], colorID);
+                } else {
+                    if (colorNum === 'n14')
+                        winc.gson.color1 = colorID;
+                    else if (colorNum === 'n15')
+                        winc.gson.color2 = colorID;
+                    else if (colorNum === 'n16')
+                        winc.gson.color3 = colorID;
+                    else if (colorNum === 'n33')
+                        UCom.setParObj(elem.gson, ['param', 'colorID1'], colorID);
+                    else if (colorNum === 'n34')
+                        UCom.setParObj(elem.gson, ['param', 'colorID2'], colorID);
+                    else if (colorNum === 'n35')
+                        UCom.setParObj(elem.gson, ['param', 'colorID3'], colorID);
+                    else if (colorNum === 'n46')
+                        elem.gson.param.colorHandl = colorID;
+                    else if (colorNum === 'n4A')
+                        UCom.setParObj(elem.gson, ['param', 'colorLoop'], colorID);
+                    else if (colorNum === 'n4C')
+                        UCom.setParObj(elem.gson, ['param', 'colorLock'], colorID);
+                    else if (colorNum === 'n53')
+                        UCom.setParObj(elem.gson, ['param', 'colorGlass'], colorID);
+                }
             }
 
             //Получить артикул элемента конструкции
