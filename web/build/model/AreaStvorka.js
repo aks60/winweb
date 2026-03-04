@@ -63,6 +63,7 @@ export class AreaStvorka extends AreaSimple {
                 } else {
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
                     gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
+                    debugger;
                     let sideStv = new ElemFrame(this.winc, gson, this);
                     sideStv.type = Type.STV_SIDE;
                     this.frames.push(sideStv);
