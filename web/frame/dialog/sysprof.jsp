@@ -64,7 +64,7 @@
 
                 table.jqGrid('clearGridData', true);
                 let id = project.prjprodRec[eSysprof.id];
-                let winc = project.wincalcMap.get(id);
+                let winc = project.mapWinc.get(id);
 
                 for (let i = 0; i < product.sysprofArr.length; i++) {
                     let tr = product.sysprofArr[i];
@@ -86,7 +86,7 @@
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
-                let winc = project.wincalcMap.get(prjprodID);
+                let winc = project.mapWinc.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 if (elem.gson.param == undefined) {
                     elem.gson.param = {};
@@ -103,7 +103,7 @@
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                 let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
-                project.wincalcMap.set(prjprodID, iwincalc); //новый экз.
+                project.mapWinc.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({

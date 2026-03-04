@@ -187,7 +187,7 @@
                         let cnv = document.getElementById("cnv");
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson);
                         product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        project.wincalcMap.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
+                        project.mapWinc.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
 //                        $.ajax({

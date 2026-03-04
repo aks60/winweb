@@ -115,7 +115,7 @@
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
                         let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
 
-                        let winc = project.wincalcMap.get(prjprodID);
+                        let winc = project.mapWinc.get(prjprodID);
                         let elem = winc.listElem.find(it => it.id == elemID);
                         elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
 
@@ -147,7 +147,7 @@
                         //Запишем скрипт в локальн. бд 
                         prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, prjprodRec[ePrjprod.script]);
-                        project.wincalcMap.set(prjprodID, winc2); //новый экз.
+                        project.mapWinc.set(prjprodID, winc2); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -223,7 +223,7 @@
                 let artiklArr = eArtikl.list.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                let winc = project.wincalcMap.get(prjprodID);
+                let winc = project.mapWinc.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 for (let furndetRec1 of eFurndet.list) {
                     if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {

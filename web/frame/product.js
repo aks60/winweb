@@ -243,7 +243,7 @@ export function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
-        let winc = project.wincalcMap.get(prjprodID);
+        let winc = project.mapWinc.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);
         let sysprofSet = new Set();
 
@@ -293,7 +293,7 @@ export function artikl_to_glass(btnSrc) {
     try {
         let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
-        let winc = project.wincalcMap.get(prjprodID);
+        let winc = project.mapWinc.get(prjprodID);
         let elem = winc.listElem.find(it => it.id === nodeID);
 
         //Список доступных толщин в ветке системы например 4;5;8
@@ -321,7 +321,7 @@ export function artikl_to_glass(btnSrc) {
 //Изменение скрипта
 export function update_script() {
     let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-    let winc = project.wincalcMap.get(prjprodID);
+    let winc = project.mapWinc.get(prjprodID);
 
     $.ajax({//запишем профиль в серверную базу данных
         url: 'dbset?action=updateScript',

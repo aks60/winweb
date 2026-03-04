@@ -1,6 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {product} from './product.js';
-export let project = {wincalcMap: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
+export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
 
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
@@ -91,7 +91,7 @@ export function load_table2(projectID) {
 //Загрузка конструкций в таблицу
 export function load_table3() {
     let projectID = project.projectRec[eProject.id];
-    project.wincalcMap.clear();
+    project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
     let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
     for (let i = 0; i < prjprodList.length; ++i) {
@@ -106,7 +106,7 @@ export function load_table3() {
         let canvas = document.getElementById('cnv' + (i + 1));
         let script = prjprodRec[ePrjprod.script];
         let winc = Wincalc.new(canvas, 68, 68, script);
-        project.wincalcMap.set(prjprodRec[ePrjprod.id], winc);
+        project.mapWinc.set(prjprodRec[ePrjprod.id], winc);
     }
     $(project.table3).jqGrid("setSelection", project.table3rowID);
 }
