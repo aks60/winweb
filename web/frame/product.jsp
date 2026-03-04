@@ -85,6 +85,8 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
+                debugger;
+                console.log(JSON.stringify(product.winCalc.gson));
             }
             function test2() {
             }

@@ -190,7 +190,7 @@
 //                            } 
 //                        }
 
-                        //set_color_gson(colorRow.id); //запишем текстуру в gson
+                        set_color_gson(colorRow.id); //запишем текстуру в gson
 
                         set_color_html(colorRow.name);
 
@@ -266,7 +266,7 @@
 
             //Запишем текстуру в скрипт
             function set_color_gson(colorID) {
-
+debugger;
                 if (colorNum === 'n14')
                     winc.gson.color1 = colorID;
                 else if (colorNum === 'n15')
