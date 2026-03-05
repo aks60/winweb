@@ -18,7 +18,7 @@
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="lib-js/jqgrid-4.6.3/jquery.jqGrid.min.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.min.js"></script>
-        <!--<script type="text/javascript" src="lib-js/jsts-2.11.2/jsts-min.js"></script>-->
+        <script type="text/javascript" src="lib-js/jsts-2.11.2/jsts-min.js"></script>
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
@@ -51,8 +51,7 @@
             //Поля таблиц
             var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
-                    eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser;
-            var eElement, PRINT;
+                    eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, PRINT;
             //Глобальные объекты
             var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {};
 
@@ -70,10 +69,9 @@
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
 
         <script type="module">
-            import {localizeFactory, println, Test2} from './frame/main.js';
-            PRINT = println;
+            import {localizeFactory, Test1} from './frame/main.js';
             localizeFactory();
-            //Test2();
+            //Test1();
 
             $("#body-jsp").load('frame/login.jsp', function () {
                 Promise.all([

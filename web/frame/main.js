@@ -13,7 +13,7 @@ import LineSegment from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSeg
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js'
 import LinearRing from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LinearRing.js'
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
-//import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
+import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.js'
 //import WKTReader from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 //import UnionOp from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
 //import Polygonizer from '../lib-js/jsts-2.11.2/org/locationtech/jts/operation/polygonize/Polygonizer.js'
@@ -109,17 +109,16 @@ export function localizeFactory() {
     };
 }
 
-export function println(geom, prefix) {
+PRINT = (geom, prefix) => {
     let writer = new WKTWriter();
-    
+
     if (prefix === undefined)
         console.log(writer.write(geom));
     else
         console.log(prefix + writer.write(geom));
-}
+};
 
 export function Test1() {
-    
 //    try {
 //        var reader = new WKTReader();
 //        let o1 = LineSegment.new([650, 0, 7], [650, 1400, 7]);
@@ -145,7 +144,7 @@ export function Test2() {
 //
 //        var union = UnionOp.union(a, b);
 //        console.log(writer.write(union));
-        
+
         //var polygonizer = new Polygonizer();
         //polygonizer.add(union);
         //var polygons = polygonizer.getPolygons();

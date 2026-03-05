@@ -191,10 +191,8 @@ UGeo.crossGeoOfLine = (poly, line) => {
         let out = new Array();
         const coo = poly.getCoordinates();
         for (let i = 1; i < coo.length; i++) {
-
-            const segm1 = coo[i - 1];
-            const segm2 = coo[i];
-            const cros = Intersection.intersection(line.p0, line.p1, segm1, segm2);
+            
+            const cros = UGeo.intersectionLS(line.p0, line.p1, coo[i], coo[i - 1]);
             if (cros !== null) {
                 out.push(cros);
             }
@@ -519,7 +517,7 @@ UGeo.insidePoly = (poly, x, y) => {
     return inside;
 };
 
-//Переьещение gson (точек на канве)
+//Перемещение gson (точек на канве)
 UGeo.moveGson = (gson, dx, dy, scale) => {
     if (gson.childs !== null) {
         let dX = (dx === 0) ? 0 : dx / scale;

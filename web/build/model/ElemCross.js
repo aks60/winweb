@@ -54,21 +54,20 @@ export class ElemCross extends ElemSimple {
         }
     }
 
-    setLocation() {
+    setLocation() {     
         try {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
 
             //Пилим полигон импостом     
-            let segmImp = UGeo.normalizeSegm(LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]));            
+            let segmImp = LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]);            
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];
 
             //Левый и правый сегмент вдоль импоста
             const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
-            const baseSegm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
-            const offsetSegment = [UGeo.offsetSegm(baseSegm, +delta), UGeo.offsetSegm(baseSegm, -delta)];
+            const offsetSegment = [UGeo.offsetSegm(segmImp, +delta), UGeo.offsetSegm(segmImp, -delta)];
 
             //Точки пересечения канвы сегментами импоста
             const areaCanvas = Polygon.new([[0, 0], [0, 10000], [10000, 10000], [10000, 0]]);
@@ -77,6 +76,7 @@ export class ElemCross extends ElemSimple {
 
             //Ареа импоста, обрезаем areaPadding 
             const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
+
             this.area = OverlayOp.intersection(geoFalz, areaEnvelope); //полигон элемента конструкции
 
         } catch (e) {

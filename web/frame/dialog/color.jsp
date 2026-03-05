@@ -155,12 +155,10 @@
                                 for (let colorRec of eColorList) {
 
                                     if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk
-                                        //if(colorRec[eColor.id] == 1010) debugger;
                                         groupSet.add(colorRec[eColor.groups_id]);
                                         colorSet.add(colorRec[eColor.id]);
 
                                     } else if (colorRec[eColor.id] === Math.abs(artdetRec[eArtdet.color_fk])) {  //текстура (+)color_fk 
-                                        //if(colorRec[eColor.id] == 1010) debugger;
                                         groupSet.add(colorRec[eColor.groups_id]);
                                         colorSet.add(colorRec[eColor.id]);
                                     }

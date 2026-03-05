@@ -92,6 +92,9 @@ export class ElemSimple extends Com5t {
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let inside = UGeo.insidePoly(this.area, X, Y);
 
+                        if (this.type == Type.IMPOST)
+                            console.log(inside + " - " + this.area);
+                        
                         //Если клик внутри контура
                         if (inside === true) {
                             ++this.passMask[1];
@@ -201,10 +204,11 @@ export class ElemSimple extends Com5t {
         }
         return Layout.ANY;
     }
-    
-    onMove = () => {};
 
-    paint() {
+    onMove = () => {
+    }
+    ;
+            paint() {
     }
 }
 
