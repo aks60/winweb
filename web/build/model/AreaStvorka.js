@@ -35,8 +35,8 @@ export class AreaStvorka extends AreaSimple {
     offset = [0, 0, 0, 0];
 
     constructor(winc, gson, owner) {
-        super(winc, gson, owner);
-        this.initArtikle(gson.param);
+        super(winc, gson, owner);       
+        this.initArtikle(); 
     }
 
     initStvorka() {
@@ -62,8 +62,7 @@ export class AreaStvorka extends AreaSimple {
                     coo[i].z = sideStv.id;
                 } else {
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
-                    gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson
-                    debugger;
+                    gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson  
                     let sideStv = new ElemFrame(this.winc, gson, this);
                     sideStv.type = Type.STV_SIDE;
                     this.frames.push(sideStv);

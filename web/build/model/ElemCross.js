@@ -1,7 +1,7 @@
 
 import {UGeo} from './uGeo.js';
 import {UCom} from '../../common/uCom.js';
-import {Layout, Type, UseSide} from '../../enums/enums.js';
+import {Layout, Type, UseSide, PKjson} from '../../enums/enums.js';
 import {Com5t, ElemSimple} from './model.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
@@ -24,10 +24,10 @@ export class ElemCross extends ElemSimple {
     }
 
     initArtikle() {
-        try {
-            this.colorID1 = UCom.isFinite(this.gson.param, 'color1') ? Number(this.gson.param.color1) : this.root.colorID1;
-            this.colorID2 = UCom.isFinite(this.gson.param, 'color2') ? Number(this.gson.param.color2) : this.root.colorID2;
-            this.colorID3 = UCom.isFinite(this.gson.param, 'color3') ? Number(this.gson.param.color3) : this.root.colorID3;
+        try {            
+            this.colorID1 = UCom.isFinite(this.gson.param, PKjson.colorID1) ? Number(this.gson.param.colorID1) : this.root.colorID1;
+            this.colorID2 = UCom.isFinite(this.gson.param, PKjson.colorID2) ? Number(this.gson.param.colorID2) : this.root.colorID2;
+            this.colorID3 = UCom.isFinite(this.gson.param, PKjson.colorID3) ? Number(this.gson.param.colorID3) : this.root.colorID3;
             this.sysprofRec = UCom.isFinite(this.gson.param, 'sysprofID') ? Number(this.gson.param.sysprofID) : null;
 
             if (this.owner.sysprofRec !== null) {
@@ -86,8 +86,7 @@ export class ElemCross extends ElemSimple {
 
     paint() {
         try {
-            if (this.area !== null && this.winc.sceleton === false) {
-                
+            if (this.area !== null && this.winc.sceleton === false) {                
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
