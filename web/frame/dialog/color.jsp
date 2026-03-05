@@ -117,7 +117,7 @@
                     let colorEnum = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
 
-                    if (['n14', 'n33', 'n46', 'n4A', 'n4C'].includes(colorNum)) {
+                    if (['n14', 'n33', 'n46', 'n4A', 'n4C', 'n53'].includes(colorNum)) {
                         colorEnum = systreeRec[eSystree.col1];
                         indexMark = eArtdet.mark_c1;
                     } else if (['n15', 'n34'].includes(colorNum)) {

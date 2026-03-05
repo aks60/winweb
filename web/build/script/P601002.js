@@ -48,6 +48,7 @@ export let p601002 = {
             "param": {
                 "typeOpen": 3,
                 "sysfurnID": 860,
+                "colorHand": 61,
                 "stvorkaLef": {
                     "colorID2": "21022"
                 }
