@@ -178,8 +178,7 @@
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
-                        set_color_gson(Number(colorRow.id)); //запишем текстуру в gson
-                        set_color_html(colorRow.name); //запишем текстуру в html
+                        set_color_gson(Number(colorRow.id)); //запишем текстуру в gson                        
 
                         //Запишем скрипт в локальн. бд
                         let cnv = document.getElementById("cnv");
@@ -188,24 +187,24 @@
                         project.mapWinc.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
-//                        $.ajax({
-//                            url: 'dbset?action=updateScript',
-//                            data: {param: JSON.stringify({
-//                                    id: project.prjprodRec[ePrjprod.id], 
-//                                    script: project.prjprodRec[ePrjprod.script]
-//                                })},
-//                            success: function (data) {
-//                                
-//                                if (data.result == 'ok') {
-//                                    set_value_html(colorRow.name);
-//                                } else {
-//                                    dialogMes('Сообщение', "<p>" + data.result);
-//                                }
-//                            },
-//                            error: function () {
-//                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-//                            }
-//                        });
+                        $.ajax({
+                            url: 'dbset?action=updateScript',
+                            data: {param: JSON.stringify({
+                                    id: project.prjprodRec[ePrjprod.id], 
+                                    script: project.prjprodRec[ePrjprod.script]
+                                })},
+                            success: function (data) {
+                                
+                                if (data.result == 'ok') {
+                                    set_color_html(colorRow.name); //запишем текстуру в html
+                                } else {
+                                    dialogMes('Сообщение', "<p>" + data.result);
+                                }
+                            },
+                            error: function () {
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            }
+                        });
 
 
                         //Комплекты
