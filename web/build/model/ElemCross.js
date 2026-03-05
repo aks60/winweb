@@ -74,9 +74,8 @@ export class ElemCross extends ElemSimple {
             const C1 = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[0]);
             const C2 = UGeo.crossGeoOfLine(areaCanvas, offsetSegment[1]);
 
-            //Ареа импоста, обрезаем areaPadding 
+            //Ареа импоста
             const areaEnvelope = Polygon.new([[C2[0].x, C2[0].y], [C1[0].x, C1[0].y], [C1[1].x, C1[1].y], [C2[1].x, C2[1].y]]);
-
             this.area = OverlayOp.intersection(geoFalz, areaEnvelope); //полигон элемента конструкции
 
         } catch (e) {
