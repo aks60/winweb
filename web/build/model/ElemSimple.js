@@ -91,9 +91,6 @@ export class ElemSimple extends Com5t {
                         let wincPress = Coordinate.new(X, Y);
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let inside = UGeo.insidePoly(this.area, X, Y);
-
-                        if (this.type == Type.IMPOST)
-                            console.log(inside + " - " + this.area);
                         
                         //Если клик внутри контура
                         if (inside === true) {
