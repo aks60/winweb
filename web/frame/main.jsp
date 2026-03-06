@@ -52,6 +52,7 @@
             var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurniture, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, PRINT;
+            //eSysfurn, eFurniture, eFurnside2, eFurndet
             //Глобальные объекты
             var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {};
 

@@ -9,7 +9,7 @@ import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineS
 import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js';
 import Centroid from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Centroid.js';
 
-import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
+//import WKTReader from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTReader.js'
 
 export class AreaStvorka extends AreaSimple {
 
