@@ -71,6 +71,9 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("furnitureList")) {
                     out.write(Dbset.furnitureList(request, response));
 
+                } else if (action.equalsIgnoreCase("furnside1List")) {
+                    out.write(Dbset.furnside1List(request, response));
+
                 } else if (action.equalsIgnoreCase("furndetList")) {
                     out.write(Dbset.furndetList(request, response));
 

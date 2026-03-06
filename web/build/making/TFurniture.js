@@ -1,5 +1,4 @@
 import {Type} from '../../enums/enums.js';
-
 export class TFurniture {
 
     winc = null;
@@ -15,14 +14,16 @@ export class TFurniture {
         try {
             //Подбор фурнитуры по параметрам
             let sysfurnList = eSysfurn.list.filter(rec => rec[eSysfurn.systree_id] == winc.nuni); //список фурнитур в системе
-            if (sysfurnList !== undefined && sysfurnList.length > 0) {
-                let sysfurnRec = sysfurnList[0]; //значение по умолчанию, первая SYSFURN в списке системы
+            if (sysfurnList.length > 0) {
 
                 //Цикл по створкам      
                 for (let areaStv of stvorkaList) {
 
                     //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
-                    sysfurnRec = sysfurnList.filter(rec => rec[eSysfurn.id] == areaStv.sysfurnRec[eSysfurn.id]);
+                    let sysfurnRec = sysfurnList.filter(rec => rec[eSysfurn.id] == areaStv.sysfurnRec[eSysfurn.id]);
+                    if (sysfurnRec.length === 0) {
+                        sysfurnRec = sysfurnList[0]; //значение по умолчанию, первая SYSFURN в списке системы
+                    }
                     let furnityreRec = eFurniture.list.find(rec => rec[eFurniture.id] == sysfurnRec[eSysfurn.furniture_id]);
 
                     //Проверка с предупреждением на max высоту, ширину, периметр
@@ -43,11 +44,47 @@ export class TFurniture {
         } catch (e) {
             errorLog('Error: TFurniture.furn() ' + e.message);
         }
-    } 
+    }
 
     variant(areaStv, furnitureRec, count) {
         try {
+            let furndetList1 = eFurndet.list.filter(rec => rec[eFurndet.furniture_id1] == furnitureRec[eFurniture.id]); //детализация первый уровень
+            let furndetList2 = furndetList1.filter(rec => rec[eFurndet.id] != rec[eFurndet.furndet_id]); //детализация второй уровень
 
+//            //Цикл по описанию сторон фурнитуры
+//            let furnsidetList = eFurnside1.list.filter(rec => rec. == furnitureRec[eFurniture.id]); //список описания сторон
+//            for (Record furnside1Rec : furnsidetList) {
+//                Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
+//                ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
+//
+//                //ФИЛЬТР вариантов с учётом стороны
+//                if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
+//                    return;
+//                }
+//            }
+//
+//            //Цикл по детализации (первый уровень)        
+//            for (Record furndetRec1 : furndetList1) {
+//                if (furndetRec1.getInt(eFurndet.furndet_id) == furndetRec1.getInt(eFurndet.id)) {
+//                    if (detail(areaStv, furndetRec1, count) == true) {
+//
+//                        //Цикл по детализации (второй уровень)
+//                        for (Record furndetRec2 : furndetList2) {
+//                            if (furndetRec2.getInt(eFurndet.furndet_id) == furndetRec1.getInt(eFurndet.id)) {
+//                                if (detail(areaStv, furndetRec2, count) == true) {
+//
+//                                    //Цикл по детализации (третий уровень)
+//                                    for (Record furndetRec3 : furndetList2) {
+//                                        if (furndetRec3.getInt(eFurndet.furndet_id) == furndetRec2.getInt(eFurndet.id)) {
+//                                            detail(areaStv, furndetRec3, count);
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         } catch (e) {
             errorLog('Error: TFurniture.variant() ' + e.message);
         }

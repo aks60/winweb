@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
 import domain.eElement;
+import domain.eFurnside1;
 import domain.eSyssize;
-import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -89,6 +89,11 @@ public class Dbset {
     public static String artdetList(HttpServletRequest request, HttpServletResponse response) {
         Query qArtdet = new Query(eArtdet.values()).select(eArtdet.up);
         return gson.toJson(qArtdet);
+    }
+
+    public static String furnside1List(HttpServletRequest request, HttpServletResponse response) {
+        Query qFurnside1 = new Query(eFurnside1.values()).select(eFurnside1.up);
+        return gson.toJson(qFurnside1);
     }
 
     public static String furndetList(HttpServletRequest request, HttpServletResponse response) {
