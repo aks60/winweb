@@ -1,4 +1,4 @@
-import {Type} from '../../enums/enums.js';
+import {Type, Layout} from '../../enums/enums.js';
 export class TFurniture {
 
     winc = null;
@@ -51,17 +51,17 @@ export class TFurniture {
             let furndetList1 = eFurndet.list.filter(rec => rec[eFurndet.furniture_id1] == furnitureRec[eFurniture.id]); //детализация первый уровень
             let furndetList2 = furndetList1.filter(rec => rec[eFurndet.id] != rec[eFurndet.furndet_id]); //детализация второй уровень
 
-//            //Цикл по описанию сторон фурнитуры
-//            let furnsidetList = eFurnside1.list.filter(rec => rec. == furnitureRec[eFurniture.id]); //список описания сторон
-//            for (Record furnside1Rec : furnsidetList) {
-//                Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
-//                ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
-//
-//                //ФИЛЬТР вариантов с учётом стороны
-//                if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
-//                    return;
-//                }
-//            }
+            //Цикл по описанию сторон фурнитуры
+            let furnsidetList = eFurnside1.list.filter(rec => rec[eFurnside1.furniture_id] == furnitureRec[eFurniture.id]); //список описания сторон
+            for (let furnside1Rec of furnsidetList) {
+                let layout = Layout.ANY.find(furnside1Rec[eFurnside1.side_num]);
+                let elemFrame = areaStv.frames.stream().filter(e => e.layout() == layout).findFirst().get();
+
+                //ФИЛЬТР вариантов с учётом стороны
+                if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
+                    return;
+                }
+            }
 //
 //            //Цикл по детализации (первый уровень)        
 //            for (Record furndetRec1 : furndetList1) {
