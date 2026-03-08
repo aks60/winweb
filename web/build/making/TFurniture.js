@@ -112,11 +112,8 @@ export class TFurniture {
         if (artiklRec[eArtikl.level1] === 2) {
             //Ручка
             if (artiklRec[eArtikl.level2] == 11) {
-                if (UCom.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
-                    artiklRec(areaStv.handRec); //выбр. вручную
-                } else {
                     areaStv.handRec = artiklRec; //из детализации авто
-                }
+
                 //Цвет
                 color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
