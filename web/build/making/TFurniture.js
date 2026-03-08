@@ -76,8 +76,6 @@ export class TFurniture {
 
                 let mapParam = new Map(); //тут накапливаются параметры element и specific
 
-                this.furnitureDet.detailRec = furndetRec; //текущий элемент детализации
-
                 //ФИЛЬТР параметров детализации 
                 if (this.furnitureDet.filter(mapParam, areaStv, furndetRec) == false) {
                     return false;
@@ -91,15 +89,12 @@ export class TFurniture {
                         //присваиваем знач. в свойства створки
                         if (artiklRec[eArtikl.level1] == 2 && artLevel.includes(artiklRec[eArtikl.level2]) == true) {
                             setPropertyStv(areaStv, spcAdd);
-                        } else {
-                            UColor.colorFromElemOrSeri(spcAdd);
                         }
                     }
 
                     //Это НАБОР 
                 } else {
                     let furnitureRec2 = eFurniture.list.find(ret => ret[eFurniture.id] == furndetRec[eFurndet.furniture_id2]);
-
                     variant(areaStv, furnitureRec2); //рекурсия обработки наборов
                 }
             }
@@ -109,6 +104,57 @@ export class TFurniture {
             errorLog('Error: TFurniture.detail() ' + e.message);
         }
     }
+    
+    //Ловим ручку, подвес, замок и 
+    //присваиваем знач. в створку    
+    setPropertyStv(areaStv, artiklRec) {
+
+        if (artiklRec[eArtikl.level1] === 2) {
+            //Ручка
+            if (artiklRec[eArtikl.level2] == 11) {
+                if (UCom.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
+                    artiklRec(areaStv.handRec); //выбр. вручную
+                } else {
+                    areaStv.handRec = artiklRec; //из детализации авто
+                }
+                //Цвет
+                color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.handColor = spcAdd.colorID1;
+                    }
+                }
+                //Подвес
+            } else if (artiklRec.getInt(eArtikl.level2) == 12) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
+                    artiklRec(areaStv.loopRec); //выбр. вручную
+                } else {
+                    areaStv.loopRec = artiklRec; //из детализации авто
+                }
+                //Цвет
+                spcAdd.color(areaStv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.loopColor = spcAdd.colorID1;
+                    }
+                }
+                //Замок  
+            } else if (artiklRec.getInt(eArtikl.level2) == 9) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
+                    artiklRec(areaStv.lockRec); //выбр. вручную
+                } else {
+                    //areaStv.lockRec = spcAdd.artiklRec; //из детализации авто
+                }
+                //Цвет
+                spcAdd.color(areaStv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
+                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.lockColor = spcAdd.colorID1;
+                    }
+                }
+            }
+        }
+    }    
 }
 
 
