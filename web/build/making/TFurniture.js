@@ -3,7 +3,7 @@ export class TFurniture {
 
     winc = null;
     //furnitureVar = null;
-    furnitureDet = null;    
+    furnitureDet = null;
     artLevel = [9, 11, 12]; //замок, ручка, петля 
     //max_size_message = true;
 
@@ -85,10 +85,11 @@ export class TFurniture {
                 if (furndetRec[eFurndet.furniture_id2] == null) {
                     if (artiklRec[eArtikl.id] != -1) { //артикул есть
 
-                        //Ловим ручку, петлю, замок и 
-                        //присваиваем знач. в свойства створки
+                        //Ловим ручку, петлю, замок и присваиваем знач. в свойства створки
                         if (artiklRec[eArtikl.level1] == 2 && artLevel.includes(artiklRec[eArtikl.level2]) == true) {
-                            setPropertyStv(areaStv, spcAdd);
+                            setPropertyStvAndSpc(areaStv, artiklRec);
+                        } else {
+                            UColor.colorFromElemOrSeri(spcAdd);
                         }
                     }
 
@@ -104,54 +105,63 @@ export class TFurniture {
             errorLog('Error: TFurniture.detail() ' + e.message);
         }
     }
-    
+
     //Ловим ручку, подвес, замок и 
     //присваиваем знач. в створку    
-    setPropertyStv(areaStv, artiklRec) {
+    setPropertyStvAndSpc(areaStv, spcAdd) {
 
-        if (artiklRec[eArtikl.level1] === 2) {
+        if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //Ручка
-            if (artiklRec[eArtikl.level2] == 11) {
-                    areaStv.handRec = artiklRec; //из детализации авто
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
 
+                //Артикл
+                if (UCom.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
+                    spcAdd.artiklRec(areaStv.handRec); //выбр. вручную
+                } else {
+                    areaStv.handRec = spcAdd.artiklRec; //из детализации авто
+                }
                 //Цвет
-                color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
+                spcAdd.color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (UCom.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.handColor = spcAdd.colorID1;
                     }
                 }
                 //Подвес
-            } else if (artiklRec.getInt(eArtikl.level2) == 12) {
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
-                    artiklRec(areaStv.loopRec); //выбр. вручную
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
+
+                //Артикл
+                if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
+                    spcAdd.artiklRec(areaStv.loopRec); //выбр. вручную
                 } else {
-                    areaStv.loopRec = artiklRec; //из детализации авто
+                    areaStv.loopRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(areaStv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
+                if (UCom.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.loopColor = spcAdd.colorID1;
                     }
                 }
                 //Замок  
-            } else if (artiklRec.getInt(eArtikl.level2) == 9) {
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
-                    artiklRec(areaStv.lockRec); //выбр. вручную
+            } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
+
+                //Артикл
+                if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
+                    spcAdd.artiklRec(areaStv.lockRec); //выбр. вручную
                 } else {
-                    //areaStv.lockRec = spcAdd.artiklRec; //из детализации авто
+                    //stv.lockRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
                 spcAdd.color(areaStv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
+                if (UCom.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
                     if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.lockColor = spcAdd.colorID1;
                     }
                 }
             }
         }
-    }    
+    }
 }
 
 
