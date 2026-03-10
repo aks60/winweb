@@ -22,7 +22,6 @@
 
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
-        <script type="module" src="./build/making/Draw.js"></script>
 
         <script type="module" src="./domain/eArtdet.js"></script>
         <script type="module" src="./domain/eArtikl.js"></script>

@@ -4,6 +4,7 @@ import {Par5s} from './Par5s.js'
 export class FurnitureDet extends Par5s {
 
     constructor() {
+        super();
     }
     
    filter(mapParam, furndetRec) {

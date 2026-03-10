@@ -6,6 +6,7 @@ import {Type, PKjson} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, AreaTrapeze,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
+import {TFurniture} from './making/TFurniture.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
@@ -246,6 +247,11 @@ export class Wincalc {
             }
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+            
+            if(this.scale > .1) {
+                let furniture = new TFurniture(this);
+                furniture.furn();
+            }
 
             //Прорисовка стеклопакетов
             this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());

@@ -1,6 +1,6 @@
 
 
-export class Par5e {
+export class Par5s {
 
     GRUP = 3;   //Ключ параметра
     TEXT = 2;   //Текст 

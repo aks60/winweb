@@ -15,19 +15,19 @@ export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
     sysfurnRec = eSysfurn.vrec; //фурнитура
-    handRec = eArtikl.vrec; //ручка
-    loopRec = eArtikl.vrec; //подвес(петли)
-    lockRec = eArtikl.vrec; //замок
-    mosqRec = eArtikl.vrec; //москитка
+    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка
+    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли)
+    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок
+    mosqRec = [eArtikl.vrec, eArtikl.vrec]; //москитка
     elementRec = eElement.vrec; //состав москидки 
 
     lineOpenHor = null; //линии горизонт. открывания
     lineOpenVer = null; //линии вертик. открывания
     handOpen = null; //ручка открывания    
-    handColor = -3; //цвет ручки вирт...
-    loopColor = -3; //цвет подвеса вирт...
-    lockColor = -3; //цвет замка вирт...
-    mosqColor = -3; //цвет москитки вирт...
+    handColor = [-3, -3]; //цвет ручки вирт...
+    loopColor = [-3, -3]; //цвет подвеса вирт...
+    lockColor = [-3, -3]; //цвет замка вирт...
+    mosqColor = [-3, -3]; //цвет москитки вирт...
 
     handHeight = 0; //высота ручки
     typeOpen = TypeOpen1.EMPTY; //направление открывания
@@ -35,8 +35,8 @@ export class AreaStvorka extends AreaSimple {
     offset = [0, 0, 0, 0];
 
     constructor(winc, gson, owner) {
-        super(winc, gson, owner);       
-        this.initArtikle(); 
+        super(winc, gson, owner);
+        this.initArtikle();
     }
 
     initStvorka() {
@@ -92,37 +92,37 @@ export class AreaStvorka extends AreaSimple {
             }
             //Ручка
             if (UCom.isFinite(param, PKjson.artiklHand)) {
-                this.handRec = eArtikl.find(param[PKjson.artiklHand], false);
+                this.handRec[0] = eArtikl.find(param[PKjson.artiklHand], false);
             } else { //по умолчанию
-                this.handRec = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
+                this.handRec[0] = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
             }
             //Текстура ручки
             if (UCom.isFinite(param, PKjson.colorHand)) {
-                this.handColor = param[PKjson.colorHand];
-            } else if (this.handColor === -3) { //по умолчанию (первая в списке)
-                this.handColor = eArtdet.find(this.handRec[eArtikl.id])[eArtdet.color_fk];
-                if (this.handColor < 0) { //если все текстуры группы
-                    let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor);
+                this.handColor[0] = param[PKjson.colorHand];
+            } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
+                this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
+                if (this.handColor[0] < 0) { //если все текстуры группы
+                    let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor[0]);
                     if (recordList.length === 0) {
-                        this.handColor = eColor.list.find(this.handColor)[0][eColor.id];
+                        this.handColor[0] = eColor.list.find(this.handColor[0])[0][eColor.id];
                     }
                 }
             }
             //Подвес (петли)
             if (UCom.isFinite(param, PKjson.artiklLoop)) {
-                this.loopRec = eArtikl.find(param[PKjson.artiklLoop], false);
+                this.loopRec[0] = eArtikl.find(param[PKjson.artiklLoop], false);
             }
             //Текстура подвеса
             if (UCom.isFinite(param, PKjson.colorLoop)) {
-                this.loopColor = param[PKjson.colorLoop];
+                this.loopColor[0] = param[PKjson.colorLoop];
             }
             //Замок
             if (UCom.isFinite(param, PKjson.artiklLock)) {
-                this.lockRec = eArtikl.find(param[PKjson.artiklLock], false);
+                this.lockRec[0] = eArtikl.find(param[PKjson.artiklLock], false);
             }
             //Текстура замка
             if (UCom.isFinite(param, PKjson.colorLock)) {
-                this.lockColor = param[PKjson.colorLock];
+                this.lockColor[0] = param[PKjson.colorLock];
             }
             //Сторона открывания
             if (UCom.isFinite(param, PKjson.typeOpen)) {
@@ -254,7 +254,8 @@ export class AreaStvorka extends AreaSimple {
                 if (this.lineOpenVer !== null) { //линии вертик. открывания
                     this.winc.paint(this.lineOpenVer);
                 }
-                this.colorRec = eColor.find(this.handColor);
+                let handColor2 = (this.handColor[1] === -3) ? this.handColor[0] : this.handColor[1];
+                this.colorRec = eColor.find(handColor2);
                 let rgb = this.colorRec[eColor.rgb].toString(16);
                 this.winc.ctx.fillStyle = '#' + rgb;
                 this.winc.paint(this.handOpen);
