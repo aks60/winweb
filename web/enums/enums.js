@@ -6,6 +6,7 @@ import {TypeOpen1} from './TypeOpen1.js';
 import {TypeOpen2} from './TypeOpen2.js';
 import {UseSide} from './UseSide.js';
 import {UseType} from './UseType.js';
+import {UseColor} from './UseColor.js';
 export {Layout, LayoutHand, PKjson, Type,
-        TypeOpen1, TypeOpen2, UseSide, UseType};
+        TypeOpen1, TypeOpen2, UseSide, UseType, UseColor};
 

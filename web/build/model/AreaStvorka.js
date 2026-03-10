@@ -15,19 +15,19 @@ export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
     sysfurnRec = eSysfurn.vrec; //фурнитура
-    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка
-    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли)
-    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок
-    mosqRec = [eArtikl.vrec, eArtikl.vrec]; //москитка
+    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка 0-настр. 1-авторасчёт
+    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли) 0-настр. 1-авторасчёт
+    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок 0-настр. 1-авторасчёт
+    mosqRec = eArtikl.vrec; //москитка
     elementRec = eElement.vrec; //состав москидки 
 
     lineOpenHor = null; //линии горизонт. открывания
     lineOpenVer = null; //линии вертик. открывания
     handOpen = null; //ручка открывания    
-    handColor = [-3, -3]; //цвет ручки вирт...
-    loopColor = [-3, -3]; //цвет подвеса вирт...
-    lockColor = [-3, -3]; //цвет замка вирт...
-    mosqColor = [-3, -3]; //цвет москитки вирт...
+    handColor = [-3, -3]; //цвет ручки вирт. 0-настр. 1-авторасчёт
+    loopColor = [-3, -3]; //цвет подвеса вирт. 0-настр. 1-авторасчёт
+    lockColor = [-3, -3]; //цвет замка вирт. 0-настр. 1-авторасчёт
+    mosqColor = -3; //цвет москитки вирт.
 
     handHeight = 0; //высота ручки
     typeOpen = TypeOpen1.EMPTY; //направление открывания

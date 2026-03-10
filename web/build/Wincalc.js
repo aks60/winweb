@@ -7,6 +7,7 @@ import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, AreaTrapeze,
         AreaStvorka, ElemCross, ElemFrame, ElemGlass, Com5t} from './model/model.js';
 import {TFurniture} from './making/TFurniture.js';
+import {UColor} from './making/uColor.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 import Polygon from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 import Coordinate from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Coordinate.js';
@@ -88,9 +89,9 @@ export class Wincalc {
             this.root.sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
             this.root.artiklRec = eArtikl.find(this.root.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
             this.syssizRec = eSyssize.find(this.root.artiklRec); //системные константы
-            this.root.colorID1 = (this.gson.color1 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
-            this.root.colorID2 = (this.gson.color2 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
-            this.root.colorID3 = (this.gson.color3 === -3) ? eColor.find2(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
+            this.root.colorID1 = (this.gson.color1 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
+            this.root.colorID2 = (this.gson.color2 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
+            this.root.colorID3 = (this.gson.color3 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
             
             this.parametr(this.gson.param);
 
