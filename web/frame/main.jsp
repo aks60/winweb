@@ -31,6 +31,7 @@
         <script type="module" src="./domain/eFurniture.js"></script>
         <script type="module" src="./domain/eFurnside1.js"></script>
         <script type="module" src="./domain/eFurndet.js"></script>        
+        <script type="module" src="./domain/eFurnpar2.js"></script>        
         <script type="module" src="./domain/eGroups.js"></script>
         <script type="module" src="./domain/eKitdet.js"></script>
         <script type="module" src="./domain/eKits.js"></script>
@@ -49,7 +50,7 @@
 
         <script type="text/javascript">
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurniture, eFurnside1, eGroups,
+            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, PRINT;
             //eSysfurn, eFurniture, eFurnside2, eFurndet
@@ -78,17 +79,17 @@
                 Promise.all([
                     $.post("dbset?action=systreeList"), $.post("dbset?action=sysprodList"), $.post("dbset?action=colorList"),
                     $.post("dbset?action=artiklList"), $.post("dbset?action=artdetList"), $.post("dbset?action=furnitureList"),
-                    $.post("dbset?action=furnside1List"), $.post("dbset?action=furndetList"), $.post("dbset?action=prjprodList"),
-                    $.post("dbset?action=sysfurnList"), $.post("dbset?action=sysprofList"), $.post("dbset?action=syspar1List"),
-                    $.post("dbset?action=paramsList"), $.post("dbset?action=groupList"), $.post("dbset?action=projectList"),
-                    $.post("dbset?action=dealerList"), $.post("dbset?action=kitsList"), $.post("dbset?action=kitdetList"),
-                    $.post("dbset?action=prjkitList"),
-                    $.post("dbset?action=syssizeList")
+                    $.post("dbset?action=furnside1List"), $.post("dbset?action=furndetList"), $.post("dbset?action=furnpar2List"),
+                    $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"), $.post("dbset?action=sysprofList"),
+                    $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"), $.post("dbset?action=groupList"),
+                    $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"), $.post("dbset?action=kitsList"),
+                    $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"), $.post("dbset?action=syssizeList")
                 ]).then(p => {
-                    eSystree.list = p[0], eSysprod.list = p[1], eColor.list = p[2], eArtikl.list = p[3], eArtdet.list = p[4], eFurniture.list = p[5],
-                            eFurnside1.list = p[6], eFurndet.list = p[7], ePrjprod.list = p[8], eSysfurn.list = p[9], eSysprof.list = p[10],
-                            eSyspar1.list = p[11], eParams.list = p[12], eGroups.list = p[13], eProject.list = p[14], eDealer.list = p[15],
-                            eKits.list = p[16], eKitdet.list = p[17], ePrjkit.list = p[18], eSyssize.list = p[19];
+                    let i = 0;
+                    eSystree.list = p[i++], eSysprod.list = p[i++], eColor.list = p[i++], eArtikl.list = p[i++], eArtdet.list = p[i++], eFurniture.list = p[i++],
+                            eFurnside1.list = p[i++], eFurndet.list = p[i++], eFurnpar2.list = p[i++], ePrjprod.list = p[i++], eSysfurn.list = p[i++], eSysprof.list = p[i++],
+                            eSyspar1.list = p[i++], eParams.list = p[i++], eGroups.list = p[i++], eProject.list = p[i++], eDealer.list = p[i++],
+                            eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++];
 
                     login.init_login();
                     login.user_connect();

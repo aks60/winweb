@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
 import domain.eElement;
+import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
 import org.json.simple.JSONArray;
@@ -99,6 +100,11 @@ public class Dbset {
     public static String furndetList(HttpServletRequest request, HttpServletResponse response) {
         Query qFurndet = new Query(eFurndet.values()).select(eFurndet.up);
         return gson.toJson(qFurndet);
+    }
+
+    public static String furnpar2List(HttpServletRequest request, HttpServletResponse response) {
+        Query qFurnpar2 = new Query(eFurnpar2.values()).select(eFurnpar2.up);
+        return gson.toJson(qFurnpar2);
     }
 
     public static String furnitureList(HttpServletRequest request, HttpServletResponse response) {

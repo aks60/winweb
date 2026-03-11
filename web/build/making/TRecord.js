@@ -1,9 +1,5 @@
-import {virtualRec}
-from './domain.js';
 
 export class TRecord {
-
-    constructor() {}
 
     spcList = []; //список составов, фурнитур и т. д.  
     mapParam = null; //параметры спецификации
@@ -36,6 +32,26 @@ export class TRecord {
     price = 0; //Цена за единицу измерения
     cost1 = 0; //Стоимость без технологической скидки
     cost2 = 0; //Стоимость с технологической скидкой  
+    
+    constructor(place, detailRec, artiklRec) {
+        this.place = place;
+        this.detailRec = detailRec;
+        this.article(artiklRec);
+    }
+    
+    article(artiklRec) {
+        this.artikl = artiklRec[eArtikl.cod];
+        this.name = artiklRec[eArtikl.name];
+        this.waste = artiklRec[eArtikl.otx_norm];
+        this.unit = artiklRec[eArtikl.unit];
+        this.artiklRec = artiklRec;
+    }
+    
+    color(colorID1, colorID2, colorID3) {
+        this.colorID1 = colorID1;
+        this.colorID2 = colorID2;
+        this.colorID3 = colorID3;
+    }    
 }
 
 

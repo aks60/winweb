@@ -15,6 +15,15 @@ export const UseColor = {
     P05: 5, //Параметр №05
     P12: 12, //Параметр №12
     P13: 13, //Параметр №13
-    P14: 14 //Параметр №14
+    P14: 14, //Параметр №14
+    isSeries(typesUS) {
+        
+        if ([this.C1SER, this.C2SER, this.C3SER, this.PARSER].includes(typesUS & 0x0000000f)
+                || [this.C1SER, this.C2SER, this.C3SER, this.PARSER].includes((typesUS & 0x000000f0) >> 4)
+                || [this.C1SER, this.C2SER, this.C3SER, this.PARSER].includes((typesUS & 0x00000f00) >> 8)) {
+            return true;
+        }
+        return false;
+    }    
 };
 
