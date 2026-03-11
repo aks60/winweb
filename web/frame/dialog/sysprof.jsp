@@ -9,23 +9,25 @@
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-//------------------------------------------------------------------------------
+
+            const paramTaq = "<%= request.getParameter("param")%>";
+            let sysprofSet = new Set();
+            const winc = product.winCalc;
+            const elem = product.clickNodeElem;
+            const tabSysprof = document.getElementById('tab-sysprof');
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
+
             function resize() {
-                $("#tab-sysprof").jqGrid('setGridWidth', $("#dialog-jsp #pan-sysprof").width());
-                $("#tab-sysprof").jqGrid('setGridHeight', $("#dialog-jsp #pan-sysprof").height() - 24);
+                $(tabSysprof).jqGrid('setGridWidth', $("#dialog-jsp #pan-sysprof").width());
+                $(tabSysprof).jqGrid('setGridHeight', $("#dialog-jsp #pan-sysprof").height() - 24);
             }
-//------------------------------------------------------------------------------
-            $(document).ready(function () {
-                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                init_dialog($("#tab-sysprof"));
-                init_table($("#tab-sysprof"))
-                load_table($("#tab-sysprof"))
-                resize();
-            });
-//------------------------------------------------------------------------------
-            function init_dialog(table) {
+
+            init_dialog();
+            init_table();
+            sysprof_set();
+            load_table();
+
+            function init_dialog() {
                 $("#dialog-jsp").dialog({
                     title: "Профили системы",
                     width: 450,
@@ -33,7 +35,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save_table(table);
+                            save_table();
                             $(this).dialog("close");
                         },
 
@@ -42,10 +44,11 @@
                         }
                     }
                 });
+                resize();
             }
-//------------------------------------------------------------------------------
-            function init_table(table) {
-                table.jqGrid({
+
+            function init_table() {
+                $(tabSysprof).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
                     colModel: [
@@ -54,35 +57,50 @@
                         {name: 'code', width: 140, sorttype: "text"},
                         {name: 'name', width: 340, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
-                        save_table(table);
+                        save_table();
                         $("#dialog-jsp").dialog("close");
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function load_table(table) {
 
-                table.jqGrid('clearGridData', true);
-                let id = project.prjprodRec[eSysprof.id];
-                let winc = project.mapWinc.get(id);
+            function load_table() {
 
-                for (let i = 0; i < product.sysprofArr.length; i++) {
-                    let tr = product.sysprofArr[i];
+                $(tabSysprof).jqGrid('clearGridData', true);
+                let sysprofList = Array.from(sysprofSet);
+                for (let i = 0; i < sysprofList.length; i++) {
+                    let tr = sysprofList[i];
                     let artRec = eArtikl.list.find(rec => tr[eSysprof.artikl_id] == rec.list[eArtikl.id]);
-                    table.jqGrid('addRowData', i + 1, {
+                    $(tabSysprof).jqGrid('addRowData', i + 1, {
                         id: tr[eSysprof.id],
                         side: use_name(tr[eSysprof.use_side]),
                         code: artRec[eArtikl.code],
                         name: artRec[eArtikl.name]
                     });
                 }
-                table.jqGrid("setSelection", 1);
+                $(tabSysprof).jqGrid("setSelection", 1);
             }
-//------------------------------------------------------------------------------
-            function save_table(table) {
+            
+            function sysprof_set() {
+                //Цикл по профилям ветки 
+                for (let sysprofRec of eSysprof.list) {
+                    //Отфильтруем подходящие по параметрам
+                    if (winc.nuni === sysprofRec[eSysprof.systree_id] && Type[elem.type][1] === sysprofRec[eSysprof.use_type]) {
+                        let use_side_ID = sysprofRec[eSysprof.use_side];
+                        if (use_side_ID === Layout[elem.layout][0]
+                                || ((elem.layout === Layout.BOTT || elem.layout === Layout.TOP) && use_side_ID === UseSide.HORIZ[0])
+                                || ((elem.layout === Layout.RIGHT || elem.layout === Layout.LEFT) && use_side_ID === UseSide.VERT[0])
+                                || use_side_ID === UseSide.ANY[0] || use_side_ID === UseSide.MANUAL[0]) {
 
-                let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                let tableRec = table.jqGrid('getRowData', rowid);  //record справочника
+                            sysprofSet.add(sysprofRec);
+                        }
+                    }
+                }                
+            }
+
+            function save_table() {
+
+                let rowid = $(tabSysprof).jqGrid('getGridParam', "selrow"); //index профиля из справочника
+                let tableRec = $(tabSysprof).jqGrid('getRowData', rowid);  //record справочника
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
@@ -91,7 +109,7 @@
                 if (elem.gson.param == undefined) {
                     elem.gson.param = {};
                 }
-                if (elem.typeForm() == "BOX_SIDE") { //коробка
+                if (elem.type == Type.BOX_SIDE) { //коробка
                     elem.gson.param.sysprofID = tableRec.id; //запишем профиль в скрипт
 
                 } else { //створка       
@@ -121,14 +139,13 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
+
             let use_name = (v) => {
                 for (let k in UseSide) {
                     if (v == UseSide[k][0])
                         return UseSide[k][1];
                 }
-            }
-//------------------------------------------------------------------------------
+            };
         </script>        
     </head>
     <body>

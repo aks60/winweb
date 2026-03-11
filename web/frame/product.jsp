@@ -76,16 +76,17 @@
             load_table2();
 
             prepareTool();
-            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n14'));
-            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n15'));
-            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n16'));
-            document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n33'));
-            document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n34'));
-            document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n35'));
-            document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n46'));
-            document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4A'));
-            document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n4C'));
-            document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?color=n53'));
+            document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n14'));
+            document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n15'));
+            document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n16'));
+            document.querySelector('#n31 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n31'));
+            document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n33'));
+            document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n34'));
+            document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n35'));
+            document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n46'));
+            document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4A'));
+            document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4C'));
+            document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n53'));
 
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);

@@ -77,8 +77,8 @@ export class TFurniture {
 
     detail(areaStv, furndetRec) {
         
-        if (furndetRec[eFurndet.id] === 644) debugger;
-        if (furndetRec[eFurndet.id] === 5512) debugger;
+        //if (furndetRec[eFurndet.id] === 644) debugger;
+        //if (furndetRec[eFurndet.id] === 5512) debugger;
         try {
             let artiklRec = eArtikl.list.find(rec => rec[eArtikl.id] === furndetRec[eFurndet.artikl_id]);
             let mapParam = new Map(); //тут накапливаются параметры element и specific

@@ -16,7 +16,7 @@
             let colorSet = new Set();
             let eColorList = new Array();
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
-            const colorNum = "<%= request.getParameter("color")%>";
+            const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
             const elem = product.clickNodeElem;
             const tab1Color = document.getElementById('tab1-color');
@@ -117,13 +117,16 @@
                     let colorEnum = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
 
-                    if (['n14', 'n33', 'n46', 'n4A', 'n4C', 'n53'].includes(colorNum)) {
+                    if (['n46', 'n4A', 'n4C', 'n53'].includes(paramTaq)) {
+                        colorEnum = null;
+                        indexMark = eArtdet.mark_c1;
+                    } else if (['n14', 'n33'].includes(paramTaq)) {
                         colorEnum = systreeRec[eSystree.col1];
                         indexMark = eArtdet.mark_c1;
-                    } else if (['n15', 'n34'].includes(colorNum)) {
+                    } else if (['n15', 'n34'].includes(paramTaq)) {
                         colorEnum = systreeRec[eSystree.col2];
                         indexMark = eArtdet.mark_c2;
-                    } else if (['n16', 'n35'].includes(colorNum)) {
+                    } else if (['n16', 'n35'].includes(paramTaq)) {
                         colorEnum = systreeRec[eSystree.col3];
                         indexMark = eArtdet.mark_c3;
                     }
@@ -209,15 +212,15 @@
 
                         //Комплекты
                     } else if ($('#body-jsp title').text() === 'KITS') {
-                        if (colorNum === 'n53') {
+                        if (paramTaq === 'n53') {
                             $("#n53").val(colorRow.name);
                             $("#n53").attr("fk", colorRow.id);
 
-                        } else if (colorNum === 'n54') {
+                        } else if (paramTaq === 'n54') {
                             $("#n54").val(colorRow.name);
                             $("#n54").attr("fk", colorRow.id);
 
-                        } else if (colorNum === 'n55') {
+                        } else if (paramTaq === 'n55') {
                             $("#n55").val(colorRow.name);
                             $("#n55").attr("fk", colorRow.id);
                         }
@@ -229,25 +232,25 @@
 
             //Запишем текстуру в html
             function set_color_html(name) {
-                if (colorNum === 'n14')
+                if (paramTaq === 'n14')
                     $("#n14").val(name);
-                else if (colorNum === 'n15')
+                else if (paramTaq === 'n15')
                     $("#n15").val(name);
-                else if (colorNum === 'n16')
+                else if (paramTaq === 'n16')
                     $("#n16").val(name);
-                else if (colorNum === 'n33')
+                else if (paramTaq === 'n33')
                     $("#n33").val(name);
-                else if (colorNum === 'n34')
+                else if (paramTaq === 'n34')
                     $("#n34").val(name);
-                else if (colorNum === 'n35')
+                else if (paramTaq === 'n35')
                     $("#n35").val(name);
-                else if (colorNum === 'n46')
+                else if (paramTaq === 'n46')
                     $("#n46").val(name);
-                else if (colorNum === 'n4A')
+                else if (paramTaq === 'n4A')
                     $("#n4A").val(name);
-                else if (colorNum === 'n4C')
+                else if (paramTaq === 'n4C')
                     $("#n4C").val(name);
-                else if (colorNum === 'n53')
+                else if (paramTaq === 'n53')
                     $("#n53").val(name);
             }
 
@@ -256,57 +259,57 @@
 
                 if (elem.type === Type.STV_SIDE) {
                     let sideStv = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][elem.layout[0]];
-                    if (colorNum === 'n33')
+                    if (paramTaq === 'n33')
                         UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID1'], colorID);
-                    else if (colorNum === 'n34')
+                    else if (paramTaq === 'n34')
                         UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID2'], colorID);
-                    else if (colorNum === 'n35')
+                    else if (paramTaq === 'n35')
                         UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID3'], colorID);
                 } else {
-                    if (colorNum === 'n14')
+                    if (paramTaq === 'n14')
                         winc.gson.color1 = colorID;
-                    else if (colorNum === 'n15')
+                    else if (paramTaq === 'n15')
                         winc.gson.color2 = colorID;
-                    else if (colorNum === 'n16')
+                    else if (paramTaq === 'n16')
                         winc.gson.color3 = colorID;
-                    else if (colorNum === 'n33')
+                    else if (paramTaq === 'n33')
                         UCom.setParObj(elem.gson, ['param', 'colorID1'], colorID);
-                    else if (colorNum === 'n34')
+                    else if (paramTaq === 'n34')
                         UCom.setParObj(elem.gson, ['param', 'colorID2'], colorID);
-                    else if (colorNum === 'n35')
+                    else if (paramTaq === 'n35')
                         UCom.setParObj(elem.gson, ['param', 'colorID3'], colorID);
-                    else if (colorNum === 'n46')
+                    else if (paramTaq === 'n46')
                         elem.gson.param.colorHandl = colorID;
-                    else if (colorNum === 'n4A')
+                    else if (paramTaq === 'n4A')
                         UCom.setParObj(elem.gson, ['param', 'colorLoop'], colorID);
-                    else if (colorNum === 'n4C')
+                    else if (paramTaq === 'n4C')
                         UCom.setParObj(elem.gson, ['param', 'colorLock'], colorID);
-                    else if (colorNum === 'n53')
+                    else if (paramTaq === 'n53')
                         UCom.setParObj(elem.gson, ['param', 'colorGlass'], colorID);
                 }
             }
 
             //Получить артикул элемента конструкции
             function get_artikl_elem() {
-                if (colorNum === 'n14')
+                if (paramTaq === 'n14')
                     return elem.artiklRec;
-                else if (colorNum === 'n15')
+                else if (paramTaq === 'n15')
                     return elem.artiklRec;
-                else if (colorNum === 'n16')
+                else if (paramTaq === 'n16')
                     return elem.artiklRec;
-                else if (colorNum === 'n33')
+                else if (paramTaq === 'n33')
                     return elem.artiklRec;
-                else if (colorNum === 'n34')
+                else if (paramTaq === 'n34')
                     return elem.artiklRec;
-                else if (colorNum === 'n35')
+                else if (paramTaq === 'n35')
                     return elem.artiklRec;
-                else if (colorNum === 'n46')
-                    return elem.handRec;
-                else if (colorNum === 'n4A')
-                    return elem.loopRec;
-                else if (colorNum === 'n4C')
-                    return elem.lockRec;
-                else if (colorNum === 'n53')
+                else if (paramTaq === 'n46')
+                    return elem.handRec[0];
+                else if (paramTaq === 'n4A')
+                    return elem.loopRec[0];
+                else if (paramTaq === 'n4C')
+                    return elem.lockRec[0];
+                else if (paramTaq === 'n53')
                     return elem.artiklRec;
                 else
                     return null;
