@@ -51,12 +51,12 @@ export class UColor {
     /**
      * ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
      *
-     * @param spcAdd
-     * @param side
-     * @param seri
-     * @return
+     * @param spcAdd - строка спецификации
+     * @param side - сторона
+     * @param seri - серия
+     * @return - false/true
      */
-    static colorFromSetting(spcAdd, side, seri) {  //см. http://help.profsegment.ru/?id=1107        
+    static colorFromSetting(spcAdd, side, seri) {        
 
         let srcNumberUS = spcAdd.detailRec[this.COLOR_US];
         let srcColorFk = spcAdd.detailRec[this.COLOR_FK];

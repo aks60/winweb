@@ -76,14 +76,17 @@ export class TFurniture {
     }
 
     detail(areaStv, furndetRec) {
+        
+        if (furndetRec[eFurndet.id] === 644) debugger;
+        if (furndetRec[eFurndet.id] === 5512) debugger;
         try {
             let artiklRec = eArtikl.list.find(rec => rec[eArtikl.id] === furndetRec[eFurndet.artikl_id]);
             let mapParam = new Map(); //тут накапливаются параметры element и specific
 
             //ФИЛЬТР сделано для убыстрения поиска ручки, 
             //подвеса, замка при конструировании окна
-            if(artiklRec === undefined) {
-                return false;
+            if(artiklRec === undefined && furndetRec[eFurndet.furniture_id2] === null) {
+                return true; //поле не заполнено, пропускаю
             }
             if (this.shortPass === true) {
                 if (furndetRec[eFurndet.furndet_id] === furndetRec[eFurndet.id] && furndetRec[eFurndet.furniture_id2] === null) {
@@ -105,7 +108,7 @@ export class TFurniture {
                     //let sideStv = this.determOfSide(mapParam, areaStv);
                     let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec);
                     
-           // if (furndetRec[eFurndet.id] === 5512) debugger;   
+                    //if (furndetRec[eFurndet.id] === 5512) debugger;   
             
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки
@@ -119,7 +122,7 @@ export class TFurniture {
 
                 //Это НАБОР 
             } else {
-                let furnitureRec2 = eFurniture.list.find(ret => ret[eFurniture.id] == furndetRec[eFurndet.furniture_id2]);
+                let furnitureRec2 = eFurniture.list.find(ret => ret[eFurniture.id] === furndetRec[eFurndet.furniture_id2]);               
                 this.variant(areaStv, furnitureRec2); //рекурсия обработки наборов
             }
             return true;

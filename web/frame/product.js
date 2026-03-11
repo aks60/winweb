@@ -212,14 +212,14 @@ export function tree_to_tabs(nodeID) {
                     n42: env.getHeight(),
                     n43: furnitureRec[eFurniture.name],
                     n44: elem.typeOpen[2],
-                    n45: elem.handRec[eArtikl.code] + ' / ' + elem.handRec[eArtikl.name],
-                    n46: findef(elem.handColor, eColor.id, eColor)[eColor.name],
+                    n45: elem.handRec[0][eArtikl.code] + ' / ' + elem.handRec[0][eArtikl.name],
+                    n46: findef(elem.handColor[0], eColor.id, eColor)[eColor.name],
                     n47: elem.handLayout[1],
                     n48: elem.handHeight,
-                    n49: elem.loopRec[eArtikl.code] + ' / ' + elem.loopRec[eArtikl.name],
-                    n4A: findef(elem.loopColor, eColor.id, eColor)[eColor.name],
-                    n4B: elem.lockRec[eArtikl.code] + ' / ' + elem.lockRec[eArtikl.name],
-                    n4C: findef(elem.lockColor, eColor.id, eColor)[eColor.name],
+                    n49: elem.loopRec[0][eArtikl.code] + ' / ' + elem.loopRec[0][eArtikl.name],
+                    n4A: findef(elem.loopColor[0], eColor.id, eColor)[eColor.name],
+                    n4B: elem.lockRec[0][eArtikl.code] + ' / ' + elem.lockRec[0][eArtikl.name],
+                    n4C: findef(elem.lockColor[0], eColor.id, eColor)[eColor.name],
                 });
                 $("#tabs-4").show();
 
