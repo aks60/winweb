@@ -298,7 +298,7 @@ export function artikl_to_glass(btnSrc) {
         let elem = winc.listElem.find(it => it.id === nodeID);
 
         //Список доступных толщин в ветке системы например 4;5;8
-        let systreeRec = eSystree.list.find(rec => winc.nuni === rec.list[eSystree.id]);
+        let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
         if (systreeRec != undefined) {
             let depth = systreeRec[eSystree.depth];
             depth = depth.replace(/;/g, ',');
@@ -306,8 +306,8 @@ export function artikl_to_glass(btnSrc) {
                 depth = depth.substring(0, depth.length - 1);
             }
             depth = depth.split(',');
-            let artiklList = eArtikl.list.filter(rec => rec.list[eArtikl.depth] != undefined && 5 == rec.list[eArtikl.level1]
-                        && [1, 2, 3].includes(rec.list[eArtikl.level2]) && depth.includes(rec.list[eArtikl.depth].toString()));
+            let artiklList = eArtikl.list.filter(rec => rec[eArtikl.depth] != undefined && 5 == rec[eArtikl.level1]
+                        && [1, 2, 3].includes(rec[eArtikl.level2]) && depth.includes(rec[eArtikl.depth].toString()));
 
             product.artiklArr = artiklList;
             product.buttonSrc = btnSrc;

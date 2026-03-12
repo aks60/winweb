@@ -96,9 +96,9 @@
                 let winc = project.mapWinc.get(prjprodID);
                 let elem = winc.listElem.find(it => it.id == elemID);
                 elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
-                let sysfurnRec = eSysfurn.list.find(rec => tableRec.id == rec.list[eSysfurn.furniture_id] && winc.nuni == rec.list[eSysfurn.systree_id]);
+                let sysfurnRec = eSysfurn.list.find(rec => tableRec.id == rec[eSysfurn.furniture_id] && winc.nuni == rec[eSysfurn.systree_id]);
                 elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
-                let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
+                let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec[ePrjprod.id]);
                 prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
                 let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
                 project.mapWinc.set(prjprodID, iwincalc); //новый экз.

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>COLOR</title>  
         <script type="module">
-            import {Type, Layout} from './enums/enums.js';
+            import {Type, Layout, PKjson} from './enums/enums.js';
             import {UCom} from './common/uCom.js';
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
@@ -174,7 +174,7 @@
                 }
             }
 
-            function save_table() {
+            function save_table() {                
                 try {
                     let colorRow = getSelectedRow($(tab2Color)); //record справочника
 
@@ -192,10 +192,7 @@
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify({
-                                    id: project.prjprodRec[ePrjprod.id], 
-                                    script: project.prjprodRec[ePrjprod.script]
-                                })},
+                            data: {param: JSON.stringify(project.prjprodRec)},
                             success: function (data) {
                                 
                                 if (data.result === 'ok') {
@@ -258,13 +255,13 @@
             function set_color_gson(colorID) {
 
                 if (elem.type === Type.STV_SIDE) {
-                    let sideStv = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][elem.layout[0]];
+                    let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
                     if (paramTaq === 'n33')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID1'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID1], colorID);
                     else if (paramTaq === 'n34')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID2'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID2], colorID);
                     else if (paramTaq === 'n35')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID3'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID3], colorID);
                 } else {
                     if (paramTaq === 'n14')
                         winc.gson.color1 = colorID;

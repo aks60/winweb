@@ -33,7 +33,7 @@
                         "Выбрать": function () {
                             let rowid = table.jqGrid('getGridParam', "selrow");
                             let paramsRow = table.jqGrid('getRowData', rowid);
-                            let paramsRec = eParams.list.find(rec => paramsRow.id == rec.list[eParams.id]);
+                            let paramsRec = eParams.list.find(rec => paramsRow.id == rec[eParams.id]);
                             let paramDef = paramsRow.id;
                             let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
                             let winc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);
@@ -42,7 +42,7 @@
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;
                             for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
 
-                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec.list[eParams.id])[eParams.params_id];
+                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec[eParams.id])[eParams.params_id];
                                 if (titleID1 == titleID2) {
                                     winc.gson.param.ioknaParam.splice(i, 1);
                                 }
@@ -87,7 +87,7 @@
 //------------------------------------------------------------------------------
             function load_table(table) {
                 table.jqGrid('clearGridData', true);
-                let params2List = eParams.list.filter(rec => product.groupParam == rec.list[eParams.params_id] && rec.list[eParams.id] != rec.list[eParams.params_id]);
+                let params2List = eParams.list.filter(rec => product.groupParam == rec[eParams.params_id] && rec[eParams.id] != rec[eParams.params_id]);
                 for (let i = 0; i < params2List.length; i++) {
                     let tr = params2List[i];
                     table.jqGrid('addRowData', i + 1, {

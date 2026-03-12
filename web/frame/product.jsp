@@ -86,6 +86,7 @@
             document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n46'));
             document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4A'));
             document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4C'));
+            document.querySelector('#n51 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n51'));
             document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n53'));
 
             document.getElementById('btnTest1').addEventListener('click', test1);
@@ -161,7 +162,7 @@
 
                 <div id="tabs-5" style="padding: 0px; display: none;">
                     <p class="pantitle"> Заполнение</p> 
-                    <jst id="n51" type='btn' label='Артикул' width='80' width2="260" click="product.artikl_to_glass('n51');"></jst><br>
+                    <jst id="n51" type='btn' label='Артикул' width='80' width2="260"></jst><br>
                     <jst id="n52" type='txt' label='Название' width='80' width2="288"></jst><br>
                     <jst id="n53" type='btn' label='Цвет' width='80' width2="260"></jst><br>
                 </div>                

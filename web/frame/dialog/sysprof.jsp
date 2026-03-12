@@ -83,17 +83,36 @@
             }
 
             function sysprof_set() {
-                //Цикл по профилям ветки 
-                for (let sysprofRec of eSysprof.list) {
-                    //Отфильтруем подходящие по параметрам
-                    if (winc.nuni === sysprofRec[eSysprof.systree_id] && elem.type[1] === sysprofRec[eSysprof.use_type]) {
-                        let useSideID = sysprofRec[eSysprof.use_side];
-                        if (useSideID === elem.layout[0]
-                                || ((elem.layout === Layout.BOTT || elem.layout === Layout.TOP) && useSideID === UseSide.HORIZ[0])
-                                || ((elem.layout === Layout.RIGHT || elem.layout === Layout.LEFT) && useSideID === UseSide.VERT[0])
-                                || useSideID === UseSide.ANY[0] || useSideID === UseSide.MANUAL[0]) {
+                if (elem.type == Type.GLASS) {
+                    let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
+                    if (systreeRec != undefined) {
+                        let depth = systreeRec[eSystree.depth];
+                        depth = depth.replace(/;/g, ',');
+                        if (depth.charAt(depth.length - 1) === ',') {
+                            depth = depth.substring(0, depth.length - 1);
+                        }
+                        depth = depth.split(',');
+                        let artiklList = eArtikl.list.filter(rec =>
+                            rec[eArtikl.depth] != undefined
+                                    && rec[eArtikl.level1] === 5
+                                    && [1, 2, 3].includes(rec[eArtikl.level2])
+                                    && depth.includes(rec[eArtikl.depth].toString())
+                        );
+                        //artiklList.foEach(it => )
+                    }
+                } else {
+                    //Цикл по профилям ветки 
+                    for (let sysprofRec of eSysprof.list) {
+                        //Отфильтруем подходящие по параметрам
+                        if (winc.nuni === sysprofRec[eSysprof.systree_id] && elem.type[1] === sysprofRec[eSysprof.use_type]) {
+                            let useSideID = sysprofRec[eSysprof.use_side];
+                            if (useSideID === elem.layout[0]
+                                    || ((elem.layout === Layout.BOTT || elem.layout === Layout.TOP) && useSideID === UseSide.HORIZ[0])
+                                    || ((elem.layout === Layout.RIGHT || elem.layout === Layout.LEFT) && useSideID === UseSide.VERT[0])
+                                    || useSideID === UseSide.ANY[0] || useSideID === UseSide.MANUAL[0]) {
 
-                            sysprofSet.add(sysprofRec);
+                                sysprofSet.add(sysprofRec);
+                            }
                         }
                     }
                 }
@@ -108,13 +127,14 @@
 
                 if (elem.type == Type.BOX_SIDE) { //коробка
                     UCom.setJsonParam(elem.gson, ['param', PKjson.sysprofID], sysprofTr.id); //запишем профиль в скрипт
-                    elem.artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
-                    elem.artiklRecAn = eArtikl.find(sysprofRec[eSysprof.artikl_id], true); //аналог
+                } else if (elem.type == Type.STV_SIDE) { //створка 
+                    let sideStv = ["", PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
+                    UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.sysprofID], sysprofTr.id);
+                } else if (elem.type == Type.GLASS) {
 
-                } else { //створка       
-                    let sideLayout = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][Layout[elem.layout][0]];
-                    elem.gson.param[sideLayout] = {sysprofID: sysprofTr.id};
                 }
+                elem.artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
+                elem.artiklRecAn = eArtikl.find(sysprofRec[eSysprof.artikl_id], true); //аналог                
 
                 //Запишем профиль в локальн. бд
                 project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));

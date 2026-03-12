@@ -7,27 +7,30 @@
 
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
+            import {UCom} from './common/uCom.js';
+            import {Type, PKjson} from './enums/enums.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-//------------------------------------------------------------------------------
+
             var TYPE = ["", "Профили", "Аксессуары", "Погонаж", "Инструмент", "Заполнения"];
-//------------------------------------------------------------------------------            
+            const paramTaq = "<%= request.getParameter("param")%>";
+            let artiklSet = new Set();
+            const winc = product.winCalc;
+            const elem = product.clickNodeElem;
+            const tabArtikl = document.getElementById('tab-artikl');
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
+
             function resize() {
                 $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
                 $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
             }
-//------------------------------------------------------------------------------
-            $(document).ready(function () {
-                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                init_dialog($("#tab-artikl"));
-                init_table($("#tab-artikl"))
-                load_table($("#tab-artikl"))
-                resize();
-            });
-//------------------------------------------------------------------------------
-            function  init_dialog(table) {
+            init_dialog();
+            init_table();
+            artikl_set();
+            load_table();
+            resize();
+
+            function  init_dialog() {
 
                 $("#dialog-jsp").dialog({
                     title: "Справочник артикулов",
@@ -36,7 +39,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            save_table(table);
+                            save_table();
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -45,10 +48,10 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function init_table(table) {
 
-                table.jqGrid({
+            function init_table() {
+
+                $(tabArtikl).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Тип', 'Код артикула', 'Наименование артикула'],
                     colModel: [
@@ -58,36 +61,37 @@
                         {name: 'name', width: 340, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
-                        save_table(table);
+                        save_table();
                         $("#dialog-jsp").dialog("close");
                     }
                 });
             }
-//------------------------------------------------------------------------------ 
-            function load_table(table) {
-                table.jqGrid('clearGridData', true);
 
-                if ($('#body-jsp title').text() == 'PRODUCT') {
-                    //Стеклопакет
-                    if (product.buttonSrc == 'n51') {
-                        for (let i = 0; i < product.artiklArr.length; i++) {
-                            let tr = product.artiklArr[i];
-                            table.jqGrid('addRowData', i + 1, {
+            function load_table() {
+                $(tabArtikl).jqGrid('clearGridData', true);
+                let artiklList = Array.from(artiklSet);
+
+                if ($('#body-jsp title').text() === 'PRODUCT') {
+                    if (paramTaq == 'n51') {
+                        //Стеклопакет 
+                        for (let i = 0; i < artiklList.length; i++) {
+                            let tr = artiklList[i];
+                            $(tabArtikl).jqGrid('addRowData', i + 1, {
                                 id: tr[eArtikl.id],
                                 type: TYPE[tr[eArtikl.level1]],
                                 code: tr[eArtikl.code],
                                 name: tr[eArtikl.name]});
                         }
                         //Ручка
-                    } else if (product.buttonSrc == 'n45') {
+                    } else if (paramTaq == 'n45') {
                         load2_table(2, 11);
 
                         //Подвес
-                    } else if (product.buttonSrc == 'n49') {
+                    } else if (paramTaq == 'n49') {
                         load2_table(2, 12);
 
                         //Замок
-                    } else if (product.buttonSrc == 'n4B') {
+                    } else if (paramTaq == 'n4B') {
                         load2_table(2, 9);
 
                     }
@@ -102,60 +106,56 @@
                             name: tr[eArtikl.name]});
                     }
                 }
-                table.jqGrid("setSelection", 1);
+                $(tabArtikl).jqGrid("setSelection", 1);
             }
-//------------------------------------------------------------------------------
+
+            function artikl_set() {
+
+                if (elem.type == Type.GLASS) {
+
+                    let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
+                    if (systreeRec != undefined) {
+                        let depth = systreeRec[eSystree.depth];
+                        depth = depth.replace(/;/g, ',');
+                        if (depth.charAt(depth.length - 1) === ',') {
+                            depth = depth.substring(0, depth.length - 1);
+                        }
+                        depth = depth.split(',');
+                        let artiklList = eArtikl.list.filter(rec =>
+                            rec[eArtikl.depth] != undefined
+                                    && rec[eArtikl.level1] === 5
+                                    && [1, 2, 3].includes(rec[eArtikl.level2])
+                                    && depth.includes(rec[eArtikl.depth].toString())
+                        );
+                        artiklList.forEach(rec => artiklSet.add(rec));
+                    }
+                }
+            }
+
             function save_table(table) {
                 try {
                     if ($('#body-jsp title').text() == 'PRODUCT') {
 
                         let rowid = table.jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                        let tableRow = table.jqGrid('getRowData', rowid);  //record справочника
-                        let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+                        let artiklRow = table.jqGrid('getRowData', rowid);  //record справочника
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                        let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec.list[ePrjprod.id]);
-
-                        let winc = project.mapWinc.get(prjprodID);
-                        let elem = winc.listElem.find(it => it.id == elemID);
-                        elem.gson.param = (elem.gson.param == undefined) ? {} : elem.gson.param;
-
-                        //Стеклопакет
-                        if (product.buttonSrc == 'n51') {
-                            elem.gson.param.artglasID = tableRow.id; //запишем профиль в скрипт
-                            $("#n51").val(tableRow.code);
-                            $("#n52").val(tableRow.name);
-
-                            //Ручка
-                        } else if (product.buttonSrc == 'n45') {
-                            elem.gson.param.artiklHandl = tableRow.id; //запишем артикул в скрипт 
-                            $("#n45").val(tableRow.code + " ÷ " + tableRow.name);
-                            $("#n46").val('');
-
-                            //Подвес
-                        } else if (product.buttonSrc == 'n49') {
-                            elem.gson.param.artiklLoop = tableRow.id; //запишем артикул в скрипт 
-                            $("#n49").val(tableRow.code + " ÷ " + tableRow.name);
-                            $("#n4A").val('');
-
-                            //Замок
-                        } else if (product.buttonSrc == 'n4B') {
-                            elem.gson.param.artiklLock = tableRow.id; //запишем артикул в скрипт 
-                            $("#n4B").val(tableRow.code + " ÷ " + tableRow.name);
-                            $("#n4C").val('');
-                        }
 
                         //Запишем скрипт в локальн. бд 
-                        prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, prjprodRec[ePrjprod.script]);
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                        let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
                         project.mapWinc.set(prjprodID, winc2); //новый экз.
+                        
+                        set_artikl_gson(artiklRow);
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => isEmpty(v))})},
+                            data: {param: JSON.stringify(project.prjprodRec)},
                             success: (data) => {
-                                if (data.result != 'ok')
-                                    dialogMes('Сообщение', "<p>" + data.result);
+                                if (data.result != 'ok') {
+                                    
+                                    set_artikl_html(artiklRow);
+                                }
                             },
                             error: () => {
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
@@ -165,7 +165,7 @@
 
                     } else if ($('#body-jsp title').text() == 'KITS') {
                         let artiklRow = getSelectedRow(table);
-                        let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec.list[eArtikl.id]);
+                        let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec[eArtikl.id]);
 
                         if (kits.buttonSrc == 'n51' || kits.buttonSrc == 'n52') {
                             $("#n51").val(artiklRow.code);
@@ -216,11 +216,11 @@
                     console.error('Error: artikl.rec_dialog_save() ' + e.message);
                 }
             }
-//------------------------------------------------------------------------------
+
             function  load2_table(level_1, level_2) {
 
                 let pkSet = new Set();
-                let artiklArr = eArtikl.list.filter(rec => rec.list[eArtikl.level1] == level_1 && rec.list[eArtikl.level2] == level_2);
+                let artiklArr = eArtikl.list.filter(rec => rec[eArtikl.level1] == level_1 && rec[eArtikl.level2] == level_2);
                 let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
                 let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
                 let winc = project.mapWinc.get(prjprodID);
@@ -239,7 +239,7 @@
                         }
                     }
                 }
-                let artiklList = artiklArr.filter(rec => pkSet.has(rec.list[eArtikl.id]));
+                let artiklList = artiklArr.filter(rec => pkSet.has(rec[eArtikl.id]));
                 for (let i = 0; i < artiklList.length; i++) {
                     let tr = artiklList[i];
                     $("#tab-artikl").jqGrid('addRowData', i + 1, {
@@ -250,7 +250,47 @@
                     });
                 }
             }
-//------------------------------------------------------------------------------
+
+            //Запишем артикл в скрипт
+            function set_artikl_gson(artiklRow) {
+                //Стеклопакет
+                if (paramTaq == 'n51') {
+                    UCom.setJsonParam(elem.gson, ['param', PKjson.artglasID], artiklRow.id); //запишем артикл в скрипт
+                    //Ручка
+                } else if (paramTaq == 'n45') {
+                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklHandl], artiklRow.id); //запишем артикл в скрипт
+                    //Подвес
+                } else if (paramTaq == 'n49') {
+                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklLoop], artiklRow.id); //запишем артикл в скрипт
+                    //Замок
+                } else if (paramTaq == 'n4B') {
+                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklLock], artiklRow.id); //запишем артикл в скрипт
+                }
+            }
+
+            //Запишем артикул в html
+            function set_artikl_html(artiklRow) {
+                //Стеклопакет
+                if (paramTaq == 'n51') {
+                    $("#n51").val(artiklRow.code);
+                    $("#n52").val(artiklRow.name);
+
+                    //Ручка
+                } else if (paramTaq == 'n45') {
+                    $("#n45").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n46").val('');
+
+                    //Подвес
+                } else if (paramTaq == 'n49') {
+                    $("#n49").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n4A").val('');
+
+                    //Замок
+                } else if (paramTaq == 'n4B') {
+                    $("#n4B").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n4C").val('');
+                }
+            }
         </script>        
     </head>
     <body>

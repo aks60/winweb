@@ -59,7 +59,7 @@
                     onSelectRow: function (rowid) {
                         table2.jqGrid("clearGridData", true);
                         let kitsRow = table1.jqGrid('getRowData', rowid);
-                        kitdetList = eKitdet.list.filter(rec => kitsRow.id == rec.list[eKitdet.kits_id]);
+                        kitdetList = eKitdet.list.filter(rec => kitsRow.id == rec[eKitdet.kits_id]);
                         if (kitdetList != undefined) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let tr = kitdetList[i];

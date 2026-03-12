@@ -26,7 +26,7 @@ kits.init_table = function (table) {
 kits.load_table = function (table) {
     table.jqGrid('clearGridData', true);
     if (project.mapWinc.size != 0) {
-        kits.prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] == rec.list[ePrjkit.prjprod_id]);
+        kits.prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] == rec[ePrjkit.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
             let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
@@ -69,7 +69,7 @@ kits.update_table = function (taq) {
 
     let rowid = $("#table1").jqGrid('getGridParam', "selrow");
     let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
-    let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec.list[ePrjkit.id]);
+    let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
 
     $("#n53").val(prjkitRow.color1);
     $("#n54").val(prjkitRow.color2);
@@ -183,20 +183,20 @@ kits.color_to_kit = function (btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();
         let prjkitRow = getSelectedRow($('#table1'));
-        let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec.list[ePrjkit.id]);
+        let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
         for (let rec of eArtdet.list) {
-            if (rec.list[eArtdet.artikl_id] == prjkitRec[ePrjkit.artikl_id]) {
-                if (rec.list[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
+            if (rec[eArtdet.artikl_id] == prjkitRec[ePrjkit.artikl_id]) {
+                if (rec[eArtdet.color_fk] < 0) { //все текстуры групы color_fk
 
                     eColor.list.forEach(colorRec => {
-                        if (colorRec[eColor.colgrp_id] == Math.abs(rec.list[eArtdet.color_fk])) {
+                        if (colorRec[eColor.colgrp_id] == Math.abs(rec[eArtdet.color_fk])) {
 
                             groupSet.add(Math.abs(colorRec[eColor.colgrp_id]));
                             colorSet.add(colorRec);
                         }
                     });
                 } else { //текстура color_fk 
-                    let color2Rec = eColor.list.find(rec3 => rec.list[eArtdet.color_fk] == rec3[eColor.id]);
+                    let color2Rec = eColor.list.find(rec3 => rec[eArtdet.color_fk] == rec3[eColor.id]);
                     groupSet.add(color2Rec[eColor.colgrp_id]);
                     colorSet.add(color2Rec);
                 }
