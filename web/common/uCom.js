@@ -54,7 +54,7 @@ UCom.scaleFont = (scale) => {
     }
 };
 
-UCom.setParObj = (obj, path, value) => {
+UCom.setJsonParam = (obj, path, value) => {
     path.reduce((acc, key, index) => {
         if (index === path.length - 1) {
             acc[key] = value;

@@ -129,7 +129,7 @@ public class Dbset {
 
     public static String syspar1List(HttpServletRequest request, HttpServletResponse response) {
         Query qSyspar1 = new Query(eSyspar1.values()).select(eSyspar1.up);
-       return gson.toJson(qSyspar1);
+        return gson.toJson(qSyspar1);
     }
 
     public static String paramsList(HttpServletRequest request, HttpServletResponse response) {
@@ -138,8 +138,24 @@ public class Dbset {
     }
 
     public static JSONObject updateScript(HttpServletRequest request, HttpServletResponse response) {
-        String param = request.getParameter("param");
+        try {
+            String param = request.getParameter("param");
+            JSONArray arr = (JSONArray) JSONValue.parse(param);
+            int id = Integer.parseInt(arr.get(ePrjprod.id.ordinal()).toString());
+            Record record = ePrjprod.find(id);
+            record.set(ePrjprod.up, "UPD");
+            record.set(ePrjprod.script, format3(arr, ePrjprod.script));
+            Query qPrjprod = new Query(ePrjprod.values());
+            qPrjprod.update2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+
+        /*String param = request.getParameter("param");
         JSONObject obj = (JSONObject) JSONValue.parse(param);
+        int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());
 
         try (Connection connection = Connect.getConnection()) {
             Statement statement = statement = connection.createStatement();
@@ -150,7 +166,7 @@ public class Dbset {
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }
+        }*/
     }
 
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
@@ -187,7 +203,7 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-    
+
     public static JSONObject updatePrjprod(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");

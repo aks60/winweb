@@ -106,9 +106,7 @@ export class TFurniture {
                 if (artiklRec[eArtikl.id] !== -1) { //артикул есть
 
                     //let sideStv = this.determOfSide(mapParam, areaStv);
-                    let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec);
-                    
-                    //if (furndetRec[eFurndet.id] === 5512) debugger;   
+                    let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec); 
             
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки

@@ -33,6 +33,7 @@
             init_table();
             color_set();
             load1_table();
+            resize();
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({
@@ -77,7 +78,6 @@
                         $("#dialog-jsp").dialog("close");
                     }
                 });
-                resize();
             }
 
             function load1_table() {
@@ -198,7 +198,7 @@
                                 })},
                             success: function (data) {
                                 
-                                if (data.result == 'ok') {
+                                if (data.result === 'ok') {
                                     set_color_html(colorRow.name); //запишем текстуру в html
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
@@ -260,11 +260,11 @@
                 if (elem.type === Type.STV_SIDE) {
                     let sideStv = ["", "stvorkaBot", "stvorkaRig", "stvorkaTop", "stvorkaLef"][elem.layout[0]];
                     if (paramTaq === 'n33')
-                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID1'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID1'], colorID);
                     else if (paramTaq === 'n34')
-                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID2'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID2'], colorID);
                     else if (paramTaq === 'n35')
-                        UCom.setParObj(elem.owner.gson, ['param', sideStv, 'colorID3'], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, 'colorID3'], colorID);
                 } else {
                     if (paramTaq === 'n14')
                         winc.gson.color1 = colorID;
@@ -273,19 +273,19 @@
                     else if (paramTaq === 'n16')
                         winc.gson.color3 = colorID;
                     else if (paramTaq === 'n33')
-                        UCom.setParObj(elem.gson, ['param', 'colorID1'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorID1'], colorID);
                     else if (paramTaq === 'n34')
-                        UCom.setParObj(elem.gson, ['param', 'colorID2'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorID2'], colorID);
                     else if (paramTaq === 'n35')
-                        UCom.setParObj(elem.gson, ['param', 'colorID3'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorID3'], colorID);
                     else if (paramTaq === 'n46')
                         elem.gson.param.colorHandl = colorID;
                     else if (paramTaq === 'n4A')
-                        UCom.setParObj(elem.gson, ['param', 'colorLoop'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorLoop'], colorID);
                     else if (paramTaq === 'n4C')
-                        UCom.setParObj(elem.gson, ['param', 'colorLock'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorLock'], colorID);
                     else if (paramTaq === 'n53')
-                        UCom.setParObj(elem.gson, ['param', 'colorGlass'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', 'colorGlass'], colorID);
                 }
             }
 

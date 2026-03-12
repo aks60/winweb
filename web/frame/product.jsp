@@ -79,7 +79,7 @@
             document.querySelector('#n14 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n14'));
             document.querySelector('#n15 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n15'));
             document.querySelector('#n16 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n16'));
-            document.querySelector('#n31 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n31'));
+            document.querySelector('#n31 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/sysprof.jsp?param=n31'));
             document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n33'));
             document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n34'));
             document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n35'));
@@ -134,8 +134,9 @@
 
                 <div id="tabs-3" style="padding: 0px; display: none;">
                     <p class="pantitle"> Сторона коробки</p> 
-                    <jst id="n31" type='btn' label='Артикул' width='80' width2="260" click="product.sysprof_to_frame('n31');"></jst><br>
+                    <jst id="n31" type='btn' label='Артикул' width='80' width2="260"></jst><br>
                     <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
+                    <jst id="n36" type='txt' label='Аналог' width='80' width2="288"></jst><br>
                     <p class="pantitle"> Текстура изделия</p>  
                     <jst id="n33" type='btn' label='Основная' width='80' width2="260"></jst><br>                          
                     <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>                          

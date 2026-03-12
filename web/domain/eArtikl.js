@@ -47,10 +47,11 @@ eArtikl = {
                 artiklRec = this.vrec;
             }
             if (analog === true && artiklRec[this.analog_id] !== null) {
-                const _analog_id = artiklRec[this.analog_id];
-                artiklRec = this.list.find(rec => _analog_id === rec[this.id]);
+                const analogID = artiklRec[this.analog_id];
+                artiklRec = this.list.find(rec => analogID === rec[this.id]);
             }
             return artiklRec;
+            
         } catch (e) {
             errorLog('Error: eArtikl.find() ' + e.message);
         }
@@ -68,5 +69,5 @@ eArtikl = {
         } catch (e) {
             errorLog('Error: eArtikl.find() ' + e.message);
         }
-    }
+    },   
 };

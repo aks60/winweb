@@ -8,7 +8,7 @@ export let product = {};
 
 //Масштабирование
 export function resize() {
-    
+
     product.winCalc.resize();
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
@@ -163,7 +163,7 @@ export function tree_to_tabs(nodeID) {
             let winc = product.winCalc;
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
                     ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
-            product.clickNodeElem = elem;        
+            product.clickNodeElem = elem;
 
             //Коробка
             if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
@@ -195,8 +195,9 @@ export function tree_to_tabs(nodeID) {
                         color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2),
                         color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
                 load_tabs({
-                    n31: elem.artiklRecAn[eArtikl.code],
-                    n32: elem.artiklRecAn[eArtikl.name],
+                    n31: elem.artiklRec[eArtikl.code],
+                    n32: elem.artiklRec[eArtikl.name],
+                    n36: (elem.artiklRec[eArtikl.analog_id] === null) ? '' : elem.artiklRecAn[eArtikl.code],
                     n33: color1Rec[eColor.name],
                     n34: color2Rec[eColor.name],
                     n35: color3Rec[eColor.name]
