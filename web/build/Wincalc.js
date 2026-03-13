@@ -50,8 +50,9 @@ export class Wincalc {
     resize() {
         this.cnv.width = this.cnv.offsetWidth;
         this.cnv.height = this.cnv.offsetHeight;
-        product.winCalc.location();
-        product.winCalc.draw();
+        //this.listElem.forEach(el => el.initArtikle());
+        this.location();
+        this.draw();
         $('#n11').val(Math.round(this.width));
         $('#n12').val(Math.round(this.height));
     }

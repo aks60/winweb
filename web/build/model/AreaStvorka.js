@@ -36,7 +36,7 @@ export class AreaStvorka extends AreaSimple {
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
-        this.initArtikle(gson.param);
+        this.initArtikle();
     }
 
     initStvorka() {
@@ -81,24 +81,24 @@ export class AreaStvorka extends AreaSimple {
      * фурнитуры. Цвет первая запись из текстуры артикулов или подбор из текстур
      * или вручную.
      */
-    initArtikle(param) {
+    initArtikle() {
         try {
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
-            if (UCom.isFinite(param, PKjson.sysfurnID)) {
-                this.sysfurnRec = eSysfurn.find2(param[PKjson.sysfurnID]);
+            if (UCom.isFinite(this.gson.param, PKjson.sysfurnID)) {
+                this.sysfurnRec = eSysfurn.find2(this.gson.param[PKjson.sysfurnID]);
             } else { //по умолчанию
                 this.sysfurnRec = eSysfurn.find3(this.winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (UCom.isFinite(param, PKjson.artiklHand)) {
-                this.handRec[0] = eArtikl.find(param[PKjson.artiklHand], false);
+            if (UCom.isFinite(this.gson.param, PKjson.artiklHand)) {
+                this.handRec[0] = eArtikl.find(this.gson.param[PKjson.artiklHand], false);
             } else { //по умолчанию
                 this.handRec[0] = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
             }
             //Текстура ручки
-            if (UCom.isFinite(param, PKjson.colorHand)) {
-                this.handColor[0] = param[PKjson.colorHand];
+            if (UCom.isFinite(this.gson.param, PKjson.colorHand)) {
+                this.handColor[0] = this.gson.param[PKjson.colorHand];
             } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
                 this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
                 if (this.handColor[0] < 0) { //если все текстуры группы
@@ -109,38 +109,38 @@ export class AreaStvorka extends AreaSimple {
                 }
             }
             //Подвес (петли)
-            if (UCom.isFinite(param, PKjson.artiklLoop)) {
-                this.loopRec[0] = eArtikl.find(param[PKjson.artiklLoop], false);
+            if (UCom.isFinite(this.gson.param, PKjson.artiklLoop)) {
+                this.loopRec[0] = eArtikl.find(this.gson.param[PKjson.artiklLoop], false);
             }
             //Текстура подвеса
-            if (UCom.isFinite(param, PKjson.colorLoop)) {
-                this.loopColor[0] = param[PKjson.colorLoop];
+            if (UCom.isFinite(this.gson.param, PKjson.colorLoop)) {
+                this.loopColor[0] = this.gson.param[PKjson.colorLoop];
             }
             //Замок
-            if (UCom.isFinite(param, PKjson.artiklLock)) {
-                this.lockRec[0] = eArtikl.find(param[PKjson.artiklLock], false);
+            if (UCom.isFinite(this.gson.param, PKjson.artiklLock)) {
+                this.lockRec[0] = eArtikl.find(this.gson.param[PKjson.artiklLock], false);
             }
             //Текстура замка
-            if (UCom.isFinite(param, PKjson.colorLock)) {
-                this.lockColor[0] = param[PKjson.colorLock];
+            if (UCom.isFinite(this.gson.param, PKjson.colorLock)) {
+                this.lockColor[0] = this.gson.param[PKjson.colorLock];
             }
             //Сторона открывания
-            if (UCom.isFinite(param, PKjson.typeOpen)) {
-                this.typeOpen = TypeOpen1.typeOpen(param[PKjson.typeOpen]);
+            if (UCom.isFinite(this.gson.param, PKjson.typeOpen)) {
+                this.typeOpen = TypeOpen1.typeOpen(this.gson.param[PKjson.typeOpen]);
             } else {
                 let index = this.sysfurnRec[eSysfurn.side_open];
                 this.typeOpen = (index === TypeOpen2.REQ[0]) ? this.typeOpen
                         : (index === TypeOpen2.LEF[0]) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке, ручка задана параметром
-            if (UCom.isFinite(param, PKjson.positionHand)) {
-                let position = param[PKjson.positionHand];
+            if (UCom.isFinite(this.gson.param, PKjson.positionHand)) {
+                let position = this.gson.param[PKjson.positionHand];
                 if (position === LayoutHand.VAR[0]) { //вариационная
                     this.handLayout = LayoutHand.VAR;
-                    if (UCom.isFinite(param, PKjson.heightHand)) {
-                        this.handHeight = param[PKjson.heightHand];
-                        if (UCom.isFinite(param, PKjson.heightHand)) {
-                            this.handHeight = param[PKjson.heightHand];
+                    if (UCom.isFinite(this.gson.param, PKjson.heightHand)) {
+                        this.handHeight = this.gson.param[PKjson.heightHand];
+                        if (UCom.isFinite(this.gson.param, PKjson.heightHand)) {
+                            this.handHeight = this.gson.param[PKjson.heightHand];
                         }
                     }
                 } else { //по середине или константная

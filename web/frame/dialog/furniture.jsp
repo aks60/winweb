@@ -22,7 +22,6 @@
                 init_table($("#tab-furniture"))
                 load_table($("#tab-furniture"))
                 resize(); //баг!
-                resize();
             });
 //------------------------------------------------------------------------------
             function init_dialog(table) {

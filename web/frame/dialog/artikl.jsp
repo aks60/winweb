@@ -4,7 +4,11 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ARTIKL</title>
-
+        <style>
+            .no-wrap {
+                white-space: nowrap;
+            }
+        </style>
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {UCom} from './common/uCom.js';
@@ -12,7 +16,7 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            var TYPE = ["", "Профили", "Аксессуары", "Погонаж", "Инструмент", "Заполнения"];
+            var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
             const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set();
             const winc = product.winCalc;
@@ -56,9 +60,9 @@
                     colNames: ['id', 'Тип', 'Код артикула', 'Наименование артикула'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'type', width: 84, sorttype: "text"},
-                        {name: 'code', width: 180, sorttype: "text"},
-                        {name: 'name', width: 340, sorttype: "text"}
+                        {name: 'type', width: 24, sortable: false},
+                        {name: 'code', width: 160, sortable: false},
+                        {name: 'name', width: 380, sortable: false}
 
                     ], ondblClickRow: function (rowid) {
                         save_table();
@@ -70,6 +74,7 @@
             function load_table() {
                 $(tabArtikl).jqGrid('clearGridData', true);
                 let artiklList = Array.from(artiklSet);
+                artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
                     if (paramTaq == 'n51') {
@@ -78,7 +83,7 @@
                             let tr = artiklList[i];
                             $(tabArtikl).jqGrid('addRowData', i + 1, {
                                 id: tr[eArtikl.id],
-                                type: TYPE[tr[eArtikl.level1]],
+                                type: tr[eArtikl.level1] + '/' + tr[eArtikl.level2],
                                 code: tr[eArtikl.code],
                                 name: tr[eArtikl.name]});
                         }
@@ -101,7 +106,7 @@
                         let tr = eArtikl.list[i];
                         $(tabArtikl).jqGrid('addRowData', i + 1, {
                             id: tr[eArtikl.id],
-                            type: TYPE[tr[eArtikl.level1]],
+                            type: LEV1[tr[eArtikl.level1]],
                             code: tr[eArtikl.code],
                             name: tr[eArtikl.name]});
                     }
@@ -143,11 +148,11 @@
                         elem.artiklRecAn = eArtikl.find(artiklRow[eArtikl.id], true); //аналог       }
 
                         set_value_gson(Number(artiklRow.id));
-                        
+
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let winc2 = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        project.mapWinc.set(prjprodID, winc2); //новый экз.
+                        let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
+                        project.mapWinc.set(prjprodID, iwincalc); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -246,7 +251,7 @@
                     let tr = artiklList[i];
                     $("#tab-artikl").jqGrid('addRowData', i + 1, {
                         id: tr[eArtikl.id],
-                        type: TYPE[tr[eArtikl.level1]],
+                        type: LEV1[tr[eArtikl.level1]],
                         code: tr[eArtikl.code],
                         name: tr[eArtikl.name]
                     });

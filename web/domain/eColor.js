@@ -13,7 +13,7 @@ eColor = {
     orient: 10, //Ориентация
     pain: 11, //Покраска
     groups_id: 12, //Группа
-    vrec: virtualRec(13, {1: -3, 3: 'virtual', 4: -3, 5: '000000', 14: -3}),
+    vrec: virtualRec(13, {1: -3, 3: 'virtual', 4: -3, 5: 'ffffff', 14: -3}),
     find(ID) {
         try {
             return this.list.seek(this.vrec, el => el[1] === ID);
@@ -29,7 +29,7 @@ eColor = {
             if (colorFK < 0) {
                 return this.list.seek(this.vrec, rec => rec[this.groups_id] === colorFK * -1);
             } else {
-                let colorRec = this.list.seek(this.vrec, rec => rec[this.id] === colorFK);
+                return this.list.seek(this.vrec, rec => rec[this.id] === colorFK);
             }
         } catch (e) {
             errorLog('Error: eColor.find() ' + e.message);
