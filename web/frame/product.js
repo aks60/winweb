@@ -27,6 +27,7 @@ export function init_table() {
             datatype: "local",
             gridview: true,
             rownumbers: true,
+            rownumWidth: 20,
             height: 246,
             shrinkToFit: false,
             scroll: "true",

@@ -26,6 +26,7 @@ users.init_table1 = function (table) {
         datatype: "local",
         gridview: true,
         rownumbers: true,
+        rownumWidth: 20,
         autowidth: true,
         height: "auto",
         colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],

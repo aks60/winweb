@@ -6,6 +6,7 @@ kits.init_table = function (table) {
         datatype: "local",
         gridview: true,
         rownumbers: true,
+        rownumWidth: 20,
         autowidth: true,
         height: "auto",
         colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],

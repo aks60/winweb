@@ -16,9 +16,10 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            //var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
+            var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
+            var LEV2 = ["", "Стекло", "Стеклопакет", "Сеннгвич", "", ""];
             const paramTaq = "<%= request.getParameter("param")%>";
-            let artiklSet = new Set();
+            let artiklSet = new Set(), handlSet = new Set();
             const winc = product.winCalc;
             const elem = product.clickNodeElem;
             const tabArtikl = document.getElementById('tab-artikl');
@@ -35,7 +36,7 @@
             resize();
 
             function  init_dialog() {
-                
+
                 $("#dialog-jsp").dialog({
                     title: "Справочник артикулов",
                     width: 600,
@@ -58,12 +59,15 @@
                 //TODO При сортировки столбца часть данных пропадает
                 $(tabArtikl).jqGrid({
                     datatype: "local",
+                    rowNum: -1,
                     colNames: ['id', 'Тип', 'Код артикула', 'Наименование артикула'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'type', width: 24, sortable: false},
-                        {name: 'code', width: 160, sortable: false},
-                        {name: 'name', width: 380, sortable: false}
+                        {name: 'type', width: 60},
+                        {name: 'code', width: 160},
+                        {name: 'name', width: 380, cellattr: function (rowId, val, rawObject, cm, rdata) {
+                                return 'style="white-space: nowrap;"';
+                            }}
 
                     ], ondblClickRow: function (rowid) {
                         save_table();
@@ -74,18 +78,18 @@
 
             function load_table() {
                 $(tabArtikl).jqGrid('clearGridData', true);
-                let artiklList = Array.from(artiklSet);               
+                let artiklList = Array.from(artiklSet);
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
-                    
+
                     if (paramTaq == 'n51') {
-                        artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
+                        //artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         //Стеклопакет 
                         for (let i = 0; i < artiklList.length; i++) {
                             let tr = artiklList[i];
                             $(tabArtikl).jqGrid('addRowData', i + 1, {
                                 id: tr[eArtikl.id],
-                                type: tr[eArtikl.level1] + '/' + tr[eArtikl.level2],
+                                type: LEV1[tr[eArtikl.level1]] + '/' + tr[eArtikl.level2],
                                 code: tr[eArtikl.code],
                                 name: tr[eArtikl.name]});
                         }
@@ -118,23 +122,52 @@
 
             function artikl_set() {
 
-                if (elem.type == Type.GLASS) {
+                if ($('#body-jsp title').text() === 'PRODUCT') {
 
-                    let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
-                    if (systreeRec != undefined) {
-                        let depth = systreeRec[eSystree.depth];
-                        depth = depth.replace(/;/g, ',');
-                        if (depth.charAt(depth.length - 1) === ',') {
-                            depth = depth.substring(0, depth.length - 1);
+                    if (paramTaq === 'n51') {
+                        let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
+                        if (systreeRec != undefined) {
+                            let depth = systreeRec[eSystree.depth];
+                            depth = depth.replace(/;/g, ',');
+                            if (depth.charAt(depth.length - 1) === ',') {
+                                depth = depth.substring(0, depth.length - 1);
+                            }
+                            depth = depth.split(',');
+                            let artiklList = eArtikl.list.filter(rec =>
+                                rec[eArtikl.depth] != undefined
+                                        && rec[eArtikl.level1] === 5
+                                        && [1, 2, 3].includes(rec[eArtikl.level2])
+                                        && depth.includes(rec[eArtikl.depth].toString())
+                            );
+                            artiklList.forEach(rec => artiklSet.add(rec));
                         }
-                        depth = depth.split(',');
-                        let artiklList = eArtikl.list.filter(rec =>
-                            rec[eArtikl.depth] != undefined
-                                    && rec[eArtikl.level1] === 5
-                                    && [1, 2, 3].includes(rec[eArtikl.level2])
-                                    && depth.includes(rec[eArtikl.depth].toString())
-                        );
-                        artiklList.forEach(rec => artiklSet.add(rec));
+                    } else if (paramTaq === 'n45') {
+                        let stvorkaID = elem.id;
+                        let filterSet = new Set();
+                        let furnitureID = elem.sysfurnRec[eSysfurn.furniture_id];
+                        let artiklList = new eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === 11);
+                        //Цикл детализаций
+                        for (let furndetRec1 of eFurndet.list) { //первый уровень
+                            if (furndetRec1[eFurndet.furniture_id1] === furnitureID) {
+
+                                //Фильтр по детализации определённого типа определённой фурнитуры
+                                if (furndetRec1[eFurndet.furniture_id2] === null) { //НЕ НАБОР
+                                    filterSet.add(furndetRec1[eFurndet.artikl_id]);
+                                } else { //ЭТО НАБОР
+                                    for (let furndetRec2 of eFurndet.list) { //второй уровень
+                                        if (furndetRec1[eFurndet.furniture_id2] === furndetRec2[eFurndet.furniture_id1]) {
+                                            filterSet.add(furndetRec2[eFurndet.artikl_id]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+//            for (Integer id of filterSet) {
+//                Record artiklRec = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
+//                if (artiklRec != null) {
+//                    qResult.add(artiklRec);
+//                }
+//            }                        
                     }
                 }
             }

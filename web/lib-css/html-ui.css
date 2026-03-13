@@ -51,18 +51,16 @@ html, body {
     border-radius: 0;
 }
 
-.ui-jqgrid .ui-jqgrid-htable th {
-    height: 1.6em !important;
+/* Установить высоту строки, например, 30px */
+.ui-jqgrid tr.jqgrow td {
+    height: 20px !important;
+    padding: 0 2px !important; /* Регулировка отступов, если нужно */
+    vertical-align: middle; /* Вертикальное выравнивание */
 }
 
-.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager
-.ui-jqgrid .ui-pg-input, input.ui-widget,
+.ui-pg-input, input.ui-widget, .ui-widget select,
 select.ui-widget, textarea.ui-widget, button.ui-widget { 
-    font-size: 12px; 
-}
-
-.ui-jqgrid tr.jqgrow td, .ui-widget select{ 
-    height: 18px; 
+    font-size: 14px; 
 }
 
 p.pantitle {    
@@ -88,11 +86,5 @@ p.field, input.field, textarea.field {
 p.field {
     background-color: #dfeffc;
     padding-top: 1px;
-}
-
-.ui-jqgrid tr.jqgrow td {
-    white-space: normal !important;
-    height: auto; /* высота строки подстроится под контент */
-    padding: 2px; /* отступы для красоты */
 }
 
