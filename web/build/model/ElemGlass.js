@@ -33,7 +33,7 @@ export class ElemGlass extends ElemSimple {
 
             //Цвет стекла
             if (UCom.isFinite(this.gson.param, PKjson.colorGlass)) {
-                this.colorID1 = this.gson.param[PKjson.colorGlass];
+                this.colorID1 = Number(this.gson.param[PKjson.colorGlass]);
                 this.colorID2 = this.colorID1;
                 this.colorID3 = this.colorID1;
             } else {
@@ -91,7 +91,7 @@ export class ElemGlass extends ElemSimple {
 
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
-                this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
+                this.winc.ctx.fillStyle = '#' + eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === this.colorID2)[eColor.rgb].toString(16);
                 this.winc.paint(geoFalz);
 
             } else if (geoFalz !== null) {

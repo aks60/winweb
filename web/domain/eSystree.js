@@ -19,13 +19,14 @@ eSystree = {
     find(nuni) {
         try {
             if (nuni === -3) {
-                return vrec;
+                return this.vrec;
             }
             let systreeRec = this.list.find(rec => nuni === rec[this.id]);
             if (systreeRec === undefined) {
-                systreeRec = this.vrec;
+                return this.vrec;
             }
             return systreeRec;
+            
         } catch (e) {
             errorLog('Error: eSystree.find() ' + e.message);
         }

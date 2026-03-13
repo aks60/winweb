@@ -157,6 +157,7 @@ export function elements(com, arr) {
 
 //Загрузка тегов страницы
 export function tree_to_tabs(nodeID) {
+    debugger;
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
         if (nodeID !== '-2') {
@@ -226,7 +227,7 @@ export function tree_to_tabs(nodeID) {
 
                 //Стеклопакет
             } else if (elem.type === Type.GLASS) {
-                let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
+                let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === elem.colorID1);
                 load_tabs({
                     n51: elem.artiklRec[eArtikl.code],
                     n52: elem.artiklRec[eArtikl.name],
@@ -236,7 +237,7 @@ export function tree_to_tabs(nodeID) {
             }
         }
     } catch (e) {
-        errorLog('Error: product.tree_to_fields() ' + e.message);
+        errorLog('Error: product.tree_to_tabs() ' + e.message);
     }
 }
 

@@ -42,10 +42,7 @@ eArtikl = {
             if (ID === -3) {
                 return this.vrec;
             }
-            let artiklRec = this.list.find(rec => ID === rec[this.id]);
-            if (artiklRec === undefined) {
-                artiklRec = this.vrec;
-            }
+            let artiklRec = this.list.seek(this.vrec, rec => ID === rec[this.id]);
             if (analog === true && artiklRec[this.analog_id] !== null) {
                 const analogID = artiklRec[this.analog_id];
                 artiklRec = this.list.find(rec => analogID === rec[this.id]);
@@ -61,11 +58,9 @@ eArtikl = {
             if ("0x0x0x0" === code) {
                 return this.vrec();
             }
-            let artiklRec = this.list.find(rec => code === rec[this.code]);
-            if (artiklRec === undefined) {
-                artiklRec = this.vrec;
-            }
+            let artiklRec = this.list.seek(this.vrec, rec => code === rec[this.code]);
             return artiklRec;
+            
         } catch (e) {
             errorLog('Error: eArtikl.find() ' + e.message);
         }

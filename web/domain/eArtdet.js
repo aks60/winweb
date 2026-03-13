@@ -19,13 +19,13 @@ eArtdet = {
     vrec: virtualRec(16, {1: -3, 14: -3, 15: -3}),
     find(ID) {
         if (ID === -3) {
-            return this.vrec();
-        }
-        let rec = this.list.find(rec => rec[this.artikl_id] === ID);
-        if(rec === undefined) {
             return this.vrec;
         }
-        return rec;
+        let record = this.list.find(rec => rec[this.artikl_id] === ID);
+        if(record === undefined) {
+            return this.vrec;
+        }
+        return record;
     }    
 };
 

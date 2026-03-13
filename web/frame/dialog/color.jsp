@@ -149,7 +149,7 @@
                     }
 
                     //Артикул элемента
-                    let artiklElem = get_artikl_elem();
+                    let artiklElem = get_value_elem();
 
                     //Текстура по таблице цветов ARTDET                                                                        
                     for (let artdetRec of eArtdet.list) { //все текстуры артикула элемента конструкции                     
@@ -181,7 +181,7 @@
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
-                        set_color_gson(Number(colorRow.id)); //запишем текстуру в gson                        
+                        set_value_gson(Number(colorRow.id)); //запишем текстуру в gson                        
 
                         //Запишем скрипт в локальн. бд
                         let cnv = document.getElementById("cnv");
@@ -196,7 +196,7 @@
                             success: function (data) {
                                 
                                 if (data.result === 'ok') {
-                                    set_color_html(colorRow.name); //запишем текстуру в html
+                                    set_value_html(colorRow.name); //запишем текстуру в html
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -228,7 +228,7 @@
             }
 
             //Запишем текстуру в html
-            function set_color_html(name) {
+            function set_value_html(name) {
                 if (paramTaq === 'n14')
                     $("#n14").val(name);
                 else if (paramTaq === 'n15')
@@ -252,42 +252,42 @@
             }
 
             //Запишем текстуру в скрипт
-            function set_color_gson(colorID) {
+            function set_value_gson(ID) {
 
                 if (elem.type === Type.STV_SIDE) {
                     let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
                     if (paramTaq === 'n33')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID1], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
                     else if (paramTaq === 'n34')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID2], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
                     else if (paramTaq === 'n35')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID3], colorID);
+                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
                 } else {
                     if (paramTaq === 'n14')
-                        winc.gson.color1 = colorID;
+                        winc.gson.color1 = ID;
                     else if (paramTaq === 'n15')
-                        winc.gson.color2 = colorID;
+                        winc.gson.color2 = ID;
                     else if (paramTaq === 'n16')
-                        winc.gson.color3 = colorID;
+                        winc.gson.color3 = ID;
                     else if (paramTaq === 'n33')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorID1'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID1], ID);
                     else if (paramTaq === 'n34')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorID2'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID2], ID);
                     else if (paramTaq === 'n35')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorID3'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID3], ID);
                     else if (paramTaq === 'n46')
-                        elem.gson.param.colorHandl = colorID;
+                        elem.gson.param.colorHandl = ID;
                     else if (paramTaq === 'n4A')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorLoop'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorLoop], ID);
                     else if (paramTaq === 'n4C')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorLock'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorLock], ID);
                     else if (paramTaq === 'n53')
-                        UCom.setJsonParam(elem.gson, ['param', 'colorGlass'], colorID);
+                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorGlass], ID);
                 }
             }
 
             //Получить артикул элемента конструкции
-            function get_artikl_elem() {
+            function get_value_elem() {
                 if (paramTaq === 'n14')
                     return elem.artiklRec;
                 else if (paramTaq === 'n15')

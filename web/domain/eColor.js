@@ -13,7 +13,7 @@ eColor = {
     orient: 10, //Ориентация
     pain: 11, //Покраска
     groups_id: 12, //Группа
-    vrec: virtualRec(13, {1: -3, 2: 'Авторасчёт', 4: -3, 5: '000000', 14: -3}),
+    vrec: virtualRec(13, {1: -3, 3: 'virtual', 4: -3, 5: '000000', 14: -3}),
     find(ID) {
         try {
             if (ID === -3) {

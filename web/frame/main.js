@@ -29,6 +29,15 @@ import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.j
 
 export function localizeFactory() {
 
+    Array.prototype.seek = function (def, callback) {
+        
+        let val = this.find(callback);
+
+        if (val === undefined || (Array.isArray(val) && val[1] === -3))
+            return def;
+        return val;
+    };
+    
     function mas(geo) {
         if (geo instanceof Coordinate)
             return [geo.x, geo.y, geo.z];
