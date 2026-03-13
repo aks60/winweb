@@ -43,6 +43,7 @@ eArtikl = {
                 return this.vrec;
             }
             let artiklRec = this.list.seek(this.vrec, rec => ID === rec[this.id]);
+
             if (analog === true && artiklRec[this.analog_id] !== null) {
                 const analogID = artiklRec[this.analog_id];
                 artiklRec = this.list.find(rec => analogID === rec[this.id]);

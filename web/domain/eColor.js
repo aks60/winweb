@@ -16,11 +16,7 @@ eColor = {
     vrec: virtualRec(13, {1: -3, 3: 'virtual', 4: -3, 5: '000000', 14: -3}),
     find(ID) {
         try {
-            if (ID === -3) {
-                return this.vrec;
-            }
-            let colorRec = this.list.find(el => el[1] === ID);
-            return (colorRec === undefined) ? this.vrec : colorRec;
+            return this.list.seek(this.vrec, el => el[1] === ID);
         } catch (e) {
             errorLog('Error: eColor.find() ' + e.message);
         }
@@ -31,12 +27,9 @@ eColor = {
                 return this.vrec;
             }
             if (colorFK < 0) {
-                let colorRec = this.list.find(rec => rec[this.groups_id] === colorFK * -1);
-                return (colorRec === undefined) ? this.vrec : colorRec;
-
+                return this.list.seek(this.vrec, rec => rec[this.groups_id] === colorFK * -1);
             } else {
-                let colorRec = this.list.find(rec => rec[this.id] === colorFK);
-                return (colorRec === undefined) ? this.vrec : colorRec;
+                let colorRec = this.list.seek(this.vrec, rec => rec[this.id] === colorFK);
             }
         } catch (e) {
             errorLog('Error: eColor.find() ' + e.message);

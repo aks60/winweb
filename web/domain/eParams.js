@@ -13,10 +13,6 @@ eParams = {
     groups_id: 10, //Название параметра
     vrec: virtualRec(11, {1: -3, 2: 'Виртуал', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3}),
     find(_id) {
-        let elem = this.list.find(rec => _id === rec.id);
-        if (elem === undefined) {
-            elem = eParams.vrec;
-        }
-        return elem;
+      return this.list.seek(eParams.vrec, rec => _id === rec.id);
     }
 };

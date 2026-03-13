@@ -18,15 +18,8 @@ eSystree = {
     vrec: virtualRec(15),
     find(nuni) {
         try {
-            if (nuni === -3) {
-                return this.vrec;
-            }
-            let systreeRec = this.list.find(rec => nuni === rec[this.id]);
-            if (systreeRec === undefined) {
-                return this.vrec;
-            }
-            return systreeRec;
-            
+           return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
+
         } catch (e) {
             errorLog('Error: eSystree.find() ' + e.message);
         }

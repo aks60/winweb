@@ -48,11 +48,7 @@ eSysprof = {
 
     find3(ID) {
         try {
-            let sysprofRec = this.list.find(rec => rec[this.id] === ID);
-            if (sysprofRec === undefined) {
-                sysprofRec = this.vrec;
-            }
-            return sysprofRec;
+            return this.list.seek(this.vrec, rec => rec[this.id] === ID);
         } catch (e) {
             errorLog('Error: eSysprof.find3() ' + e.message);
         }

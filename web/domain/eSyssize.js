@@ -11,10 +11,7 @@ eSyssize = {
     vrec: virtualRec(7),
     find(artiklRec) {
         let id = artiklRec[eArtikl.syssize_id];
-        if (id === -3) { //если арт. вирт. то return virtualRec();
-            return vrec();
-        }
-        return this.list.find(rec => id === rec[this.id]);
+        return this.list.seek(this.vrec, rec => id === rec[this.id]);
     }
 };
 
