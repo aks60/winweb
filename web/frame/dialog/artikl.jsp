@@ -140,12 +140,11 @@
             function save_table() {
                 try {
                     if ($('#body-jsp title').text() == 'PRODUCT') {
-                        debugger;
                         let rowid = $(tabArtikl).jqGrid('getGridParam', "selrow"); //index профиля из справочника
                         let artiklRow = $(tabArtikl).jqGrid('getRowData', rowid);  //record справочника
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                        elem.artiklRec = eArtikl.find(artiklRow[eArtikl.id], false); //артикул
-                        elem.artiklRecAn = eArtikl.find(artiklRow[eArtikl.id], true); //аналог       }
+                        elem.artiklRec = eArtikl.find(artiklRow.id, false); //артикул
+                        elem.artiklRecAn = eArtikl.find(artiklRow.id, true); //аналог       }
 
                         set_value_gson(Number(artiklRow.id));
 
