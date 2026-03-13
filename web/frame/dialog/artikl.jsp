@@ -16,7 +16,7 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
-            var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
+            //var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
             const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set();
             const winc = product.winCalc;
@@ -35,7 +35,7 @@
             resize();
 
             function  init_dialog() {
-
+                
                 $("#dialog-jsp").dialog({
                     title: "Справочник артикулов",
                     width: 600,
@@ -55,6 +55,7 @@
 
             function init_table() {
 
+                //TODO При сортировки столбца часть данных пропадает
                 $(tabArtikl).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Тип', 'Код артикула', 'Наименование артикула'],
@@ -73,11 +74,12 @@
 
             function load_table() {
                 $(tabArtikl).jqGrid('clearGridData', true);
-                let artiklList = Array.from(artiklSet);
-                artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
+                let artiklList = Array.from(artiklSet);               
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
+                    
                     if (paramTaq == 'n51') {
+                        artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         //Стеклопакет 
                         for (let i = 0; i < artiklList.length; i++) {
                             let tr = artiklList[i];

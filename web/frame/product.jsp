@@ -83,6 +83,7 @@
             document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n33'));
             document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n34'));
             document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n35'));
+            document.querySelector('#n45 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n45'));
             document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n46'));
             document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4A'));
             document.querySelector('#n4C + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4C'));
@@ -150,7 +151,8 @@
                     <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
                     <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="product.furniture_to_stvorka('n43');"></jst><br>                          
                     <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click="product.sideopen_to_stvorka('n44')"></jst><br>
-                    <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n45');"></jst><br>
+                    <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220"></jst><br>
+                    <!--<jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n45');"></jst><br>-->
                     <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220"></jst><br>                            
                     <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                     <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            

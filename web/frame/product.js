@@ -240,7 +240,7 @@ export function tree_to_tabs(nodeID) {
     }
 }
 
-export function sysprof_to_frame(btnSrc) {
+/*export function sysprof_to_frame(btnSrc) {
     try {
         let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
@@ -269,7 +269,7 @@ export function sysprof_to_frame(btnSrc) {
     } catch (e) {
         console.error('Error: product.sysprof_to_frame() ' + e.message);
     }
-}
+}*/
 
 //Фурнитура стеклопакета
 export function furniture_to_stvorka(btnSrc) {
@@ -284,13 +284,13 @@ export function sideopen_to_stvorka(btnSrc) {
 }
 
 //Артикл ручки, подвеса, замка
-export function artikl_to_stvork(btnSrc) {
+/*export function artikl_to_stvork(btnSrc) {
     product.buttonSrc = btnSrc;
     $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-}
+}*/
 
 //Заполнение
-export function artikl_to_glass(btnSrc) {
+/*export function artikl_to_glass(btnSrc) {
     try {
         let nodeID = $(product.table2).jstree("get_selected")[0];
         let prjprodID = project.prjprodRec[ePrjprod.id];
@@ -317,10 +317,10 @@ export function artikl_to_glass(btnSrc) {
     } catch (e) {
         console.error('Error: product.artikl_to_glass() ' + e.message);
     }
-}
+}*/
 
 //Изменение скрипта
-export function update_script() {
+/*export function update_script() {
     let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
     let winc = project.mapWinc.get(prjprodID);
 
@@ -335,5 +335,5 @@ export function update_script() {
             dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
         }
     });
-}
+}*/
 
