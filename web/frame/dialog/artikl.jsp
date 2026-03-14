@@ -31,6 +31,7 @@
             }
             init_dialog();
             init_table();
+//debugger;
             artikl_set();
             load_table();
             resize();
@@ -81,10 +82,8 @@
                 let artiklList = Array.from(artiklSet);
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
-
-                    if (paramTaq == 'n51') {
-                        //artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
-                        //Стеклопакет 
+                    if (paramTaq == 'n45' || paramTaq == 'n51') {
+                        artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         for (let i = 0; i < artiklList.length; i++) {
                             let tr = artiklList[i];
                             $(tabArtikl).jqGrid('addRowData', i + 1, {
@@ -93,18 +92,6 @@
                                 code: tr[eArtikl.code],
                                 name: tr[eArtikl.name]});
                         }
-                        //Ручка
-                    } else if (paramTaq == 'n45') {
-                        load2_table(2, 11);
-
-                        //Подвес
-                    } else if (paramTaq == 'n49') {
-                        load2_table(2, 12);
-
-                        //Замок
-                    } else if (paramTaq == 'n4B') {
-                        load2_table(2, 9);
-
                     }
 
                 } else if ($('#body-jsp title').text() == 'KITS') {
@@ -124,6 +111,7 @@
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
 
+                    //Заполнение
                     if (paramTaq === 'n51') {
                         let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
                         if (systreeRec != undefined) {
@@ -141,12 +129,14 @@
                             );
                             artiklList.forEach(rec => artiklSet.add(rec));
                         }
+
+                        //Ручка
                     } else if (paramTaq === 'n45') {
-                        let stvorkaID = elem.id;
                         let filterSet = new Set();
                         let furnitureID = elem.sysfurnRec[eSysfurn.furniture_id];
-                        let artiklList = new eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === 11);
-                        //Цикл детализаций
+                        let artiklList = eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === 11);
+
+                        //Цикл по детализации
                         for (let furndetRec1 of eFurndet.list) { //первый уровень
                             if (furndetRec1[eFurndet.furniture_id1] === furnitureID) {
 
@@ -162,12 +152,12 @@
                                 }
                             }
                         }
-//            for (Integer id of filterSet) {
-//                Record artiklRec = qArtikl.stream().filter(rec -> rec.getInt(eArtikl.id) == id).findFirst().orElse(null);
-//                if (artiklRec != null) {
-//                    qResult.add(artiklRec);
-//                }
-//            }                        
+                        for (let id of filterSet) {
+                            let artiklRec = artiklList.find(rec => rec[eArtikl.id] === id);
+                            if (artiklRec !== undefined) {
+                                artiklSet.add(artiklRec);
+                            }
+                        }
                     }
                 }
             }
@@ -176,11 +166,12 @@
                 try {
                     if ($('#body-jsp title').text() == 'PRODUCT') {
                         let rowid = $(tabArtikl).jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                        let artiklRow = $(tabArtikl).jqGrid('getRowData', rowid);  //record справочника
+                        let artiklRow = $(tabArtikl).jqGrid('getRowData', rowid);  //row справочника
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
                         elem.artiklRec = eArtikl.find(artiklRow.id, false); //артикул
                         elem.artiklRecAn = eArtikl.find(artiklRow.id, true); //аналог       }
 
+                        //Запишем скрипт в gson 
                         set_value_gson(Number(artiklRow.id));
 
                         //Запишем скрипт в локальн. бд 
@@ -258,39 +249,39 @@
                 }
             }
 
-            function  load2_table(level_1, level_2) {
-
-                let pkSet = new Set();
-                let artiklArr = eArtikl.list.filter(rec => rec[eArtikl.level1] == level_1 && rec[eArtikl.level2] == level_2);
-                let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
-                let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                let winc = project.mapWinc.get(prjprodID);
-                let elem = winc.listElem.find(it => it.id == elemID);
-                for (let furndetRec1 of eFurndet.list) {
-                    if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {
-
-                        if (furndetRec1[eFurndet.furniture_id2] == null) { //НЕ НАБОР                                
-                            pkSet.add(furndetRec1[eFurndet.artikl_id]);
-                        } else {
-                            for (let furndetRec2 of eFurndet.list) {
-                                if (furndetRec1[eFurndet.furniture_id2] == furndetRec2[eFurndet.furniture_id1]) {
-                                    pkSet.add(furndetRec2[eFurndet.artikl_id]);
-                                }
-                            }
-                        }
-                    }
-                }
-                let artiklList = artiklArr.filter(rec => pkSet.has(rec[eArtikl.id]));
-                for (let i = 0; i < artiklList.length; i++) {
-                    let tr = artiklList[i];
-                    $("#tab-artikl").jqGrid('addRowData', i + 1, {
-                        id: tr[eArtikl.id],
-                        type: LEV1[tr[eArtikl.level1]],
-                        code: tr[eArtikl.code],
-                        name: tr[eArtikl.name]
-                    });
-                }
-            }
+            /*            function  load2_table(level_1, level_2) {
+             
+             let pkSet = new Set();
+             let artiklArr = eArtikl.list.filter(rec => rec[eArtikl.level1] == level_1 && rec[eArtikl.level2] == level_2);
+             let elemID = $("#tree-winc").jstree("get_selected")[0]; //id элемента из tree
+             let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+             let winc = project.mapWinc.get(prjprodID);
+             let elem = winc.listElem.find(it => it.id == elemID);
+             for (let furndetRec1 of eFurndet.list) {
+             if (furndetRec1[eFurndet.furniture_id1] == elem.sysfurnRec[eSysfurn.furniture_id]) {
+             
+             if (furndetRec1[eFurndet.furniture_id2] == null) { //НЕ НАБОР                                
+             pkSet.add(furndetRec1[eFurndet.artikl_id]);
+             } else {
+             for (let furndetRec2 of eFurndet.list) {
+             if (furndetRec1[eFurndet.furniture_id2] == furndetRec2[eFurndet.furniture_id1]) {
+             pkSet.add(furndetRec2[eFurndet.artikl_id]);
+             }
+             }
+             }
+             }
+             }
+             let artiklList = artiklArr.filter(rec => pkSet.has(rec[eArtikl.id]));
+             for (let i = 0; i < artiklList.length; i++) {
+             let tr = artiklList[i];
+             $("#tab-artikl").jqGrid('addRowData', i + 1, {
+             id: tr[eArtikl.id],
+             type: LEV1[tr[eArtikl.level1]],
+             code: tr[eArtikl.code],
+             name: tr[eArtikl.name]
+             });
+             }
+             }*/
 
             //Запишем артикл в скрипт
             function set_value_gson(ID) {
@@ -318,17 +309,17 @@
 
                     //Ручка
                 } else if (paramTaq === 'n45') {
-                    $("#n45").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n45").val(artiklRow.code + " / " + artiklRow.name);
                     $("#n46").val('');
 
                     //Подвес
                 } else if (paramTaq === 'n49') {
-                    $("#n49").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n49").val(artiklRow.code + " / " + artiklRow.name);
                     $("#n4A").val('');
 
                     //Замок
                 } else if (paramTaq === 'n4B') {
-                    $("#n4B").val(artiklRow.code + " ÷ " + artiklRow.name);
+                    $("#n4B").val(artiklRow.code + " / " + artiklRow.name);
                     $("#n4C").val('');
                 }
             }
