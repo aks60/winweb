@@ -309,7 +309,8 @@
 
                     //Ручка
                 } else if (paramTaq === 'n45') {
-                    $("#n45").val(artiklRow.code + " / " + artiklRow.name);
+                    $("#n45").val(artiklRow.code);
+                    $("#n4D").val(artiklRow.name);
                     $("#n46").val('');
 
                     //Подвес

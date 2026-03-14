@@ -159,7 +159,7 @@ export function elements(com, arr) {
 //Загрузка тегов страницы
 export function tree_to_tabs(nodeID) {
     try {
-        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-5").hide();
         if (nodeID !== '-2') {
             let winc = product.winCalc;
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
@@ -214,7 +214,8 @@ export function tree_to_tabs(nodeID) {
                     n42: env.getHeight(),
                     n43: furnitureRec[eFurniture.name],
                     n44: elem.typeOpen[2],
-                    n45: elem.handRec[0][eArtikl.code] + ' / ' + elem.handRec[0][eArtikl.name],
+                    n45: elem.handRec[0][eArtikl.code],
+                    n4D: elem.handRec[0][eArtikl.name],
                     n46: findef(elem.handColor[0], eColor.id, eColor)[eColor.name],
                     n47: elem.handLayout[1],
                     n48: elem.handHeight,
@@ -224,7 +225,8 @@ export function tree_to_tabs(nodeID) {
                     n4C: findef(elem.lockColor[0], eColor.id, eColor)[eColor.name],
                 });
                 $("#tabs-4").show();
-
+                $("#tabs-41").show();
+                
                 //Стеклопакет
             } else if (elem.type === Type.GLASS) {
                 let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === elem.colorID1);
@@ -241,36 +243,45 @@ export function tree_to_tabs(nodeID) {
     }
 }
 
-/*export function sysprof_to_frame(btnSrc) {
-    try {
-        let nodeID = $(product.table2).jstree("get_selected")[0];
-        let prjprodID = project.prjprodRec[ePrjprod.id];
-        let winc = project.mapWinc.get(prjprodID);
-        let elem = winc.listElem.find(it => it.id === nodeID);
-        let sysprofSet = new Set();
-
-        //Цикл по профилям ветки 
-        for (let sysprofRec of eSysprof.list) {
-            //Отфильтруем подходящие по параметрам
-            if (winc.nuni === sysprofRec[eSysprof.systree_id] && Type[elem.type][1] === sysprofRec[eSysprof.use_type]) {
-                let use_side_ID = sysprofRec[eSysprof.use_side];
-                if (use_side_ID === Layout[elem.layout][0]
-                        || ((elem.layout === 'BOTT' || elem.layout === 'TOP') && use_side_ID === UseSide.HORIZ[0])
-                        || ((elem.layout === 'RIGHT' || elem.layout === 'LEFT') && use_side_ID === UseSide.VERT[0])
-                        || use_side_ID === UseSide.ANY[0] || use_side_ID === UseSide.MANUAL[0]) {
-
-                    sysprofSet.add(sysprofRec);
-                }
-            }
-        }
-        product.sysprofArr = Array.from(sysprofSet);
-        product.buttonSrc = btnSrc;
-        $('#dialog-jsp').load('frame/dialog/sysprof.jsp');
-
-    } catch (e) {
-        console.error('Error: product.sysprof_to_frame() ' + e.message);
+export function btn_to_tabs(btnTaq) {
+    $("#tabs-41, #tabs-42").hide();
+    if (btnTaq === 'btnProdStv') {
+        $("#tabs-41").show();
+    } else if (btnTaq === 'btnProdAdd') {
+        $("#tabs-42").show();
     }
-}*/
+}
+
+/*export function sysprof_to_frame(btnSrc) {
+ try {
+ let nodeID = $(product.table2).jstree("get_selected")[0];
+ let prjprodID = project.prjprodRec[ePrjprod.id];
+ let winc = project.mapWinc.get(prjprodID);
+ let elem = winc.listElem.find(it => it.id === nodeID);
+ let sysprofSet = new Set();
+ 
+ //Цикл по профилям ветки 
+ for (let sysprofRec of eSysprof.list) {
+ //Отфильтруем подходящие по параметрам
+ if (winc.nuni === sysprofRec[eSysprof.systree_id] && Type[elem.type][1] === sysprofRec[eSysprof.use_type]) {
+ let use_side_ID = sysprofRec[eSysprof.use_side];
+ if (use_side_ID === Layout[elem.layout][0]
+ || ((elem.layout === 'BOTT' || elem.layout === 'TOP') && use_side_ID === UseSide.HORIZ[0])
+ || ((elem.layout === 'RIGHT' || elem.layout === 'LEFT') && use_side_ID === UseSide.VERT[0])
+ || use_side_ID === UseSide.ANY[0] || use_side_ID === UseSide.MANUAL[0]) {
+ 
+ sysprofSet.add(sysprofRec);
+ }
+ }
+ }
+ product.sysprofArr = Array.from(sysprofSet);
+ product.buttonSrc = btnSrc;
+ $('#dialog-jsp').load('frame/dialog/sysprof.jsp');
+ 
+ } catch (e) {
+ console.error('Error: product.sysprof_to_frame() ' + e.message);
+ }
+ }*/
 
 //Фурнитура стеклопакета
 export function furniture_to_stvorka(btnSrc) {
@@ -286,55 +297,55 @@ export function sideopen_to_stvorka(btnSrc) {
 
 //Артикл ручки, подвеса, замка
 /*export function artikl_to_stvork(btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-}*/
+ product.buttonSrc = btnSrc;
+ $('#dialog-jsp').load('frame/dialog/artikl.jsp');
+ }*/
 
 //Заполнение
 /*export function artikl_to_glass(btnSrc) {
-    try {
-        let nodeID = $(product.table2).jstree("get_selected")[0];
-        let prjprodID = project.prjprodRec[ePrjprod.id];
-        let winc = project.mapWinc.get(prjprodID);
-        let elem = winc.listElem.find(it => it.id === nodeID);
-
-        //Список доступных толщин в ветке системы например 4;5;8
-        let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
-        if (systreeRec != undefined) {
-            let depth = systreeRec[eSystree.depth];
-            depth = depth.replace(/;/g, ',');
-            if (depth.charAt(depth.length - 1) === ',') {
-                depth = depth.substring(0, depth.length - 1);
-            }
-            depth = depth.split(',');
-            let artiklList = eArtikl.list.filter(rec => rec[eArtikl.depth] != undefined && 5 == rec[eArtikl.level1]
-                        && [1, 2, 3].includes(rec[eArtikl.level2]) && depth.includes(rec[eArtikl.depth].toString()));
-
-            product.artiklArr = artiklList;
-            product.buttonSrc = btnSrc;
-            $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-
-        }
-    } catch (e) {
-        console.error('Error: product.artikl_to_glass() ' + e.message);
-    }
-}*/
+ try {
+ let nodeID = $(product.table2).jstree("get_selected")[0];
+ let prjprodID = project.prjprodRec[ePrjprod.id];
+ let winc = project.mapWinc.get(prjprodID);
+ let elem = winc.listElem.find(it => it.id === nodeID);
+ 
+ //Список доступных толщин в ветке системы например 4;5;8
+ let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
+ if (systreeRec != undefined) {
+ let depth = systreeRec[eSystree.depth];
+ depth = depth.replace(/;/g, ',');
+ if (depth.charAt(depth.length - 1) === ',') {
+ depth = depth.substring(0, depth.length - 1);
+ }
+ depth = depth.split(',');
+ let artiklList = eArtikl.list.filter(rec => rec[eArtikl.depth] != undefined && 5 == rec[eArtikl.level1]
+ && [1, 2, 3].includes(rec[eArtikl.level2]) && depth.includes(rec[eArtikl.depth].toString()));
+ 
+ product.artiklArr = artiklList;
+ product.buttonSrc = btnSrc;
+ $('#dialog-jsp').load('frame/dialog/artikl.jsp');
+ 
+ }
+ } catch (e) {
+ console.error('Error: product.artikl_to_glass() ' + e.message);
+ }
+ }*/
 
 //Изменение скрипта
 /*export function update_script() {
-    let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-    let winc = project.mapWinc.get(prjprodID);
-
-    $.ajax({//запишем профиль в серверную базу данных
-        url: 'dbset?action=updateScript',
-        data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson)})},
-        success: function (data) {
-            if (data.result != 'ok')
-                dialogMes('Сообщение', "<p>" + data.result);
-        },
-        error: function () {
-            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-        }
-    });
-}*/
+ let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
+ let winc = project.mapWinc.get(prjprodID);
+ 
+ $.ajax({//запишем профиль в серверную базу данных
+ url: 'dbset?action=updateScript',
+ data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson)})},
+ success: function (data) {
+ if (data.result != 'ok')
+ dialogMes('Сообщение', "<p>" + data.result);
+ },
+ error: function () {
+ dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+ }
+ });
+ }*/
 

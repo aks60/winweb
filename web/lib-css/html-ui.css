@@ -3,7 +3,7 @@ html, body {
     margin: 0;
 }
 
-#north { 
+#north {
     background-repeat:repeat-x;
     background-image:url('../lib-img/shadow4.jpg');
     width: calc(100% - 2px);
@@ -15,27 +15,27 @@ html, body {
     width: calc(100% - 2px);
 }
 
-#midl { 
-    border: 0 !important; 
+#midl {
+    border: 0 !important;
 }
 
-#south { 
+#south {
     background-repeat:repeat-x;
-    background-image:url('../lib-img/shadow2.jpg'); 
+    background-image:url('../lib-img/shadow2.jpg');
     width: calc(100% - 2px);
     height: 18px;
 }
 
-#north, 
-#west, #west1, #west2, west3, 
-#centr, 
-#east, #east1, #east2, #east3, 
-#south {  
-    border: 1px solid #ccc; 
+#north,
+#west, #west1, #west2, west3,
+#centr,
+#east, #east1, #east2, #east3,
+#south {
+    border: 1px solid #ccc;
 }
 
 .ui-dialog-buttonpane {
-   background: #efeffb !important; 
+    background: #efeffb !important;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -51,35 +51,40 @@ html, body {
     border-radius: 0;
 }
 
-/* Установить высоту строки, например, 30px */
+/* Установить высоту столбца */
+.ui-jqgrid .ui-jqgrid-htable th {
+    height: 16px  !important;
+}
+
+/* Установить высоту строки */
 .ui-jqgrid tr.jqgrow td {
-    height: 20px !important;
+    height: 18px !important;
     padding: 0 2px !important; /* Регулировка отступов, если нужно */
     vertical-align: middle; /* Вертикальное выравнивание */
 }
 
 .ui-pg-input, input.ui-widget, .ui-widget select,
-select.ui-widget, textarea.ui-widget, button.ui-widget { 
-    font-size: 14px; 
+select.ui-widget, textarea.ui-widget, button.ui-widget {
+    font-size: 12px;
 }
 
-p.pantitle {    
+p.pantitle {
     margin-top: 6px;
     margin-bottom: -3px;
     margin-left: 3px;
 }
 
 p.field, input.field, textarea.field {
-    border: transparent;     
-    border: 1px groove #ccc;   
-    height: 14px;  
+    border: transparent;
+    border: 1px groove #ccc;
+    height: 14px;
     font-size: 12px;
     font-weight: normal;
     font-style: normal;
     margin-top: 6px;
     margin-left: 4px;
     margin-bottom: 0px;
-    vertical-align: top; 
+    vertical-align: top;
     display: inline-block;
 }
 
