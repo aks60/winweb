@@ -141,7 +141,7 @@ export class TFurniture {
 
                     //Артикл
                     if (UCom.isFinite(areaStv.gson.param, PKjson.artiklHand)) { //если есть параметр то устан. вручную
-                        spcAdd.artiklRec(areaStv.handRec[0]); //выбр. вручную
+                        spcAdd.article(areaStv.handRec[0]); //выбр. вручную
                     } else {
                         areaStv.handRec[1] = spcAdd.artiklRec; //из детализации подбор
                     }
@@ -157,7 +157,7 @@ export class TFurniture {
 
                     //Артикл
                     if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLoop)) { //если есть параметр то устан. вручную
-                        spcAdd.artiklRec(areaStv.loopRec[0]); //выбр. вручную
+                        spcAdd.article(areaStv.loopRec[0]); //выбр. вручную
                     } else {
                         areaStv.loopRec[10] = spcAdd.artiklRec; //из детализации подбор
                     }
@@ -173,7 +173,7 @@ export class TFurniture {
 
                     //Артикл
                     if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
-                        spcAdd.artiklRec(areaStv.lockRec[0]); //выбр. вручную
+                        spcAdd.article(areaStv.lockRec[0]); //выбр. вручную
                     } else {
                         areaStv.lockRec[1] = spcAdd.artiklRec; //из детализации подбор
                     }

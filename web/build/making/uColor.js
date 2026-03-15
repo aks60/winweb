@@ -24,7 +24,7 @@ export class UColor {
 
             let artseriList = eArtikl.list.filter(rec => rec[eArtikl.groups4_id] === spcClon.artiklRec[eArtikl.groups4_id]);
             for (let artseriRec of artseriList) {
-                spcClon.artiklRec(artseriRec);
+                spcClon.article(artseriRec);
                 if (UColor.colorFromSetting(spcClon, 1, true)
                         && UColor.colorFromSetting(spcClon, 2, true)
                         && UColor.colorFromSetting(spcClon, 3, true)) {

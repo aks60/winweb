@@ -40,7 +40,7 @@ export class TRecord {
     }
     
     article(artiklRec) {
-        this.artikl = artiklRec[eArtikl.cod];
+        this.artikl = artiklRec[eArtikl.code];
         this.name = artiklRec[eArtikl.name];
         this.waste = artiklRec[eArtikl.otx_norm];
         this.unit = artiklRec[eArtikl.unit];
