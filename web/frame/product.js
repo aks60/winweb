@@ -10,6 +10,8 @@ export let product = {};
 export function resize() {
 
     product.winCalc.resize();
+    $('#n11').val(Math.round(product.winCalc.width));
+    $('#n12').val(Math.round(product.winCalc.height));    
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
     $("div .field2[dx]").each(function (index) {

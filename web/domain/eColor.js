@@ -16,6 +16,7 @@ eColor = {
     vrec: virtualRec(13, {1: -3, 3: 'virtual', 4: -3, 5: 'ffffff', 14: -3}),
     find(ID) {
         try {
+            ID = Number(ID);
             return this.list.seek(this.vrec, el => el[1] === ID);
         } catch (e) {
             console.error(e.message);
@@ -23,6 +24,7 @@ eColor = {
     },
     find3(colorFK) {
         try {
+            colorFK = Number(colorFK);
             if (colorFK === -3) {
                 return this.vrec;
             }

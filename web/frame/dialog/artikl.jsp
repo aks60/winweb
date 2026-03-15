@@ -173,8 +173,10 @@
                         
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        project.mapWinc.set(prjprodID, iwincalc); //новый экз.
+                        winc.location();
+                        
+                        //let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
+                        //project.mapWinc.set(prjprodID, iwincalc); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -274,17 +276,16 @@
                 } else if (paramTaq === 'n45') {
                     $("#n45").val(artiklRow.code);
                     $("#n4D").val(artiklRow.name);
-                    $("#n46").val('');
 
                     //Подвес
                 } else if (paramTaq === 'n49') {
                     $("#n49").val(artiklRow.code + " / " + artiklRow.name);
-                    $("#n4A").val('');
+                    //$("#n4A").val('');
 
                     //Замок
                 } else if (paramTaq === 'n4B') {
                     $("#n4B").val(artiklRow.code + " / " + artiklRow.name);
-                    $("#n4C").val('');
+                    //$("#n4C").val('');
                 }
             }
         </script>        

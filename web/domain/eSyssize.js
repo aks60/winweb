@@ -10,7 +10,7 @@ eSyssize = {
     zax: 6, //Заход импоста
     vrec: virtualRec(7),
     find(artiklRec) {
-        let id = artiklRec[eArtikl.syssize_id];
+        let id = Number(artiklRec[eArtikl.syssize_id]);
         return this.list.seek(this.vrec, rec => id === rec[this.id]);
     }
 };

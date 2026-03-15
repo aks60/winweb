@@ -50,11 +50,10 @@ export class Wincalc {
     resize() {
         this.cnv.width = this.cnv.offsetWidth;
         this.cnv.height = this.cnv.offsetHeight;
-        //this.listElem.forEach(el => el.initArtikle());
         this.location();
         this.draw();
-        $('#n11').val(Math.round(this.width));
-        $('#n12').val(Math.round(this.height));
+        //$('#n11').val(Math.round(this.width));
+        //$('#n12').val(Math.round(this.height));
     }
 
     build(script) {
@@ -250,10 +249,10 @@ export class Wincalc {
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
             
-            if(this.scale > .1) {
-                let furniture = new TFurniture(this);
-                furniture.furn();
-            }
+//            if(this.scale > .1) {
+//                let furniture = new TFurniture(this);
+//                furniture.furn();
+//            }
 
             //Прорисовка стеклопакетов
             this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());

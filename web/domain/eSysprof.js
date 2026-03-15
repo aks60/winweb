@@ -48,6 +48,7 @@ eSysprof = {
 
     find3(ID) {
         try {
+            ID = Number(ID);
             return this.list.seek(this.vrec, rec => rec[this.id] === ID);
         } catch (e) {
             console.error(e.message);

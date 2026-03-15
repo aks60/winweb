@@ -18,6 +18,7 @@ eSystree = {
     vrec: virtualRec(15),
     find(nuni) {
         try {
+            nuni = Number(nuni);
            return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
 
         } catch (e) {

@@ -39,10 +39,11 @@ eArtikl = {
     vrec: virtualRec(36, {1: -3, 2: '@', 5: 'virtual', 9: 20, 11: 0, 14: 64, 15: 4, 32: -3, 35: -3}),
     find(artiklID, analog) {
         try {
+            artiklID = Number(artiklID);
             if (artiklID === -3) {
                 return this.vrec;
             }
-            let artiklRec = this.list.seek(this.vrec, rec => Number(artiklID) === rec[this.id]);
+            let artiklRec = this.list.seek(this.vrec, rec => artiklID === rec[this.id]);
 
             if (analog === true && artiklRec[this.analog_id] !== null) {
                 const analogID = artiklRec[this.analog_id];
