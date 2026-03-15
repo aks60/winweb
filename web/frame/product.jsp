@@ -157,13 +157,15 @@
                     </div>
                     <div id="tabs-42">
                         <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220"></jst><br>
-                        <jst id="n4D" type='btn' label='Название' width='120' width2="220"></jst><br>  
+                        <jst id="n4D" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220"></jst><br>                                                                          
                         <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                         <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
-                        <jst id="n49" type='btn' label='Подвес (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
+                        <jst id="n49" type='btn' label='Подвес' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
+                        <jst id="n4E" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220"></jst><br>
-                        <jst id="n4B" type='btn' label='Замок (арт/наименов)' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
+                        <jst id="n4B" type='btn' label='Замок' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
+                        <jst id="n4G" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220"></jst><br>
                     </div>
                     <div id='south' class='abs' style='height: 22px'>

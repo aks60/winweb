@@ -7,6 +7,7 @@
         <script type="module">
             import {Type, Layout, PKjson} from './enums/enums.js';
             import {UCom} from './common/uCom.js';
+            import {TFurniture} from './build/making/TFurniture.js';
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
@@ -176,23 +177,21 @@
 
             function save_table() {                
                 try {
-                    let colorRow = getSelectedRow($(tab2Color)); //record справочника
+                    let colorRow = getSelectedRow($(tab2Color)); //row справочника
 
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
-
+//debugger;
                         //Запишем текстуру в gson 
                         set_value_gson(Number(colorRow.id)); 
+                        
+                        //Переcтройка
                         winc.location();
                         TFurniture.calc(winc);
-                        winc.draw;
+                        winc.draw();                        
 
                         //Запишем скрипт в локальн. бд                       
-                        project.prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson);
-                        
-                        //let cnv = document.getElementById("cnv");
-                        //product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        //project.mapWinc.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -201,7 +200,9 @@
                             success: function (data) {
                                 
                                 if (data.result === 'ok') {
-                                    set_value_html(colorRow.name); //запишем текстуру в html
+                                    
+                                    //Запишем текстуру в html
+                                    set_value_html(colorRow.name); 
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -281,7 +282,7 @@
                     else if (paramTaq === 'n35')
                         UCom.setJsonParam(elem.gson, ['param', PKjson.colorID3], ID);
                     else if (paramTaq === 'n46')
-                        elem.gson.param.colorHandl = ID;
+                       UCom.setJsonParam(elem.gson, ['param', PKjson.colorHand], ID);
                     else if (paramTaq === 'n4A')
                         UCom.setJsonParam(elem.gson, ['param', PKjson.colorLoop], ID);
                     else if (paramTaq === 'n4C')

@@ -13,6 +13,7 @@
             import {Wincalc} from './build/Wincalc.js';
             import {UCom} from './common/uCom.js';
             import {Type, PKjson} from './enums/enums.js';
+            import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
@@ -168,10 +169,13 @@
                         let artiklRow = $(tabArtikl).jqGrid('getRowData', rowid);  //row справочника
                         let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
-                        //Запишем скрипт в gson 
-                        set_value_gson(Number(artiklRow.id));  
+                        //Запишем артикл в gson 
+                        set_value_gson(Number(artiklRow.id));
+                        
+                        //Переcтройка
                         winc.location();
                         TFurniture.calc(winc);
+                        winc.draw();
                         
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
@@ -247,7 +251,7 @@
             }
 
             //Запишем артикл в скрипт
-            function set_value_gson(artiklRec) {
+            function set_value_gson(ID) {
                 //Стеклопакет
                 if (paramTaq === 'n51') {
                     UCom.setJsonParam(elem.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт

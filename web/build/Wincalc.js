@@ -57,8 +57,8 @@ export class Wincalc {
         this.cnv.height = this.cnv.offsetHeight;
         this.location();
         this.draw();
-        //$('#n11').val(Math.round(this.width));
-        //$('#n12').val(Math.round(this.height));
+        $('#n11').val(Math.round(this.width));
+        $('#n12').val(Math.round(this.height));
     }
 
     build(script) {
@@ -68,8 +68,7 @@ export class Wincalc {
             for (var el of  [this.listArea, this.listElem, this.listJoin, this.listAll, this.listKit]) {
                 el.length = 0;
             }
-            this.gson = JSON.parse(script);      //объектная модель конструкции
-            //this.setform(gson, this);             //форма конструкции, см. класс Area                   
+            this.gson = JSON.parse(script);      //объектная модель конструкции               
 
             //Главное окно
             if ('RECTANGL' === this.gson.type) {
@@ -94,11 +93,8 @@ export class Wincalc {
             this.root.sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
             this.root.artiklRec = eArtikl.find(this.root.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
             this.syssizRec = eSyssize.find(this.root.artiklRec); //системные константы
-            this.root.colorID1 = (this.gson.color1 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
-            this.root.colorID2 = (this.gson.color2 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
-            this.root.colorID3 = (this.gson.color3 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
-            
-            this.parametr(this.gson.param);
+
+            this.parametr(this.gson.param); //параметры
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
 
@@ -206,6 +202,10 @@ export class Wincalc {
     //Кальк.коорд. элементов конструкции
     location() {
         try {
+            this.root.colorID1 = (this.gson.color1 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
+            this.root.colorID2 = (this.gson.color2 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
+            this.root.colorID3 = (this.gson.color3 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
+            
             this.listElem.forEach(e => e.initArtikle()); //артиклы элементов            
             this.root.setLocation();
 
@@ -266,7 +266,6 @@ export class Wincalc {
             this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
 
             //Прорисовка рам
-            let arr = this.listElem.filter(el => el.type === Type.BOX_SIDE);
             this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
 
             //Прорисовка рам створок

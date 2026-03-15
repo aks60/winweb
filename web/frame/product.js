@@ -9,9 +9,8 @@ export let product = {};
 //Масштабирование
 export function resize() {
 
-    product.winCalc.resize();
-    $('#n11').val(Math.round(product.winCalc.width));
-    $('#n12').val(Math.round(product.winCalc.height));    
+    product.winCalc.resize(); 
+    
     //Прорисовка полей
     let winWidth = $('#east').width() - 24;
     $("div .field2[dx]").each(function (index) {
@@ -172,8 +171,8 @@ export function tree_to_tabs(nodeID) {
             if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
                 $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
                 loadingTab({
-                    n11: winc.width,
-                    n12: winc.height,
+                    n11: Math.round(winc.width),
+                    n12: Math.round(winc.height),
                     n14: eColor.find(winc.root.colorID1)[eColor.name],
                     n15: eColor.find(winc.root.colorID2)[eColor.name],
                     n16: eColor.find(winc.root.colorID3)[eColor.name]
@@ -212,8 +211,8 @@ export function tree_to_tabs(nodeID) {
                 let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
                 let env = elem.area.getGeometryN(0).getEnvelopeInternal();
                 loadingTab({
-                    n41: env.getWidth(),
-                    n42: env.getHeight(),
+                    n41: Math.round(env.getWidth()),
+                    n42: Math.round(env.getHeight()),
                     n43: furnitureRec[eFurniture.name],
                     n44: elem.typeOpen[2],
                     n45: elem.handRec[0][eArtikl.code],

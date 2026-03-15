@@ -99,6 +99,7 @@ export class AreaStvorka extends AreaSimple {
             //Текстура ручки
             if (UCom.isFinite(this.gson.param, PKjson.colorHand)) {
                 this.handColor[0] = this.gson.param[PKjson.colorHand];
+                
             } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
                 this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
                 if (this.handColor[0] < 0) { //если все текстуры группы
