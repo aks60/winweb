@@ -66,7 +66,7 @@
             //Создание конструкции
             let cnv = document.getElementById("cnv");
             let script = project.prjprodRec[ePrjprod.script];
-            product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, script);
+            product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, script, true);
 
             product.table1 = document.getElementById('table1');
             product.table2 = document.getElementById('table2');

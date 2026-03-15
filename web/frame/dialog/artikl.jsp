@@ -170,14 +170,12 @@
 
                         //Запишем скрипт в gson 
                         set_value_gson(Number(artiklRow.id));  
+                        winc.location();
+                        TFurniture.calc(winc);
                         
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                        winc.location();
                         
-                        //let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        //project.mapWinc.set(prjprodID, iwincalc); //новый экз.
-
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',

@@ -40,10 +40,15 @@ export class Wincalc {
         }
     }
 
-    static new (canvas, width, height, script) {
+    static new (canvas, width, height, script, furn) {
         canvas.width = width;
         canvas.height = height;
-        return new Wincalc(canvas).build(script);
+        let w = new Wincalc(canvas).build(script);
+        if(furn === true) {
+            let f = new TFurniture(w);
+            f.furn();
+        }
+        return w;
     }
 
     //Пересчитать и перерисовать

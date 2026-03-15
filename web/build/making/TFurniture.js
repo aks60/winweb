@@ -18,7 +18,11 @@ export class TFurniture {
         //this.furnitureVar = new FurnitureVar(winc);
         this.furnitureDet = new FurnitureDet(winc);
     }
-
+    static calc(winc) {
+        let f = new TFurniture(winc);
+        f.furn();        
+    }
+    
     furn() {
         let stvorkaList = this.winc.listArea.filter(rec => rec.type === Type.STVORKA);
         try {

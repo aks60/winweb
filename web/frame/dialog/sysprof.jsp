@@ -121,25 +121,14 @@
             function save_table() {
 
                 let rowid = $(tabSysprof).jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                let sysprofRow = $(tabSysprof).jqGrid('getRowData', rowid);  //record справочника
-                let sysprofRec = eSysprof.list.find(rec => rec[eSysprof.id] === Number(sysprofRow.id));
-                let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                elem.artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
-                elem.artiklRecAn = eArtikl.find(sysprofRec[eSysprof.artikl_id], true); //аналог                  
+                let sysprofRow = $(tabSysprof).jqGrid('getRowData', rowid);  //record справочника               
 
-                if (elem.type == Type.BOX_SIDE) { //коробка
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.sysprofID], sysprofRow.id); //запишем профиль в скрипт
-                } else if (elem.type == Type.STV_SIDE) { //створка 
-                    let sideStv = ["", PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
-                    UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.sysprofID], sysprofRow.id);
-                } else if (elem.type == Type.GLASS) {
-
-                }              
+                //Запишем скрипт в gson 
+                set_value_gson(sysprofRow);
+                winc.location();
 
                 //Запишем профиль в локальн. бд
                 project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
-                let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
-                project.mapWinc.set(prjprodID, iwincalc); //новый экз.
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({
@@ -157,6 +146,21 @@
                         dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                     }
                 });
+            }
+
+            //Запишем профиль в скрипт
+            function set_value_gson(sysprofRow) {
+                
+                if (elem.type == Type.BOX_SIDE) { //коробка
+                    UCom.setJsonParam(elem.gson, ['param', PKjson.sysprofID], sysprofRow.id); //запишем профиль в скрипт
+                    
+                } else if (elem.type == Type.STV_SIDE) { //створка 
+                    let sideStv = ["", PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
+                    UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.sysprofID], sysprofRow.id);
+                    
+                } else if (elem.type == Type.GLASS) {
+
+                }
             }
         </script>        
     </head>

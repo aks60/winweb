@@ -182,13 +182,17 @@
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
                         //Запишем текстуру в gson 
-                        set_value_gson(Number(colorRow.id));                       
+                        set_value_gson(Number(colorRow.id)); 
+                        winc.location();
+                        TFurniture.calc(winc);
+                        winc.draw;
 
-                        //Запишем скрипт в локальн. бд
-                        let cnv = document.getElementById("cnv");
+                        //Запишем скрипт в локальн. бд                       
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(product.winCalc.gson);
-                        product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
-                        project.mapWinc.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
+                        
+                        //let cnv = document.getElementById("cnv");
+                        //product.winCalc = Wincalc.new(cnv, cnv.offsetWidth, cnv.offsetHeight, project.prjprodRec[ePrjprod.script]);
+                        //project.mapWinc.set(project.prjprodRec[ePrjprod.id], product.winCalc); //новый экз.
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
