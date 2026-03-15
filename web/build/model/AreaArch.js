@@ -15,7 +15,7 @@ export class AreaArch extends AreaSimple {
                 this.owner = this;
 
         } catch (e) {
-            errorLog('Error:AreaArch.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -60,7 +60,7 @@ export class AreaArch extends AreaSimple {
             let geoFalz = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
         } catch (e) {
-            errorLog('Error: AreaArch.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
     
@@ -68,7 +68,7 @@ export class AreaArch extends AreaSimple {
         try {
             super.paint();
         } catch (e) {
-            errorLog('Error: AreaArch.paint() ' + e.message);
+            console.error(e.message);
         }
     }      
 }

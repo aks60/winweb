@@ -19,7 +19,7 @@ export class AreaSimple extends Com5t {
             this.winc.listArea.push(this);
             this.winc.listAll.push(this);
         } catch (e) {
-            errorLog('Error: AreaSimple.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
     /**
@@ -35,7 +35,7 @@ export class AreaSimple extends Com5t {
             //    sysprofRec = eSysprof.list.find4(this.winc.nuni, UseType.FRAME.id, UseSide.ANY);
             //}
         } catch (e) {
-            errorLog('Error: AreaSimple.initConstructiv() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -47,7 +47,7 @@ export class AreaSimple extends Com5t {
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
 
         } catch (e) {
-            errorLog('Error: AreaSimple.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -222,7 +222,7 @@ export class AreaSimple extends Com5t {
             }
             this.winc.ctx.restore();
         } catch (e) {
-            errorLog('Error: AreaSimple.paint() ' + e.message);
+            console.error(e.message);
         }
     }
 }

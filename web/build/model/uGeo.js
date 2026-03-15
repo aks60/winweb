@@ -144,7 +144,7 @@ UGeo.splitPolygon = (geom, segm) => {
         return [Polygon.new(cooL), Polygon.new(cooR)];
 
     } catch (e) {
-        errorLog("Error: UGeo.splitPolygon(*) " + e.message);
+        console.error(e.message);
     }
 };
 
@@ -204,7 +204,7 @@ UGeo.crossGeoOfLine = (poly, line) => {
         }
         return out;
     } catch (e) {
-        errorLog("Error: UGeo.crossGeoOfLine()" + e);
+        console.error(e.message);
     }
 };
 
@@ -236,7 +236,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
             return polyRect;
         }
     } catch (e) {
-        errorLog("Error: uGeo.bufferGeometry() " + e);
+        console.error(e.message);
     }
 };
 
@@ -314,7 +314,7 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
         return result;
 
     } catch (e) {
-        errorLog("Error: UGeo.bufferRectangl() " + e);
+        console.error(e.message);
     }
 };
 
@@ -367,7 +367,7 @@ UGeo.bufferCurve = (geoShell, dist) => {
         return result; 
         
     } catch (e) {
-        errorLog("Ошибка:UGeo.bufferCurve() " + e);
+        console.error(e.message);
     }
 }
 
@@ -401,7 +401,7 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
         listBuffer.push(listBuffer[0]);
         return  Com5t.gf.createPolygon(listBuffer);
     } catch (e) {
-        errorLog("Error: UGeo.bufferPolygon() " + e.message);
+        console.error(e.message);
     }
 };
 
@@ -418,7 +418,7 @@ UGeo.newLineArch = (x1, x2, y, h, z) => {
         lc.forEach(c => c.z = z);
         return Com5t.gf.createLineString(lc);
     } catch (e) {
-        errorLog("Error: UGeo.lineArch() " + e.message);
+        console.error(e.message);
     }
 };
 
@@ -470,7 +470,7 @@ UGeo.getIndex = (geo, id) => {
             return i;
         }
     }
-    errorLog("Error: UGeo.getIndex()");
+    console.error("Error: UGeo.getIndex()");
 };
 
 /**
@@ -494,7 +494,7 @@ UGeo.lineTip = (midle, tipX, tipY, angl, length) => {
         let geom = aff.transform(geometry);
         return geom;
     } catch (e) {
-        errorLog("Error: UGeo.lineTip() " + e.message);
+        console.error(e.message);
     }
 };
 

@@ -7,7 +7,7 @@ export class AreaDoor extends AreaSimple {
         try {
             alrt('new AreaDoor');
         } catch (e) {
-            errorLog('Error: AreaDoor.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -15,7 +15,7 @@ export class AreaDoor extends AreaSimple {
         try {
             super.paint();
         } catch (e) {
-            errorLog('Error: AreaDoor.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
 }

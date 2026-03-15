@@ -69,7 +69,7 @@ function deployTaq(selectors) {
     }
 }
 
-function card_deploy2(taq, type) {
+function deployCard(taq, type) {
     let
             title2 = $(taq).attr('card_title'),
             width2 = $(taq).attr('card_width'),
@@ -162,7 +162,7 @@ function card_deploy2(taq, type) {
     }
 }
 
-function load_tabs(records) {
+function loadingTab(records) {
     for (let key in records) {
         $("#" + key).val(records[key]);
     }
@@ -344,7 +344,7 @@ function findef(key, index, domain) {
         return domain.vrec;
 
     } catch (e) {
-        errorLog('Error: uGui.findef() ' + e.message);
+        console.error(e.message);
     }
 }
 
@@ -361,11 +361,6 @@ Math.toDegrees = function (x) {
 Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
-
-function errorLog(mes) {
-    //alert(mes); 
-    console.log(mes);
-}
 
 function traverseJson(data) {
     if (typeof data === 'object' && data !== null) {

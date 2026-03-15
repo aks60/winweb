@@ -21,7 +21,7 @@ eSystree = {
            return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
 
         } catch (e) {
-            errorLog('Error: eSystree.find() ' + e.message);
+            console.error(e.message);
         }
     }
 };

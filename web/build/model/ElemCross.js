@@ -19,7 +19,7 @@ export class ElemCross extends ElemSimple {
             this.addListenerEvents();
             this.anglCut = [90, 90]; //угол реза            
         } catch (e) {
-            errorLog('Error: ElemCross.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -50,7 +50,7 @@ export class ElemCross extends ElemSimple {
                 this.artiklRecAn[eArtikl.size_centr] = 40;
             }
         } catch (e) {
-            errorLog('Error: ElemCross.initArtikle() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -79,7 +79,7 @@ export class ElemCross extends ElemSimple {
             this.area = OverlayOp.intersection(geoFalz, areaEnvelope); //полигон элемента конструкции
 
         } catch (e) {
-            errorLog("Error: ElemCross.setLocation " + e);
+            console.error(e.message);
         }
     }
 
@@ -94,7 +94,7 @@ export class ElemCross extends ElemSimple {
                 this.winc.paint(geoPaint);
             }
         } catch (e) {
-            errorLog('Error: ElemCross.paint() ' + e.message);
+            console.error(e.message);
         }
     }
 }

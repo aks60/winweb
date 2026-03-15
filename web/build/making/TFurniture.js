@@ -39,7 +39,7 @@ export class TFurniture {
                 }
             }
         } catch (e) {
-            errorLog('Error: TFurniture.furn() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -71,7 +71,7 @@ export class TFurniture {
                 }
             }
         } catch (e) {
-            errorLog('Error: TFurniture.variant() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -126,7 +126,7 @@ export class TFurniture {
             return true;
 
         } catch (e) {
-            errorLog('Error: TFurniture.detail() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -187,7 +187,7 @@ export class TFurniture {
                 }
             }
         } catch (e) {
-            errorLog('Error: TFurniture.settingStvAndSpc() ' + e.message);
+            console.error(e.message);
         }
     }
 }

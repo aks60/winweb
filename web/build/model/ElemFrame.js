@@ -15,7 +15,7 @@ export class ElemFrame extends ElemSimple {
             super(winc, gson, owner);
             this.addListenerEvents();
         } catch (e) {
-            errorLog('Error: ElemFrame.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -47,7 +47,7 @@ export class ElemFrame extends ElemSimple {
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог             
 
         } catch (e) {
-            errorLog('Error: ElemFrame.initArtikle() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -73,7 +73,7 @@ export class ElemFrame extends ElemSimple {
                 }
             }
         } catch (e) {
-            errorLog('Error: ElemFrame.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -87,7 +87,7 @@ export class ElemFrame extends ElemSimple {
                 this.winc.paint(this.area);
             }
         } catch (e) {
-            errorLog('Error: ElemFrame.paint() ' + e.message);
+            console.error(e.message);
         }
     }
 

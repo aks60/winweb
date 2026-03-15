@@ -16,7 +16,7 @@ export class ElemGlass extends ElemSimple {
         try {
             super(winc, gson, owner);
         } catch (e) {
-            errorLog('Error: ElemGlass.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -63,7 +63,7 @@ export class ElemGlass extends ElemSimple {
                 }
             }
         } catch (e) {
-            errorLog('Error: ElemGlass.initArtikl() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -80,7 +80,7 @@ export class ElemGlass extends ElemSimple {
                 coo[coo.length - 1].z = coo[1].z;
             }
         } catch (e) {
-            errorLog('Error: ElemGlass.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -98,7 +98,7 @@ export class ElemGlass extends ElemSimple {
                 //
             }
         } catch (e) {
-            errorLog('Error: ElemGlass.paint() ' + e.message);
+            console.error(e.message);
         }
     }
 }

@@ -82,6 +82,8 @@
             document.querySelector('#n33 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n33'));
             document.querySelector('#n34 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n34'));
             document.querySelector('#n35 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n35'));
+            document.querySelector('#n43 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/furniture.jsp?param=n43'));
+            document.querySelector('#n44 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/sideopen.jsp?param=n44'));
             document.querySelector('#n45 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n45'));
             document.querySelector('#n46 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n46'));
             document.querySelector('#n4A + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n4A'));
@@ -151,8 +153,8 @@
                     <div id="tabs-41">
                     <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
                     <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
-                    <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="product.furniture_to_stvorka('n43');"></jst><br>                          
-                    <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click="product.sideopen_to_stvorka('n44')"></jst><br>
+                    <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220"></jst><br>                          
+                    <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220"></jst><br>
                      </div>
                     <div id="tabs-42">
                     <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220"></jst><br>

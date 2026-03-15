@@ -42,7 +42,7 @@ eSysprof = {
             }
             return mapPrio.get(minLevel);
         } catch (e) {
-            errorLog('Error: eSysprof.find2() ' + e.message);
+            console.error(e.message);
         }
     },
 
@@ -50,7 +50,7 @@ eSysprof = {
         try {
             return this.list.seek(this.vrec, rec => rec[this.id] === ID);
         } catch (e) {
-            errorLog('Error: eSysprof.find3() ' + e.message);
+            console.error(e.message);
         }
     },
 
@@ -74,7 +74,7 @@ eSysprof = {
             }
 
         } catch (e) {
-            errorLog('Error: eSysprof.find5() ' + e.message);
+            console.error(e.message);
         }
     }
 };

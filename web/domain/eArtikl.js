@@ -51,7 +51,7 @@ eArtikl = {
             return artiklRec;
             
         } catch (e) {
-            errorLog('Error: eArtikl.find() ' + e.message);
+            console.error(e.message);
         }
     },
     find2(code) {
@@ -63,7 +63,7 @@ eArtikl = {
             return artiklRec;
             
         } catch (e) {
-            errorLog('Error: eArtikl.find() ' + e.message);
+            console.error(e.message);
         }
     },   
 };

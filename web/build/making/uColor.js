@@ -157,7 +157,7 @@ export class UColor {
                 return false;
             }
         } catch (e) {
-            errorLog("Error: UColor.colorFromSetting3) " + e);
+            console.error(e.message);
         }
         return true;
     }
@@ -177,7 +177,7 @@ export class UColor {
             return -3;
 
         } catch (e) {
-            errorLog('Error: UColor.findColorFromArtdet() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -239,8 +239,7 @@ export class UColor {
                     return -1;
             }
         } catch (e) {
-            errorLog("Error: UColor.getID_colorUS() " + e);
-            return -1;
+            console.error(e.message);
         }
     }
 
@@ -282,8 +281,7 @@ export class UColor {
             return -1;
 
         } catch (e) {
-            errorLog("Error: UColor.scanFromProfSide() " + e);
-            return -1;
+            console.error(e.message);
         }
     }
 }

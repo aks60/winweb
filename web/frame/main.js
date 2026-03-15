@@ -137,7 +137,7 @@ export function Test1() {
 //        PRINT(o3[0]);
 //        PRINT(o3[1]);
 //    } catch (e) {
-//        errorLog('Error: Test1()  ' + e.message);
+//        console.error(e.message);
 //    }
 }
 

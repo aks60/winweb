@@ -36,7 +36,7 @@ export class Wincalc {
             this._cnv = canvas;
             this._ctx = canvas.getContext('2d');
         } catch (e) {
-            errorLog('Error: Wincalc.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -105,7 +105,7 @@ export class Wincalc {
             return this;
 
         } catch (e) {
-            errorLog('Error: Wincalc.build(). ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -138,7 +138,7 @@ export class Wincalc {
                 }
             }
         } catch (e) {
-            errorLog('Error: Wincalc.parametr() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -195,7 +195,7 @@ export class Wincalc {
                 this.creator(k, hmDip.get(k));
             }
         } catch (e) {
-            errorLog('Error: Wincalc.creator() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -230,7 +230,7 @@ export class Wincalc {
             this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.setLocation());
 
         } catch (e) {
-            errorLog('Error: Wincalc.location() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -278,7 +278,7 @@ export class Wincalc {
             this.ctx.restore();
 
         } catch (e) {
-            errorLog('Error: Wincalc.draw() ' + e.message);
+            console.error(e.message);
         }
     }
 

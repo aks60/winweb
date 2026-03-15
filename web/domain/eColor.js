@@ -18,7 +18,7 @@ eColor = {
         try {
             return this.list.seek(this.vrec, el => el[1] === ID);
         } catch (e) {
-            errorLog('Error: eColor.find() ' + e.message);
+            console.error(e.message);
         }
     },
     find3(colorFK) {
@@ -32,7 +32,7 @@ eColor = {
                 return this.list.seek(this.vrec, rec => rec[this.id] === colorFK);
             }
         } catch (e) {
-            errorLog('Error: eColor.find() ' + e.message);
+            console.error(e.message);
         }
     }
 };

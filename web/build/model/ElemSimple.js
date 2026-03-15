@@ -91,7 +91,7 @@ export class ElemSimple extends Com5t {
                         let wincPress = Coordinate.new(X, Y);
                         this.pointPress = [evt.offsetX, evt.offsetY];
                         let inside = UGeo.insidePoly(this.area, X, Y);
-                        
+
                         //Если клик внутри контура
                         if (inside === true) {
                             ++this.passMask[1];
@@ -175,7 +175,7 @@ export class ElemSimple extends Com5t {
                 });
 
             } catch (e) {
-                errorLog("Error: ElemSimple.addListenerEvents() " + e.message);
+                console.error(e.message);
             }
         }
     }
@@ -197,15 +197,15 @@ export class ElemSimple extends Com5t {
                 return (this.type === Type.IMPOST || this.type === Type.SHTULP) ? Layout.VER : Layout.LEF;
             }
         } catch (e) {
-            errorLog("Error: ElemSimple.layout() " + e.message);
+            console.error(e.message);
         }
         return Layout.ANY;
     }
 
     onMove = () => {
     }
-    ;
-            paint() {
+
+    paint() {
     }
 }
 

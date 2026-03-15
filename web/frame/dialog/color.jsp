@@ -170,7 +170,7 @@
                         }
                     }
                 } catch (e) {
-                    errorLog('Error: color.color_set() ' + e.message);
+                    console.error(e.message);
                 }
             }
 
@@ -223,7 +223,7 @@
                         }
                     }
                 } catch (e) {
-                    errorLog('Error: save_table() ' + e.message);
+                    console.error(e.message);
                 }
             }
 

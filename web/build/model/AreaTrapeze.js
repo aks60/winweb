@@ -12,7 +12,7 @@ export class AreaTrapeze extends AreaSimple {
                 this.owner = this;
 
         } catch (e) {
-            errorLog('Error:AreaTrapeze.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -29,7 +29,7 @@ export class AreaTrapeze extends AreaSimple {
             let geoFalz = UGeo.bufferGeometry(geoShell, this.winc.listElem, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
         } catch (e) {
-            errorLog('Error: AreaTrapeze.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
     
@@ -37,7 +37,7 @@ export class AreaTrapeze extends AreaSimple {
         try {
             super.paint();
         } catch (e) {
-            errorLog('Error: AreaTrapeze.paint() ' + e.message);
+            console.error(e.message);
         }
     }    
 }

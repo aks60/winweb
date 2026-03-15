@@ -11,7 +11,7 @@ eSyspar1 = {
         try {
             return list.filter(rec => rec[systree_id] == _nuni);
         } catch (e) {
-            errorLog('Error: eSyspar1.filter() ' + e.message);
+            console.error(e.message);
         }
     }
 };

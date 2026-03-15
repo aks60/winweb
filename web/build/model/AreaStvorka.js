@@ -70,7 +70,7 @@ export class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (e) {
-            errorLog("Error: AreaStvorka.initStvorka() " + e.message);
+            console.error(e.message);
         }
     }
 
@@ -148,7 +148,7 @@ export class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (e) {
-            errorLog("Error: AreaStvorka.initArtikle() " + e.message);
+            console.error(e.message);
         }
     }
 
@@ -237,7 +237,7 @@ export class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (e) {
-            errorLog("Error: AreaStvorka.setLocation() " + e.message);
+            console.error(e.message);
         }
     }
 
@@ -263,7 +263,7 @@ export class AreaStvorka extends AreaSimple {
                 }
             }
         } else {
-            errorLog('Error: AreaStvorka.paint() ' + e.message);
+            console.error('Error: AreaStvorka.paint()');
         }
     }
 }

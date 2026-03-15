@@ -40,7 +40,7 @@ export class Com5t {
             this.owner = owner;
             this.gson = gson;
         } catch (e) {
-            errorLog('Error: Com5t.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 

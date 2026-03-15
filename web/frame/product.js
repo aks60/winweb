@@ -46,7 +46,7 @@ export function init_table() {
             }
         });
     } catch (e) {
-        errorLog("Error: product.init_table() " + e.message);
+        console.error(e.message);
     }
 }
 
@@ -72,7 +72,7 @@ export function load_table1() {
         }
         $(product.table1).jqGrid("setSelection", 1);
     } catch (e) {
-        errorLog("Error: product.load_table1() " + e.message);
+        console.error(e.message);
     }
 }
 
@@ -113,7 +113,7 @@ export function load_table2(tabtree) {
                     });
         }
     } catch (e) {
-        errorLog("Error: product.load_table2() " + e.message);
+        console.error(e.message);
     }
 }
 
@@ -152,7 +152,7 @@ export function elements(com, arr) {
             }
         }
     } catch (e) {
-        errorLog("Error: product.elements() " + e.message);
+        console.error(e.message);
     }
 }
 
@@ -169,7 +169,7 @@ export function tree_to_tabs(nodeID) {
             //Коробка
             if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
                 $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
-                load_tabs({
+                loadingTab({
                     n11: winc.width,
                     n12: winc.height,
                     n14: eColor.find(winc.root.colorID1)[eColor.name],
@@ -195,7 +195,7 @@ export function tree_to_tabs(nodeID) {
                 let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1),
                         color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2),
                         color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
-                load_tabs({
+                loadingTab({
                     n31: elem.artiklRec[eArtikl.code],
                     n32: elem.artiklRec[eArtikl.name],
                     n36: (elem.artiklRec[eArtikl.analog_id] === null) ? '' : elem.artiklRecAn[eArtikl.code],
@@ -209,7 +209,7 @@ export function tree_to_tabs(nodeID) {
             } else if (elem.type === Type.STVORKA) {
                 let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
                 let env = elem.area.getGeometryN(0).getEnvelopeInternal();
-                load_tabs({
+                loadingTab({
                     n41: env.getWidth(),
                     n42: env.getHeight(),
                     n43: furnitureRec[eFurniture.name],
@@ -230,7 +230,7 @@ export function tree_to_tabs(nodeID) {
                 //Стеклопакет
             } else if (elem.type === Type.GLASS) {
                 let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === elem.colorID1);
-                load_tabs({
+                loadingTab({
                     n51: elem.artiklRec[eArtikl.code],
                     n52: elem.artiklRec[eArtikl.name],
                     n53: color1Rec[eColor.name]
@@ -239,7 +239,7 @@ export function tree_to_tabs(nodeID) {
             }
         }
     } catch (e) {
-        errorLog('Error: product.tree_to_tabs() ' + e.message);
+        console.error(e.message);
     }
 }
 
@@ -251,101 +251,4 @@ export function btn_to_tabs(btnTaq) {
         $("#tabs-42").show();
     }
 }
-
-/*export function sysprof_to_frame(btnSrc) {
- try {
- let nodeID = $(product.table2).jstree("get_selected")[0];
- let prjprodID = project.prjprodRec[ePrjprod.id];
- let winc = project.mapWinc.get(prjprodID);
- let elem = winc.listElem.find(it => it.id === nodeID);
- let sysprofSet = new Set();
- 
- //Цикл по профилям ветки 
- for (let sysprofRec of eSysprof.list) {
- //Отфильтруем подходящие по параметрам
- if (winc.nuni === sysprofRec[eSysprof.systree_id] && Type[elem.type][1] === sysprofRec[eSysprof.use_type]) {
- let use_side_ID = sysprofRec[eSysprof.use_side];
- if (use_side_ID === Layout[elem.layout][0]
- || ((elem.layout === 'BOTT' || elem.layout === 'TOP') && use_side_ID === UseSide.HORIZ[0])
- || ((elem.layout === 'RIGHT' || elem.layout === 'LEFT') && use_side_ID === UseSide.VERT[0])
- || use_side_ID === UseSide.ANY[0] || use_side_ID === UseSide.MANUAL[0]) {
- 
- sysprofSet.add(sysprofRec);
- }
- }
- }
- product.sysprofArr = Array.from(sysprofSet);
- product.buttonSrc = btnSrc;
- $('#dialog-jsp').load('frame/dialog/sysprof.jsp');
- 
- } catch (e) {
- console.error('Error: product.sysprof_to_frame() ' + e.message);
- }
- }*/
-
-//Фурнитура стеклопакета
-export function furniture_to_stvorka(btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-jsp').load('frame/dialog/furniture.jsp');
-}
-
-//Сторона открывания
-export function sideopen_to_stvorka(btnSrc) {
-    product.buttonSrc = btnSrc;
-    $('#dialog-jsp').load('frame/dialog/sideopen.jsp');
-}
-
-//Артикл ручки, подвеса, замка
-/*export function artikl_to_stvork(btnSrc) {
- product.buttonSrc = btnSrc;
- $('#dialog-jsp').load('frame/dialog/artikl.jsp');
- }*/
-
-//Заполнение
-/*export function artikl_to_glass(btnSrc) {
- try {
- let nodeID = $(product.table2).jstree("get_selected")[0];
- let prjprodID = project.prjprodRec[ePrjprod.id];
- let winc = project.mapWinc.get(prjprodID);
- let elem = winc.listElem.find(it => it.id === nodeID);
- 
- //Список доступных толщин в ветке системы например 4;5;8
- let systreeRec = eSystree.list.find(rec => winc.nuni === rec[eSystree.id]);
- if (systreeRec != undefined) {
- let depth = systreeRec[eSystree.depth];
- depth = depth.replace(/;/g, ',');
- if (depth.charAt(depth.length - 1) === ',') {
- depth = depth.substring(0, depth.length - 1);
- }
- depth = depth.split(',');
- let artiklList = eArtikl.list.filter(rec => rec[eArtikl.depth] != undefined && 5 == rec[eArtikl.level1]
- && [1, 2, 3].includes(rec[eArtikl.level2]) && depth.includes(rec[eArtikl.depth].toString()));
- 
- product.artiklArr = artiklList;
- product.buttonSrc = btnSrc;
- $('#dialog-jsp').load('frame/dialog/artikl.jsp');
- 
- }
- } catch (e) {
- console.error('Error: product.artikl_to_glass() ' + e.message);
- }
- }*/
-
-//Изменение скрипта
-/*export function update_script() {
- let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
- let winc = project.mapWinc.get(prjprodID);
- 
- $.ajax({//запишем профиль в серверную базу данных
- url: 'dbset?action=updateScript',
- data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson)})},
- success: function (data) {
- if (data.result != 'ok')
- dialogMes('Сообщение', "<p>" + data.result);
- },
- error: function () {
- dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
- }
- });
- }*/
 

@@ -14,7 +14,7 @@ export class AreaRectangl extends AreaSimple {
                 this.owner = this;
 
         } catch (e) {
-            errorLog('Error:AreaRectangl.constructor() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -32,7 +32,7 @@ export class AreaRectangl extends AreaSimple {
             this.area = Com5t.gf.createMultiPolygon([geoShell, geoInner, geoFalz]);
 
         } catch (e) {
-            errorLog('Error:AreaRectangl.setLocation() ' + e.message);
+            console.error(e.message);
         }
     }
 
@@ -40,7 +40,7 @@ export class AreaRectangl extends AreaSimple {
         try {
             super.paint();
         } catch (e) {
-            errorLog('Error: AreaRectangl.paint() ' + e.message);
+            console.error(e.message);
         }
     }
 }
