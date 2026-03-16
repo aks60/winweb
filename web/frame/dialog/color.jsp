@@ -181,10 +181,10 @@
 
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
-//debugger;
+debugger;
                         //Запишем текстуру в gson 
                         set_value_gson(Number(colorRow.id)); 
-                        
+                
                         //Переcтройка
                         winc.location();
                         TFurniture.calc(winc);

@@ -82,6 +82,7 @@ export class AreaStvorka extends AreaSimple {
      * или вручную.
      */
     initArtikle() {
+        debugger;
         try {
             //Поиск по параметру или первая запись из списка...
             //Фурнитура

@@ -229,6 +229,7 @@ export class Wincalc {
 
             //Создание створки
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
+            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initArtikle());
             this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.initArtikle());
             this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
             this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.setLocation());
