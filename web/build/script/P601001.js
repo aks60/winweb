@@ -5,9 +5,6 @@ export let p601001 = {
   "ord": 1,
   "nuni": 8,
   "name": "KBE\\KBE 58\\1 ОКНА\\Открывание внутрь (ств. Z77)",
-  "color1": 1009,
-  "color2": 10009,
-  "color3": 1009,
   "id": 0.0,
   "childs": [
     {

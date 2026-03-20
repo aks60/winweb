@@ -84,21 +84,21 @@ export function load_table2(tabtree) {
             let arr = new Array();
             let root = product.winCalc.root;
 
-            if (root.type === Type.RECTANGL)
-                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
-            else if (root.type === Type.TRAPEZE)
-                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
-            else if (root.type === Type.TRIANGL)
-                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
-            else if (root.type === Type.ARCH)
-                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
+//            if (root.type === Type.RECTANGL)
+//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
+//            else if (root.type === Type.TRAPEZE)
+//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
+//            else if (root.type === Type.TRIANGL)
+//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
+//            else if (root.type === Type.ARCH)
+//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
 
-            arr.push({'id': -1, 'parent': root.id, 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
-            arr.push({'id': -2, 'parent': root.id, 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
+            arr.push({'id': -1, 'parent': '#', 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
+            arr.push({'id': 0, 'parent': '#', 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
 
             //Рамы
             for (let el of root.frames) {
-                arr.push({'id': el.id, 'parent': -2, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
+                arr.push({'id': el.id, 'parent': 0, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
             }
 
             elements(root, arr); //вход в рекурсию    
@@ -122,7 +122,7 @@ export function load_table2(tabtree) {
 export function elements(com, arr) {
     try {
         if (com.type === Type.STVORKA) {
-            arr.push({'id': com.id, 'parent': 0, 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
+            arr.push({'id': com.id, 'parent': "#", 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
 
             //Рамы створок
             for (let el of com.frames) {
@@ -161,7 +161,7 @@ export function elements(com, arr) {
 export function tree_to_tabs(nodeID) {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-5").hide();
-        if (nodeID !== '-2') {
+//        if (nodeID !== '-2') {
             let winc = product.winCalc;
             let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
                     ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
@@ -238,7 +238,7 @@ export function tree_to_tabs(nodeID) {
                 });
                 $("#tabs-5").show();
             }
-        }
+//        }
     } catch (e) {
         console.error(e.message);
     }
