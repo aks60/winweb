@@ -84,18 +84,8 @@ export function load_table2(tabtree) {
             let arr = new Array();
             let root = product.winCalc.root;
 
-//            if (root.type === Type.RECTANGL)
-//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно четырёхугольное', 'icon': 'lib-img/tool/folder.gif'});
-//            else if (root.type === Type.TRAPEZE)
-//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно трапеция', 'icon': 'lib-img/tool/folder.gif'});
-//            else if (root.type === Type.TRIANGL)
-//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно треугольное', 'icon': 'lib-img/tool/folder.gif'});
-//            else if (root.type === Type.ARCH)
-//                arr.push({'id': root.id, 'parent': '#', 'text': 'Окно арочное', 'icon': 'lib-img/tool/folder.gif'});
-
             arr.push({'id': -1, 'parent': '#', 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
-            arr.push({'id': 0, 'parent': '#', 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
-
+            arr.push({'id': root.id, 'parent': '#', 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
             //Рамы
             for (let el of root.frames) {
                 arr.push({'id': el.id, 'parent': 0, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
@@ -105,11 +95,11 @@ export function load_table2(tabtree) {
 
             $(product.table2).jstree({'core': {'data': arr}})
                     .bind("loaded.jstree", function (event, data) {
-                        $(this).jstree('open_node', $('#0'));
+                        //$(this).jstree('open_node', $('#0'));
                         $(this).jstree('select_node', 0.0);
                     })
                     .bind("select_node.jstree", function (evt, data) {
-                        //product.clickNode = data.node;
+                        product.clickNode = data.node;
                         tree_to_tabs(data.node.id);
                     });
         }
@@ -122,8 +112,7 @@ export function load_table2(tabtree) {
 export function elements(com, arr) {
     try {
         if (com.type === Type.STVORKA) {
-            arr.push({'id': com.id, 'parent': "#", 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
-
+            arr.push({'id': com.id, 'parent': '#', 'text': 'Створка', 'icon': 'lib-img/tool/folder.gif'});
             //Рамы створок
             for (let el of com.frames) {
                 arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
