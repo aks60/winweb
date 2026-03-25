@@ -41,6 +41,8 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
+            super.initArtikle();
+            
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом	
             let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                     || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
@@ -82,7 +84,6 @@ export class AreaStvorka extends AreaSimple {
      * или вручную.
      */
     initArtikle() {
-        debugger;
         try {
             //Поиск по параметру или первая запись из списка...
             //Фурнитура

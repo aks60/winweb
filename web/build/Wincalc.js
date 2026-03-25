@@ -44,7 +44,7 @@ export class Wincalc {
         canvas.width = width;
         canvas.height = height;
         let w = new Wincalc(canvas).build(script);
-        if(furn === true) {
+        if (furn === true) {
             let f = new TFurniture(w);
             f.furn();
         }
@@ -97,6 +97,8 @@ export class Wincalc {
             this.parametr(this.gson.param); //параметры
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
+
+            this.artikle(); //артиклы конструкции
 
             this.location(); //кальк. коорд. элементов конструкции    
 
@@ -199,14 +201,20 @@ export class Wincalc {
         }
     }
 
+    //Получение артиклов
+    artikle() {
+        try {
+            this.listArea.forEach(e => e.initArtikle());
+            this.listElem.forEach(e => e.initArtikle());
+            
+        } catch (e) {
+            console.error(e.message);
+        }
+    }
+
     //Кальк.коорд. элементов конструкции
     location() {
         try {
-            this.root.colorID1 = (this.gson.color1 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color1; //цвет базовый
-            this.root.colorID2 = (this.gson.color2 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color2; //цвет внутр.
-            this.root.colorID3 = (this.gson.color3 === -3) ? UColor.findColorFromArtdet(this.root.artiklRec[eArtikl.id]) : this.gson.color3; //цвет внещний  
-            
-            this.listElem.forEach(e => e.initArtikle()); //артиклы элементов            
             this.root.setLocation();
 
             //Исключая импост створки т.к. ств. ещё не создана
@@ -218,9 +226,10 @@ export class Wincalc {
                     elem.setLocation();
                 }
             }
+
             //Исключая створку т.к. она не создана
             for (let area of this.listArea) {
-                if (area.id != 0.0) {
+                if (area.id !== 0.0) {
                     if (area instanceof AreaStvorka === false && area.owner instanceof AreaStvorka === false) {
                         area.setLocation();
                     }
@@ -228,17 +237,22 @@ export class Wincalc {
             }
 
             //Создание створки
-            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initStvorka());
-            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.initArtikle());
-            this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.initArtikle());
-            this.listArea.filter(elem => elem.type === Type.STVORKA).forEach(e => e.setLocation());
-            this.listElem.filter(elem => elem.type === Type.STV_SIDE).forEach(e => e.setLocation());
+            this.listArea.filter(el => el.type === Type.STVORKA).forEach(e => e.initStvorka());
+            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach(e => e.initArtikle());
+            this.listArea.filter(el => el.type === Type.STVORKA).forEach(e => e.setLocation());
+            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach(e => e.setLocation());
 
+            for (let elem of this.listElem) {
+                if (elem instanceof ElemGlass) {
+                    elem.setLocation();
+                } else if (elem instanceof ElemCross && elem.owner instanceof AreaStvorka) {
+                    elem.setLocation();
+                }
+            }
         } catch (e) {
             console.error(e.message);
         }
     }
-
     //Рисуем конструкцию
     draw() {
         try {
@@ -254,11 +268,6 @@ export class Wincalc {
             }
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
-            
-//            if(this.scale > .1) {
-//                let furniture = new TFurniture(this);
-//                furniture.furn();
-//            }
 
             //Прорисовка стеклопакетов
             this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());

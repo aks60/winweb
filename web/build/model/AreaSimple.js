@@ -1,9 +1,9 @@
 
-import {AreaArch, Com5t} from './model.js';
+import {AreaArch, AreaStvorka, Com5t} from './model.js';
 import {UCom} from '../../common/uCom.js';
 import {UGeo} from './uGeo.js';
-import {PKjson} from '/winweb/enums/PKjson.js';
-import {Type} from '../../enums/enums.js';
+import {UColor} from '../making/uColor.js';
+import {Type, UseType, PKjson} from '../../enums/enums.js';
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';
 
@@ -15,48 +15,51 @@ export class AreaSimple extends Com5t {
     constructor(winc, gson, owner) {
         try {
             super(winc, gson, owner);
-            this.initArtikle();
             this.winc.listArea.push(this);
             this.winc.listAll.push(this);
         } catch (e) {
             console.error(e.message);
         }
     }
+    
     /**
      * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
      * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
      * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
      */
     initArtikle() {
-        if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) {
-            this.sysprofRec = eSysprof.find3(Number(this.gson.param[PKjson.sysprofID]));
-            this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
-            this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог           
-        } else {
-            const useType = (this instanceof AreaStvorka) ? UseType.STVORKA : UseType.FRAME;
-            this.sysprofRec = eSysprof.find2(this.winc.nuni, useType[0]); //первая.запись коробки
-            this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
-            this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог                
-        }
-            if ((this instanceof AreaStvorka)) {
-                this.colorID1 = (UPar.isFinite(this.gson.param, PKjson.colorID1))
+        try {
+            if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) {
+                this.sysprofRec = eSysprof.find3(Number(this.gson.param[PKjson.sysprofID]));
+                this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
+                this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог           
+            } else {
+                const useType = (this instanceof AreaStvorka) ? UseType.STVORKA : UseType.FRAME;
+                this.sysprofRec = eSysprof.find2(this.winc.nuni, useType[0]); //первая.запись коробки
+                this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
+                this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог                
+            }
+            if (this instanceof AreaStvorka) {                
+                this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1))
                         ? Number(this.gson.param[PKjson.colorID1]) : this.owner.colorID1;
-                this.colorID2 = (UPar.isFinite(this.gson.param, PKjson.colorID2))
+                this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2))
                         ? Number(this.gson.param[PKjson.colorID2]) : this.owner.colorID2;
-                this.colorID3 = (UPar.isFinite(this.gson.param, PKjson.colorID3))
+                this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3))
                         ? Number(this.gson.param[PKjson.colorID3]) : this.owner.colorID3;
             } else {
-                this.colorID1 = (UPar.isFinite(this.gson.param, PKjson.colorID1))
+                this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1))
                         ? Number(this.gson.param[PKjson.colorID1])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-                this.colorID2 = (UPar.isFinite(this.gson.param, PKjson.colorID2))
+                this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2))
                         ? Number(this.gson.param[PKjson.colorID2])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-                this.colorID3 = (UPar.isFinite(this.gson.param, PKjson.colorID3))
+                this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3))
                         ? Number(this.gson.param[PKjson.colorID3])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-            }        
-        
+            }
+        } catch (e) {
+            console.error(e.message);
+        }
     }
 
     setLocation() {

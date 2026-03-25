@@ -33,7 +33,7 @@ export class ElemCross extends ElemSimple {
                 this.sysprofRec = eSysprof.find3(this.gson.param[PKjson.sysprofID]);
             } else {
                 this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
-            }
+            }            
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
 

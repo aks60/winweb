@@ -132,7 +132,7 @@ export function elements(com, arr) {
 //Загрузка тегов страницы
 export function tree_to_tabs(nodeID) {
     try {
-        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-5").hide();
+        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-43, #tabs-5").hide();
 //        if (nodeID !== '-2') {
         let winc = product.winCalc;
         let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
@@ -165,9 +165,9 @@ export function tree_to_tabs(nodeID) {
             } else {
                 $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
             }
-            let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1),
-                    color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2),
-                    color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
+            let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
+            let color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2);
+            let color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
             loadingTab({
                 n31: elem.artiklRec[eArtikl.code],
                 n32: elem.artiklRec[eArtikl.name],
