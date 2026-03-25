@@ -198,7 +198,7 @@ export function tree_to_tabs(nodeID) {
                 n4C: findef(elem.lockColor[0], eColor.id, eColor)[eColor.name],
             });
             $("#tabs-4").show();
-            $("#tabs-41").show();
+            btn_to_tabs('btnProdStv');
 
             //Стеклопакет
         } else if (elem.type === Type.GLASS) {
@@ -217,11 +217,13 @@ export function tree_to_tabs(nodeID) {
 }
 
 export function btn_to_tabs(btnTaq) {
-    $("#tabs-41, #tabs-42").hide();
+    $("#tabs-41, #tabs-42,  #tabs-43").hide();
     if (btnTaq === 'btnProdStv') {
         $("#tabs-41").show();
-    } else if (btnTaq === 'btnProdAdd') {
+    } else if (btnTaq === 'btnProdFurn') {
         $("#tabs-42").show();
+    } else if (btnTaq === 'btnProdAdd') {
+        $("#tabs-43").show();
     }
 }
 

@@ -89,6 +89,7 @@
             document.querySelector('#n51 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n51'));
             document.querySelector('#n53 + input').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/color.jsp?param=n53'));
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
+            document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
 
             document.getElementById('btnTest1').addEventListener('click', test1);
@@ -124,52 +125,64 @@
                     <p class="pantitle"> Основные размеры</p> 
                     <jst id="n11" type='txt' label='Ширина' width='80' width2="60" nul='r'></jst><br>
                     <jst id="n12" type='txt' label='Высота' width='80' width2="60" nul='r'></jst><br>
-                    <p class="pantitle"> Текстура изделия</p> 
+                    <jst id="n55" type='btn' label='*Артикул' width='80' width2="260"></jst><br>
+                    <jst id="n56" type='txt' label='*Название' width='80' width2="288"></jst><br>                    
+                    <p class="pantitle"> Текстура</p> 
                     <jst id="n14" type='btn' label='Основная' width='80' width2="260"></jst><br>
                     <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>
                     <jst id="n16" type='btn' label='Внещняя' width='80' width2="260"></jst><br>
                 </div>
-
                 <div id="tabs-2" style="padding: 0px; display: none;"> 
                     <p class="pantitle" style="margin-bottom: 4px"> Параметры системы</p> 
                     <table id="table1"  class="ui-jqgrid-btable"></table>
                 </div>
-
                 <div id="tabs-3" style="padding: 0px; display: none;">
                     <p class="pantitle"> Сторона коробки</p> 
                     <jst id="n31" type='btn' label='Артикул' width='80' width2="260"></jst><br>
                     <jst id="n32" type='txt' label='Название' width='80' width2="288"></jst><br>
                     <jst id="n36" type='txt' label='Аналог' width='80' width2="288"></jst><br>
-                    <p class="pantitle"> Текстура изделия</p>  
+                    <p class="pantitle"> Текстура</p>  
                     <jst id="n33" type='btn' label='Основная' width='80' width2="260"></jst><br>                          
                     <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>                          
                     <jst id="n35" type='btn' label='Внещняя' width='80' width2="260"></jst><br>                          
                 </div>
-
                 <div id="tabs-4" style="padding: 0px; display: none;">
                     <p class="pantitle"> Створка</p> 
                     <div id="tabs-41">
                         <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
-                        <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                        
-                        <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220"></jst><br>                          
-                        <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220"></jst><br>
+                        <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                          
+                        <jst id="n57" type='btn' label='*Артикул' width='80' width2="260"></jst><br>
+                        <jst id="n58" type='txt' label='*Название' width='80' width2="288"></jst><br>
+                        <jst id="n59" type='txt' label='*Аналог' width='80' width2="288"></jst><br>
+                        <p class="pantitle"> Текстура</p>  
+                        <jst id="n60" type='btn' label='*Основная' width='80' width2="260"></jst><br>                          
+                        <jst id="n61" type='btn' label='*Внутренняя' width='80' width2="260"></jst><br>                          
+                        <jst id="n62" type='btn' label='*Внещняя' width='80' width2="260"></jst><br>                          
                     </div>
                     <div id="tabs-42">
+                        <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220"></jst><br>                          
+                        <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220"></jst><br>                        
                         <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220"></jst><br>
                         <jst id="n4D" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220"></jst><br>                                                                          
                         <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                         <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
-                        <jst id="n49" type='btn' label='Подвес' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
+                        <jst id="n49" type='btn' label='Петля' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
                         <jst id="n4E" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220"></jst><br>
+                    </div>
+                    <div id="tabs-43">
                         <jst id="n4B" type='btn' label='Замок' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
                         <jst id="n4G" type='txt' label='Название' width='120' width2="250"></jst><br>
-                        <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220"></jst><br>
-                    </div>
+                        <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220"></jst><br>    
+                        <jst id="n63" type='btn' label='**Моск.сетка' width='120' width2="220"></jst><br>
+                        <jst id="n64" type='txt' label='*Название' width='120' width2="250"></jst><br>
+                        <jst id="n65" type='btn' label='*Текстура сетки' width='120' width2="220"></jst><br>                           
+                    </div>                    
                     <div id='south' class='abs' style='height: 22px'>
                         <button id="btnProdStv" style="width: 96px; height: 18px; padding: 0; margin: 2px 0 2px 16px;">Створка</button>
-                        <button id="btnProdAdd" style="width: 96px; height: 18px; padding: 0; margin: 2px 0 2px 8px;">Фурнитура</button>
+                        <button id="btnProdFurn" style="width: 96px; height: 18px; padding: 0; margin: 2px 0 2px 8px;">Фурнитура</button>
+                        <button id="btnProdAdd" style="width: 96px; height: 18px; padding: 0; margin: 2px 0 2px 8px;">Дополнительно</button>
                     </div>                      
                 </div>
 

@@ -201,6 +201,7 @@ function prepareTool() {
     $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
     $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
     $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
+    $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
     $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
