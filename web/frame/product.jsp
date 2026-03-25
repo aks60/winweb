@@ -175,7 +175,7 @@
                         <jst id="n4B" type='btn' label='Замок' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
                         <jst id="n4G" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220"></jst><br>    
-                        <jst id="n63" type='btn' label='**Моск.сетка' width='120' width2="220"></jst><br>
+                        <jst id="n63" type='btn' label='*Моск.сетка' width='120' width2="220"></jst><br>
                         <jst id="n64" type='txt' label='*Название' width='120' width2="250"></jst><br>
                         <jst id="n65" type='btn' label='*Текстура сетки' width='120' width2="220"></jst><br>                           
                     </div>                    
