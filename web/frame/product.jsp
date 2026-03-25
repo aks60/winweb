@@ -126,7 +126,8 @@
                     <jst id="n11" type='txt' label='Ширина' width='80' width2="60" nul='r'></jst><br>
                     <jst id="n12" type='txt' label='Высота' width='80' width2="60" nul='r'></jst><br>
                     <jst id="n55" type='btn' label='*Артикул' width='80' width2="260"></jst><br>
-                    <jst id="n56" type='txt' label='*Название' width='80' width2="288"></jst><br>                    
+                    <jst id="n56" type='txt' label='*Название' width='80' width2="288"></jst><br> 
+                    <jst id="n66" type='txt' label='*Аналог' width='80' width2="288"></jst><br>
                     <p class="pantitle"> Текстура</p> 
                     <jst id="n14" type='btn' label='Основная' width='80' width2="260"></jst><br>
                     <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260"></jst><br>
