@@ -90,7 +90,6 @@ export function load_table2(tabtree) {
 
             $(product.table2).jstree({'core': {'data': arr}})
                     .bind("loaded.jstree", function (event, data) {
-                        //$(this).jstree('open_node', $('#0'));
                         $(this).jstree('select_node', 0.0);
                     })
                     .bind("select_node.jstree", function (evt, data) {                        
