@@ -93,9 +93,8 @@ export function load_table2(tabtree) {
                         $(this).jstree('select_node', 0.0);
                     })
                     .bind("select_node.jstree", function (evt, data) {                        
-                        let winc = product.winCalc;
                         let com5t = (data.node.id === '-1') ? {type: Type.PARAM} : (data.node.id === '0')
-                                ? winc.root : winc.listAll.find(it => it.id === Number(data.node.id));
+                                ? product.winCalc.root : product.winCalc.listAll.find(it => it.id === Number(data.node.id));
                                 
                         product.clickNode = data.node;  //выбранный tree узел      
                         product.clickNodeElem = com5t;  //выбранный компонент в узле
