@@ -21,14 +21,14 @@ export class ElemFrame extends ElemSimple {
 
     initArtikle() {
         try {
-            this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1)) ? Number(this.gson.param.colorID1) : this.root.colorID1;
-            this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2)) ? Number(this.gson.param.colorID2) : this.root.colorID2;
-            this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3)) ? Number(this.gson.param.colorID3) : this.root.colorID3;
+            this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1)) ? Number(this.gson.param.colorID1) : this.owner.colorID1;
+            this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2)) ? Number(this.gson.param.colorID2) : this.owner.colorID2;
+            this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3)) ? Number(this.gson.param.colorID3) : this.owner.colorID3;
 
-            if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) {
+            if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) { //профили через параметр
                 this.sysprofRec = eSysprof.find3(Number(this.gson.param[PKjson.sysprofID]));
 
-            } else if (this.owner.sysprofRec !== null)
+            } else if (this.owner.sysprofRec !== null) 
                 this.sysprofRec = this.owner.sysprofRec;
             else {
                 if (Layout.BOT === this.layout) {

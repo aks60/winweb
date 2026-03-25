@@ -184,7 +184,7 @@
 
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
-debugger;
+
                         //Запишем текстуру в gson 
                         set_value_gson(Number(colorRow.id)); 
                 

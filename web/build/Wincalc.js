@@ -89,7 +89,7 @@ export class Wincalc {
             }
             //Инит конструктива
             this.id = this.gson.id;
-            this.nuni = (this.gson.nuni === undefined) ? -3 : this.gson.nuni;
+            this.nuni = (this.gson.nuni === undefined) ? -3 : Number(this.gson.nuni);
             this.root.sysprofRec = eSysprof.find2(this.nuni, UseType.FRAME[0]); //первая.запись коробки
             this.root.artiklRec = eArtikl.find(this.root.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
             this.syssizRec = eSyssize.find(this.root.artiklRec); //системные константы
