@@ -93,9 +93,16 @@ export function load_table2(tabtree) {
                         //$(this).jstree('open_node', $('#0'));
                         $(this).jstree('select_node', 0.0);
                     })
-                    .bind("select_node.jstree", function (evt, data) {
-                        product.clickNode = data.node;
-                        tree_to_tabs(data.node.id);
+                    .bind("select_node.jstree", function (evt, data) {                        
+                        let winc = product.winCalc;
+                        let com5t = (data.node.id === '-1') ? {type: Type.PARAM} : (data.node.id === '0')
+                                ? winc.root : winc.listAll.find(it => it.id === Number(data.node.id));
+                                
+                        product.clickNode = data.node;  //выбранный tree узел      
+                        product.clickNodeElem = com5t;  //выбранный компонент в узле
+                        
+                        tree_to_tabs(com5t);
+                        
                     });
         }
     } catch (e) {
@@ -130,17 +137,13 @@ export function elements(com, arr) {
 }
 
 //Загрузка тегов страницы
-export function tree_to_tabs(nodeID) {
+export function tree_to_tabs(com5t) {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-43, #tabs-5").hide();
-//        if (nodeID !== '-2') {
-        let winc = product.winCalc;
-        let elem = (nodeID === '-1') ? {type: Type.PARAM} : (nodeID === '0')
-                ? winc.root : winc.listAll.find(it => it.id === Number(nodeID));
-        product.clickNodeElem = elem;
+        let winc = product.winCalc;        
 
         //Коробка
-        if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(elem.type, 0)) {
+        if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(com5t.type, 0)) {
             $("#tabs-1 :nth-child(1)").text(winc.root.type[2]);
             loadingTab({
                 n11: Math.round(winc.width),
@@ -152,26 +155,26 @@ export function tree_to_tabs(nodeID) {
             $("#tabs-1").show();
 
             //Парам. по умолчанию
-        } else if (elem.type === Type.PARAM) {
+        } else if (com5t.type === Type.PARAM) {
             load_table1($('#table1'));
             $("#tabs-2").show();
 
             //Сторона коробки, створки
-        } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(elem.type, 0)) {
-            if (elem.type === Type.BOX_SIDE) {
-                $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + elem.layout[1]);
-            } else if (elem.type === Type.STV_SIDE) {
-                $("#tabs-3 :nth-child(1)").text('Сторона створки ' + elem.layout[1]);
+        } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(com5t.type, 0)) {
+            if (com5t.type === Type.BOX_SIDE) {
+                $("#tabs-3 :nth-child(1)").text('Сторона коробки ' + com5t.layout[1]);
+            } else if (com5t.type === Type.STV_SIDE) {
+                $("#tabs-3 :nth-child(1)").text('Сторона створки ' + com5t.layout[1]);
             } else {
-                $("#tabs-3 :nth-child(1)").text('Импост ' + elem.layout[1]);
+                $("#tabs-3 :nth-child(1)").text('Импост ' + com5t.layout[1]);
             }
-            let color1Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID1);
-            let color2Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID2);
-            let color3Rec = eColor.list.find(rec => rec[eColor.id] === elem.colorID3);
+            let color1Rec = eColor.list.find(rec => rec[eColor.id] === com5t.colorID1);
+            let color2Rec = eColor.list.find(rec => rec[eColor.id] === com5t.colorID2);
+            let color3Rec = eColor.list.find(rec => rec[eColor.id] === com5t.colorID3);
             loadingTab({
-                n31: elem.artiklRec[eArtikl.code],
-                n32: elem.artiklRec[eArtikl.name],
-                n36: (elem.artiklRec[eArtikl.analog_id] === null) ? '' : elem.artiklRecAn[eArtikl.code],
+                n31: com5t.artiklRec[eArtikl.code],
+                n32: com5t.artiklRec[eArtikl.name],
+                n36: (com5t.artiklRec[eArtikl.analog_id] === null) ? '' : com5t.artiklRecAn[eArtikl.code],
                 n33: color1Rec[eColor.name],
                 n34: color2Rec[eColor.name],
                 n35: color3Rec[eColor.name]
@@ -179,33 +182,33 @@ export function tree_to_tabs(nodeID) {
             $("#tabs-3").show();
 
             //Створка
-        } else if (elem.type === Type.STVORKA) {
-            let furnitureRec = eFurniture.list.find(rec => elem.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
-            let env = elem.area.getGeometryN(0).getEnvelopeInternal();
+        } else if (com5t.type === Type.STVORKA) {
+            let furnitureRec = eFurniture.list.find(rec => com5t.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
+            let env = com5t.area.getGeometryN(0).getEnvelopeInternal();
             loadingTab({
                 n41: Math.round(env.getWidth()),
                 n42: Math.round(env.getHeight()),
                 n43: furnitureRec[eFurniture.name],
-                n44: elem.typeOpen[2],
-                n45: elem.handRec[0][eArtikl.code],
-                n4D: elem.handRec[0][eArtikl.name],
-                n46: findef(elem.handColor[0], eColor.id, eColor)[eColor.name],
-                n47: elem.handLayout[1],
-                n48: elem.handHeight,
-                n49: elem.loopRec[0][eArtikl.code] + ' / ' + elem.loopRec[0][eArtikl.name],
-                n4A: findef(elem.loopColor[0], eColor.id, eColor)[eColor.name],
-                n4B: elem.lockRec[0][eArtikl.code] + ' / ' + elem.lockRec[0][eArtikl.name],
-                n4C: findef(elem.lockColor[0], eColor.id, eColor)[eColor.name],
+                n44: com5t.typeOpen[2],
+                n45: com5t.handRec[0][eArtikl.code],
+                n4D: com5t.handRec[0][eArtikl.name],
+                n46: findef(com5t.handColor[0], eColor.id, eColor)[eColor.name],
+                n47: com5t.handLayout[1],
+                n48: com5t.handHeight,
+                n49: com5t.loopRec[0][eArtikl.code] + ' / ' + com5t.loopRec[0][eArtikl.name],
+                n4A: findef(com5t.loopColor[0], eColor.id, eColor)[eColor.name],
+                n4B: com5t.lockRec[0][eArtikl.code] + ' / ' + com5t.lockRec[0][eArtikl.name],
+                n4C: findef(com5t.lockColor[0], eColor.id, eColor)[eColor.name],
             });
             $("#tabs-4").show();
             btn_to_tabs('btnProdStv');
 
             //Стеклопакет
-        } else if (elem.type === Type.GLASS) {
-            let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === elem.colorID1);
+        } else if (com5t.type === Type.GLASS) {
+            let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === com5t.colorID1);
             loadingTab({
-                n51: elem.artiklRec[eArtikl.code],
-                n52: elem.artiklRec[eArtikl.name],
+                n51: com5t.artiklRec[eArtikl.code],
+                n52: com5t.artiklRec[eArtikl.name],
                 n53: color1Rec[eColor.name]
             });
             $("#tabs-5").show();
