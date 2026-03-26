@@ -189,6 +189,7 @@
                         set_value_gson(Number(colorRow.id)); 
                 
                         //Переcтройка
+                        winc.artikle();
                         winc.location();
                         TFurniture.calc(winc);
                         winc.draw();                        
