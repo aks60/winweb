@@ -66,13 +66,13 @@
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
-            $(function () {
+
                 $("#btnTest1").button({
                     icons: {
                         primary: "ui-icon-gear"
                     }
                 });
-            });
+
             function test1() {
                 //enterFullscreen();
             }

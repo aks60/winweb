@@ -182,30 +182,41 @@ function formatDate2(d) {
 }
 
 function prepareTool() {
-      $("#btnTest1").button({icons: {primary: "ui-icon-gear"}});   
+
+//  $("#btnTest1").button({
+//    icons: {
+//      primary: "ui-icon-arrowthick-1-n" // Иконка слева
+//      // secondary: "ui-icon-triangle-1-s" // Иконка справа (опционально)
+//    },
+//    text: true // Отображать текст вместе с иконкой
+//  });
+    
+//$("#btnTest1").button("option", "icons", {primary: "ui-icon-locked"});
+
+//$("#btnTest1").button({icons: {primary: "ui-icon ui-icon-arrowthick-1-n"}});   
 //$( "#btnTest1" ).button({icons: {primary: "ui-icon ui-icon-arrowthick-1-n"}, text: false});    
 //$( "#btnTest2" ).button({icons: {primary: "ui-icon  ui-icon-plus"}});    
 
-//    $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
-//    $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
-//    $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
-//    $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
-//    $("#btnProd2").button({icons: {primary: "ui-icon-pencil"}});
-//    $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
-//    $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
-//    $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
-//    $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
-//    $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
-//    $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
-//    $("#btnReset").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
-//    $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
-//    $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
-//    $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
-//    $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
-//    $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
-//    $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
-//    $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
-//    $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
+    $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnProd2").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
+    $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
+    $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
+    $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
+    $("#btnReset").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
+    $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
+    $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
+    $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
+    $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
+    $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
+    $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
+    $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
+    $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
     //-------------------------------------------------------------
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});

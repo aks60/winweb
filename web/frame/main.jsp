@@ -6,6 +6,7 @@
         <title>SA-OKNA</title>
 
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jquery-ui-1.14.2/themes/redmond/jquery-ui.css">                                                    
+        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jquery-ui-1.14.2/themes/redmond/theme.css">                                                    
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jstree-3.3.12/themes/default/style.min.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/html-ui.css">
