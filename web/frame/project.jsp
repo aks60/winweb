@@ -87,8 +87,8 @@
             <button id="btnProd1" style="width: 136px">Добавить констр.</button>
             <button id="btnProd2" style="width: 136px">Изменить констр.</button>
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
-            <button id="btnTest1">TEST</button>                        
-            <button id="btnTest2">TEST</button>                        
+            <button id="btnTest1">TEST1</button>                        
+            <button id="btnTest2">TEST2</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                

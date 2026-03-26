@@ -92,8 +92,8 @@
             document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
 
-            document.getElementById('btnTest1').addEventListener('click', test1);
-            document.getElementById('btnTest2').addEventListener('click', test2);
+            document.getElementById('btnTest3').addEventListener('click', test1);
+            document.getElementById('btnTest4').addEventListener('click', test2);
 
             function test1() {
                 console.log(JSON.stringify(product.winCalc.gson));
@@ -104,8 +104,8 @@
     </head>
     <body>
         <div id='north' style=''>
-            <button id="btnTest1" style="width: 48px; margin-left: 40px;">TEST</button>
-            <button id="btnTest2" style="width: 48px; margin-left: 40px;">TEST</button>
+            <button id="btnTest3" style="width: 48px; margin-left: 40px;">TEST3</button>
+            <button id="btnTest4" style="width: 48px; margin-left: 40px;">TEST4</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
