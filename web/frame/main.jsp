@@ -11,9 +11,11 @@
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/menu.css">
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/html-ui.css">
 
-        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.min.js"></script>                               
-        <script type="text/javascript" src="lib-js/jquery-ui-1.14.2/jquery-ui.min.js"></script> 
+        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.min.js"></script>         
+        <!--<script type="text/javascript" src="lib-js/jquery-ui-1.14.2/jquery-ui.min.js"></script>--> 
         <script type="text/javascript" src="lib-js/jquery-ui-1.14.2/i18n/datepicker-ru.js"></script>
+        <script type="text/javascript" src="lib-js/jquery-ui-1.13/jquery-ui.min.js"></script> 
+      
 
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jqgrid-5.8.10/ui.jqgrid.css">
         <script type="text/javascript" src="lib-js/jqgrid-5.8.10/i18n/grid.locale-ru.js"></script>
