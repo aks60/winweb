@@ -182,7 +182,9 @@ function formatDate2(d) {
 }
 
 function prepareTool() {
-$( "#btnTest1" ).button({icons: {primary: "ui-icon-plus"}, text: false});    
+      $("#btnTest1").button({icons: {primary: "ui-icon-gear"}});   
+//$( "#btnTest1" ).button({icons: {primary: "ui-icon ui-icon-arrowthick-1-n"}, text: false});    
+//$( "#btnTest2" ).button({icons: {primary: "ui-icon  ui-icon-plus"}});    
 
 //    $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
 //    $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});

@@ -66,7 +66,13 @@
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
-
+            $(function () {
+                $("#btnTest1").button({
+                    icons: {
+                        primary: "ui-icon-gear"
+                    }
+                });
+            });
             function test1() {
                 //enterFullscreen();
             }
@@ -80,6 +86,8 @@
     </head>
     <body>        
         <div id="north">
+            <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+
             <button id="btnProj1" style="width: 128px">Добавить заказ</button>
             <button id="btnProj2" style="width: 128px">Изменить заказ</button>
             <button id="btnProj3" style="width: 128px">Удалить заказ</button>
