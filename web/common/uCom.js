@@ -64,3 +64,10 @@ UCom.setJsonParam = (obj, path, value) => {
         return acc[key];
     }, obj);
 };
+
+UCom.deleteJsonParam = (obj, key) => {
+
+    for (let k in obj)
+        return false; // если тело цикла начнет выполняться - значит в объекте есть свойства
+    return true;
+};
