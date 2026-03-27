@@ -48,7 +48,7 @@
                             save_table();
                             $(this).dialog("close");
                         },
-                        "По умолчанию": function () {
+                        "Удалить": function () {
                             $(this).dialog("close");
                         },                        
                         "Закрыть": function () {

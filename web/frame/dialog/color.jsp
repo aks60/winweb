@@ -13,11 +13,11 @@
             import {product} from './frame/product.js';
             import {tree_to_tabs} from './frame/product.js';
 
-
             let groupSet = new Set();
             let colorSet = new Set();
             let eColorList = new Array();
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
+            let colorRow = {};
             const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
             const com5t = product.clickTreeNodeElem;
@@ -45,10 +45,13 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
+                            colorRow = getSelectedRow($(tab2Color));
                             save_table();
                             $(this).dialog("close");
                         },
-                        "По умолчанию": function () {
+                        "Удалить": function () {
+                            colorRow = {id: -3, name: 'virtual'}
+                            save_table();
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -79,6 +82,7 @@
                         {name: 'name', width: 340}
                     ],
                     ondblClickRow: function (rowId) {
+                        colorRow = getSelectedRow($(tab2Color));
                         save_table();
                         $("#dialog-jsp").dialog("close");
                     }
@@ -179,15 +183,13 @@
                 }
             }
 
-            function save_table() {                
+            function save_table() {
                 try {
-                    let colorRow = getSelectedRow($(tab2Color)); //row справочника
-
                     //Изделия
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
                         //Запишем текстуру в gson 
-                        set_value_gson(Number(colorRow.id));                        
+                        set_value_gson();
 
                         //Запишем скрипт в локальн. бд                       
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
@@ -197,9 +199,9 @@
                             url: 'dbset?action=updateScript',
                             data: {param: JSON.stringify(project.prjprodRec)},
                             success: function (data) {
-                                
+
                                 if (data.result === 'ok') {
-                                    
+
                                     //Запишем текстуру в html
                                     tree_to_tabs(com5t);
 
@@ -234,45 +236,30 @@
             }
 
             //Запишем текстуру в скрипт
-            function set_value_gson(ID) {
-
-                if (com5t.type === Type.STV_SIDE) {
-                    let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
-                    if (paramTaq === 'n33')
-                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
-                    else if (paramTaq === 'n34')
-                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
-                    else if (paramTaq === 'n35')
-                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
-                } else {
-                    if (paramTaq === 'n14')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
-                    else if (paramTaq === 'n15') 
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
-                    else if (paramTaq === 'n16')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
-                    else if (paramTaq === 'n33')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
-                    else if (paramTaq === 'n34')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
-                    else if (paramTaq === 'n35')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
-                    else if (paramTaq === 'n46')
-                       UCom.setJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
-                    else if (paramTaq === 'n4A')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
-                    else if (paramTaq === 'n4C')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
-                    else if (paramTaq === 'n53')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
-                    else if (paramTaq === 'n60')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
-                    else if (paramTaq === 'n61')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
-                    else if (paramTaq === 'n62')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);                    
-                    else if (paramTaq === 'n65')
-                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);                    
+            function set_value_gson() {
+                let ID = Number(colorRow.id);
+                let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
+                
+                if (paramTaq === 'n33') {
+                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
+                } else if (paramTaq === 'n34') {
+                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
+                } else if (paramTaq === 'n35') {
+                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
+                } else if (['n14', 'n33', 'n60', 'n65'].includes(paramTaq)) {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
+                } else if (['n15', 'n34', 'n61'].includes(paramTaq)) {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
+                } else if (['n16', 'n35', 'n62'].includes(paramTaq)) {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
+                } else if (paramTaq === 'n46') {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
+                } else if (paramTaq === 'n4A') {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
+                } else if (paramTaq === 'n4C') {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
+                } else if (paramTaq === 'n53') {
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
                 }
             }
 
@@ -299,13 +286,13 @@
                 else if (paramTaq === 'n53')
                     return com5t.artiklRec;
                 else if (paramTaq === 'n60')
-                    return com5t.artiklRec;                
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n61')
-                    return com5t.artiklRec;                
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n62')
-                    return com5t.artiklRec;                
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n65')
-                    return com5t.artiklRec;                
+                    return com5t.artiklRec;
                 else
                     return null;
             }
