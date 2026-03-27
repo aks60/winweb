@@ -22,7 +22,7 @@
             const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set(), handlSet = new Set();
             const winc = product.winCalc;
-            const elem = product.clickTreeNodeElem;
+            const com5t = product.clickTreeNodeElem;
             const tabArtikl = document.getElementById('tab-artikl');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
@@ -136,7 +136,7 @@
                         //Ручка
                     } else if (paramTaq === 'n45') {
                         let filterSet = new Set();
-                        let furnitureID = elem.sysfurnRec[eSysfurn.furniture_id];
+                        let furnitureID = com5t.sysfurnRec[eSysfurn.furniture_id];
                         let artiklList = eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === 11);
 
                         //Цикл по детализации
@@ -174,12 +174,7 @@
 
                         //Запишем артикл в gson 
                         set_value_gson(Number(artiklRow.id));
-                        
-                        //Переcтройка
-                        winc.location();
-                        TFurniture.calc(winc);
-                        winc.draw();
-                        
+
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
                         
@@ -190,7 +185,8 @@
                             success: (data) => {
                                 if (data.result === 'ok') {
 
-                                    set_value_html(artiklRow);
+                                    //Запишем текстуру в html
+                                    tree_to_tabs(com5t);
                                 }
                             },
                             error: () => {
@@ -253,20 +249,20 @@
                 }
             }
 
-            //Запишем артикл в скрипт
+/*            //Запишем артикл в скрипт
             function set_value_gson(ID) {
                 //Стеклопакет
                 if (paramTaq === 'n51') {
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт
                     //Ручка
                 } else if (paramTaq === 'n45') {
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklHand], ID); //запишем артикл в скрипт
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklHand], ID); //запишем артикл в скрипт
                     //Подвес
                 } else if (paramTaq === 'n49') {
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklLoop], ID); //запишем артикл в скрипт
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklLoop], ID); //запишем артикл в скрипт
                     //Замок
                 } else if (paramTaq === 'n4B') {
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.artiklLock], ID); //запишем артикл в скрипт
+                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklLock], ID); //запишем артикл в скрипт
                 }
             }
 
@@ -293,6 +289,7 @@
                     //$("#n4C").val('');
                 }
             }
+ */
         </script>        
     </head>
     <body>

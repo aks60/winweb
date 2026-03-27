@@ -2,6 +2,7 @@
 import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
 import {project} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
+import {TFurniture} from '../build/making/TFurniture.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
 export let product = {};
@@ -142,6 +143,8 @@ export function tree_to_tabs(com5t) {
         let winc = product.winCalc;
         winc.artikle();
         winc.location();
+        TFurniture.calc(winc);
+        winc.draw(); 
 
         //Коробка
         if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(com5t.type, 0)) {

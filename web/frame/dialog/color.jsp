@@ -187,13 +187,7 @@
                     if ($('#body-jsp title').text() === 'PRODUCT') {
 
                         //Запишем текстуру в gson 
-                        set_value_gson(Number(colorRow.id)); 
-                
-                        //Переcтройка
-                        winc.artikle();
-                        winc.location();
-                        TFurniture.calc(winc);
-                        winc.draw();                        
+                        set_value_gson(Number(colorRow.id));                        
 
                         //Запишем скрипт в локальн. бд                       
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
