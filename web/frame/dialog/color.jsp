@@ -137,7 +137,7 @@
                     }
 
                     //Текстура по фильтрам цветов SYSTREE.COL
-                    if (['n46', 'n4A', 'n4C', 'n65'].includes(paramTaq) === false) {
+                    if (['n46', 'n4A', 'n4C', 'n53', 'n65'].includes(paramTaq) === false) {
                         colorFilter = (colorTxt === null) ? [] : parserInt(colorTxt);
                         if (colorFilter.length !== 0) {
                             for (let colorRec of eColor.list) {
