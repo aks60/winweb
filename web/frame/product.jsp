@@ -117,7 +117,7 @@
                 <button id="btnSceleton" class="toolWest1"></button>
             </div>
             <div id='west2' class='abs' style='border: 0;'>
-                <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 0px solid #ccc;'></canvas>  
+                <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 0 solid #ccc;'></canvas>  
             </div> 
             <div id='east1' class='abs' style=''>
 
