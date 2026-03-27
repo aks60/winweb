@@ -15,7 +15,7 @@
             const paramTaq = "<%= request.getParameter("param")%>";
             let sysprofSet = new Set();
             const winc = product.winCalc;
-            const elem = product.clickNodeElem;
+            const elem = product.clickTreeNodeElem;
             const tabSysprof = document.getElementById('tab-sysprof');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 

@@ -22,7 +22,7 @@
             const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set(), handlSet = new Set();
             const winc = product.winCalc;
-            const elem = product.clickNodeElem;
+            const elem = product.clickTreeNodeElem;
             const tabArtikl = document.getElementById('tab-artikl');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 

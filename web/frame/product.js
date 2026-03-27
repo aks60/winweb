@@ -95,9 +95,8 @@ export function load_table2(tabtree) {
                     .bind("select_node.jstree", function (evt, data) {                        
                         let com5t = (data.node.id === '-1') ? {type: Type.PARAM} : (data.node.id === '0')
                                 ? product.winCalc.root : product.winCalc.listAll.find(it => it.id === Number(data.node.id));
-                                
-                        product.clickNode = data.node;  //выбранный tree узел      
-                        product.clickNodeElem = com5t;  //выбранный компонент в узле
+                                    
+                        product.clickTreeNodeElem = com5t;  //выбранный компонент в узле
                         
                         tree_to_tabs(com5t);
                         
@@ -137,8 +136,12 @@ export function elements(com, arr) {
 //Загрузка тегов страницы
 export function tree_to_tabs(com5t) {
     try {
-        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-41, #tabs-42, #tabs-43, #tabs-5").hide();
-        let winc = product.winCalc;        
+        $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+        
+        //Пересчитаем конструкцию
+        let winc = product.winCalc;
+        winc.artikle();
+        winc.location();
 
         //Коробка
         if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(com5t.type, 0)) {
@@ -146,6 +149,9 @@ export function tree_to_tabs(com5t) {
             loadingTab({
                 n11: Math.round(winc.width),
                 n12: Math.round(winc.height),
+                n55: com5t.artiklRec[eArtikl.code],
+                n56: com5t.artiklRec[eArtikl.name],
+                n66: com5t.artiklRecAn[eArtikl.code],
                 n14: eColor.find(winc.root.colorID1)[eColor.name],
                 n15: eColor.find(winc.root.colorID2)[eColor.name],
                 n16: eColor.find(winc.root.colorID3)[eColor.name]
@@ -184,8 +190,16 @@ export function tree_to_tabs(com5t) {
             let furnitureRec = eFurniture.list.find(rec => com5t.sysfurnRec[eSysfurn.furniture_id] === rec[eFurniture.id]);
             let env = com5t.area.getGeometryN(0).getEnvelopeInternal();
             loadingTab({
+                //tabs-41
                 n41: Math.round(env.getWidth()),
                 n42: Math.round(env.getHeight()),
+                n57: com5t.artiklRec[eArtikl.code],
+                n58: com5t.artiklRec[eArtikl.name],
+                n59: com5t.artiklRecAn[eArtikl.code],                
+                n60: eColor.find(com5t.colorID1)[eColor.name],
+                n61: eColor.find(com5t.colorID2)[eColor.name],
+                n62: eColor.find(com5t.colorID3)[eColor.name],
+                //tabs-42
                 n43: furnitureRec[eFurniture.name],
                 n44: com5t.typeOpen[2],
                 n45: com5t.handRec[0][eArtikl.code],
@@ -195,11 +209,12 @@ export function tree_to_tabs(com5t) {
                 n48: com5t.handHeight,
                 n49: com5t.loopRec[0][eArtikl.code] + ' / ' + com5t.loopRec[0][eArtikl.name],
                 n4A: findef(com5t.loopColor[0], eColor.id, eColor)[eColor.name],
+                //tabs-43
                 n4B: com5t.lockRec[0][eArtikl.code] + ' / ' + com5t.lockRec[0][eArtikl.name],
                 n4C: findef(com5t.lockColor[0], eColor.id, eColor)[eColor.name],
+                
             });
             $("#tabs-4").show();
-            btn_to_tabs('btnProdStv');
 
             //Стеклопакет
         } else if (com5t.type === Type.GLASS) {

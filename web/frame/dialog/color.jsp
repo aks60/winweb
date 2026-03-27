@@ -11,6 +11,7 @@
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
+            import {tree_to_tabs} from './frame/product.js';
 
 
             let groupSet = new Set();
@@ -19,7 +20,7 @@
             let colorFilter = []; //пример [1009,1009,1200,12380] шаг=2 в цыкле
             const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
-            const elem = product.clickNodeElem;
+            const com5t = product.clickTreeNodeElem;
             const tab1Color = document.getElementById('tab1-color');
             const tab2Color = document.getElementById('tab2-color');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
@@ -118,26 +119,26 @@
             //Текстура изделия
             function color_set() {
                 try {
-                    let colorEnum = null, indexMark = null;
+                    let colorTxt = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
 
                     if (['n46', 'n4A', 'n4C', 'n53'].includes(paramTaq)) {
-                        colorEnum = null;
+                        colorTxt = null;
                         indexMark = eArtdet.mark_c1;
-                    } else if (['n14', 'n33'].includes(paramTaq)) {
-                        colorEnum = systreeRec[eSystree.col1];
+                    } else if (['n14', 'n33', 'n60'].includes(paramTaq)) {
+                        colorTxt = systreeRec[eSystree.col1];
                         indexMark = eArtdet.mark_c1;
-                    } else if (['n15', 'n34'].includes(paramTaq)) {
-                        colorEnum = systreeRec[eSystree.col2];
+                    } else if (['n15', 'n34', 'n61'].includes(paramTaq)) {
+                        colorTxt = systreeRec[eSystree.col2];
                         indexMark = eArtdet.mark_c2;
-                    } else if (['n16', 'n35'].includes(paramTaq)) {
-                        colorEnum = systreeRec[eSystree.col3];
+                    } else if (['n16', 'n35', 'n62'].includes(paramTaq)) {
+                        colorTxt = systreeRec[eSystree.col3];
                         indexMark = eArtdet.mark_c3;
                     }
 
                     //Текстура по фильтрам цветов SYSTREE.COL
-                    if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST].includes(elem.type)) {
-                        colorFilter = (colorEnum === null) ? [] : parserInt(colorEnum);
+                    if (['n46', 'n4A', 'n4C', 'n65'].includes(paramTaq) === false) {
+                        colorFilter = (colorTxt === null) ? [] : parserInt(colorTxt);
                         if (colorFilter.length !== 0) {
                             for (let colorRec of eColor.list) {
                                 for (let i = 0; i < colorFilter.length; i = i + 2) { //текстуры
@@ -151,7 +152,7 @@
                     if (eColorList.length === 0) { //если фильтра нет
                         eColorList = eColor.list;
                     }
-
+debugger;
                     //Артикул элемента
                     let artiklElem = get_value_elem();
 
@@ -206,7 +207,8 @@
                                 if (data.result === 'ok') {
                                     
                                     //Запишем текстуру в html
-                                    set_value_html(colorRow.name); 
+                                    tree_to_tabs(com5t);
+
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
@@ -237,87 +239,75 @@
                 }
             }
 
-            //Запишем текстуру в html
-            function set_value_html(name) {
-                if (paramTaq === 'n14')
-                    $("#n14").val(name);
-                else if (paramTaq === 'n15')
-                    $("#n15").val(name);
-                else if (paramTaq === 'n16')
-                    $("#n16").val(name);
-                else if (paramTaq === 'n33')
-                    $("#n33").val(name);
-                else if (paramTaq === 'n34')
-                    $("#n34").val(name);
-                else if (paramTaq === 'n35')
-                    $("#n35").val(name);
-                else if (paramTaq === 'n46')
-                    $("#n46").val(name);
-                else if (paramTaq === 'n4A')
-                    $("#n4A").val(name);
-                else if (paramTaq === 'n4C')
-                    $("#n4C").val(name);
-                else if (paramTaq === 'n53')
-                    $("#n53").val(name);
-            }
-
             //Запишем текстуру в скрипт
             function set_value_gson(ID) {
 
-                if (elem.type === Type.STV_SIDE) {
-                    let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
+                if (com5t.type === Type.STV_SIDE) {
+                    let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
                     if (paramTaq === 'n33')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
+                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
                     else if (paramTaq === 'n34')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
+                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
                     else if (paramTaq === 'n35')
-                        UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
+                        UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
                 } else {
                     if (paramTaq === 'n14')
-                        winc.gson.color1 = ID;
-                    else if (paramTaq === 'n15')
-                        winc.gson.color2 = ID;
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
+                    else if (paramTaq === 'n15') 
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
                     else if (paramTaq === 'n16')
-                        winc.gson.color3 = ID;
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
                     else if (paramTaq === 'n33')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID1], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
                     else if (paramTaq === 'n34')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID2], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
                     else if (paramTaq === 'n35')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorID3], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
                     else if (paramTaq === 'n46')
-                       UCom.setJsonParam(elem.gson, ['param', PKjson.colorHand], ID);
+                       UCom.setJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
                     else if (paramTaq === 'n4A')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorLoop], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
                     else if (paramTaq === 'n4C')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorLock], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
                     else if (paramTaq === 'n53')
-                        UCom.setJsonParam(elem.gson, ['param', PKjson.colorGlass], ID);
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
+                    else if (paramTaq === 'n60')
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
+                    else if (paramTaq === 'n61')
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
+                    else if (paramTaq === 'n62')
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);                    
                 }
             }
 
             //Получить артикул элемента конструкции
             function get_value_elem() {
                 if (paramTaq === 'n14')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n15')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n16')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n33')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n34')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n35')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
                 else if (paramTaq === 'n46')
-                    return elem.handRec[0];
+                    return com5t.handRec[0];
                 else if (paramTaq === 'n4A')
-                    return elem.loopRec[0];
+                    return com5t.loopRec[0];
                 else if (paramTaq === 'n4C')
-                    return elem.lockRec[0];
+                    return com5t.lockRec[0];
                 else if (paramTaq === 'n53')
-                    return elem.artiklRec;
+                    return com5t.artiklRec;
+                else if (paramTaq === 'n60')
+                    return com5t.artiklRec;                
+                else if (paramTaq === 'n61')
+                    return com5t.artiklRec;                
+                else if (paramTaq === 'n62')
+                    return com5t.artiklRec;                
                 else
                     return null;
             }
