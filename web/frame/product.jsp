@@ -162,7 +162,7 @@
                         <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n4C')"></jst><br>    
                         <jst id="n63" type='btn' label='*Моск.сетка' width='120' width2="220"></jst><br>
                         <jst id="n64" type='txt' label='*Название' width='120' width2="250"></jst><br>
-                        <jst id="n65" type='btn' label='*Текстура сетки' width='120' width2="220"></jst><br>                           
+                        <jst id="n65" type='btn' label='Текстура сетки' width='120' width2="220"  click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n65')"></jst><br>                           
                     </div>                    
                     <div id='south' class='abs' style='height: 22px'>
                         <button id="btnProdStv" style="width: 96px; height: 18px; padding: 0; margin: 3px 0 2px 16px;">Створка</button>

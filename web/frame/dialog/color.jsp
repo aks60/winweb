@@ -152,7 +152,7 @@
                     if (eColorList.length === 0) { //если фильтра нет
                         eColorList = eColor.list;
                     }
-debugger;
+
                     //Артикул элемента
                     let artiklElem = get_value_elem();
 
@@ -277,6 +277,8 @@ debugger;
                         UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
                     else if (paramTaq === 'n62')
                         UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);                    
+                    else if (paramTaq === 'n65')
+                        UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);                    
                 }
             }
 
@@ -307,6 +309,8 @@ debugger;
                 else if (paramTaq === 'n61')
                     return com5t.artiklRec;                
                 else if (paramTaq === 'n62')
+                    return com5t.artiklRec;                
+                else if (paramTaq === 'n65')
                     return com5t.artiklRec;                
                 else
                     return null;
