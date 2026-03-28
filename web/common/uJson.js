@@ -1,7 +1,7 @@
 
-export let UCom = {};
+export let UJson = {};
 
-UCom.traverseJson = (data) => {
+UJson.traverseJson = (data) => {
     if (typeof data === 'object' && data !== null) {
         // Если это массив
         if (Array.isArray(data)) {
@@ -21,7 +21,7 @@ UCom.traverseJson = (data) => {
     //}
 };
 
-UCom.findJson = (id, data) => {
+UJson.findJson = (id, data) => {
     let obj = {};
     try {
         let recursive = (data) => {
@@ -48,7 +48,7 @@ UCom.findJson = (id, data) => {
     return obj;
 };
 
-UCom.isEmpty = (v) => {
+UJson.isEmpty = (v) => {
 
     if (v === "" || v === undefined || v === null)
         return undefined;
@@ -60,11 +60,11 @@ UCom.isEmpty = (v) => {
     }
 };
 
-UCom.isFinite = (key1, key2) => {
+UJson.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
 
-UCom.getJsonParam = (json1, json2) => {
+UJson.getJsonParam = (json1, json2) => {
     if (json1 === undefined) {
         return undefined;
     } else if (json1 !== undefined && json2 === undefined) {
@@ -74,7 +74,7 @@ UCom.getJsonParam = (json1, json2) => {
     }
 };
 
-UCom.setJsonParam = (obj, keys, value) => {
+UJson.setJsonParam = (obj, keys, value) => {
     keys.reduce((acc, key, index) => {
         if (index === keys.length - 1) {
             acc[key] = value;
@@ -85,7 +85,7 @@ UCom.setJsonParam = (obj, keys, value) => {
     }, obj);
 };
 
-UCom.remJsonParam = (obj, keys) => {
+UJson.remJsonParam = (obj, keys) => {
     debugger;
     obj[keys[0]] = obj[keys[0]] || {};
     obj[keys[0]][keys[1]] = obj[keys[0]][keys[1]] || {};
@@ -106,10 +106,10 @@ UCom.remJsonParam = (obj, keys) => {
     }
 };
 
-UCom.updateJsonParam = (obj, keys, id) => {
+UJson.updateJsonParam = (obj, keys, id) => {
     if (id === -3) {
-        UCom.remJsonParam(obj, keys);
+        UJson.remJsonParam(obj, keys);
     } else {
-        UCom.setJsonParam(obj, keys, id);
+        UJson.setJsonParam(obj, keys, id);
     }
 }

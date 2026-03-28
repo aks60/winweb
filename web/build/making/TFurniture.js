@@ -1,4 +1,4 @@
-import {UCom} from '../../common/uCom.js';
+import {UJson} from '../../common/uJson.js';
 import {Type, Layout, PKjson} from '../../enums/enums.js';
 import {FurnitureDet} from '../param/FurnitureDet.js';
 import {UColor} from './uColor.js';
@@ -144,14 +144,14 @@ export class TFurniture {
                 if (spcAdd.artiklRec[eArtikl.level2] === 11) {
 
                     //Артикл
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.artiklHand)) { //если есть параметр то устан. вручную
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.artiklHand)) { //если есть параметр то устан. вручную
                         spcAdd.article(areaStv.handRec[0]); //выбр. вручную
                     } else {
                         areaStv.handRec[1] = spcAdd.artiklRec; //из детализации подбор
                     }
                     //Цвет
                     spcAdd.color(areaStv.handColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.colorHand) === false) { //если нет параметра то подбор
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.colorHand) === false) { //если нет параметра то подбор
                         if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                             areaStv.handColor[1] = spcAdd.colorID1; //из детализации подбор
                         }
@@ -160,14 +160,14 @@ export class TFurniture {
                 } else if (spcAdd.artiklRec[eArtikl.level2] == 12) {
 
                     //Артикл
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLoop)) { //если есть параметр то устан. вручную
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.artiklLoop)) { //если есть параметр то устан. вручную
                         spcAdd.article(areaStv.loopRec[0]); //выбр. вручную
                     } else {
                         areaStv.loopRec[10] = spcAdd.artiklRec; //из детализации подбор
                     }
                     //Цвет
                     spcAdd.color(areaStv.loopColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.colorLoop) === false) { //если нет параметра то подбор
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.colorLoop) === false) { //если нет параметра то подбор
                         if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                             areaStv.loopColor[1] = spcAdd.colorID1; //из детализации подбор
                         }
@@ -176,14 +176,14 @@ export class TFurniture {
                 } else if (spcAdd.artiklRec[eArtikl.level2] === 9) {
 
                     //Артикл
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
                         spcAdd.article(areaStv.lockRec[0]); //выбр. вручную
                     } else {
                         areaStv.lockRec[1] = spcAdd.artiklRec; //из детализации подбор
                     }
                     //Цвет
                     spcAdd.color(areaStv.lockColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                    if (UCom.isFinite(areaStv.gson.param, PKjson.colorLock) == false) { //если нет параметра то подбор
+                    if (UJson.isFinite(areaStv.gson.param, PKjson.colorLock) == false) { //если нет параметра то подбор
                         if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                             areaStv.lockColor[1] = spcAdd.colorID1; //из детализации подбор
                         }

@@ -6,7 +6,7 @@
         <title>COLOR</title>  
         <script type="module">
             import {Type, Layout, PKjson} from './enums/enums.js';
-            import {UCom} from './common/uCom.js';
+            import {UJson} from './common/uJson.js';
             import {TFurniture} from './build/making/TFurniture.js';
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
@@ -192,7 +192,7 @@
                         set_value_gson();
 
                         //Запишем скрипт в локальн. бд                       
-                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v));
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -243,27 +243,27 @@
                 if (com5t.type === Type.STV_SIDE) {
                     let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
                     if (paramTaq === 'n33') {
-                        UCom.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
+                        UJson.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
                     } else if (paramTaq === 'n34') {
-                        UCom.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
+                        UJson.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
                     } else if (paramTaq === 'n35') {
-                        UCom.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
+                        UJson.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
                     }
                 } else {
                     if (['n14', 'n33', 'n60', 'n65'].includes(paramTaq)) {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
                     } else if (['n15', 'n34', 'n61'].includes(paramTaq)) {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
                     } else if (['n16', 'n35', 'n62'].includes(paramTaq)) {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
                     } else if (paramTaq === 'n46') {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
                     } else if (paramTaq === 'n4A') {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
                     } else if (paramTaq === 'n4C') {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
                     } else if (paramTaq === 'n53') {
-                        UCom.updateJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
                     }
                 }
             }

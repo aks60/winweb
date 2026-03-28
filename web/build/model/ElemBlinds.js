@@ -1,6 +1,6 @@
 import {UGeo} from './uGeo.js';
 import {Type, Layout, PKjson} from '../../enums/enums.js';
-import {UCom} from '../../common/uCom.js';
+import {UJson} from '../../common/uJson.js';
 import {Com5t, ElemSimple} from './model.js';
 
 export class ElemBlinds extends ElemSimple {
@@ -18,7 +18,7 @@ export class ElemBlinds extends ElemSimple {
     initArtikle() {
         try {
             //Артикул
-            if (UCom.isFinite(this.gson.param, PKjson.artiklID)) {
+            if (UJson.isFinite(this.gson.param, PKjson.artiklID)) {
                 this.artiklRec = eArtikl.find(this.gson.param[PKjson.artiklID], false);
             } else {
                 this.artiklRec = eArtikl.vrec();
@@ -26,7 +26,7 @@ export class ElemBlinds extends ElemSimple {
             this.artiklRecAn = this.artiklRec;
 
             //Текстура
-            if (UCom.isFinite(this.gson.param, PKjson.colorID1)) {
+            if (UJson.isFinite(this.gson.param, PKjson.colorID1)) {
                 this.colorID1 = Number(this.gson.param[PKjson.colorID1]);
             } else {
                 let artdetRec = eArtdet.find(this.artiklRec[eArtikl.id]);
@@ -35,7 +35,7 @@ export class ElemBlinds extends ElemSimple {
             }
 
             //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
-            if (UCom.isFinite(this.gson.param, PKjson.elementID)) {
+            if (UJson.isFinite(this.gson.param, PKjson.elementID)) {
                 this.sysprofRec = eElement.list.find(this.gson.param[PKjson.elementID]);
             } else {
                 this.sysprofRec = eElement.vrec();

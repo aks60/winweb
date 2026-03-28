@@ -1,6 +1,6 @@
 
 import {ElemSimple} from './ElemSimple.js';
-import {UCom} from '../../common/uCom.js';
+import {UJson} from '../../common/uJson.js';
 import {PKjson} from '../../enums/enums.js';
 
 export class ElemGlass extends ElemSimple {
@@ -23,7 +23,7 @@ export class ElemGlass extends ElemSimple {
     initArtikle() {
         try {
             //Артикул стекла
-            if (UCom.isFinite(this.gson.param, PKjson.artglasID)) {
+            if (UJson.isFinite(this.gson.param, PKjson.artglasID)) {
                 this.artiklRec = eArtikl.find(this.gson.param[PKjson.artglasID], false);
             } else {
                 let systreeRec = eSystree.find(this.winc.nuni); //по умолчанию стеклопакет
@@ -32,7 +32,7 @@ export class ElemGlass extends ElemSimple {
             this.artiklRecAn = this.artiklRec;
 
             //Цвет стекла
-            if (UCom.isFinite(this.gson.param, PKjson.colorGlass)) {
+            if (UJson.isFinite(this.gson.param, PKjson.colorGlass)) {
                 this.colorID1 = Number(this.gson.param[PKjson.colorGlass]);
                 this.colorID2 = this.colorID1;
                 this.colorID3 = this.colorID1;
@@ -45,20 +45,20 @@ export class ElemGlass extends ElemSimple {
             }
 
             //Раскладка
-            if (UCom.isFinite(this.gson.param, PKjson.artiklRasc)) {
+            if (UJson.isFinite(this.gson.param, PKjson.artiklRasc)) {
                 this.rascRec = eArtikl.find(this.gson.param[PKjson.artiklRasc], false);
                 //Текстура
-                if (UCom.isFinite(this.gson.param, PKjson.colorRasc)) {
+                if (UJson.isFinite(this.gson.param, PKjson.colorRasc)) {
                     this.rascColor = eColor.find(this.gson.param[PKjson.colorRasc])[eColor.id];
                 } else {
                     this.rascColor = eArtdet.find(this.rascRec[eArtikl.id])[eArtdet.color_fk]; //цвет по умолчанию
                 }
                 //Проёмы гориз.
-                if (UCom.isFinite(this.gson.param, PKjson.horRasc)) {
+                if (UJson.isFinite(this.gson.param, PKjson.horRasc)) {
                     this.rascNumber[0] = this.gson.param[PKjson.horRasc];
                 }
                 //Проёмы вертик.
-                if (UCom.isFinite(this.gson.param, PKjson.verRasc)) {
+                if (UJson.isFinite(this.gson.param, PKjson.verRasc)) {
                     this.rascNumber[1] = this.gson.param[PKjson.verRasc];
                 }
             }

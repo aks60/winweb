@@ -1,5 +1,4 @@
 import {UGeo} from './uGeo.js';
-import {UCom} from '../../common/uCom.js';
 import {Com5t} from './Com5t.js';
 import {Layout, Type} from '../../enums/enums.js';
 import LineSegment from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineSegment.js';

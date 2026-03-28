@@ -11,7 +11,7 @@
         </style>
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
-            import {UCom} from './common/uCom.js';
+            import {UJson} from './common/uJson.js';
             import {Type, PKjson} from './enums/enums.js';
             import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
@@ -176,7 +176,7 @@
                         set_value_gson(Number(artiklRow.id));
 
                         //Запишем скрипт в локальн. бд 
-                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v));
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
                         
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
@@ -253,16 +253,16 @@
             function set_value_gson(ID) {
                 //Стеклопакет
                 if (paramTaq === 'n51') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт
+                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт
                     //Ручка
                 } else if (paramTaq === 'n45') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklHand], ID); //запишем артикл в скрипт
+                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklHand], ID); //запишем артикл в скрипт
                     //Подвес
                 } else if (paramTaq === 'n49') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklLoop], ID); //запишем артикл в скрипт
+                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklLoop], ID); //запишем артикл в скрипт
                     //Замок
                 } else if (paramTaq === 'n4B') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.artiklLock], ID); //запишем артикл в скрипт
+                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklLock], ID); //запишем артикл в скрипт
                 }
             }
 

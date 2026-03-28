@@ -1,6 +1,6 @@
 
 import {AreaArch, AreaStvorka, Com5t} from './model.js';
-import {UCom} from '../../common/uCom.js';
+import {UJson} from '../../common/uJson.js';
 import {UGeo} from './uGeo.js';
 import {UColor} from '../making/uColor.js';
 import {Type, UseType, PKjson} from '../../enums/enums.js';
@@ -29,7 +29,7 @@ export class AreaSimple extends Com5t {
      */
     initArtikle() {
         try {
-            if (UCom.isFinite(this.gson.param, PKjson.sysprofID)) {
+            if (UJson.isFinite(this.gson.param, PKjson.sysprofID)) {
                 this.sysprofRec = eSysprof.find3(Number(this.gson.param[PKjson.sysprofID]));
                 this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
                 this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог           
@@ -40,20 +40,20 @@ export class AreaSimple extends Com5t {
                 this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог                
             }
             if (this instanceof AreaStvorka) {                
-                this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1))
+                this.colorID1 = (UJson.isFinite(this.gson.param, PKjson.colorID1))
                         ? Number(this.gson.param[PKjson.colorID1]) : this.owner.colorID1;
-                this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2))
+                this.colorID2 = (UJson.isFinite(this.gson.param, PKjson.colorID2))
                         ? Number(this.gson.param[PKjson.colorID2]) : this.owner.colorID2;
-                this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3))
+                this.colorID3 = (UJson.isFinite(this.gson.param, PKjson.colorID3))
                         ? Number(this.gson.param[PKjson.colorID3]) : this.owner.colorID3;
             } else {
-                this.colorID1 = (UCom.isFinite(this.gson.param, PKjson.colorID1))
+                this.colorID1 = (UJson.isFinite(this.gson.param, PKjson.colorID1))
                         ? Number(this.gson.param[PKjson.colorID1])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-                this.colorID2 = (UCom.isFinite(this.gson.param, PKjson.colorID2))
+                this.colorID2 = (UJson.isFinite(this.gson.param, PKjson.colorID2))
                         ? Number(this.gson.param[PKjson.colorID2])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-                this.colorID3 = (UCom.isFinite(this.gson.param, PKjson.colorID3))
+                this.colorID3 = (UJson.isFinite(this.gson.param, PKjson.colorID3))
                         ? Number(this.gson.param[PKjson.colorID3])
                         : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
             }

@@ -1,5 +1,4 @@
 
-import {UCom} from '../../common/uCom.js';
 import PrecisionModel from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/PrecisionModel.js';
 import GeometryFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
 import GeometricShapeFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/util/GeometricShapeFactory.js';

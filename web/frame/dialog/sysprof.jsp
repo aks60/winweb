@@ -8,7 +8,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {Type, Layout, UseSide, PKjson} from './enums/enums.js';
-            import {UCom} from './common/uCom.js';
+            import {UJson} from './common/uJson.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
 
@@ -130,7 +130,7 @@
                 winc.location();
 
                 //Запишем профиль в локальн. бд
-                project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v));
+                project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
 
                 //Запишем профиль в серверную базу данных
                 $.ajax({
@@ -154,11 +154,11 @@
             function set_value_gson(sysprofRow) {
                 
                 if (elem.type == Type.BOX_SIDE) { //коробка
-                    UCom.setJsonParam(elem.gson, ['param', PKjson.sysprofID], sysprofRow.id); //запишем профиль в скрипт
+                    UJson.setJsonParam(elem.gson, ['param', PKjson.sysprofID], sysprofRow.id); //запишем профиль в скрипт
                     
                 } else if (elem.type == Type.STV_SIDE) { //створка 
                     let sideStv = ["", PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][elem.layout[0]];
-                    UCom.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.sysprofID], sysprofRow.id);
+                    UJson.setJsonParam(elem.owner.gson, ['param', sideStv, PKjson.sysprofID], sysprofRow.id);
                     
                 } else if (elem.type == Type.GLASS) {
 

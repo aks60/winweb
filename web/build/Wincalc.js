@@ -1,6 +1,6 @@
 
 import {UGeo} from './model/uGeo.js';
-import {UCom} from '../common/uCom.js';
+import {UJson} from '../common/uJson.js';
 import {product} from '../frame/product.js';
 import {Type, PKjson} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
@@ -118,7 +118,7 @@ export class Wincalc {
             eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] == this.nuni)
                     .forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
 
-            if (UCom.isFinite(param, PKjson.ioknaParam)) {
+            if (UJson.isFinite(param, PKjson.ioknaParam)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 let ioknaParamArr = param[PKjson.ioknaParam];
                 for (const ioknaID of ioknaParamArr) { //цикл по параметрам менеджера
