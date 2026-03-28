@@ -1,7 +1,8 @@
 
-import {Type, TypeOpen1, Layout, LayoutHand} from '../enums/enums.js';
+import {Type, TypeOpen1, Layout, LayoutHand, PKjson} from '../enums/enums.js';
 import {project} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
+import {UJson} from '../common/uJson.js';
 import {TFurniture} from '../build/making/TFurniture.js';
 import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 
@@ -161,6 +162,11 @@ export function tree_to_tabs(com5t) {
                 n16: eColor.find(winc.root.colorID3)[eColor.name]
             });
 
+            if(UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
+                $('#n15 + input').val(' V');
+            } else {
+                $('#n15 + input').val('...');
+            }
             //Парам. по умолчанию
         } else if (com5t.type === Type.PARAM) {
             $("#tabs-2").show();

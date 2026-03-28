@@ -37,7 +37,7 @@ function deployTaq(selectors) {
                     let readonly = ($(elem).attr('nul') === 'w') ? '' : 'readonly';
                     output = `<p class='field' style='width: ${width}px;'>${label}</p>`
                             + `<input id='${key}' class='field' type='text' ${dx} style='width: ${width2}px;' ${readonly}>`
-                            + `<input class='field' type='button' style='height: 18px;' value='---' onclick=\" ${src} \">`;
+                            + `<input class='field' type='button' style='height: 18px;' value='...' onclick=\" ${src} \">`;
 
                 } else if (type === 'btn2') { //background: #eee
                     let dx = (width2 === null) ? ` dx='${$(elem).attr('dx') + 16}'` : "";
@@ -182,21 +182,7 @@ function formatDate2(d) {
 }
 
 function prepareTool() {
-
-//  $("#btnTest1").button({
-//    icons: {
-//      primary: "ui-icon-arrowthick-1-n" // Иконка слева
-//      // secondary: "ui-icon-triangle-1-s" // Иконка справа (опционально)
-//    },
-//    text: true // Отображать текст вместе с иконкой
-//  });
     
-//$("#btnTest1").button("option", "icons", {primary: "ui-icon-locked"});
-
-//$("#btnTest1").button({icons: {primary: "ui-icon ui-icon-arrowthick-1-n"}});   
-//$( "#btnTest1" ).button({icons: {primary: "ui-icon ui-icon-arrowthick-1-n"}, text: false});    
-//$( "#btnTest2" ).button({icons: {primary: "ui-icon  ui-icon-plus"}});    
-
     $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
     $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
     $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
@@ -217,7 +203,7 @@ function prepareTool() {
     $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
     $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
     $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
-    //-------------------------------------------------------------
+
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
     //$("#tab-2").button({icons: {primary: "ui-icon-star"}});
