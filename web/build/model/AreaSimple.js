@@ -166,7 +166,7 @@ export class AreaSimple extends Com5t {
                     listHor.sort((a, b) => a - b);
                     listVer.sort((a, b) => a - b);
 
-                    const font = UCom.scaleFont(this.winc.scale);
+                    const font = UGeo.scaleFont(this.winc.scale);
                     this.winc.ctx.font = `normal ${font}px sans-serif`; //размер шрифта
                     let matrix = this.winc.ctx.getTransform();
                     let metricTxt = this.winc.ctx.measureText("999.99");
