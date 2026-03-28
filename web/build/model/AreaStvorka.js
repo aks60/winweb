@@ -42,7 +42,6 @@ export class AreaStvorka extends AreaSimple {
     initStvorka() {
         try {
             super.initArtikle();
-            //this.frames.length = 0;
             //
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом	
             let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
@@ -57,9 +56,10 @@ export class AreaStvorka extends AreaSimple {
 
                 //Координаты рам створок
                 let ID = this.gson.id + (0.1 + i / 10);
-                let sideStv = this.frames.find(el => el.id === ID);
+                let sideStv = this.frames.find(el => el.id === ID);                 
 
                 if (sideStv !== undefined) {
+                    sideStv.gson.param = UJson.getJsonParam(this.gson.param, PKjson.stvorkaSide[i]); //обновил параметры в gson 
                     sideStv.x1 = coo[i].x;
                     sideStv.y1 = coo[i].y;
                     coo[i].z = sideStv.id;
