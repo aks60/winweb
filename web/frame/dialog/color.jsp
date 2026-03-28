@@ -238,28 +238,32 @@
             //Запишем текстуру в скрипт
             function set_value_gson() {
                 let ID = Number(colorRow.id);
-                let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
-                
-                if (paramTaq === 'n33') {
-                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
-                } else if (paramTaq === 'n34') {
-                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
-                } else if (paramTaq === 'n35') {
-                    UCom.setJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
-                } else if (['n14', 'n33', 'n60', 'n65'].includes(paramTaq)) {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
-                } else if (['n15', 'n34', 'n61'].includes(paramTaq)) {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID2], ID);
-                } else if (['n16', 'n35', 'n62'].includes(paramTaq)) {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorID3], ID);
-                } else if (paramTaq === 'n46') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorHand], ID);
-                } else if (paramTaq === 'n4A') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLoop], ID);
-                } else if (paramTaq === 'n4C') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
-                } else if (paramTaq === 'n53') {
-                    UCom.setJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
+
+                if (com5t.type === Type.STV_SIDE) {
+                    let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
+                    if (paramTaq === 'n33') {
+                        UCom.update_value_json(com5t.owner.gson, ['param', sideStv, PKjson.colorID1], ID);
+                    } else if (paramTaq === 'n34') {
+                        UCom.update_value_json(com5t.owner.gson, ['param', sideStv, PKjson.colorID2], ID);
+                    } else if (paramTaq === 'n35') {
+                        UCom.update_value_json(com5t.owner.gson, ['param', sideStv, PKjson.colorID3], ID);
+                    }
+                } else {
+                    if (['n14', 'n33', 'n60', 'n65'].includes(paramTaq)) {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorID1], ID);
+                    } else if (['n15', 'n34', 'n61'].includes(paramTaq)) {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorID2], ID);
+                    } else if (['n16', 'n35', 'n62'].includes(paramTaq)) {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorID3], ID);
+                    } else if (paramTaq === 'n46') {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorHand], ID);
+                    } else if (paramTaq === 'n4A') {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorLoop], ID);
+                    } else if (paramTaq === 'n4C') {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorLock], ID);
+                    } else if (paramTaq === 'n53') {
+                        UCom.update_value_json(com5t.gson, ['param', PKjson.colorGlass], ID);
+                    }
                 }
             }
 
@@ -296,7 +300,6 @@
                 else
                     return null;
             }
-
         </script>         
     </head>
     <body>

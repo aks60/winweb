@@ -54,10 +54,10 @@ UCom.scaleFont = (scale) => {
     }
 };
 
-UCom.setJsonParam = (obj, path, value) => {
-    path.reduce((acc, key, index) => {
-        if (index === path.length - 1) {
-            acc[key] = value;
+UCom.setJsonParam = (obj, keys, val) => {
+    keys.reduce((acc, key, index) => {
+        if (index === keys.length - 1) {
+            acc[key] = val;
         } else {
             acc[key] = acc[key] || {};
         }
@@ -65,9 +65,22 @@ UCom.setJsonParam = (obj, path, value) => {
     }, obj);
 };
 
-UCom.deleteJsonParam = (obj, key) => {
-
-    for (let k in obj)
-        return false; // если тело цикла начнет выполняться - значит в объекте есть свойства
-    return true;
+UCom.remJsonParam = (obj, keys) => {
+    debugger;
+    for (let index = keys.lengt - 1; index >= 0; index--) {
+        if (index === keys.length - 1) {
+            delete obj[keys[index]];
+        }
+        if (Object.keys(obj[keys[index]]).length === 0) {
+            delete obj[keys[index]];
+        }
+    }
 };
+
+UCom.update_value_json = (obj, keys, id) => {
+    if (id === -3) {
+        UCom.remJsonParam(obj, keys);
+    } else {
+        UCom.setJsonParam(obj, keys, id);
+    }
+}
