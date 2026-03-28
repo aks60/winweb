@@ -136,6 +136,7 @@ export function elements(com, arr) {
 
 //Загрузка тегов страницы
 export function tree_to_tabs(com5t) {
+    debugger;
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
 

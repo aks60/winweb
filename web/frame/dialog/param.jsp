@@ -7,6 +7,7 @@
 
         <script type="module">
             import {product} from './frame/product.js';
+            import {UCom} from './common/uCom.js';
 //------------------------------------------------------------------------------            
             function resize() {
                 $("#tab-param").jqGrid('setGridWidth', $("#dialog-jsp #pan-param").width());
@@ -51,7 +52,7 @@
 
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=updateScript',
-                                data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => isEmpty(v))})},
+                                data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v))})},
                                 success: function (data) {
                                     if (data.result == 'ok') {
                                         winc.root.init_pardef_map();

@@ -8,6 +8,7 @@
         <script type="module">
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
+            import {UCom} from './common/uCom.js';
 //------------------------------------------------------------------------------
             function resize() {
                 $("#tab-furniture").jqGrid('setGridWidth', $("#dialog-jsp #pan-furniture").width());
@@ -100,9 +101,9 @@
                 let sysfurnRec = eSysfurn.list.find(rec => tableRec.id == rec[eSysfurn.furniture_id] && winc.nuni == rec[eSysfurn.systree_id]);
                 elem.gson.param.sysfurnID = sysfurnRec[eSysfurn.id]; //запишем профиль в скрипт
                 let prjprodRec = ePrjprod.list.find(rec => prjprodID == rec[ePrjprod.id]);
-                prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v)); //запишем профиль в локальн. бд  
-                let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => isEmpty(v)));
-                project.mapWinc.set(prjprodID, iwincalc); //новый экз.
+                prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v)); //запишем профиль в локальн. бд  
+                let iwincalc = Wincalc.new(winc.cnv, winc.cnv.offsetWidth, winc.cnv.offsetHeight, JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v)));
+                project.mapWinc.set(prjprodID, iwincalc); //новый экз.isEmpty(
 
                 $.ajax({//запишем профиль в серверную базу данных
                     url: 'dbset?action=updateScript',

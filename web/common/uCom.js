@@ -38,6 +38,18 @@ UCom.getJson = (json1, json2) => {
     }
 };
 
+UCom.isEmpty = (v) => {
+
+    if (v === "" || v === undefined || v === null)
+        return undefined;
+    else {
+        if (typeof v === 'object' && Object.keys(v).length === 0)
+            return undefined;
+        else
+            return v;
+    }
+};
+
 UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
@@ -54,10 +66,10 @@ UCom.scaleFont = (scale) => {
     }
 };
 
-UCom.setJsonParam = (obj, keys, val) => {
+UCom.setJsonParam = (obj, keys, value) => {
     keys.reduce((acc, key, index) => {
         if (index === keys.length - 1) {
-            acc[key] = val;
+            acc[key] = value;
         } else {
             acc[key] = acc[key] || {};
         }
@@ -67,13 +79,22 @@ UCom.setJsonParam = (obj, keys, val) => {
 
 UCom.remJsonParam = (obj, keys) => {
     debugger;
-    for (let index = keys.lengt - 1; index >= 0; index--) {
-        if (index === keys.length - 1) {
-            delete obj[keys[index]];
-        }
-        if (Object.keys(obj[keys[index]]).length === 0) {
-            delete obj[keys[index]];
-        }
+    obj[keys[0]] = obj[keys[0]] || {};
+    obj[keys[0]][keys[1]] = obj[keys[0]][keys[1]] || {};
+
+    if (keys.length === 2) {
+        if (Object.keys(obj[keys[0]][keys[1]]).length === 0)
+            delete obj[keys[0]][keys[1]];
+        if (Object.keys(obj[keys[0]]).length === 0)
+            delete obj[keys[0]];
+
+    } else if (keys.length === 3) {
+        obj[keys[0]][keys[1]][keys[2]] = obj[keys[0]][keys[1]][keys[2]] || {};
+        delete obj[keys[0]][keys[1]][keys[2]];
+        if (Object.keys(obj[keys[0]][keys[1]]).length === 0)
+            delete obj[keys[0]][keys[1]];
+        if (Object.keys(obj[keys[0]]).length === 0)
+            delete obj[keys[0]];
     }
 };
 

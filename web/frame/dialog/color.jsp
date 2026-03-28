@@ -192,7 +192,7 @@
                         set_value_gson();
 
                         //Запишем скрипт в локальн. бд                       
-                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => isEmpty(v));
+                        project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UCom.isEmpty(v));
 
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
