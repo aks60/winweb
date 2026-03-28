@@ -1,6 +1,26 @@
 
 export let UCom = {};
 
+UCom.traverseJson = (data) => {
+    if (typeof data === 'object' && data !== null) {
+        // Если это массив
+        if (Array.isArray(data)) {
+            data.forEach((item, index) => {
+                console.log(`Массив, индекс ${index}:`, item);
+                traverseJson(item); // Рекурсивный вызов
+            });
+        } else { // Если это объект
+            Object.keys(data).forEach(key => {
+                console.log(`Ключ: ${key}, Значение: ${data[key]}`);
+                traverseJson(data[key]); // Рекурсивный вызов
+            });
+        }
+    } //else {
+    // Это примитивное значение (строка, число, null, boolean)
+    // console.log('Примитивное значение:', data);
+    //}
+};
+
 UCom.findJson = (id, data) => {
     let obj = {};
     try {
@@ -28,16 +48,6 @@ UCom.findJson = (id, data) => {
     return obj;
 };
 
-UCom.getJson = (json1, json2) => {
-    if (json1 === undefined) {
-        return undefined;
-    } else if (json1 !== undefined && json2 === undefined) {
-        return json1;
-    } else if (json1 !== undefined && json2 !== undefined) {
-        return json1[json2];
-    }
-};
-
 UCom.isEmpty = (v) => {
 
     if (v === "" || v === undefined || v === null)
@@ -54,15 +64,13 @@ UCom.isFinite = (key1, key2) => {
     return (key1 === undefined) ? false : isFinite(key1[key2]);
 };
 
-UCom.scaleFont = (scale) => {
-    if (scale > .44) {
-        return 30;
-    } else if (scale > .34) {
-        return 40;
-    } else if (scale > .18) {
-        return 45;
-    } else {
-        return 50;
+UCom.getJsonParam = (json1, json2) => {
+    if (json1 === undefined) {
+        return undefined;
+    } else if (json1 !== undefined && json2 === undefined) {
+        return json1;
+    } else if (json1 !== undefined && json2 !== undefined) {
+        return json1[json2];
     }
 };
 
@@ -98,7 +106,7 @@ UCom.remJsonParam = (obj, keys) => {
     }
 };
 
-UCom.update_value_json = (obj, keys, id) => {
+UCom.updateJsonParam = (obj, keys, id) => {
     if (id === -3) {
         UCom.remJsonParam(obj, keys);
     } else {

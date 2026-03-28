@@ -36,18 +36,6 @@ UGeo.toDegrees = (rad) => {
     return rad / (Math.PI / 180);
 };
 
-UGeo.scaleFont = (scale) => {
-    if (scale > .44) {
-        return 30;
-    } else if (scale > .34) {
-        return 40;
-    } else if (scale > .18) {
-        return 45;
-    } else {
-        return 50;
-    }
-};
-
 //Список входн. параметров не замыкается начальной точкой как в jts!
 UGeo.arrCoord = (arr) => {
     let list = new Array();

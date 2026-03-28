@@ -366,23 +366,15 @@ Math.toRadians = function (x) {
     return x / 180 * Math.PI;
 };
 
-function traverseJson(data) {
-    if (typeof data === 'object' && data !== null) {
-        // Если это массив
-        if (Array.isArray(data)) {
-            data.forEach((item, index) => {
-                console.log(`Массив, индекс ${index}:`, item);
-                traverseJson(item); // Рекурсивный вызов
-            });
-        } else { // Если это объект
-            Object.keys(data).forEach(key => {
-                console.log(`Ключ: ${key}, Значение: ${data[key]}`);
-                traverseJson(data[key]); // Рекурсивный вызов
-            });
-        }
-    } //else {
-    // Это примитивное значение (строка, число, null, boolean)
-    // console.log('Примитивное значение:', data);
-    //}
-}
+function scaleFont(scale) {
+    if (scale > .44) {
+        return 30;
+    } else if (scale > .34) {
+        return 40;
+    } else if (scale > .18) {
+        return 45;
+    } else {
+        return 50;
+    }
+};
 

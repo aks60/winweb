@@ -42,7 +42,8 @@ export class AreaStvorka extends AreaSimple {
     initStvorka() {
         try {
             super.initArtikle();
-            
+            //this.frames.length = 0;
+            //
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом	
             let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                     || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
@@ -64,7 +65,7 @@ export class AreaStvorka extends AreaSimple {
                     coo[i].z = sideStv.id;
                 } else {
                     let gson = {id: ID, type: Type.STV_SIDE, x1: coo[i].x, y1: coo[i].y};
-                    gson.param = UCom.getJson(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson  
+                    gson.param = UCom.getJsonParam(this.gson.param, PKjson.stvorkaSide[i]); //впихнул параметры в gson  
                     let sideStv = new ElemFrame(this.winc, gson, this);
                     sideStv.type = Type.STV_SIDE;
                     this.frames.push(sideStv);
