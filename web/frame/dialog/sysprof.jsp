@@ -12,7 +12,7 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {tree_to_tabs} from './frame/product.js';
-
+            debugger;
             const paramTaq = "<%= request.getParameter("param")%>";
             let sysprofSet = new Set();
             let sysprofRow = {};
@@ -94,18 +94,21 @@
 
                 //Коробка
                 if (paramTaq === 'n55') {
-
+                    debugger;
                     //Цикл по профилям ветки 
                     for (let sysprofRec of eSysprof.list) {
                         //Отфильтруем подходящие по параметрам
                         if (winc.nuni === sysprofRec[eSysprof.systree_id] && com5t.type[1] === sysprofRec[eSysprof.use_type]) {
                             let useSideID = sysprofRec[eSysprof.use_side];
-                            if (useSideID === com5t.layout[0]|| ((com5t.layout === Layout. || com5t.layout === Layout.TOP) && useSideID === UseSide.HORIZ[0])
-                                sysprofSet.add(sysprofRec);
-                            //}
+                            let  useType = sysprofRec[eSysprof.use_tupe];
+                            if (useType == UseType,FRAME) {
+                                if (useSideID === UseSide) {
+                                    sysprofSet.add(sysprofRec);
+                                }
+                            }
                         }
                     }
-                //Сторона коробки
+                    //Сторона коробки
                 } else if (paramTaq === 'n31') {
                     //Цикл по профилям ветки 
                     for (let sysprofRec of eSysprof.list) {
