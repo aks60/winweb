@@ -50,7 +50,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            colorRow = {id: -3, name: 'virtual'}
+                            colorRow = {id: -3, name: 'virtual'};
                             save_table();
                             $(this).dialog("close");
                         },
@@ -203,7 +203,6 @@
                                 if (data.result === 'ok') {
 
                                     //Запишем текстуру в html
-                                    debugger;
                                     tree_to_tabs(com5t);
 
                                 } else {
@@ -238,6 +237,7 @@
 
             //Запишем текстуру в скрипт
             function set_value_gson() {
+                
                 let ID = Number(colorRow.id);
 
                 if (com5t.type === Type.STV_SIDE) {

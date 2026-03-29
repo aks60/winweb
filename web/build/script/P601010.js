@@ -45,7 +45,7 @@ export let p601010 = {
                 {
                     "id": 6.0,
                     "param": {
-                        "artglasID": 4663
+                        "artiklID": 4663
                     },
                     "type": "GLASS"
                 }
@@ -82,7 +82,7 @@ export let p601010 = {
                 {
                     "id": 9.0,
                     "param": {
-                        "artglasID": 4663
+                        "artiklID": 4663
                     },
                     "type": "GLASS"
                 }

@@ -16,11 +16,13 @@
             import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
+            import {tree_to_tabs} from './frame/product.js';
 
-            var LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
-            var LEV2 = ["", "Стекло", "Стеклопакет", "Сеннгвич", "", ""];
+            const LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
+            const LEV2 = ["", "Стекло", "Стеклопакет", "Сеннгвич", "", ""];
             const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set(), handlSet = new Set();
+            let artiklRow = {};
             const winc = product.winCalc;
             const com5t = product.clickTreeNodeElem;
             const tabArtikl = document.getElementById('tab-artikl');
@@ -36,7 +38,7 @@
             load_table();
             resize();
 
-            function  init_dialog() {
+            function init_dialog() {
 
                 $("#dialog-jsp").dialog({
                     title: "Справочник артикулов",
@@ -45,10 +47,13 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
+                            artiklRow = getSelectedRow($(tabArtikl));
                             save_table();
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
+                            artiklRow = {id: -3, type: '0/0', code: '@', name: 'virtual'};
+                            save_table();
                             $(this).dialog("close");
                         },                        
                         "Закрыть": function () {
@@ -74,6 +79,7 @@
                             }}
 
                     ], ondblClickRow: function (rowid) {
+                        artiklRow = getSelectedRow($(tabArtikl));
                         save_table();
                         $("#dialog-jsp").dialog("close");
                     }
@@ -168,12 +174,9 @@
             function save_table() {
                 try {
                     if ($('#body-jsp title').text() == 'PRODUCT') {
-                        let rowid = $(tabArtikl).jqGrid('getGridParam', "selrow"); //index профиля из справочника
-                        let artiklRow = $(tabArtikl).jqGrid('getRowData', rowid);  //row справочника
-                        let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
 
                         //Запишем артикл в gson 
-                        set_value_gson(Number(artiklRow.id));
+                        set_value_gson();
 
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
@@ -248,48 +251,25 @@
                     console.error('Error: save_table() ' + e.message);
                 }
             }
+            
+            //Запишем артикл в скрипт
+            function set_value_gson() {
 
-/*            //Запишем артикл в скрипт
-            function set_value_gson(ID) {
-                //Стеклопакет
-                if (paramTaq === 'n51') {
-                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artglasID], ID); //запишем артикл в скрипт
+                let ID = Number(artiklRow.id);
+                
+                if (paramTaq === 'n51') {  
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklID], ID);
                     //Ручка
                 } else if (paramTaq === 'n45') {
-                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklHand], ID); //запишем артикл в скрипт
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklHand], ID);
                     //Подвес
                 } else if (paramTaq === 'n49') {
-                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklLoop], ID); //запишем артикл в скрипт
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklLoop], ID);
                     //Замок
                 } else if (paramTaq === 'n4B') {
-                    UJson.setJsonParam(com5t.gson, ['param', PKjson.artiklLock], ID); //запишем артикл в скрипт
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklLock], ID);
                 }
             }
-
-            //Запишем артикул в html
-            function set_value_html(artiklRow) {
-                //Стеклопакет
-                if (paramTaq === 'n51') {
-                    $("#n51").val(artiklRow.code);
-                    $("#n52").val(artiklRow.name);
-
-                    //Ручка
-                } else if (paramTaq === 'n45') {
-                    $("#n45").val(artiklRow.code);
-                    $("#n4D").val(artiklRow.name);
-
-                    //Подвес
-                } else if (paramTaq === 'n49') {
-                    $("#n49").val(artiklRow.code + " / " + artiklRow.name);
-                    //$("#n4A").val('');
-
-                    //Замок
-                } else if (paramTaq === 'n4B') {
-                    $("#n4B").val(artiklRow.code + " / " + artiklRow.name);
-                    //$("#n4C").val('');
-                }
-            }
- */
         </script>        
     </head>
     <body>

@@ -23,8 +23,8 @@ export class ElemGlass extends ElemSimple {
     initArtikle() {
         try {
             //Артикул стекла
-            if (UJson.isFinite(this.gson.param, PKjson.artglasID)) {
-                this.artiklRec = eArtikl.find(this.gson.param[PKjson.artglasID], false);
+            if (UJson.isFinite(this.gson.param, PKjson.artiklID)) {
+                this.artiklRec = eArtikl.find(this.gson.param[PKjson.artiklID], false);
             } else {
                 let systreeRec = eSystree.find(this.winc.nuni); //по умолчанию стеклопакет
                 this.artiklRec = eArtikl.find2(systreeRec[eSystree.glas]);

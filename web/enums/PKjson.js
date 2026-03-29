@@ -4,7 +4,6 @@ export const PKjson = {
     artiklID: "artiklID", //ID артикула
     sysprofID: "sysprofID", //ID профиля
     sysfurnID: "sysfurnID", //ID Фурнитуры
-    artglasID: "artglasID", //ID заполнения
     elementID: "elementID", //ID составов
     parentID: "parentID", //ID родителя
 
