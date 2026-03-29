@@ -33,7 +33,7 @@
             }
             init_dialog();
             init_table();
-            color_set();
+            data_set();
             load1_table();
             resize();
 
@@ -121,7 +121,7 @@
             }
 
             //Текстура изделия
-            function color_set() {
+            function data_set() {
                 try {
                     let colorTxt = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);

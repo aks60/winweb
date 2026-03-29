@@ -34,7 +34,7 @@
             }
             init_dialog();
             init_table();
-            artikl_set();
+            data_set();
             load_table();
             resize();
 
@@ -116,7 +116,7 @@
                 $(tabArtikl).jqGrid("setSelection", 1);
             }
 
-            function artikl_set() {
+            function data_set() {
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
 
