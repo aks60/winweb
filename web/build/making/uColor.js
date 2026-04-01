@@ -13,8 +13,6 @@ export class UColor {
 
     static findFromArtOrSeri(spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
-        //if (spcAdd.detailRec[eFurndet.id] === 5512) debugger;  
-
         //let spcClon = new TRecord(spcAdd);
         let spcClon = spcAdd;
         let typesUS = spcClon.detailRec[this.COLOR_US];
