@@ -16,7 +16,7 @@
             import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {tree_to_tabs} from './frame/product.js';
+            import {tree_to_html} from './frame/product.js';
 
             const LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
             const LEV2 = ["", "Стекло", "Стеклопакет", "Сеннгвич", "", ""];
@@ -189,7 +189,7 @@
                                 if (data.result === 'ok') {
 
                                     //Запишем текстуру в html
-                                    tree_to_tabs(com5t);
+                                    tree_to_html();
                                 }
                             },
                             error: () => {

@@ -112,9 +112,9 @@
                     <p class="pantitle" style='text-align: center'> Основные размеры</p> 
                     <jst id="n11" type='txt' label='Ширина' width='80' width2="60" nul='r'></jst><br>
                     <jst id="n12" type='txt' label='Высота' width='80' width2="60" nul='r'></jst><br>
-                    <jst id="n55" type='btn' label='*Артикул' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/sysprof.jsp?param=n55')"></jst><br>
-                    <jst id="n56" type='txt' label='*Название' width='80' width2="288"></jst><br> 
-                    <jst id="n66" type='txt' label='*Аналог' width='80' width2="288"></jst><br>
+                    <jst id="n55" type='btn' label='Артикул' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/sysprof.jsp?param=n55')"></jst><br>
+                    <jst id="n56" type='txt' label='Название' width='80' width2="288"></jst><br> 
+                    <jst id="n66" type='txt' label='Аналог' width='80' width2="288"></jst><br>
                     <p class="pantitle"> Текстура</p> 
                     <jst id="n14" type='btn' label='Основная' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n14')"></jst><br>
                     <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n15')"></jst><br>
@@ -145,9 +145,9 @@
                     <div id="tabs-41">
                         <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
                         <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                          
-                        <jst id="n57" type='btn' label='*Артикул' width='80' width2="260"></jst><br>
-                        <jst id="n58" type='txt' label='*Название' width='80' width2="288"></jst><br>
-                        <jst id="n59" type='txt' label='*Аналог' width='80' width2="288"></jst><br>
+                        <jst id="n57" type='btn' label='Артикул' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/sysprof.jsp?param=n57')"></jst><br>
+                        <jst id="n58" type='txt' label='Название' width='80' width2="288"></jst><br>
+                        <jst id="n59" type='txt' label='Аналог' width='80' width2="288"></jst><br>
                         <p class="pantitle"> Текстура</p>  
                         <jst id="n60" type='btn' label='Основная' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n60')"></jst><br>                          
                         <jst id="n61" type='btn' label='Внутренняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n61')"></jst><br>                          

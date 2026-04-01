@@ -80,7 +80,7 @@ export function load_table1() {
 }
 
 //Загрузка данных в tree
-export function load_table2(tabtree) {
+export function load_table2() {
     try {
         if (project.prjprodRec != null) {
             let arr = new Array();
@@ -100,7 +100,7 @@ export function load_table2(tabtree) {
 
                         product.clickTreeNodeElem = com5t;  //выбранный компонент в узле
 
-                        tree_to_tabs(com5t);
+                        tree_to_html();
 
                     });
         }
@@ -136,16 +136,17 @@ export function elements(com, arr) {
 }
 
 //Загрузка тегов страницы
-export function tree_to_tabs(com5t) {
+export function tree_to_html() {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
+        let com5t = product.clickTreeNodeElem;
 
         //Пересчитаем конструкцию
         let winc = product.winCalc;
         winc.artikle();
         winc.location();
         TFurniture.calc(winc);
-        winc.draw(); 
+        winc.draw();
 
         //Коробка
         if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(com5t.type, 0)) {
@@ -162,7 +163,7 @@ export function tree_to_tabs(com5t) {
                 n16: eColor.find(winc.root.colorID3)[eColor.name]
             });
 
-            if(UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
+            if (UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
                 $('#n15 + input').val(' V');
             } else {
                 $('#n15 + input').val('...');
@@ -226,9 +227,17 @@ export function tree_to_tabs(com5t) {
                 n53: color1Rec[eColor.name]
             });
         }
-        
+
     } catch (e) {
         console.error(e.message);
+    }
+}
+
+function checkMarkOnBtn() {
+    if (UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
+        $('#n15 + input').val(' V');
+    } else {
+        $('#n15 + input').val('...');
     }
 }
 

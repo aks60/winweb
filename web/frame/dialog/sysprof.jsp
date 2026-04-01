@@ -11,8 +11,8 @@
             import {UJson} from './common/uJson.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {tree_to_tabs} from './frame/product.js';
-            debugger;
+            import {tree_to_html} from './frame/product.js';
+            
             const paramTaq = "<%= request.getParameter("param")%>";
             let sysprofSet = new Set();
             let sysprofRow = {};
@@ -92,20 +92,14 @@
 
             function data_set() {
 
-                //Коробка
-                if (paramTaq === 'n55') {
-                    debugger;
+                //Коробка, створка
+                if (paramTaq === 'n55' || paramTaq === 'n57') {
+
                     //Цикл по профилям ветки 
                     for (let sysprofRec of eSysprof.list) {
                         //Отфильтруем подходящие по параметрам
                         if (winc.nuni === sysprofRec[eSysprof.systree_id] && com5t.type[1] === sysprofRec[eSysprof.use_type]) {
-                            let useSideID = sysprofRec[eSysprof.use_side];
-                            let  useType = sysprofRec[eSysprof.use_tupe];
-                            if (useType == UseType,FRAME) {
-                                if (useSideID === UseSide) {
-                                    sysprofSet.add(sysprofRec);
-                                }
-                            }
+                            sysprofSet.add(sysprofRec);
                         }
                     }
                     //Сторона коробки
@@ -141,12 +135,9 @@
                     data: {param: JSON.stringify(project.prjprodRec)},
                     success: function (data) {
                         if (data.result === 'ok') {
-                            //$("#n31").val(elem.artiklRec[eArtikl.code]);
-                            //$("#n32").val(elem.artiklRec[eArtikl.name]);
-                            //$("#n36").val((elem.artiklRec[eArtikl.analog_id] === null) ? '' : elem.artiklRecAn[eArtikl.code]);
 
                             //Запишем текстуру в html
-                            tree_to_tabs(com5t);
+                            tree_to_html();
 
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
@@ -162,27 +153,14 @@
                 let ID = Number(sysprofRow.id);
                 //Коробка
                 if (paramTaq === 'n55') {
-                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID);
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID); //запишем профиль в скрипт
                     //Сторона коробки
-                } else if (paramTaq === 'n31') {
+                } else if (paramTaq === 'n57') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID);
-                    //Ччччч
+                    //Стеклопакет
+                } else if (paramTaq === 'n51') {
+                    UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID);
                 }
-                //else if() {
-
-                //}
-                /*
-                 if (com5t.type == Type.BOX_SIDE) { //коробка
-                 UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID); //запишем профиль в скрипт
-                 
-                 } else if (com5t.type == Type.STV_SIDE) { //створка 
-                 let sideStv = ["", PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];
-                 UJson.updateJsonParam(com5t.owner.gson, ['param', sideStv, PKjson.sysprofID], ID);
-                 
-                 } else if (com5t.type == Type.GLASS) {
-                 UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID); //запишем профиль в скрипт
-                 }
-                 */
             }
         </script>        
     </head>

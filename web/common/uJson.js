@@ -86,7 +86,7 @@ UJson.setJsonParam = (obj, keys, value) => {
 };
 
 UJson.remJsonParam = (obj, keys) => {
-    debugger;
+
     obj[keys[0]] = obj[keys[0]] || {};
     obj[keys[0]][keys[1]] = obj[keys[0]][keys[1]] || {};
 

@@ -11,7 +11,7 @@
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {tree_to_tabs} from './frame/product.js';
+            import {tree_to_html} from './frame/product.js';
 
             let groupSet = new Set();
             let colorSet = new Set();
@@ -203,7 +203,7 @@
                                 if (data.result === 'ok') {
 
                                     //Запишем текстуру в html
-                                    tree_to_tabs(com5t);
+                                    tree_to_html();
 
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
