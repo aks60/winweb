@@ -263,7 +263,7 @@
                     } else if (paramTaq === 'n4C') {
                         UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorLock], ID);
                     } else if (paramTaq === 'n53') {
-                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorGlass], ID);
+                        UJson.updateJsonParam(com5t.gson, ['param', PKjson.colorID1], ID);
                     }
                 }
             }

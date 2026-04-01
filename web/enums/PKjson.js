@@ -15,7 +15,6 @@ export const PKjson = {
     colorHand: "colorHand", //Цвет ручки створки 
     colorLoop: "colorLoop", //Цвет подвеса
     colorLock: "colorLock", //Цвет замка
-    colorGlass: "colorGlass", //Цвет стекла
     colorRasc: "colorRasc", //Цвет раскладки
 
     colorID1: "colorID1", //Текстура

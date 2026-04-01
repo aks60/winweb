@@ -155,8 +155,8 @@
                     </div>
                     <div id="tabs-42" style="display: none;">
                         <jst id="n43" type='btn' label='Фурнитура' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/furniture.jsp?param=n43')"></jst><br>                          
-                        <jst id="n44" type='btn' label='Сторона открывания' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/sideopen.jsp?param=n44')"></jst><br>                        
-                        <jst id="n45" type='btn' label='Ручка (арт/наименов)' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n45')"></jst><br>
+                        <jst id="n44" type='btn' label='Сторона открыв.' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/sideopen.jsp?param=n44')"></jst><br>                        
+                        <jst id="n45" type='btn' label='Ручка артикул' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n45')"></jst><br>
                         <jst id="n4D" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n46')"></jst><br>                                                                          
                         <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>

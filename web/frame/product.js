@@ -155,19 +155,18 @@ export function tree_to_html() {
             loadingTab({
                 n11: Math.round(winc.width),
                 n12: Math.round(winc.height),
-                n55: com5t.artiklRec[eArtikl.code],
+                n55: check_mark(com5t.artiklRec[eArtikl.code], '#n55 + input', PKjson.sysprofID),
                 n56: com5t.artiklRec[eArtikl.name],
                 n66: com5t.artiklRecAn[eArtikl.code],
-                n14: eColor.find(winc.root.colorID1)[eColor.name],
-                n15: eColor.find(winc.root.colorID2)[eColor.name],
-                n16: eColor.find(winc.root.colorID3)[eColor.name]
+                n14: check_mark(eColor.find(winc.root.colorID1)[eColor.name], '#n14 + input', PKjson.colorID1),
+                n15: check_mark(eColor.find(winc.root.colorID2)[eColor.name], '#n15 + input', PKjson.colorID2),
+                n16: check_mark(eColor.find(winc.root.colorID3)[eColor.name], '#n16 + input', PKjson.colorID3)
             });
-
-            if (UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
-                $('#n15 + input').val(' V');
-            } else {
-                $('#n15 + input').val('...');
-            }
+            //if (UJson.isFinite(com5t.gson.param, PKjson.sysprofID)) {
+            //    $('n55 + input').val('Z');
+            //} else {
+            //    $('n55 + input').val('...');
+            //}            
             //Парам. по умолчанию
         } else if (com5t.type === Type.PARAM) {
             $("#tabs-2").show();
@@ -179,12 +178,12 @@ export function tree_to_html() {
             let txt = (com5t.type === Type.BOX_SIDE) ? 'Сторона коробки ' : (com5t.type === Type.STV_SIDE) ? 'Сторона створки ' : 'Импост ';
             $("#tabs-3 :nth-child(1)").text(txt + com5t.layout[1]);
             loadingTab({
-                n31: com5t.artiklRec[eArtikl.code],
+                n31: check_mark(com5t.artiklRec[eArtikl.code], '#n31 + input', PKjson.sysprofID),
                 n32: com5t.artiklRec[eArtikl.name],
                 n36: (com5t.artiklRec[eArtikl.analog_id] === null) ? '' : com5t.artiklRecAn[eArtikl.code],
-                n33: eColor.list.find(rec => rec[eColor.id] === com5t.colorID1)[eColor.name],
-                n34: eColor.list.find(rec => rec[eColor.id] === com5t.colorID2)[eColor.name],
-                n35: eColor.list.find(rec => rec[eColor.id] === com5t.colorID3)[eColor.name]
+                n33: check_mark(eColor.list.find(rec => rec[eColor.id] === com5t.colorID1)[eColor.name], '#n33 + input', PKjson.colorID1),
+                n34: check_mark(eColor.list.find(rec => rec[eColor.id] === com5t.colorID2)[eColor.name], '#n34 + input', PKjson.colorID2),
+                n35: check_mark(eColor.list.find(rec => rec[eColor.id] === com5t.colorID3)[eColor.name], '#n35 + input', PKjson.colorID3)
             });
 
             //Створка
@@ -196,18 +195,18 @@ export function tree_to_html() {
                 //tabs-41
                 n41: Math.round(env.getWidth()),
                 n42: Math.round(env.getHeight()),
-                n57: com5t.artiklRec[eArtikl.code],
+                n57: check_mark(com5t.artiklRec[eArtikl.code], '#n57 + input', PKjson.sysprofID),
                 n58: com5t.artiklRec[eArtikl.name],
                 n59: com5t.artiklRecAn[eArtikl.code],
-                n60: eColor.find(com5t.colorID1)[eColor.name],
-                n61: eColor.find(com5t.colorID2)[eColor.name],
-                n62: eColor.find(com5t.colorID3)[eColor.name],
+                n60: check_mark(eColor.find(com5t.colorID1)[eColor.name], '#n60 + input', PKjson.colorID1),
+                n61: check_mark(eColor.find(com5t.colorID2)[eColor.name], '#n61 + input', PKjson.colorID2),
+                n62: check_mark(eColor.find(com5t.colorID3)[eColor.name], '#n62 + input', PKjson.colorID3),
                 //tabs-42
                 n43: furnitureRec[eFurniture.name],
                 n44: com5t.typeOpen[2],
-                n45: com5t.handRec[0][eArtikl.code],
+                n45: check_mark(com5t.handRec[0][eArtikl.code], '#n45 + input', PKjson.artiklHand),
                 n4D: com5t.handRec[0][eArtikl.name],
-                n46: findef(com5t.handColor[0], eColor.id, eColor)[eColor.name],
+                n46: check_mark(findef(com5t.handColor[0], eColor.id, eColor)[eColor.name], '#n46 + input', PKjson.colorHand),
                 n47: com5t.handLayout[1],
                 n48: com5t.handHeight,
                 n49: com5t.loopRec[0][eArtikl.code] + ' / ' + com5t.loopRec[0][eArtikl.name],
@@ -216,29 +215,29 @@ export function tree_to_html() {
                 n4B: com5t.lockRec[0][eArtikl.code] + ' / ' + com5t.lockRec[0][eArtikl.name],
                 n4C: findef(com5t.lockColor[0], eColor.id, eColor)[eColor.name],
             });
-
             //Стеклопакет
         } else if (com5t.type === Type.GLASS) {
             $("#tabs-5").show();
             let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === com5t.colorID1);
             loadingTab({
-                n51: com5t.artiklRec[eArtikl.code],
+                n51: check_mark(com5t.artiklRec[eArtikl.code], '#n51 + input', PKjson.sysprofID),
                 n52: com5t.artiklRec[eArtikl.name],
-                n53: color1Rec[eColor.name]
+                n53: check_mark(color1Rec[eColor.name], '#n53 + input', PKjson.colorID1)
             });
         }
-
     } catch (e) {
         console.error(e.message);
     }
 }
 
-function checkMarkOnBtn() {
-    if (UJson.isFinite(com5t.gson.param, PKjson.colorID2)) {
-        $('#n15 + input').val(' V');
+function check_mark(val, btn, PKjsonID) {
+    let com5t = product.clickTreeNodeElem;
+    if (UJson.isFinite(com5t.gson.param, PKjsonID)) {
+        $(btn).val(' √');
     } else {
-        $('#n15 + input').val('...');
+        $(btn).val('...');
     }
+    return val;
 }
 
 export function btn_to_tabs(btnTaq) {

@@ -32,8 +32,8 @@ export class ElemGlass extends ElemSimple {
             this.artiklRecAn = this.artiklRec;
 
             //Цвет стекла
-            if (UJson.isFinite(this.gson.param, PKjson.colorGlass)) {
-                this.colorID1 = Number(this.gson.param[PKjson.colorGlass]);
+            if (UJson.isFinite(this.gson.param, PKjson.colorID1)) {
+                this.colorID1 = Number(this.gson.param[PKjson.colorID1]);
                 this.colorID2 = this.colorID1;
                 this.colorID3 = this.colorID1;
             } else {

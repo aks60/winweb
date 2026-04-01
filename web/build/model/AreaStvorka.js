@@ -15,18 +15,18 @@ export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
     sysfurnRec = eSysfurn.vrec; //фурнитура
-    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка 0-настр. 1-авторасчёт
-    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли) 0-настр. 1-авторасчёт
-    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок 0-настр. 1-авторасчёт
+    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка 0-вручную. 1-авторасчёт
+    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли) 0-вручную. 1-авторасчёт
+    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок 0-вручную. 1-авторасчёт
     mosqRec = eArtikl.vrec; //москитка
     elementRec = eElement.vrec; //состав москидки 
 
     lineOpenHor = null; //линии горизонт. открывания
     lineOpenVer = null; //линии вертик. открывания
     handOpen = null; //ручка открывания    
-    handColor = [-3, -3]; //цвет ручки вирт. 0-настр. 1-авторасчёт
-    loopColor = [-3, -3]; //цвет подвеса вирт. 0-настр. 1-авторасчёт
-    lockColor = [-3, -3]; //цвет замка вирт. 0-настр. 1-авторасчёт
+    handColor = [-3, -3]; //цвет ручки 0-вручную. 1-авторасчёт
+    loopColor = [-3, -3]; //цвет подвеса 0-вручную. 1-авторасчёт
+    lockColor = [-3, -3]; //цвет замка 0-вручную. 1-авторасчёт
     mosqColor = -3; //цвет москитки вирт.
 
     handHeight = 0; //высота ручки
@@ -41,8 +41,6 @@ export class AreaStvorka extends AreaSimple {
 
     initStvorka() {
         try {
-            super.initArtikle();
-            //
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом	
             let frameBox = (this.winc.listElem.filter(elem => (elem.type === Type.IMPOST)).length === 0
                     || this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
@@ -56,7 +54,7 @@ export class AreaStvorka extends AreaSimple {
 
                 //Координаты рам створок
                 let ID = this.gson.id + (0.1 + i / 10);
-                let sideStv = this.frames.find(el => el.id === ID);                 
+                let sideStv = this.frames.find(el => el.id === ID);
 
                 if (sideStv !== undefined) {
                     sideStv.gson.param = UJson.getJsonParam(this.gson.param, PKjson.stvorkaSide[i]); //обновил параметры в gson 
@@ -86,6 +84,12 @@ export class AreaStvorka extends AreaSimple {
      */
     initArtikle() {
         try {
+            this.handColor = [-3, -3];
+            this.loopColor = [-3, -3];
+            this.lockColor = [-3, -3];
+
+            super.initArtikle();
+
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
             if (UJson.isFinite(this.gson.param, PKjson.sysfurnID)) {
@@ -102,13 +106,12 @@ export class AreaStvorka extends AreaSimple {
             //Текстура ручки
             if (UJson.isFinite(this.gson.param, PKjson.colorHand)) {
                 this.handColor[0] = this.gson.param[PKjson.colorHand];
-                
             } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
                 this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
                 if (this.handColor[0] < 0) { //если все текстуры группы
                     let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor[0]);
                     if (recordList.length === 0) {
-                        this.handColor[0] = eColor.list.find(this.handColor[0])[0][eColor.id];
+                        this.handColor[0] = eColor.list.find(this.handColor[0])[0][eColor.id]; //первая в списке
                     }
                 }
             }
