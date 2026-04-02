@@ -107,7 +107,7 @@ export class TFurniture {
             if (furndetRec[eFurndet.furniture_id2] === null) {
                 if (artiklRec[eArtikl.id] !== -1) { //артикул есть
 
-                    let sideStv = this.determOfSide(mapParam, areaStv);
+                    let sideStv = this.determ2OfSide(mapParam, areaStv);
                     let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec, sideStv); 
             
                     //Ловим ручку, петлю, замок и присваиваем 
@@ -128,6 +128,8 @@ export class TFurniture {
             return true;
 
         } catch (e) {
+            debugger;
+            this.detail(areaStv, furndetRec);
             console.error(e.message);
         }
     }
@@ -193,7 +195,7 @@ export class TFurniture {
         }
     }
     
-    determOfSide(mapParam, area5e) {
+    determ2OfSide(mapParam, area5e) {
 
         //Через параметр
         if ("1" === mapParam.get(25010)) {
@@ -206,7 +208,7 @@ export class TFurniture {
             return area5e.frames.find(el => el.layout === Layout.LEF);
         } else {
             //Там где крепится ручка
-            return determOfSide(area5e);
+            return this.determOfSide(area5e);
         }
     } 
     

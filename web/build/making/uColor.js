@@ -24,23 +24,23 @@ export class UColor {
             let artseriList = eArtikl.list.filter(rec => rec[eArtikl.groups4_id] === spcClon.artiklRec[eArtikl.groups4_id]);
             for (let artseriRec of artseriList) {
                 spcClon.article(artseriRec);
-                if (UColor.colorFromSetting(spcClon, 1, true)
-                        && UColor.colorFromSetting(spcClon, 2, true)
-                        && UColor.colorFromSetting(spcClon, 3, true)) {
+                if (this.colorFromSetting(spcClon, 1, true)
+                        && this.colorFromSetting(spcClon, 2, true)
+                        && this.colorFromSetting(spcClon, 3, true)) {
                     //spcAdd.copy(spcClon);
                     return true;
                 }
             }
-            spcClon.colorID1 = UColor.getID_colorUS(spcClon, typesUS & 0x0000000f);
-            spcClon.colorID2 = UColor.getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
-            spcClon.colorID3 = UColor.getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
+            spcClon.colorID1 = this.getID_colorUS(spcClon, typesUS & 0x0000000f);
+            spcClon.colorID2 = this.getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
+            spcClon.colorID3 = this.getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
 
 
             //Не серия артикулов
         } else {
-            if (UColor.colorFromSetting(spcAdd, 1, false)
-                    && UColor.colorFromSetting(spcAdd, 2, false)
-                    && UColor.colorFromSetting(spcAdd, 3, false)) {
+            if (this.colorFromSetting(spcAdd, 1, false)
+                    && this.colorFromSetting(spcAdd, 2, false)
+                    && this.colorFromSetting(spcAdd, 3, false)) {
                 return true;
             }
         }
@@ -54,7 +54,7 @@ export class UColor {
      * @param seri - серия
      * @return - false/true
      */
-    static #colorFromSetting(spcAdd, side, seri) {
+    static colorFromSetting(spcAdd, side, seri) {
 
         let srcNumberUS = spcAdd.detailRec[UColor.COLOR_US];
         let srcColorFk = spcAdd.detailRec[UColor.COLOR_FK];
@@ -70,7 +70,7 @@ export class UColor {
             let elemArtID = spcAdd.artiklRec[eArtikl.id];
 
             //Цвет элемента по которому подбираю из варианта подбора
-            let originColorID = UColor.getID_colorUS(spcAdd, srcColorUS);
+            let originColorID = this.getID_colorUS(spcAdd, srcColorUS);
 
 
             ////= ВРУЧНУЮ =////
@@ -81,12 +81,12 @@ export class UColor {
                     if (seri === true) {
                         resultColorID = -1; //нельзя назначать на серию
                     } else {
-                        resultColorID = UColor.scanFromProfSide(elemArtID, srcColorFk, side); //теоритически это должно железно работать!!!
+                        resultColorID = this.scanFromProfSide(elemArtID, srcColorFk, side); //теоритически это должно железно работать!!!
                         if (resultColorID === -1) {
                             if (spcAdd.artiklRec[eArtikl.level1] === 2 && (spcAdd.artiklRec[eArtikl.level2] === 11 || spcAdd.artiklRec[eArtikl.level2] === 13)) {
                                 return false;
                             }
-                            resultColorID = UColor.scanFromColorFirst(spcAdd); //первая в списке и это неправильно
+                            resultColorID = this.scanFromColorFirst(spcAdd); //первая в списке и это неправильно
                         }
                     }
 
@@ -94,7 +94,7 @@ export class UColor {
                 } else if ([UseColor.PROF, UseColor.GLAS, UseColor.COL1, UseColor.COL2,
                     UseColor.COL3, UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
 
-                    resultColorID = UColor.scanFromProfSide(elemArtID, originColorID, side);
+                    resultColorID = this.scanFromProfSide(elemArtID, originColorID, side);
                     if (resultColorID === -1 && seri === false) {
                         resultColorID = srcColorFk;
                     }
@@ -108,7 +108,7 @@ export class UColor {
                 //Подбор по текстуре профиля и заполн.
                 if ([UseColor.PROF, UseColor.GLAS].includes(srcColorUS)) {
 
-                    resultColorID = UColor.scanFromProfile(elemArtID, originColorID, side);
+                    resultColorID = this.scanFromProfile(elemArtID, originColorID, side);
                     if (resultColorID === -1 && srcColorFk === 0) {
                         resultColorID = scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
                     }
@@ -118,7 +118,7 @@ export class UColor {
                     UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
                     resultColorID = scanFromProfSide(elemArtID, originColorID, side);
                     if (resultColorID === -1 && srcColorFk === 0) {
-                        resultColorID = UColor.scanFromColorFirst(spcAdd); //первая в списке запись цвета
+                        resultColorID = this.scanFromColorFirst(spcAdd); //первая в списке запись цвета
                     }
                 }
 
@@ -129,18 +129,18 @@ export class UColor {
 
                 //Подбор по текстуре профиля и заполн.
                 if (srcColorUS === UseColor.PROF || srcColorUS === UseColor.GLAS) {
-                    resultColorID = UColor.scanFromParams(elemArtID, syspar1Rec, originColorID, side);
+                    resultColorID = this.scanFromParams(elemArtID, syspar1Rec, originColorID, side);
 
                     //Подбор по текстуре сторон профиля
                 } else if ([UseColor.COL1, UseColor.COL2, UseColor.COL3,
                     UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
-                    resultColorID = UColor.scanFromParamSide(elemArtID, syspar1Rec, originColorID, side);
+                    resultColorID = this.scanFromParamSide(elemArtID, syspar1Rec, originColorID, side);
 
                     //Подбор по текстурному параметру
                 } else if ([UseColor.PARAM, UseColor.PARSER].includes(srcColorUS)) {
                     let parmapRec = eParmap.find3(syspar1Rec[eSyspar1.text], syspar1Rec[eSyspar1.groups_id]);
                     originColorID = parmapRec[eParmap.color_id1];
-                    resultColorID = UColor.scanFromProfSide(elemArtID, originColorID, side);
+                    resultColorID = this.scanFromProfSide(elemArtID, originColorID, side);
                 }
             }
             if (resultColorID !== -1) {
@@ -162,7 +162,7 @@ export class UColor {
     }
 
     //Авто профиля или заполнения
-    static #scanFromProfile(detailArtiklID, originColorID, side) {
+    static scanFromProfile(detailArtiklID, originColorID, side) {
         try {
             let artdetList = eArtdet.list.find(rec => rec[eArtdet.id] === detailArtiklID);
             let mark_c = (side === 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
@@ -198,7 +198,7 @@ export class UColor {
      * @param originColorID - текстура стороны профиля
      * @param side - сторона элемента детализации состава
      */
-    static #scanFromProfSide(detailArtiklID, originColorID, side) {
+    static scanFromProfSide(detailArtiklID, originColorID, side) {
         try {
             let artdetList = eArtdet.list.filter(rec => rec[eArtdet.artikl_id] === detailArtiklID);
             //Цикл по ARTDET определённого артикула
@@ -254,7 +254,7 @@ export class UColor {
     }
 
     //Первая запись цвета
-    static  #scanFromColorFirst(spc) {
+    static  scanFromColorFirst(spc) {
 
         let artdetRec = eArtdet.list.find(rec => rec[eArtdet.artikl_id] === spc.detailRec[UColor.ARTIKL_ID]);
         if (artdetRec[1] !== -1) {
@@ -277,7 +277,7 @@ export class UColor {
     }
 
     //Выдает цвет в соответствии с заданным вариантом подбора текстуры
-    static #getID_colorUS(spcAdd, srcColorUS) {
+    static getID_colorUS(spcAdd, srcColorUS) {
         try {
             switch (srcColorUS) {
                 case 0:
