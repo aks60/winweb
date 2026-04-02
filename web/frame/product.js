@@ -209,11 +209,13 @@ export function tree_to_html() {
                 n46: check_mark(findef(com5t.handColor[0], eColor.id, eColor)[eColor.name], '#n46 + input', PKjson.colorHand),
                 n47: com5t.handLayout[1],
                 n48: com5t.handHeight,
-                n49: com5t.loopRec[0][eArtikl.code] + ' / ' + com5t.loopRec[0][eArtikl.name],
+                n49: check_mark(com5t.loopRec[0][eArtikl.code], '#n49 + input', PKjson.artiklLoop),
+                n4E: com5t.loopRec[0][eArtikl.name],
                 n4A: findef(com5t.loopColor[0], eColor.id, eColor)[eColor.name],
                 //tabs-43
-                n4B: com5t.lockRec[0][eArtikl.code] + ' / ' + com5t.lockRec[0][eArtikl.name],
-                n4C: findef(com5t.lockColor[0], eColor.id, eColor)[eColor.name],
+                n4B: check_mark(com5t.lockRec[0][eArtikl.code], '#n4B + input', PKjson.artiklLock),
+                n4G: com5t.lockRec[0][eArtikl.name],
+                n4C: check_mark(findef(com5t.lockColor[0], eColor.id, eColor)[eColor.name], '#n4C + input', PKjson.colorLock),
             });
             //Стеклопакет
         } else if (com5t.type === Type.GLASS) {

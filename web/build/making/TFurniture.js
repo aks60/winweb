@@ -1,6 +1,7 @@
 import {UJson} from '../../common/uJson.js';
 import {Type, Layout, PKjson} from '../../enums/enums.js';
 import {FurnitureDet} from '../param/FurnitureDet.js';
+import {AreaStvorka} from '../model/AreaStvorka.js';
 import {UColor} from './uColor.js';
 import {TRecord} from './TRecord.js';
 
@@ -106,8 +107,8 @@ export class TFurniture {
             if (furndetRec[eFurndet.furniture_id2] === null) {
                 if (artiklRec[eArtikl.id] !== -1) { //артикул есть
 
-                    //let sideStv = this.determOfSide(mapParam, areaStv);
-                    let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec); 
+                    let sideStv = this.determOfSide(mapParam, areaStv);
+                    let spcAdd = new TRecord("ФУРН", furndetRec, artiklRec, sideStv); 
             
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки
@@ -191,6 +192,38 @@ export class TFurniture {
             console.error(e.message);
         }
     }
+    
+    determOfSide(mapParam, area5e) {
+
+        //Через параметр
+        if ("1" === mapParam.get(25010)) {
+            return area5e.frames.find(el => el.layout === Layout.BOT);
+        } else if ("2" === mapParam.get(25010)) {
+            return area5e.frames.find(el => el.layout === Layout.RIG);
+        } else if ("3" === mapParam.get(25010)) {
+            return area5e.frames.find(el => el.layout === Layout.TOP);
+        } else if ("4" === mapParam.get(25010)) {
+            return area5e.frames.find(el => el.layout === Layout.LEF);
+        } else {
+            //Там где крепится ручка
+            return determOfSide(area5e);
+        }
+    } 
+    
+    //Там где крепится ручка
+    determOfSide(area5e) {
+        if (area5e instanceof AreaStvorka) {
+            let id = area5e.typeOpen[0];
+            if ([1, 3, 11].includes(id)) {
+                return area5e.frames.find(el => el.layout === Layout.LEF);
+            } else if ([2, 4, 12].includees(id)) {
+                return area5e.frames.find(el => el.layout === Layout.RIG);;
+            } else {
+                return area5e.frames.find(el => el.layout === Layout.BOT);
+            }
+        }
+        return area5e.frames[0];  //первая попавшаяся        
+    }    
 }
 
 

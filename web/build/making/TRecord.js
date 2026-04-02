@@ -33,9 +33,10 @@ export class TRecord {
     cost1 = 0; //Стоимость без технологической скидки
     cost2 = 0; //Стоимость с технологической скидкой  
     
-    constructor(place, detailRec, artiklRec) {
+    constructor(place, detailRec, artiklRec, areaSimple) {
         this.place = place;
         this.detailRec = detailRec;
+        this.elem5e = areaSimple;
         this.article(artiklRec);
     }
     

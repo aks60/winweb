@@ -139,16 +139,17 @@
                             artiklList.forEach(rec => artiklSet.add(rec));
                         }
 
-                        //Ручка
-                    } else if (paramTaq === 'n45') {
+                        //Ручка, петля, замок
+                    } else if (paramTaq === 'n45' || paramTaq === 'n49' || paramTaq === 'n4B') {
                         let filterSet = new Set();
                         let furnitureID = com5t.sysfurnRec[eSysfurn.furniture_id];
-                        let artiklList = eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === 11);
+                        const level2 = (paramTaq === 'n45') ? 11 : (paramTaq === 'n49') ? 12 : 9;
+                        let artiklList = eArtikl.list.filter(rec => rec[eArtikl.level1] === 2 && rec[eArtikl.level2] === level2);
 
                         //Цикл по детализации
                         for (let furndetRec1 of eFurndet.list) { //первый уровень
                             if (furndetRec1[eFurndet.furniture_id1] === furnitureID) {
-
+if(furndetRec1[1] === 15512 || furndetRec1[1] === 15513) debugger;
                                 //Фильтр по детализации определённого типа определённой фурнитуры
                                 if (furndetRec1[eFurndet.furniture_id2] === null) { //НЕ НАБОР
                                     filterSet.add(furndetRec1[eFurndet.artikl_id]);

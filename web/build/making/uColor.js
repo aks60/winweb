@@ -11,11 +11,12 @@ export class UColor {
     constructor() {
     }
 
+    //Выбор подбора по текстуре элемента или серии элементов
     static findFromArtOrSeri(spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
         //let spcClon = new TRecord(spcAdd);
         let spcClon = spcAdd;
-        let typesUS = spcClon.detailRec[this.COLOR_US];
+        let typesUS = spcClon.detailRec[UColor.COLOR_US];
 
         //Серия артикулов
         if (UseColor.isSeries(typesUS)) {
@@ -46,18 +47,17 @@ export class UColor {
         return false;
     }
 
+    //ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
     /**
-     * ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
-     *
      * @param spcAdd - строка спецификации
      * @param side - сторона
      * @param seri - серия
      * @return - false/true
      */
-    static colorFromSetting(spcAdd, side, seri) {        
+    static #colorFromSetting(spcAdd, side, seri) {
 
-        let srcNumberUS = spcAdd.detailRec[this.COLOR_US];
-        let srcColorFk = spcAdd.detailRec[this.COLOR_FK];
+        let srcNumberUS = spcAdd.detailRec[UColor.COLOR_US];
+        let srcColorFk = spcAdd.detailRec[UColor.COLOR_FK];
 
         if (srcColorFk === -1) {
             colorFromMes(spcAdd);
@@ -78,15 +78,15 @@ export class UColor {
 
                 //Явное указание текстуры
                 if (srcColorUS === UseColor.MANUAL) {
-                    if (seri == true) {
+                    if (seri === true) {
                         resultColorID = -1; //нельзя назначать на серию
                     } else {
-                        resultColorID = this.scanFromProfSide(elemArtID, srcColorFk, side); //теоритически это должно железно работать!!!
+                        resultColorID = UColor.scanFromProfSide(elemArtID, srcColorFk, side); //теоритически это должно железно работать!!!
                         if (resultColorID === -1) {
                             if (spcAdd.artiklRec[eArtikl.level1] === 2 && (spcAdd.artiklRec[eArtikl.level2] === 11 || spcAdd.artiklRec[eArtikl.level2] === 13)) {
                                 return false;
                             }
-                            resultColorID = this.scanFromColorFirst(spcAdd); //первая в списке и это неправильно
+                            resultColorID = UColor.scanFromColorFirst(spcAdd); //первая в списке и это неправильно
                         }
                     }
 
@@ -94,7 +94,7 @@ export class UColor {
                 } else if ([UseColor.PROF, UseColor.GLAS, UseColor.COL1, UseColor.COL2,
                     UseColor.COL3, UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
 
-                    resultColorID = this.scanFromProfSide(elemArtID, originColorID, side);
+                    resultColorID = UColor.scanFromProfSide(elemArtID, originColorID, side);
                     if (resultColorID === -1 && seri === false) {
                         resultColorID = srcColorFk;
                     }
@@ -107,7 +107,8 @@ export class UColor {
 
                 //Подбор по текстуре профиля и заполн.
                 if ([UseColor.PROF, UseColor.GLAS].includes(srcColorUS)) {
-                    resultColorID = scanFromProfile(elemArtID, originColorID, side);
+
+                    resultColorID = UColor.scanFromProfile(elemArtID, originColorID, side);
                     if (resultColorID === -1 && srcColorFk === 0) {
                         resultColorID = scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
                     }
@@ -117,7 +118,7 @@ export class UColor {
                     UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
                     resultColorID = scanFromProfSide(elemArtID, originColorID, side);
                     if (resultColorID === -1 && srcColorFk === 0) {
-                        resultColorID = this.scanFromColorFirst(spcAdd); //первая в списке запись цвета
+                        resultColorID = UColor.scanFromColorFirst(spcAdd); //первая в списке запись цвета
                     }
                 }
 
@@ -128,18 +129,18 @@ export class UColor {
 
                 //Подбор по текстуре профиля и заполн.
                 if (srcColorUS === UseColor.PROF || srcColorUS === UseColor.GLAS) {
-                    resultColorID = this.scanFromParams(elemArtID, syspar1Rec, originColorID, side);
+                    resultColorID = UColor.scanFromParams(elemArtID, syspar1Rec, originColorID, side);
 
                     //Подбор по текстуре сторон профиля
                 } else if ([UseColor.COL1, UseColor.COL2, UseColor.COL3,
                     UseColor.C1SER, UseColor.C2SER, UseColor.C3SER].includes(srcColorUS)) {
-                    resultColorID = this.scanFromParamSide(elemArtID, syspar1Rec, originColorID, side);
+                    resultColorID = UColor.scanFromParamSide(elemArtID, syspar1Rec, originColorID, side);
 
                     //Подбор по текстурному параметру
                 } else if ([UseColor.PARAM, UseColor.PARSER].includes(srcColorUS)) {
                     let parmapRec = eParmap.find3(syspar1Rec[eSyspar1.text], syspar1Rec[eSyspar1.groups_id]);
                     originColorID = parmapRec[eParmap.color_id1];
-                    resultColorID = this.scanFromProfSide(elemArtID, originColorID, side);
+                    resultColorID = UColor.scanFromProfSide(elemArtID, originColorID, side);
                 }
             }
             if (resultColorID !== -1) {
@@ -160,95 +161,44 @@ export class UColor {
         return true;
     }
 
-    //Текстура профиля или текстура заполнения изделия (неокрашенные)
-    static findColorFromArtdet(artiklID) {
+    //Авто профиля или заполнения
+    static #scanFromProfile(detailArtiklID, originColorID, side) {
         try {
-            let artdetList = eArtdet.list.filter(rec => rec[eArtdet.artikl_id] === artiklID);
+            let artdetList = eArtdet.list.find(rec => rec[eArtdet.id] === detailArtiklID);
+            let mark_c = (side === 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
+
             //Цикл по ARTDET определённого артикула
             for (let artdetRec of artdetList) {
-                if (artdetRec[eArtdet.color_fk] >= 0) {
-                    if (1 === artdetRec[eArtdet.mark_c1]) {
-                        return artdetRec[eArtdet.color_fk];
+
+                if (side === 1) {
+                    if (artdetRec[eArtdet.mark_c1] === 1 && artdetRec[eArtdet.color_fk] === originColorID) {
+                        return originColorID;
+                    }
+                } else {
+                    if (artdetRec[eArtdet.mark_c] === 1) {
+                        if (artdetRec[eArtdet.color_fk] === originColorID) {
+                            return originColorID;
+                        }
+                    } else if (artdetRec[eArtdet.mark_c1] === 1) {
+                        if (artdetRec[eArtdet.color_fk] === originColorID) {
+                            return originColorID;
+                        }
                     }
                 }
             }
-            return -3;
-
+            return -1;
         } catch (e) {
             console.error(e.message);
         }
     }
 
-    //Первая запись цвета
-    static  scanFromColorFirst(spc) {
-
-        let artdetRec = eArtdet.list.find(rec => rec[eArtdet.artikl_id] === spc.detailRec[this.ARTIKL_ID]);
-        if (artdetRec[1] !== -1) {
-            let colorFK2 = artdetRec[eArtdet.color_fk];
-
-            if (colorFK2 < 0 && colorFK2 !== -1) { //это группа
-                let colorList = eColor.list.filter(rec => rec[eColor.groups_id] === colorFK2);
-                if (colorList.length !== 0) {
-                    return colorList[0][eColor.id];
-                }
-            } else { //если это не группа цветов                               
-                return colorFK2;
-
-            }
-        }
-
-        dialogMes('Ошибка', 'Для артикула  ' + spc.artikl + ' не определена цена.');
-        return 1; //такого случая не должно быть
-
-    }
-
-    //Выдает цвет в соответствии с заданным вариантом подбора текстуры   
-    static getID_colorUS(spcAdd, srcColorUS) {
-        try {
-            switch (srcColorUS) {
-                case 0:
-                    return spcAdd.detailRec[this.COLOR_FK];  //указана вручную
-                case 11: //По текстуре профиля
-                    let firstElem = spcAdd.elem5e.root.frames[0];
-                    let artiklID = firstElem.artiklRec[eArtikl.id];
-                    return eArtdet.list.filter(rec =>
-                        rec[eArtdet.mark_c1] === 1
-                                && rec[eArtdet.mark_c2] === 1
-                                && rec[eArtdet.mark_c3] === 1
-                                && rec[eArtdet.artikl_id] === artiklID
-                                && rec[eArtdet.color_fk] > 0)[eArtdet.color_fk];
-                case 15: //По текстуре заполнения
-                    if (spcAdd.elem5e.artiklRecAn[eArtikl.level1] === 5) {
-                        return spcAdd.elem5e.colorID1;
-                    }
-                case 1: //По основе профиля
-                    return spcAdd.elem5e.root.colorID1;
-                case 2: //По внутр.профиля
-                    return spcAdd.elem5e.root.colorID2;
-                case 3: //По внешн.профиля
-                    return spcAdd.elem5e.root.colorID3;
-                case 6: //По основе профиля в серии
-                    return spcAdd.elem5e.root.colorID1;
-                case 7: //По внутр.профиля в серии
-                    return spcAdd.elem5e.root.colorID2;
-                case 8: //По внешн.профиля в серии
-                    return spcAdd.elem5e.root.colorID3;
-                default:
-                    return -1;
-            }
-        } catch (e) {
-            console.error(e.message);
-        }
-    }
-
+    //Авто сторон профиля
     /**
-     * Авто сторон профиля
-     *
      * @param detailArtiklID - артикул элемента детализации состава
      * @param originColorID - текстура стороны профиля
      * @param side - сторона элемента детализации состава
      */
-    static scanFromProfSide(detailArtiklID, originColorID, side) {
+    static #scanFromProfSide(detailArtiklID, originColorID, side) {
         try {
             let artdetList = eArtdet.list.filter(rec => rec[eArtdet.artikl_id] === detailArtiklID);
             //Цикл по ARTDET определённого артикула
@@ -278,6 +228,88 @@ export class UColor {
             }
             return -1;
 
+        } catch (e) {
+            debugger;
+            console.error(e.message);
+        }
+    }
+    
+    //Текстура профиля или текстура заполнения изделия (неокрашенные)
+    static findColorFromArtdet(artiklID) {
+        try {
+            let artdetList = eArtdet.list.filter(rec => rec[eArtdet.artikl_id] === artiklID);
+            //Цикл по ARTDET определённого артикула
+            for (let artdetRec of artdetList) {
+                if (artdetRec[eArtdet.color_fk] >= 0) {
+                    if (1 === artdetRec[eArtdet.mark_c1]) {
+                        return artdetRec[eArtdet.color_fk];
+                    }
+                }
+            }
+            return -3;
+
+        } catch (e) {
+            console.error(e.message);
+        }
+    }
+
+    //Первая запись цвета
+    static  #scanFromColorFirst(spc) {
+
+        let artdetRec = eArtdet.list.find(rec => rec[eArtdet.artikl_id] === spc.detailRec[UColor.ARTIKL_ID]);
+        if (artdetRec[1] !== -1) {
+            let colorFK2 = artdetRec[eArtdet.color_fk];
+
+            if (colorFK2 < 0 && colorFK2 !== -1) { //это группа
+                let colorList = eColor.list.filter(rec => rec[eColor.groups_id] === colorFK2);
+                if (colorList.length !== 0) {
+                    return colorList[0][eColor.id];
+                }
+            } else { //если это не группа цветов                               
+                return colorFK2;
+
+            }
+        }
+
+        dialogMes('Ошибка', 'Для артикула  ' + spc.artikl + ' не определена цена.');
+        return 1; //такого случая не должно быть
+
+    }
+
+    //Выдает цвет в соответствии с заданным вариантом подбора текстуры
+    static #getID_colorUS(spcAdd, srcColorUS) {
+        try {
+            switch (srcColorUS) {
+                case 0:
+                    return spcAdd.detailRec[UColor.COLOR_FK];  //указана вручную
+                case 11: //По текстуре профиля
+                    let firstElem = spcAdd.elem5e.root.frames[0];
+                    let artiklID = firstElem.artiklRec[eArtikl.id];
+                    return eArtdet.list.filter(rec =>
+                        rec[eArtdet.mark_c1] === 1
+                                && rec[eArtdet.mark_c2] === 1
+                                && rec[eArtdet.mark_c3] === 1
+                                && rec[eArtdet.artikl_id] === artiklID
+                                && rec[eArtdet.color_fk] > 0)[eArtdet.color_fk];
+                case 15: //По текстуре заполнения
+                    if (spcAdd.elem5e.artiklRecAn[eArtikl.level1] === 5) {
+                        return spcAdd.elem5e.colorID1;
+                    }
+                case 1: //По основе профиля
+                    return spcAdd.elem5e.root.colorID1;
+                case 2: //По внутр.профиля
+                    return spcAdd.elem5e.root.colorID2;
+                case 3: //По внешн.профиля
+                    return spcAdd.elem5e.root.colorID3;
+                case 6: //По основе профиля в серии
+                    return spcAdd.elem5e.root.colorID1;
+                case 7: //По внутр.профиля в серии
+                    return spcAdd.elem5e.root.colorID2;
+                case 8: //По внешн.профиля в серии
+                    return spcAdd.elem5e.root.colorID3;
+                default:
+                    return -1;
+            }
         } catch (e) {
             console.error(e.message);
         }

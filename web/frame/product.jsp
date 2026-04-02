@@ -161,12 +161,12 @@
                         <jst id="n46" type='btn' label='Текстура ручки' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n46')"></jst><br>                                                                          
                         <jst id="n47" type='txt' label='Высота ручки' width='120' width2="153"></jst>
                         <jst id="n48" type='btn' label='' width='0' width2="47" click=""></jst><br>                            
-                        <jst id="n49" type='btn' label='Петля' width='120' width2="220" click="product.artikl_to_stvorka('n49');"></jst><br>
+                        <jst id="n49" type='btn' label='Петля' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n49')"></jst><br>
                         <jst id="n4E" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4A" type='btn' label='Текстура подвеса' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n4A')"></jst><br>
                     </div>
                     <div id="tabs-43" style="display: none;">
-                        <jst id="n4B" type='btn' label='Замок' width='120' width2="220" click="product.artikl_to_stvorka('n4B');"></jst><br>
+                        <jst id="n4B" type='btn' label='Замок' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/artikl.jsp?param=n4B')"></jst><br>
                         <jst id="n4G" type='txt' label='Название' width='120' width2="250"></jst><br>
                         <jst id="n4C" type='btn' label='Текстура замка' width='120' width2="220" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n4C')"></jst><br>    
                         <jst id="n63" type='btn' label='*Моск.сетка' width='120' width2="220"></jst><br>
