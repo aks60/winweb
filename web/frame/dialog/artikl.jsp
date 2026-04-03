@@ -174,7 +174,7 @@
 
             function save_table() {
                 try {
-                    if ($('#body-jsp title').text() == 'PRODUCT') {
+                    if ($('#body-jsp title').text() === 'PRODUCT') {
 
                         //Запишем артикл в gson 
                         set_value_gson();
