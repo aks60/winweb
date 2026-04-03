@@ -149,7 +149,7 @@
                         //Цикл по детализации
                         for (let furndetRec1 of eFurndet.list) { //первый уровень
                             if (furndetRec1[eFurndet.furniture_id1] === furnitureID) {
-if(furndetRec1[1] === 15512 || furndetRec1[1] === 15513) debugger;
+  //if(furndetRec1[1] === 15512 || furndetRec1[1] === 15513) debugger;
                                 //Фильтр по детализации определённого типа определённой фурнитуры
                                 if (furndetRec1[eFurndet.furniture_id2] === null) { //НЕ НАБОР
                                     filterSet.add(furndetRec1[eFurndet.artikl_id]);

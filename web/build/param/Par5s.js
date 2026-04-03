@@ -4,8 +4,10 @@ export class Par5s {
 
     GRUP = 3;   //Ключ параметра
     TEXT = 2;   //Текст 
+    winc = null;
  
-    constructor() {
+    constructor(winc) {
+        this.winc = winc;
     }
     
     //Фильтр параметров по умолчанию + выбранных клиентом
@@ -13,7 +15,7 @@ export class Par5s {
 
         for (let paramRec of paramList) {
             if (paramRec[this.GRUP] < 0) {
-                let syspar1Rec = winc.mapPardef.get(paramRec[this.GRUP]);
+                let syspar1Rec = this.winc.mapPardef.get(paramRec[this.GRUP]);
                 if (syspar1Rec === null) {
                     return false; //если группы нет
                 }

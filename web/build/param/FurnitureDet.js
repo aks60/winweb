@@ -3,8 +3,8 @@ import {Par5s} from './Par5s.js'
 
 export class FurnitureDet extends Par5s {
 
-    constructor() {
-        super();
+    constructor(winc) {
+        super(winc);
     }
 
     filter(mapParam, areaStv, furndetRec) {

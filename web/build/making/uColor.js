@@ -11,8 +11,8 @@ export class UColor {
     constructor() {
     }
 
-    //Выбор подбора по текстуре элемента или серии элементов
-    static findFromArtOrSeri(spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
+    //Подбора по текстуре элем. или серии элементов
+    static choiceFromArtOrSeri(spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
         //let spcClon = new TRecord(spcAdd);
         let spcClon = spcAdd;
@@ -31,9 +31,9 @@ export class UColor {
                     return true;
                 }
             }
-            spcClon.colorID1 = this.getID_colorUS(spcClon, typesUS & 0x0000000f);
-            spcClon.colorID2 = this.getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
-            spcClon.colorID3 = this.getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
+            spcClon.colorID1 = this.colorFromTexturUse(spcClon, typesUS & 0x0000000f);
+            spcClon.colorID2 = this.colorFromTexturUse(spcClon, (typesUS & 0x000000f0) >> 4);
+            spcClon.colorID3 = this.colorFromTexturUse(spcClon, (typesUS & 0x00000f00) >> 8);
 
 
             //Не серия артикулов
@@ -58,11 +58,12 @@ export class UColor {
 
         let srcNumberUS = spcAdd.detailRec[UColor.COLOR_US];
         let srcColorFk = spcAdd.detailRec[UColor.COLOR_FK];
-
-        if (srcColorFk === -1) {
-            colorFromMes(spcAdd);
-            return false; //нет данных для поиска
-        }
+        if (spcAdd.detailRec[eFurndet.id] === 15513)
+            //debugger;
+            if (srcColorFk === -1) {
+                colorFromMes(spcAdd);
+                return false; //нет данных для поиска
+            }
         let resultColorID = -1;
         try {
             let srcColorUS = (side === 1) ? srcNumberUS & 0x0000000f : (side === 2)
@@ -70,7 +71,7 @@ export class UColor {
             let elemArtID = spcAdd.artiklRec[eArtikl.id];
 
             //Цвет элемента по которому подбираю из варианта подбора
-            let originColorID = this.getID_colorUS(spcAdd, srcColorUS);
+            let originColorID = this.colorFromTexturUse(spcAdd, srcColorUS);
 
 
             ////= ВРУЧНУЮ =////
@@ -110,7 +111,7 @@ export class UColor {
 
                     resultColorID = this.scanFromProfile(elemArtID, originColorID, side);
                     if (resultColorID === -1 && srcColorFk === 0) {
-                        resultColorID = scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
+                        resultColorID = this.scanFromColorFirst(spcAdd); //если неудача подбора то первая в списке запись цвета
                     }
 
                     //Подбор по текстуре сторон профиля
@@ -188,6 +189,8 @@ export class UColor {
             }
             return -1;
         } catch (e) {
+            debugger;
+            scanFromProfile(detailArtiklID, originColorID, side);
             console.error(e.message);
         }
     }
@@ -233,7 +236,7 @@ export class UColor {
             console.error(e.message);
         }
     }
-    
+
     //Текстура профиля или текстура заполнения изделия (неокрашенные)
     static findColorFromArtdet(artiklID) {
         try {
@@ -277,20 +280,22 @@ export class UColor {
     }
 
     //Выдает цвет в соответствии с заданным вариантом подбора текстуры
-    static getID_colorUS(spcAdd, srcColorUS) {
+    static colorFromTexturUse(spcAdd, srcColorUS) {
         try {
             switch (srcColorUS) {
                 case 0:
                     return spcAdd.detailRec[UColor.COLOR_FK];  //указана вручную
                 case 11: //По текстуре профиля
-                    let firstElem = spcAdd.elem5e.root.frames[0];
-                    let artiklID = firstElem.artiklRec[eArtikl.id];
-                    return eArtdet.list.filter(rec =>
-                        rec[eArtdet.mark_c1] === 1
-                                && rec[eArtdet.mark_c2] === 1
-                                && rec[eArtdet.mark_c3] === 1
-                                && rec[eArtdet.artikl_id] === artiklID
-                                && rec[eArtdet.color_fk] > 0)[eArtdet.color_fk];
+                    let artiklID = spcAdd.elem5e.root.artiklRec[eArtikl.id];
+                    let record = eArtdet.list.filter(rec => rec[eArtdet.mark_c1] === 1
+                                && rec[eArtdet.mark_c2] === 1 && rec[eArtdet.mark_c3] === 1
+                                && rec[eArtdet.artikl_id] === artiklID && rec[eArtdet.color_fk] > 0);
+                    if (record.length === 0) {
+                        record = eArtdet.list.filter(rec => rec[eArtdet.mark_c1] === 1
+                                    && rec[eArtdet.artikl_id] === artiklID
+                                    && rec[eArtdet.color_fk] > 0);
+                    }
+                    return record[eArtdet.color_fk];
                 case 15: //По текстуре заполнения
                     if (spcAdd.elem5e.artiklRecAn[eArtikl.level1] === 5) {
                         return spcAdd.elem5e.colorID1;
