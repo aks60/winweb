@@ -128,8 +128,6 @@ export class TFurniture {
             return true;
 
         } catch (e) {
-            debugger;
-            this.detail(areaStv, furndetRec);
             console.error(e.message);
         }
     }

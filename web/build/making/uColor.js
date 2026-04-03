@@ -59,7 +59,6 @@ export class UColor {
         let srcNumberUS = spcAdd.detailRec[UColor.COLOR_US];
         let srcColorFk = spcAdd.detailRec[UColor.COLOR_FK];
         if (spcAdd.detailRec[eFurndet.id] === 15513)
-            //debugger;
             if (srcColorFk === -1) {
                 colorFromMes(spcAdd);
                 return false; //нет данных для поиска
@@ -165,7 +164,7 @@ export class UColor {
     //Авто профиля или заполнения
     static scanFromProfile(detailArtiklID, originColorID, side) {
         try {
-            let artdetList = eArtdet.list.find(rec => rec[eArtdet.id] === detailArtiklID);
+            let artdetList = eArtdet.list.filter(rec => rec[eArtdet.id] === detailArtiklID);
             let mark_c = (side === 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
 
             //Цикл по ARTDET определённого артикула
@@ -189,8 +188,6 @@ export class UColor {
             }
             return -1;
         } catch (e) {
-            debugger;
-            scanFromProfile(detailArtiklID, originColorID, side);
             console.error(e.message);
         }
     }
@@ -232,7 +229,6 @@ export class UColor {
             return -1;
 
         } catch (e) {
-            debugger;
             console.error(e.message);
         }
     }
@@ -286,16 +282,18 @@ export class UColor {
                 case 0:
                     return spcAdd.detailRec[UColor.COLOR_FK];  //указана вручную
                 case 11: //По текстуре профиля
+                {
                     let artiklID = spcAdd.elem5e.root.artiklRec[eArtikl.id];
-                    let record = eArtdet.list.filter(rec => rec[eArtdet.mark_c1] === 1
+                    let record = eArtdet.list.find(rec => rec[eArtdet.mark_c1] === 1
                                 && rec[eArtdet.mark_c2] === 1 && rec[eArtdet.mark_c3] === 1
                                 && rec[eArtdet.artikl_id] === artiklID && rec[eArtdet.color_fk] > 0);
                     if (record.length === 0) {
-                        record = eArtdet.list.filter(rec => rec[eArtdet.mark_c1] === 1
+                        record = eArtdet.list.find(rec => rec[eArtdet.mark_c1] === 1
                                     && rec[eArtdet.artikl_id] === artiklID
                                     && rec[eArtdet.color_fk] > 0);
                     }
                     return record[eArtdet.color_fk];
+                }
                 case 15: //По текстуре заполнения
                     if (spcAdd.elem5e.artiklRecAn[eArtikl.level1] === 5) {
                         return spcAdd.elem5e.colorID1;
