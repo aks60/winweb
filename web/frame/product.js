@@ -162,11 +162,7 @@ export function tree_to_html() {
                 n15: check_mark(eColor.find(winc.root.colorID2)[eColor.name], '#n15 + input', PKjson.colorID2),
                 n16: check_mark(eColor.find(winc.root.colorID3)[eColor.name], '#n16 + input', PKjson.colorID3)
             });
-            //if (UJson.isFinite(com5t.gson.param, PKjson.sysprofID)) {
-            //    $('n55 + input').val('Z');
-            //} else {
-            //    $('n55 + input').val('...');
-            //}            
+           
             //Парам. по умолчанию
         } else if (com5t.type === Type.PARAM) {
             $("#tabs-2").show();
@@ -211,7 +207,7 @@ export function tree_to_html() {
                 n48: com5t.handHeight,
                 n49: check_mark(com5t.loopRec[0][eArtikl.code], '#n49 + input', PKjson.artiklLoop),
                 n4E: com5t.loopRec[0][eArtikl.name],
-                n4A: findef(com5t.loopColor[0], eColor.id, eColor)[eColor.name],
+                n4A: check_mark(findef(com5t.loopColor[0], eColor.id, eColor)[eColor.name], '#n4A + input', PKjson.colorLoop),
                 //tabs-43
                 n4B: check_mark(com5t.lockRec[0][eArtikl.code], '#n4B + input', PKjson.artiklLock),
                 n4G: com5t.lockRec[0][eArtikl.name],

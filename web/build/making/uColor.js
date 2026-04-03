@@ -287,7 +287,7 @@ export class UColor {
                     let record = eArtdet.list.find(rec => rec[eArtdet.mark_c1] === 1
                                 && rec[eArtdet.mark_c2] === 1 && rec[eArtdet.mark_c3] === 1
                                 && rec[eArtdet.artikl_id] === artiklID && rec[eArtdet.color_fk] > 0);
-                    if (record.length === 0) {
+                    if (record === undefined) {
                         record = eArtdet.list.find(rec => rec[eArtdet.mark_c1] === 1
                                     && rec[eArtdet.artikl_id] === artiklID
                                     && rec[eArtdet.color_fk] > 0);

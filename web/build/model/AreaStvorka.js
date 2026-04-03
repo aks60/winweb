@@ -110,18 +110,24 @@ export class AreaStvorka extends AreaSimple {
                 this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
                 if (this.handColor[0] < 0) { //если все текстуры группы
                     let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor[0]);
-                    if (recordList.length === 0) {
-                        this.handColor[0] = eColor.list.find(this.handColor[0])[0][eColor.id]; //первая в списке
-                    }
+                    this.handColor[0] = recordList[0][eColor.id]; //первая в списке
                 }
             }
             //Подвес (петли)
             if (UJson.isFinite(this.gson.param, PKjson.artiklLoop)) {
                 this.loopRec[0] = eArtikl.find(this.gson.param[PKjson.artiklLoop], false);
+            } else { //по умолчанию
+                this.loopRec[0] = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
             }
             //Текстура подвеса
             if (UJson.isFinite(this.gson.param, PKjson.colorLoop)) {
                 this.loopColor[0] = this.gson.param[PKjson.colorLoop];
+            } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
+                this.loopColor[0] = eArtdet.find(this.loopRec[0][eArtikl.id])[eArtdet.color_fk];
+                if (this.handColor[0] < 0) { //если все текстуры группы
+                    let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor[0]);
+                    this.loopColor[0] = recordList[0][eColor.id]; //первая в списке
+                }
             }
             //Замок
             if (UJson.isFinite(this.gson.param, PKjson.artiklLock)) {
