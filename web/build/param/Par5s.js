@@ -25,5 +25,15 @@ export class Par5s {
             }
         }
         return true;
+    }  
+    
+    //Необработанные параметры
+    message(code) {
+//        if (code >= 0) {
+//            //if (ParamList.find(code).pass() != 0) {
+//            String str = ParamList.find(code).text();
+//            System.err.println("Не обработан:  " + code + "-" + str);
+//            //}
+//        }
     }    
 }
