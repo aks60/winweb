@@ -29,11 +29,11 @@ export class Par5s {
     
     //Необработанные параметры
     message(code) {
-//        if (code >= 0) {
-//            //if (ParamList.find(code).pass() != 0) {
-//            String str = ParamList.find(code).text();
-//            System.err.println("Не обработан:  " + code + "-" + str);
-//            //}
-//        }
+        if (code >= 0) {
+            //if (ParamList.find(code).pass() != 0) {
+            //String str = ParamList.find(code).text();
+            alert("Параметр не обработан. код  " + code);
+            //}
+        }
     }    
 }
