@@ -117,7 +117,7 @@ export class AreaStvorka extends AreaSimple {
             if (UJson.isFinite(this.gson.param, PKjson.artiklLoop)) {
                 this.loopRec[0] = eArtikl.find(this.gson.param[PKjson.artiklLoop], false);
             } else { //по умолчанию
-                this.loopRec[0] = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id1], false);
+                this.loopRec[0] = eArtikl.find(this.sysfurnRec[eSysfurn.artikl_id2], false);
             }
             //Текстура подвеса
             if (UJson.isFinite(this.gson.param, PKjson.colorLoop)) {
