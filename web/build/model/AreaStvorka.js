@@ -84,6 +84,9 @@ export class AreaStvorka extends AreaSimple {
      */
     initArtikle() {
         try {
+            this.handRec = [eArtikl.vrec, eArtikl.vrec];
+            this.loopRec = [eArtikl.vrec, eArtikl.vrec];
+            this.lockRec = [eArtikl.vrec, eArtikl.vrec];
             this.handColor = [-3, -3];
             this.loopColor = [-3, -3];
             this.lockColor = [-3, -3];
