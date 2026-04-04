@@ -1,6 +1,6 @@
 
 import {Par5s} from './Par5s.js'
-import {LayoutHand} from '../../enums/enums.js';
+import {Type, LayoutHand} from '../../enums/enums.js';
 
 export class FurnitureDet extends Par5s {
 
@@ -32,21 +32,21 @@ export class FurnitureDet extends Par5s {
                 case 25001: //Форма контура 
                 {
                     //"Прямоугольное", "Не прямоугольное", "Не арочное", "Арочное" (TypeElem.AREA - глухарь)
-                    if ("прямоугольная" === rec[this.TEXT] && (Type.RECTANGL === areaStv.type) === false
-                            && (Type.AREA === areaStv.type) === false && (Type.STVORKA === areaStv.type) === false) {
+                    if ("прямоугольная" === rec[this.TEXT] && (Type.RECTANGL === elemStv.type) === false
+                            && (Type.AREA === elemStv.type) === false && (Type.STVORKA === elemStv.type) === false) {
                         return false;
-                    } else if ("трапециевидная" === rec[this.TEXT] && (Type.TRAPEZE === areaStv.type) === false) {
+                    } else if ("трапециевидная" === rec[this.TEXT] && (Type.TRAPEZE === elemStv.type) === false) {
                         return false;
-                    } else if ("арочная" === rec[this.TEXT] && (Type.ARCH === areaStv.type) === false) {
+                    } else if ("арочная" === rec[this.TEXT] && (Type.ARCH === elemStv.type) === false) {
                         return false;
-                    } else if ("не арочная" === rec[this.TEXT] &&  (Type.ARCH === areaStv.type) === true) {
+                    } else if ("не арочная" === rec[this.TEXT] &&  (Type.ARCH === elemStv.type) === true) {
                         return false;
                     }
                     break;
                 }
                 case 24002:  //Если артикул створки 
                 case 25002:  //Если артикул створки 
-                    if (areaStv.frames.find(el => el.artiklRec[eArtikl.code] === rec[this.TEXT]) === undefined) {
+                    if (elemStv.frames.find(el => el.artiklRec[eArtikl.code] === rec[this.TEXT]) === undefined) {
                         return false;
                     }
                     break;
@@ -55,13 +55,13 @@ export class FurnitureDet extends Par5s {
                     this.message(rec[this.GRUP]);
                     break;
                 case 24004: //Если створка прилегает к артикулу 
-                    //if (areaStv.frames.find(el => UCom.elem(winc.listJoin, el, 2).artiklRec[eArtikl.code] === rec[this.TEXT]) === false) {
+                    //if (elemStv.frames.find(el => UCom.elem(winc.listJoin, el, 2).artiklRec[eArtikl.code] === rec[this.TEXT]) === false) {
                     //    return false;
                     //}
                     break;
                 case 24005:  //Коды текстуры створки 
                 case 25005:  //Коды текстуры створки 
-                    //if (areaStv.frames.find(el => UCom.containsColor(rec[this.TEXT], el.colorID1) === true) === undefined) {
+                    //if (elemStv.frames.find(el => UCom.containsColor(rec[this.TEXT], el.colorID1) === true) === undefined) {
                     //    return false;
                     //}
                     break;
@@ -83,7 +83,7 @@ export class FurnitureDet extends Par5s {
                 case 24007: //Коды текстуры ручки 
                 case 25007: //Коды текстуры ручки                  
                 {
-                    let name = eColor.find(rec => rec[eColor.id] === areaStv.handColor[0])[eColor.name];
+                    let name = eColor.find(rec => rec[eColor.id] === elemStv.handColor[0])[eColor.name];
                     if ((name === rec[this.TEXT]) === false) {
                         return false;
                     }
@@ -92,7 +92,7 @@ export class FurnitureDet extends Par5s {
                 case 24008: //Если серия створки 
                 case 25008: //Если серия створки   
                 {
-                    let series_id = UCom.layout(areaStv.frames, Layout.BOT).artiklRec[eArtikl.groups4_id];
+                    let series_id = UCom.layout(elemStv.frames, Layout.BOT).artiklRec[eArtikl.groups4_id];
                     let name = eGroups.list.find(rec => rec[eGroups.id] === series_id)[eGroups.name];
                     if ((name === rec[this.TEXT]) === false) {
                         return false;
@@ -101,7 +101,7 @@ export class FurnitureDet extends Par5s {
                 break;
                 case 24009:  //Коды текстуры подвеса 
                 case 25009:  //Коды текстуры подвеса                   
-                    for (let elem of areaStv.frames) {
+                    for (let elem of elemStv.frames) {
                         for (let spc of elem.spcRec.spcList) {
                             if (spc.artiklRec[eArtikl.level1] === 2 && spc.artiklRec[eArtikl.level2] === 12) {
                                 let name = eColor.find(rec => rec[eColor.id] === spc.colorID1)[eColor.name];
@@ -151,7 +151,7 @@ export class FurnitureDet extends Par5s {
                 case 25033: //Фурнитура штульповая 
 
                     if (rec[this.TEXT] === "Да") {
-                        for (let entry of areaStv.owner.childs) {
+                        for (let entry of elemStv.owner.childs) {
                             if (entry.type === Type.SHTULP) {
                                 return true;
                             }
@@ -159,7 +159,7 @@ export class FurnitureDet extends Par5s {
                         return false;
 
                     } else if (rec[this.TEXT] === "Нет") {
-                        for (let entry of areaStv.owner.childs) {
+                        for (let entry of elemStv.owner.childs) {
                             if (entry.type === Type.SHTULP) {
                                 return false;
                             }
@@ -195,7 +195,7 @@ export class FurnitureDet extends Par5s {
                 case 24063: //Диапазон веса, кг 
                 case 25063: //Диапазон веса, кг 
                 {
-                    let glass = areaStv.childs.find(el => el.type === Type.GLASS);
+                    let glass = elemStv.childs.find(el => el.type === Type.GLASS);
                     if (glass !== undefined) {
                         let weight = ((glass.width() * glass.height()) / 1000000) * glass.artiklRecAn.getDbl(eArtikl.density);
                         if (UCom.containsNumbExp(rec[this.TEXT], weight) === false) {
