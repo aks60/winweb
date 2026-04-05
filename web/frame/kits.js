@@ -1,5 +1,7 @@
 
-import {project} from './frame/project.js';
+import {Type, TypeOpen1, Layout, LayoutHand, PKjson} from '../enums/enums.js';
+import {project} from './project.js';
+
 export let kits = {};
 
 //Масштабирование
@@ -8,7 +10,7 @@ export function resize() {
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
     $(kits.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
-    $(kits.table1).jqGrid('setGridHeight', $("#centr").height() - 24);
+    $(kits.table1).jqGrid('setGridHeight', $("#centr").height() - 30);
 }
 
 export function init_table() {
@@ -72,7 +74,7 @@ export function insert2_table() {
         $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
-        console.error('Error: kits.insert2_table() ' + e.message);
+        console.error(e.message);
     }
 }
 
@@ -83,15 +85,15 @@ export function update_table(taq) {
     let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid)
     let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
 
-    $("#n53").val(prjkitRow.color1);
-    $("#n54").val(prjkitRow.color2);
-    $("#n55").val(prjkitRow.color3);
-    $("#n56").val(prjkitRow.width);
-    $("#n57").val(prjkitRow.height);
-    $("#n58").val(prjkitRow.numb);
-    $("#n53").attr("fk", prjkitRec[ePrjkit.color1_id]);
-    $("#n54").attr("fk", prjkitRec[ePrjkit.color2_id]);
-    $("#n55").attr("fk", prjkitRec[ePrjkit.color3_id]);
+    $("#k53").val(prjkitRow.color1);
+    $("#k54").val(prjkitRow.color2);
+    $("#k55").val(prjkitRow.color3);
+    $("#k56").val(prjkitRow.width);
+    $("#k57").val(prjkitRow.height);
+    $("#k58").val(prjkitRow.numb);
+    $("#k53").attr("fk", prjkitRec[ePrjkit.color1_id]);
+    $("#k54").attr("fk", prjkitRec[ePrjkit.color2_id]);
+    $("#k55").attr("fk", prjkitRec[ePrjkit.color3_id]);
 
     $(taq).dialog({//открытие диалога insert
         title: "Карточка редактирования артикула",
@@ -103,12 +105,12 @@ export function update_table(taq) {
             "Применить": function () {
 
                 prjkitRec[0] = 'UPD';
-                prjkitRec[ePrjkit.numb] = $("#n58").val();
-                prjkitRec[ePrjkit.width] = $("#n56").val();
-                prjkitRec[ePrjkit.height] = $("#n57").val();
-                prjkitRec[ePrjkit.color1_id] = $("#n53").attr("fk");
-                prjkitRec[ePrjkit.color2_id] = $("#n54").attr("fk");
-                prjkitRec[ePrjkit.color3_id] = $("#n55").attr("fk");
+                prjkitRec[ePrjkit.numb] = $("#k58").val();
+                prjkitRec[ePrjkit.width] = $("#k56").val();
+                prjkitRec[ePrjkit.height] = $("#k57").val();
+                prjkitRec[ePrjkit.color1_id] = $("#k53").attr("fk");
+                prjkitRec[ePrjkit.color2_id] = $("#k54").attr("fk");
+                prjkitRec[ePrjkit.color3_id] = $("#k55").attr("fk");
 
                 $.ajax({
                     url: 'dbset?action=updatePrjkit',
@@ -116,12 +118,12 @@ export function update_table(taq) {
                     success: (data) => {
                         if (data.result == 'ok') {
                             $('#table1').jqGrid('setRowData', rowid, {
-                                color1: $("#n53").val(),
-                                color2: $("#n54").val(),
-                                color3: $("#n55").val(),
-                                width: $("#n56").val(),
-                                height: $("#n57").val(),
-                                numb: $("#n58").val(),
+                                color1: $("#k53").val(),
+                                color2: $("#k54").val(),
+                                color3: $("#k55").val(),
+                                width: $("#k56").val(),
+                                height: $("#k57").val(),
+                                numb: $("#k58").val(),
                             });
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
@@ -186,7 +188,7 @@ export function artikl_to_kit(btnSrc) {
         $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
-        console.error('Error: kits.artikl_to_kit() ' + e.message);
+        console.error(e.message);
     }
 }
 
@@ -221,6 +223,6 @@ export function color_to_kit(btnSrc) {
         $('#dialog-jsp').load('frame/dialog/color.jsp');
 
     } catch (e) {
-        console.error('Error: kits.color_to_kit() ' + e.message);
+        console.error(e.message);
     }
 }

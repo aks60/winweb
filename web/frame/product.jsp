@@ -72,8 +72,7 @@
             init_table();
             load_table2();
 
-            prepareTool();
-            
+            prepareTool();           
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
             document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
