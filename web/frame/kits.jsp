@@ -9,19 +9,17 @@
         <script type="module">
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {kits, resize, init_table, load_table, insert_kit,
-                    insert_table, update_table, delete_table, artikl_to_kit,
-                    color_to_kit} from './frame/kits.js';
+            import {kits, resize, init_table, load_table, update_table, 
+                delete_table, artikl_to_kit, color_to_kit} from './frame/kits.js';
            
             kits.table1 = document.getElementById('table1');
             init_table();
             load_table();
-            resize();
             
             $("button").button();
             prepareTool();
             deployTaq(['#dialog-card']);
-            $(window).bind('resize', resize); //.trigger('resize');
+            $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnKit3').addEventListener('click', () =>  update_table());
             document.getElementById('btnKit4').addEventListener('click', () =>  delete_table());            
         </script>         

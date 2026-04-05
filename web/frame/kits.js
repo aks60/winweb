@@ -59,24 +59,6 @@ export function load_table() {
     }
 }
 
-export function insert_kit() {
-
-    if (project.mapWinc.size == 0) {
-        dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
-
-    } else {
-        $('#dialog-jsp').load('frame/dialog/kitcard.jsp');
-    }
-}
-
-export function insert_table() {
-    try {
-        $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-
-    } catch (e) {
-        console.error(e.message);
-    }
-}
 
 //Редактирования строки таблицы
 export function update_table() {

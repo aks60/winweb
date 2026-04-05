@@ -8,17 +8,16 @@
             
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
-//------------------------------------------------------------------------------
+
             var kitdetList = null;
-//------------------------------------------------------------------------------
+
             function resize() {
                 $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan1-kitcard").width() - 4);
                 $("#tab1-kitcard").jqGrid('setGridHeight', $("#dialog-jsp #pan1-kitcard").height() - 24);
                 $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan2-kitcard").width() - 4);
                 $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-jsp #pan2-kitcard").height() - 24);
             }
-//------------------------------------------------------------------------------
-            $(document).ready(function () {
+
                 init_dialog($("#tab1-kitcard"), $("#tab2-kitcard"));
                 init_table($("#tab1-kitcard"), $("#tab2-kitcard"));
                 load_table($("#tab1-kitcard"), $("#tab2-kitcard"));
@@ -27,8 +26,7 @@
                     resize();
                 });
                 resize();
-            });
-//------------------------------------------------------------------------------
+
             function init_dialog(table1, table2) {
                 $("#dialog-jsp").dialog({
                     title: "Справочник  комплектов",
@@ -46,11 +44,11 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
+
             function init_table(table1, table2) {
                 table1.jqGrid({
                     datatype: "local",
-                    colNames: ['id', 'Категория', 'Название компдекта'],
+                    colNames: ['id', 'Категория', 'Название комплекта'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'categ', width: 100},
@@ -88,7 +86,7 @@
                     ]
                 });
             }
-//------------------------------------------------------------------------------
+
             function load_table(table1, table2) {
                 table1.jqGrid('clearGridData', true);
                 table2.jqGrid('clearGridData', true);
@@ -103,7 +101,7 @@
                 table1.jqGrid("setSelection", 1);
             }
             ;
-//------------------------------------------------------------------------------
+
             function save_table(table2) {
                 try {
                     for (let kitdetRec of kitdetList) {
@@ -146,7 +144,6 @@
                     console.error('Error: kitcard.save_table() ' + e.message);
                 }
             }
-//------------------------------------------------------------------------------
         </script>         
     </head>
     <body>       
