@@ -88,9 +88,9 @@
 
             function load_table() {
                 $(tabArtikl).jqGrid('clearGridData', true);
-                let artiklList = Array.from(artiklSet);
-
+                
                 if ($('#body-jsp title').text() === 'PRODUCT') {
+                    let artiklList = Array.from(artiklSet);
                     if (paramTaq == 'n45' || paramTaq == 'n49' || paramTaq == 'n4B' || paramTaq == 'n51') {
                         artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         for (let i = 0; i < artiklList.length; i++) {

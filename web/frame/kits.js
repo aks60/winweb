@@ -59,7 +59,7 @@ export function load_table() {
     }
 }
 
-export function insert_table() {
+export function insert_kit() {
 
     if (project.mapWinc.size == 0) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
@@ -69,7 +69,7 @@ export function insert_table() {
     }
 }
 
-export function insert2_table() {
+export function insert_table() {
     try {
         $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
@@ -79,11 +79,12 @@ export function insert2_table() {
 }
 
 //Редактирования строки таблицы
-export function update_table(taq) {
+export function update_table() {
 
+    let taq = '#dialog-card';
     let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
-    let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid)
-    let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
+    let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
+    let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id === rec[ePrjkit.id]);
 
     $("#k53").val(prjkitRow.color1);
     $("#k54").val(prjkitRow.color2);
@@ -116,7 +117,7 @@ export function update_table(taq) {
                     url: 'dbset?action=updatePrjkit',
                     data: {param: JSON.stringify(prjkitRec)},
                     success: (data) => {
-                        if (data.result == 'ok') {
+                        if (data.result === 'ok') {
                             $('#table1').jqGrid('setRowData', rowid, {
                                 color1: $("#k53").val(),
                                 color2: $("#k54").val(),

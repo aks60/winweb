@@ -9,29 +9,29 @@
         <script type="module">
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {kits, resize, init_table, load_table, insert_table,
-                    insert2_table, update_table, delete_table, artikl_to_kit,
+            import {kits, resize, init_table, load_table, insert_kit,
+                    insert_table, update_table, delete_table, artikl_to_kit,
                     color_to_kit} from './frame/kits.js';
-
-            deployTaq(['#dialog-card']);
-            $(window).bind('resize', resize); //.trigger('resize');
-
+           
             kits.table1 = document.getElementById('table1');
-            init_table($("#table1"));
-            load_table($("#table1"));
+            init_table();
+            load_table();
             resize();
             
             $("button").button();
             prepareTool();
             deployTaq(['#dialog-card']);
+            $(window).bind('resize', resize); //.trigger('resize');
+            document.getElementById('btnKit3').addEventListener('click', () =>  update_table());
+            document.getElementById('btnKit4').addEventListener('click', () =>  delete_table());            
         </script>         
     </head>
     <body>
         <div id="north">   
-            <button id="btnKit1" style="width: 160px" onClick="kits.insert_table($('#table1'));">Добавить комплект</button>
-            <button id="btnKit2" style="width: 160px" onClick="kits.insert2_table($('#table1'));">Добавить артикул</button>
-            <button id="btnKit3" style="width: 160px" onClick="kits.update_table('#dialog-card');">Изменить артикул</button>
-            <button id="btnKit4" style="width: 160px" onClick="kits.delete_table($('#table1'));">Удалить артикул</button>            
+            <button id="btnKit1" style="width: 160px" onClick="$('#dialog-jsp').load('frame/dialog/kitcard.jsp')">Добавить комплект</button>
+            <button id="btnKit2" style="width: 160px" onClick="$('#dialog-jsp').load('frame/dialog/artikl.jsp')">Добавить артикул</button>
+            <button id="btnKit3" style="width: 160px">Изменить артикул</button>
+            <button id="btnKit4" style="width: 160px">Удалить артикул</button>            
         </div> 
         <div id = "context">               
             <div id="dialog-card" card_width="490" card_height="260" style="display: none;">
