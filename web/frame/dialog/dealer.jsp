@@ -30,8 +30,8 @@
                     buttons: {
                         "Выбрать": function () {
                             let dealerRow = getSelectedRow($(tabDealer));
-                            $('#n25').val(dealerRow.partner);
-                            $('#n25').attr("fk", dealerRow.id);
+                            $('#p25').val(dealerRow.partner);
+                            $('#p25').attr("fk", dealerRow.id);
                             $("#dialog-jsp").dialog("close");
                         },
                         "Закрыть": function () {
@@ -53,8 +53,8 @@
 
                     ], ondblClickRow: function (rowid) {
                         let dealerRow = getSelectedRow($(tabDealer));
-                        $('#n25').val(dealerRow.partner);
-                        $('#n25').attr("fk", dealerRow.id);
+                        $('#p25').val(dealerRow.partner);
+                        $('#p25').attr("fk", dealerRow.id);
                         $("#dialog-jsp").dialog("close");
                     }
                 });

@@ -6,23 +6,22 @@
         <script type="text/javascript" src="frame/kits.js"></script> 
         <title>KITS</title>
 
-        <script type="text/javascript">
-            kits.resize = function () {
-                var height = window.innerHeight;
-                $("#context").css("height", height - 80);
-                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 24);
-            }
+        <script type="module">
+            import {project} from './frame/project.js';
+            import {Wincalc} from './build/Wincalc.js';
+            import {product, resize, init_table, load_table, insert_table,
+                    inser2_table, update_table, delete_table, artikl_to_kit,
+                    color_to_kit} from './frame/product.js';
 
-            $(document).ready(function () {
-                $(window).bind('resize', () => kits.resize()).trigger('resize');
+            $(window).bind('resize', resize); //.trigger('resize');
 
-                kits.init_table($("#table1"));
-                kits.load_table($("#table1"));
-                kits.resize();
-                prepareTool();
-                deployTaq(['#dialog-card']);
-            });
+            kits.table1 = document.getElementById('table1');
+            kits.init_table($("#table1"));
+            kits.load_table($("#table1"));
+            kits.resize();
+            prepareTool();
+            deployTaq(['#dialog-card']);
+
         </script>         
     </head>
     <body>

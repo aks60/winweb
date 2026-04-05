@@ -19,8 +19,8 @@ export function resize() {
         var width = $(this).attr('dx');
         $(this).width(winWidth - width);
     });
-    $("#table1").jqGrid('setGridWidth', $("#east1").width() - 8);
-    $("#table1").jqGrid('setGridHeight', $("#east1").height() - 24);
+    $(product.table1).jqGrid('setGridWidth', $("#east1").width() - 8);
+    $(product.table1).jqGrid('setGridHeight', $("#east1").height() - 24);
 }
 
 //Инициализация таблицы

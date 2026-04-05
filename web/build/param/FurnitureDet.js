@@ -314,15 +314,6 @@ export class FurnitureDet extends Par5s {
             console.error(e.message);
         }
         return true;
-        
-//        switch (grup) {
-//            case 24010:
-//                mapParam.set(rec[this.GRUP], rec[this.this.TEXT]);
-//                break;
-//            case 25010:
-//                mapParam.set(rec[this.GRUP], rec[this.this.TEXT]);
-//                break;
-//        }
     }
 }
 

@@ -1,8 +1,18 @@
 
 import {project} from './frame/project.js';
+export let kits = {};
 
-kits.init_table = function (table) {
-    table.jqGrid({
+//Масштабирование
+export function resize() {
+
+    var height = window.innerHeight;
+    $("#context").css("height", height - 80);
+    $(kits.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
+    $(kits.table1).jqGrid('setGridHeight', $("#centr").height() - 24);
+}
+
+export function init_table() {
+    $(kits.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -22,16 +32,16 @@ kits.init_table = function (table) {
             {name: 'numb', width: 60, sorttype: "text"}
         ]
     });
-};
-//------------------------------------------------------------------------------
-kits.load_table = function (table) {
-    table.jqGrid('clearGridData', true);
+}
+
+export function load_table() {
+    $(kits.table1).jqGrid('clearGridData', true);
     if (project.mapWinc.size != 0) {
         kits.prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] == rec[ePrjkit.prjprod_id]);
         for (let i = 0; i < kits.prjkitList.length; i++) {
             let tr = kits.prjkitList[i];
             let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
-            table.jqGrid('addRowData', i + 1, {
+            $(kits.table1).jqGrid('addRowData', i + 1, {
                 id: tr[KITS.id],
                 code: artiklRec[eArtikl.code],
                 name: artiklRec[eArtikl.name],
@@ -43,11 +53,11 @@ kits.load_table = function (table) {
                 numb: tr[ePrjkit.numb]
             });
         }
-        table.jqGrid("setSelection", 1);
+        $(kits.table1).jqGrid("setSelection", 1);
     }
-};
-//------------------------------------------------------------------------------
-kits.insert_table = function (table) {
+}
+
+export function insert_table() {
 
     if (project.mapWinc.size == 0) {
         dialogMes('Внимание', "<p>Выберите конструкцию заказа.");
@@ -55,21 +65,22 @@ kits.insert_table = function (table) {
     } else {
         $('#dialog-jsp').load('frame/dialog/kitcard.jsp');
     }
-};
-//------------------------------------------------------------------------------
-kits.insert2_table = function (table) {
+}
+
+export function insert2_table() {
     try {
         $('#dialog-jsp').load('frame/dialog/artikl.jsp');
 
     } catch (e) {
         console.error('Error: kits.insert2_table() ' + e.message);
     }
-};
-//------------  Редактирования строки таблицы  ---------------------------------
-kits.update_table = function (taq) {
+}
 
-    let rowid = $("#table1").jqGrid('getGridParam', "selrow");
-    let prjkitRow = $("#table1").jqGrid('getRowData', rowid)
+//Редактирования строки таблицы
+export function update_table(taq) {
+
+    let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
+    let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid)
     let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
 
     $("#n53").val(prjkitRow.color1);
@@ -126,9 +137,9 @@ kits.update_table = function (taq) {
             }
         }
     });
-};
-//------------------------------------------------------------------------------
-kits.delete_table = function (table) {
+}
+
+export function delete_table(table) {
 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -167,9 +178,9 @@ kits.delete_table = function (table) {
             }
         }
     });
-};
-//------------------------------------------------------------------------------
-kits.artikl_to_kit = function (btnSrc) {
+}
+
+export function artikl_to_kit(btnSrc) {
     try {
         kits.buttonSrc = btnSrc;
         $('#dialog-jsp').load('frame/dialog/artikl.jsp');
@@ -177,9 +188,10 @@ kits.artikl_to_kit = function (btnSrc) {
     } catch (e) {
         console.error('Error: kits.artikl_to_kit() ' + e.message);
     }
-};
-//-----------------------  Заполнение  -----------------------------------------
-kits.color_to_kit = function (btnSrc) {
+}
+
+//Заполнение
+export function color_to_kit(btnSrc) {
     try {
         let groupSet = new Set();
         let colorSet = new Set();
@@ -211,5 +223,4 @@ kits.color_to_kit = function (btnSrc) {
     } catch (e) {
         console.error('Error: kits.color_to_kit() ' + e.message);
     }
-};
-//------------------------------------------------------------------------------
+}

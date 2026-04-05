@@ -123,12 +123,12 @@ export function insert_table1(taq) {
         data: {param: JSON.stringify({})},
         success: (datkey) => {
             if (datkey.result === 'ok') {
-                $("#n21").val(datkey.id);
-                $("#n22").val('');
-                $("#n23").val(formatDate2(new Date()));
-                $("#n24").val('');
-                $("#n25").val('');
-                $("#n25").attr("fk", '-3');
+                $("#p21").val(datkey.id);
+                $("#p22").val('');
+                $("#p23").val(formatDate2(new Date()));
+                $("#p24").val('');
+                $("#p25").val('');
+                $("#p25").attr("fk", '-3');
 
                 let o1 = $(taq).attr('card_width');
 
@@ -144,14 +144,14 @@ export function insert_table1(taq) {
                             let projectRec = eProject.vrec;
                             projectRec[0] = 'SEL';
                             projectRec[eProject.id] = datkey.id;
-                            projectRec[eProject.num_ord] = $("#n21").val();
-                            projectRec[eProject.num_acc] = $("#n22").val();
+                            projectRec[eProject.num_ord] = $("#p21").val();
+                            projectRec[eProject.num_acc] = $("#p22").val();
                             projectRec[eProject.manager] = login.data.user_fio;
-                            projectRec[eProject.date4] = $("#n23").val();
-                            projectRec[eProject.date6] = $("#n24").val();
+                            projectRec[eProject.date4] = $("#p23").val();
+                            projectRec[eProject.date6] = $("#p24").val();
                             projectRec[eProject.owner] = login.data.user_name;
-                            projectRec[eProject.prjpart_id] = $("#n25").attr("fk");
-                            if ($("#n25").attr("fk") === '-3') {
+                            projectRec[eProject.prjpart_id] = $("#p25").attr("fk");
+                            if ($("#p25").attr("fk") === '-3') {
                                 dialogMes('Сообщение', "<p>Контрагент не установлен");
                                 return;
                             }
@@ -190,12 +190,12 @@ export function update_table1(dialogCard) {
 
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
-    $("#n21").val(projectRow.num_ord);
-    $("#n22").val(projectRow.num_acc);
-    $("#n23").val(projectRow.date4);
-    $("#n24").val(projectRow.date6);
-    $("#n25").val(projectRow.partner);
-    $("#n25").attr("fk", projectRow.prjpart_id);
+    $("#p21").val(projectRow.num_ord);
+    $("#p22").val(projectRow.num_acc);
+    $("#p23").val(projectRow.date4);
+    $("#p24").val(projectRow.date6);
+    $("#p25").val(projectRow.partner);
+    $("#p25").attr("fk", projectRow.prjpart_id);
     $(dialogCard).dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
         width: $(dialogCard).attr('card_width'),
@@ -206,13 +206,13 @@ export function update_table1(dialogCard) {
             "Применить": function () {
 
                 projectRec[0] = 'UPD';
-                projectRec[eProject.num_ord] = $("#n21").val();
-                projectRec[eProject.num_acc] = $("#n22").val();
+                projectRec[eProject.num_ord] = $("#p21").val();
+                projectRec[eProject.num_acc] = $("#p22").val();
                 projectRec[eProject.manager] = login.data.user_fio;
-                projectRec[eProject.date4] = $("#n23").val();
-                projectRec[eProject.date6] = $("#n24").val();
+                projectRec[eProject.date4] = $("#p23").val();
+                projectRec[eProject.date6] = $("#p24").val();
                 projectRec[eProject.owner] = login.data.user_name;
-                projectRec[eProject.prjpart_id] = $("#n25").attr("fk");
+                projectRec[eProject.prjpart_id] = $("#p25").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateProject',
                     data: {param: JSON.stringify(projectRec)},
@@ -294,8 +294,8 @@ export function insert_table3(table, prjprodRec) {
 //Редактирования строки таблицы
 export function update_table3(taq) {
 
-    $("#n31").val(project.prjprodRec[ePrjprod.num]);
-    $("#n32").val(project.prjprodRec[ePrjprod.name]);
+    $("#p31").val(project.prjprodRec[ePrjprod.num]);
+    $("#p32").val(project.prjprodRec[ePrjprod.name]);
 
 
     $(taq).dialog({//открытие диалога insert
@@ -307,8 +307,8 @@ export function update_table3(taq) {
         buttons: {
             "Применить": function () {
                 project.prjprodRec[0] = 'UPD';
-                project.prjprodRec[ePrjprod.num] = $("#n31").val();
-                project.prjprodRec[ePrjprod.name] = $("#n32").val();
+                project.prjprodRec[ePrjprod.num] = $("#p31").val();
+                project.prjprodRec[ePrjprod.name] = $("#p32").val();
                 $.ajax({
                     url: 'dbset?action=updatePrjprod',
                     data: {param: JSON.stringify(project.prjprodRec)},
