@@ -201,7 +201,7 @@
 
                     } else if ($('#body-jsp title').text() == 'KITS') {
                         let artiklRow = getSelectedRow($(tabArtikl));
-                        let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec[eArtikl.id]);
+                        //let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec[eArtikl.id]);
 
                         if (kits.buttonSrc === 'n51' || kits.buttonSrc == 'n52') {
                             $("#n51").val(artiklRow.code);

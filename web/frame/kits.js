@@ -38,10 +38,10 @@ export function init_table() {
 
 export function load_table() {
     $(kits.table1).jqGrid('clearGridData', true);
-    if (project.mapWinc.size != 0) {
-        kits.prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] == rec[ePrjkit.prjprod_id]);
-        for (let i = 0; i < kits.prjkitList.length; i++) {
-            let tr = kits.prjkitList[i];
+    if (project.mapWinc.size !== 0) {
+        let prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] === rec[ePrjkit.prjprod_id]);
+        for (let i = 0; i < prjkitList.length; i++) {
+            let tr = prjkitList[i];
             let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
             $(kits.table1).jqGrid('addRowData', i + 1, {
                 id: tr[KITS.id],
