@@ -41,18 +41,18 @@ export function load_table() {
     if (project.mapWinc.size !== 0) {
         let prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] === rec[ePrjkit.prjprod_id]);
         for (let i = 0; i < prjkitList.length; i++) {
-            let tr = prjkitList[i];
-            let artiklRec = findef(tr[ePrjkit.artikl_id], eArtikl.id, eArtikl);
+            let prjkitRec = prjkitList[i];
+            let artiklRec = findef(prjkitRec[ePrjkit.artikl_id], eArtikl.id, eArtikl);
             $(kits.table1).jqGrid('addRowData', i + 1, {
-                id: tr[KITS.id],
+                id: prjkitRec[eKits.id],
                 code: artiklRec[eArtikl.code],
                 name: artiklRec[eArtikl.name],
-                color1: findef(tr[ePrjkit.color1_id], eColor.id, eColor)[eColor.name],
-                color2: findef(tr[ePrjkit.color2_id], eColor.id, eColor)[eColor.name],
-                color3: findef(tr[ePrjkit.color3_id], eColor.id, eColor)[eColor.name],
-                width: tr[ePrjkit.width],
-                height: tr[ePrjkit.height],
-                numb: tr[ePrjkit.numb]
+                color1: findef(prjkitRec[ePrjkit.color1_id], eColor.id, eColor)[eColor.name],
+                color2: findef(prjkitRec[ePrjkit.color2_id], eColor.id, eColor)[eColor.name],
+                color3: findef(prjkitRec[ePrjkit.color3_id], eColor.id, eColor)[eColor.name],
+                width: prjkitRec[ePrjkit.width],
+                height: prjkitRec[ePrjkit.height],
+                numb: prjkitRec[ePrjkit.numb]
             });
         }
         $(kits.table1).jqGrid("setSelection", 1);
@@ -66,8 +66,7 @@ export function update_table() {
     let taq = '#dialog-card';
     let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
     let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
-    let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id === rec[ePrjkit.id]);
-
+    let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.id) === rec[ePrjkit.id]);
     $("#k53").val(prjkitRow.color1);
     $("#k54").val(prjkitRow.color2);
     $("#k55").val(prjkitRow.color3);

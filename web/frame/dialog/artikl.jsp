@@ -91,7 +91,7 @@
                 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
                     let artiklList = Array.from(artiklSet);
-                    if (paramTaq == 'n45' || paramTaq == 'n49' || paramTaq == 'n4B' || paramTaq == 'n51') {
+                    if (paramTaq === 'n45' || paramTaq === 'n49' || paramTaq === 'n4B' || paramTaq === 'n51') {
                         artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         for (let i = 0; i < artiklList.length; i++) {
                             let tr = artiklList[i];
@@ -103,7 +103,7 @@
                         }
                     }
 
-                } else if ($('#body-jsp title').text() == 'KITS') {
+                } else if ($('#body-jsp title').text() === 'KITS') {
                     for (let i = 0; i < eArtikl.list.length; i++) {
                         let tr = eArtikl.list[i];
                         $(tabArtikl).jqGrid('addRowData', i + 1, {
@@ -203,8 +203,8 @@
                         let artiklRow = getSelectedRow($(tabArtikl));
                         //let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec[eArtikl.id]);
 
-                        if (kits.buttonSrc === 'n51' || kits.buttonSrc == 'n52') {
-                            $("#n51").val(artiklRow.code);
+                        if (paramTaq === 'k51' || paramTaq == 'k52') {
+                            $("#k51").val(artiklRow.code);
                             $("#n52").val(artiklRow.name);
                             $("#n51").attr("fk", artiklRow.id);
                             $("#n52").attr("fk", artiklRow.id);
