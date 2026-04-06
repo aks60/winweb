@@ -32,7 +32,11 @@ export function init_table() {
             {name: 'width', width: 60, sorttype: "text"},
             {name: 'height', width: 60, sorttype: "text"},
             {name: 'numb', width: 60, sorttype: "text"}
-        ]
+        ],
+        onSelectRow: function (rowid) {
+            let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
+            kits.prjkitRec = findef(prjkitRow.id, ePrjkit.id, ePrjkit);
+        }
     });
 }
 
@@ -58,7 +62,6 @@ export function load_table() {
         $(kits.table1).jqGrid("setSelection", 1);
     }
 }
-
 
 //Редактирования строки таблицы
 export function update_table() {
@@ -181,6 +184,7 @@ export function color_to_kit(btnSrc) {
         let colorSet = new Set();
         let prjkitRow = getSelectedRow($('#table1'));
         let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
+
         for (let rec of eArtdet.list) {
             if (rec[eArtdet.artikl_id] == prjkitRec[ePrjkit.artikl_id]) {
                 if (rec[eArtdet.color_fk] < 0) { //все текстуры групы color_fk

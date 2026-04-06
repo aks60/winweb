@@ -11,6 +11,7 @@
             import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
+            import {kits} from './frame/kits.js';
             import {tree_to_html} from './frame/product.js';
 
             let groupSet = new Set();
@@ -122,13 +123,17 @@
 
             //Текстура изделия
             function data_set() {
+              
                 try {
                     let colorTxt = null, indexMark = null;
                     let systreeRec = eSystree.list.find(rec => winc.nuni == rec[eSystree.id]);
 
-                    if (['n46', 'n4A', 'n4C', 'n53'].includes(paramTaq)) {
-                        colorTxt = null;
+                    if (['n46', 'n4A', 'n4C', 'n53', 'k53'].includes(paramTaq)) {
                         indexMark = eArtdet.mark_c1;
+                    } else if(paramTaq === 'k54')  {
+                        indexMark = eArtdet.mark_c2; 
+                    } else if(paramTaq === 'k55')  {
+                        indexMark = eArtdet.mark_c3; 
                     } else if (['n14', 'n33', 'n60'].includes(paramTaq)) {
                         colorTxt = systreeRec[eSystree.col1];
                         indexMark = eArtdet.mark_c1;
@@ -217,18 +222,32 @@
 
                         //Комплекты
                     } else if ($('#body-jsp title').text() === 'KITS') {
-                        if (paramTaq === 'n53') {
-                            $("#n53").val(colorRow.name);
-                            $("#n53").attr("fk", colorRow.id);
-
-                        } else if (paramTaq === 'n54') {
-                            $("#n54").val(colorRow.name);
-                            $("#n54").attr("fk", colorRow.id);
-
-                        } else if (paramTaq === 'n55') {
-                            $("#n55").val(colorRow.name);
-                            $("#n55").attr("fk", colorRow.id);
+                        if (paramTaq === 'k53') {
+                            $("#k53").val(colorRow.name);
+                        } else if (paramTaq === 'k54') {
+                            $("#k54").val(colorRow.name);
+                        } else if (paramTaq === 'k55') {
+                            $("#k55").val(colorRow.name);
                         }
+                        //Запишем в серверную базу данных
+                        $.ajax({
+                            url: 'dbset?action=updateScript',
+                            data: {param: JSON.stringify(project.prjprodRec)},
+                            success: function (data) {
+
+                                if (data.result === 'ok') {
+
+                                    //Запишем текстуру в html
+                                    tree_to_html();
+
+                                } else {
+                                    dialogMes('Сообщение', "<p>" + data.result);
+                                }
+                            },
+                            error: function () {
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            }
+                        });                        
                     }
                 } catch (e) {
                     console.error(e.message);
@@ -298,6 +317,12 @@
                     return com5t.artiklRec;
                 else if (paramTaq === 'n65')
                     return com5t.artiklRec;
+                else if (paramTaq === 'k53')
+                    return eArtikl.list.find(rec => rec[eArtikl.id] === kits.prjkitRec[ePrjkit.artikl_id]);
+                else if (paramTaq === 'k54')
+                    return eArtikl.list.find(rec => rec[eArtikl.id] === kits.prjkitRec[ePrjkit.artikl_id]);
+                else if (paramTaq === 'k55')
+                    return eArtikl.list.find(rec => rec[eArtikl.id] === kits.prjkitRec[ePrjkit.artikl_id]);
                 else
                     return null;
             }

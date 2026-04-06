@@ -45,7 +45,7 @@ export function init_table() {
                 $('#dialog-jsp').load('frame/dialog/param.jsp');
             }, onSelectRow: function (rowid) {
                 let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-                product.groupParam = findef(syspar1Row.id, SYSPAR1.id, eSyspar1)[eSyspar1.params_id];
+                product.groupParam = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.params_id];
             }
         });
     } catch (e) {

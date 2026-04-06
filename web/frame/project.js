@@ -58,6 +58,7 @@ export function init_table() {
             let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
             project.prjprodRec = ePrjprod.list.find(rec => prjprodRow.id == rec[ePrjprod.id]);
             project.table3rowID = rowid;
+            product.winCalc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);;
         }
         //gridComplete: function () {} //использовать при загрузки рисунка
     });

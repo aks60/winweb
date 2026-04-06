@@ -16,6 +16,7 @@
             import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
+            import {load_table as load_kits} from './frame/kits.js';
             import {tree_to_html} from './frame/product.js';
 
             const LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
@@ -198,54 +199,32 @@
                             }
                         });
 
+                    } else if ($('#body-jsp title').text() === 'KITS') {
 
-                    } else if ($('#body-jsp title').text() == 'KITS') {
-                        let artiklRow = getSelectedRow($(tabArtikl));
-                        //let artiklRec = eArtikl.list.find(rec => artiklRow.id == rec[eArtikl.id]);
-
-                        if (paramTaq === 'k51' || paramTaq == 'k52') {
-                            $("#k51").val(artiklRow.code);
-                            $("#n52").val(artiklRow.name);
-                            $("#n51").attr("fk", artiklRow.id);
-                            $("#n52").attr("fk", artiklRow.id);
-
-
-                        } else {
-                            $.ajax({//запишем комплект в серверную базу данных
+                        let prjkitRec = ePrjkit.vrec;
+                        prjkitRec[0] = 'INS';
+                        prjkitRec[ePrjkit.numb] = 1;
+                        prjkitRec[ePrjkit.artikl_id] = Number(artiklRow.id);
+                        prjkitRec[ePrjkit.prjprod_id] = project.prjprodRec[ePrjprod.id];
+                        prjkitRec[ePrjkit.project_id] = project.projectRec[eProject.id];
+                        
+                            $.ajax({ //запишем строку комплекта в серверную базу данных
                                 url: 'dbset?action=insertKits',
-                                data: {
-                                    param: JSON.stringify({
-                                        color1_id: artiklRec[eArtikl.color1_id],
-                                        color2_id: artiklRec[eArtikl.color2_id],
-                                        color3_id: artiklRec[eArtikl.color3_id],
-                                        artikl_id: artiklRec[eArtikl.id],
-                                        prjprod_id: project.prjprodRec[ePrjprod.id]
-                                    })
-                                },
+                                data: {param: JSON.stringify(prjkitRec)},                                
                                 success: (data) => {
-                                    if (data.result == 'ok') {
-                                        let record = new Array(13);
-                                        record[0] = 'SEL';
-                                        record[ePrjkit.id] = data.prjkitRec[ePrjkit.id];
-                                        record[ePrjkit.numb] = data.prjkitRec[ePrjkit.numb];
-                                        record[ePrjkit.width] = data.prjkitRec[ePrjkit.width];
-                                        record[ePrjkit.height] = data.prjkitRec[ePrjkit.height];
-                                        record[ePrjkit.color1_id] = data.prjkitRec[ePrjkit.color1_id];
-                                        record[ePrjkit.color2_id] = data.prjkitRec[ePrjkit.color2_id];
-                                        record[ePrjkit.color3_id] = data.prjkitRec[ePrjkit.color3_id];
-                                        record[ePrjkit.artikl_id] = data.prjkitRec[ePrjkit.artikl_id];
-                                        record[ePrjkit.prjprod_id] = data.prjkitRec[ePrjkit.prjprod_id];
-                                        ePrjkit.list.push(record);
+                                    
+                                   if (data.result === 'ok') {                                       
+                                        ePrjkit.list.push(data.prjkitRec);
+                                        
                                     } else {
                                         dialogMes('Сообщение', "<p>" + data.result);
                                     }
-                                    kits.load_table($("#table1"));
+                                    load_kits(); //перезагрузка комплектов
                                 },
                                 error: () => {
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                 }
                             });
-                        }
                     }
 
                 } catch (e) {

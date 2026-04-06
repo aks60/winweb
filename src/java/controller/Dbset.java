@@ -152,21 +152,6 @@ public class Dbset {
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-
-        /*String param = request.getParameter("param");
-        JSONObject obj = (JSONObject) JSONValue.parse(param);
-        int id = Integer.valueOf(obj.get(eProject.id.ordinal()).toString());
-
-        try (Connection connection = Connect.getConnection()) {
-            Statement statement = statement = connection.createStatement();
-            String sql = "update prjprod set script = '" + obj.get("script") + "' where id = " + obj.get("id");
-            statement.executeUpdate(sql);
-            connection.close();
-            return new JSONObject(App.asMap("result", "ok"));
-
-        } catch (SQLException e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }*/
     }
 
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
@@ -225,22 +210,10 @@ public class Dbset {
     public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONObject obj = (JSONObject) JSONValue.parse(param);
-            Record artiklRec = eArtikl.find(Integer.parseInt(obj.get(ePrjkit.artikl_id.name()).toString()), true);
-            Query qPrjkit = new Query(ePrjkit.values());
-            Record record = ePrjkit.up.newRecord("INS");
+            Record record = gson.fromJson(param, Record.class);
             record.set(ePrjkit.id, Connect.genId(ePrjkit.up));
-            record.set(ePrjkit.numb, 1);
-            record.set(ePrjkit.width, artiklRec.get(eArtikl.len_unit));
-            record.set(ePrjkit.height, artiklRec.get(eArtikl.height));
-            record.set(ePrjkit.color1_id, format4(obj, ePrjkit.color1_id));
-            record.set(ePrjkit.color2_id, format4(obj, ePrjkit.color2_id));
-            record.set(ePrjkit.color3_id, format4(obj, ePrjkit.color3_id));
-            record.set(ePrjkit.color3_id, format4(obj, ePrjkit.color3_id));
-            record.set(ePrjkit.artikl_id, artiklRec.get(eArtikl.id));
-            record.set(ePrjkit.prjprod_id, format4(obj, ePrjkit.prjprod_id));
-            qPrjkit.insert2(record);
-            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
+            new Query(ePrjkit.values()).insert2(record);
+            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));            
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
