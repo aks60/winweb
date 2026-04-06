@@ -10,7 +10,7 @@
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
             import {kits, resize, init_table, load_table, update_table, 
-                delete_table, artikl_to_kit, color_to_kit} from './frame/kits.js';
+                delete_table, color_to_kit} from './frame/kits.js';
            
             kits.table1 = document.getElementById('table1');
             init_table();
@@ -33,9 +33,9 @@
         </div> 
         <div id = "context">               
             <div id="dialog-card" card_width="480" card_height="250" style="display: none;">              
-                <jst id="k53" type='btn' label='Основная текстура' width='126' width2="280" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k53')"></jst><br>
-                <jst id="k54" type='btn' label='Внутренняя текстура' width='126' width2="280" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k54')"></jst><br>
-                <jst id="k55" type='btn' label='Внешняя текстура' width='126' width2="280" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k55')"></jst><br>
+                <jst id="k53" type='btn' label='Основная текстура' width='126' width2="280" fk="-3" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k53')"></jst><br>
+                <jst id="k54" type='btn' label='Внутренняя текстура' width='126' width2="280" fk="-3" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k54')"></jst><br>
+                <jst id="k55" type='btn' label='Внешняя текстура' width='126' width2="280" fk="-3" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k55')"></jst><br>
                 <jst id="k56" type='txt' label='Длина' width='126' width2="80"></jst><br>
                 <jst id="k57" type='txt' label='Ширина' width='126' width2="80"></jst><br>
                 <jst id="k58" type='txt' label='Количество' width='126' width2="80"></jst><br>

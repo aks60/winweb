@@ -66,7 +66,7 @@ export function load_table() {
 //Редактирования строки таблицы
 export function update_table() {
 
-    let taq = '#dialog-card';
+    let dialogTaq = '#dialog-card';
     let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
     let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
     let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.id) === rec[ePrjkit.id]);
@@ -80,16 +80,15 @@ export function update_table() {
     $("#k54").attr("fk", prjkitRec[ePrjkit.color2_id]);
     $("#k55").attr("fk", prjkitRec[ePrjkit.color3_id]);
 
-    $(taq).dialog({//открытие диалога insert
+    $(dialogTaq).dialog({//открытие диалога insert
         title: "Карточка редактирования артикула",
-        width: $(taq).attr('card_width'),
-        height: $(taq).attr('card_height'),
+        width: $(dialogTaq).attr('card_width'),
+        height: $(dialogTaq).attr('card_height'),
         modal: true,
         resizable: false,
         buttons: {
             "Применить": function () {
 
-                prjkitRec[0] = 'UPD';
                 prjkitRec[ePrjkit.numb] = $("#k58").val();
                 prjkitRec[ePrjkit.width] = $("#k56").val();
                 prjkitRec[ePrjkit.height] = $("#k57").val();
@@ -126,7 +125,7 @@ export function update_table() {
     });
 }
 
-export function delete_table(table) {
+export function delete_table() {
 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -138,16 +137,17 @@ export function delete_table(table) {
         modal: true,
         buttons: {
             "Да": function () {
-                let rowid = table.jqGrid('getGridParam', "selrow");
-                let prjkitID = table.jqGrid('getRowData', rowid).id;
+                let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
+                let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
+                let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.id) === rec[ePrjkit.id]);
                 $.ajax({
                     url: 'dbset?action=deletePrjkit',
-                    data: {param: JSON.stringify({id: prjkitID})},
+                    data: {param: JSON.stringify(prjkitRec)},
                     success: (data) => {
-                        if (data.result == 'ok') {
-                            table.jqGrid("delRowData", rowid);
+                        if (data.result === 'ok') {
+                            $(kits.table1).jqGrid("delRowData", rowid);
                             for (let i = 0; i < ePrjkit.list.length; ++i) {
-                                if (prjkitID == ePrjkit.list[i][ePrjkit.id]) {
+                                if (Number(prjkitRow.id) === ePrjkit.list[i][ePrjkit.id]) {
                                     ePrjkit.list.splice(i, 1);
                                 }
                             }
@@ -165,16 +165,6 @@ export function delete_table(table) {
             }
         }
     });
-}
-
-export function artikl_to_kit(btnSrc) {
-    try {
-        kits.buttonSrc = btnSrc;
-        $('#dialog-jsp').load('frame/dialog/artikl.jsp');
-
-    } catch (e) {
-        console.error(e.message);
-    }
 }
 
 //Заполнение

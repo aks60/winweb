@@ -224,30 +224,16 @@
                     } else if ($('#body-jsp title').text() === 'KITS') {
                         if (paramTaq === 'k53') {
                             $("#k53").val(colorRow.name);
+                            $("#k53").attr("fk", colorRow.id);
+
                         } else if (paramTaq === 'k54') {
                             $("#k54").val(colorRow.name);
+                            $("#k54").attr("fk", colorRow.id);
+
                         } else if (paramTaq === 'k55') {
                             $("#k55").val(colorRow.name);
-                        }
-                        //Запишем в серверную базу данных
-                        $.ajax({
-                            url: 'dbset?action=updateScript',
-                            data: {param: JSON.stringify(project.prjprodRec)},
-                            success: function (data) {
-
-                                if (data.result === 'ok') {
-
-                                    //Запишем текстуру в html
-                                    tree_to_html();
-
-                                } else {
-                                    dialogMes('Сообщение', "<p>" + data.result);
-                                }
-                            },
-                            error: function () {
-                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                            }
-                        });                        
+                            $("#k55").attr("fk", colorRow.id);
+                        }                       
                     }
                 } catch (e) {
                     console.error(e.message);

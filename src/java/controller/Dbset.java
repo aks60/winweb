@@ -251,12 +251,18 @@ public class Dbset {
     public static JSONObject deletePrjkit(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONObject obj = (JSONObject) JSONValue.parse(param);
-            Query qPrjkit = new Query(ePrjkit.values());
-            Record record = ePrjkit.up.newRecord("DEL");
-            record.set(ePrjkit.id, obj.get("id"));
-            qPrjkit.delete2(record);
+            Record record = gson.fromJson(param, Record.class);
+            record.set(ePrjkit.up, "DEL");
+            new Query(ePrjkit.values()).delete2(record);
             return new JSONObject(App.asMap("result", "ok"));
+            
+//            String param = request.getParameter("param");
+//            JSONObject obj = (JSONObject) JSONValue.parse(param);
+//            Query qPrjkit = new Query(ePrjkit.values());
+//            Record record = ePrjkit.up.newRecord("DEL");
+//            record.set(ePrjkit.id, obj.get("id"));
+//            qPrjkit.delete2(record);
+//            return new JSONObject(App.asMap("result", "ok"));
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
@@ -266,19 +272,9 @@ public class Dbset {
     public static JSONObject updatePrjkit(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONArray arr = (JSONArray) JSONValue.parse(param);
-            int id = Integer.valueOf(arr.get(ePrjkit.id.ordinal()).toString());
-            Record record = ePrjkit.find(id);
+            Record record = gson.fromJson(param, Record.class);
             record.set(ePrjkit.up, "UPD");
-            record.set(ePrjkit.numb, format3(arr, ePrjkit.numb));
-            record.set(ePrjkit.width, format3(arr, ePrjkit.width));
-            record.set(ePrjkit.height, format3(arr, ePrjkit.height));
-            record.set(ePrjkit.color1_id, format3(arr, ePrjkit.color1_id));
-            record.set(ePrjkit.color2_id, format3(arr, ePrjkit.color2_id));
-            record.set(ePrjkit.color3_id, format3(arr, ePrjkit.color3_id));
-            record.set(ePrjkit.prjprod_id, format3(arr, ePrjkit.prjprod_id));
-            Query qPrjkit = new Query(ePrjkit.values());
-            qPrjkit.update2(record);
+            new Query(ePrjkit.values()).update2(record);
             return new JSONObject(App.asMap("result", "ok"));
 
         } catch (SQLException e) {
