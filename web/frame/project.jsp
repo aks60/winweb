@@ -86,8 +86,6 @@
     </head>
     <body>        
         <div id="north">
-            <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-
             <button id="btnProj1" style="width: 128px">Добавить заказ</button>
             <button id="btnProj2" style="width: 128px">Изменить заказ</button>
             <button id="btnProj3" style="width: 128px">Удалить заказ</button>
