@@ -25,13 +25,13 @@ export function init_table() {
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'code', width: 80, sorttype: "text"},
-            {name: 'name', width: 200, sorttype: "text"},
+            {name: 'name', width: 260, sorttype: "text"},
             {name: 'color1', width: 80, sorttype: "text"},
             {name: 'color2', width: 80, sorttype: "text"},
             {name: 'color3', width: 80, sorttype: "text"},
             {name: 'width', width: 60, sorttype: "text"},
             {name: 'height', width: 60, sorttype: "text"},
-            {name: 'numb', width: 60, sorttype: "text"}
+            {name: 'numb', width: 30, sorttype: "text"}
         ],
         onSelectRow: function (rowid) {
             let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);

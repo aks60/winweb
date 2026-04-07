@@ -51,7 +51,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            colorRow = {id: -3, name: 'virtual'};
+                            colorRow = {id: -3, name: ''};
                             save_table();
                             $(this).dialog("close");
                         },

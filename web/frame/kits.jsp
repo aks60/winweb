@@ -40,7 +40,7 @@
                 <jst id="k57" type='txt' label='Ширина' width='126' width2="80"></jst><br>
                 <jst id="k58" type='txt' label='Количество' width='126' width2="80"></jst><br>
             </div>            
-            <div id="centr" style="height: 100%; margin-top: 2px;">
+            <div id="centr" style="height: 100%;">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>          
         </div>
