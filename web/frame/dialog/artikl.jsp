@@ -209,7 +209,7 @@
                         prjkitRec[ePrjkit.project_id] = project.projectRec[eProject.id];
                         
                             $.ajax({ //запишем строку комплекта в серверную базу данных
-                                url: 'dbset?action=insertKits',
+                                url: 'dbset?action=insertKit',
                                 data: {param: JSON.stringify(prjkitRec)},                                
                                 success: (data) => {
                                     

@@ -25,7 +25,7 @@
             const tab1Color = document.getElementById('tab1-color');
             const tab2Color = document.getElementById('tab2-color');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
-
+            
             function resize() {
                 $(tab1Color).jqGrid('setGridWidth', $("#dialog-jsp #pan1-color").width());
                 $(tab1Color).jqGrid('setGridHeight', $("#dialog-jsp #pan1-color").height() - 20);

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
-import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
@@ -24,18 +23,18 @@ import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import domain.eSysuser;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.sys.App;
+import dataset.Record;
 import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -207,13 +206,32 @@ public class Dbset {
         }
     }
 
-    public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject insertKit(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
             Record record = gson.fromJson(param, Record.class);
             record.set(ePrjkit.id, Connect.genId(ePrjkit.up));
             new Query(ePrjkit.values()).insert2(record);
-            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));            
+            return new JSONObject(App.asMap("result", "ok", "prjkitRec", record));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
+
+    public static JSONObject insertKits(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            ArrayList<Record> recordList = new ArrayList<Record>();
+            Query query = new Query(ePrjkit.values());
+            String param = request.getParameter("param");
+            JSONArray jsonArray = (JSONArray) JSONValue.parse(param);
+            for (Object kitsRec : jsonArray) {
+                Record record = gson.fromJson(kitsRec.toString(), Record.class);
+                record.set(ePrjkit.id, Connect.genId(ePrjkit.up));
+                query.insert2(record);
+                recordList.add(record);
+            }
+            return new JSONObject(App.asMap("result", "ok", "prjkitList", recordList));
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
@@ -255,14 +273,6 @@ public class Dbset {
             record.set(ePrjkit.up, "DEL");
             new Query(ePrjkit.values()).delete2(record);
             return new JSONObject(App.asMap("result", "ok"));
-            
-//            String param = request.getParameter("param");
-//            JSONObject obj = (JSONObject) JSONValue.parse(param);
-//            Query qPrjkit = new Query(ePrjkit.values());
-//            Record record = ePrjkit.up.newRecord("DEL");
-//            record.set(ePrjkit.id, obj.get("id"));
-//            qPrjkit.delete2(record);
-//            return new JSONObject(App.asMap("result", "ok"));
 
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
