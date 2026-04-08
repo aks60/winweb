@@ -13,24 +13,38 @@ export function resize() {
 }
 
 export function init_table() {
-    $(kits.table1).jqGrid({
+    $(tarif.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],
+        colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Внутренняя', 'Внешняя', 
+            'Длина', 'Ширина', 'Масса', 'Угол реза1', 'Угол реза2', 'Угол гориз.', 
+            'Кол. единиц', 'Ед.изм', 'Процент отхода', 'Количество с отх.', 'Себестоимость', 
+            'Цена за единицу', 'Стоимость без скидки', 'Стоимость со скидкой'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'code', width: 80, sorttype: "text"},
-            {name: 'name', width: 260, sorttype: "text"},
-            {name: 'color1', width: 80, sorttype: "text"},
-            {name: 'color2', width: 80, sorttype: "text"},
-            {name: 'color3', width: 80, sorttype: "text"},
-            {name: 'width', width: 60, sorttype: "text"},
-            {name: 'height', width: 60, sorttype: "text"},
-            {name: 'numb', width: 30, sorttype: "text"}
+            {name: 'code', width: 60, sorttype: "text"}, //Артикул
+            {name: 'name', width: 220, sorttype: "text"}, //Название
+            {name: 'colorID1', width: 80, sorttype: "text"}, //Текстура
+            {name: 'colorID2', width: 80, sorttype: "text"}, //Внутренняя
+            {name: 'colorID3', width: 80, sorttype: "text"}, //Внешняя
+            {name: 'width', width: 30, sorttype: "int"}, //Длина
+            {name: 'height', width: 30, sorttype: "int"}, //Ширина
+            {name: 'weight', width: 30, sorttype: "float"}, //Вес
+            {name: 'anglCut0', width: 30, sorttype: "float"}, //Угол1
+            {name: 'anglCut1', width: 30, sorttype: "float"}, //Угол2
+            {name: 'anglHoriz', width: 30, sorttype: "float"}, //Угол к горизонту
+            {name: 'numb', width: 30, sorttype: "int"}, //Кол. единиц
+            {name: 'unit', width: 30, sorttype: "text"}, //Ед.изм  
+            {name: 'waste', width: 30, sorttype: "float"}, //Процент отхода см. eArtikl.otx_norm   
+            {name: 'quant2', width: 30, sorttype: "float"}, //Количество с отх.
+            {name: 'costprice', width: 30, sorttype: "float"}, //Себестоимость  
+            {name: 'price', width: 30, sorttype: "float"}, //Цена за единицу измерения 
+            {name: 'cost1', width: 30, sorttype: "float"}, //Стоимость без технологической скидки
+            {name: 'cost2', width: 30, sorttype: "float"} //Стоимость с технологической скидкой
         ]
     });
 }

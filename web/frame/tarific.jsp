@@ -3,14 +3,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="module" src="frame/tarific.js"></script>
         <title>TARIF</title>
-
+        <style>
+            .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
+                height: auto;
+                white-space: normal;
+            }
+        </style>
         <script type="module">
             import {project} from './frame/project.js';
+            import {product} from './frame/product.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {tarif, resize, init_table, load_table} from './frame/tarif.js';
+            import {tarif, resize, init_table, load_table} from './frame/tarific.js';
 
-            const paramTaq = "<%= request.getParameter("param")%>";
+    //            const paramTaq = "<%= request.getParameter("param")%>";
             let artiklSet = new Set();
             let artiklRow = {};
             const winc = product.winCalc;
@@ -19,8 +26,8 @@
 
             init_table();
             load_table();
+            resize();
 
-            $("button").button();
             prepareTool();
             $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnTar1').addEventListener('click', () => test());

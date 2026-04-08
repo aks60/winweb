@@ -52,7 +52,6 @@
             init_table();
             load_table1();
 
-            $("button").button();
             prepareTool('project');
             deployTaq(['#dialog-card1', '#dialog-card2']);
             $('#p23').datepicker();

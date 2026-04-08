@@ -24,7 +24,7 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="">Спецификация</a></li>
+                                            <li><a onClick="$('#body-jsp').load('frame/tarific.jsp');">Спецификация</a></li>
                                             <li><a onClick="">Смета</a></li>
                                             <li><a onClick="">Счёт-фактура</a></li>
                                         </ul>
