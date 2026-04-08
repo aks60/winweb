@@ -28,7 +28,7 @@ export function init_table() {
         colModel: [
             {name: 'id', hidden: true, key: true},
             {name: 'place', width: 60, sorttype: "text"}, //Место размешения
-            {name: 'artikl', width: 60, sorttype: "text"}, //Артикул
+            {name: 'code', width: 60, sorttype: "text"}, //Артикул
             {name: 'name', width: 220, sorttype: "text"}, //Название
             {name: 'colorID1', width: 80, sorttype: "text"}, //Текстура
             {name: 'colorID2', width: 80, sorttype: "text"}, //Внутренняя
@@ -67,7 +67,7 @@ export function load_table() {
                     $(tarif.table1).jqGrid('addRowData', i + 1, {
                         id: tarifRec[eTarif.id],
                         place: tarifRec[eTarif.place],
-                        artikl: tarifRec[eTarif.artikl],
+                        code: tarifRec[eTarif.code],
                         name: tarifRec[eTarif.name],
                         colorID1: tarifRec[eTarif.colorID1],
                         colorID2: tarifRec[eTarif.colorID2],

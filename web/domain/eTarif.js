@@ -2,8 +2,8 @@ import {virtualRec} from './domain.js';
 eTarif = {
     id: 1, //ID;
     place: 2, //Место размешения
-    name: 3, //Наименование
-    artikl: 4, //Артикул
+    code: 3, //Артикул
+    name: 4, //Наименование
     colorID1: 5, //Осн.текстура
     colorID2: 6, //Внутр.текстура
     colorID3: 7, //Внешн.текстура
