@@ -53,7 +53,7 @@
             load_table1();
 
             $("button").button();
-            prepareTool();
+            prepareTool('project');
             deployTaq(['#dialog-card1', '#dialog-card2']);
             $('#p23').datepicker();
             $('#p24').datepicker();
@@ -66,12 +66,6 @@
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnTest1').addEventListener('click', test1);
             document.getElementById('btnTest2').addEventListener('click', test2);
-
-                $("#btnTest1").button({
-                    icons: {
-                        primary: "ui-icon-gear"
-                    }
-                });
 
             function test1() {
                 //enterFullscreen();

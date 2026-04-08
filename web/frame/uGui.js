@@ -6,7 +6,7 @@ function printScript(winc) {
 function deployTaq(selectors) {
     for (let selector of selectors) {
         $(selector + ' jst').each(function (index, elem) {
-            
+
             let output = '';
             let width = $(elem).attr('width'); //ширина 1 элемента
             let width2 = $(elem).attr('width2'); //ширина 2 элемента
@@ -181,28 +181,37 @@ function formatDate2(d) {
     return dd + '.' + mm + '.' + d.getFullYear();
 }
 
-function prepareTool() {
-    
-    $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
-    $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
-    $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnProd2").button({icons: {primary: "ui-icon-pencil"}});
-    $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
-    $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
-    $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
-    $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
-    $("#btnResiz").button({icons: {primary: "ui-icon-arrow-4-diag"}});
-    $("#btnReset").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
-    $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
-    $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
-    $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
-    $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
-    $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
-    $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
-    $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
-    $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
+function prepareTool(name) {
+
+    if (name === 'project') {
+        $("#btnProj1").button({icons: {primary: "ui-icon-plus"}});
+        $("#btnProj2").button({icons: {primary: "ui-icon-pencil"}});
+        $("#btnProj3").button({icons: {primary: "ui-icon-trash"}});
+        $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
+        $("#btnProd2").button({icons: {primary: "ui-icon-pencil"}});
+        $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
+    }
+    if (name === 'kits') {
+        $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
+        $("#btnKit2").button({icons: {primary: "ui-icon-plus"}});
+        $("#btnKit3").button({icons: {primary: "ui-icon-pencil"}});
+        $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
+    }
+    if (name == 'product') {
+        $("#btnReset").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
+        $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
+        $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
+        $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
+        $("#btnBot").button({icons: {primary: "ui-icon-arrowthick-1-s"}});
+        $("#btnSceleton").button({icons: {primary: "ui-icon-arrow-4"}});
+        $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
+        $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
+        $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
+    }
+    if (name === 'tarif') {
+        $("btnTar1").button({icons: {primary: "ui-icon-document"}});
+        $("btnTar2").button({icons: {primary: "ui-icon-document"}});
+    }
 
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});
     //$("#tab-1").button({icons: {primary: "ui-icon-star"}});
@@ -362,5 +371,6 @@ function scaleFont(scale) {
     } else {
         return 50;
     }
-};
+}
+;
 

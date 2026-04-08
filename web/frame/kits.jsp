@@ -17,7 +17,7 @@
             load_table();
             
             $("button").button();
-            prepareTool();
+            prepareTool('kits');
             deployTaq(['#dialog-card']);
             $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnKit3').addEventListener('click', () =>  update_table());

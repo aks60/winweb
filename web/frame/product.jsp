@@ -72,7 +72,7 @@
             init_table();
             load_table2();
 
-            prepareTool();           
+            prepareTool('product');           
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
             document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
@@ -88,8 +88,8 @@
     </head>
     <body>
         <div id='north' style=''>
-            <button id="btnTest3" style="width: 48px; margin-left: 40px;">TEST3</button>
-            <button id="btnTest4" style="width: 48px; margin-left: 40px;">TEST4</button>
+            <button id="btnTest3" style="width: 54px; margin-left: 40px;">TEST3</button>
+            <button id="btnTest4" style="width: 54px; margin-left: 40px;">TEST4</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
