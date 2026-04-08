@@ -1,5 +1,6 @@
 import {Type} from '../enums/enums.js';
 import {project} from './project.js';
+import {product} from './product.js';
 
 export let tarif = {};
 
@@ -20,9 +21,9 @@ export function init_table() {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Внутренняя', 'Внешняя', 
-            'Длина', 'Ширина', 'Масса', 'Угол реза1', 'Угол реза2', 'Угол гориз.', 
-            'Кол. единиц', 'Ед.изм', 'Процент отхода', 'Количество с отх.', 'Себестоимость', 
+        colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Внутренняя', 'Внешняя',
+            'Длина', 'Ширина', 'Масса', 'Угол реза1', 'Угол реза2', 'Угол гориз.',
+            'Кол. единиц', 'Ед.изм', 'Процент отхода', 'Количество с отх.', 'Себестоимость',
             'Цена за единицу', 'Стоимость без скидки', 'Стоимость со скидкой'],
         colModel: [
             {name: 'id', hidden: true, key: true},
@@ -51,7 +52,21 @@ export function init_table() {
 
 
 export function load_table() {
-    $(tarif.table1).jqGrid('clearGridData', true);
+    debugger;
+    if (product.winCalc !== undefined) {
+        $.ajax({
+            url: 'dbset?action=tarificList',
+            data: {param: JSON.stringify(product.winCalc.gson)},
+            success: function (data) {
+                eTarif.list = data;
+            },
+            error: function () {
+                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+            }
+        });
+
+        $(tarif.table1).jqGrid('clearGridData', true);
+        
 //    if (project.mapWinc.size !== 0) {
 //        let prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] === rec[ePrjkit.prjprod_id]);
 //        for (let i = 0; i < prjkitList.length; i++) {
@@ -71,6 +86,7 @@ export function load_table() {
 //        }
 //        $(tarif.table1).jqGrid("setSelection", 1);
 //    }
+    }
 }
 
 

@@ -16,11 +16,7 @@
             import {product} from './frame/product.js';
             import {Wincalc} from './build/Wincalc.js';
             import {tarif, resize, init_table, load_table} from './frame/tarific.js';
-
-    //            const paramTaq = "<%= request.getParameter("param")%>";
-            let artiklSet = new Set();
-            let artiklRow = {};
-            const winc = product.winCalc;
+         
             tarif.table1 = document.getElementById('table1');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 

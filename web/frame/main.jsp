@@ -51,7 +51,7 @@
             //Поля таблиц
             var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, eGroups,
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
-                    eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, PRINT;
+                    eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
             //eSysfurn, eFurniture, eFurnside2, eFurndet
             //Глобальные объекты
             var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {};

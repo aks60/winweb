@@ -1,5 +1,6 @@
 package controller;
 
+import builder.Wincalc;
 import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
@@ -368,5 +369,17 @@ public class Dbset {
     public static String syssizeList(HttpServletRequest request, HttpServletResponse response) {
         Query qSyssize = new Query(eSyssize.values()).select(eSyssize.up, "order by", eSyssize.id);
         return gson.toJson(qSyssize);
+    }
+
+    public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
+        Wincalc winc = new Wincalc();
+        try {
+            String script = request.getParameter("param");
+            winc.build(script);
+            winc.specific(true, true);            
+        } catch (Exception e) {
+            System.err.println("Error: Dbset.tarificList() " + e.getMessage());
+        }
+        return gson.toJson(winc.listSpec);
     }
 }
