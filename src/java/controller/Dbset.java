@@ -372,14 +372,16 @@ public class Dbset {
     }
 
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
-        Wincalc winc = new Wincalc();
         try {
+            Wincalc winc = new Wincalc();
             String script = request.getParameter("param");
             winc.build(script);
-            winc.specific(true, true);            
+            winc.specific(true, true);
+            return gson.toJson(winc.listSpec);
+            
         } catch (Exception e) {
             System.err.println("Error: Dbset.tarificList() " + e.getMessage());
         }
-        return gson.toJson(winc.listSpec);
+        return null;
     }
 }
