@@ -21,13 +21,14 @@ export function init_table() {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Внутренняя', 'Внешняя',
+        colNames: ['id', 'Расположение', 'Артикул', 'Название', 'Текстура', 'Внутренняя', 'Внешняя',
             'Длина', 'Ширина', 'Масса', 'Угол реза1', 'Угол реза2', 'Угол гориз.',
             'Кол. единиц', 'Ед.изм', 'Процент отхода', 'Количество с отх.', 'Себестоимость',
             'Цена за единицу', 'Стоимость без скидки', 'Стоимость со скидкой'],
         colModel: [
             {name: 'id', hidden: true, key: true},
-            {name: 'code', width: 60, sorttype: "text"}, //Артикул
+            {name: 'place', width: 60, sorttype: "text"}, //Место размешения
+            {name: 'artikl', width: 60, sorttype: "text"}, //Артикул
             {name: 'name', width: 220, sorttype: "text"}, //Название
             {name: 'colorID1', width: 80, sorttype: "text"}, //Текстура
             {name: 'colorID2', width: 80, sorttype: "text"}, //Внутренняя
@@ -52,7 +53,7 @@ export function init_table() {
 
 
 export function load_table() {
-    
+
     if (product.winCalc !== undefined) {
         $.ajax({
             url: 'dbset?action=tarificList',
@@ -60,33 +61,40 @@ export function load_table() {
             success: function (data) {
                 debugger;
                 eTarif.list = data;
+                $(tarif.table1).jqGrid('clearGridData', true);
+                for (let i = 0; i < eTarif.list.length; i++) {
+                    let tarifRec = eTarif.list[i];
+                    $(tarif.table1).jqGrid('addRowData', i + 1, {
+                        id: tarifRec[eTarif.id],
+                        place: tarifRec[eTarif.place],
+                        artikl: tarifRec[eTarif.artikl],
+                        name: tarifRec[eTarif.name],
+                        colorID1: tarifRec[eTarif.colorID1],
+                        colorID2: tarifRec[eTarif.colorID2],
+                        colorID3: tarifRec[eTarif.colorID3],
+                        width: tarifRec[eTarif.width],
+                        height: tarifRec[eTarif.height],
+                        weight: tarifRec[eTarif.weight],
+                        anglCut0: tarifRec[eTarif.anglCut0],
+                        anglCut1: tarifRec[eTarif.anglCut1],
+                        anglHoriz: tarifRec[eTarif.anglHoriz],
+                        count: tarifRec[eTarif.count],
+                        unit: tarifRec[eTarif.unit],
+                        waste: tarifRec[eTarif.waste],
+                        quant1: tarifRec[eTarif.quant1],
+                        quant2: tarifRec[eTarif.quant2],
+                        costprice: tarifRec[eTarif.costprice],
+                        price: tarifRec[eTarif.price],
+                        cost1: tarifRec[eTarif.cost1],
+                        cost2: tarifRec[eTarif.cost2]
+                    });
+                }
+                $(tarif.table1).jqGrid("setSelection", 1);
             },
             error: function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
             }
         });
-
-        $(tarif.table1).jqGrid('clearGridData', true);
-        
-//    if (project.mapWinc.size !== 0) {
-//        let prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] === rec[ePrjkit.prjprod_id]);
-//        for (let i = 0; i < prjkitList.length; i++) {
-//            let prjkitRec = prjkitList[i];
-//            let artiklRec = findef(prjkitRec[ePrjkit.artikl_id], eArtikl.id, eArtikl);
-//            $(tarif.table1).jqGrid('addRowData', i + 1, {
-//                id: prjkitRec[eKits.id],
-//                code: artiklRec[eArtikl.code],
-//                name: artiklRec[eArtikl.name],
-//                color1: findef(prjkitRec[ePrjkit.color1_id], eColor.id, eColor)[eColor.name],
-//                color2: findef(prjkitRec[ePrjkit.color2_id], eColor.id, eColor)[eColor.name],
-//                color3: findef(prjkitRec[ePrjkit.color3_id], eColor.id, eColor)[eColor.name],
-//                width: prjkitRec[ePrjkit.width],
-//                height: prjkitRec[ePrjkit.height],
-//                numb: prjkitRec[ePrjkit.numb]
-//            });
-//        }
-//        $(tarif.table1).jqGrid("setSelection", 1);
-//    }
     }
 }
 
