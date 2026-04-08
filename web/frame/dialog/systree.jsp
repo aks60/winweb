@@ -215,14 +215,10 @@
                     return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
                 return null;
             }
-
-
-            //document.getElementById('btnTest1k').addEventListener('click', () => alert('ok'));
         </script> 
 
     </head> 
-    <body>                      
-        <!--<button id="btnTest1k" style="width: 128px;">TEST</button>-->                                
+    <body>                                                   
         <div id="midl" style="position: relative; height: 99.6%; margin-right: 300px;">
 
             <div id="pan1-systree" style="height: 99.6%; width: 99%;">

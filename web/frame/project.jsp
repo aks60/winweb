@@ -64,8 +64,8 @@
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-            document.getElementById('btnTest1').addEventListener('click', test1);
-            document.getElementById('btnTest2').addEventListener('click', test2);
+            //document.getElementById('btnTest1').addEventListener('click', test1);
+            //document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
                 //enterFullscreen();

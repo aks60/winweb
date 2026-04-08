@@ -87,7 +87,7 @@
         </script>  
     </head>
     <body>
-        <div id='north' style=''>
+        <div id="north">
             <button id="btnTest3" style="width: 54px; margin-left: 40px;">TEST3</button>
             <button id="btnTest4" style="width: 54px; margin-left: 40px;">TEST4</button>
         </div>  
