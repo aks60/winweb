@@ -168,8 +168,7 @@ public class DbsetCont extends HttpServlet {
                     out.write(Dbset.syssizeList(request, response));
 
                 } else if (action.equalsIgnoreCase("tarificList")) {
-                    Dbset.tarificList(request, response);
-                    out.write(JSONObject.toJSONString(new JSONObject(Map.of("result", "ok", "id", 777))));
+                    out.write(Dbset.tarificList(request, response));
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

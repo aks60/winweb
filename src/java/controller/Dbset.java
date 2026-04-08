@@ -1,6 +1,7 @@
 package controller;
 
 import builder.Wincalc;
+import builder.making.TRecord;
 import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
@@ -372,16 +373,13 @@ public class Dbset {
     }
 
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
-        try {
+
+        ArrayList httpList = new ArrayList();
             Wincalc winc = new Wincalc();
             String script = request.getParameter("param");
             winc.build(script);
             winc.specific(true, true);
-            return gson.toJson(winc.listSpec);
-            
-        } catch (Exception e) {
-            System.err.println("Error: Dbset.tarificList() " + e.getMessage());
-        }
-        return null;
+            winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
+            return gson.toJson(httpList);
     }
 }

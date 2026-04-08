@@ -52,12 +52,13 @@ export function init_table() {
 
 
 export function load_table() {
-    debugger;
+    
     if (product.winCalc !== undefined) {
         $.ajax({
             url: 'dbset?action=tarificList',
             data: {param: JSON.stringify(product.winCalc.gson)},
             success: function (data) {
+                debugger;
                 eTarif.list = data;
             },
             error: function () {

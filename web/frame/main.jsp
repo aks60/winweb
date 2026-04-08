@@ -46,6 +46,7 @@
         <script type="module" src="./domain/eSyssize.js"></script>
         <script type="module" src="./domain/eSystree.js"></script>
         <script type="module" src="./domain/eSysuser.js"></script>        
+        <script type="module" src="./domain/eTarif.js"></script>        
 
         <script type="text/javascript">
             //Поля таблиц
