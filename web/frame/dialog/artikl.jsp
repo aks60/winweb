@@ -230,7 +230,7 @@
                 }
             }
 
-            //Запишем артикл в скрипт
+            //Запишем артикул в скрипт
             function set_value_gson() {
 
                 let ID = Number(artiklRow.id);
