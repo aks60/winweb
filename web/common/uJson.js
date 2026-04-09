@@ -112,4 +112,18 @@ UJson.updateJsonParam = (obj, keys, id) => {
     } else {
         UJson.setJsonParam(obj, keys, id);
     }
-}
+};
+
+ UJson.serialize = (gsonElem) => {
+//        if (gsonElem == this && this.param != null && this.param.size() == 0) {
+//            this.param = null;
+//        }
+//        if (this.childs != null) {
+//            for (GsonElem el : this.childs) {
+//                if (el.param != null && el.param.size() == 0) {
+//                    el.param = null;
+//                }
+//                el.serialize(this); //рекурсия  
+//            }
+//        }
+    };

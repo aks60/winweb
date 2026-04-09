@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>        
+    <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ARTIKL</title>
         <style>
@@ -56,7 +56,7 @@
                             artiklRow = {id: -3, type: '0/0', code: '@', name: 'virtual'};
                             save_table();
                             $(this).dialog("close");
-                        },                        
+                        },
                         "Закрыть": function () {
                             $(this).dialog("close");
                         }
@@ -66,7 +66,6 @@
 
             function init_table() {
 
-                //TODO При сортировки столбца часть данных пропадает
                 $(tabArtikl).jqGrid({
                     datatype: "local",
                     rowNum: -1,
@@ -89,7 +88,7 @@
 
             function load_table() {
                 $(tabArtikl).jqGrid('clearGridData', true);
-                
+
                 if ($('#body-jsp title').text() === 'PRODUCT') {
                     let artiklList = Array.from(artiklSet);
                     if (paramTaq === 'n45' || paramTaq === 'n49' || paramTaq === 'n4B' || paramTaq === 'n51') {
@@ -182,7 +181,7 @@
 
                         //Запишем скрипт в локальн. бд 
                         project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
-                        
+
                         //Запишем скрипт в серверную базу данных
                         $.ajax({
                             url: 'dbset?action=updateScript',
@@ -207,37 +206,37 @@
                         prjkitRec[ePrjkit.artikl_id] = Number(artiklRow.id);
                         prjkitRec[ePrjkit.prjprod_id] = project.prjprodRec[ePrjprod.id];
                         prjkitRec[ePrjkit.project_id] = project.projectRec[eProject.id];
-                        
-                            $.ajax({ //запишем строку комплекта в серверную базу данных
-                                url: 'dbset?action=insertKit',
-                                data: {param: JSON.stringify(prjkitRec)},                                
-                                success: (data) => {
-                                    
-                                   if (data.result === 'ok') {                                       
-                                        ePrjkit.list.push(data.prjkitRec);
-                                        
-                                    } else {
-                                        dialogMes('Сообщение', "<p>" + data.result);
-                                    }
-                                    load_kits(); //перезагрузка комплектов
-                                },
-                                error: () => {
-                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+
+                        $.ajax({//запишем строку комплекта в серверную базу данных
+                            url: 'dbset?action=insertKit',
+                            data: {param: JSON.stringify(prjkitRec)},
+                            success: (data) => {
+
+                                if (data.result === 'ok') {
+                                    ePrjkit.list.push(data.prjkitRec);
+
+                                } else {
+                                    dialogMes('Сообщение', "<p>" + data.result);
                                 }
-                            });
+                                load_kits(); //перезагрузка комплектов
+                            },
+                            error: () => {
+                                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                            }
+                        });
                     }
 
                 } catch (e) {
                     console.error('Error: save_table() ' + e.message);
                 }
             }
-            
+
             //Запишем артикл в скрипт
             function set_value_gson() {
 
                 let ID = Number(artiklRow.id);
-                
-                if (paramTaq === 'n51') {  
+
+                if (paramTaq === 'n51') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklID], ID);
                     //Ручка
                 } else if (paramTaq === 'n45') {

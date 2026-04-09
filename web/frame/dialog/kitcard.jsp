@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head style="margin: 0; padding: 0;">
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>KITCARD</title>
         <script type="module">

@@ -214,9 +214,9 @@ export class TFurniture {
     determOfSide(area5e) {
         if (area5e instanceof AreaStvorka) {
             let id = area5e.typeOpen[0];
-            if ([1, 3, 11].includes(id)) {
+            if ([1, 3, 11].includes(Number(id))) {
                 return area5e.frames.find(el => el.layout === Layout.LEF);
-            } else if ([2, 4, 12].includees(id)) {
+            } else if ([2, 4, 12].includes(id)) {
                 return area5e.frames.find(el => el.layout === Layout.RIG);;
             } else {
                 return area5e.frames.find(el => el.layout === Layout.BOT);
