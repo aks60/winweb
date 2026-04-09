@@ -209,8 +209,11 @@ function prepareTool(name) {
         $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
     }
     if (name === 'tarif') {
-        $("btnTar1").button({icons: {primary: "ui-icon-document"}});
-        $("btnTar2").button({icons: {primary: "ui-icon-document"}});
+        $("#btnTar1").button({icons: {primary: "ui-icon-document"}});
+        $("#btnTar2").button({icons: {primary: "ui-icon-document"}});
+        $("#btnTar3").button({icons: {primary: "ui-icon-document"}});
+        $("#btnTar4").button({icons: {primary: "ui-icon-document"}});
+        $("#btnTar5").button({icons: {primary: "ui-icon-document"}});
     }
 
     //$("#menu").menu({items: "> :not(.ui-widget-header)"});

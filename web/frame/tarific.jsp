@@ -24,7 +24,7 @@
             load_table();
             resize();
 
-            prepareTool();
+            prepareTool('tarif');   
             $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnTar1').addEventListener('click', () => test());
             document.getElementById('btnTar2').addEventListener('click', () => test());
@@ -36,11 +36,14 @@
     </head>
     <body>
         <div id="north">   
-            <button id="btnTar1" style="width: 160px">TEST1</button>
-            <button id="btnTar2" style="width: 160px">TEST2</button>            
+            <button id="btnTar1" style="width: 80px; margin-left: 20px;">Соед</button>
+            <button id="btnTar2" style="width: 80px; margin-left: 4px;">Вст</button>            
+            <button id="btnTar3" style="width: 80px; margin-left: 4px;">Зап</button>            
+            <button id="btnTar4" style="width: 80px; margin-left: 4px;">Фурн</button>            
+            <button id="btnTar5" style="width: 80px; margin-left: 4px;">Комп</button>            
         </div> 
         <div id = "context">                         
-            <div id="centr" style="height: 100%;">
+            <div id="centr" style="height: calc(100% - 24px);">
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>          
         </div>

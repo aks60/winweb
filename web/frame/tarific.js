@@ -1,4 +1,4 @@
-import {Type} from '../enums/enums.js';
+import {UseUnit} from '../enums/enums.js';
 import {project} from './project.js';
 import {product} from './product.js';
 
@@ -10,7 +10,7 @@ export function resize() {
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
     $(tarif.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
-    $(tarif.table1).jqGrid('setGridHeight', $("#centr").height() - 30);
+    $(tarif.table1).jqGrid('setGridHeight', $("#centr").height() - 34);
 }
 
 export function init_table() {
@@ -36,10 +36,10 @@ export function init_table() {
             {name: 'width', width: 30, sorttype: "int"}, //Длина
             {name: 'height', width: 30, sorttype: "int"}, //Ширина
             {name: 'weight', width: 30, sorttype: "float"}, //Вес
-            {name: 'anglCut0', width: 30, sorttype: "float"}, //Угол1
-            {name: 'anglCut1', width: 30, sorttype: "float"}, //Угол2
-            {name: 'anglHoriz', width: 30, sorttype: "float"}, //Угол к горизонту
-            {name: 'numb', width: 30, sorttype: "int"}, //Кол. единиц
+            {name: 'anglCut0', width: 25, sorttype: "float"}, //Угол1
+            {name: 'anglCut1', width: 25, sorttype: "float"}, //Угол2
+            {name: 'anglHoriz', width: 25, sorttype: "float"}, //Угол к горизонту
+            {name: 'count', width: 25, sorttype: "int"}, //Кол. единиц
             {name: 'unit', width: 30, sorttype: "text"}, //Ед.изм  
             {name: 'waste', width: 30, sorttype: "float"}, //Процент отхода см. eArtikl.otx_norm   
             {name: 'quant2', width: 30, sorttype: "float"}, //Количество с отх.
@@ -69,24 +69,24 @@ export function load_table() {
                         place: tarifRec[eTarif.place],
                         code: tarifRec[eTarif.code],
                         name: tarifRec[eTarif.name],
-                        colorID1: tarifRec[eTarif.colorID1],
-                        colorID2: tarifRec[eTarif.colorID2],
-                        colorID3: tarifRec[eTarif.colorID3],
-                        width: tarifRec[eTarif.width],
-                        height: tarifRec[eTarif.height],
-                        weight: tarifRec[eTarif.weight],
-                        anglCut0: tarifRec[eTarif.anglCut0],
-                        anglCut1: tarifRec[eTarif.anglCut1],
-                        anglHoriz: tarifRec[eTarif.anglHoriz],
+                        colorID1: eColor.find(tarifRec[eTarif.colorID1])[eColor.name],
+                        colorID2: eColor.find(tarifRec[eTarif.colorID2])[eColor.name],
+                        colorID3: eColor.find(tarifRec[eTarif.colorID3])[eColor.name],
+                        width: Math.round(tarifRec[eTarif.width]),
+                        height: Math.round(tarifRec[eTarif.height]),
+                        weight: Math.round(tarifRec[eTarif.weight] * 10) / 10,
+                        anglCut0: Math.round(tarifRec[eTarif.anglCut0] * 100) / 100,
+                        anglCut1: Math.round(tarifRec[eTarif.anglCut1] * 100) / 100,
+                        anglHoriz: Math.round(tarifRec[eTarif.anglHoriz] * 100) / 100,
                         count: tarifRec[eTarif.count],
-                        unit: tarifRec[eTarif.unit],
-                        waste: tarifRec[eTarif.waste],
-                        quant1: tarifRec[eTarif.quant1],
-                        quant2: tarifRec[eTarif.quant2],
-                        costprice: tarifRec[eTarif.costprice],
-                        price: tarifRec[eTarif.price],
-                        cost1: tarifRec[eTarif.cost1],
-                        cost2: tarifRec[eTarif.cost2]
+                        unit: UseUnit.name(tarifRec[eTarif.unit]),
+                        waste: Math.round(tarifRec[eTarif.waste] * 100) / 100,
+                        quant1: Math.round(tarifRec[eTarif.quant1] * 100) / 100,
+                        quant2: Math.round(tarifRec[eTarif.quant2] * 100) / 100,
+                        costprice: Math.round(tarifRec[eTarif.costprice] * 100) / 100,
+                        price: Math.round(tarifRec[eTarif.price] * 100) / 100,
+                        cost1: Math.round(tarifRec[eTarif.cost1] * 100) / 100,
+                        cost2: Math.round(tarifRec[eTarif.cost2] * 100) / 100
                     });
                 }
                 $(tarif.table1).jqGrid("setSelection", 1);
