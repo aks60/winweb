@@ -6,7 +6,6 @@
         <title>SYSPROF</title>
 
         <script type="module">
-            import {Wincalc} from './build/Wincalc.js';
             import {Type, Layout, UseSide, PKjson} from './enums/enums.js';
             import {UJson} from './common/uJson.js';
             import {project} from './frame/project.js';

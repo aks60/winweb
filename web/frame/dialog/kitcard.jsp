@@ -6,7 +6,6 @@
         <title>KITCARD</title>
         <script type="module">
 
-            import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {kits, load_table as load_kits} from './frame/kits.js';

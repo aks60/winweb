@@ -10,7 +10,6 @@
             }
         </style>
         <script type="module">
-            import {Wincalc} from './build/Wincalc.js';
             import {UJson} from './common/uJson.js';
             import {Type, PKjson} from './enums/enums.js';
             import {TFurniture} from './build/making/TFurniture.js';

@@ -8,7 +8,6 @@
             import {Type, Layout, PKjson} from './enums/enums.js';
             import {UJson} from './common/uJson.js';
             import {TFurniture} from './build/making/TFurniture.js';
-            import {Wincalc} from './build/Wincalc.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {kits} from './frame/kits.js';

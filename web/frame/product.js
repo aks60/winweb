@@ -198,7 +198,8 @@ export function tree_to_html() {
                 n61: check_mark(eColor.find(com5t.colorID2)[eColor.name], '#n61 + input', PKjson.colorID2),
                 n62: check_mark(eColor.find(com5t.colorID3)[eColor.name], '#n62 + input', PKjson.colorID3),
                 //tabs-42
-                n43: furnitureRec[eFurniture.name],
+                //n43: furnitureRec[eFurniture.name],
+                n43: check_mark(furnitureRec[eFurniture.name], '#n43 + input', PKjson.sysfurnID),
                 n44: com5t.typeOpen[2],
                 n45: check_mark(com5t.handRec[0][eArtikl.code], '#n45 + input', PKjson.artiklHand),
                 n4D: com5t.handRec[0][eArtikl.name],
