@@ -63,14 +63,18 @@
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-            //document.getElementById('btnTest1').addEventListener('click', test1);
-            //document.getElementById('btnTest2').addEventListener('click', test2);
+            document.getElementById('btnTest1').addEventListener('click', test1);
+            document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
-                //enterFullscreen();
+                $("#dialog-mes").html("<label for='file'>Пожалуйста, подождите...:\n\
+                          </label> <progress id='file' max='100'> 32% </progress>");
+                $("#dialog-mes").dialog({title: "Загрузка данных",
+                    resizable: false, height: 60, width: 300
+                });
             }
             function test2() {
-                //closeFullscreen();
+                $("#dialog-mes").dialog("close");
             }
         </script>
         <script type="text/javascript">

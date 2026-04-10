@@ -72,7 +72,7 @@
             init_table();
             load_table2();
 
-            prepareTool('product');           
+            prepareTool('product');
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
             document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
@@ -83,6 +83,7 @@
                 console.log(JSON.stringify(product.winCalc.gson));
             }
             function test2() {
+                
             }
         </script>  
     </head>
@@ -103,9 +104,9 @@
             <div id='west2' class='abs' style='border: 0;'>
                 <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 0 solid #ccc;'></canvas>  
             </div> 
-            
+
             <div id='east1' class='abs' style=''>
-                
+
                 <!--//КОРОБКА-->
                 <div id="tabs-1" style="padding: 0px;">  
                     <p class="pantitle" style='text-align: center'> Основные размеры</p> 
@@ -119,13 +120,13 @@
                     <jst id="n15" type='btn' label='Внутренняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n15')"></jst><br>
                     <jst id="n16" type='btn' label='Внещняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n16')"></jst><br>
                 </div>
-                
+
                 <!--//ПАРАМЕТРЫ-->
                 <div id="tabs-2" style="padding: 0px; display: none;"> 
                     <p class="pantitle" style="margin-bottom: 4px"> Параметры системы</p> 
                     <table id="table1"  class="ui-jqgrid-btable"></table>
                 </div>
-                
+
                 <!--//СТОРОНА КОРОБКИ-->
                 <div id="tabs-3" style="padding: 0px; display: none;">
                     <p class="pantitle"style='text-align: center'> Сторона коробки</p> 
@@ -137,7 +138,7 @@
                     <jst id="n34" type='btn' label='Внутренняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n34')"></jst><br>                          
                     <jst id="n35" type='btn' label='Внещняя' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=n35')"></jst><br>                          
                 </div>
-                
+
                 <!--//СТВОРКА-->
                 <div id="tabs-4" style="padding: 0px; display: none;">
                     <p class="pantitle" style='text-align: center'> Створка</p> 
@@ -178,7 +179,7 @@
                         <button id="btnProdAdd" style="width: 116px; height: 18px; padding: 0; margin: 3px 0 2px 8px;">Дополн.</button>
                     </div>                      
                 </div>
-                
+
                 <!--//ЗАПОЛНЕНИЕ-->
                 <div id="tabs-5" style="padding: 0px; display: none;">
                     <p class="pantitle" style='text-align: center'> Заполнение</p> 
@@ -193,6 +194,6 @@
         </div>  
         <div id='south' class='abs' style=''>
             Итого: 
-        </div>        
+        </div>       
     </body>
 </html>
