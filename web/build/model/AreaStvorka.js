@@ -87,9 +87,12 @@ export class AreaStvorka extends AreaSimple {
             this.handRec = [eArtikl.vrec, eArtikl.vrec];
             this.loopRec = [eArtikl.vrec, eArtikl.vrec];
             this.lockRec = [eArtikl.vrec, eArtikl.vrec];
+            this.typeOpen = TypeOpen1.EMPTY;
+            this.lineOpenHor = null;
+            this.lineOpenVer = null;
             this.handColor = [-3, -3];
             this.loopColor = [-3, -3];
-            this.lockColor = [-3, -3];
+            this.lockColor = [-3, -3]; 
 
             super.initArtikle();
 
@@ -146,7 +149,7 @@ export class AreaStvorka extends AreaSimple {
             } else {
                 let index = this.sysfurnRec[eSysfurn.side_open];
                 this.typeOpen = (index === TypeOpen2.REQ[0]) ? this.typeOpen
-                        : (index === TypeOpen2.LEF[0]) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
+                        : (index === TypeOpen2.LEF[0]) ? TypeOpen1.LEFT : TypeOpen1.RIGH;
             }
             //Положение ручки на створке, ручка задана параметром
             if (UJson.isFinite(this.gson.param, PKjson.positionHand)) {

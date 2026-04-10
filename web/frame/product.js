@@ -42,11 +42,14 @@ export function init_table() {
                 {name: 'fixed', width: 20, sorttype: "text"}
 
             ], ondblClickRow: function (rowid) {
-                $('#dialog-jsp').load('frame/dialog/param.jsp');
-            }, onSelectRow: function (rowid) {
                 let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-                product.groupParam = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.params_id];
+                let groupsID = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
+                $('#dialog-jsp').load('frame/dialog/param.jsp?param=' + groupsID);
             }
+//            , onSelectRow: function (rowid) {
+//                let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
+//                product.groupParam = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
+//            }
         });
     } catch (e) {
         console.error(e.message);
@@ -200,7 +203,7 @@ export function tree_to_html() {
                 //tabs-42
                 //n43: furnitureRec[eFurniture.name],
                 n43: check_mark(furnitureRec[eFurniture.name], '#n43 + input', PKjson.sysfurnID),
-                n44: com5t.typeOpen[2],
+                n44: check_mark(com5t.typeOpen[2], '#n44 + input', PKjson.typeOpen),
                 n45: check_mark(com5t.handRec[0][eArtikl.code], '#n45 + input', PKjson.artiklHand),
                 n4D: com5t.handRec[0][eArtikl.name],
                 n46: check_mark(findef(com5t.handColor[0], eColor.id, eColor)[eColor.name], '#n46 + input', PKjson.colorHand),

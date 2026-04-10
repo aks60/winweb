@@ -29,8 +29,8 @@
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
-                $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
-                $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
+                $(tabArtikl).jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
+                $(tabArtikl).jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
             } 
             init_dialog();
             init_table();

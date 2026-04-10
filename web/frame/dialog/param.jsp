@@ -6,25 +6,31 @@
         <title>PARAM</title>
 
         <script type="module">
+            import {TypeOpen1, PKjson} from './enums/enums.js';
+            import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {UJson} from './common/uJson.js';
-//------------------------------------------------------------------------------            
+            import {tree_to_html} from './frame/product.js';
+
+            let sideopenRow = {};
+            const paramTaq = "<%= request.getParameter("param")%>";
+            const winc = product.winCalc;
+            const com5t = product.clickTreeNodeElem;
+            const tabParam = document.getElementById('tab-param');
+            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
+
             function resize() {
-                $("#tab-param").jqGrid('setGridWidth', $("#dialog-jsp #pan-param").width());
-                $("#tab-param").jqGrid('setGridHeight', $("#dialog-jsp #pan-param").height() - 24);
+                $(tabParam).jqGrid('setGridWidth', $("#dialog-jsp #pan-param").width());
+                $(tabParam).jqGrid('setGridHeight', $("#dialog-jsp #pan-param").height() - 24);
             }
-//------------------------------------------------------------------------------
-            $(document).ready(function () {
-                $("#dialog-jsp").unbind().bind("dialogresize", function (event, ui) {
-                    resize();
-                });
-                init_dialog($("#tab-param"));
-                init_table($("#tab-param"));
-                load_table($("#tab-param"));
-                resize();
-            });
-//------------------------------------------------------------------------------            
-            function init_dialog(table) {
+
+            init_dialog();
+            init_table();
+            load_table();
+            resize();
+
+
+            function init_dialog() {
                 $("#dialog-jsp").dialog({
                     title: "Справочник параметров",
                     width: 400,
@@ -32,19 +38,18 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let rowid = table.jqGrid('getGridParam', "selrow");
-                            let paramsRow = table.jqGrid('getRowData', rowid);
+                            let rowid = $(tabParam).jqGrid('getGridParam', "selrow");
+                            let paramsRow = $(tabParam).jqGrid('getRowData', rowid);
                             let paramsRec = eParams.list.find(rec => paramsRow.id == rec[eParams.id]);
                             let paramDef = paramsRow.id;
                             let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                            let winc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);
-                            let titleID1 = paramsRec[eParams.params_id];
+                            let titleID1 = paramsRec[eParams.groups_id];
                             winc.gson.param = (winc.gson.param == undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;
                             for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
 
-                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec[eParams.id])[eParams.params_id];
-                                if (titleID1 == titleID2) {
+                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec[eParams.id])[eParams.groups_id];
+                                if (titleID1 === titleID2) {
                                     winc.gson.param.ioknaParam.splice(i, 1);
                                 }
                             }
@@ -56,7 +61,7 @@
                                 success: function (data) {
                                     if (data.result == 'ok') {
                                         winc.root.init_pardef_map();
-                                        product.load_table($('#table1'));
+                                        product.load_table($(tabParam));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },
@@ -72,34 +77,39 @@
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function init_table(table) {
-                table.jqGrid({
+
+            function init_table() {
+                $(tabParam).jqGrid({
                     datatype: "local",
                     colNames: ['id', 'Значение параметра'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'text', width: 400, sorttype: "text"}
                     ], onSelectRow: function (rowid) {
-                        let syspar1Row = table.jqGrid('getRowData', rowid);
+                        let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
                     }
                 });
             }
-//------------------------------------------------------------------------------
-            function load_table(table) {
-                table.jqGrid('clearGridData', true);
-                let params2List = eParams.list.filter(rec => product.groupParam == rec[eParams.params_id] && rec[eParams.id] != rec[eParams.params_id]);
+
+            function load_table() {
+
+                $(tabParam).jqGrid('clearGridData', true);
+
+                let params2List = eParams.list.filter(rec =>
+                    Number(paramTaq) === rec[eParams.groups_id] && 
+                            rec[eParams.id] != rec[eParams.groups_id]);
+
                 for (let i = 0; i < params2List.length; i++) {
-                    let tr = params2List[i];
-                    table.jqGrid('addRowData', i + 1, {
-                        id: tr[eParams.id],
-                        text: tr[eParams.text]
+                    let paramsRec = params2List[i];
+                    $(tabParam).jqGrid('addRowData', i + 1, {
+                        id: paramsRec[eParams.id],
+                        text: paramsRec[eParams.text]
                                 //text: tr[eParams.params_id]
                     });
                 }
-                table.jqGrid("setSelection", 1);
+                $(tabParam).jqGrid("setSelection", 1);
             }
-//------------------------------------------------------------------------------
+
         </script>        
     </head>
     <body>
