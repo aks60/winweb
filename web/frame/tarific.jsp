@@ -16,10 +16,11 @@
             import {product} from './frame/product.js';
             import {Wincalc} from './build/Wincalc.js';
             import {tarif, resize, init_table, load_table} from './frame/tarific.js';
-         
+                  
             tarif.table1 = document.getElementById('table1');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
+            progres();
             init_table();
             load_table();
             resize();
@@ -28,9 +29,9 @@
             $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnTar1').addEventListener('click', () => test());
             document.getElementById('btnTar2').addEventListener('click', () => test());
-
+            document.getElementById('btnTest5').addEventListener('click', () => test());
+            
             function test() {
-                console.log("777");
             }
         </script>         
     </head>
@@ -41,6 +42,7 @@
             <button id="btnTar3" style="width: 80px; margin-left: 4px;">Зап</button>            
             <button id="btnTar4" style="width: 80px; margin-left: 4px;">Фурн</button>            
             <button id="btnTar5" style="width: 80px; margin-left: 4px;">Комп</button>            
+            <button id="btnTest5" style="width: 80px; margin-left: 4px;">TEST</button>            
         </div> 
         <div id = "context">                         
             <div id="centr" style="height: calc(100% - 24px);">

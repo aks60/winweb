@@ -113,7 +113,6 @@
         <div id="pan-sideopen" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-sideopen"  class="ui-jqgrid-btable"></table> 
         </div>
-        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 

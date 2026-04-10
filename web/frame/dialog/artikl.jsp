@@ -31,7 +31,7 @@
             function resize() {
                 $("#tab-artikl").jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
                 $("#tab-artikl").jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
-            }
+            } 
             init_dialog();
             init_table();
             data_set();
@@ -86,6 +86,7 @@
             }
 
             function load_table() {
+                
                 $(tabArtikl).jqGrid('clearGridData', true);
 
                 if ($('#body-jsp title').text() === 'PRODUCT') {
@@ -253,8 +254,6 @@
     <body>
         <div id="pan-artikl" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-artikl"  class="ui-jqgrid-btable"></table> 
-        </div>
-        <div id="dialog-mes" title="Сообщение">
         </div>
     </body>
 </html>

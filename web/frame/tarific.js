@@ -59,7 +59,6 @@ export function load_table() {
             url: 'dbset?action=tarificList',
             data: {param: JSON.stringify(product.winCalc.gson)},
             success: function (data) {
-                debugger;
                 eTarif.list = data;
                 $(tarif.table1).jqGrid('clearGridData', true);
                 for (let i = 0; i < eTarif.list.length; i++) {
@@ -90,6 +89,7 @@ export function load_table() {
                     });
                 }
                 $(tarif.table1).jqGrid("setSelection", 1);
+                progres();
             },
             error: function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

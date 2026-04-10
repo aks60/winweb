@@ -131,7 +131,6 @@
         <div id="pan-furniture" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-furniture"  class="ui-jqgrid-btable"></table> 
         </div>
-        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 

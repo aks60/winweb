@@ -167,6 +167,5 @@
         <div id="pan-sysprof" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-sysprof"  class="ui-jqgrid-btable"></table> 
         </div>
-        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>

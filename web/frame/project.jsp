@@ -67,12 +67,10 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
-                progres_start();
-                //$("#dialog-mes").html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
-                //$("#dialog-mes").dialog({title: "Загрузка данных", resizable: false, height: 64, width: 300 });
+                progres('open');
             }
             function test2() {
-                $("#dialog-mes").dialog("close");
+                progres('close');
             }
         </script>
         <script type="text/javascript">

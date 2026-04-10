@@ -320,7 +320,6 @@
         <div id="pan2-color" style="height: 60%; width: calc(100% - 4px)">
             <table id="tab2-color"  class="ui-jqgrid-btable"></table>
         </div>
-        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 

@@ -105,7 +105,6 @@
     <body>
         <div id="pan-param" style="height: calc(100% - 4px); width: calc(100% - 4px);">
             <table id="tab-param"  class="ui-jqgrid-btable"></table> 
-            <div id="dialog-mes" title="Сообщение"></div>
         </div>
     </body>
 </html>

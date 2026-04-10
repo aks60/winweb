@@ -17,7 +17,7 @@
         <script type="text/javascript" src="lib-js/jqgrid-5.8.10/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="lib-js/jqgrid-5.8.10/jquery.jqGrid.min.js"></script> 
         <script type="text/javascript" src="lib-js/jstree-3.3.12/jstree.min.js"></script>
-        
+
         <!--<script type="text/javascript" src="lib-js/jsts-2.11.2/jsts-min.js"></script>-->
         <script type="text/javascript" src="frame/uGui.js"></script>
         <script type="module" src="./build/Wincalc.js"></script>
@@ -54,17 +54,23 @@
                     eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
                     eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
             //eSysfurn, eFurniture, eFurnside2, eFurndet
+            //
             //Глобальные объекты
-            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {};
+            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {}, triggerMes = 0;
 
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
             $.jstree.defaults.core.themes.variant = "large";
-            function progres_start() {
-                $("#dialog-mes").html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
-                $("#dialog-mes").dialog({title: "Загрузка данных", resizable: false, height: 64, width: 300 });
-            }            
+
+            var progres = () => {
+                triggerMes = (triggerMes === 0) ? 1 : 0;
+                if (triggerMes === 1) {
+                    $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
+                    $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 300});
+                } else
+                    $('#dialog-mes').dialog("close");
+            };
         </script>         
     </head>
     <body>

@@ -149,7 +149,6 @@
         <div id="pan2-kitcard" style="height: 40%; width: calc(100% - 4px)"> 
             <table id="tab2-kitcard"  class="ui-jqgrid-btable"></table>
         </div>
-        <div id="dialog-mes" title="Сообщение"></div>
     </body>
 </html>
 
