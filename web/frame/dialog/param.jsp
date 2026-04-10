@@ -15,7 +15,6 @@
             let sideopenRow = {};
             const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
-            const com5t = product.clickTreeNodeElem;
             const tabParam = document.getElementById('tab-param');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
@@ -38,34 +37,36 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-                            let rowid = $(tabParam).jqGrid('getGridParam', "selrow");
-                            let paramsRow = $(tabParam).jqGrid('getRowData', rowid);
-                            let paramsRec = eParams.list.find(rec => paramsRow.id == rec[eParams.id]);
-                            let paramDef = paramsRow.id;
-                            let prjprodID = project.prjprodRec[ePrjprod.id]; //id prjprod заказа
-                            let titleID1 = paramsRec[eParams.groups_id];
-                            winc.gson.param = (winc.gson.param == undefined) ? {} : winc.gson.param;
-                            winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam == undefined) ? [] : winc.gson.param.ioknaParam;
-                            for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
+debugger;
+                            let rowidZ = $(tabParam).jqGrid('getGridParam', "selrow");
+                            let paramsRowZ = $(tabParam).jqGrid('getRowData', rowidZ);
 
-                                let titleID2 = eParams.list.find(rec => winc.gson.param.ioknaParam[i] == rec[eParams.id])[eParams.groups_id];
-                                if (titleID1 === titleID2) {
+                            let paramsRow = getSelectedRow($(tabParam));
+                            let paramsRec = eParams.list.find(rec => Number(paramsRow.id) === rec[eParams.id]);
+                            winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
+                            winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
+
+                            for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
+                                let groupsID = eParams.list.find(rec => Number(winc.gson.param.ioknaParam[i]) === rec[eParams.id])[eParams.groups_id];
+                                if (groupsID === Number(paramsRow.groups_id)) {
                                     winc.gson.param.ioknaParam.splice(i, 1);
                                 }
                             }
-                            winc.gson.param.ioknaParam.push(parseInt(paramDef)); //запишем профиль в скрипт
+                            //Запишем параметр в скрипт
+                            winc.gson.param.ioknaParam.push(parseInt(paramsRow.id)); 
+                            project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
 
                             $.ajax({//запишем профиль в серверную базу данных
                                 url: 'dbset?action=updateScript',
-                                data: {param: JSON.stringify({id: prjprodID, script: JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v))})},
+                                data: {param: JSON.stringify(project.prjprodRec)},
                                 success: function (data) {
                                     if (data.result == 'ok') {
-                                        winc.root.init_pardef_map();
-                                        product.load_table($(tabParam));
-                                    } else
-                                        dialogMes('Сообщение', "<p>" + data.result);
+
+                                        //Запишем текстуру в html
+                                        tree_to_html();
+                                    }
                                 },
-                                error: function () {
+                                error: () => {
                                     dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
                                 }
                             });
@@ -81,10 +82,11 @@
             function init_table() {
                 $(tabParam).jqGrid({
                     datatype: "local",
-                    colNames: ['id', 'Значение параметра'],
+                    colNames: ['id', 'id2', 'Значение параметра'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'text', width: 400, sorttype: "text"}
+                        {name: 'id2', hidden: true},
+                        {name: 'txt', width: 400, sorttype: "text"}                        
                     ], onSelectRow: function (rowid) {
                         let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
                     }
@@ -95,21 +97,25 @@
 
                 $(tabParam).jqGrid('clearGridData', true);
 
-                let params2List = eParams.list.filter(rec =>
-                    Number(paramTaq) === rec[eParams.groups_id] && 
+                let paramsList = eParams.list.filter(rec =>
+                    Number(paramTaq) === rec[eParams.groups_id] &&
                             rec[eParams.id] != rec[eParams.groups_id]);
-
-                for (let i = 0; i < params2List.length; i++) {
-                    let paramsRec = params2List[i];
+                    
+                for (let i = 0; i < paramsList.length; i++) {
+                    let paramsRec = paramsList[i];
+                    //let o1 = paramsRec[eParams.groups_id];
+                    //debugger;
                     $(tabParam).jqGrid('addRowData', i + 1, {
                         id: paramsRec[eParams.id],
-                        text: paramsRec[eParams.text]
-                                //text: tr[eParams.params_id]
+                        id2: paramsRec[eParams.groups_id],
+                        txt: paramsRec[eParams.text]                        
                     });
                 }
                 $(tabParam).jqGrid("setSelection", 1);
             }
 
+            function set_value_gson() {
+            }
         </script>        
     </head>
     <body>
