@@ -61,6 +61,10 @@
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
             $.jstree.defaults.core.themes.variant = "large";
+            function progres_start() {
+                $("#dialog-mes").html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
+                $("#dialog-mes").dialog({title: "Загрузка данных", resizable: false, height: 64, width: 300 });
+            }            
         </script>         
     </head>
     <body>
