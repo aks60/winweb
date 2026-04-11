@@ -84,7 +84,7 @@ debugger;
                     datatype: "local",
                     colNames: ['paramID', 'groupsID', 'Значение параметра'],
                     colModel: [
-                        {name: 'id1', hidden: true},
+                        {name: 'ID', hidden: true},
                         {name: 'id2', hidden: true},
                         {name: 'txt', width: 400, sorttype: "text"}  
                         
@@ -94,7 +94,7 @@ debugger;
                     },  ondblClickRow: function (rowid) {
                         alert(rowid);
                         let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
-                        alert(syspar1Row.id1 + ' ' + syspar1Row.txt);                        
+                        alert(syspar1Row.ID + ' ' + syspar1Row.txt);                        
                     }
                 });
             }
@@ -112,7 +112,7 @@ debugger;
                     //let o1 = paramsRec[eParams.groups_id];
                     //debugger;
                     $(tabParam).jqGrid('addRowData', i + 1, {
-                        id1: paramsRec[eParams.id],
+                        ID: paramsRec[eParams.id],
                         id2: paramsRec[eParams.groups_id],
                         txt: paramsRec[eParams.text]                        
                     });
