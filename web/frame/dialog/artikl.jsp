@@ -48,6 +48,7 @@
                     buttons: {
                         "Выбрать": function () {
                             artiklRow = getSelectedRow($(tabArtikl));
+                            debugger;
                             save_table();
                             $(this).dialog("close");
                         },
@@ -72,8 +73,8 @@
                     colModel: [
                         {name: 'id', hidden: true, key: true},
                         {name: 'type', width: 60},
-                        {name: 'code', width: 160},
-                        {name: 'name', width: 380, cellattr: function (rowId, val, rawObject, cm, rdata) {
+                        {name: 'code', width: 160, sorttype: "text"},
+                        {name: 'name', width: 380, sorttype: "text", cellattr: function (rowId, val, rawObject, cm, rdata) {
                                 return 'style="white-space: nowrap;"';
                             }}
 

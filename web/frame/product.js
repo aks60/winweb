@@ -89,7 +89,7 @@ export function load_table2() {
             let arr = new Array();
             let root = product.winCalc.root;
 
-            arr.push({'id': -1, 'parent': '#', 'text': 'Параметры по умолчанию', 'icon': 'lib-img/tool/leaf.gif'});
+            arr.push({'id': -1, 'parent': '#', 'text': 'Параметры', 'icon': 'lib-img/tool/leaf.gif'});
             arr.push({'id': root.id, 'parent': '#', 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
             elements(root, arr); //вход в рекурсию    
 

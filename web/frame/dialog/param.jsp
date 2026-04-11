@@ -37,11 +37,11 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-debugger;
+
                             let rowidZ = $(tabParam).jqGrid('getGridParam', "selrow");
                             let paramsRowZ = $(tabParam).jqGrid('getRowData', rowidZ);
-
                             let paramsRow = getSelectedRow($(tabParam));
+debugger;                            
                             let paramsRec = eParams.list.find(rec => Number(paramsRow.id) === rec[eParams.id]);
                             winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
@@ -82,10 +82,10 @@ debugger;
             function init_table() {
                 $(tabParam).jqGrid({
                     datatype: "local",
-                    colNames: ['id', 'id2', 'Значение параметра'],
+                    colNames: ['paramID', 'groupsID', 'Значение параметра'],
                     colModel: [
                         {name: 'id', hidden: true, key: true},
-                        {name: 'id2', hidden: true},
+                        {name: 'id2', width: 40, hidden: true},
                         {name: 'txt', width: 400, sorttype: "text"}                        
                     ], onSelectRow: function (rowid) {
                         let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
