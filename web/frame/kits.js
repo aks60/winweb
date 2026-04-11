@@ -23,7 +23,7 @@ export function init_table() {
         height: "auto",
         colNames: ['id', 'Артикул', 'Название', 'Основная', 'Внутренняя', 'Внешняя', 'Длина', 'Ширина', 'Кол-во'],
         colModel: [
-            {name: 'id', hidden: true, key: true},
+            {name: 'ID', hidden: true},
             {name: 'code', width: 80, sorttype: "text"},
             {name: 'name', width: 260, sorttype: "text"},
             {name: 'color1', width: 80, sorttype: "text"},
@@ -35,7 +35,7 @@ export function init_table() {
         ],
         onSelectRow: function (rowid) {
             let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
-            kits.prjkitRec = findef(prjkitRow.id, ePrjkit.id, ePrjkit);
+            kits.prjkitRec = findef(prjkitRow.ID, ePrjkit.id, ePrjkit);
         }
     });
 }
@@ -48,7 +48,7 @@ export function load_table() {
             let prjkitRec = prjkitList[i];
             let artiklRec = findef(prjkitRec[ePrjkit.artikl_id], eArtikl.id, eArtikl);
             $(kits.table1).jqGrid('addRowData', i + 1, {
-                id: prjkitRec[eKits.id],
+                ID: prjkitRec[eKits.id],
                 code: artiklRec[eArtikl.code],
                 name: artiklRec[eArtikl.name],
                 color1: findef(prjkitRec[ePrjkit.color1_id], eColor.id, eColor)[eColor.name],
@@ -69,7 +69,7 @@ export function update_table() {
     let dialogTaq = '#dialog-card';
     let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
     let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
-    let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.id) === rec[ePrjkit.id]);
+    let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.ID) === rec[ePrjkit.id]);
     $("#k53").val(prjkitRow.color1);
     $("#k54").val(prjkitRow.color2);
     $("#k55").val(prjkitRow.color3);
@@ -139,7 +139,7 @@ export function delete_table() {
             "Да": function () {
                 let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
                 let prjkitRow = $(kits.table1).jqGrid('getRowData', rowid);
-                let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.id) === rec[ePrjkit.id]);
+                let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.ID) === rec[ePrjkit.id]);
                 $.ajax({
                     url: 'dbset?action=deletePrjkit',
                     data: {param: JSON.stringify(prjkitRec)},
@@ -147,7 +147,7 @@ export function delete_table() {
                         if (data.result === 'ok') {
                             $(kits.table1).jqGrid("delRowData", rowid);
                             for (let i = 0; i < ePrjkit.list.length; ++i) {
-                                if (Number(prjkitRow.id) === ePrjkit.list[i][ePrjkit.id]) {
+                                if (Number(prjkitRow.ID) === ePrjkit.list[i][ePrjkit.id]) {
                                     ePrjkit.list.splice(i, 1);
                                 }
                             }
@@ -173,7 +173,7 @@ export function color_to_kit(btnSrc) {
         let groupSet = new Set();
         let colorSet = new Set();
         let prjkitRow = getSelectedRow($('#table1'));
-        let prjkitRec = ePrjkit.list.find(rec => prjkitRow.id == rec[ePrjkit.id]);
+        let prjkitRec = ePrjkit.list.find(rec => Number(prjkitRow.ID) == rec[ePrjkit.id]);
 
         for (let rec of eArtdet.list) {
             if (rec[eArtdet.artikl_id] == prjkitRec[ePrjkit.artikl_id]) {

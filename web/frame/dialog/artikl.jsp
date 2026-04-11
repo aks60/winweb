@@ -71,7 +71,7 @@
                     rowNum: -1,
                     colNames: ['id', 'Тип', 'Код артикула', 'Наименование артикула'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'type', width: 60},
                         {name: 'code', width: 160, sorttype: "text"},
                         {name: 'name', width: 380, sorttype: "text", cellattr: function (rowId, val, rawObject, cm, rdata) {
@@ -97,7 +97,7 @@
                         for (let i = 0; i < artiklList.length; i++) {
                             let tr = artiklList[i];
                             $(tabArtikl).jqGrid('addRowData', i + 1, {
-                                id: tr[eArtikl.id],
+                                ID: tr[eArtikl.id],
                                 type: LEV1[tr[eArtikl.level1]] + '/' + tr[eArtikl.level2],
                                 code: tr[eArtikl.code],
                                 name: tr[eArtikl.name]});
@@ -108,7 +108,7 @@
                     for (let i = 0; i < eArtikl.list.length; i++) {
                         let tr = eArtikl.list[i];
                         $(tabArtikl).jqGrid('addRowData', i + 1, {
-                            id: tr[eArtikl.id],
+                            ID: tr[eArtikl.id],
                             type: LEV1[tr[eArtikl.level1]],
                             code: tr[eArtikl.code],
                             name: tr[eArtikl.name]});
@@ -204,7 +204,7 @@
                         let prjkitRec = ePrjkit.vrec;
                         prjkitRec[0] = 'INS';
                         prjkitRec[ePrjkit.numb] = 1;
-                        prjkitRec[ePrjkit.artikl_id] = Number(artiklRow.id);
+                        prjkitRec[ePrjkit.artikl_id] = Number(artiklRow.ID);
                         prjkitRec[ePrjkit.prjprod_id] = project.prjprodRec[ePrjprod.id];
                         prjkitRec[ePrjkit.project_id] = project.projectRec[eProject.id];
 
@@ -235,7 +235,7 @@
             //Запишем артикул в скрипт
             function set_value_gson() {
 
-                let ID = Number(artiklRow.id);
+                let ID = Number(artiklRow.ID);
 
                 if (paramTaq === 'n51') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.artiklID], ID);

@@ -1,6 +1,6 @@
 import {virtualRec} from './domain.js';
 eTarif = {
-    id: 0, //ID;
+    id: 0, //Идентификатор
     place: 1, //Место размешения
     code: 2, //Артикул
     name: 3, //Наименование

@@ -31,7 +31,7 @@
                         "Выбрать": function () {
                             let dealerRow = getSelectedRow($(tabDealer));
                             $('#p25').val(dealerRow.partner);
-                            $('#p25').attr("fk", dealerRow.id);
+                            $('#p25').attr("fk", dealerRow.ID);
                             $("#dialog-jsp").dialog("close");
                         },
                         "Закрыть": function () {
@@ -47,14 +47,14 @@
                     datatype: "local",
                     colNames: ['id', 'Контрагент', 'Дилер'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'partner', width: 300, sorttype: "text"},
                         {name: 'manager', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
                         let dealerRow = getSelectedRow($(tabDealer));
                         $('#p25').val(dealerRow.partner);
-                        $('#p25').attr("fk", dealerRow.id);
+                        $('#p25').attr("fk", dealerRow.ID);
                         $("#dialog-jsp").dialog("close");
                     }
                 });
@@ -64,7 +64,7 @@
                 for (let i = 0; i < eDealer.list.length; i++) {
                     let tr = eDealer.list[i];
                     $(tabDealer).jqGrid('addRowData', i + 1, {
-                        id: tr[eDealer.id],
+                        ID: tr[eDealer.id],
                         partner: tr[eDealer.partner],
                         manager: tr[eDealer.login]});
                 }

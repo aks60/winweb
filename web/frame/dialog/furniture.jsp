@@ -60,7 +60,7 @@
                     datatype: "local",
                     colNames: ['id', 'Наименование'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'name', width: 360, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         furnitureRow = getSelectedRow($(tabFurn));
@@ -75,7 +75,7 @@
                 for (let i = 0; i < furnitureList.length; i++) {
                     let furnitureRec = furnitureList[i];
                     $(tabFurn).jqGrid('addRowData', i + 1, {
-                        id: furnitureRec[eFurniture.id],
+                        ID: furnitureRec[eFurniture.id],
                         name: furnitureRec[eFurniture.name]
                     });
                 }
@@ -120,7 +120,7 @@
             }
 
             function set_value_gson() {  
-                let sysfurnRec = eSysfurn.list.seek(eSysfurn.vrec, rec => rec[eSysfurn.furniture_id] === Number(furnitureRow.id));
+                let sysfurnRec = eSysfurn.list.seek(eSysfurn.vrec, rec => rec[eSysfurn.furniture_id] === Number(furnitureRow.ID));
                 if (paramTaq === 'n43') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysfurnID], sysfurnRec[eSysfurn.id]);
                 }

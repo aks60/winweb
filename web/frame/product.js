@@ -36,19 +36,19 @@ export function init_table() {
             scroll: "true",
             colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
             colModel: [
-                {name: 'id', hidden: true, key: true},
+                {name: 'ID', hidden: true},
                 {name: 'text', width: 190, sorttype: "text", edittype: "button"},
                 {name: 'val', width: 120, sorttype: "text"},
                 {name: 'fixed', width: 20, sorttype: "text"}
 
             ], ondblClickRow: function (rowid) {
                 let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-                let groupsID = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
+                let groupsID = findef(syspar1Row.ID, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
                 $('#dialog-jsp').load('frame/dialog/param.jsp?param=' + groupsID);
             }
 //            , onSelectRow: function (rowid) {
 //                let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-//                product.groupParam = findef(syspar1Row.id, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
+//                product.groupParam = findef(syspar1Row.ID, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
 //            }
         });
     } catch (e) {
@@ -70,7 +70,7 @@ export function load_table1() {
 
             let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === tr[eSyspar1.groups_id]);
             $(product.table1).jqGrid('addRowData', i + 1, {
-                id: tr[eSyspar1.id],
+                ID: tr[eSyspar1.id],
                 text: groupsRec[eGroups.name],
                 val: tr[eSyspar1.text],
                 fixed: tr[eSyspar1.fixed]

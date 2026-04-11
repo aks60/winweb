@@ -51,7 +51,7 @@
                     datatype: "local",
                     colNames: ['id', 'Категория', 'Название комплекта'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'categ', width: 100},
                         {name: 'name', width: 240}
                     ],
@@ -59,14 +59,14 @@
                         $(tab2Kitcard).jqGrid("clearGridData", true);
                         
                         let kitsRow = $(tab1Kitcard).jqGrid('getRowData', rowid);
-                        kitdetList = eKitdet.list.filter(rec => Number(kitsRow.id) === rec[eKitdet.kits_id]);
+                        kitdetList = eKitdet.list.filter(rec => Number(kitsRow.ID) === rec[eKitdet.kits_id]);
                         if (kitdetList.length !== 0) {
                             for (let i = 0; i < kitdetList.length; ++i) {
                                 let kitdetRec = kitdetList[i];
                                 let artiklRec = findef(kitdetRec[eKitdet.artikl_id], eArtikl.id, eArtikl);
                                 
                                 $(tab2Kitcard).jqGrid('addRowData', i + 1, {
-                                    id: kitdetRec[eKitdet.id],
+                                    ID: kitdetRec[eKitdet.id],
                                     code: artiklRec[eArtikl.code],
                                     name: artiklRec[eArtikl.name],
                                     color1_id: findef(kitdetRec[eKitdet.color1_id], eColor.id, eColor)[eColor.name],
@@ -81,7 +81,7 @@
                     datatype: "local",
                     colNames: ['id', 'Артикул', 'Название', 'Текстура', 'Ед.изм.'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'code', width: 60},
                         {name: 'name', width: 180},
                         {name: 'color1_id', width: 80},
@@ -98,7 +98,7 @@
                     let kitsRec = eKits.list[i];
                     
                     $(tab1Kitcard).jqGrid('addRowData', i + 1, {
-                        id: kitsRec[eKits.id],
+                        ID: kitsRec[eKits.id],
                         categ: eGroups.list.find(rec => rec[eGroups.id] === kitsRec[eKits.groups_id])[eGroups.name],
                         name: kitsRec[eKits.name]
                     });

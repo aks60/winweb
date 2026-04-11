@@ -56,7 +56,7 @@
                     datatype: "local",
                     colNames: ['id', 'Наименование'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'name', width: 400, sorttype: "text"}
                     ], ondblClickRow: function (rowid) {
                         sideopenRow = getSelectedRow($(tabSideopen));
@@ -75,7 +75,7 @@
                 for (let i = 0; i < typeopenList.length; i++) {
                     let typeopenRec = typeopenList[i];
                     $(tabSideopen).jqGrid('addRowData', i + 1, {
-                        id: typeopenRec[0],
+                        ID: typeopenRec[0],
                         name: typeopenRec[2]
                     });
                 }
@@ -112,7 +112,7 @@
 
             function set_value_gson() {
 
-                let ID = Number(sideopenRow.id);
+                let ID = Number(sideopenRow.ID);
 
                 if (paramTaq === 'n44') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.typeOpen], ID);

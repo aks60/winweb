@@ -42,7 +42,7 @@
                             let paramsRowZ = $(tabParam).jqGrid('getRowData', rowidZ);
                             let paramsRow = getSelectedRow($(tabParam));
 debugger;                            
-                            let paramsRec = eParams.list.find(rec => Number(paramsRow.id) === rec[eParams.id]);
+                            let paramsRec = eParams.list.find(rec => Number(paramsRow.ID) === rec[eParams.id]);
                             winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
 
@@ -53,7 +53,7 @@ debugger;
                                 }
                             }
                             //Запишем параметр в скрипт
-                            winc.gson.param.ioknaParam.push(parseInt(paramsRow.id)); 
+                            winc.gson.param.ioknaParam.push(parseInt(paramsRow.ID)); 
                             project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
 
                             $.ajax({//запишем профиль в серверную базу данных

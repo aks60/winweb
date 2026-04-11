@@ -21,7 +21,7 @@ export function init_table() {
         height: "auto",
         colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User', 'prjpart_id'],
         colModel: [
-            {name: 'id', hidden: true, key: true},
+            {name: 'ID', hidden: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
             {name: 'num_acc', width: 80, sorttype: "text"},
             {name: 'date4', width: 80, sorttype: "date"},
@@ -32,7 +32,7 @@ export function init_table() {
         ],
         onSelectRow: function (rowid, status, e) {
             let projectRow = $(project.table1).jqGrid('getRowData', rowid);
-            project.projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+            project.projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
             project.table1rowID = rowid;
             load_table3();   //загрузка таблицы 3         
         }
@@ -46,7 +46,7 @@ export function init_table() {
         height: 'auto',
         colNames: ['id', 'Наименование', 'Кол-во', 'Изображение'],
         colModel: [
-            {name: 'id', hidden: true, key: true},
+            {name: 'ID', hidden: true},
             {name: 'name', width: 220, sortable: false},
             {name: 'num', width: 24, sortable: false},
             {name: 'image', width: 68, sortable: false, formatter: function (cellvalue, options, rowObject) {
@@ -56,7 +56,7 @@ export function init_table() {
         ],
         onSelectRow: function (rowid, status, e) {
             let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
-            project.prjprodRec = ePrjprod.list.find(rec => prjprodRow.id == rec[ePrjprod.id]);
+            project.prjprodRec = ePrjprod.list.find(rec => Number(prjprodRow.ID) === rec[ePrjprod.id]);
             project.table3rowID = rowid;
             product.winCalc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);;
         }
@@ -73,7 +73,7 @@ export function load_table1() {
     for (let i = 0; i < eProject.list.length; i++) {
         let tr = eProject.list[i];
         $(project.table1).jqGrid('addRowData', i + 1, {
-            id: tr[eProject.id],
+            ID: tr[eProject.id],
             num_ord: tr[eProject.num_ord],
             num_acc: tr[eProject.num_acc],
             date4: tr[eProject.date4],
@@ -96,12 +96,12 @@ export function load_table3() {
     let projectID = project.projectRec[eProject.id];
     project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
-    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.id
+    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.ID
     for (let i = 0; i < prjprodList.length; ++i) {
 
         let prjprodRec = prjprodList[i];
         $(project.table3).jqGrid('addRowData', i + 1, {
-            id: prjprodRec[ePrjprod.id],
+            ID: prjprodRec[ePrjprod.id],
             name: prjprodRec[ePrjprod.name],
             num: prjprodRec[ePrjprod.num]
         });
@@ -118,7 +118,7 @@ export function load_table3() {
 export function insert_table1(taq) {
 
     let projectRow = getSelectedRow($(project.table1));
-    let projectRec = eProject.list.find(rec => projectRow.id = rec[eProject.id]);
+    let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidProject',
         data: {param: JSON.stringify({})},
@@ -190,7 +190,7 @@ export function insert_table1(taq) {
 export function update_table1(dialogCard) {
 
     let projectRow = getSelectedRow($(project.table1));
-    let projectRec = eProject.list.find(rec => projectRow.id == rec[eProject.id]);
+    let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $("#p21").val(projectRow.num_ord);
     $("#p22").val(projectRow.num_acc);
     $("#p23").val(projectRow.date4);
@@ -221,7 +221,7 @@ export function update_table1(dialogCard) {
                         if (data.result === 'ok') {
                             let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
                             $(project.table1).jqGrid('setRowData', rowid, {
-                                id: projectRec[eProject.id],
+                                ID: projectRec[eProject.id],
                                 num_ord: projectRec[eProject.num_ord],
                                 num_acc: projectRec[eProject.num_acc],
                                 date4: projectRec[eProject.date4],
@@ -262,12 +262,12 @@ export function delete_table1(table) {
                 "Да": function () {
                     $.ajax({
                         url: 'dbset?action=deleteProject',
-                        data: {param: JSON.stringify({id: projectRow.id})},
+                        data: {param: JSON.stringify({id: projectRow.ID})},
                         success: (data) => {
                             if (data.result === 'ok') {
                                 table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < eProject.list.length; ++i) {
-                                    if (projectRow.id === eProject.list[i][eProject.id]) {
+                                    if (Number(projectRow.ID) === eProject.list[i][eProject.id]) {
                                         eProject.list.splice(i, 1);
                                     }
                                 }

@@ -26,7 +26,7 @@ export function init_table() {
             'Кол. единиц', 'Ед.изм', 'Процент отхода', 'Количество с отх.', 'Себестоимость',
             'Цена за единицу', 'Стоимость без скидки', 'Стоимость со скидкой'],
         colModel: [
-            {name: 'id', hidden: true, key: true},
+            {name: 'ID', hidden: true},
             {name: 'place', width: 60, sorttype: "text"}, //Место размешения
             {name: 'code', width: 60, sorttype: "text"}, //Артикул
             {name: 'name', width: 220, sorttype: "text"}, //Название
@@ -64,7 +64,7 @@ export function load_table() {
                 for (let i = 0; i < eTarif.list.length; i++) {
                     let tarifRec = eTarif.list[i];
                     $(tarif.table1).jqGrid('addRowData', i + 1, {
-                        id: tarifRec[eTarif.id],
+                        ID: tarifRec[eTarif.id],
                         place: tarifRec[eTarif.place],
                         code: tarifRec[eTarif.code],
                         name: tarifRec[eTarif.name],

@@ -67,7 +67,7 @@
                     datatype: "local",
                     colNames: ['id', 'Группы текстур'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'name', width: 360}
                     ],
                     onSelectRow: function (rowid, status, e) {
@@ -96,7 +96,7 @@
                     groupsList.forEach((tr, i) => {
 
                         $(tab1Color).jqGrid('addRowData', i + 1, {
-                            id: tr[eGroups.id],
+                            ID: tr[eGroups.id],
                             name: tr[eGroups.name]
                         });
                     });
@@ -107,11 +107,11 @@
             function load2_table(rowid) {
                 $(tab2Color).jqGrid('clearGridData', true);
                 let groupsRow = $(tab1Color).jqGrid('getRowData', rowid);
-                let colorList = eColorList.filter(rec => groupsRow.id == rec[eColor.groups_id] && colorSet.has(rec[eColor.id]));
+                let colorList = eColorList.filter(rec => Number(groupsRow.ID) === rec[eColor.groups_id] && colorSet.has(rec[eColor.id]));
                 colorList.forEach((tr, i) => {
 
                     $(tab2Color).jqGrid('addRowData', i + 1, {
-                        id: tr[eColor.id],
+                        ID: tr[eColor.id],
                         name: tr[eColor.name]
                     });
                     let rgb = '#' + tr[eColor.rgb].toString(16);
@@ -223,15 +223,15 @@
                     } else if ($('#body-jsp title').text() === 'KITS') {
                         if (paramTaq === 'k53') {
                             $("#k53").val(colorRow.name);
-                            $("#k53").attr("fk", colorRow.id);
+                            $("#k53").attr("fk", colorRow.ID);
 
                         } else if (paramTaq === 'k54') {
                             $("#k54").val(colorRow.name);
-                            $("#k54").attr("fk", colorRow.id);
+                            $("#k54").attr("fk", colorRow.ID);
 
                         } else if (paramTaq === 'k55') {
                             $("#k55").val(colorRow.name);
-                            $("#k55").attr("fk", colorRow.id);
+                            $("#k55").attr("fk", colorRow.ID);
                         }                       
                     }
                 } catch (e) {
@@ -242,7 +242,7 @@
             //Запишем текстуру в скрипт
             function set_value_gson() {
                 
-                let ID = Number(colorRow.id);
+                let ID = Number(colorRow.ID);
 
                 if (com5t.type === Type.STV_SIDE) {
                     let sideStv = ['', PKjson.stvorkaBot, PKjson.stvorkaRig, PKjson.stvorkaTop, PKjson.stvorkaLef][com5t.layout[0]];

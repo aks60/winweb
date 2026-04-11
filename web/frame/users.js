@@ -31,7 +31,7 @@ users.init_table1 = function (table) {
         height: "auto",
         colNames: ['id', 'ФИО', 'Описание', 'Логин', 'Роль'],
         colModel: [
-            {name: 'id', hidden: true, key: true},
+            {name: 'ID', hidden: true},
             {name: 'fio', width: 98, sorttype: "text"},
             {name: 'desc', width: 200, sorttype: "text"},
             {name: 'login', width: 40, sorttype: "text"},
@@ -50,7 +50,7 @@ users.load_table1 = function (table) {
             for (let i = 0; i < users.userList.length; i++) {
                 let tr = users.userList[i];
                 table.jqGrid('addRowData', i + 1, {
-                    id: tr[USER.id],
+                    ID: tr[USER.id],
                     fio: tr[USER.fio],
                     desc: tr[USER.desc],
                     login: tr[USER.login],

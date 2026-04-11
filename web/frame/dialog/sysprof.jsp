@@ -60,7 +60,7 @@
                     datatype: "local",
                     colNames: ['id', 'Сторона', 'Код артикула', 'Наименование артикула'],
                     colModel: [
-                        {name: 'id', hidden: true, key: true},
+                        {name: 'ID', hidden: true},
                         {name: 'side', width: 60, sorttype: "text"},
                         {name: 'code', width: 140, sorttype: "text"},
                         {name: 'name', width: 340, sorttype: "text"}
@@ -80,7 +80,7 @@
                     let tr = sysprofList[i];
                     let artiklRec = eArtikl.list.find(rec => tr[eSysprof.artikl_id] == rec[eArtikl.id]);
                     $(tabSysprof).jqGrid('addRowData', i + 1, {
-                        id: tr[eSysprof.id],
+                        ID: tr[eSysprof.id],
                         side: UseSide.find(tr[eSysprof.use_side]),
                         code: artiklRec[eArtikl.code],
                         name: artiklRec[eArtikl.name]
@@ -149,7 +149,7 @@
 
             //Запишем профиль в скрипт
             function set_value_gson() {
-                let ID = Number(sysprofRow.id);
+                let ID = Number(sysprofRow.ID);
                 //Коробка
                 if (paramTaq === 'n55') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysprofID], ID); //запишем профиль в скрипт
