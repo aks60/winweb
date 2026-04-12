@@ -63,7 +63,7 @@
             $.ajaxSetup({type: 'POST', dataType: 'json', async: true, cache: false});
             $.jstree.defaults.core.themes.variant = "large";
 
-            var progres = () => {
+            var progress = () => {
                 triggerMes = (triggerMes === 0) ? 1 : 0;
                 if (triggerMes === 1) {
                     $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");

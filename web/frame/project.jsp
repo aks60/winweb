@@ -67,10 +67,10 @@
             document.getElementById('btnTest2').addEventListener('click', test2);
 
             function test1() {
-                progres('open');
+                progress('open');
             }
             function test2() {
-                progres('close');
+                progress('close');
             }
         </script>
         <script type="text/javascript">

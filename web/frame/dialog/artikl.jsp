@@ -32,6 +32,7 @@
                 $(tabArtikl).jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
                 $(tabArtikl).jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
             } 
+                        
             init_dialog();
             init_table();
             data_set();
@@ -53,7 +54,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            artiklRow = {id: -3, type: '0/0', code: '@', name: 'virtual'};
+                            artiklRow = {ID: -3, type: '0/0', code: '@', name: 'virtual'};
                             save_table();
                             $(this).dialog("close");
                         },
@@ -61,7 +62,7 @@
                             $(this).dialog("close");
                         }
                     }
-                });
+                });                
             }
 
             function init_table() {
@@ -132,7 +133,7 @@
                             }
                             depth = depth.split(',');
                             let artiklList = eArtikl.list.filter(rec =>
-                                rec[eArtikl.depth] != undefined
+                                rec[eArtikl.depth] !== undefined
                                         && rec[eArtikl.level1] === 5
                                         && [1, 2, 3].includes(rec[eArtikl.level2])
                                         && depth.includes(rec[eArtikl.depth].toString())

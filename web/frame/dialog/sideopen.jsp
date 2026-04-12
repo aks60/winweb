@@ -40,7 +40,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            sideopenRow = {id: -3, name: ''};
+                            sideopenRow = {ID: -3, name: ''};
                             save_table();
                             $(this).dialog("close");
                         },

@@ -112,13 +112,13 @@
                     datatype: "local",
                     colNames: ['id', 'Категория'],
                     colModel: [
-                        {name: 'id', index: 'id', width: 1, hidden: true, key: true},
+                        {name: 'ID', index: 'ID', hidden: true},
                         {name: 'name', index: 'cname', width: 180}
                     ],
                     treeIcons: {plus: 'ui-icon-folder-collapsed', minus: 'ui-icon-folder-open', leaf: 'ui-icon-document'},
                     autowidth: true,
                     height: "auto",
-                    sortname: 'id',
+                    sortname: 'ID',
                     treeGrid: true,
                     treeGridModel: 'adjacency',
                     ExpandColumn: 'name',
@@ -212,7 +212,7 @@
 
             function parentTag(node, tag) {
                 if (node)
-                    return (node.tagName == tag) ? node : parentTag(node.parentElement, tag);
+                    return (node.tagName === tag) ? node : parentTag(node.parentElement, tag);
                 return null;
             }
         </script> 

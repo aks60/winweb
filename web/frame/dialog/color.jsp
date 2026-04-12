@@ -50,7 +50,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            colorRow = {id: -3, name: ''};
+                            colorRow = {ID: -3, name: ''};
                             save_table();
                             $(this).dialog("close");
                         },
@@ -78,7 +78,7 @@
                     datatype: "local",
                     colNames: ['Код', 'Описание текстур'],
                     colModel: [
-                        {name: 'id', width: 60, key: true},
+                        {name: 'ID', width: 60},
                         {name: 'name', width: 340}
                     ],
                     ondblClickRow: function (rowId) {
@@ -167,7 +167,7 @@
                     //Текстура по таблице цветов ARTDET                                                                        
                     for (let artdetRec of eArtdet.list) { //все текстуры артикула элемента конструкции                     
                         if (artdetRec[eArtdet.artikl_id] === artiklElem[eArtikl.id]) {
-                            if (artdetRec[indexMark] == '1') { //фильтр стороны  
+                            if (artdetRec[indexMark] === 1) { //фильтр стороны  
                                 for (let colorRec of eColorList) {
 
                                     if (colorRec[eColor.groups_id] === artdetRec[eArtdet.color_fk]) { //все текстуры групы (-)color_fk

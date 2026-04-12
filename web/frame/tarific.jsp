@@ -20,7 +20,7 @@
             tarif.table1 = document.getElementById('table1');
             $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
-            progres();
+            progress();
             init_table();
             load_table();
             resize();

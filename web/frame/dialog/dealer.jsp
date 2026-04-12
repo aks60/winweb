@@ -62,11 +62,11 @@
 
             function load_table() {
                 for (let i = 0; i < eDealer.list.length; i++) {
-                    let tr = eDealer.list[i];
+                    let dealerRec = eDealer.list[i];
                     $(tabDealer).jqGrid('addRowData', i + 1, {
-                        ID: tr[eDealer.id],
-                        partner: tr[eDealer.partner],
-                        manager: tr[eDealer.login]});
+                        ID: dealerRec[eDealer.id],
+                        partner: dealerRec[eDealer.partner],
+                        manager: dealerRec[eDealer.login]});
                 }
                 $(tabDealer).jqGrid("setSelection", 1);
             }

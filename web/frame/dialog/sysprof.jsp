@@ -44,7 +44,7 @@
                             $(this).dialog("close");
                         },
                         "Удалить": function () {
-                            sysprofRow = {id: -3, side: '', code: '@', name: ''};
+                            sysprofRow = {ID: -3, side: '', code: '@', name: ''};
                             save_table();
                             $(this).dialog("close");
                         },

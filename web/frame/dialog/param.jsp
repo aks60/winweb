@@ -109,8 +109,6 @@ debugger;
                     
                 for (let i = 0; i < paramsList.length; i++) {
                     let paramsRec = paramsList[i];
-                    //let o1 = paramsRec[eParams.groups_id];
-                    //debugger;
                     $(tabParam).jqGrid('addRowData', i + 1, {
                         ID: paramsRec[eParams.id],
                         id2: paramsRec[eParams.groups_id],
