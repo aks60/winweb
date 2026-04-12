@@ -90,6 +90,7 @@
             function load_table() {
                 
                 $(tabArtikl).jqGrid('clearGridData', true);
+                
                 if ($('#body-jsp title').text() === 'PRODUCT') {
                     let artiklList = Array.from(artiklSet);
                     if (paramTaq === 'n45' || paramTaq === 'n49' || paramTaq === 'n4B' || paramTaq === 'n51') {
