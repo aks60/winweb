@@ -11,7 +11,7 @@ export class TFurniture {
     //furnitureVar = null;
     furnitureDet = null;
     shortPass = true;
-    artLevel = [9, 11, 12]; //замок, ручка, петля 
+    LEVEL = [9, 11, 12]; //замок, ручка, петля 
     //max_size_message = true;
 
     constructor(winc) {
@@ -93,7 +93,7 @@ export class TFurniture {
             if (this.shortPass === true) {
                 if (furndetRec[eFurndet.furndet_id] === furndetRec[eFurndet.id] && furndetRec[eFurndet.furniture_id2] === null) {
                     if (artiklRec[eArtikl.level1] !== 2
-                            || (artiklRec[eArtikl.level1] === 2 && this.artLevel.includes(artiklRec[eArtikl.level2]) === false)) {
+                            || (artiklRec[eArtikl.level1] === 2 && this.LEVEL.includes(artiklRec[eArtikl.level2]) === false)) {
                         return false;  //т.к. ручки, подвеса, замка на этом уровне нет
                     }
                 }
@@ -113,7 +113,7 @@ export class TFurniture {
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки
                     //если level2 = 13 идет только в тарификацию 
-                    if (this.shortPass === true && artiklRec[eArtikl.level1] === 2 && this.artLevel.includes(artiklRec[eArtikl.level2]) === true) {
+                    if (this.shortPass === true && artiklRec[eArtikl.level1] === 2 && this.LEVEL.includes(artiklRec[eArtikl.level2]) === true) {
                         this.settingStvAndSpc(areaStv, spcAdd);
                     } else {
                         UColor.choiceFromArtOrSeri(spcAdd);
