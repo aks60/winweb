@@ -48,13 +48,13 @@ users.load_table1 = function (table) {
         success: function (data) {
             users.userList = data;
             for (let i = 0; i < users.userList.length; i++) {
-                let tr = users.userList[i];
+                let usersRec = users.userList[i];
                 table.jqGrid('addRowData', i + 1, {
-                    ID: tr[USER.id],
-                    fio: tr[USER.fio],
-                    desc: tr[USER.desc],
-                    login: tr[USER.login],
-                    role: tr[USER.role]
+                    ID: usersRec[USER.id],
+                    fio: usersRec[USER.fio],
+                    desc: usersRec[USER.desc],
+                    login: usersRec[USER.login],
+                    role: usersRec[USER.role]
                 });
             }
             users.resize();

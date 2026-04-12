@@ -112,13 +112,13 @@
                     datatype: "local",
                     colNames: ['id', 'Категория'],
                     colModel: [
-                        {name: 'ID', index: 'ID', hidden: true},
+                        {name: 'id', index: 'id', hidden: true},
                         {name: 'name', index: 'cname', width: 180}
                     ],
                     treeIcons: {plus: 'ui-icon-folder-collapsed', minus: 'ui-icon-folder-open', leaf: 'ui-icon-document'},
                     autowidth: true,
                     height: "auto",
-                    sortname: 'ID',
+                    sortname: 'id',
                     treeGrid: true,
                     treeGridModel: 'adjacency',
                     ExpandColumn: 'name',

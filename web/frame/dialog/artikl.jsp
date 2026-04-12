@@ -96,23 +96,24 @@
                     if (paramTaq === 'n45' || paramTaq === 'n49' || paramTaq === 'n4B' || paramTaq === 'n51') {
                         artiklList.sort((a, b) => a[eArtikl.code].localeCompare(b[eArtikl.code]));
                         for (let i = 0; i < artiklList.length; i++) {
-                            let tr = artiklList[i];
+                            let artiklRec = artiklList[i];
                             $(tabArtikl).jqGrid('addRowData', i + 1, {
-                                ID: tr[eArtikl.id],
-                                type: LEV1[tr[eArtikl.level1]] + '/' + tr[eArtikl.level2],
-                                code: tr[eArtikl.code],
-                                name: tr[eArtikl.name]});
+                                ID: artiklRec[eArtikl.id],
+                                type: LEV1[artiklRec[eArtikl.level1]] + '/' + artiklRec[eArtikl.level2],
+                                code: artiklRec[eArtikl.code],
+                                name: artiklRec[eArtikl.name]});
                         }
                     }
 
                 } else if ($('#body-jsp title').text() === 'KITS') {
+                    let table = $(tabArtikl);
                     for (let i = 0; i < eArtikl.list.length; i++) {
-                        let tr = eArtikl.list[i];
-                        $(tabArtikl).jqGrid('addRowData', i + 1, {
-                            ID: tr[eArtikl.id],
-                            type: LEV1[tr[eArtikl.level1]],
-                            code: tr[eArtikl.code],
-                            name: tr[eArtikl.name]});
+                        let artiklRec = eArtikl.list[i];
+                        table.jqGrid('addRowData', i + 1, {
+                            ID: artiklRec[eArtikl.id],
+                            type: LEV1[artiklRec[eArtikl.level1]],
+                            code: artiklRec[eArtikl.code],
+                            name: artiklRec[eArtikl.name]});
                     }
                 }
                 $(tabArtikl).jqGrid("setSelection", 1);
