@@ -24,7 +24,7 @@ export function resize() {
 }
 
 //Инициализация таблицы
-export function init_table() {
+export function init_table1() {
     try {
         $(product.table1).jqGrid({
             datatype: "local",
@@ -34,17 +34,17 @@ export function init_table() {
             height: 246,
             shrinkToFit: false,
             scroll: "true",
-            colNames: ['id', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
+            colNames: ['id', 'groupsID', 'Параметр', 'Знач.по умолч...', 'Закреплено'],
             colModel: [
                 {name: 'ID', hidden: true},
+                {name: 'groupsID', hidden: true},
                 {name: 'text', width: 190, sorttype: "text", edittype: "button"},
                 {name: 'val', width: 120, sorttype: "text"},
                 {name: 'fixed', width: 20, sorttype: "text"}
 
             ], ondblClickRow: function (rowid) {
-                let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
-                let groupsID = findef(syspar1Row.ID, eSyspar1.id, eSyspar1)[eSyspar1.groups_id];
-                $('#dialog-jsp').load('frame/dialog/param.jsp?param=' + groupsID);
+                product.syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
+                $('#dialog-jsp').load('frame/dialog/param.jsp?param=' + product.syspar1Row.groupsID);
             }
 //            , onSelectRow: function (rowid) {
 //                let syspar1Row = $(product.table1).jqGrid('getRowData', rowid);
@@ -57,23 +57,23 @@ export function init_table() {
 }
 
 //Загрузка данных в таблицу
-export function load_table1() {
+export function load_table1() {  
     try {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
-        for (let syspar1Rec of product.winCalc.mapPardef.values()) {
-            syspar1List.push(syspar1Rec);
-        }
+        product.winCalc.mapPardef.forEach((rec, key) => syspar1List.push(rec));      
         syspar1List.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
+     
         for (let i = 0; i < syspar1List.length; i++) {
-            let tr = syspar1List[i];
-
-            let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === tr[eSyspar1.groups_id]);
+            let syspar1Rec = syspar1List[i];
+            let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === syspar1Rec[eSyspar1.groups_id]);
+            
             $(product.table1).jqGrid('addRowData', i + 1, {
-                ID: tr[eSyspar1.id],
+                ID: syspar1Rec[eSyspar1.id],
+                groupsID: groupsRec[eGroups.id],
                 text: groupsRec[eGroups.name],
-                val: tr[eSyspar1.text],
-                fixed: tr[eSyspar1.fixed]
+                val: syspar1Rec[eSyspar1.text],
+                fixed: syspar1Rec[eSyspar1.fixed]
             });
         }
         $(product.table1).jqGrid("setSelection", 1);

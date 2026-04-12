@@ -12,7 +12,7 @@
             import {UJson} from './common/uJson.js';
             import {tree_to_html} from './frame/product.js';
 
-            let sideopenRow = {};
+            let syspar1Row = {};
             const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
             const tabParam = document.getElementById('tab-param');
@@ -38,31 +38,29 @@
                     buttons: {
                         "Выбрать": function () {
 
-                            let rowidZ = $(tabParam).jqGrid('getGridParam', "selrow");
-                            let paramsRowZ = $(tabParam).jqGrid('getRowData', rowidZ);
-                            let paramsRow = getSelectedRow($(tabParam));
-debugger;                            
-                            let paramsRec = eParams.list.find(rec => Number(paramsRow.ID) === rec[eParams.id]);
+                            debugger;
                             winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
                             winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
 
+                            //Удалим параметр из  "ioknaParam": [-8228б -90345]
                             for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
-                                let groupsID = eParams.list.find(rec => Number(winc.gson.param.ioknaParam[i]) === rec[eParams.id])[eParams.groups_id];
-                                if (groupsID === Number(paramsRow.groups_id)) {
+                                if (Number(product.syspar1Row.ID) === winc.gson.param.ioknaParam[i]) {
                                     winc.gson.param.ioknaParam.splice(i, 1);
                                 }
                             }
-                            //Запишем параметр в скрипт
-                            winc.gson.param.ioknaParam.push(parseInt(paramsRow.ID)); 
+                            //Запишем новый параметр в "ioknaParam": [-8228б -90345]
+                            winc.gson.param.ioknaParam.push(parseInt(syspar1Row.ID));
+
+                            //Запишем новый параметр в скрипт
                             project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
 
-                            $.ajax({//запишем профиль в серверную базу данных
+                            $.ajax({//запишем скрипт в серверную базу данных
                                 url: 'dbset?action=updateScript',
                                 data: {param: JSON.stringify(project.prjprodRec)},
                                 success: function (data) {
                                     if (data.result == 'ok') {
 
-                                        //Запишем текстуру в html
+                                        //Обновим конструкцию
                                         tree_to_html();
                                     }
                                 },
@@ -85,16 +83,16 @@ debugger;
                     colNames: ['paramID', 'groupsID', 'Значение параметра'],
                     colModel: [
                         {name: 'ID', hidden: true},
-                        {name: 'id2', hidden: true},
-                        {name: 'txt', width: 400, sorttype: "text"}  
-                        
+                        {name: 'groupsID', hidden: true},
+                        {name: 'txt', width: 400, sorttype: "text"}
+
                     ], onSelectRow: function (rowid) {
-                        let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
-                        
-                    },  ondblClickRow: function (rowid) {
+                        syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
+
+                    }, ondblClickRow: function (rowid) {
                         alert(rowid);
-                        let syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
-                        alert(syspar1Row.ID + ' ' + syspar1Row.txt);                        
+                        syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
+                        alert(syspar1Row.ID + ' ' + syspar1Row.txt);
                     }
                 });
             }
@@ -102,17 +100,17 @@ debugger;
             function load_table() {
 
                 $(tabParam).jqGrid('clearGridData', true);
-
                 let paramsList = eParams.list.filter(rec =>
                     Number(paramTaq) === rec[eParams.groups_id] &&
-                            rec[eParams.id] != rec[eParams.groups_id]);
-                    
+                            rec[eParams.id] != rec[eParams.groups_id]);                   
+                paramsList.sort((a, b) => b[eParams.text] - a[eParams.text]);
+                
                 for (let i = 0; i < paramsList.length; i++) {
                     let paramsRec = paramsList[i];
                     $(tabParam).jqGrid('addRowData', i + 1, {
                         ID: paramsRec[eParams.id],
-                        id2: paramsRec[eParams.groups_id],
-                        txt: paramsRec[eParams.text]                        
+                        groupsID: paramsRec[eParams.groups_id],
+                        txt: paramsRec[eParams.text]
                     });
                 }
                 $(tabParam).jqGrid("setSelection", 1);

@@ -61,7 +61,13 @@ UJson.isEmpty = (v) => {
 };
 
 UJson.isFinite = (key1, key2) => {
-    return (key1 === undefined) ? false : isFinite(key1[key2]);
+    if(key1 === undefined) {
+        return false;
+    }
+    if(key1[key2] === undefined) {
+        return  false;
+    }
+    return true;
 };
 
 UJson.getJsonParam = (json1, json2) => {

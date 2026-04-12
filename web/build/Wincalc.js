@@ -115,13 +115,13 @@ export class Wincalc {
     parametr(param) {
         try {
             //Параметры системы конструкции
-            eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] == this.nuni)
-                    .forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
+            let syspar1List = eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] === this.nuni);
+            syspar1List.forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
 
             if (UJson.isFinite(param, PKjson.ioknaParam)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
-                let ioknaParamArr = param[PKjson.ioknaParam];
-                for (const ioknaID of ioknaParamArr) { //цикл по параметрам менеджера
+                let ioknaParamList = param[PKjson.ioknaParam];
+                for (const ioknaID of ioknaParamList) { //цикл по параметрам менеджера
                     //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
                         let paramsRec = eParams.list.find(rec => rec[eParams.id] == ioknaID); //параметр менеджера

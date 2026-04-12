@@ -49,7 +49,6 @@
                     buttons: {
                         "Выбрать": function () {
                             artiklRow = getSelectedRow($(tabArtikl));
-                            debugger;
                             save_table();
                             $(this).dialog("close");
                         },

@@ -57,7 +57,7 @@
         <script type="module">
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {product, resize, init_table, load_table2, btn_to_tabs} from './frame/product.js';
+            import {product, resize, init_table1, load_table2, btn_to_tabs} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
             $(window).bind('resize', resize); //.trigger('resize');
@@ -69,7 +69,7 @@
 
             product.table1 = document.getElementById('table1');
             product.table2 = document.getElementById('table2');
-            init_table();
+            init_table1();
             load_table2();
 
             prepareTool('product');
@@ -143,8 +143,8 @@
                 <div id="tabs-4" style="padding: 0px; display: none;">
                     <p class="pantitle" style='text-align: center'> Створка</p> 
                     <div id="tabs-41">
-                        <jst id="n41" type='txt' label='Ширина' width='60' width2="60"></jst> &nbsp; &nbsp;
-                        <jst id="n42" type='txt' label='Высота' width='60' width2="60"></jst><br>                          
+                        <jst id="n41" type='txt' label='Ширина' width='80' width2="60"></jst><br>  
+                        <jst id="n42" type='txt' label='Высота' width='80' width2="60"></jst><br>                          
                         <jst id="n57" type='btn' label='Артикул' width='80' width2="260" click="$('#dialog-jsp').load('frame/dialog/sysprof.jsp?param=n57')"></jst><br>
                         <jst id="n58" type='txt' label='Название' width='80' width2="288"></jst><br>
                         <jst id="n59" type='txt' label='Аналог' width='80' width2="288"></jst><br>
