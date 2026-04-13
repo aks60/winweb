@@ -5,10 +5,6 @@
         <title>Выпадающее меню на CSS3</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-            });
-        </script> 
     </head>
     <body>
         <div class="menu">
@@ -18,7 +14,7 @@
                     <li><a onClick="$('#body-jsp').load('frame/project.jsp');">Заказы</a></li>
                     <li><a onClick="$('#body-jsp').load('frame/product.jsp');">Изделия</a></li>
                     <li><a onClick="$('#body-jsp').load('frame/kits.jsp');">Комплекты</a></li>
-                    <li><a>Отчеты</a>
+                    <li><a>Отчеты конст-ции</a>
                         <div class="subs">
                             <div>
                                 <ul>
@@ -27,6 +23,23 @@
                                             <li><a onClick="$('#body-jsp').load('frame/tarific.jsp');">Спецификация</a></li>
                                             <li><a onClick="">Смета</a></li>
                                             <li><a onClick="">Счёт-фактура</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                                
+                    </li>
+                    <li><a>Отчеты заказа</a>
+                        <div class="subs">
+                            <div>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li><a>Спецификация</a></li>
+                                            <ul>
+                                                <li><a href="#">HTML</a></li>
+                                                <li><a href="#">CSS</a></li>
+                                            </ul>
                                         </ul>
                                     </li>
                                 </ul>
