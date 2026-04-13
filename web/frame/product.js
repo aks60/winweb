@@ -62,7 +62,7 @@ export function load_table1() {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
         product.winCalc.mapPardef.forEach((rec, key) => syspar1List.push(rec));      
-        syspar1List.sort((a, b) => b[eSyspar1.params_id] - a[eSyspar1.params_id]);
+        //syspar1List.sort((a, b) => b[eParams.params_id] - a[eParams.params_id]);
      
         for (let i = 0; i < syspar1List.length; i++) {
             let syspar1Rec = syspar1List[i];

@@ -37,37 +37,7 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
-
-                            debugger;
-                            winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
-                            winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
-
-                            //Удалим параметр из  "ioknaParam": [-8228б -90345]
-                            for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
-                                if (Number(product.syspar1Row.ID) === winc.gson.param.ioknaParam[i]) {
-                                    winc.gson.param.ioknaParam.splice(i, 1);
-                                }
-                            }
-                            //Запишем новый параметр в "ioknaParam": [-8228б -90345]
-                            winc.gson.param.ioknaParam.push(parseInt(syspar1Row.ID));
-
-                            //Запишем новый параметр в скрипт
-                            project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
-
-                            $.ajax({//запишем скрипт в серверную базу данных
-                                url: 'dbset?action=updateScript',
-                                data: {param: JSON.stringify(project.prjprodRec)},
-                                success: function (data) {
-                                    if (data.result == 'ok') {
-
-                                        //Обновим конструкцию
-                                        tree_to_html();
-                                    }
-                                },
-                                error: () => {
-                                    dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
-                                }
-                            });
+                            save_table();
                             $(this).dialog("close");
                         },
                         "Закрыть": function () {
@@ -80,6 +50,7 @@
             function init_table() {
                 $(tabParam).jqGrid({
                     datatype: "local",
+                    //sortname: 'txt',
                     colNames: ['paramID', 'groupsID', 'Значение параметра'],
                     colModel: [
                         {name: 'ID', hidden: true},
@@ -102,9 +73,10 @@
                 $(tabParam).jqGrid('clearGridData', true);
                 let paramsList = eParams.list.filter(rec =>
                     Number(paramTaq) === rec[eParams.groups_id] &&
-                            rec[eParams.id] != rec[eParams.groups_id]);                   
-                paramsList.sort((a, b) => b[eParams.text] - a[eParams.text]);
-                
+                            rec[eParams.id] != rec[eParams.groups_id]);
+                    
+                paramsList.sort((a, b) => a[eParams.text].localeCompare(b[eParams.text]));
+
                 for (let i = 0; i < paramsList.length; i++) {
                     let paramsRec = paramsList[i];
                     $(tabParam).jqGrid('addRowData', i + 1, {
@@ -116,6 +88,42 @@
                 $(tabParam).jqGrid("setSelection", 1);
             }
 
+            function save_table() {
+                debugger;
+                try {
+                    winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
+                    winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
+
+                    //Удалим параметр из  "ioknaParam": [-8228б -90345]
+                    for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
+                        if (Number(product.syspar1Row.ID) === winc.gson.param.ioknaParam[i]) {
+                            winc.gson.param.ioknaParam.splice(i, 1);
+                        }
+                    }
+                    //Запишем новый параметр в "ioknaParam": [-8228б -90345]
+                    winc.gson.param.ioknaParam.push(parseInt(syspar1Row.ID));
+
+                    //Запишем новый параметр в скрипт
+                    project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
+
+                    $.ajax({//Запишем скрипт в серверную базу данных
+                        url: 'dbset?action=updateScript',
+                        data: {param: JSON.stringify(project.prjprodRec)},
+                        success: function (data) {
+                            if (data.result == 'ok') {
+
+                                //Обновим конструкцию
+                                tree_to_html();
+                            }
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                        }
+                    });
+                } catch (e) {
+                    console.error(e.message);
+                }
+            }
             function set_value_gson() {
             }
         </script>        

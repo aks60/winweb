@@ -94,7 +94,7 @@ export class Wincalc {
             this.root.artiklRec = eArtikl.find(this.root.sysprofRec[eSysprof.artikl_id], false); //первый артикул из сист. профилей
             this.syssizRec = eSyssize.find(this.root.artiklRec); //системные константы
 
-            this.parametr(this.gson.param); //параметры
+            this.parametr(); //параметры
 
             this.creator(this.root, this.gson); //создадим элементы конструкции    
 
@@ -112,15 +112,15 @@ export class Wincalc {
     }
 
     //Параметры системы(технолога) + параметры менеджера
-    parametr(param) {
+    parametr() {
         try {
             //Параметры системы конструкции
             let syspar1List = eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] === this.nuni);
             syspar1List.forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
 
-            if (UJson.isFinite(param, PKjson.ioknaParam)) {
+            if (UJson.isFinite(this.gson.param, PKjson.ioknaParam)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
-                let ioknaParamList = param[PKjson.ioknaParam];
+                let ioknaParamList = this.gson.param[PKjson.ioknaParam];
                 for (const ioknaID of ioknaParamList) { //цикл по параметрам менеджера
                     //Найдём record paramsRec и syspar1Rec;   
                     if (ioknaID < 0) {
