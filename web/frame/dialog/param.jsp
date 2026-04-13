@@ -7,6 +7,7 @@
 
         <script type="module">
             import {TypeOpen1, PKjson} from './enums/enums.js';
+            import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {UJson} from './common/uJson.js';
@@ -37,6 +38,12 @@
                     modal: true,
                     buttons: {
                         "Выбрать": function () {
+                            syspar1Row = getSelectedRow($(tabParam));;
+                            save_table();
+                            $(this).dialog("close");
+                        },
+                        "Удалить": function () {
+                            syspar1Row = {ID: -3, text: ''};
                             save_table();
                             $(this).dialog("close");
                         },
@@ -57,13 +64,10 @@
                         {name: 'groupsID', hidden: true},
                         {name: 'txt', width: 400, sorttype: "text"}
 
-                    ], onSelectRow: function (rowid) {
+                    ], ondblClickRow: function (rowid) {
                         syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
-
-                    }, ondblClickRow: function (rowid) {
-                        alert(rowid);
-                        syspar1Row = $(tabParam).jqGrid('getRowData', rowid);
-                        alert(syspar1Row.ID + ' ' + syspar1Row.txt);
+                        save_table();
+                        $("#dialog-jsp").dialog("close");
                     }
                 });
             }
@@ -74,7 +78,7 @@
                 let paramsList = eParams.list.filter(rec =>
                     Number(paramTaq) === rec[eParams.groups_id] &&
                             rec[eParams.id] != rec[eParams.groups_id]);
-                    
+
                 paramsList.sort((a, b) => a[eParams.text].localeCompare(b[eParams.text]));
 
                 for (let i = 0; i < paramsList.length; i++) {
@@ -94,14 +98,20 @@
                     winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
                     winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
 
-                    //Удалим параметр из  "ioknaParam": [-8228б -90345]
+                    //Удалим параметр из  "ioknaParam": [-8228, -90345]
                     for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
-                        if (Number(product.syspar1Row.ID) === winc.gson.param.ioknaParam[i]) {
+                        let paramsRec = eParams.list.seek(eParams.vrec, rec => rec[eParams.id] === Number(winc.gson.param.ioknaParam[i]));
+
+                        //let o1 = product.syspar1Row.groupsID;
+                        //let o2 = paramsRec[eParams.groups_id];
+
+                        if (Number(product.syspar1Row.groupsID) === paramsRec[eParams.groups_id]) {
                             winc.gson.param.ioknaParam.splice(i, 1);
                         }
                     }
-                    //Запишем новый параметр в "ioknaParam": [-8228б -90345]
-                    winc.gson.param.ioknaParam.push(parseInt(syspar1Row.ID));
+                    //Запишем новый параметр в "ioknaParam": [-8228, -90345]
+                    if (syspar1Row.ID != -3)
+                        winc.gson.param.ioknaParam.push(parseInt(syspar1Row.ID));
 
                     //Запишем новый параметр в скрипт
                     project.prjprodRec[ePrjprod.script] = JSON.stringify(winc.gson, (k, v) => UJson.isEmpty(v));
@@ -113,7 +123,13 @@
                             if (data.result == 'ok') {
 
                                 //Обновим конструкцию
-                                tree_to_html();
+                                winc.parametr();
+                                winc.artikle();
+                                winc.location();
+                                TFurniture.calc(winc);
+                                winc.draw();
+                                let rowid = $(product.table1).jqGrid('getGridParam', "selrow");
+                                $(product.table1).jqGrid('setRowData', rowid, {val: syspar1Row.txt});
                             }
                         },
                         error: () => {

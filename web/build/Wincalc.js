@@ -114,6 +114,7 @@ export class Wincalc {
     //Параметры системы(технолога) + параметры менеджера
     parametr() {
         try {
+            this.mapPardef.clear();
             //Параметры системы конструкции
             let syspar1List = eSyspar1.list.filter(rec => rec[eSyspar1.systree_id] === this.nuni);
             syspar1List.forEach(syspar1Rec => this.mapPardef.set(syspar1Rec[eSyspar1.groups_id], [...syspar1Rec]));
