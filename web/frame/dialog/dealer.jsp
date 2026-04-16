@@ -23,7 +23,7 @@
             function init_dialog() {
 
                 $("#dialog-jsp").dialog({
-                    title: "Справочник-",
+                    title: "Справочник",
                     width: 500,
                     height: 500,
                     modal: true,
