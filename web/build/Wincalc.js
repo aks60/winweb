@@ -319,7 +319,7 @@ export class Wincalc {
         } else {
             //this.ctx.strokeStyle = 'blue';
             //this.ctx.fillStyle = "rgba(255, 165, 0, 0.5)";            
-            alert('Wincalc.paint()');
+            //alert('Wincalc.paint()');
         }
         this.ctx.stroke(); //рисуем контур 
         this.ctx.restore();

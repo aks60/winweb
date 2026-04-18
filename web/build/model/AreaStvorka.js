@@ -4,6 +4,8 @@ import {UJson} from '../../common/uJson.js';
 import {Com5t, ElemFrame, AreaSimple} from './model.js'
 import {Type, TypeOpen1, TypeOpen2, PKjson,
         LayoutHand, Layout, UseSide} from '../../enums/enums.js';
+import MultiPolygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/MultiPolygon.js';
+import GeometryFactory from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/GeometryFactory.js';
 import Polygon from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/Polygon.js';
 import LineString from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineString.js';
 import AffineTransformation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/geom/util/AffineTransformation.js';
@@ -28,7 +30,10 @@ export class AreaStvorka extends AreaSimple {
     loopColor = [-3, -3]; //цвет подвеса 0-вручную. 1-авторасчёт
     lockColor = [-3, -3]; //цвет замка 0-вручную. 1-авторасчёт
     mosqColor = -3; //цвет москитки вирт.
-
+    areaHand = null;
+    imageHand = new GeometryFactory().createMultiPolygon([
+        Polygon.new([[-20, -20], [-20, 20], [-10, 20], [-10, -10], [10, -10], [10, 20], [20, 20], [20, -20]]),
+        Polygon.new([[-10, -10], [-10, 120], [10, 120], [10, -10]])]); //ручка шаблон 
     handHeight = 0; //высота ручки
     typeOpen = TypeOpen1.EMPTY; //направление открывания
     handLayout = LayoutHand.MIDL; //положение ручки на створке      
@@ -92,7 +97,7 @@ export class AreaStvorka extends AreaSimple {
             this.lineOpenVer = null;
             this.handColor = [-3, -3];
             this.loopColor = [-3, -3];
-            this.lockColor = [-3, -3]; 
+            this.lockColor = [-3, -3];
 
             super.initArtikle();
 
@@ -102,6 +107,14 @@ export class AreaStvorka extends AreaSimple {
                 this.sysfurnRec = eSysfurn.find2(this.gson.param[PKjson.sysfurnID]);
             } else { //по умолчанию
                 this.sysfurnRec = eSysfurn.find3(this.winc.nuni); //ищем первую в системе
+            }
+            //Сторона открывания
+            if (UJson.isFinite(this.gson.param, PKjson.typeOpen)) {
+                this.typeOpen = TypeOpen1.typeOpen(this.gson.param[PKjson.typeOpen]);
+            } else {
+                let index = this.sysfurnRec[eSysfurn.side_open];
+                this.typeOpen = (index === TypeOpen2.REQ[0]) ? this.typeOpen
+                        : (index === TypeOpen2.LEF[0]) ? TypeOpen1.LEFT : TypeOpen1.RIGH;
             }
             //Ручка
             if (UJson.isFinite(this.gson.param, PKjson.artiklHand)) {
@@ -143,29 +156,6 @@ export class AreaStvorka extends AreaSimple {
             if (UJson.isFinite(this.gson.param, PKjson.colorLock)) {
                 this.lockColor[0] = this.gson.param[PKjson.colorLock];
             }
-            //Сторона открывания
-            if (UJson.isFinite(this.gson.param, PKjson.typeOpen)) {
-                this.typeOpen = TypeOpen1.typeOpen(this.gson.param[PKjson.typeOpen]);
-            } else {
-                let index = this.sysfurnRec[eSysfurn.side_open];
-                this.typeOpen = (index === TypeOpen2.REQ[0]) ? this.typeOpen
-                        : (index === TypeOpen2.LEF[0]) ? TypeOpen1.LEFT : TypeOpen1.RIGH;
-            }
-            //Положение ручки на створке, ручка задана параметром
-            if (UJson.isFinite(this.gson.param, PKjson.positionHand)) {
-                let position = this.gson.param[PKjson.positionHand];
-                if (position === LayoutHand.VAR[0]) { //вариационная
-                    this.handLayout = LayoutHand.VAR;
-                    if (UJson.isFinite(this.gson.param, PKjson.heightHand)) {
-                        this.handHeight = this.gson.param[PKjson.heightHand];
-                        if (UJson.isFinite(this.gson.param, PKjson.heightHand)) {
-                            this.handHeight = this.gson.param[PKjson.heightHand];
-                        }
-                    }
-                } else { //по середине или константная
-                    this.handLayout = (position === LayoutHand.MIDL[0]) ? LayoutHand.MIDL : LayoutHand.CONST;
-                }
-            }
         } catch (e) {
             console.error(e.message);
         }
@@ -173,9 +163,9 @@ export class AreaStvorka extends AreaSimple {
 
     //Создание и коррекция сторон створки
     setLocation() {
+        let frameBox = (this.winc.listElem.filter(el => el.type === Type.IMPOST).length === 0)
+                || (this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
-            let frameBox = (this.winc.listElem.filter(el => el.type === Type.IMPOST).length === 0)
-                    || (this.root.type === Type.DOOR) ? this.owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
             let dh = this.winc.syssizRec[eSyssize.falz] + this.winc.syssizRec[eSyssize.naxl];
             let stvShell = UGeo.bufferGeometry(frameBox, this.winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
@@ -194,65 +184,54 @@ export class AreaStvorka extends AreaSimple {
             let stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
             this.area = Com5t.gf.createMultiPolygon([stvShell, stvInner, stvFalz, frameBox]);
 
-            //Высота ручки, линии открывания
+            //Высота ручки
             if (this.typeOpen !== TypeOpen1.EMPTY) {
-                if (UJson.isFinite(this.gson.param, PKjson.positionHand) === false) {
 
-                    if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutHand.MIDL.id) { //по середине
-                        this.handLayout = LayoutHand.MIDL;
-                        this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-                    } else if (this.sysfurnRec[eSysfurn.hand_pos] === LayoutHand.CONST.id) { //константная
-                        this.handLayout = LayoutHand.CONST;
-                        this.handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                let stvside = TypeOpen1.getHand(this, this.typeOpen);
+                let indexSideOpen = UGeo.getIndex(this.area, stvside.id);
+                let segment = UGeo.getSegment(this.area, indexSideOpen);
+                let segmentHand = UGeo.offsetSegm(segment, -1 * this.artiklRec[eArtikl.height] / 2); //линия сегмента ручки
+                this.handHeight = segmentHand.getLength() / 2;
+
+                //Ручка задана параметром
+                if (UJson.isFinite(this.gson.param, PKjson.positionHand)) {
+                    let position = this.gson.param[PKjson.positionHand];
+                    if (position === LayoutHand.VAR[0]) {  //установлена на высоте (вариационная)
+                        this.handLayout = LayoutHand.VAR;
+                        if (UJson.isFinite(this.gson.param, PKjson.heightHand)) {
+                            this.handHeight = this.gson.param[PKjson.heightHand];
+                            if (UJson.isFinite(this.gson.param, PKjson.heightHand)) {
+                                this.handHeight = this.gson.param[PKjson.heightHand];
+                            }
+                        }
+                    } else { //по середине или константная (конст.-настраивается в коструктиве)
+                        this.handLayout = (position === LayoutHand.MIDL[0]) ? LayoutHand.MIDL : LayoutHand.CONST;
                     }
                 }
 
+                //Полигон ручки
+                let cooHand = segmentHand.pointAlong(1 - (this.handHeight) / segmentHand.getLength()); //положение ручки на створке
+                let aff = AffineTransformation.translationInstance(cooHand.x, cooHand.y);
+                let imageHand2 = aff.transform(this.imageHand);
+                let angle = segmentHand.angle();
+                let angHand = (angle > 0) ? angle - Math.PI / 2 : angle + Math.PI / 2;
+                aff.setToRotation(angHand, cooHand.x, cooHand.y);
+                this.areaHand = aff.transform(imageHand2);
+
                 //Линии гориз. открывания
-                let stvside = TypeOpen1.getHand(this, this.typeOpen);
-                let ind = UGeo.getIndex(this.area, stvside.id);
-                let h = UGeo.getSegment(this.area, ind).midPoint(); //высота ручки по умолчанию
-                let s1 = UGeo.getSegment(this.area, ind - 1);
-                let s2 = UGeo.getSegment(this.area, ind + 1);
+                let h = UGeo.getSegment(this.area, indexSideOpen).midPoint(); //высота ручки по умолчанию
+                let s1 = UGeo.getSegment(this.area, indexSideOpen - 1);
+                let s2 = UGeo.getSegment(this.area, indexSideOpen + 1);
                 this.lineOpenHor = LineString.new([[s1.p0.x, s1.p0.y], [h.x, h.y], [s2.p1.x, s2.p1.y], [h.x, h.y]]);
 
                 //Линии вертик. открывания
                 if (this.typeOpen === TypeOpen1.LEFTUP || this.typeOpen === TypeOpen1.RIGHUP) {
                     stvside = this.frames.find(el => el.layout === Layout.TOP);
-                    ind = UGeo.getIndex(this.area, stvside.id);
-                    let p2 = UGeo.getSegment(this.area, ind).midPoint();
-                    s1 = UGeo.getSegment(this.area, ind - 1);
-                    s2 = UGeo.getSegment(this.area, ind + 1);
+                    indexSideOpen = UGeo.getIndex(this.area, stvside.id);
+                    let p2 = UGeo.getSegment(this.area, indexSideOpen).midPoint();
+                    s1 = UGeo.getSegment(this.area, indexSideOpen - 1);
+                    s2 = UGeo.getSegment(this.area, indexSideOpen + 1);
                     this.lineOpenVer = LineString.new([[p2.x, p2.y], [s1.p0.x, s1.p0.y], [p2.x, p2.y], [s2.p1.x, s2.p1.y]]);
-                }
-                //Полигон ручки
-                let DX = 10, DY = 60;
-                if (this.handLayout === LayoutHand.VAR && this.handHeight !== 0) {
-                    let lineSegm = UGeo.getSegment(this.area, ind);
-                    h = lineSegm.pointAlong(this.handHeight / lineSegm.getLength()); //высота ручки на створке
-                }
-                let sysprofRec = eSysprof.find5(this.winc.nuni, stvside.type[1], UseSide.ANY[1], UseSide.ANY[1]); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
-                let artiklRec = eArtikl.find(sysprofRec[eSysprof.artikl_id], false); //артикул
-                let dx = artiklRec[eArtikl.height] / 2;
-                if (this.typeOpen === TypeOpen1.UPPER) {
-                    h.y = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
-                } else {
-                    h.x = (this.typeOpen === TypeOpen1.LEFT || this.typeOpen === TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
-                }
-                if (this.root.type === Type.DOOR) {
-                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
-                } else {
-                    this.handOpen = Polygon.new([[h.x - DX, h.y - DY], [h.x + DX, h.y - DY], [h.x + DX, h.y + DY], [h.x - DX, h.y + DY]]);
-                }
-                //Направление открывания
-                if (this.typeOpen !== TypeOpen1.UPPER) {
-                    let anglHoriz = UGeo.anglHor(stvside.x1, stvside.y1, stvside.x2, stvside.y2);
-                    if (!(anglHoriz === 90 || anglHoriz === 270)) {
-                        let aff = new AffineTransformation();
-                        aff.setToRotation(UGeo.toRadians(anglHoriz),
-                                Centroid.getCentroid(this.handOpen).getX(),
-                                Centroid.getCentroid(this.handOpen).getY());
-                        this.handOpen = aff.transform(this.handOpen);
-                    }
                 }
             }
         } catch (e) {
@@ -263,24 +242,20 @@ export class AreaStvorka extends AreaSimple {
     paint() {
         if (this.winc.sceleton === false) {
             this.winc.ctx.lineWidth = 4;
+            this.winc.ctx.strokeStyle = '#000000';
 
-            if (this.handOpen !== null) {
-                this.winc.ctx.strokeStyle = '#000000';
-
-                if (this.lineOpenHor !== null) { //линии горизонт. открывания
-                    this.winc.paint(this.lineOpenHor);
-                }
-                if (this.lineOpenVer !== null) { //линии вертик. открывания
-                    this.winc.paint(this.lineOpenVer);
-                }
-                if (this.handOpen !== null) {
-                    let colorHandl = (this.handColor[1] === -3) ? this.handColor[0] : this.handColor[1];
-                    let colorRec = eColor.find(colorHandl);
-                    let rgb = colorRec[eColor.rgb].toString(16);
-                    this.winc.ctx.fillStyle = '#' + rgb;
-                    this.winc.paint(this.handOpen);
-                }
+            if (this.lineOpenHor !== null) { //линии горизонт. открывания
+                this.winc.paint(this.lineOpenHor);
             }
+            if (this.lineOpenVer !== null) { //линии вертик. открывания
+                this.winc.paint(this.lineOpenVer);
+            }
+            let colorHandl = (this.handColor[1] === -3) ? this.handColor[0] : this.handColor[1];
+            let colorRec = eColor.find(colorHandl);
+            let rgb = colorRec[eColor.rgb].toString(16);
+            this.winc.ctx.fillStyle = '#' + rgb;
+            this.winc.paint(this.areaHand.getGeometryN(0));
+            this.winc.paint(this.areaHand.getGeometryN(1));
         } else {
             console.error('Error: AreaStvorka.paint()');
         }

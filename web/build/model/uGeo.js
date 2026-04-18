@@ -444,7 +444,7 @@ UGeo.pointAlongOffset = (lineSegm, segmentLengthFraction, offsetDistance) => {
 
     let offsetx = segx - uy;
     let offsety = segy + ux;
-    let coord = new Coordinate(lineSegm.p0);
+    let coord = new Coordinate(lineSegm.p0.x, lineSegm.p0.y, lineSegm.p0.z);
     coord.setX(offsetx);
     coord.setY(offsety);
     coord.setZ(segz);
