@@ -6,7 +6,7 @@ export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, tabl
 //Масштабирование
 export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
-    $("#table1").jqGrid('setGridWidth', $("#midl").width() - 20);
+    $("#table1").jqGrid('setGridWidth', $("#midl").width() - 16);
     $("#table1").jqGrid('setGridHeight', $("#midl").height() - 28);
 }
 
@@ -17,11 +17,12 @@ export function init_table() {
         gridview: true,
         rownumbers: true,
         rownumWidth: 20,
-        autowidth: true,
+        //autowidth: true,
+        width: 600,
         height: "auto",
         colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User', 'prjpart_id'],
         colModel: [
-            {name: 'ID', width: 8, hidden: true},
+            {name: 'ID', hidden: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
             {name: 'num_acc', width: 80, sorttype: "text"},
             {name: 'date4', width: 80, sorttype: "date"},

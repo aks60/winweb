@@ -50,7 +50,6 @@
 
             init_table();
             load_table1();
-            $(window).bind('resize', resize).trigger('resize');
 
             prepareTool('project');
             deployTaq(['#dialog-card1', '#dialog-card2', '#east2']);
@@ -73,6 +72,7 @@
                 resize();
                 //progress('close');
             }
+            $(window).bind('resize', resize).trigger('resize');
         </script>
         <script type="text/javascript">
 
@@ -105,10 +105,10 @@
             </div>
             <div id="midl" style="position: relative; margin-right: 460px; height: 100%"> 
 
-                <div id="centr" style="height: 100%; width: 100%; margin-top: 0px;">
+                <div id="centr" style="height: 100%; width: 100%; margin-top: 0px; border: 8px double black;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
-                <div id="east" style="position: absolute; margin-top: 160px; width: 472px; top: 0; right: -460px; bottom: 0;">
+                <div id="east" style="position: absolute; margin-top: 160px; width: 450px; top: 0; right: -460px; bottom: 0;">
                     <div id="east2" style="margin-left: -2px; margin-top: -162px; height: 158px; background: #efeffb">
                         <jst id="p33" type='txt' label='Площадь заказа' width='160' width2="120"></jst><br>
                         <jst id="p33" type='txt' label='Вес заказа' width='160' width2="120"></jst><br>
