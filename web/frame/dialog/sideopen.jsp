@@ -16,7 +16,6 @@
             const winc = product.winCalc;
             const com5t = product.clickTreeNodeElem;
             const tabSideopen = document.getElementById('tab-sideopen');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
                 $(tabSideopen).jqGrid('setGridWidth', $("#dialog-jsp #pan-sideopen").width());
@@ -25,7 +24,7 @@
             init_dialog();
             init_table();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({

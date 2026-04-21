@@ -17,7 +17,6 @@
             const paramTaq = "<%= request.getParameter("param")%>";
             const winc = product.winCalc;
             const tabParam = document.getElementById('tab-param');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
                 $(tabParam).jqGrid('setGridWidth', $("#dialog-jsp #pan-param").width());
@@ -27,7 +26,7 @@
             init_dialog();
             init_table();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
 
             function init_dialog() {

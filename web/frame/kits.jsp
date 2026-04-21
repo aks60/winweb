@@ -15,10 +15,10 @@
             kits.table1 = document.getElementById('table1');
             init_table();
             load_table();
+            $(window).bind('resize', resize).trigger('resize');
 
             prepareTool('kits');
             deployTaq(['#dialog-card']);
-            $(window).bind('resize', resize).trigger('resize');
             document.getElementById('btnKit3').addEventListener('click', () =>  update_table());
             document.getElementById('btnKit4').addEventListener('click', () =>  delete_table());            
         </script>         

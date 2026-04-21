@@ -60,7 +60,6 @@
             import {product, resize, init_table1, load_table2, btn_to_tabs} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
-            $(window).bind('resize', resize); //.trigger('resize');
 
             //Создание конструкции
             let cnv = document.getElementById("cnv");
@@ -71,6 +70,7 @@
             product.table2 = document.getElementById('table2');
             init_table1();
             load_table2();
+            $(window).bind('resize', resize).trigger('resize');
 
             prepareTool('product');
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));

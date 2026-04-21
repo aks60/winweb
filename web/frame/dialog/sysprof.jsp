@@ -17,8 +17,7 @@
             let sysprofRow = {};
             const winc = product.winCalc;
             const com5t = product.clickTreeNodeElem;
-            const tabSysprof = document.getElementById('tab-sysprof');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
+            const tabSysprof = document.getElementById('tab-sysprof');            
 
             function resize() {
                 $(tabSysprof).jqGrid('setGridWidth', $("#dialog-jsp #pan-sysprof").width());
@@ -29,7 +28,7 @@
             init_table();
             data_set();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({

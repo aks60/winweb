@@ -13,12 +13,11 @@
                 $(tabDealer).jqGrid('setGridWidth', $("#dialog-jsp #pan-dealer").width());
                 $(tabDealer).jqGrid('setGridHeight', $("#dialog-jsp #pan-dealer").height() - 24);
             }
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
             
             init_dialog();
             init_table();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
 

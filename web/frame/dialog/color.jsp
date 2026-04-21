@@ -23,7 +23,6 @@
             const com5t = product.clickTreeNodeElem;
             const tab1Color = document.getElementById('tab1-color');
             const tab2Color = document.getElementById('tab2-color');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
             
             function resize() {
                 $(tab1Color).jqGrid('setGridWidth', $("#dialog-jsp #pan1-color").width());
@@ -35,7 +34,7 @@
             init_table();
             data_set();
             load1_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({

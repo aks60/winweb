@@ -17,7 +17,6 @@
             const winc = product.winCalc;
             const com5t = product.clickTreeNodeElem;
             const tabFurn = document.getElementById('tab-furniture');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             function resize() {
                 $(tabFurn).jqGrid('setGridWidth', $("#dialog-jsp #pan-furniture").width());
@@ -28,7 +27,7 @@
             init_table();
             data_set();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
 

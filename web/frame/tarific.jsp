@@ -18,12 +18,11 @@
             import {tarif, resize, init_table, load_table} from './frame/tarific.js';
                   
             tarif.table1 = document.getElementById('table1');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
 
             progress();
             init_table();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             prepareTool('tarif');   
             $(window).bind('resize', resize).trigger('resize');

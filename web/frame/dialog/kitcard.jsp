@@ -14,7 +14,6 @@
             const winc = product.winCalc;
             const tab1Kitcard = document.getElementById('tab1-kitcard');
             const tab2Kitcard = document.getElementById('tab2-kitcard');
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
             
             function resize() {
                 $("#tab1-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan1-kitcard").width());
@@ -26,7 +25,7 @@
             init_dialog();
             init_table();
             load_table();
-            resize();
+            $(window).bind('resize', resize).trigger('resize');
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({

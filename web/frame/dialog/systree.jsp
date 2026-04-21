@@ -50,9 +50,7 @@
             init_dialog($("#dialog-jsp"));
             init_table();
             load_table1();
-            resize();
-
-            $("#dialog-jsp").unbind().bind("dialogresize", (event, ui) => resize());
+            $(window).bind('resize', resize).trigger('resize');
 
             function resize() {
                 $("#tab1-ree").jqGrid('setGridWidth', $("#dialog-jsp #midl #pan1-systree").width());
