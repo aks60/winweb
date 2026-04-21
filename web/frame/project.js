@@ -6,8 +6,10 @@ export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, tabl
 //Масштабирование
 export function  resize() {
     $("#context").css("height", window.innerHeight - 80);
-    $("#table1").jqGrid('setGridWidth', $("#midl").width() - 16);
-    $("#table1").jqGrid('setGridHeight', $("#midl").height() - 28);
+    $("#table1").jqGrid('setGridWidth', $("#centr").width());
+    $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
+    $("#table2").jqGrid('setGridWidth', $("#east").width() - 4);
+    $("#table3").jqGrid('setGridWidth', $("#east").width() - 4);
 }
 
 //Инициализация таблиц
@@ -17,8 +19,7 @@ export function init_table() {
         gridview: true,
         rownumbers: true,
         rownumWidth: 20,
-        //autowidth: true,
-        width: 600,
+        autowidth: true,
         height: "auto",
         colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User', 'prjpart_id'],
         colModel: [
@@ -36,34 +37,37 @@ export function init_table() {
             project.projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
             project.table1rowID = rowid;
             load_table3();   //загрузка таблицы 3         
+        },
+        gridComplete: function () {
+            resize();
         }
     });
     $(project.table2).jqGrid({
         datatype: "local",
         gridview: true,
         autowidth: true,
-        height: 40,
+        height: 'auto',
         colNames: ['id', '', 'Скидка(%)', 'Без скидок', 'Со скидкой'],
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'name', width: 180, sortable: false},
-            {name: 'disc', width: 80, sortable: false},
+            {name: 'disc', width: 80, sortable: false, edittype: 'text'},
             {name: 'cost1', width: 80, sortable: false},
             {name: 'cost2', width: 80, sortable: false},
         ]
     });
+
     $(project.table3).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
         rownumWidth: 20,
-//        width: 468,
         autowidth: true,
         height: 'auto',
         colNames: ['id', 'Наименование', 'Кол-во', 'Изображение'],
         colModel: [
             {name: 'ID', hidden: true},
-            {name: 'name', width: 200, sortable: false},
+            {name: 'name', width: 220, sortable: false},
             {name: 'num', width: 24, sortable: false},
             {name: 'image', width: 68, sortable: false, formatter: function (cellvalue, options, rowObject) {
                     return '<canvas id="cnv' + options.rowId + '" width="68" height="68"></canvas>';
@@ -74,11 +78,11 @@ export function init_table() {
             let prjprodRow = $(project.table3).jqGrid('getRowData', rowid);
             project.prjprodRec = ePrjprod.list.find(rec => Number(prjprodRow.ID) === rec[ePrjprod.id]);
             project.table3rowID = rowid;
-            product.winCalc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);;
+            product.winCalc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);
+            ;
         }
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
-    //resize();
 }
 
 //Загрузка лроектов в таблицу
@@ -99,22 +103,15 @@ export function load_table1() {
             prjpart_id: tr[eProject.prjpart_id]
         });
     }
-    //resize();
     $(project.table1).jqGrid("setSelection", project.table1rowID);
 }
 
 //Загрузка конструкций в таблицу
-export function load_table2(projectID) {
-
+export function load_table2() {
     $(project.table2).jqGrid('clearGridData', true);
-
-        $(project.table1).jqGrid('addRowData', i + 1, {
-            ID: 1,
-            name: 'Конструкции',
-            disc: 0,
-            cost1: 0,
-            cost2: 0
-        });      
+    $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции', disc: 0, cost1: 0, cost2: 0});
+    $(project.table2).jqGrid('addRowData', 2, {ID: 2, name: 'Комплектации', disc: 0, cost1: 0, cost2: 0});
+    $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ', disc: 0, cost1: 0, cost2: 0});
 }
 
 //Загрузка конструкций в таблицу

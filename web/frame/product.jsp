@@ -29,7 +29,7 @@
             }
             #east1 {
                 background: #efeffb;
-                width: 388px;
+                width: 400px;
                 height: 300px;
                 right: 0px;
             }
@@ -37,7 +37,7 @@
             #east2 {
                 background: #efeffb;
                 overflow-y: auto;
-                width: 388px;
+                width: 400px;
                 height: calc(100% - 300px);
                 right: 0px;
                 bottom: 0px;
