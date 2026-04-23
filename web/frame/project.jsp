@@ -7,37 +7,6 @@
         <title>PROJECT</title>
 
         <style>
-/*            #table2  {
-                border-collapse: collapse;
-            }
-            #table2 tr {
-                height: 68px;
-            }
-            #table2 td {
-                border: 1px solid #79b7e7;
-            }
-            #table2 tr:hover {
-                background:#E2EEFF;
-            }
-            #table2 .activeRow, #table2 .activeRow:hover {
-                background:#6598C7;
-                color:#fff;
-            }
-            #table2 tr > *:nth-child(1) {
-                display: none !important;
-            }
-            #table2 tr > *:nth-child(2) {
-                width: 390px !important;
-            }
-            #table2 tr > *:nth-child(3) {
-                width: 30px !important;
-            }
-            #table2 tr > *:nth-child(4) {
-                width: 68px !important;
-            }
-            #table2 tr > *:nth-child(5) {
-                display: none !important;
-            }*/
         </style>        
 
         <script type="module">
@@ -64,8 +33,8 @@
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-            document.getElementById('btnTest1').addEventListener('click', test1);
-            document.getElementById('btnTest2').addEventListener('click', test2);
+            document.getElementById('btnCalc').addEventListener('click', test1);
+            document.getElementById('btnTest1').addEventListener('click', test2);
 
             function test1() {
                 progress('open');
@@ -87,8 +56,8 @@
             <button id="btnProd1" style="width: 136px">Добавить констр.</button>
             <button id="btnProd2" style="width: 136px">Изменить констр.</button>
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
-            <button id="btnTest1">TEST1</button>                        
-            <button id="btnTest2">TEST2</button>                        
+            <button id="btnCalc"  style="width: 128px">Кальк. заказа</button>                        
+            <button id="btnTest1">TEST</button>                        
         </div>     
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                

@@ -108,8 +108,9 @@ export function load_table1() {
 
 //Загрузка конструкций в таблицу
 export function load_table2() {
+    let v12 = 76.89;
     $(project.table2).jqGrid('clearGridData', true);
-    $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции', disc: 0, cost1: 0, cost2: 0});
+    $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции', disc: 0, cost1: 0, cost2: v12});
     $(project.table2).jqGrid('addRowData', 2, {ID: 2, name: 'Комплектации', disc: 0, cost1: 0, cost2: 0});
     $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ', disc: 0, cost1: 0, cost2: 0});
 }
@@ -393,6 +394,26 @@ export function delete_table3() {
             }
         }
     });
+}
+
+export function calculate() {
+    try {
+                $.ajax({
+                    url: 'dbset?action=calculatePrjprod',
+                    data: {param: JSON.stringify({id: project.prjprodRec[ePrjprod.id]})},
+                    success: (data) => {
+                        if (data.result === 'ok') {
+
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
+                    }
+                });
+    } catch (e) {
+        console.error(e.message);
+    }
 }
 
 

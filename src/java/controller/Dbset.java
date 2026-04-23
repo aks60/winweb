@@ -1,7 +1,6 @@
 package controller;
 
 import builder.Wincalc;
-import builder.making.TRecord;
 import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
@@ -374,6 +373,24 @@ public class Dbset {
 
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
 
+        ArrayList httpList = new ArrayList();
+            Wincalc winc = new Wincalc();
+            String script = request.getParameter("param");
+            winc.build(script);
+            winc.specific(true, true);
+            winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
+            return gson.toJson(httpList);
+    }
+
+    public static String calculateProject(HttpServletRequest request, HttpServletResponse response) {
+       
+//        HashMap<Integer, HashMap> hm = new HashMap();
+        String projectID = request.getParameter("projectID");
+
+            String param = request.getParameter("param");
+            JSONArray arr = (JSONArray) JSONValue.parse(param);
+            int id = Integer.parseInt(arr.get(ePrjprod.id.ordinal()).toString());
+            
         ArrayList httpList = new ArrayList();
             Wincalc winc = new Wincalc();
             String script = request.getParameter("param");

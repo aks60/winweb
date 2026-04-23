@@ -190,6 +190,7 @@ function prepareTool(name) {
         $("#btnProd1").button({icons: {primary: "ui-icon-plus"}});
         $("#btnProd2").button({icons: {primary: "ui-icon-pencil"}});
         $("#btnProd3").button({icons: {primary: "ui-icon-trash"}});
+        $("#btnCalc").button({icons: {primary: "ui-icon-calculator"}});
     }
     if (name === 'kits') {
         $("#btnKit1").button({icons: {primary: "ui-icon-plus"}});
