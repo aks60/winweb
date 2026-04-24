@@ -11,29 +11,30 @@
 
         <script type="module">
             import {project, resize, init_table, load_table1, insert_table1, update_table1, delete_table1, load_table2, 
-                    load_table3, update_table3, delete_table3} from './frame/project.js';
+                    update_table2, load_table3, update_table3, delete_table3, calculate_project} from './frame/project.js';
 
             $(window).bind('resize', resize);
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
             project.table3 = document.getElementById('table3');
+            deployTaq(['#dialog-card1', '#dialog-card2', '#dialog-card3', '#east2']);
 
             init_table();
             load_table1();
             load_table2();
 
             prepareTool('project');
-            deployTaq(['#dialog-card1', '#dialog-card2', '#east2']);
             $('#p23').datepicker();
             $('#p24').datepicker();
 
+            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card1'));
             document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card1'));
             document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
-            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
+            document.getElementById('btnDisc').addEventListener('click', () => update_table2('#dialog-card3'));
             document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-            document.getElementById('btnCalc').addEventListener('click', test1);
+            document.getElementById('btnCalc').addEventListener('click', () => calculate_project());            
             document.getElementById('btnTest1').addEventListener('click', test2);
 
             function test1() {
@@ -72,6 +73,11 @@
                 <jst id="p31" type='txt' label='Количество' width='80' width2="40"></jst><br>
                 <jst id="p32" type='area' label='Наименование конструкции' width='80' height='80' width2="290" resize=none;></jst>
             </div>
+            <div id="dialog-card3" card_width="260" card_height="180" style="display: none;">                
+                <jst id="p35" type='txt' label='Cкидка конструкции' width='160' width2="40"></jst><br>
+                <jst id="p36" type='txt' label='Cкидка комплектации' width='160' width2="40"></jst><br>
+                <jst id="p37" type='txt' label='Cкидка общая' width='160' width2="40"></jst>
+            </div>
             <div id="midl" style="position: relative; margin-right: 400px; height: 100%"> 
 
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 0px;">
@@ -79,9 +85,10 @@
                 </div>
                 <div id="east" style="position: absolute; width: 394px; height: 100%; top: 0; right: -400px;  border: 1px groove #ccc;">
                     <div id="east2" style="height: 180px; background: #efeffb">
-                        <jst id="p33" type='txt' label='Площадь заказа' width='160' width2="120"></jst><br>
-                        <jst id="p33" type='txt' label='Вес заказа' width='160' width2="120"></jst><br><br>                        
-                        <table id="table2"  class="ui-jqgrid-btable"></table><br>
+                        <jst id="p33" type='txt' label='Площадь заказа' width='120' width2="60"></jst><br>
+                        <jst id="p34" type='txt' label='Вес заказа' width='120' width2="60"></jst><br><br>                        
+                        <table id="table2"  class="ui-jqgrid-btable"></table>
+                        <button id="btnDisc" style="width: 140px;">Установить скидки</button>
                     </div>
                     <div id="east3" style="background: #efeffb;">
                         <table id="table3"  class="ui-jqgrid-btable"></table>                       

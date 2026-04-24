@@ -1,6 +1,7 @@
 package controller;
 
 import builder.Wincalc;
+import builder.making.TTariffic;
 import com.google.gson.Gson;
 import dataset.Connect;
 import dataset.Field;
@@ -36,6 +37,7 @@ import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -174,11 +176,14 @@ public class Dbset {
             int id = Integer.valueOf(arr.get(eProject.id.ordinal()).toString());
             Record record = eProject.find(id);
             record.set(eProject.up, "UPD");
+            record.set(eProject.disc_win, format3(arr, eProject.disc_win));
+            record.set(eProject.disc_kit, format3(arr, eProject.disc_kit));
+            record.set(eProject.disc_all, format3(arr, eProject.disc_all));
             record.set(eProject.num_ord, format3(arr, eProject.num_ord));
             record.set(eProject.num_acc, format3(arr, eProject.num_acc));
             record.set(eProject.manager, format3(arr, eProject.manager));
-            record.set(eProject.date4, (arr.get(eProject.date4.ordinal()).equals("")) ? null : arr.get(eProject.date4.ordinal()));
-            record.set(eProject.date6, (arr.get(eProject.date6.ordinal()).equals("")) ? null : arr.get(eProject.date6.ordinal()));
+            record.set(eProject.date4, ("".equals(arr.get(eProject.date4.ordinal()))) ? null : arr.get(eProject.date4.ordinal()));
+            record.set(eProject.date6, ("".equals(arr.get(eProject.date6.ordinal()))) ? null : arr.get(eProject.date6.ordinal()));
             record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
             Query qProject = new Query(eProject.values());
             qProject.update2(record);
@@ -374,29 +379,26 @@ public class Dbset {
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
 
         ArrayList httpList = new ArrayList();
-            Wincalc winc = new Wincalc();
-            String script = request.getParameter("param");
-            winc.build(script);
-            winc.specific(true, true);
-            winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
-            return gson.toJson(httpList);
+        Wincalc winc = new Wincalc();
+        String script = request.getParameter("param");
+        winc.build(script);
+        winc.specific(true, true);
+        winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
+        return gson.toJson(httpList);
     }
 
-    public static String calculateProject(HttpServletRequest request, HttpServletResponse response) {
-       
-//        HashMap<Integer, HashMap> hm = new HashMap();
-        String projectID = request.getParameter("projectID");
+    public static JSONObject calculateProject(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String projectID = request.getParameter("projectID");
+            Record projectRec = eProject.find(Integer.valueOf(projectID));
+            TTariffic.calculate(projectRec, true);
+            projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
+            projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));            
+            projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));            
+            return new JSONObject(App.asMap("result", "ok", "projectRec", projectRec));
 
-            String param = request.getParameter("param");
-            JSONArray arr = (JSONArray) JSONValue.parse(param);
-            int id = Integer.parseInt(arr.get(ePrjprod.id.ordinal()).toString());
-            
-        ArrayList httpList = new ArrayList();
-            Wincalc winc = new Wincalc();
-            String script = request.getParameter("param");
-            winc.build(script);
-            winc.specific(true, true);
-            winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
-            return gson.toJson(httpList);
+        } catch (Exception e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 }

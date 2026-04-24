@@ -36,6 +36,7 @@ export function init_table() {
             let projectRow = $(project.table1).jqGrid('getRowData', rowid);
             project.projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
             project.table1rowID = rowid;
+            load_table2();
             load_table3();   //загрузка таблицы 3         
         },
         gridComplete: function () {
@@ -47,13 +48,13 @@ export function init_table() {
         gridview: true,
         autowidth: true,
         height: 'auto',
-        colNames: ['id', '', 'Скидка(%)', 'Без скидок', 'Со скидкой'],
+        colNames: ['id', '', 'Проц.скидки', 'Без скидок', 'Со скидкой'],
         colModel: [
             {name: 'ID', hidden: true},
-            {name: 'name', width: 180, sortable: false},
+            {name: 'name', width: 120, sortable: false},
             {name: 'disc', width: 80, sortable: false, edittype: 'text'},
-            {name: 'cost1', width: 80, sortable: false},
-            {name: 'cost2', width: 80, sortable: false},
+            {name: 'cost1', width: 100, sortable: false},
+            {name: 'cost2', width: 100, sortable: false},
         ]
     });
 
@@ -79,7 +80,6 @@ export function init_table() {
             project.prjprodRec = ePrjprod.list.find(rec => Number(prjprodRow.ID) === rec[ePrjprod.id]);
             project.table3rowID = rowid;
             product.winCalc = project.mapWinc.get(project.prjprodRec[ePrjprod.id]);
-            ;
         }
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
@@ -108,11 +108,25 @@ export function load_table1() {
 
 //Загрузка конструкций в таблицу
 export function load_table2() {
-    let v12 = 76.89;
+
+    const rubf = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
+
     $(project.table2).jqGrid('clearGridData', true);
-    $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции', disc: 0, cost1: 0, cost2: v12});
-    $(project.table2).jqGrid('addRowData', 2, {ID: 2, name: 'Комплектации', disc: 0, cost1: 0, cost2: 0});
-    $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ', disc: 0, cost1: 0, cost2: 0});
+    $('#p33').val(Math.round(project.projectRec[eProject.square] / 1000000 * 100) / 100); //площадь
+    $('#p34').val(Math.round(project.projectRec[eProject.weight] * 100) / 100); //вес 
+
+    $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции',
+        disc: project.projectRec[eProject.disc_win], //скидка конструкции 
+        cost1: rubf.format(project.projectRec[eProject.cost1_win]), //cтоимость конструкций без скидки
+        cost2: rubf.format(project.projectRec[eProject.cost2_win])}); //cтоимость конструкций co скидкой
+    $(project.table2).jqGrid('addRowData', 2, {ID: 2, name: 'Комплектации',
+        disc: project.projectRec[eProject.disc_kit], //скидка комплектации
+        cost1: rubf.format(project.projectRec[eProject.cost1_kit]), //стоимость комплектации без скидки
+        cost2: rubf.format(project.projectRec[eProject.cost1_kit])}); //стоимость комплектации со скидкой
+    $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ',
+        disc: project.projectRec[eProject.disc_all], //скидка общая
+        cost1: rubf.format(project.projectRec[eProject.cost1_win] + project.projectRec[eProject.cost1_kit]), //итого стоимость без скидки
+        cost2: rubf.format(project.projectRec[eProject.cost2_win] + project.projectRec[eProject.cost2_kit])}); //итого стоимость со скидкой
 }
 
 //Загрузка конструкций в таблицу
@@ -312,6 +326,49 @@ export function delete_table1(table) {
     }
 }
 
+//Редактирования строки таблицы
+export function update_table2(dialogCard) {
+
+    $("#p35").val($(project.table2).jqGrid('getCell', 1, 2));
+    $("#p36").val($(project.table2).jqGrid('getCell', 2, 2));
+    $("#p37").val($(project.table2).jqGrid('getCell', 3, 2));
+
+    $(dialogCard).dialog({
+        title: "Карточка редактирования заказа",
+        width: $(dialogCard).attr('card_width'),
+        height: $(dialogCard).attr('card_height'),
+        modal: true,
+        resizable: false,
+        buttons: {
+            "Применить": function () {
+
+                project.projectRec[eProject.disc_win] = $('#p35').val();
+                project.projectRec[eProject.disc_kit] = $('#p36').val();
+                project.projectRec[eProject.disc_all] = $('#p37').val();
+
+                $.ajax({
+                    url: 'dbset?action=updateProject',
+                    data: {param: JSON.stringify(project.projectRec)},
+                    success: (data) => {
+                        
+                        if (data.result === 'ok') {
+                            load_table2();
+                        } else
+                            dialogMes('Сообщение', "<p>" + data.result);
+                    },
+                    error: () => {
+                        dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+                    }
+                });
+                $(this).dialog("close");
+            },
+            "Отменить": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
 //Добавим запись в домен ePrjprod
 export function insert_table3(table, prjprodRec) {
 }
@@ -396,21 +453,33 @@ export function delete_table3() {
     });
 }
 
-export function calculate() {
+export function calculate_project() {
     try {
-                $.ajax({
-                    url: 'dbset?action=calculatePrjprod',
-                    data: {param: JSON.stringify({id: project.prjprodRec[ePrjprod.id]})},
-                    success: (data) => {
-                        if (data.result === 'ok') {
+        $.ajax({
+            url: 'dbset?action=calculateProject',
+            data: {'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                debugger;
+                if (data.result === 'ok') {
+                    let projectRec = data.projectRec;
 
-                        } else
-                            dialogMes('Сообщение', "<p>" + data.result);
-                    },
-                    error: () => {
-                        dialogMes('Сообщение', "<p>Ошибка при удалении записи на сервере");
-                    }
-                });
+                    project.projectRec[eProject.square] = projectRec[eProject.square];
+                    project.projectRec[eProject.weight] = projectRec[eProject.weight];
+                    project.projectRec[eProject.cost1_win] = projectRec[eProject.cost1_win];
+                    project.projectRec[eProject.cost2_win] = projectRec[eProject.cost2_win];
+                    project.projectRec[eProject.cost1_kit] = projectRec[eProject.cost1_kit];
+                    project.projectRec[eProject.cost2_kit] = projectRec[eProject.cost2_kit];
+
+                    load_table2();
+
+                } else
+                    dialogMes('Сообщение', "<p>" + data.result);
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX Error: " + textStatus, errorThrown);
+                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
+            }
+        });
     } catch (e) {
         console.error(e.message);
     }

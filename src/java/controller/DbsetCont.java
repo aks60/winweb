@@ -169,12 +169,10 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("tarificList")) {
                     out.write(Dbset.tarificList(request, response));
-          
+
                 } else if (action.equalsIgnoreCase("calculateProject")) {
-                    out.write(Dbset.calculateProject(request, response));
-                    
-                    JSONObject output = Dbset.insertKit(request, response);
-                    out.write(JSONObject.toJSONString(output));                    
+                    JSONObject output = Dbset.calculateProject(request, response);
+                    out.write(JSONObject.toJSONString(output));
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);
