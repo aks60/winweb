@@ -376,6 +376,11 @@ public class Dbset {
         return gson.toJson(qSyssize);
     }
 
+    public static String sysuserList(HttpServletRequest request, HttpServletResponse response) {
+        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.id);
+        return gson.toJson(qSysuser);
+    }
+
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
 
         ArrayList httpList = new ArrayList();

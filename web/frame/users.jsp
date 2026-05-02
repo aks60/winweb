@@ -7,24 +7,13 @@
         <title>USERS</title>
 
         <script type="text/javascript">
-            users.resize = function () {
-                var height = window.innerHeight;
-                $("#context").css("height", height - 54);
-                $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
-                $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
-            }
-
-            function onpage(val) {
-                $("#pan1, #pan2, #pan3, #pan4").hide();
-                $("#pan" + val).show();
-            }
-
             $(document).ready(function () {
+                
                 $(window).bind('resize', () => users.resize()).trigger('resize');
-
                 users.init_table1($("#table1"));
                 users.load_table1($("#table1"));
                 $('button').button();
+                
             });
         </script>          
     </head>
@@ -36,13 +25,13 @@
             <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                     <div id="west2" style="height: 112px">
-                        <button type="button" onClick="onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
-                        <button type="button" onClick="onpage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
-                        <button type="button" onClick="onpage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
-                        <button type="button" onClick="onpage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
+                        <button type="button" onClick="users.onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
+                        <button type="button" onClick="users.onpage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
+                        <button type="button" onClick="users.onpage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
+                        <button type="button" onClick="users.onpage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
                     </div>
                     <div id="west3" style="height: 200px">
-                        <div id="pan1">                     
+                        <div id="pan1" style="display: none;">                     
                             <p class="pantitle"><font size=3>Регистрация нового пользователя для входа через логин и пароль</font></p> 
                             <p>Для регистрации введите логин и пароль администратора, введите логин и пароль пользователя, 
                                 нажмите кнопку «Зарегистрировать». </p><br><br>    
