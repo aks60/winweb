@@ -110,7 +110,6 @@ export function load_table1() {
 export function load_table2() {
 
     const rubf = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
-debugger;
     $(project.table2).jqGrid('clearGridData', true);
     $('#p33').val(Math.round(project.projectRec[eProject.square] / 1000000 * 100) / 100); //площадь
     $('#p34').val(Math.round(project.projectRec[eProject.weight] * 100) / 100); //вес 
@@ -466,10 +465,8 @@ export function calculate_project() {
             url: 'dbset?action=calculateProject',
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
-                debugger;
                 if (data.result === 'ok') {
                     let projectRec = data.projectRec;
-debugger;
                     project.projectRec[eProject.square] = projectRec[eProject.square];
                     project.projectRec[eProject.weight] = projectRec[eProject.weight];
                     project.projectRec[eProject.cost1_win] = projectRec[eProject.cost1_win];

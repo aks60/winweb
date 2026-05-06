@@ -92,7 +92,6 @@
             }
 
             function save_table() {
-                debugger;
                 try {
                     winc.gson.param = (winc.gson.param === undefined) ? {} : winc.gson.param;
                     winc.gson.param.ioknaParam = (winc.gson.param.ioknaParam === undefined) ? [] : winc.gson.param.ioknaParam;
