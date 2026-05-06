@@ -110,23 +110,29 @@ export function load_table1() {
 export function load_table2() {
 
     const rubf = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
-
+debugger;
     $(project.table2).jqGrid('clearGridData', true);
     $('#p33').val(Math.round(project.projectRec[eProject.square] / 1000000 * 100) / 100); //площадь
     $('#p34').val(Math.round(project.projectRec[eProject.weight] * 100) / 100); //вес 
 
+    let disc_all = project.projectRec[eProject.disc_all];
+    let cost1_win = project.projectRec[eProject.cost1_win];
+    let cost1_kit = project.projectRec[eProject.cost1_kit];
+    let cost2_win = project.projectRec[eProject.cost2_win];
+    let cost2_kit = project.projectRec[eProject.cost2_kit];
+
     $(project.table2).jqGrid('addRowData', 1, {ID: 1, name: 'Конструкции',
         disc: project.projectRec[eProject.disc_win], //скидка конструкции 
-        cost1: rubf.format(project.projectRec[eProject.cost1_win]), //cтоимость конструкций без скидки
-        cost2: rubf.format(project.projectRec[eProject.cost2_win])}); //cтоимость конструкций co скидкой
+        cost1: rubf.format(cost1_win), //cтоимость конструкций без скидки
+        cost2: rubf.format(cost2_win)}); //cтоимость конструкций co скидкой
     $(project.table2).jqGrid('addRowData', 2, {ID: 2, name: 'Комплектации',
         disc: project.projectRec[eProject.disc_kit], //скидка комплектации
-        cost1: rubf.format(project.projectRec[eProject.cost1_kit]), //стоимость комплектации без скидки
-        cost2: rubf.format(project.projectRec[eProject.cost1_kit])}); //стоимость комплектации со скидкой
+        cost1: rubf.format(cost1_kit), //стоимость комплектации без скидки
+        cost2: rubf.format(cost2_kit)}); //стоимость комплектации со скидкой
     $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ',
         disc: project.projectRec[eProject.disc_all], //скидка общая
-        cost1: rubf.format(project.projectRec[eProject.cost1_win] + project.projectRec[eProject.cost1_kit]), //итого стоимость без скидки
-        cost2: rubf.format(project.projectRec[eProject.cost2_win] + project.projectRec[eProject.cost2_kit])}); //итого стоимость со скидкой
+        cost1: rubf.format(cost1_win + cost1_kit), //итого стоимость без скидки
+        cost2: rubf.format((cost2_win + cost2_kit) - (cost2_win + cost2_kit) * disc_all / 100)}); //итого стоимость со скидкой
 }
 
 //Загрузка конструкций в таблицу
@@ -350,9 +356,10 @@ export function update_table2(dialogCard) {
                     url: 'dbset?action=updateProject',
                     data: {param: JSON.stringify(project.projectRec)},
                     success: (data) => {
-                        
+
                         if (data.result === 'ok') {
                             load_table2();
+                            calculate_project();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -462,7 +469,7 @@ export function calculate_project() {
                 debugger;
                 if (data.result === 'ok') {
                     let projectRec = data.projectRec;
-
+debugger;
                     project.projectRec[eProject.square] = projectRec[eProject.square];
                     project.projectRec[eProject.weight] = projectRec[eProject.weight];
                     project.projectRec[eProject.cost1_win] = projectRec[eProject.cost1_win];

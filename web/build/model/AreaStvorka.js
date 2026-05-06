@@ -17,6 +17,8 @@ export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
     sysfurnRec = eSysfurn.vrec; //фурнитура
+    //[0]-вручную, то что отображается в интерфейсе
+    //[1]-подбор по параметрам, то что отображается на рисунке и идет в спецификацию    
     handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка 0-вручную. 1-авторасчёт
     loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли) 0-вручную. 1-авторасчёт
     lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок 0-вручную. 1-авторасчёт
@@ -127,7 +129,7 @@ export class AreaStvorka extends AreaSimple {
                 this.handColor[0] = this.gson.param[PKjson.colorHand];
             } else if (this.handColor[0] === -3) { //по умолчанию (первая в списке)
                 this.handColor[0] = eArtdet.find(this.handRec[0][eArtikl.id])[eArtdet.color_fk];
-                if (this.handColor[0] < 0) { //если все текстуры группы
+                if (this.handColor[0] != -3 && this.handColor[0] < 0) { //если все текстуры группы
                     let recordList = eColor.list.filter(rec => rec[eColor.groups_id] === this.handColor[0]);
                     this.handColor[0] = recordList[0][eColor.id]; //первая в списке
                 }

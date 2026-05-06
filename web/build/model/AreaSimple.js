@@ -48,14 +48,14 @@ export class AreaSimple extends Com5t {
                         ? Number(this.gson.param[PKjson.colorID3]) : this.owner.colorID3;
             } else {
                 this.colorID1 = (UJson.isFinite(this.gson.param, PKjson.colorID1))
-                        ? Number(this.gson.param[PKjson.colorID1])
-                        : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
+                        ? Number(this.gson.param[PKjson.colorID1]) : (this.winc.gson.color1 === -3)
+                        ? UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]) : this.winc.gson.color1; //базовый
                 this.colorID2 = (UJson.isFinite(this.gson.param, PKjson.colorID2))
-                        ? Number(this.gson.param[PKjson.colorID2])
-                        : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
-                this.colorID3 = (UJson.isFinite(this.gson.param, PKjson.colorID3))
-                        ? Number(this.gson.param[PKjson.colorID3])
-                        : UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]);
+                        ? Number(this.gson.param[PKjson.colorID2]) : (this.winc.gson.color2 === -3)
+                        ? UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]) : this.winc.gson.color2; //внутр
+                this.colorID3 = (UJson.isFinite(this.gson.param, PKjson.colorID3)) 
+                        ? Number(this.gson.param[PKjson.colorID3]) : (this.winc.gson.color2 === -3)
+                        ? UColor.findColorFromArtdet(this.sysprofRec[eSysprof.artikl_id]) : this.winc.gson.color3; //внещний
             }
         } catch (e) {
             console.error(e.message);

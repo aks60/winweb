@@ -167,6 +167,7 @@ export class TFurniture {
                     spcAdd.color(areaStv.loopColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                     if (UJson.isFinite(areaStv.gson.param, PKjson.colorLoop) === false) { //если нет параметра то подбор
                         if (UColor.choiceFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                            areaStv.loopColor[0] = spcAdd.colorID1; //из детализации подбор
                             areaStv.loopColor[1] = spcAdd.colorID1; //из детализации подбор
                         }
                     }
