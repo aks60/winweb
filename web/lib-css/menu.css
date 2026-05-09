@@ -54,10 +54,10 @@
     position:absolute;
     top:-1px;
     z-index:90000;
-    width:200px;
+    width:140px;
 }
 #nav2 li div div.wrp2{
-    width:200px;
+    width:140px;
 }
 #nav2 .sep{
     left:192px;
@@ -69,11 +69,17 @@
     top:0;
     width:1px;
 }
+.separator {
+    height: 1px;
+    background-color: #aaa;
+    margin: 1px 0;
+    list-style: none;
+}
 #nav2 li div ul{
     padding-left:5px;
     /*//padding-right:10px;*/
     position:relative;
-    width:192px;
+    width:132px;
     float:left;
     list-style-type:none;
 }

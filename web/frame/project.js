@@ -158,8 +158,9 @@ export function load_table3() {
 }
 
 //Вставка строки в таблицу
-export function insert_table1(taq) {
+export function insert_table1() {
 
+    let taq = document.getElementById('dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
@@ -230,8 +231,9 @@ export function insert_table1(taq) {
 }
 
 //Редактирования строки таблицы
-export function update_table1(dialogCard) {
+export function update_table1() {
 
+    let dialogCard = $('#dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $("#p21").val(projectRow.num_ord);
@@ -240,10 +242,10 @@ export function update_table1(dialogCard) {
     $("#p24").val(projectRow.date6);
     $("#p25").val(projectRow.partner);
     $("#p25").attr("fk", projectRow.prjpart_id);
-    $(dialogCard).dialog({//открытие диалога insert
+    dialogCard.dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
-        width: $(dialogCard).attr('card_width'),
-        height: $(dialogCard).attr('card_height'),
+        width: dialogCard.attr('card_width'),
+        height: dialogCard.attr('card_height'),
         modal: true,
         resizable: false,
         buttons: {
@@ -289,10 +291,9 @@ export function update_table1(dialogCard) {
 }
 
 //Удаление строки таблицы
-export function delete_table1(table) {
-
-    let projectRow = getSelectedRow(table);
-    if (projectRow != null) {
+export function delete_table1() {
+    let projectRow = getSelectedRow($(project.table1));
+    if (projectRow !== null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущий заказ?");
         $("#dialog-mes").dialog({
@@ -308,7 +309,7 @@ export function delete_table1(table) {
                         data: {param: JSON.stringify({id: projectRow.ID})},
                         success: (data) => {
                             if (data.result === 'ok') {
-                                table.jqGrid('delRowData', table.jqGrid('getGridParam', "selrow"));
+                                $(project.table1).jqGrid('delRowData', $(project.table1).jqGrid('getGridParam', "selrow"));
                                 for (let i = 0; i < eProject.list.length; ++i) {
                                     if (Number(projectRow.ID) === eProject.list[i][eProject.id]) {
                                         eProject.list.splice(i, 1);
@@ -332,16 +333,17 @@ export function delete_table1(table) {
 }
 
 //Редактирования строки таблицы
-export function update_table2(dialogCard) {
+export function update_table2() {
 
+    let dialogCard = $('#dialog-card3');
     $("#p35").val($(project.table2).jqGrid('getCell', 1, 2));
     $("#p36").val($(project.table2).jqGrid('getCell', 2, 2));
     $("#p37").val($(project.table2).jqGrid('getCell', 3, 2));
 
-    $(dialogCard).dialog({
+    dialogCard.dialog({
         title: "Карточка редактирования заказа",
-        width: $(dialogCard).attr('card_width'),
-        height: $(dialogCard).attr('card_height'),
+        width: dialogCard.attr('card_width'),
+        height: dialogCard.attr('card_height'),
         modal: true,
         resizable: false,
         buttons: {
@@ -380,8 +382,9 @@ export function insert_table3(table, prjprodRec) {
 }
 
 //Редактирования строки таблицы
-export function update_table3(taq) {
+export function update_table3() {
 
+    let taq = document.getElementById('dialog-card2');
     $("#p31").val(project.prjprodRec[ePrjprod.num]);
     $("#p32").val(project.prjprodRec[ePrjprod.name]);
 

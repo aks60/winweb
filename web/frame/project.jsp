@@ -28,11 +28,11 @@
             $('#p24').datepicker();
 
             document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
-            document.getElementById('btnProj1').addEventListener('click', () => insert_table1('#dialog-card1'));
-            document.getElementById('btnProj2').addEventListener('click', () => update_table1('#dialog-card1'));
-            document.getElementById('btnProj3').addEventListener('click', () => delete_table1($('#table1')));
-            document.getElementById('btnDisc').addEventListener('click', () => update_table2('#dialog-card3'));
-            document.getElementById('btnProd2').addEventListener('click', () => update_table3('#dialog-card2'));
+            document.getElementById('btnProj1').addEventListener('click', () => insert_table1());
+            document.getElementById('btnProj2').addEventListener('click', () => update_table1());
+            document.getElementById('btnProj3').addEventListener('click', () => delete_table1());
+            document.getElementById('btnDisc').addEventListener('click', () => update_table2());
+            document.getElementById('btnProd2').addEventListener('click', () => update_table3());
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
             document.getElementById('btnCalc').addEventListener('click', () => calculate_project());            
             document.getElementById('btnTest1').addEventListener('click', test2);
