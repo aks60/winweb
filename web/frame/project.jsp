@@ -7,10 +7,13 @@
         <title>PROJECT</title>
 
         <style>
+            #north button.ui-widget{
+                height: 20px;
+            }
         </style>        
 
         <script type="module">
-            import {project, resize, init_table, load_table1, insert_table1, update_table1, delete_table1, load_table2, 
+            import {project, resize, init_table, load_table1, insert_table1, update_table1, delete_table1, load_table2,
                     update_table2, load_table3, update_table3, delete_table3, calculate_project} from './frame/project.js';
 
             $(window).bind('resize', resize);
@@ -34,7 +37,7 @@
             document.getElementById('btnDisc').addEventListener('click', () => update_table2());
             document.getElementById('btnProd2').addEventListener('click', () => update_table3());
             document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-            document.getElementById('btnCalc').addEventListener('click', () => calculate_project());            
+            document.getElementById('btnCalc').addEventListener('click', () => calculate_project());
             document.getElementById('btnTest1').addEventListener('click', test2);
 
             function test1() {
@@ -49,7 +52,7 @@
         </script>
     </head>
     <body>        
-        <div id="north">
+<!--        <div id="north">
             <button id="btnProj1" style="width: 128px">Добавить заказ</button>
             <button id="btnProj2" style="width: 128px">Изменить заказ</button>
             <button id="btnProj3" style="width: 128px">Удалить заказ</button>
@@ -59,7 +62,7 @@
             <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
             <button id="btnCalc"  style="width: 128px">Кальк. заказа</button>                        
             <button id="btnTest1">TEST</button>                        
-        </div>     
+        </div>     -->
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                
                 <jst id="p21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>

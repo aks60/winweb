@@ -179,7 +179,7 @@ export function insert_table1() {
 
                 //Открытие диалога insert
                 $(taq).dialog({
-                    title: "Карточка ввода нового проекта",
+                    title: "Карточка ввода нового заказа",
                     width: $(taq).attr('card_width'),
                     height: $(taq).attr('card_height'),
                     modal: true,

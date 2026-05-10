@@ -79,10 +79,10 @@
             document.getElementById('btnTest3').addEventListener('click', test1);
             document.getElementById('btnTest4').addEventListener('click', test2);
 
-            function test1() {
+            export function test1() {
                 console.log(JSON.stringify(product.winCalc.gson));
             }
-            function test2() {
+            export function test2() {
 
             }
         </script>  

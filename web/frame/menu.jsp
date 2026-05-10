@@ -9,7 +9,14 @@
     <script type="module">
         import {insert_table1 as project_insert_table1,
                 update_table1 as project_update_table1,
-                delete_table1 as project_delete_table1} from './frame/project.js';
+                delete_table1 as project_delete_table1,
+                update_table2 as project_update_table2,
+                update_table3 as project_update_table3,
+                delete_table3 as project_delete_table3,
+                calculate_project} from './frame/project.js';
+        import {update_table,
+                delete_table,
+                color_to_kit} from './frame/kits.js';
 
         let nameJsp = 'PROJECT';
 
@@ -27,16 +34,32 @@
             }
         }
 
+        function load_kits(name) {
+            nameJsp = name;
+            if ($('#body-jsp title').text() !== 'KITS') {
+                $('#body-jsp').load('frame/kits.jsp');
+            }
+        }
+
         function init_menu() {
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project_insert_table1());
             document.getElementById('m21').addEventListener('click', () => project_update_table1());
             document.getElementById('m31').addEventListener('click', () => project_delete_table1());
 
-            document.getElementById('m61').addEventListener('click', () => project_delete_table1());
-            document.getElementById('m71').addEventListener('click', () => project_delete_table1());
-            
+            document.getElementById('m41').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
+            document.getElementById('m51').addEventListener('click', () => project_update_table3());
+            document.getElementById('m61').addEventListener('click', () => project_delete_table3());
+            document.getElementById('m71').addEventListener('click', () => project_update_table2());
+            document.getElementById('m81').addEventListener('click', () => calculate_project());
+
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
+
+            document.getElementById('m03').addEventListener('click', () => load_kit('KIT'));
+            document.getElementById('m13').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
+            document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
+            document.getElementById('m33').addEventListener('click', () => );
+            document.getElementById('m43').addEventListener('click', () => );
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
                 if ($(this).parent().hasClass('selected')) {
@@ -81,11 +104,12 @@
                                             <li><a id='m21'>Изменить заказ</a></li>   
                                             <li><a id='m31'>Удалить заказ</a></li>    
                                             <li><a class="separator"></a></li>
-                                            <li><a id='m51' onClick="$('#dialog-jsp').load('frame/dialog/systree.jsp')">Добавить конст.</a></li>
-                                            <li><a id='m61'>Изменить конст.</a></li>
-                                            <li><a id='m71'>Удалить конст.</a></li>
+                                            <li><a id='m41'>Добавить конст.</a></li>
+                                            <li><a id='m51'>Изменить конст.</a></li>
+                                            <li><a id='m61'>Удалить конст.</a></li>
                                             <li><a class="separator"></a></li>
-                                            <li><a id='m81'>Кальк. заказа</a></li>
+                                            <li><a id='m71'>Установить скидки</a></li>
+                                            <li><a id='m81'>Калькуляция заказа</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -98,17 +122,31 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="alert('01')">Добавить</a></li>
-                                            <li><a onClick="alert('02')">Изменить</a></li>
-                                            <li><a onClick="alert('03')">Удалить</a></li>    
+                                            <li><a onClick="alert('01')">TEST3</a></li>
+                                            <li><a onClick="alert('02')">TEST4</a></li>  
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
                         </div>                      
                     </li>
-                    <li><a onClick="$('#body-jsp').load('frame/kits.jsp');">Комплекты</a></li>
-                    <li><a>Отчеты</a>
+                    <li><a id="03">Комплекты</a>
+                        <div class="subs">
+                            <div>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li><a id="m13">Добавить комплект</a></li>
+                                            <li><a id="m23">Добавить артикул</a></li>  
+                                            <li><a id="m33">Изменить артикул</a></li>  
+                                            <li><a id="m43">Удалить артикул</a></li>  
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </li>
+                    <li><a id="m04">Отчеты</a>
                         <div class="subs">
                             <div>
                                 <ul>
