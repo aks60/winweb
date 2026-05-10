@@ -76,21 +76,10 @@
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
             document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
-            document.getElementById('btnTest3').addEventListener('click', test1);
-            document.getElementById('btnTest4').addEventListener('click', test2);
-
-            export function test1() {
-                console.log(JSON.stringify(product.winCalc.gson));
-            }
-            export function test2() {
-
-            }
         </script>  
     </head>
     <body>
         <div id="north">
-            <button id="btnTest3" style="width: 54px; margin-left: 40px;">TEST3</button>
-            <button id="btnTest4" style="width: 54px; margin-left: 40px;">TEST4</button>
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>

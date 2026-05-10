@@ -57,17 +57,17 @@ export function init_table1() {
 }
 
 //Загрузка данных в таблицу
-export function load_table1() {  
+export function load_table1() {
     try {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
-        product.winCalc.mapPardef.forEach((rec, key) => syspar1List.push(rec));      
+        product.winCalc.mapPardef.forEach((rec, key) => syspar1List.push(rec));
         //syspar1List.sort((a, b) => b[eParams.params_id] - a[eParams.params_id]);
-     
+
         for (let i = 0; i < syspar1List.length; i++) {
             let syspar1Rec = syspar1List[i];
             let groupsRec = eGroups.list.find(rec => rec[eGroups.id] === syspar1Rec[eSyspar1.groups_id]);
-            
+
             $(product.table1).jqGrid('addRowData', i + 1, {
                 ID: syspar1Rec[eSyspar1.id],
                 groupsID: groupsRec[eGroups.id],
@@ -165,7 +165,7 @@ export function tree_to_html() {
                 n15: check_mark(eColor.find(winc.root.colorID2)[eColor.name], '#n15 + input', PKjson.colorID2),
                 n16: check_mark(eColor.find(winc.root.colorID3)[eColor.name], '#n16 + input', PKjson.colorID3)
             });
-           
+
             //Парам. по умолчанию
         } else if (com5t.type === Type.PARAM) {
             $("#tabs-2").show();
@@ -251,5 +251,13 @@ export function btn_to_tabs(btnTaq) {
     } else if (btnTaq === 'btnProdAdd') {
         $("#tabs-43").show();
     }
+}
+
+export function test1() {
+    alert('test1');
+    //console.log(JSON.stringify(product.winCalc.gson));
+}
+export function test2() {
+    alert('test2');
 }
 

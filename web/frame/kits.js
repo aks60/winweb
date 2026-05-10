@@ -8,7 +8,7 @@ export let kits = {};
 export function resize() {
 
     var height = window.innerHeight;
-    $("#context").css("height", height - 80);
+    $("#context").css("height", height - 48);
     $(kits.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
     $(kits.table1).jqGrid('setGridHeight', $("#centr").height() - 30);
 }

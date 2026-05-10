@@ -14,8 +14,11 @@
                 update_table3 as project_update_table3,
                 delete_table3 as project_delete_table3,
                 calculate_project} from './frame/project.js';
-        import {update_table,
-                delete_table,
+
+        import {test1, test2} from './frame/product.js';
+
+        import {update_table as kits_update_table,
+                delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
 
         let nameJsp = 'PROJECT';
@@ -55,11 +58,11 @@
 
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
 
-            document.getElementById('m03').addEventListener('click', () => load_kit('KIT'));
+            document.getElementById('m03').addEventListener('click', () => load_kits('KITS'));
             document.getElementById('m13').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
             document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
-            document.getElementById('m33').addEventListener('click', () => );
-            document.getElementById('m43').addEventListener('click', () => );
+            document.getElementById('m33').addEventListener('click', () => kits_update_table());
+            document.getElementById('m43').addEventListener('click', () => kits_delete_table());
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
                 if ($(this).parent().hasClass('selected')) {
@@ -104,9 +107,9 @@
                                             <li><a id='m21'>Изменить заказ</a></li>   
                                             <li><a id='m31'>Удалить заказ</a></li>    
                                             <li><a class="separator"></a></li>
-                                            <li><a id='m41'>Добавить конст.</a></li>
-                                            <li><a id='m51'>Изменить конст.</a></li>
-                                            <li><a id='m61'>Удалить конст.</a></li>
+                                            <li><a id='m41'>Добавить констр.</a></li>
+                                            <li><a id='m51'>Изменить констр.</a></li>
+                                            <li><a id='m61'>Удалить констр.</a></li>
                                             <li><a class="separator"></a></li>
                                             <li><a id='m71'>Установить скидки</a></li>
                                             <li><a id='m81'>Калькуляция заказа</a></li>
@@ -130,7 +133,7 @@
                             </div>
                         </div>                      
                     </li>
-                    <li><a id="03">Комплекты</a>
+                    <li><a id="m03">Комплекты</a>
                         <div class="subs">
                             <div>
                                 <ul>

@@ -5,7 +5,7 @@ export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, tabl
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
 export function  resize() {
-    $("#context").css("height", window.innerHeight - 80);
+    $("#context").css("height", window.innerHeight - 48);
     $("#table1").jqGrid('setGridWidth', $("#centr").width());
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
     $("#table2").jqGrid('setGridWidth', $("#east").width() - 4);
