@@ -21,7 +21,7 @@
                 $("#tab2-kitcard").jqGrid('setGridWidth', $("#dialog-jsp #pan2-kitcard").width());
                 $("#tab2-kitcard").jqGrid('setGridHeight', $("#dialog-jsp #pan2-kitcard").height() - 24);
             }
-
+            
             init_dialog();
             init_table();
             load_table();

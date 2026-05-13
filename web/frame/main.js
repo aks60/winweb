@@ -38,6 +38,27 @@ export function localizeFactory() {
         return val;
     };
 
+    (function ($) {
+        $.fn.sign = function (val, def) {
+            
+            if (arguments.length === 1) {
+                let v = this.val();
+                if (v === null || v === '') {
+                    return def;
+                } else {
+                    return this.val();
+                }
+                
+            } else {
+                if (val === null || val === '') {
+                    this.val(def);
+                } else {
+                    this.val(val);
+                }
+            }
+        };
+    })(jQuery);
+
     function mas(geo) {
         if (geo instanceof Coordinate)
             return [geo.x, geo.y, geo.z];

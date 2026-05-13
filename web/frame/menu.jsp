@@ -44,6 +44,12 @@
             }
         }
 
+        function load_dialog(path) {
+            progress3('xaxaxax');
+            $('#dialog-jsp').load('frame/dialog/artikl.jsp');
+            //progress(1);
+        }
+
         function init_menu() {
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project_insert_table1());
@@ -60,7 +66,8 @@
 
             document.getElementById('m03').addEventListener('click', () => load_kits('KITS'));
             document.getElementById('m13').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
-            document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
+            //document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
+            document.getElementById('m23').addEventListener('click', () => load_dialog('frame/dialog/artikl.jsp'));
             document.getElementById('m33').addEventListener('click', () => kits_update_table());
             document.getElementById('m43').addEventListener('click', () => kits_delete_table());
 

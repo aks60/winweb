@@ -31,7 +31,7 @@
                 $(tabArtikl).jqGrid('setGridWidth', $("#dialog-jsp #pan-artikl").width());
                 $(tabArtikl).jqGrid('setGridHeight', $("#dialog-jsp #pan-artikl").height() - 24);
             } 
-                        
+            //progress(0);            
             init_dialog();
             init_table();
             data_set();
@@ -86,7 +86,7 @@
             }
 
             function load_table() {
-                
+  
                 $(tabArtikl).jqGrid('clearGridData', true);
                 
                 if ($('#body-jsp title').text() === 'PRODUCT') {

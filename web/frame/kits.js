@@ -1,4 +1,3 @@
-k56
 import {Type, TypeOpen1, Layout, LayoutHand, PKjson} from '../enums/enums.js';
 import {project} from './project.js';
 
@@ -73,9 +72,9 @@ export function update_table() {
     $("#k53").val(prjkitRow.color1);
     $("#k54").val(prjkitRow.color2);
     $("#k55").val(prjkitRow.color3);
-    $("#k56").val(prjkitRow.width);
-    $("#k57").val(prjkitRow.height);
-    $("#k58").val(prjkitRow.numb);
+    $("#k56").sign(prjkitRow.width, 0);
+    $("#k57").sign(prjkitRow.height, 0);
+    $("#k58").sign(prjkitRow.numb, 1);
     $("#k53").attr("fk", prjkitRec[ePrjkit.color1_id]);
     $("#k54").attr("fk", prjkitRec[ePrjkit.color2_id]);
     $("#k55").attr("fk", prjkitRec[ePrjkit.color3_id]);
@@ -88,10 +87,10 @@ export function update_table() {
         resizable: false,
         buttons: {
             "Применить": function () {
-
-                prjkitRec[ePrjkit.numb] = $("#k58").val();
-                prjkitRec[ePrjkit.width] = $("#k56").val();
-                prjkitRec[ePrjkit.height] = $("#k57").val();
+      
+                prjkitRec[ePrjkit.width] = $("#k56").sign(0);
+                prjkitRec[ePrjkit.height] = $("#k57").sign(0);
+                prjkitRec[ePrjkit.numb] = $("#k58").sign(1);
                 prjkitRec[ePrjkit.color1_id] = $("#k53").attr("fk");
                 prjkitRec[ePrjkit.color2_id] = $("#k54").attr("fk");
                 prjkitRec[ePrjkit.color3_id] = $("#k55").attr("fk");

@@ -246,9 +246,17 @@ function dialogMes(title, mes) {
                 }}]});
 }
 
+function progress(v) {
+    if (v === 0) {
+        $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
+        $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 300});
+    } else if (v === 1)
+        $('#dialog-mes').dialog("close");
+}
+
 //Диалог окна прогрес сохранения
 //TODO доработать прогресс
-function dialogPrg2() {
+function progress2() {
 
     $("#dialog-mes").html("run " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
     $("#dialog-mes").dialog({modal: true});
@@ -278,12 +286,11 @@ function dialogPrg2() {
     }
 }
 
+
 //Прогресс бар
-function dialogPrg(mes) {
+function progress3(mes) {
     $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
-    $("#dialog-mes").dialog({
-        modal: true
-    });
+    $("#dialog-mes").dialog({modal: true});
     $(function () {
         let pgbar = $("#progressbar"), pglab = $(".progress-label");
 
@@ -376,5 +383,4 @@ function scaleFont(scale) {
         return 50;
     }
 }
-;
 

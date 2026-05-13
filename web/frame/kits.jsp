@@ -11,7 +11,7 @@
             import {Wincalc} from './build/Wincalc.js';
             import {kits, resize, init_table, load_table, update_table, 
                 delete_table, color_to_kit} from './frame/kits.js';
-           
+
             kits.table1 = document.getElementById('table1');
             init_table();
             load_table();
