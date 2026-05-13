@@ -22,10 +22,10 @@
             progress();
             init_table();
             load_table();
-            $(window).bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', resize).trigger('resize');
 
             prepareTool('tarif');   
-            $(window).bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', resize).trigger('resize');
             document.getElementById('btnTar1').addEventListener('click', () => test());
             document.getElementById('btnTar2').addEventListener('click', () => test());
             document.getElementById('btnTest5').addEventListener('click', () => test());

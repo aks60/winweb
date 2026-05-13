@@ -9,7 +9,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 
-                $(window).bind('resize', () => users.resize()).trigger('resize');
+                $(window).unbind('resize').bind('resize', () => users.resize()).trigger('resize');
                 users.init_table1($("#table1"));
                 users.load_table1($("#table1"));
                 $('button').button();

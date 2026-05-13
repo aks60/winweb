@@ -16,7 +16,7 @@
             import {project, resize, init_table, load_table1, insert_table1, update_table1, delete_table1, load_table2,
                     update_table2, load_table3, update_table3, delete_table3, calculate_project} from './frame/project.js';
 
-            $(window).bind('resize', resize);
+            $(window).unbind('resize').bind('resize', resize);
             project.table1 = document.getElementById('table1');
             project.table2 = document.getElementById('table2');
             project.table3 = document.getElementById('table3');

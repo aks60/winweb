@@ -18,7 +18,7 @@
             }
             $(document).ready(function () {
                 $("#btn2").focus();
-                $(window).bind('resize', () => login.resize()).trigger('resize');
+                $(window).unbind('resize').bind('resize', () => login.resize()).trigger('resize');
                 $("button").button();
             });
         </script>         

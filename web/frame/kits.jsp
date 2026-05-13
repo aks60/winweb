@@ -15,7 +15,7 @@
             kits.table1 = document.getElementById('table1');
             init_table();
             load_table();
-            $(window).bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', resize).trigger('resize');
 
             prepareTool('kits');
             deployTaq(['#dialog-card']);

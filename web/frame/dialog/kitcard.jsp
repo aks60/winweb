@@ -25,7 +25,7 @@
             init_dialog();
             init_table();
             load_table();
-            $(window).bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', resize).trigger('resize');
 
             function init_dialog() {
                 $("#dialog-jsp").dialog({

@@ -10,9 +10,6 @@
                 position: absolute;
                 /*border: 1px solid #00f;*/
             }
-            #north {
-                /*border: 1px solid #00f;*/
-            }
             #context {
                 top: 60px;
                 height: calc(100% - 80px);
@@ -70,7 +67,7 @@
             product.table2 = document.getElementById('table2');
             init_table1();
             load_table2();
-            $(window).bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', resize).trigger('resize');
 
             prepareTool('product');
             document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
