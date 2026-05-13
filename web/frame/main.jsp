@@ -70,7 +70,8 @@
         <div id="dialog-jsp"></div> 
         <div id="dialog-mes" title="Сообщение"></div>
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
-
+        <div id="progressbar"></div>
+        
         <script type="module">
             import {localizeFactory, Test1} from './frame/main.js';
             localizeFactory();

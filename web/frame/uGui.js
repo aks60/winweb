@@ -272,18 +272,22 @@ function progress2() {
             $("this.pglab").text("Complete!");
         }
     });
-    this.progressloop();
 
     this.progressloop = function () {
         let val = this.pgbar.progressbar("value") || 0;
-        this.pgbar.progressbar("value", val + 2);
+        this.pgbar.progressbar("value", val + 1);
 
         if (val < 99) {
             setTimeout(foo_catch, 2000);
         } else {
             $('#dialog-mes').dialog('close');
         }
-    }
+    };
+    this.progressloop();
+}
+
+function foo_catch() {
+    alert('xxx');
 }
 
 
@@ -302,7 +306,7 @@ function progress3(mes) {
         });
         function progress() {
             let val = pgbar.progressbar("value") || 0;
-            pgbar.progressbar("value", val + 4);
+            pgbar.progressbar("value", val + .1);
 
             if (val < 99) {
                 setTimeout(progress, 0);
@@ -310,7 +314,7 @@ function progress3(mes) {
         }
         progress();
     });
-    setTimeout("$('#dialog-mes').dialog('close');", 2600);
+    setTimeout("$('#dialog-mes').dialog('close');", 4600);
 }
 
 //1;79-10;0-10 => [1,1,79,10,0,10]
