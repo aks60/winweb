@@ -1,4 +1,4 @@
-
+k56
 import {Type, TypeOpen1, Layout, LayoutHand, PKjson} from '../enums/enums.js';
 import {project} from './project.js';
 

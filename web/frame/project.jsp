@@ -30,16 +30,6 @@
             $('#p23').datepicker();
             $('#p24').datepicker();
 
-//            document.getElementById('btnProd1').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
-//            document.getElementById('btnProj1').addEventListener('click', () => insert_table1());
-//            document.getElementById('btnProj2').addEventListener('click', () => update_table1());
-//            document.getElementById('btnProj3').addEventListener('click', () => delete_table1());
-//            document.getElementById('btnDisc').addEventListener('click', () => update_table2());
-//            document.getElementById('btnProd2').addEventListener('click', () => update_table3());
-//            document.getElementById('btnProd3').addEventListener('click', () => delete_table3());
-//            document.getElementById('btnCalc').addEventListener('click', () => calculate_project());
-//            document.getElementById('btnTest1').addEventListener('click', test2);
-
             function test1() {
                 progress('open');
             }
@@ -52,17 +42,6 @@
         </script>
     </head>
     <body>        
-<!--        <div id="north">
-            <button id="btnProj1" style="width: 128px">Добавить заказ</button>
-            <button id="btnProj2" style="width: 128px">Изменить заказ</button>
-            <button id="btnProj3" style="width: 128px">Удалить заказ</button>
-            &emsp;&emsp;&emsp;
-            <button id="btnProd1" style="width: 136px">Добавить констр.</button>
-            <button id="btnProd2" style="width: 136px">Изменить констр.</button>
-            <button id="btnProd3" style="width: 128px">Удалить констр.</button>                        
-            <button id="btnCalc"  style="width: 128px">Кальк. заказа</button>                        
-            <button id="btnTest1">TEST</button>                        
-        </div>     -->
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                
                 <jst id="p21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>

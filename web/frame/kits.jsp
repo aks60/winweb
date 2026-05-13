@@ -18,18 +18,10 @@
             $(window).unbind('resize').bind('resize', resize).trigger('resize');
 
             prepareTool('kits');
-            deployTaq(['#dialog-card']);
-//            document.getElementById('btnKit3').addEventListener('click', () =>  update_table());
-//            document.getElementById('btnKit4').addEventListener('click', () =>  delete_table());            
+            deployTaq(['#dialog-card']);           
         </script>         
     </head>
     <body>
-<!--        <div id="north">   
-            <button id="btnKit1" style="width: 160px" onClick="$('#dialog-jsp').load('frame/dialog/kitcard.jsp')">Добавить комплект</button>
-            <button id="btnKit2" style="width: 160px" onClick="$('#dialog-jsp').load('frame/dialog/artikl.jsp')">Добавить артикул</button>
-            <button id="btnKit3" style="width: 160px">Изменить артикул</button>
-            <button id="btnKit4" style="width: 160px">Удалить артикул</button>            
-        </div> -->
         <div id = "context">               
             <div id="dialog-card" card_width="480" card_height="250" style="display: none;">              
                 <jst id="k53" type='btn' label='Основная текстура' width='126' width2="280" fk="-3" click="$('#dialog-jsp').load('frame/dialog/color.jsp?param=k53')"></jst><br>
