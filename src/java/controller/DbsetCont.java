@@ -1,18 +1,18 @@
 package controller;
 
-import com.google.gson.Gson;
 import dataset.Connect;
 import domain.eProject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import controller.sys.App;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
@@ -176,6 +176,23 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("calculateProject")) {
                     JSONObject output = Dbset.calculateProject(request, response);
                     out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("smetaProject")) {
+                    JSONObject output = Dbset.smetaProject(request, response);
+
+                    //response.setContentType("text/html; charset=UTF-8");
+                    //Path filePath = Path.of(getServletContext().getRealPath("/WEB-INF/templates/my-page.html"));
+                    Path filePath = Path.of("C:\\ProgramData\\Avers\\Okna\\report.html"); //путь к вашему файлу
+                    //Files.copy(filePath, response.getOutputStream()); //записываем файл напрямую в ответ
+
+                    String html = new String(Files.readAllBytes(filePath));
+                    response.getWriter().print(html);
+                    
+                    //try (PrintWriter out = response.getWriter()) {
+                    //    Files.readAllLines(Paths.get(filePath)).forEach(out::println);
+                    //}
+
+                    //out.write(JSONObject.toJSONString(output));
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

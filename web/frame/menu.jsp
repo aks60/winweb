@@ -20,6 +20,8 @@
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
+        import {smeta as report_smeta, schet_faktura as
+                report_schet_faktura} from './frame/report.js';
 
         let nameJsp = 'PROJECT';
 
@@ -63,6 +65,9 @@
             document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
             document.getElementById('m33').addEventListener('click', () => kits_update_table());
             document.getElementById('m43').addEventListener('click', () => kits_delete_table());
+
+            document.getElementById('m24').addEventListener('click', () => report_smeta());
+            document.getElementById('m34').addEventListener('click', () => report_schet_faktura());
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
                 if ($(this).parent().hasClass('selected')) {
@@ -155,9 +160,9 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="$('#body-jsp').load('frame/tarific.jsp');">Спецификация</a></li>
-                                            <li><a onClick="">Смета</a></li>
-                                            <li><a onClick="">Счёт-фактура</a></li>
+                                            <li><a id="m14" onClick="$('#body-jsp').load('frame/tarific.jsp');">Спецификация</a></li>
+                                            <li><a id="m24" onClick="">Смета</a></li>
+                                            <li><a id="m34" onClick="">Счёт-фактура</a></li>
                                         </ul>
                                     </li>
                                 </ul>

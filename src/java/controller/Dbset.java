@@ -1,8 +1,6 @@
 package controller;
 
-import builder.Kitcalc;
 import builder.Wincalc;
-import builder.making.TRecord;
 import builder.making.TTariffic;
 import com.google.gson.Gson;
 import dataset.Connect;
@@ -38,12 +36,14 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import report.RSmeta;
 
 public class Dbset {
 
@@ -398,15 +398,29 @@ public class Dbset {
     public static JSONObject calculateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String projectID = request.getParameter("projectID");
-            Record projectRec = eProject.find(Integer.valueOf(projectID));           
-            TTariffic.calculate(projectRec, true);           
+            Record projectRec = eProject.find(Integer.valueOf(projectID));
+            TTariffic.calculate(projectRec, true);
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
-            projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));            
-            projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));            
+            projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));
+            projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));
             return new JSONObject(App.asMap("result", "ok", "projectRec", projectRec));
 
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }   
+    }
+
+    public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Object o1 = Connect.webapp;
+            String projectSt = request.getParameter("projectID");
+            Integer projectID = Integer.valueOf(projectSt);
+            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
+            new RSmeta().parseDoc2(prjprodList);
+            return null; // new JSONObject(App.asMap("result", "ok"));
+
+        } catch (Exception e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
 }
