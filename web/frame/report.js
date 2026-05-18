@@ -21,20 +21,6 @@ export function smeta(projectID) {
     }
 }
 
-export function smeta2(projectID) {
-    $.ajax({
-        url: 'dbset?action=smetaProject',
-        type: 'GET',
-        dataType: 'html', // Ожидаем HTML в ответе
-        success: function (data) {
-           $('#body-jsp').html(data);
-        },
-        error: function (xhr, status, error) {
-            console.error('Ошибка загрузки: ', error);
-        }
-    });
-}
-
 export function schet_faktura(projectID) {
     try {
         $.ajax({

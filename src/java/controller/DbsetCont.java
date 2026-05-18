@@ -1,10 +1,12 @@
 package controller;
 
+import static builder.script.GsonScript.filePath;
+import common.eProp;
 import dataset.Connect;
 import domain.eProject;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import javax.servlet.ServletOutputStream;
 import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
@@ -179,37 +180,12 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("smetaProject")) {
-                    try {
-                        response.setContentType("text/html");
-                        response.setCharacterEncoding("UTF-8");
 
-                        // Укажите путь к файлу
-                        File file = new File(getServletContext().getRealPath("/index.html"));
-                        Path path = file.toPath();
-                        ServletOutputStream outp = response.getOutputStream();
-                        // Передача файла в ответ
-                        Files.copy(path, outp);
-
-//                    //Указываем кодировку и тип контента
-//                    response.setContentType("text/html; charset=UTF-8");
-//                    response.setCharacterEncoding("UTF-8");
-//                    
-//                    JSONObject output = Dbset.calculateProject(request, response);
-//                    
-//                    //Читаем и отправляем файл
-//                    File file = new File(getServletContext().getRealPath("C:\\ProgramData\\Avers\\Okna\\report.html"));
-//                    //File file = new File("C:\\ProgramData\\Avers\\Okna\\report.html");
-//                    Files.copy(file.toPath(), response.getOutputStream());
-//
-//                    Dbset.smetaProject(request, response);
-//                    Path filePath = Path.of("C:\\ProgramData\\Avers\\Okna\\report.html"); //путь к вашему файлу
-//                    //Files.copy(filePath, response.getOutputStream()); //записываем файл напрямую в ответ
-//                    //Files.readAllLines(Paths.get(filePath)).forEach(out::println);
-//                    String html = new String(Files.readAllBytes(filePath));
-//                    response.getWriter().print(html);
-                    } catch (IOException e) {
-                        System.err.println(e);
-                    }
+                    Dbset.smetaProject(request, response);
+                    String path = eProp.genl.getProp();
+                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
+                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
+                    response.getWriter().print(html);
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

@@ -412,7 +412,6 @@ public class Dbset {
 
     public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Object o1 = Connect.webapp;
             String projectSt = request.getParameter("projectID");
             Integer projectID = Integer.valueOf(projectSt);
             List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
