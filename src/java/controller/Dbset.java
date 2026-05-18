@@ -416,8 +416,8 @@ public class Dbset {
             String projectSt = request.getParameter("projectID");
             Integer projectID = Integer.valueOf(projectSt);
             List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
-            new RSmeta().parseDoc2(prjprodList);
-            return null; // new JSONObject(App.asMap("result", "ok"));
+            new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
+            return new JSONObject(App.asMap("result", "ok"));
 
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));

@@ -10,12 +10,6 @@ export function smeta(projectID) {
             success: (data) => {
                 debugger;
                 $('#body-jsp').html(data);
-                
-//                if (data.result === 'ok') {
-//                    debugger;
-//                    $('#body-jsp').load('C:\\ProgramData\\Avers\\Okna\\report.html');
-//                } else
-//                    dialogMes('Сообщение', "<p>" + data.result);
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error("AJAX Error: " + textStatus, errorThrown);
@@ -26,6 +20,21 @@ export function smeta(projectID) {
         console.error(e.message);
     }
 }
+
+export function smeta2(projectID) {
+    $.ajax({
+        url: 'dbset?action=smetaProject',
+        type: 'GET',
+        dataType: 'html', // Ожидаем HTML в ответе
+        success: function (data) {
+           $('#body-jsp').html(data);
+        },
+        error: function (xhr, status, error) {
+            console.error('Ошибка загрузки: ', error);
+        }
+    });
+}
+
 export function schet_faktura(projectID) {
     try {
         $.ajax({
@@ -49,7 +58,7 @@ export function schet_faktura(projectID) {
 
 export function load_report(projectID) {
     document.getElementById('downloadBtn').addEventListener('click', function () {
-        fetch('/api/download-file', {method: 'GET',})
+        fetch('/api/download-file', {method: 'GET', })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Ошибка при скачивании файла');
