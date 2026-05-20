@@ -253,11 +253,11 @@ export function btn_to_tabs(btnTaq) {
     }
 }
 
-export function test1() {
-    alert('test1');
+export function save_update_script() {
+    alert('save_update_script');
     //console.log(JSON.stringify(product.winCalc.gson));
 }
-export function test2() {
-    alert('test2');
+export function revert_update_script() {
+    alert('revert_update_script');
 }
 

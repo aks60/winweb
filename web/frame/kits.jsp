@@ -35,8 +35,6 @@
                 <table id="table1"  class="ui-jqgrid-btable"></table> 
             </div>          
         </div>
-        <div id="south">
-            Итого:
-        </div>
+        <div id="south"></div>
     </body>
 </html>

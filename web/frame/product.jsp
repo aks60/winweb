@@ -80,7 +80,8 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
-                <button id="btnReset" class="toolWest1"></button>
+<!--                <button id="btnSave" class="toolWest1"></button>
+                <button id="btnRevert" class="toolWest1"></button>-->
                 <button id="btnTop" class="toolWest1"></button>
                 <button id="btnBot" class="toolWest1"></button>
                 <button id="btnLef" class="toolWest1"></button>
@@ -178,8 +179,6 @@
                 <div id="table2"></div>
             </div>       
         </div>  
-        <div id='south' class='abs' style=''>
-            Итого: 
-        </div>       
+        <div id='south' class='abs' style=''></div>       
     </body>
 </html>

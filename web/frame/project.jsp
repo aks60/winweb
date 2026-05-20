@@ -77,8 +77,6 @@
                 </div>
             </div>
         </div>
-        <div id="south">
-            Итого:
-        </div> 
+        <div id="south"></div> 
     </body>
 </html>

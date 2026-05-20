@@ -14,7 +14,7 @@
                 update_table3 as project_update_table3,
                 delete_table3 as project_delete_table3,
                 calculate_project, project} from './frame/project.js';
-        import {test1, test2} from './frame/product.js';
+        import {save_update_script, revert_update_script} from './frame/product.js';
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
@@ -110,6 +110,8 @@
             document.getElementById('m81').addEventListener('click', () => calculate_project());
 
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
+            document.getElementById('m12').addEventListener('click', () => save_update_script());
+            document.getElementById('m22').addEventListener('click', () => revert_update_script());
 
             document.getElementById('m03').addEventListener('click', () => load_kits('KITS'));
             document.getElementById('m13').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
@@ -145,6 +147,7 @@
                 $("#nav2 .selected").removeClass("selected");
             });
         }
+        
         init_menu();
 
 
@@ -183,8 +186,8 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a onClick="alert('01')">TEST3</a></li>
-                                            <li><a onClick="alert('02')">TEST4</a></li>  
+                                            <li><a id="m12">Сохранить констр.</a></li>
+                                            <li><a id="m22">Отменить измен.</a></li>  
                                         </ul>
                                     </li>
                                 </ul>
