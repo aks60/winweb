@@ -15,6 +15,7 @@
                 delete_table3 as project_delete_table3,
                 calculate_project, project} from './frame/project.js';
         import {save_update_script, revert_update_script} from './frame/product.js';
+        import {load_tarif, load_smeta, load_check} from './frame/report.js';
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
@@ -41,7 +42,7 @@
                 $('#body-jsp').load('frame/kits.jsp');
             }
         }
-
+/*
         function load_tarif(name) {
             progress(0);
             nameJsp = name;
@@ -96,7 +97,7 @@
                 console.error(e.message);
             }
         }
-
+*/
         function init_menu() {
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project_insert_table1());
