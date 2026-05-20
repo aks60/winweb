@@ -15,27 +15,27 @@
                 delete_table3 as project_delete_table3,
                 calculate_project, project} from './frame/project.js';
         import {save_update_script, revert_update_script} from './frame/product.js';
-        import {nameJsp, load_tarif, load_smeta, load_check} from './frame/report.js';
+        import {state, load_tarif, load_smeta, load_check} from './frame/report.js';
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
 
         function load_project(name) {
-            nameJsp = name;
+            state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PROJECT') {
                 $('#body-jsp').load('frame/project.jsp');
             }
         }
 
         function load_product(name) {
-            nameJsp = name;
+            state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PRODUCT') {
                 $('#body-jsp').load('frame/product.jsp');
             }
         }
 
         function load_kits(name) {
-            nameJsp = name;
+            state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'KITS') {
                 $('#body-jsp').load('frame/kits.jsp');
             }
@@ -77,7 +77,8 @@
                     $("#nav2 .selected").removeClass("selected");
 
                     if ($(this).next(".subs").length) {
-                        if ($('#body-jsp title').text() === nameJsp) {
+                        
+                        if ($('#body-jsp title').text() === state.nameJsp) {
                             $(this).parent().addClass("selected"); // display popup
                             $(this).next(".subs").children().slideDown(200);
                         }

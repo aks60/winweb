@@ -2,11 +2,13 @@ import {project} from './project.js';
 //import {nameObj} from './menu.jsp';
 //import {nameJsp} from './menu.jsp';
 
-export let nameJsp = 'PROJECT';
+export let state = {
+    nameJsp : 'PROJECT'
+};
 
 export function load_tarif(name) {
     progress(0);
-    nameJsp = name;
+    state.nameJsp = name;
     $('#body-jsp').load('frame/tarific.jsp');
 }
 
@@ -14,7 +16,7 @@ export function load_smeta(name) {
 
     try {
         progress(0);
-        nameJsp = name;
+        state.nameJsp = name;
         $.ajax({
             url: 'dbset?action=smetaProject',
             data: {'projectID': project.projectRec[eProject.id]},
@@ -38,7 +40,7 @@ export function load_smeta(name) {
 export function load_check(name) {
     try {
         progress(0);
-        nameJsp = name;
+        state.nameJsp = name;
         $.ajax({
             url: 'dbset?action=checkProject',
             data: {'projectID': project.projectRec[eProject.id]},
