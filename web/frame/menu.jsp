@@ -13,15 +13,13 @@
                 update_table2 as project_update_table2,
                 update_table3 as project_update_table3,
                 delete_table3 as project_delete_table3,
-                calculate_project} from './frame/project.js';
+                calculate_project, project} from './frame/project.js';
 
         import {test1, test2} from './frame/product.js';
 
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
-        import {smeta as report_smeta, schet_faktura as
-                report_schet_faktura} from './frame/report.js';
 
         let nameJsp = 'PROJECT';
 
@@ -46,6 +44,51 @@
             }
         }
 
+        function load_smeta(name) {
+            nameJsp = name;
+            try {
+                $.ajax({
+                    url: 'dbset?action=smetaProject',
+                    data: {'projectID': project.projectRec[eProject.id]},
+                    dataType: 'html',
+                    success: (data) => {
+                        $('#body-jsp').html(data);
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error("AJAX Error: " + textStatus, errorThrown);
+                        dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+                    }
+                });
+            } catch (e) {
+                console.error(e.message);
+            }
+        }
+
+        function load_check(name) {
+            nameJsp = name;
+            try {
+                $.ajax({
+                    url: 'dbset?action=checkProject',
+                    data: {'projectID': project.projectRec[eProject.id]},
+                    dataType: 'html',
+                    success: (data) => {
+                        $('#body-jsp').html(data);
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error("AJAX Error: " + textStatus, errorThrown);
+                        dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+                    }
+                });
+            } catch (e) {
+                console.error(e.message);
+            }
+        }
+        
+        function load_tarif(name) {
+            nameJsp = name;
+            $('#body-jsp').load('frame/tarific.jsp');
+        }
+
         function init_menu() {
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project_insert_table1());
@@ -66,10 +109,12 @@
             document.getElementById('m33').addEventListener('click', () => kits_update_table());
             document.getElementById('m43').addEventListener('click', () => kits_delete_table());
 
-            document.getElementById('m24').addEventListener('click', () => report_smeta());
-            document.getElementById('m34').addEventListener('click', () => report_schet_faktura());
+            document.getElementById('m14').addEventListener('click', () => load_tarif('TARIF'));
+            document.getElementById('m24').addEventListener('click', () => load_smeta('Смета2'));
+            document.getElementById('m34').addEventListener('click', () => load_check('Счёт2'));
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
+                
                 if ($(this).parent().hasClass('selected')) {
                     $("#nav2 .selected div div").slideUp(100); // hiding popups
                     $("#nav2 .selected").removeClass("selected");
@@ -160,8 +205,8 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a id="m14" onClick="$('#body-jsp').load('frame/tarific.jsp');">Спецификация</a></li>
-                                            <li><a id="m24" onClick="">Смета</a></li>
+                                            <li><a id="m14" onClick="">Тарификация</a></li>
+                                            <li><a id="m24" onClick="">Смета подробная</a></li>
                                             <li><a id="m34" onClick="">Счёт-фактура</a></li>
                                         </ul>
                                     </li>

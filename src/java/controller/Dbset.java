@@ -36,13 +36,12 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import report.RCheck;
 import report.RSmeta;
 
 public class Dbset {
@@ -416,6 +415,19 @@ public class Dbset {
             Integer projectID = Integer.valueOf(projectSt);
             List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
             new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (Exception e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
+
+    public static JSONObject checkProject(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String projectSt = request.getParameter("projectID");
+            Integer projectID = Integer.valueOf(projectSt);
+            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
+            new RCheck().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
             return new JSONObject(App.asMap("result", "ok"));
 
         } catch (Exception e) {
