@@ -1,5 +1,8 @@
 import {project} from './project.js';
-import {nameJsp} from './menu.jsp';
+//import {nameObj} from './menu.jsp';
+//import {nameJsp} from './menu.jsp';
+
+export let nameJsp = 'PROJECT';
 
 export function load_tarif(name) {
     progress(0);
