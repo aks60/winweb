@@ -70,7 +70,6 @@
                         <jst id="p33" type='txt' label='Площадь заказа' width='120' width2="60"></jst><br>
                         <jst id="p34" type='txt' label='Вес заказа' width='120' width2="60"></jst><br><br>                        
                         <table id="table2"  class="ui-jqgrid-btable"></table>
-                        <button id="btnDisc" style="width: 140px;">Установить скидки</button>
                     </div>
                     <div id="east3" style="background: #efeffb;">
                         <table id="table3"  class="ui-jqgrid-btable"></table>                       
