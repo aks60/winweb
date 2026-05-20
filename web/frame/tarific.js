@@ -89,6 +89,7 @@ export function load_table() {
                     });
                 }
                 $(tarif.table1).jqGrid("setSelection", 1); 
+                progress(1);
             },
             error: function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
