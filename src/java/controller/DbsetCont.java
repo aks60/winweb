@@ -180,18 +180,12 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("smetaProject")) {
-                    Dbset.smetaProject(request, response);
-                    String path = eProp.genl.getProp();
-                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-                    response.getWriter().print(html);
+                    JSONObject output = Dbset.smetaProject(request, response);
+                    out.write(JSONObject.toJSONString(output));
                     
                 } else if (action.equalsIgnoreCase("checkProject")) {
-                    Dbset.checkProject(request, response);
-                    String path = eProp.genl.getProp();
-                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-                    response.getWriter().print(html);
+                    JSONObject output = Dbset.checkProject(request, response);
+                    out.write(JSONObject.toJSONString(output));                    
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

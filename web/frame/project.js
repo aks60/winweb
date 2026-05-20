@@ -263,6 +263,7 @@ export function update_table1() {
                     url: 'dbset?action=updateProject',
                     data: {param: JSON.stringify(projectRec)},
                     success: (data) => {
+
                         if (data.result === 'ok') {
                             let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
                             $(project.table1).jqGrid('setRowData', rowid, {
@@ -341,7 +342,7 @@ export function update_table2() {
     $("#p37").val($(project.table2).jqGrid('getCell', 3, 2));
 
     dialogCard.dialog({
-        title: "Карточка редактирования заказа",
+        title: "Карточка скидок",
         width: dialogCard.attr('card_width'),
         height: dialogCard.attr('card_height'),
         modal: true,
@@ -390,7 +391,7 @@ export function update_table3() {
 
 
     $(taq).dialog({//открытие диалога insert
-        title: "Карточка редактирования заказа",
+        title: "Карточка редактирования конструкции",
         width: $(taq).attr('card_width'),
         height: $(taq).attr('card_height'),
         modal: true,

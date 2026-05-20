@@ -1,5 +1,6 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {project} from './project.js';
+//import {nameJsp} from './menu.jsp';
 
 export function smeta(projectID) {
     try {
@@ -21,20 +22,25 @@ export function smeta(projectID) {
     }
 }
 
-export function schet_faktura(projectID) {
+export  function load_check(name) {
     try {
+        //progress(0);
+        //nameJsp = name;
         $.ajax({
-            url: 'dbset?action=smetaProject',
+            url: 'dbset?action=checkProject',
             data: {'projectID': project.projectRec[eProject.id]},
+            dataType: 'html',
             success: (data) => {
+                debugger;
+                let o1 = data.result;
                 if (data.result === 'ok') {
-
-                } else
-                    dialogMes('Сообщение', "<p>" + data.result);
+                    $('#body-jsp').html(data.report);
+                    //progress(1);
+                }
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
+                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
             }
         });
     } catch (e) {

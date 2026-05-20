@@ -246,6 +246,7 @@ function dialogMes(title, mes) {
                 }}]});
 }
 
+//Прогресс бар
 function progress(v) {
     if (v === 0) {
         $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
@@ -289,7 +290,6 @@ function progress2() {
 function foo_catch() {
     alert('xxx');
 }
-
 
 //Прогресс бар
 function progress3(mes) {

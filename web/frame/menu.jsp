@@ -14,14 +14,13 @@
                 update_table3 as project_update_table3,
                 delete_table3 as project_delete_table3,
                 calculate_project, project} from './frame/project.js';
-
         import {test1, test2} from './frame/product.js';
-
+        //import {load_check} from './frame/report.js';
         import {update_table as kits_update_table,
                 delete_table as kits_delete_table,
                 color_to_kit} from './frame/kits.js';
 
-        let nameJsp = 'PROJECT';
+        export let nameJsp = 'PROJECT';
 
         function load_project(name) {
             nameJsp = name;
@@ -44,15 +43,26 @@
             }
         }
 
-        function load_smeta(name) {
+        function load_tarif(name) {
+            progress(0);
             nameJsp = name;
+            $('#body-jsp').load('frame/tarific.jsp');
+        }
+
+        function load_smeta(name) {
+
             try {
+                progress(0);
+                nameJsp = name;
                 $.ajax({
                     url: 'dbset?action=smetaProject',
                     data: {'projectID': project.projectRec[eProject.id]},
-                    dataType: 'html',
                     success: (data) => {
-                        $('#body-jsp').html(data);
+
+                        if (data.result === 'ok') {
+                            $('#body-jsp').html(data.report);
+                            progress(1);
+                        }
                     },
                     error: (jqXHR, textStatus, errorThrown) => {
                         console.error("AJAX Error: " + textStatus, errorThrown);
@@ -65,14 +75,18 @@
         }
 
         function load_check(name) {
-            nameJsp = name;
             try {
+                progress(0);
+                nameJsp = name;
                 $.ajax({
                     url: 'dbset?action=checkProject',
                     data: {'projectID': project.projectRec[eProject.id]},
-                    dataType: 'html',
                     success: (data) => {
-                        $('#body-jsp').html(data);
+
+                        if (data.result === 'ok') {
+                            $('#body-jsp').html(data.report);
+                            progress(1);
+                        }
                     },
                     error: (jqXHR, textStatus, errorThrown) => {
                         console.error("AJAX Error: " + textStatus, errorThrown);
@@ -82,11 +96,6 @@
             } catch (e) {
                 console.error(e.message);
             }
-        }
-        
-        function load_tarif(name) {
-            nameJsp = name;
-            $('#body-jsp').load('frame/tarific.jsp');
         }
 
         function init_menu() {
@@ -114,7 +123,7 @@
             document.getElementById('m34').addEventListener('click', () => load_check('Счёт2'));
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
-                
+
                 if ($(this).parent().hasClass('selected')) {
                     $("#nav2 .selected div div").slideUp(100); // hiding popups
                     $("#nav2 .selected").removeClass("selected");

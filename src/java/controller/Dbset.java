@@ -3,6 +3,7 @@ package controller;
 import builder.Wincalc;
 import builder.making.TTariffic;
 import com.google.gson.Gson;
+import common.eProp;
 import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
@@ -36,6 +37,9 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -415,7 +419,10 @@ public class Dbset {
             Integer projectID = Integer.valueOf(projectSt);
             List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
             new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            return new JSONObject(App.asMap("result", "ok"));
+            String path = eProp.genl.getProp();
+            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
+            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
+            return new JSONObject(App.asMap("result", "ok", "report", html));
 
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
@@ -428,7 +435,10 @@ public class Dbset {
             Integer projectID = Integer.valueOf(projectSt);
             List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
             new RCheck().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            return new JSONObject(App.asMap("result", "ok"));
+            String path = eProp.genl.getProp();
+            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
+            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
+            return new JSONObject(App.asMap("result", "ok", "report", html));
 
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));

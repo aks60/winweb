@@ -19,7 +19,6 @@
                   
             tarif.table1 = document.getElementById('table1');
 
-            progress(0);
             init_table();
             load_table();
             $(window).unbind('resize').bind('resize', resize).trigger('resize');

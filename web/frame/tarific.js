@@ -88,8 +88,7 @@ export function load_table() {
                         cost2: Math.round(tarifRec[eTarif.cost2] * 100) / 100
                     });
                 }
-                $(tarif.table1).jqGrid("setSelection", 1);
-                progress(1);
+                $(tarif.table1).jqGrid("setSelection", 1); 
             },
             error: function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
