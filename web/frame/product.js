@@ -254,8 +254,38 @@ export function btn_to_tabs(btnTaq) {
 }
 
 export function save_update_script() {
-    alert('save_update_script');
-    //console.log(JSON.stringify(product.winCalc.gson));
+    try {
+debugger;        
+        let script = product.winCalc.gson;
+        project.prjprodRec[ePrjprod.script] = script;
+        $.ajax({
+            url: 'dbset?action=updateScript',
+            data: {param: JSON.stringify(project.prjprodRec)},
+            success: function (data) {
+                if (data.result === 'ok') {
+debugger;
+                    //Запишем текстуру в html
+                    tree_to_html();
+
+                } else
+                    dialogMes('Сообщение', "<p>" + data.result);
+            },
+            error: function () {
+                dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
+            }
+        });
+
+//                let script = product.winCalc.gson;
+//                product.winCalc.build(script);
+//                product.winCalc.imageIcon = Canvas.createIcon(winc, 68);
+//                let sysmodelRec = qSysmodel.get(index);
+//                sysmodelRec.set(eSysmodel.script, script);
+//                sysmodelRec.set(eSysmodel.values().length, winc);
+//            }
+    } catch (e) {
+        console.error(e.message);
+    }
+    return null;
 }
 export function revert_update_script() {
     alert('revert_update_script');
