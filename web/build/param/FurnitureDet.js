@@ -177,8 +177,8 @@ export class FurnitureDet extends Par5s {
                 case 24038:  //Проверять Cторону_(L))/Cторону_(W) 
                 case 25038:  //Проверять Cторону_(L)/Cторону_(W)     
                     //TODO Параметры. Тут полные непонятки. Возможно сторона проверки назначается для всего набора
-                    //mapParamTmp.set(grup, rec[this.TEXT]);
-                    this.message(rec[this.GRUP]);
+                    mapParamTmp.set(grup, rec[this.TEXT]);
+                    //this.message(rec[this.GRUP]);
                     break;
                 case 24039:  //Створка заднего плана 
                     this.message(rec[this.GRUP]);

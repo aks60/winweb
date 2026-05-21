@@ -23,7 +23,7 @@ product.resize = function () {
     $(product.table1).jqGrid('setGridHeight', $("#east1").height() - 24);
 };
 
-//Инициализация таблицы
+//Инициализация таблицы параметров
 product.init_table1 = function () {
     try {
         $(product.table1).jqGrid({
@@ -56,7 +56,7 @@ product.init_table1 = function () {
     }
 };
 
-//Загрузка данных в таблицу
+//Загрузка данных в таблицу параметров
 product.load_table1 = function () {
     try {
         let syspar1List = [];
@@ -138,7 +138,7 @@ product.elements = function (com, arr) {
     }
 };
 
-//Загрузка тегов страницы
+//Загрузка тегов страницы и перерисовка канвы
 product.tree_to_html = function () {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
@@ -149,7 +149,7 @@ product.tree_to_html = function () {
         winc.artikle();
         winc.location();
         TFurniture.calc(winc);
-        winc.draw();
+        winc.draw(); //рисуем на канве
 
         //Коробка
         if ([Type.RECTANGL, Type.TRAPEZE, Type.TRIANGL, Type.ARCH, Type.DOOR].includes(com5t.type, 0)) {
@@ -255,7 +255,7 @@ product.btn_to_tabs = function (btnTaq) {
 
 product.save_update_script = function () {
     try {
-        let script = product.winCalc.gson;
+        let script = JSON.stringify(product.winCalc.gson);
         project.prjprodRec[ePrjprod.script] = script;
         $.ajax({
             url: 'dbset?action=updateScript',
@@ -264,6 +264,7 @@ product.save_update_script = function () {
                 if (data.result === 'ok') {
                     //Запишем текстуру в html
                     product.tree_to_html();
+                    project.load_table3();
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);
@@ -272,14 +273,7 @@ product.save_update_script = function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
             }
         });
-
-//                let script = product.winCalc.gson;
-//                product.winCalc.build(script);
-//                product.winCalc.imageIcon = Canvas.createIcon(winc, 68);
-//                let sysmodelRec = qSysmodel.get(index);
-//                sysmodelRec.set(eSysmodel.script, script);
-//                sysmodelRec.set(eSysmodel.values().length, winc);
-//            }
+        
     } catch (e) {
         console.error(e.message);
     }

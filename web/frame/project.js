@@ -139,7 +139,7 @@ project.load_table3 = function () {
     let projectID = project.projectRec[eProject.id];
     project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
-    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций заказа по ключу projectRow.ID
+    let prjprodList = ePrjprod.list.filter(rec => projectID == rec[ePrjprod.project_id]); //фильтр конструкций
     for (let i = 0; i < prjprodList.length; ++i) {
 
         let prjprodRec = prjprodList[i];
