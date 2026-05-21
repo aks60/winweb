@@ -5,15 +5,15 @@ import {product} from './product.js';
 export let tarif = {};
 
 //Масштабирование
-export function resize() {
+tarif.resize = function () {
 
     var height = window.innerHeight;
     $("#context").css("height", height - 80);
     $(tarif.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
     $(tarif.table1).jqGrid('setGridHeight', $("#centr").height() - 34);
-}
+};
 
-export function init_table() {
+tarif.init_table = function () {
     $(tarif.table1).jqGrid({
         datatype: "local",
         gridview: true,
@@ -49,10 +49,10 @@ export function init_table() {
             {name: 'cost2', width: 30, sorttype: "float"} //Стоимость с технологической скидкой
         ]
     });
-}
+};
 
 
-export function load_table() {
+tarif.load_table = function () {
 
     if (product.winCalc !== undefined) {
         $.ajax({
@@ -88,7 +88,7 @@ export function load_table() {
                         cost2: Math.round(tarifRec[eTarif.cost2] * 100) / 100
                     });
                 }
-                $(tarif.table1).jqGrid("setSelection", 1); 
+                $(tarif.table1).jqGrid("setSelection", 1);
                 progress(1);
             },
             error: function () {
@@ -96,6 +96,6 @@ export function load_table() {
             }
         });
     }
-}
+};
 
 

@@ -15,16 +15,15 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {tarif, resize, init_table, load_table} from './frame/tarific.js';
+            import {tarif} from './frame/tarific.js';
                   
             tarif.table1 = document.getElementById('table1');
 
-            init_table();
-            load_table();
-            $(window).unbind('resize').bind('resize', resize).trigger('resize');
+            tarif.init_table();
+            tarif.load_table();
 
             prepareTool('tarif');   
-            $(window).unbind('resize').bind('resize', resize).trigger('resize');
+            $(window).unbind('resize').bind('resize', tarif.resize).trigger('resize');
             document.getElementById('btnTar1').addEventListener('click', () => test());
             document.getElementById('btnTar2').addEventListener('click', () => test());
             document.getElementById('btnTest5').addEventListener('click', () => test());
