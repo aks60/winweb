@@ -9,7 +9,6 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {UJson} from './common/uJson.js';
-            import {tree_to_html} from './frame/product.js';
 
             let sideopenRow = {};
             const paramTaq = "<%= request.getParameter("param")%>";
@@ -97,7 +96,7 @@
                         if (data.result === 'ok') {
 
                             //Запишем текстуру в html
-                            tree_to_html();
+                            product.tree_to_html();
 
                         } else {
                             dialogMes('Сообщение', "<p>" + data.result);

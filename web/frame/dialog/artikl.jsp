@@ -15,8 +15,7 @@
             import {TFurniture} from './build/making/TFurniture.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {load_table as load_kits} from './frame/kits.js';
-            import {tree_to_html} from './frame/product.js';
+            import {kits} from './frame/kits.js';
 
             const LEV1 = ["", "Проф.", "Акс.", "Пог.", "Инс.", "Зап."];
             const LEV2 = ["", "Стекло", "Стеклопакет", "Сеннгвич", "", ""];
@@ -191,7 +190,7 @@
                                 if (data.result === 'ok') {
 
                                     //Запишем текстуру в html
-                                    tree_to_html();
+                                    product.tree_to_html();
                                 }
                             },
                             error: () => {
@@ -219,7 +218,7 @@
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
-                                load_kits(); //перезагрузка комплектов
+                                kits.load_table(); //перезагрузка комплектов
                             },
                             error: () => {
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

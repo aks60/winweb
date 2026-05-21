@@ -11,7 +11,6 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {kits} from './frame/kits.js';
-            import {tree_to_html} from './frame/product.js';
 
             let groupSet = new Set();
             let colorSet = new Set();
@@ -206,7 +205,7 @@
                                 if (data.result === 'ok') {
 
                                     //Запишем текстуру в html
-                                    tree_to_html();
+                                    product.tree_to_html();
 
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);

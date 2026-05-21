@@ -54,7 +54,7 @@
         <script type="module">
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {product, resize, init_table1, load_table2, btn_to_tabs} from './frame/product.js';
+            import {product} from './frame/product.js';
 
             deployTaq(['#tabs-1', '#tabs-2', '#tabs-3', '#tabs-4', '#tabs-5']);
 
@@ -65,14 +65,14 @@
 
             product.table1 = document.getElementById('table1');
             product.table2 = document.getElementById('table2');
-            init_table1();
-            load_table2();
-            $(window).unbind('resize').bind('resize', resize).trigger('resize');
+            product.init_table1();
+            product.load_table2();
+            $(window).unbind('resize').bind('resize', product.resize).trigger('resize');
 
             prepareTool('product');
-            document.getElementById('btnProdStv').addEventListener('click', () => btn_to_tabs('btnProdStv'));
-            document.getElementById('btnProdFurn').addEventListener('click', () => btn_to_tabs('btnProdFurn'));
-            document.getElementById('btnProdAdd').addEventListener('click', () => btn_to_tabs('btnProdAdd'));
+            document.getElementById('btnProdStv').addEventListener('click', () => product.btn_to_tabs('btnProdStv'));
+            document.getElementById('btnProdFurn').addEventListener('click', () => product.btn_to_tabs('btnProdFurn'));
+            document.getElementById('btnProdAdd').addEventListener('click', () => product.btn_to_tabs('btnProdAdd'));
         </script>  
     </head>
     <body>

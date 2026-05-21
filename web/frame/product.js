@@ -9,7 +9,7 @@ import LineString from '../lib-js/jsts-2.11.2/org/locationtech/jts/geom/LineStri
 export let product = {};
 
 //Масштабирование
-export function resize() {
+product.resize = function () {
 
     product.winCalc.resize();
 
@@ -21,10 +21,10 @@ export function resize() {
     });
     $(product.table1).jqGrid('setGridWidth', $("#east1").width() - 8);
     $(product.table1).jqGrid('setGridHeight', $("#east1").height() - 24);
-}
+};
 
 //Инициализация таблицы
-export function init_table1() {
+product.init_table1 = function () {
     try {
         $(product.table1).jqGrid({
             datatype: "local",
@@ -54,10 +54,10 @@ export function init_table1() {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 //Загрузка данных в таблицу
-export function load_table1() {
+product.load_table1 = function () {
     try {
         let syspar1List = [];
         $(product.table1).jqGrid('clearGridData', true);
@@ -80,10 +80,10 @@ export function load_table1() {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 //Загрузка данных в tree
-export function load_table2() {
+product.load_table2 = function () {
     try {
         if (project.prjprodRec != null) {
             let arr = new Array();
@@ -110,10 +110,10 @@ export function load_table2() {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 //Рекурсия элементов
-export function elements(com, arr) {
+product.elements = function (com, arr) {
     try {
         //Створки
         if (com.type === Type.STVORKA) {
@@ -136,10 +136,10 @@ export function elements(com, arr) {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 //Загрузка тегов страницы
-export function tree_to_html() {
+  product.tree_to_html = function  () {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
         let com5t = product.clickTreeNodeElem;
@@ -230,7 +230,7 @@ export function tree_to_html() {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 function check_mark(val, btn, PKjsonID) {
     let com5t = product.clickTreeNodeElem;
@@ -240,9 +240,9 @@ function check_mark(val, btn, PKjsonID) {
         $(btn).val('...');
     }
     return val;
-}
+};
 
-export function btn_to_tabs(btnTaq) {
+  product.btn_to_tabs = function (btnTaq) {
     $("#tabs-41, #tabs-42,  #tabs-43").hide();
     if (btnTaq === 'btnProdStv') {
         $("#tabs-41").show();
@@ -251,11 +251,11 @@ export function btn_to_tabs(btnTaq) {
     } else if (btnTaq === 'btnProdAdd') {
         $("#tabs-43").show();
     }
-}
+};
 
-export function save_update_script() {
+product.save_update_script =  function () {
     try {
-debugger;        
+        debugger;
         let script = product.winCalc.gson;
         project.prjprodRec[ePrjprod.script] = script;
         $.ajax({
@@ -263,7 +263,7 @@ debugger;
             data: {param: JSON.stringify(project.prjprodRec)},
             success: function (data) {
                 if (data.result === 'ok') {
-debugger;
+                    debugger;
                     //Запишем текстуру в html
                     tree_to_html();
 
@@ -286,8 +286,9 @@ debugger;
         console.error(e.message);
     }
     return null;
-}
-export function revert_update_script() {
+};
+
+product.revert_update_script = function () {
     alert('revert_update_script');
-}
+};
 

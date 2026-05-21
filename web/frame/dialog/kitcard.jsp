@@ -8,7 +8,7 @@
 
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {kits, load_table as load_kits} from './frame/kits.js';
+            import {kits} from './frame/kits.js';
             
             let kitdetList = null;
             const winc = product.winCalc;
@@ -129,7 +129,7 @@
                                 } else {
                                     dialogMes('Сообщение', "<p>" + data.result);
                                 }
-                                load_kits();
+                                kits.load_table();
                             },
                             error: () => {
                                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");

@@ -9,13 +9,12 @@
         <script type="module">
             import {project} from './frame/project.js';
             import {Wincalc} from './build/Wincalc.js';
-            import {kits, resize, init_table, load_table, update_table, 
-                delete_table, color_to_kit} from './frame/kits.js';
+            import {kits} from './frame/kits.js';
 
             kits.table1 = document.getElementById('table1');
-            init_table();
-            load_table();
-            $(window).unbind('resize').bind('resize', resize).trigger('resize');
+            kits.init_table();
+            kits.load_table();
+            $(window).unbind('resize').bind('resize', kits.resize).trigger('resize');
 
             prepareTool('kits');
             deployTaq(['#dialog-card']);           

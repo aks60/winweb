@@ -6,21 +6,26 @@
         <script type="text/javascript" src="frame/login.js"></script>
         <title>Login</title>
 
-        <script type="text/javascript">
-            login.resize = function () {
+        <script type="module">
+            import {login} from './frame/login.js'
+
+            function resize() {
                 var height = window.innerHeight;
                 $("#context").css("height", height - 54);
-            };
+            }
 
             function onPage(val) {
                 $("#pan1, #pan2").hide();
                 $("#pan" + val).show();
             }
-            $(document).ready(function () {
-                $("#btn2").focus();
-                $(window).unbind('resize').bind('resize', () => login.resize()).trigger('resize');
-                $("button").button();
-            });
+
+            $("#btn2").focus();
+            $(window).unbind('resize').bind('resize', () => resize()).trigger('resize');
+            $("button").button();
+            
+            document.getElementById('L01').addEventListener('click', () => login.user_connect());
+            document.getElementById('L02').addEventListener('click', () => login.token_refresh());
+            document.getElementById('L03').addEventListener('click', () => login.token_connect());            
         </script>         
     </head>
     <body>
@@ -49,7 +54,7 @@
                             </tr>
                             <td></td>
                             <td>
-                                <button tabindex="2" type="button" onclick="login.user_connect();" style="width: 106px;">Войти</button>
+                                <button id="L01" tabindex="2" type="button" onclick="" style="width: 106px;">Войти</button>
                             </td>                            
                         </table>
 
@@ -72,8 +77,8 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class='refresh' tabindex="3" type="button" onclick="token_refresh()"style="width: 80px;">Обновить</button>
-                                    <button tabindex="2" type="button" onclick="token_connect()"style="width: 120px;">Войти</button>
+                                    <button id="L02" class='refresh' tabindex="3" type="button" onclick="" style="width: 80px;">Обновить</button>
+                                    <button id="L03" tabindex="2" type="button" onclick="" style="width: 120px;">Войти</button>
                                 </td>
                             </tr>
                         </table>                

@@ -4,15 +4,15 @@ import {project} from './project.js';
 export let kits = {};
 
 //Масштабирование
-export function resize() {
+kits.resize = () => {
 
     var height = window.innerHeight;
     $("#context").css("height", height - 48);
     $(kits.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
     $(kits.table1).jqGrid('setGridHeight', $("#centr").height() - 30);
-}
+};
 
-export function init_table() {
+kits.init_table = () => {
     $(kits.table1).jqGrid({
         datatype: "local",
         gridview: true,
@@ -37,9 +37,9 @@ export function init_table() {
             kits.prjkitRec = findef(prjkitRow.ID, ePrjkit.id, ePrjkit);
         }
     });
-}
+};
 
-export function load_table() {
+kits.load_table = () => {
     $(kits.table1).jqGrid('clearGridData', true);
     if (project.mapWinc.size !== 0) {
         let prjkitList = ePrjkit.list.filter(rec => project.prjprodRec[ePrjprod.id] === rec[ePrjkit.prjprod_id]);
@@ -60,10 +60,10 @@ export function load_table() {
         }
         $(kits.table1).jqGrid("setSelection", 1);
     }
-}
+};
 
 //Редактирования строки таблицы
-export function update_table() {
+kits.update_table = () => {
 
     let dialogTaq = '#dialog-card';
     let rowid = $(kits.table1).jqGrid('getGridParam', "selrow");
@@ -87,7 +87,7 @@ export function update_table() {
         resizable: false,
         buttons: {
             "Применить": function () {
-      
+
                 prjkitRec[ePrjkit.width] = $("#k56").sign(0);
                 prjkitRec[ePrjkit.height] = $("#k57").sign(0);
                 prjkitRec[ePrjkit.numb] = $("#k58").sign(1);
@@ -122,9 +122,9 @@ export function update_table() {
             }
         }
     });
-}
+};
 
-export function delete_table() {
+kits.delete_table = () => {
 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -164,10 +164,10 @@ export function delete_table() {
             }
         }
     });
-}
+};
 
 //Заполнение
-export function color_to_kit(btnSrc) {
+kits.color_to_kit = (btnSrc) => {
     try {
         let groupSet = new Set();
         let colorSet = new Set();
@@ -200,4 +200,4 @@ export function color_to_kit(btnSrc) {
     } catch (e) {
         console.error(e.message);
     }
-}
+};

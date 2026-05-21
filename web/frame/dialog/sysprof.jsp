@@ -10,7 +10,6 @@
             import {UJson} from './common/uJson.js';
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
-            import {tree_to_html} from './frame/product.js';
             
             const paramTaq = "<%= request.getParameter("param")%>";
             let sysprofSet = new Set();
@@ -135,7 +134,7 @@
                         if (data.result === 'ok') {
 
                             //Запишем текстуру в html
-                            tree_to_html();
+                            product.tree_to_html();
 
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);

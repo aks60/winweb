@@ -11,7 +11,6 @@
             import {project} from './frame/project.js';
             import {product} from './frame/product.js';
             import {UJson} from './common/uJson.js';
-            import {tree_to_html} from './frame/product.js';
 
             let syspar1Row = {};
             const paramTaq = "<%= request.getParameter("param")%>";

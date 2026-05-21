@@ -1,7 +1,7 @@
 
 import {UGeo} from './model/uGeo.js';
 import {UJson} from '../common/uJson.js';
-import {product} from '../frame/product.js';
+//import {product} from '../frame/product.js';
 import {Type, PKjson} from '../enums/enums.js';
 import {UseType} from '../enums/UseType.js';
 import {AreaSimple, AreaArch, AreaDoor, AreaRectangl, AreaTrapeze,

@@ -51,13 +51,9 @@
 
         <script type="text/javascript">
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, eGroups,
-                    eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn,
-                    eSyspar1, eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
-            //eSysfurn, eFurniture, eFurnside2, eFurndet
-            //
-            //Глобальные объекты
-            var dbrec = {}, login = {que_requests: 2}, fio = {}, users = {}, kits = {}, triggerMes = 0;
+            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, 
+                    eGroups, eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, eSyspar1, 
+                    eSysprod, eSysprof,  eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
 
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
@@ -75,6 +71,7 @@
         
         <script type="module">
             import {localizeFactory, Test1} from './frame/main.js';
+            import {login} from './frame/login.js';
             localizeFactory();
             //Test1();
 
@@ -95,7 +92,7 @@
                             eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++];
 
                     login.init_login();
-                    login.user_connect();
+                    //login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

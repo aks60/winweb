@@ -18,7 +18,9 @@ err[-50] = 'Библиотека не загружена';
 err[-51] = 'Библиотека находится в неинициализированном состоянии';
 err[-52] = 'Библиотека не поддерживает расширенный интерфейс';
 err[-53] = 'Ошибка в библиотеке rtpkcs11ecp';
-//------------------------------------------------------------------------------
+
+export let login = {que_requests: 2};
+
 login.init_login = function () {
     --login.que_requests;
     if (login.que_requests == 0 && login.data != undefined) {
@@ -35,7 +37,8 @@ login.init_login = function () {
         }
     }
 };
-//----------------  Авторизация через логин-пароль  ----------------------------
+
+//Авторизация через логин-пароль
 login.user_connect = function () {
     var att = [$('#pan1 .login').val(), $('#pan1 .password').val()];
     var mes = ['Не введён логин пользователя', 'Не введён пароль пользователя'];
@@ -57,7 +60,8 @@ login.user_connect = function () {
         }
     });
 };
-//---------------  Проверка корректности ввода учётной записи  -----------------
+
+//Проверка корректности ввода учётной записи
 login.token_check = function () {
 
     var att = [$('#pan2 .login:first').val(), $('#pan2 .password').val(), $('pan2 .login.last').val()];
@@ -91,7 +95,8 @@ login.token_check = function () {
         }
     });
 };
-//------------------  Отправим учётку, получим случайное сообщение  ------------
+
+//Отправим учётку, получим случайное сообщение
 login.token_connect = function () {
     var login = document.getElementById('token_login').value;
     if (login == "none") {
@@ -109,7 +114,8 @@ login.token_connect = function () {
         });
     }
 };
-//------------- Подписание сообщения сервера закрытым ключём токена  -----------
+
+//Подписание сообщения сервера закрытым ключём токена
 login.token_sign = function (random) {
     plugin = document.getElementById("cryptoPlugin");
     if (!plugin.valid) {
@@ -144,7 +150,8 @@ login.token_sign = function (random) {
         }
     }
 };
-//---------------  получение списка учёных записей токена  ---------------------
+
+//Получение списка учёных записей токена
 login.token_refresh = function () {
     plugin = document.getElementById("cryptoPlugin");
     log_list = document.getElementById("token_login");
@@ -167,7 +174,7 @@ login.token_refresh = function () {
         document.all.mesCell.innerHTML = err[ret];
     }
 };
-//------------------------------------------------------------------------------
+
 login.add_item = function (oListbox, text, value, isDefaultSelected, isSelected) {
     var oOption = document.createElement("option");
     oOption.appendChild(document.createTextNode(text));
