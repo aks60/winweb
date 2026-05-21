@@ -4,16 +4,16 @@ export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, tabl
 
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
-export function  resize() {
+project.resize = function() {
     $("#context").css("height", window.innerHeight - 48);
     $("#table1").jqGrid('setGridWidth', $("#centr").width());
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
     $("#table2").jqGrid('setGridWidth', $("#east").width() - 4);
     $("#table3").jqGrid('setGridWidth', $("#east").width() - 4);
-}
+};
 
 //Инициализация таблиц
-export function init_table() {
+project.init_table = function () {
     $(project.table1).jqGrid({
         datatype: "local",
         gridview: true,
@@ -36,11 +36,11 @@ export function init_table() {
             let projectRow = $(project.table1).jqGrid('getRowData', rowid);
             project.projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
             project.table1rowID = rowid;
-            load_table2();
-            load_table3();   //загрузка таблицы 3         
+            project.load_table2();
+            project.load_table3();   //загрузка таблицы 3         
         },
         gridComplete: function () {
-            resize();
+            project.resize();
         }
     });
     $(project.table2).jqGrid({
@@ -83,10 +83,10 @@ export function init_table() {
         }
         //gridComplete: function () {} //использовать при загрузки рисунка
     });
-}
+};
 
 //Загрузка лроектов в таблицу
-export function load_table1() {
+project.load_table1 = function () {
 
     $(project.table1).jqGrid('clearGridData', true);
     eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
@@ -104,10 +104,10 @@ export function load_table1() {
         });
     }
     $(project.table1).jqGrid("setSelection", project.table1rowID);
-}
+};
 
 //Загрузка конструкций в таблицу
-export function load_table2() {
+project.load_table2 = function () {
 
     const rubf = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
     $(project.table2).jqGrid('clearGridData', true);
@@ -132,10 +132,10 @@ export function load_table2() {
         disc: project.projectRec[eProject.disc_all], //скидка общая
         cost1: rubf.format(cost1_win + cost1_kit), //итого стоимость без скидки
         cost2: rubf.format((cost2_win + cost2_kit) - (cost2_win + cost2_kit) * disc_all / 100)}); //итого стоимость со скидкой
-}
+};
 
 //Загрузка конструкций в таблицу
-export function load_table3() {
+project.load_table3 = function () {
     let projectID = project.projectRec[eProject.id];
     project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
@@ -155,10 +155,10 @@ export function load_table3() {
         project.mapWinc.set(prjprodRec[ePrjprod.id], winc);
     }
     $(project.table3).jqGrid("setSelection", project.table3rowID);
-}
+};
 
 //Вставка строки в таблицу
-export function insert_table1() {
+project.insert_table1 = function () {
 
     let taq = document.getElementById('dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
@@ -206,7 +206,7 @@ export function insert_table1() {
                                 success: (data) => {
                                     if (data.result === 'ok') {
                                         eProject.list.push(projectRec);
-                                        load_table1($(project.table1));
+                                        project.load_table1($(project.table1));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);
                                 },
@@ -228,10 +228,10 @@ export function insert_table1() {
             dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
         }
     });
-}
+};
 
 //Редактирования строки таблицы
-export function update_table1() {
+project.update_table1 = function () {
 
     let dialogCard = $('#dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
@@ -289,10 +289,10 @@ export function update_table1() {
             }
         }
     });
-}
+};
 
 //Удаление строки таблицы
-export function delete_table1() {
+project.delete_table1 = function () {
     let projectRow = getSelectedRow($(project.table1));
     if (projectRow !== null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
@@ -331,10 +331,10 @@ export function delete_table1() {
             }
         });
     }
-}
+};
 
 //Редактирования строки таблицы
-export function update_table2() {
+project.update_table2 = function () {
 
     let dialogCard = $('#dialog-card3');
     $("#p35").val($(project.table2).jqGrid('getCell', 1, 2));
@@ -360,8 +360,8 @@ export function update_table2() {
                     success: (data) => {
 
                         if (data.result === 'ok') {
-                            load_table2();
-                            calculate_project();
+                            project.load_table2();
+                            project.calculate_project();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -376,14 +376,14 @@ export function update_table2() {
             }
         }
     });
-}
+};
 
 //Добавим запись в домен ePrjprod
-export function insert_table3(table, prjprodRec) {
-}
+project.insert_table3 = function (table, prjprodRec) {
+};
 
 //Редактирования строки таблицы
-export function update_table3() {
+project.update_table3 = function () {
 
     let taq = document.getElementById('dialog-card2');
     $("#p31").val(project.prjprodRec[ePrjprod.num]);
@@ -406,7 +406,7 @@ export function update_table3() {
                     data: {param: JSON.stringify(project.prjprodRec)},
                     success: (data) => {
                         if (data.result === 'ok') {
-                            load_table3();
+                            project.load_table3();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -421,10 +421,10 @@ export function update_table3() {
             }
         }
     });
-}
+};
 
 //Удаление строки таблицы 
-export function delete_table3() {
+project.delete_table3 = function () {
 
     $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
     </span> Вы действительно хотите удалить текущую запись?");
@@ -446,7 +446,7 @@ export function delete_table3() {
                                     ePrjprod.list.splice(i, 1);
                                 }
                             }
-                            load_table3();
+                            project.load_table3();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },
@@ -461,9 +461,9 @@ export function delete_table3() {
             }
         }
     });
-}
+};
 
-export function calculate_project() {
+project.calculate_project = function () {
     try {
         $.ajax({
             url: 'dbset?action=calculateProject',
@@ -478,7 +478,7 @@ export function calculate_project() {
                     project.projectRec[eProject.cost1_kit] = projectRec[eProject.cost1_kit];
                     project.projectRec[eProject.cost2_kit] = projectRec[eProject.cost2_kit];
 
-                    load_table2();
+                    project.load_table2();
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);
@@ -491,6 +491,6 @@ export function calculate_project() {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
 

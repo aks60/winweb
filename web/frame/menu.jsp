@@ -7,13 +7,7 @@
 
     </head>
     <script type="module">
-        import {insert_table1 as project_insert_table1,
-                update_table1 as project_update_table1,
-                delete_table1 as project_delete_table1,
-                update_table2 as project_update_table2,
-                update_table3 as project_update_table3,
-                delete_table3 as project_delete_table3,
-                calculate_project, project} from './frame/project.js';
+        import {project} from './frame/project.js';
         import {product} from './frame/product.js';
         import {state, load_tarif, load_smeta, load_check} from './frame/report.js';
         import {kits} from './frame/kits.js';
@@ -41,15 +35,15 @@
 
         function init_menu() {
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
-            document.getElementById('m11').addEventListener('click', () => project_insert_table1());
-            document.getElementById('m21').addEventListener('click', () => project_update_table1());
-            document.getElementById('m31').addEventListener('click', () => project_delete_table1());
+            document.getElementById('m11').addEventListener('click', () => project.insert_table1());
+            document.getElementById('m21').addEventListener('click', () => project.update_table1());
+            document.getElementById('m31').addEventListener('click', () => project.delete_table1());
 
             document.getElementById('m41').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
-            document.getElementById('m51').addEventListener('click', () => project_update_table3());
-            document.getElementById('m61').addEventListener('click', () => project_delete_table3());
-            document.getElementById('m71').addEventListener('click', () => project_update_table2());
-            document.getElementById('m81').addEventListener('click', () => calculate_project());
+            document.getElementById('m51').addEventListener('click', () => project.update_table3());
+            document.getElementById('m61').addEventListener('click', () => project.delete_table3());
+            document.getElementById('m71').addEventListener('click', () => project.update_table2());
+            document.getElementById('m81').addEventListener('click', () => project.calculate_project());
 
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
             document.getElementById('m12').addEventListener('click', () => product.save_update_script());
@@ -75,7 +69,7 @@
                     $("#nav2 .selected").removeClass("selected");
 
                     if ($(this).next(".subs").length) {
-                        
+
                         if ($('#body-jsp title').text() === state.nameJsp) {
                             $(this).parent().addClass("selected"); // display popup
                             $(this).next(".subs").children().slideDown(200);
@@ -90,7 +84,7 @@
                 $("#nav2 .selected").removeClass("selected");
             });
         }
-        
+
         init_menu();
 
 
