@@ -85,7 +85,6 @@ product.load_table1 = function () {
 //Загрузка данных в tree
 product.load_table2 = function () {
     try {
-        debugger;
         if (project.prjprodRec != null) {
             let arr = new Array();
             let root = product.winCalc.root;
@@ -256,7 +255,6 @@ product.btn_to_tabs = function (btnTaq) {
 
 product.save_update_script = function () {
     try {
-        debugger;
         let script = product.winCalc.gson;
         project.prjprodRec[ePrjprod.script] = script;
         $.ajax({
@@ -264,7 +262,6 @@ product.save_update_script = function () {
             data: {param: JSON.stringify(project.prjprodRec)},
             success: function (data) {
                 if (data.result === 'ok') {
-                    debugger;
                     //Запишем текстуру в html
                     product.tree_to_html();
 
