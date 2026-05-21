@@ -9,7 +9,7 @@
     <script type="module">
         import {project} from './frame/project.js';
         import {product} from './frame/product.js';
-        import {state, load_tarif, load_smeta, load_check} from './frame/report.js';
+        import {state} from './frame/report.js';
         import {kits} from './frame/kits.js';
 
         function load_project(name) {
@@ -55,9 +55,9 @@
             document.getElementById('m33').addEventListener('click', () => kits.update_table());
             document.getElementById('m43').addEventListener('click', () => kits.delete_table());
 
-            document.getElementById('m14').addEventListener('click', () => load_tarif('TARIF'));
-            document.getElementById('m24').addEventListener('click', () => load_smeta('Смета2'));
-            document.getElementById('m34').addEventListener('click', () => load_check('Счёт2'));
+            document.getElementById('m14').addEventListener('click', () => state.load_tarif('TARIF'));
+            document.getElementById('m24').addEventListener('click', () => state.load_smeta('Смета2'));
+            document.getElementById('m34').addEventListener('click', () => state.load_check('Счёт2'));
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
 

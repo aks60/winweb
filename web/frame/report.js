@@ -2,17 +2,15 @@ import {project} from './project.js';
 //import {nameObj} from './menu.jsp';
 //import {nameJsp} from './menu.jsp';
 
-export let state = {
-    nameJsp : 'PROJECT'
-};
+export let state = {nameJsp : 'PROJECT'};
 
-export function load_tarif(name) {
+state.load_tarif = function (name) {
     progress(0);
     state.nameJsp = name;
     $('#body-jsp').load('frame/tarific.jsp');
-}
+};
 
-export function load_smeta(name) {
+state.load_smeta = function (name) {
 
     try {
         progress(0);
@@ -35,9 +33,9 @@ export function load_smeta(name) {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
-export function load_check(name) {
+state.load_check = function (name) {
     try {
         progress(0);
         state.nameJsp = name;
@@ -59,5 +57,5 @@ export function load_check(name) {
     } catch (e) {
         console.error(e.message);
     }
-}
+};
 
