@@ -3,7 +3,7 @@
 <html>
     <head>        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-        <script type="text/javascript" src="frame/login.js"></script>
+        <!--<script type="text/javascript" src="frame/login.js"></script>-->
         <title>Login</title>
 
         <script type="module">
@@ -54,7 +54,7 @@
                             </tr>
                             <td></td>
                             <td>
-                                <button id="L01" tabindex="2" type="button" onclick="" style="width: 106px;">Войти</button>
+                                <button id="L01" tabindex="2" type="button" style="width: 106px;">Войти</button>
                             </td>                            
                         </table>
 
@@ -77,8 +77,8 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button id="L02" class='refresh' tabindex="3" type="button" onclick="" style="width: 80px;">Обновить</button>
-                                    <button id="L03" tabindex="2" type="button" onclick="" style="width: 120px;">Войти</button>
+                                    <button id="L02" class='refresh' tabindex="3" type="button" style="width: 80px;">Обновить</button>
+                                    <button id="L03" tabindex="2" type="button" style="width: 120px;">Войти</button>
                                 </td>
                             </tr>
                         </table>                

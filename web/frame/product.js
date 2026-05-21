@@ -85,13 +85,14 @@ product.load_table1 = function () {
 //Загрузка данных в tree
 product.load_table2 = function () {
     try {
+        debugger;
         if (project.prjprodRec != null) {
             let arr = new Array();
             let root = product.winCalc.root;
 
             arr.push({'id': -1, 'parent': '#', 'text': 'Параметры', 'icon': 'lib-img/tool/leaf.gif'});
             arr.push({'id': root.id, 'parent': '#', 'text': 'Коробка', 'icon': 'lib-img/tool/folder.gif'});
-            elements(root, arr); //вход в рекурсию    
+            product.elements(root, arr); //вход в рекурсию    
 
             $(product.table2).jstree({'core': {'data': arr}})
                     .bind("loaded.jstree", function (event, data) {
@@ -103,7 +104,7 @@ product.load_table2 = function () {
 
                         product.clickTreeNodeElem = com5t;  //выбранный компонент в узле
 
-                        tree_to_html();
+                        product.tree_to_html();
 
                     });
         }
@@ -127,7 +128,7 @@ product.elements = function (com, arr) {
 
             //Контейнер
             if ([Type.AREA, Type.STVORKA].includes(el.type, 0)) {
-                elements(el, arr);
+                product.elements(el, arr);
                 //Элемент
             } else {
                 arr.push({'id': el.id, 'parent': com.id, 'text': el.type[2] + ', ' + el.layout[1], 'icon': 'lib-img/tool/leaf.gif'});
@@ -139,7 +140,7 @@ product.elements = function (com, arr) {
 };
 
 //Загрузка тегов страницы
-  product.tree_to_html = function  () {
+product.tree_to_html = function () {
     try {
         $("#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5").hide();
         let com5t = product.clickTreeNodeElem;
@@ -169,7 +170,7 @@ product.elements = function (com, arr) {
             //Парам. по умолчанию
         } else if (com5t.type === Type.PARAM) {
             $("#tabs-2").show();
-            load_table1($('#table1'));
+            product.load_table1($('#table1'));
 
             //Сторона коробки, створки
         } else if ([Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP, Type.STOIKA].includes(com5t.type, 0)) {
@@ -240,9 +241,9 @@ function check_mark(val, btn, PKjsonID) {
         $(btn).val('...');
     }
     return val;
-};
+}
 
-  product.btn_to_tabs = function (btnTaq) {
+product.btn_to_tabs = function (btnTaq) {
     $("#tabs-41, #tabs-42,  #tabs-43").hide();
     if (btnTaq === 'btnProdStv') {
         $("#tabs-41").show();
@@ -253,7 +254,7 @@ function check_mark(val, btn, PKjsonID) {
     }
 };
 
-product.save_update_script =  function () {
+product.save_update_script = function () {
     try {
         debugger;
         let script = product.winCalc.gson;
@@ -265,7 +266,7 @@ product.save_update_script =  function () {
                 if (data.result === 'ok') {
                     debugger;
                     //Запишем текстуру в html
-                    tree_to_html();
+                    product.tree_to_html();
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);
