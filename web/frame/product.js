@@ -1,4 +1,4 @@
-
+import {Wincalc} from '../build/Wincalc.js';
 import {Type, TypeOpen1, Layout, LayoutHand, PKjson} from '../enums/enums.js';
 import {project} from './project.js';
 import {UGeo} from '../build/model/uGeo.js';
@@ -273,7 +273,7 @@ product.save_update_script = function () {
                 dialogMes('Сообщение', "<p>Ошибка при сохранении данных на сервере");
             }
         });
-        
+
     } catch (e) {
         console.error(e.message);
     }
@@ -281,6 +281,15 @@ product.save_update_script = function () {
 };
 
 product.revert_update_script = function () {
-    alert('revert_update_script');
+    try {
+        let prjprodRec = ePrjprod.list.find(rec => rec[ePrjprod.id] === project.prjprodRec[ePrjprod.id]);
+        let script = project.prjprodRec[ePrjprod.script];
+        const ctx = product.winCalc.cnv.getContext('2d');
+        ctx.clearRect(0, 0, product.winCalc.cnv.width, product.winCalc.cnv.height);
+        product.winCalc.build(script);
+
+    } catch (e) {
+        console.error(e.message);
+    }
 };
 
