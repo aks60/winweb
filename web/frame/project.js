@@ -136,6 +136,7 @@ project.load_table2 = function () {
 
 //Загрузка конструкций в таблицу
 project.load_table3 = function () {
+    
     let projectID = project.projectRec[eProject.id];
     project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
@@ -148,7 +149,6 @@ project.load_table3 = function () {
             name: prjprodRec[ePrjprod.name],
             num: prjprodRec[ePrjprod.num]
         });
-
         let canvas = document.getElementById('cnv' + (i + 1));
         let script = prjprodRec[ePrjprod.script];
         let winc = Wincalc.new(canvas, 68, 68, script);

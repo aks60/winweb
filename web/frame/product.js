@@ -262,9 +262,8 @@ product.save_update_script = function () {
             data: {param: JSON.stringify(project.prjprodRec)},
             success: function (data) {
                 if (data.result === 'ok') {
-                    //Запишем текстуру в html
-                    product.tree_to_html();
-                    project.load_table3();
+                    //product.tree_to_html();
+                    //project.load_table3();
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);
@@ -293,3 +292,17 @@ product.revert_update_script = function () {
     }
 };
 
+product.moveWinc = function (btn) {
+
+    let dxy = 2; //(timer.isRunning() == true) ? 2 : 1;
+    if (btn === "btnBot") {
+        UGeo.moveGson(product.winCalc.gson, .0, dxy, product.winCalc.scale);
+    } else if (btn === "btnRop") {
+        UGeo.moveGson(product.winCalc.gson, .0, -dxy, product.winCalc.scale);
+    } else if (btn === "btnLef") {
+        UGeo.moveGson(product.winCalc.gson, -dxy, .0, product.winCalc.scale);
+    } else if (btn === "btnRig") {
+        UGeo.moveGson(product.winCalc.gson, dxy, .0, product.winCalc.scale);
+    }
+    product.winCalc.resize();
+};

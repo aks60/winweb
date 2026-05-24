@@ -73,6 +73,10 @@
             document.getElementById('btnProdStv').addEventListener('click', () => product.btn_to_tabs('btnProdStv'));
             document.getElementById('btnProdFurn').addEventListener('click', () => product.btn_to_tabs('btnProdFurn'));
             document.getElementById('btnProdAdd').addEventListener('click', () => product.btn_to_tabs('btnProdAdd'));
+            document.getElementById('btnTop').addEventListener('click', () => product.moveWinc('btnTop'));
+            document.getElementById('btnBot').addEventListener('click', () => product.moveWinc('btnBot'));
+            document.getElementById('btnLef').addEventListener('click', () => product.moveWinc('btnLef'));
+            document.getElementById('btnRig').addEventListener('click', () => product.moveWinc('btnRig'));
         </script>  
     </head>
     <body>
@@ -80,8 +84,6 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
-<!--                <button id="btnSave" class="toolWest1"></button>
-                <button id="btnRevert" class="toolWest1"></button>-->
                 <button id="btnTop" class="toolWest1"></button>
                 <button id="btnBot" class="toolWest1"></button>
                 <button id="btnLef" class="toolWest1"></button>

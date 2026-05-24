@@ -43,7 +43,6 @@ export class AreaStvorka extends AreaSimple {
 
     constructor(winc, gson, owner) {
         super(winc, gson, owner);
-        this.initArtikle();
     }
 
     initStvorka() {

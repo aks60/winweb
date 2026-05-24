@@ -199,8 +199,6 @@ function prepareTool(name) {
         $("#btnKit4").button({icons: {primary: "ui-icon-trash"}});
     }
     if (name == 'product') {
-        //$("#btnSave").button({icons: {primary: "ui-icon-script"}});
-        //$("#btnRevert").button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
         $("#btnLef").button({icons: {primary: " ui-icon-arrowthick-1-w"}});
         $("#btnRig").button({icons: {primary: "ui-icon-arrowthick-1-e"}});
         $("#btnTop").button({icons: {primary: "ui-icon-arrowthick-1-n"}});
