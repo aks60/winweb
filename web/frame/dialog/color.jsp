@@ -112,7 +112,7 @@
                         ID: tr[eColor.id],
                         name: tr[eColor.name]
                     });
-                    let rgb = '#' + tr[eColor.rgb].toString(16);
+                    let rgb = '#' + tr[eColor.rgb].toString(16).padStart(6, '0');
                     $(tab2Color).jqGrid('setCell', i + 1, 'id', '', {background: rgb});
                 });
                 $(tab2Color).jqGrid("setSelection", 1);

@@ -83,7 +83,7 @@ export class ElemFrame extends ElemSimple {
                 super.paint();
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
-                this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16);
+                this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 this.winc.paint(this.area);
             }
         } catch (e) {

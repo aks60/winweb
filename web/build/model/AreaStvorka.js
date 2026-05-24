@@ -253,7 +253,7 @@ export class AreaStvorka extends AreaSimple {
             }
             let colorHandl = (this.handColor[1] === -3) ? this.handColor[0] : this.handColor[1];
             let colorRec = eColor.find(colorHandl);
-            let rgb = colorRec[eColor.rgb].toString(16);
+            let rgb = colorRec[eColor.rgb].toString(16).padStart(6, '0');
             this.winc.ctx.fillStyle = '#' + rgb;
             this.winc.paint(this.areaHand.getGeometryN(0));
             this.winc.paint(this.areaHand.getGeometryN(1));

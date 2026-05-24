@@ -91,7 +91,8 @@ export class ElemGlass extends ElemSimple {
 
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
-                this.winc.ctx.fillStyle = '#' + eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === this.colorID2)[eColor.rgb].toString(16);
+                this.winc.ctx.fillStyle = '#' + eColor.list.seek(eColor.vrec, rec =>
+                    rec[eColor.id] === this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 this.winc.paint(geoFalz);
 
             } else if (geoFalz !== null) {
