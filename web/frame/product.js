@@ -262,6 +262,7 @@ product.save_update_script = function () {
             data: {param: JSON.stringify(project.prjprodRec)},
             success: function (data) {
                 if (data.result === 'ok') {
+                    product.winCalc.build(script);
                     //product.tree_to_html();
                     //project.load_table3();
 
