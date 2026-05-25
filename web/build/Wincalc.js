@@ -326,19 +326,6 @@ export class Wincalc {
         this.ctx.restore();
     }
 
-//    ajax(tName, record) {
-//        const obj = {};
-//        if (record[0] === 'INS') {
-//            obj.url = 'dbset?action=insert' + tName[1];
-//        } else if (record[0] === 'UPD') {
-//            obj.url = 'dbset?action=update' + tName[1];
-//        } else if (record[0] === 'DEL') {
-//            obj.url = 'dbset?action=delete' + tName[1];
-//        } else if (record[0] !== 'SEL') {
-//            obj.data = JSON.stringify(record);
-//        }
-//    }
-
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     get cnv() {
         return this._cnv;
