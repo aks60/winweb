@@ -95,9 +95,7 @@ export class ElemGlass extends ElemSimple {
                     rec[eColor.id] === this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 this.winc.paint(geoFalz);
 
-            } else if (geoFalz !== null) {
-                //
-            }
+            } 
         } catch (e) {
             console.error(e.message);
         }

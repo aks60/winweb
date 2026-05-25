@@ -317,3 +317,9 @@ product.zoomScale = function (btn) {
     }
     product.winCalc.resize();
 };
+
+product.sceleton = function () {
+    //product.winCalc.sceleton = !product.winCalc.sceleton;
+    product.winCalc.resize();
+    debugger;
+};

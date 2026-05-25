@@ -79,6 +79,7 @@
             document.getElementById('btnRig').addEventListener('click', () => product.moveWinc('btnRig'));
             document.getElementById('btnPlus').addEventListener('click', () => product.zoomScale('btnPlus'));
             document.getElementById('btnMinus').addEventListener('click', () => product.zoomScale('btnMinus'));
+            document.getElementById('btnSceleton').addEventListener('click', () => product.sceleton());
         </script>  
     </head>
     <body>

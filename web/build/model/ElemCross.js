@@ -24,7 +24,7 @@ export class ElemCross extends ElemSimple {
     }
 
     initArtikle() {
-        try {            
+        try {
             this.colorID1 = UJson.isFinite(this.gson.param, PKjson.colorID1) ? Number(this.gson.param.colorID1) : this.root.colorID1;
             this.colorID2 = UJson.isFinite(this.gson.param, PKjson.colorID2) ? Number(this.gson.param.colorID2) : this.root.colorID2;
             this.colorID3 = UJson.isFinite(this.gson.param, PKjson.colorID3) ? Number(this.gson.param.colorID3) : this.root.colorID3;
@@ -33,7 +33,7 @@ export class ElemCross extends ElemSimple {
                 this.sysprofRec = eSysprof.find3(this.gson.param[PKjson.sysprofID]);
             } else {
                 this.sysprofRec = eSysprof.find5(this.winc.nuni, this.type[1], UseSide.ANY[0], UseSide.ANY[0]);
-            }            
+            }
             this.artiklRec = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], false); //артикул
             this.artiklRecAn = eArtikl.find(this.sysprofRec[eSysprof.artikl_id], true); //аналог     
 
@@ -53,13 +53,13 @@ export class ElemCross extends ElemSimple {
         }
     }
 
-    setLocation() {     
+    setLocation() {
         try {
             const geoShell = this.owner.area.getGeometryN(0);
             const geoFalz = this.owner.area.getGeometryN(2);
 
             //Пилим полигон импостом     
-            let segmImp = LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]);            
+            let segmImp = LineSegment.new([this.x1, this.y1, this.id], [this.x2, this.y2, this.id]);
             const geoSplit = UGeo.splitPolygon(geoShell.copy(), segmImp);
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];
@@ -84,13 +84,18 @@ export class ElemCross extends ElemSimple {
 
     paint() {
         try {
-            if (this.area !== null && this.winc.sceleton === false) {                
+            if (this.area !== null && this.winc.sceleton === false) {
                 this.winc.ctx.lineWidth = 4;
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 const geoInne = this.owner.area.getGeometryN(1);
                 let geoPaint = OverlayOp.intersection(this.area, geoInne);
                 this.winc.paint(geoPaint);
+            } else {
+                this.winc.ctx.strokeStyle = "#0000FF";
+                this.winc.ctx.fillStyle = '#ffffff';
+                let shape = this.area.getGeometryN(0);
+                this.winc.paint(shape);
             }
         } catch (e) {
             console.error(e.message);

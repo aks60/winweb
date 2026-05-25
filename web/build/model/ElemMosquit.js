@@ -55,7 +55,9 @@ export class ElemMosquit extends ElemSimple {
 
     paint() {
         try {
+            if (this.winc.sceleton === false) {
 
+            }
         } catch (e) {
             console.error(e.message);
         }

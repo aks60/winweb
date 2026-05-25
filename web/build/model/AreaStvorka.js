@@ -257,8 +257,15 @@ export class AreaStvorka extends AreaSimple {
             this.winc.ctx.fillStyle = '#' + rgb;
             this.winc.paint(this.areaHand.getGeometryN(0));
             this.winc.paint(this.areaHand.getGeometryN(1));
+            
         } else {
-            console.error('Error: AreaStvorka.paint()');
+            
+            this.winc.ctx.strokeStyle = "#0000FF";
+            this.winc.ctx.fillStyle = '#ffffff';
+            for (let i = 0; i < 3; ++i) {
+                let shape = this.area.getGeometryN(i);
+                this.winc.paint(shape);
+            }
         }
     }
 }
