@@ -77,6 +77,8 @@
             document.getElementById('btnBot').addEventListener('click', () => product.moveWinc('btnBot'));
             document.getElementById('btnLef').addEventListener('click', () => product.moveWinc('btnLef'));
             document.getElementById('btnRig').addEventListener('click', () => product.moveWinc('btnRig'));
+            document.getElementById('btnPlus').addEventListener('click', () => product.zoomScale('btnPlus'));
+            document.getElementById('btnMinus').addEventListener('click', () => product.zoomScale('btnMinus'));
         </script>  
     </head>
     <body>
@@ -88,6 +90,8 @@
                 <button id="btnBot" class="toolWest1"></button>
                 <button id="btnLef" class="toolWest1"></button>
                 <button id="btnRig" class="toolWest1"></button>
+                <button id="btnPlus" class="toolWest1"></button>
+                <button id="btnMinus" class="toolWest1"></button>
                 <button id="btnSceleton" class="toolWest1"></button>
             </div>
             <div id='west2' class='abs' style='border: 0;'>

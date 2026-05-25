@@ -24,6 +24,7 @@ export class Wincalc {
     listAll = new Array();  //список всех компонентов (area + elem)
     listKit = new Array();  //комплектация   
     scale = 1; //коэффициент сжатия
+    scaleZoom = 1; //для масштабированя, т.к. scale постоянно пересчитывается
     syssizRec; //системные константы   
     root; //объектная модель конструкции 
     dXY = 40; //коррекция разм. линий
@@ -265,7 +266,7 @@ export class Wincalc {
                         ? this.cnv.width / this.width : this.cnv.height / this.height;
             } else {
                 this.scale = ((this.cnv.width - this.dXY) / this.width < (this.cnv.height - this.dXY) / this.height)
-                        ? (this.cnv.width - this.dXY) / this.width : (this.cnv.height - this.dXY) / this.height;
+                        ? (this.scaleZoom * this.cnv.width - this.dXY) / this.width : (this.scaleZoom * this.cnv.height - this.dXY) / this.height;
             }
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
@@ -325,18 +326,18 @@ export class Wincalc {
         this.ctx.restore();
     }
 
-    ajax(tName, record) {
-        const obj = {};
-        if (record[0] === 'INS') {
-            obj.url = 'dbset?action=insert' + tName[1];
-        } else if (record[0] === 'UPD') {
-            obj.url = 'dbset?action=update' + tName[1];
-        } else if (record[0] === 'DEL') {
-            obj.url = 'dbset?action=delete' + tName[1];
-        } else if (record[0] !== 'SEL') {
-            obj.data = JSON.stringify(record);
-        }
-    }
+//    ajax(tName, record) {
+//        const obj = {};
+//        if (record[0] === 'INS') {
+//            obj.url = 'dbset?action=insert' + tName[1];
+//        } else if (record[0] === 'UPD') {
+//            obj.url = 'dbset?action=update' + tName[1];
+//        } else if (record[0] === 'DEL') {
+//            obj.url = 'dbset?action=delete' + tName[1];
+//        } else if (record[0] !== 'SEL') {
+//            obj.data = JSON.stringify(record);
+//        }
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="GET AND SET"> 
     get cnv() {

@@ -307,3 +307,13 @@ product.moveWinc = function (btn) {
     }
     product.winCalc.resize();
 };
+
+product.zoomScale = function (btn) {
+
+    if (btn === "btnPlus") {
+        product.winCalc.scaleZoom = product.winCalc.scaleZoom + .1;
+    } else if (btn === "btnMinus") {
+        product.winCalc.scaleZoom = product.winCalc.scaleZoom - .1;
+    }
+    product.winCalc.resize();
+};

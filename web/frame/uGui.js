@@ -207,6 +207,8 @@ function prepareTool(name) {
         $("#btnProdStv").button({icons: {primary: "ui-icon-document"}});
         $("#btnProdFurn").button({icons: {primary: "ui-icon-document"}});
         $("#btnProdAdd").button({icons: {primary: "ui-icon-document"}});
+        $("#btnPlus").button({icons: {primary: "ui-icon-plusthick"}});
+        $("#btnMinus").button({icons: {primary: "ui-icon-minusthick"}});
     }
     if (name === 'tarif') {
         $("#btnTar1").button({icons: {primary: "ui-icon-document"}});
