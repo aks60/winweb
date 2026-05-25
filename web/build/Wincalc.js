@@ -258,45 +258,40 @@ export class Wincalc {
     //Рисуем конструкцию
     draw() {
         try {
-            if (this.sceleton == false) {
-                this.ctx.save();
-                this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
+            this.ctx.save();
+            this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
 
-                if (this.cnv.width < 100 && this.cnv.height < 100) {
-                    this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
-                            ? this.cnv.width / this.width : this.cnv.height / this.height;
-                } else {
-                    this.scale = ((this.cnv.width - this.dXY) / this.width < (this.cnv.height - this.dXY) / this.height)
-                            ? (this.scaleZoom * this.cnv.width - this.dXY) / this.width : (this.scaleZoom * this.cnv.height - this.dXY) / this.height;
-                }
-                this.ctx.scale(this.scale, this.scale);
-                this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
-
-                //Прорисовка стеклопакетов
-                this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
-
-                //Прорисовка импостов
-                this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
-
-                //Прорисовка рам
-                this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
-
-                //Прорисовка рам створок
-                this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
-
-                //Прорисока фурнитуры створок
-                this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
-
-                //Размерные линии
-                if (this.scale > .2) {
-                    this.root.paint();
-                }
-                this.ctx.restore();
-                
+            if (this.cnv.width < 100 && this.cnv.height < 100) {
+                this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
+                        ? this.cnv.width / this.width : this.cnv.height / this.height;
             } else {
-                this.listArea.forEach(el => el.paint());
-                this.listElem.forEach(el => el.paint());                
+                this.scale = ((this.cnv.width - this.dXY) / this.width < (this.cnv.height - this.dXY) / this.height)
+                        ? (this.scaleZoom * this.cnv.width - this.dXY) / this.width : (this.scaleZoom * this.cnv.height - this.dXY) / this.height;
             }
+            this.ctx.scale(this.scale, this.scale);
+            this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+
+            //Прорисовка стеклопакетов
+            this.listElem.filter(el => el.type === Type.GLASS).forEach((el) => el.paint());
+
+            //Прорисовка импостов
+            this.listElem.filter(el => el.type === Type.IMPOST).forEach((el) => el.paint());
+
+            //Прорисовка рам
+            this.listElem.filter(el => el.type === Type.BOX_SIDE).forEach((el) => el.paint());
+
+            //Прорисовка рам створок
+            this.listElem.filter(el => el.type === Type.STV_SIDE).forEach((el) => el.paint());
+
+            //Прорисока фурнитуры створок
+            this.listArea.filter(el => el.type === Type.STVORKA).forEach((el) => el.paint());
+
+            //Размерные линии
+            if (this.scale > .2) {
+                this.root.paint();
+            }
+            this.ctx.restore();
+
         } catch (e) {
             console.error(e.message);
         }

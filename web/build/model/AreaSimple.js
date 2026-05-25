@@ -237,7 +237,8 @@ export class AreaSimple extends Com5t {
                         this.winc.ctx.setTransform(matrix);
                     }
                 }
-            } else if (this.area !== null) {
+            } else {
+                
                 this.winc.ctx.strokeStyle = "#0000FF";
                 this.winc.ctx.fillStyle = '#ffffff';
                 for (let i = 0; i < 3; ++i) {

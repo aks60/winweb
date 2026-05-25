@@ -79,17 +79,14 @@ export class ElemFrame extends ElemSimple {
 
     paint() {
         try {
-            if (this.area !== null && this.winc.sceleton === false) {
-                super.paint();
-                this.winc.ctx.lineWidth = 4;
+            if (this.winc.sceleton === false) {
                 this.winc.ctx.strokeStyle = '#000000';
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 this.winc.paint(this.area);
             } else {
                 this.winc.ctx.strokeStyle = "#0000FF";
                 this.winc.ctx.fillStyle = '#ffffff';
-                let shape = this.area.getGeometryN(0);
-                this.winc.paint(shape);
+                this.winc.paint(this.area);
             }
         } catch (e) {
             console.error(e.message);
