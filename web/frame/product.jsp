@@ -86,13 +86,13 @@
         </div>  
         <div id='context' class='abs' style=''>
             <div id='west1' class='abs' style=''>
-                <button id="btnTop" class="toolWest1"></button>
-                <button id="btnBot" class="toolWest1"></button>
-                <button id="btnLef" class="toolWest1"></button>
-                <button id="btnRig" class="toolWest1"></button>
-                <button id="btnPlus" class="toolWest1"></button>
-                <button id="btnMinus" class="toolWest1"></button>
-                <button id="btnSceleton" class="toolWest1"></button>
+                <button id="btnTop" class="toolWest1" title="Сдвиг вверх"></button>
+                <button id="btnBot" class="toolWest1" title="Сдвиг вниз"></button>
+                <button id="btnLef" class="toolWest1" title="Сдвиг влево"></button>
+                <button id="btnRig" class="toolWest1" title="Сдвиг вправо"></button>
+                <button id="btnPlus" class="toolWest1" title="Увеличить размер"></button>
+                <button id="btnMinus" class="toolWest1" title="Уменьшить размер"></button>
+                <button id="btnSceleton" class="toolWest1" title="Показать/скрыть размерные линии"></button>
             </div>
             <div id='west2' class='abs' style='border: 0;'>
                 <canvas id="cnv"  tabindex="-1"  style='width: 100%; height: 100%; border: 0 solid #ccc;'></canvas>  
