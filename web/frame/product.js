@@ -295,10 +295,10 @@ product.revert_update_script = function () {
 
 product.moveWinc = function (btn) {
 
-    let dxy = 2; //(timer.isRunning() == true) ? 2 : 1;
+    let dxy = 2;
     if (btn === "btnBot") {
         UGeo.moveGson(product.winCalc.gson, .0, dxy, product.winCalc.scale);
-    } else if (btn === "btnRop") {
+    } else if (btn === "btnTop") {
         UGeo.moveGson(product.winCalc.gson, .0, -dxy, product.winCalc.scale);
     } else if (btn === "btnLef") {
         UGeo.moveGson(product.winCalc.gson, -dxy, .0, product.winCalc.scale);

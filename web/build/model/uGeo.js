@@ -518,12 +518,12 @@ UGeo.insidePoly = (poly, x, y) => {
 
 //Перемещение gson (точек на канве)
 UGeo.moveGson = (gson, dx, dy, scale) => {
-    debugger;
+    
     if (gson.childs !== null) {
         let dX = (dx === 0) ? 0 : dx / scale;
         let dY = (dy === 0) ? 0 : dy / scale;
         for (let child of gson.childs) {
-            if ([Type.IMPOST, Type.STOIKA, Type.SHTULP].includes(child.type)) {
+            if (['IMPOST', 'STOIKA', 'SHTULP'].includes(child.type)) {
                 if (dX !== 0) {
                     child.x1 += dX;
                     child.x2 += dX;
@@ -532,7 +532,7 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
                     child.y1 += dY;
                     child.y2 += dY;
                 }
-            } else if ([Type.BOX_SIDE, Type.STV_SIDE].includes(child.type)) {
+            } else if (['BOX_SIDE', 'STV_SIDE'].includes(child.type)) {
                 if (dX !== 0) {
                     child.x1 += +dX;
                 }
@@ -540,7 +540,7 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
                     child.y1 += dY;
                 }
             }
-            if ([Type.AREA, Type.STVORKA].includes(child.type)) {
+            if (['AREA', 'STVORKA'].includes(child.type)) {
                 UGeo.moveGson(child, dx, dy, scale);
             }
         }
