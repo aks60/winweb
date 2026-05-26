@@ -84,7 +84,7 @@ export class ElemFrame extends ElemSimple {
                 this.winc.ctx.fillStyle = '#' + eColor.find(this.colorID2)[eColor.rgb].toString(16).padStart(6, '0');
                 this.winc.paint(this.area);
             } else {
-                this.winc.ctx.strokeStyle = "#0000FF";
+                this.winc.ctx.strokeStyle = "#000000";
                 this.winc.ctx.fillStyle = '#ffffff';
                 this.winc.paint(this.area);
             }
