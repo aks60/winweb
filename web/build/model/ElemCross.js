@@ -94,8 +94,7 @@ export class ElemCross extends ElemSimple {
             } else {
                 this.winc.ctx.strokeStyle = "#0000FF";
                 this.winc.ctx.fillStyle = '#ffffff';
-                let shape = this.area.getGeometryN(0);
-                this.winc.paint(shape);
+                this.winc.paint(this.area);
             }
         } catch (e) {
             console.error(e.message);

@@ -256,14 +256,14 @@ export class AreaStvorka extends AreaSimple {
             let rgb = colorRec[eColor.rgb].toString(16).padStart(6, '0');
             this.winc.ctx.fillStyle = '#' + rgb;
             this.winc.paint(this.areaHand.getGeometryN(0));
-            this.winc.paint(this.areaHand.getGeometryN(1));           
-        } else {           
-            this.winc.ctx.strokeStyle = "#0000FF";
-            this.winc.ctx.fillStyle = '#ffffff';
-            for (let i = 0; i < 3; ++i) {
-                let shape = this.area.getGeometryN(i);
-                this.winc.paint(shape);
-            }
+            this.winc.paint(this.areaHand.getGeometryN(1));
+        } else {
+//            this.winc.ctx.strokeStyle = "#0000FF";
+//            this.winc.ctx.fillStyle = '#ffffff';
+//            for (let i = 0; i < 3; ++i) {
+//                let shape = this.area.getGeometryN(i);
+//                this.winc.paint(shape);
+//            }
         }
     }
 }

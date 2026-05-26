@@ -239,11 +239,11 @@ export class AreaSimple extends Com5t {
                 }
             } else {
                 
-                this.winc.ctx.strokeStyle = "#0000FF";
-                this.winc.ctx.fillStyle = '#ffffff';
-                for (let i = 0; i < 3; ++i) {
-                    this.winc.paint(this.area.getGeometryN(i));
-                }
+//                this.winc.ctx.strokeStyle = "#0000FF";
+//                this.winc.ctx.fillStyle = '#ffffff';
+//                for (let i = 0; i < 3; ++i) {
+//                    this.winc.paint(this.area.getGeometryN(i));
+//                }
             }
             this.winc.ctx.restore();
         } catch (e) {
