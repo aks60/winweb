@@ -179,7 +179,7 @@ public class Dbset {
         try {
             String param = request.getParameter("param");
             JSONArray arr = (JSONArray) JSONValue.parse(param);
-            int id = Integer.valueOf(arr.get(eProject.id.ordinal()).toString());
+            int id = Integer.parseInt(arr.get(eProject.id.ordinal()).toString());
             Record record = eProject.find(id);
             record.set(eProject.up, "UPD");
             record.set(eProject.disc_win, format3(arr, eProject.disc_win));
@@ -189,6 +189,7 @@ public class Dbset {
             record.set(eProject.num_acc, format3(arr, eProject.num_acc));
             record.set(eProject.manager, format3(arr, eProject.manager));
             record.set(eProject.date4, ("".equals(arr.get(eProject.date4.ordinal()))) ? null : arr.get(eProject.date4.ordinal()));
+            record.set(eProject.date5, ("".equals(arr.get(eProject.date5.ordinal()))) ? null : arr.get(eProject.date5.ordinal()));
             record.set(eProject.date6, ("".equals(arr.get(eProject.date6.ordinal()))) ? null : arr.get(eProject.date6.ordinal()));
             record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
             Query qProject = new Query(eProject.values());

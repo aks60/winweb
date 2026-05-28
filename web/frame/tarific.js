@@ -55,6 +55,7 @@ tarif.init_table = function () {
 tarif.load_table = function () {
 
     if (product.winCalc !== undefined) {
+        let total = 0;
         $.ajax({
             url: 'dbset?action=tarificList',
             data: {param: JSON.stringify(product.winCalc.gson)},
@@ -63,6 +64,7 @@ tarif.load_table = function () {
                 $(tarif.table1).jqGrid('clearGridData', true);
                 for (let i = 0; i < eTarif.list.length; i++) {
                     let tarifRec = eTarif.list[i];
+                    total = total + tarifRec[eTarif.cost2];
                     $(tarif.table1).jqGrid('addRowData', i + 1, {
                         ID: tarifRec[eTarif.id],
                         place: tarifRec[eTarif.place],
@@ -87,8 +89,10 @@ tarif.load_table = function () {
                         cost1: Math.round(tarifRec[eTarif.cost1] * 100) / 100,
                         cost2: Math.round(tarifRec[eTarif.cost2] * 100) / 100
                     });
-                }
+                }                
                 $(tarif.table1).jqGrid("setSelection", 1);
+                const rubFormat = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
+                $('#south').text('Итого: ' + rubFormat.format(total));
                 progress(1);
             },
             error: function () {

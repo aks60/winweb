@@ -28,6 +28,7 @@
             prepareTool('project');
             $('#p23').datepicker();
             $('#p24').datepicker();
+            $('#p25').datepicker();
 
             function test1() {
                 progress('open');
@@ -42,13 +43,16 @@
     </head>
     <body>        
         <div id = "context">     
-            <div id="dialog-card1" card_width="416" card_height="230" style="display: none;">                
-                <jst id="p21" type='txt' label='Номер заказа' width='80' width2="120"></jst><br>
-                <jst id="p22" type='txt' label='Номер счёта' width='80' width2="120"></jst>
+            <div id="dialog-card1" card_width="416" card_height="250" style="display: none;">                
+                <jst id="p21" type='txt' label='Номер заказа' width='120' width2="120"></jst><br>
+                <jst id="p22" type='txt' label='Номер счёта' width='120' width2="120"></jst>
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p22').val($('#p21').val());"><br>
-                <jst id="p23" type='txt' label='Дата от...' width='80' width2="80"></jst><br>
-                <jst id="p24" type='txt' label='Дата до...' width='80' width2="80"></jst><br>
-                <jst id="p25" type='btn' label='Контрагент' width='80' width2="260" fk="-3" click="$('#dialog-jsp').load('frame/dialog/dealer.jsp');"></jst><br>
+                <jst id="p23" type='txt' label='Дата регистрации' width='120' width2="80"></jst><br>        
+                <jst id="p24" type='txt' label='Дата расчёта' width='120' width2="80"></jst>
+                <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p24').val($('#p23').val());"><br>        
+                <jst id="p25" type='txt' label='Дата в производство' width='120' width2="80"></jst>
+                <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p25').val($('#p24').val());"><br>        
+                <jst id="p26" type='btn' label='Контрагент' width='120' width2="220" fk="-3" click="$('#dialog-jsp').load('frame/dialog/dealer.jsp');"></jst><br>
             </div>
             <div id="dialog-card2" card_width="416" card_height="230" style="display: none;">                
                 <jst id="p31" type='txt' label='Количество' width='80' width2="40"></jst><br>

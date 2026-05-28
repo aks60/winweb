@@ -169,8 +169,7 @@ function loadingTab(records) {
 }
 
 function formatDate2(d) {
-
-    let dd = d.getDate();
+    /*let dd = d.getDate();
     let mm = d.getMonth() + 1;
     if (dd < 10) {
         dd = '0' + dd
@@ -178,7 +177,8 @@ function formatDate2(d) {
     if (mm < 10) {
         mm = '0' + mm
     }
-    return dd + '.' + mm + '.' + d.getFullYear();
+    return dd + '.' + mm + '.' + d.getFullYear();*/
+    return d.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric'});
 }
 
 function prepareTool(name) {

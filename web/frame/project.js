@@ -1,10 +1,16 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {product} from './product.js';
+import {login} from './login.js';
 export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
+
+project.test = function () {
+    debugger;
+    project.projectRec[eProject.date4] = new Date().toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric'});
+};
 
 //TODO При удалении проекта таблица 2 не удаляется
 //Масштабирование
-project.resize = function() {
+project.resize = function () {
     $("#context").css("height", window.innerHeight - 48);
     $("#table1").jqGrid('setGridWidth', $("#centr").width());
     $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
@@ -21,12 +27,13 @@ project.init_table = function () {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата от...', 'Дата до...', 'Контрагент', 'User', 'prjpart_id'],
+        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Контрагент', 'User', 'prjpart_id'],
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
             {name: 'num_acc', width: 80, sorttype: "text"},
             {name: 'date4', width: 80, sorttype: "date"},
+            {name: 'date5', width: 80, sorttype: "date"},
             {name: 'date6', width: 80, sorttype: "date"},
             {name: 'partner', width: 220, sorttype: "text"},
             {name: 'manager', width: 120, sorttype: "text"},
@@ -97,6 +104,7 @@ project.load_table1 = function () {
             num_ord: tr[eProject.num_ord],
             num_acc: tr[eProject.num_acc],
             date4: tr[eProject.date4],
+            date5: tr[eProject.date5],
             date6: tr[eProject.date6],
             partner: findef(tr[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
             manager: tr[eProject.manager],
@@ -136,7 +144,7 @@ project.load_table2 = function () {
 
 //Загрузка конструкций в таблицу
 project.load_table3 = function () {
-    
+
     let projectID = project.projectRec[eProject.id];
     project.mapWinc.clear();
     $(project.table3).jqGrid('clearGridData', true);
@@ -173,7 +181,8 @@ project.insert_table1 = function () {
                 $("#p23").val(formatDate2(new Date()));
                 $("#p24").val('');
                 $("#p25").val('');
-                $("#p25").attr("fk", '-3');
+                $("#p26").val('');
+                $("#p26").attr("fk", '-3');
 
                 let o1 = $(taq).attr('card_width');
 
@@ -193,10 +202,11 @@ project.insert_table1 = function () {
                             projectRec[eProject.num_acc] = $("#p22").val();
                             projectRec[eProject.manager] = login.data.user_fio;
                             projectRec[eProject.date4] = $("#p23").val();
-                            projectRec[eProject.date6] = $("#p24").val();
+                            projectRec[eProject.date5] = $("#p24").val();
+                            projectRec[eProject.date6] = $("#p25").val();
                             projectRec[eProject.owner] = login.data.user_name;
-                            projectRec[eProject.prjpart_id] = $("#p25").attr("fk");
-                            if ($("#p25").attr("fk") === '-3') {
+                            projectRec[eProject.prjpart_id] = $("#p26").attr("fk");
+                            if ($("#p26").attr("fk") === '-3') {
                                 dialogMes('Сообщение', "<p>Контрагент не установлен");
                                 return;
                             }
@@ -239,9 +249,10 @@ project.update_table1 = function () {
     $("#p21").val(projectRow.num_ord);
     $("#p22").val(projectRow.num_acc);
     $("#p23").val(projectRow.date4);
-    $("#p24").val(projectRow.date6);
-    $("#p25").val(projectRow.partner);
-    $("#p25").attr("fk", projectRow.prjpart_id);
+    $("#p24").val(projectRow.date5);
+    $("#p25").val(projectRow.date6);
+    $("#p26").val(projectRow.partner);
+    $("#p26").attr("fk", projectRow.prjpart_id);
     dialogCard.dialog({//открытие диалога insert
         title: "Карточка редактирования заказа",
         width: dialogCard.attr('card_width'),
@@ -256,9 +267,10 @@ project.update_table1 = function () {
                 projectRec[eProject.num_acc] = $("#p22").val();
                 projectRec[eProject.manager] = login.data.user_fio;
                 projectRec[eProject.date4] = $("#p23").val();
-                projectRec[eProject.date6] = $("#p24").val();
+                projectRec[eProject.date5] = $("#p24").val();
+                projectRec[eProject.date6] = $("#p25").val();
                 projectRec[eProject.owner] = login.data.user_name;
-                projectRec[eProject.prjpart_id] = $("#p25").attr("fk");
+                projectRec[eProject.prjpart_id] = $("#p26").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateProject',
                     data: {param: JSON.stringify(projectRec)},
@@ -271,6 +283,7 @@ project.update_table1 = function () {
                                 num_ord: projectRec[eProject.num_ord],
                                 num_acc: projectRec[eProject.num_acc],
                                 date4: projectRec[eProject.date4],
+                                date5: projectRec[eProject.date5],
                                 date6: projectRec[eProject.date6],
                                 partner: findef(projectRec[eProject.prjpart_id], eDealer.id, eDealer)[eDealer.partner],
                                 manager: projectRec[eProject.manager]
@@ -470,15 +483,34 @@ project.calculate_project = function () {
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 if (data.result === 'ok') {
-                    let projectRec = data.projectRec;
-                    project.projectRec[eProject.square] = projectRec[eProject.square];
-                    project.projectRec[eProject.weight] = projectRec[eProject.weight];
-                    project.projectRec[eProject.cost1_win] = projectRec[eProject.cost1_win];
-                    project.projectRec[eProject.cost2_win] = projectRec[eProject.cost2_win];
-                    project.projectRec[eProject.cost1_kit] = projectRec[eProject.cost1_kit];
-                    project.projectRec[eProject.cost2_kit] = projectRec[eProject.cost2_kit];
-
+                    debugger;
+                    let project2Rec = data.projectRec;
+                    project.projectRec[eProject.square] = project2Rec[eProject.square];
+                    project.projectRec[eProject.weight] = project2Rec[eProject.weight];
+                    project.projectRec[eProject.cost1_win] = project2Rec[eProject.cost1_win];
+                    project.projectRec[eProject.cost2_win] = project2Rec[eProject.cost2_win];
+                    project.projectRec[eProject.cost1_kit] = project2Rec[eProject.cost1_kit];
+                    project.projectRec[eProject.cost2_kit] = project2Rec[eProject.cost2_kit];
+                    project.projectRec[eProject.date5] = formatDate2(new Date());
+                    
                     project.load_table2();
+                    
+//                    $.ajax({
+//                        url: 'dbset?action=updateProject',
+//                        data: {param: JSON.stringify(project.projectRec)},
+//                        success: (data) => {
+//                            if (data.result === 'ok') {
+//                                let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
+//                                $(project.table1).jqGrid('setRowData', rowid, {
+//                                    date5: project.projectRec[eProject.date5]
+//                                });
+//                            } else
+//                                dialogMes('Сообщение', "<p>" + data.result);
+//                        },
+//                        error: () => {
+//                            dialogMes('Сообщение', "<p>Ошибка при сохранении даты калькуляции на сервере");
+//                        }
+//                    });
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);

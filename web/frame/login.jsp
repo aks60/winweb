@@ -45,7 +45,7 @@
                         <table height="80" width="340">
                             <tr>
                                 <td>Логин пользователя:</td>
-                                <td><input class="login" placeholder='Введите логин' value='dealer'  type='text' size='16'></td>
+                                <td><input class="login" placeholder='Введите логин' value='DEALER'  type='text' size='16'></td>
                             </tr> 
                             <tr>
                                 <td>Пароль пользователя:</td>
