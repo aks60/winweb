@@ -56,23 +56,17 @@ users.init_table1 = (table) => {
 users.load_table1 = (table) => {
 
     table.jqGrid('clearGridData', true);
-    $.ajax({
-        url: 'dbset?action=userList',
-        success: function (data) {
-            users.userList = data;
-            for (let i = 0; i < eSysuser.list.length; i++) {
-                let usersRec = users.userList[i];
-                table.jqGrid('addRowData', i + 1, {
-                    ID: usersRec[eSysuser.id],
-                    fio: usersRec[eSysuser.fio],
-                    desc: usersRec[eSysuser.desc],
-                    login: usersRec[eSysuser.login],
-                    role: usersRec[eSysuser.role]
-                });
-            }
-            users.resize();
-        }
-    });
+    for (let i = 0; i < eSysuser.list.length; i++) {
+        let usersRec = eSysuser.list[i];
+        table.jqGrid('addRowData', i + 1, {
+            ID: usersRec[eSysuser.id],
+            fio: usersRec[eSysuser.fio],
+            desc: usersRec[eSysuser.desc],
+            login: usersRec[eSysuser.login],
+            role: usersRec[eSysuser.role]
+        });
+    }
+    users.resize();
 };
 
 //Проверка корректности ввода учётной записи
@@ -142,7 +136,7 @@ users.logim_create = () => {
             $('#pan1 .password:last').val('');
             $('#pan1 .fio').val('');
             $('#pan1 .desc').val('');
-            
+
             users.load_table1($("#table1"));
         },
         error: function () {

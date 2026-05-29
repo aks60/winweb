@@ -3,7 +3,6 @@
 <html>
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                       
-        <script type="text/javascript" src="frame/users.js"></script>
         <title>USERS</title>
 
         <script type="module">
@@ -13,6 +12,16 @@
             users.init_table1($("#table1"));
             users.load_table1($("#table1"));
             $('button').button();
+            
+            document.getElementById('u01').addEventListener('click', () => users.onpage('1'));
+            document.getElementById('u02').addEventListener('click', () => users.onpage('2'));
+            document.getElementById('u03').addEventListener('click', () => users.onpage('3'));
+            document.getElementById('u04').addEventListener('click', () => users.onpage('4'));
+            document.getElementById('u05').addEventListener('click', () => users.logim_create());
+            document.getElementById('u06').addEventListener('click', () => users.token_check());
+            document.getElementById('u07').addEventListener('click', () => users.token_refresh());
+            document.getElementById('u08').addEventListener('click', () => users.delete_openkey());
+            document.getElementById('u09').addEventListener('click', () => users.login_delete());
 
         </script>          
     </head>
@@ -24,10 +33,10 @@
             <div id="midl" style="position: relative; margin: 0 2px 0 500px; height: 100%;">
                 <div id="west" style="position: absolute; height: 100%; width: 500px; margin-left: -500px;">
                     <div id="west2" style="height: 112px">
-                        <button id="u01" type="button" onClick="users.onpage('1');" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
-                        <button id="u01" type="button" onClick="users.onpage('2');" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
-                        <button id="u03" type="button" onClick="users.onpage('4');" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
-                        <button id="u04" type="button" onClick="users.onpage('3');" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
+                        <button id="u01" type="button" style="width: 160px; margin: 6px 32px;">Создание пользователя(пароль)</button>                    
+                        <button id="u02" type="button" style="width: 160px; margin: 6px 0px;">Создание пользователя(токен)</button>
+                        <button id="u03" type="button" style="width: 160px; margin: 6px 32px;">Удаление пользователя(пароль)</button>                                       
+                        <button id="u04" type="button" style="width: 160px; margin: 6px 0px;">Удаление пользователя(токен)</button>                                       
                     </div>
                     <div id="west3" style="height: 200px">
                         <div id="pan1" style="display: none;">                     
@@ -60,7 +69,7 @@
                                     <td><input class="desc" placeholder='Описание ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
-                                    <td></td><td><button id="u05" type="button" onClick="users.logim_create();" style="width: 164px;">Зарегистрировать</button></td>
+                                    <td></td><td><button id="u05" type="button" style="width: 164px;">Зарегистрировать</button></td>
                                 </tr>
                             </table>                       
                         </div>                    
@@ -91,7 +100,7 @@
                                     <td><input class="desc" placeholder='Описание ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
-                                    <td></td><td><button id="u06" type="button" onClick="users.token_check();" style="width: 164px;">Зарегистрировать</button></td>
+                                    <td></td><td><button id="u06" type="button" style="width: 164px;">Зарегистрировать</button></td>
                                 </tr>
                             </table>                      
                         </div> 
@@ -112,8 +121,8 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button id="u07" class='refresh' tabindex="3" type="button" onclick="token_refresh()" style="width: 80px;">Обновить</button>
-                                        <button id="u08" tabindex="2" type="button" onclick="delete_openkey()"style="width: 76px;">Удалить</button>
+                                        <button id="u07" class='refresh' tabindex="3" type="button" style="width: 80px;">Обновить</button>
+                                        <button id="u08" tabindex="2" type="button" style="width: 76px;">Удалить</button>
                                     </td>
                                 </tr>
                             </table>
@@ -133,7 +142,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button id="u09" tabindex="2" type="button" onclick="users.login_delete();" style="width: 76px;">Удалить</button>
+                                        <button id="u09" tabindex="2" type="button" style="width: 76px;">Удалить</button>
                                     </td>
                                 </tr>
                             </table>

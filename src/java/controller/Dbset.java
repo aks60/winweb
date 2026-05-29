@@ -343,10 +343,10 @@ public class Dbset {
         return null;
     }
 
-    public static String userList(HttpServletRequest request, HttpServletResponse response) {
-        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-        return gson.toJson(qSysuser);
-    }
+//    public static String userList(HttpServletRequest request, HttpServletResponse response) {
+//        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
+//        return gson.toJson(qSysuser);
+//    }
 
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");

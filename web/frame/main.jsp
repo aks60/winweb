@@ -83,16 +83,17 @@
                     $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"), $.post("dbset?action=sysprofList"),
                     $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"), $.post("dbset?action=groupList"),
                     $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"), $.post("dbset?action=kitsList"),
-                    $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"), $.post("dbset?action=syssizeList")
+                    $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"), $.post("dbset?action=syssizeList"), 
+                    $.post("dbset?action=sysuserList")
                 ]).then(p => {
                     let i = 0;
                     eSystree.list = p[i++], eSysprod.list = p[i++], eColor.list = p[i++], eArtikl.list = p[i++], eArtdet.list = p[i++], eFurniture.list = p[i++],
                             eFurnside1.list = p[i++], eFurndet.list = p[i++], eFurnpar2.list = p[i++], ePrjprod.list = p[i++], eSysfurn.list = p[i++], eSysprof.list = p[i++],
                             eSyspar1.list = p[i++], eParams.list = p[i++], eGroups.list = p[i++], eProject.list = p[i++], eDealer.list = p[i++],
-                            eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++];
+                            eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++], eSysuser.list = p[i++];
 
                     login.init_login();
-                    login.user_connect();
+                    //login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
