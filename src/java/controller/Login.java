@@ -216,7 +216,8 @@ public class Login {
                     record.set(eSysuser.openkey, strOpenPas);
                     qSysuser.insert(record);
 
-                    output.put("result", "true");
+                    return new JSONObject(App.asMap("result", "ok", "sysuserRec", record));
+                    
                 } else {
                     output.put("result", "Такой пользователь уже создан");
                 }

@@ -30,12 +30,12 @@ users.onpage = (val) => {
 users.resize = () => {
     var height = window.innerHeight;
     $("#context").css("height", height - 54);
-    $("#table1").jqGrid('setGridWidth', $("#centr").width() - 4);
-    $("#table1").jqGrid('setGridHeight', $("#centr").height() - 28);
+    $(users.table1).jqGrid('setGridWidth', $("#centr").width() - 4);
+    $(users.table1).jqGrid('setGridHeight', $("#centr").height() - 28);
 };
 
-users.init_table1 = (table) => {
-    table.jqGrid({
+users.init_table1 = () => {
+    $(users.table1).jqGrid({
         datatype: "local",
         gridview: true,
         rownumbers: true,
@@ -53,12 +53,12 @@ users.init_table1 = (table) => {
     });
 };
 
-users.load_table1 = (table) => {
+users.load_table1 = () => {
 
-    table.jqGrid('clearGridData', true);
+    $(users.table1).jqGrid('clearGridData', true);
     for (let i = 0; i < eSysuser.list.length; i++) {
         let usersRec = eSysuser.list[i];
-        table.jqGrid('addRowData', i + 1, {
+        $(users.table1).jqGrid('addRowData', i + 1, {
             ID: usersRec[eSysuser.id],
             fio: usersRec[eSysuser.fio],
             desc: usersRec[eSysuser.desc],
@@ -103,6 +103,7 @@ users.token_check = () => {
         }
     });
 };
+
 //Создание учётной записи логин-пароль пользователя на сервере
 users.logim_create = () => {
 
@@ -130,14 +131,17 @@ users.logim_create = () => {
         url: 'login?action=newLogin',
         data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DIALER_RW'},
         success: function (data) {
-            $('#pan1 .login:first').val('');
-            $('#pan1 .password:first').val('');
-            $('#pan1 .login:last').val('');
-            $('#pan1 .password:last').val('');
-            $('#pan1 .fio').val('');
-            $('#pan1 .desc').val('');
-
-            users.load_table1($("#table1"));
+            debugger;
+            if (data.result === 'ok') {
+                eSysuser.list.add(data.sysuserRec);
+                $('#pan1 .login:first').val('');
+                $('#pan1 .password:first').val('');
+                $('#pan1 .login:last').val('');
+                $('#pan1 .password:last').val('');
+                $('#pan1 .fio').val('');
+                $('#pan1 .desc').val('');
+                users.load_table1();
+            }
         },
         error: function () {
             alert('Ошибка создания нового пользователя');

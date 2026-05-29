@@ -93,8 +93,7 @@ public class LoginCont extends HttpServlet {
 
             } else if (action.equalsIgnoreCase("newLogin")) {
                 Login adm = new Login();
-                JSONObject output = adm.newLogin(request, response);
-                out.write(JSONObject.toJSONString(output));
+                out.write(JSONObject.toJSONString(adm.newLogin(request, response)));
 
             } else if (action.equalsIgnoreCase("deleteLogin")) {
                 Login adm = new Login();

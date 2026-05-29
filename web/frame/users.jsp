@@ -7,12 +7,13 @@
 
         <script type="module">
             import {users} from './frame/users.js';
-
-            $(window).unbind('resize').bind('resize', () => users.resize()).trigger('resize');
-            users.init_table1($("#table1"));
-            users.load_table1($("#table1"));
-            $('button').button();
+           
+            users.table1 = document.getElementById('table1');
+            users.init_table1();
+            users.load_table1();
+            $(window).unbind('resize').bind('resize', users.resize).trigger('resize');
             
+            $('button').button();           
             document.getElementById('u01').addEventListener('click', () => users.onpage('1'));
             document.getElementById('u02').addEventListener('click', () => users.onpage('2'));
             document.getElementById('u03').addEventListener('click', () => users.onpage('3'));
