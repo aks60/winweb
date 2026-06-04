@@ -169,7 +169,10 @@ public class Dbset {
             record.set(eProject.id, Connect.genId(eProject.up));
             new Query(eProject.values()).insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(eProject.id)));
-
+//                UGui.insertRecordCur(eProgect.up, (record) -> {
+//                    Record artiklRec = qArtikl.get(index);
+//                    record.setNo(eArtdet.artikl_id, artiklRec.get(eArtikl.id));
+//                });
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -178,20 +181,21 @@ public class Dbset {
     public static JSONObject updateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
-            JSONArray arr = (JSONArray) JSONValue.parse(param);
-            int id = Integer.parseInt(arr.get(eProject.id.ordinal()).toString());
+            JSONArray projectRec = (JSONArray) JSONValue.parse(param);
+            int id = Integer.parseInt(projectRec.get(eProject.id.ordinal()).toString());
             Record record = eProject.find(id);
             record.set(eProject.up, "UPD");
-            record.set(eProject.disc_win, format3(arr, eProject.disc_win));
-            record.set(eProject.disc_kit, format3(arr, eProject.disc_kit));
-            record.set(eProject.disc_all, format3(arr, eProject.disc_all));
-            record.set(eProject.num_ord, format3(arr, eProject.num_ord));
-            record.set(eProject.num_acc, format3(arr, eProject.num_acc));
-            record.set(eProject.manager, format3(arr, eProject.manager));
-            record.set(eProject.date4, ("".equals(arr.get(eProject.date4.ordinal()))) ? null : arr.get(eProject.date4.ordinal()));
-            record.set(eProject.date5, ("".equals(arr.get(eProject.date5.ordinal()))) ? null : arr.get(eProject.date5.ordinal()));
-            record.set(eProject.date6, ("".equals(arr.get(eProject.date6.ordinal()))) ? null : arr.get(eProject.date6.ordinal()));
-            record.set(eProject.prjpart_id, format3(arr, eProject.prjpart_id));
+            record.set(eProject.disc_win, format3(projectRec, eProject.disc_win));
+            record.set(eProject.disc_kit, format3(projectRec, eProject.disc_kit));
+            record.set(eProject.disc_all, format3(projectRec, eProject.disc_all));
+            record.set(eProject.num_ord, format3(projectRec, eProject.num_ord));
+            record.set(eProject.num_acc, format3(projectRec, eProject.num_acc));
+            record.set(eProject.login, format3(projectRec, eProject.login));
+            record.set(eProject.date4, ("".equals(projectRec.get(eProject.date4.ordinal()))) ? null : projectRec.get(eProject.date4.ordinal()));
+            record.set(eProject.date5, ("".equals(projectRec.get(eProject.date5.ordinal()))) ? null : projectRec.get(eProject.date5.ordinal()));
+            record.set(eProject.date6, ("".equals(projectRec.get(eProject.date6.ordinal()))) ? null : projectRec.get(eProject.date6.ordinal()));
+            record.set(eProject.prjpart1_id, format3(projectRec, eProject.prjpart1_id));
+            record.set(eProject.prjpart2_id, format3(projectRec, eProject.prjpart2_id));
             Query qProject = new Query(eProject.values());
             qProject.update2(record);
             return new JSONObject(App.asMap("result", "ok"));
@@ -349,7 +353,7 @@ public class Dbset {
 //    }
 
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart_id = b.id and b.category = 'дилер' order by a.id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart2_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));

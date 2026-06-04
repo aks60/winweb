@@ -54,7 +54,6 @@ users.init_table1 = () => {
 };
 
 users.load_table1 = () => {
-
     $(users.table1).jqGrid('clearGridData', true);
     for (let i = 0; i < eSysuser.list.length; i++) {
         let usersRec = eSysuser.list[i];

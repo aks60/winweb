@@ -48,7 +48,7 @@
                     colModel: [
                         {name: 'ID', hidden: true},
                         {name: 'partner', width: 300, sorttype: "text"},
-                        {name: 'manager', width: 200, sorttype: "text"}
+                        {name: 'login', width: 200, sorttype: "text"}
 
                     ], ondblClickRow: function (rowid) {
                         let dealerRow = getSelectedRow($(tabDealer));
@@ -65,7 +65,7 @@
                     $(tabDealer).jqGrid('addRowData', i + 1, {
                         ID: dealerRec[eDealer.id],
                         partner: dealerRec[eDealer.partner],
-                        manager: dealerRec[eDealer.login]});
+                        login: dealerRec[eDealer.login]});
                 }
                 $(tabDealer).jqGrid("setSelection", 1);
             }
