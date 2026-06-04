@@ -49,7 +49,13 @@ users.init_table1 = () => {
             {name: 'desc', width: 200, sorttype: "text"},
             {name: 'login', width: 40, sorttype: "text"},
             {name: 'role', width: 40, sorttype: "text"},
-        ]
+        ],
+        onSelectRow: function (rowid, status, e) {
+            users.userRow = $(users.table1).jqGrid('getRowData', rowid);
+            users.usersRec = eSysuser.list.find(rec => Number(users.userRow.ID) === rec[eSysuser.id]);
+            $('#u13').val(users.userRow.fio);
+            $('#u18').val(users.userRow.login);
+        }
     });
 };
 
@@ -64,8 +70,127 @@ users.load_table1 = () => {
             login: usersRec[eSysuser.login],
             role: usersRec[eSysuser.role]
         });
+        //u13 u18
     }
     users.resize();
+};
+
+//Создание учётной записи логин-пароль пользователя на сервере
+users.logim_create = () => {
+
+    var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
+    var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
+    for (let i = 0; i < 4; i++) {
+        if (att[i] === '') {
+            alert(mes[i]);
+            return;
+        }
+    }
+    var login = [att[2], att[3]];
+    var re = /^[a-zA-Z0-9]+$/;
+    for (let i = 0; i < 2; i++) {
+        if (!re.test(login[i])) {
+            alert('Логин и пароль пользователя может состоять только из букв английского алфавита и цифр');
+            return false;
+        }
+    }
+    if (login[0].length < 3 || login[0].length > 16) {
+        alert('Логин и пароль должен быть не меньше 3-х и не больше 16 символов');
+        return false;
+    }
+    $.ajax({
+        url: 'login?action=newLogin',
+        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DEALER_RW'},
+        success: function (data) {
+            debugger;
+            if (data.result === 'ok') {
+                eSysuser.list.push(data.sysuserRec);
+                $('#pan1 .login:first').val('');
+                $('#pan1 .password:first').val('');
+                $('#pan1 .login:last').val('');
+                $('#pan1 .password:last').val('');
+                $('#pan1 .fio').val('');
+                $('#pan1 .desc').val('');
+                users.load_table1();
+            }
+        },
+        error: function () {
+            alert('Ошибка создания нового пользователя');
+        }
+    });
+};
+
+//Удаление учётной записи логин-пароль пользователя на сервере
+users.login_delete = () => {
+    debugger;
+    let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
+    if (isDelete == true) {
+        $.ajax({
+            url: 'login?action=deleteLogin',
+            data: {'userID': users.userRow.ID},
+            success: function (data) {
+                
+                if (data.result === "true") {
+                    for (let i = 0; i < eSysuser.list.length; i++) {
+                        if (eSysuser.list[i][eSysuser.id] === Number(users.userRow.ID)) {
+                            eSysuser.list.splice(i, 1);
+                        }
+                    }
+                    users.load_table1();
+                    
+                } else {
+                    alert(data.mes);
+                }
+            },
+            error: function () {
+                alert('Ошибка удаления пользователя');
+            }
+        });
+    }
+};
+
+//Создание учётной записи пользователя на сервере
+users.token_create = (login) => {
+    plugin = document.getElementById("cryptoPlugin");
+    if (!plugin.valid) {
+        alert('Не установлен плагин для работы с USB-токеном');
+        return;
+    }
+    var result = plugin.rtwIsTokenPresentAndOK();
+    if (result < 0) {
+        alert(err[result]);
+        return;
+    }
+    result = plugin.rtwGenKeyPair(login);
+    if (result < 0) {
+        alert(err[result]);
+    } else {
+        var role = null;
+        var uch = null;
+        var element = document.getElementById('combo').value;
+        for (let index = 0; index < regionList.length; ++index) {
+            var record = regionList[index].name
+            if (element == record) {
+
+                uch = regionList[index].uch
+                if (regionList[index].id == 599999) {
+                    role = 'DEALER_RW';
+                } else {
+                    role = 'DEALER_RW';
+                }
+            }
+        }
+        $.ajax({
+            url: 'login?action=newToken',
+            data: {'login': login, 'openkey': result, 'role': role, 'uch': uch},
+            success: function (data) {
+                alert('Логин пользователя создан!');
+            },
+            error: function () {
+                alert('Ошибка регистрации токена на сервере');
+            }
+        });
+    }
 };
 
 //Проверка корректности ввода учётной записи
@@ -101,118 +226,6 @@ users.token_check = () => {
             }
         }
     });
-};
-
-//Создание учётной записи логин-пароль пользователя на сервере
-users.logim_create = () => {
-
-    var att = [$('#pan1 .login:first').val(), $('#pan1 .password:first').val(), $('#pan1 .login:last').val(), $('#pan1 .password:last').val(), $('#pan1 .fio').val(), $('#pan1 .desc').val()];
-    var mes = ['Не введён логин администратора', 'Не введён пароль администратора', 'Не введён логин пользователя', 'Не введён пароль пользователя'];
-    for (let i = 0; i < 4; i++) {
-        if (att[i] === '') {
-            alert(mes[i]);
-            return;
-        }
-    }
-    var login = [att[2], att[3]];
-    var re = /^[a-zA-Z0-9]+$/;
-    for (let i = 0; i < 2; i++) {
-        if (!re.test(login[i])) {
-            alert('Логин и пароль пользователя может состоять только из букв английского алфавита и цифр');
-            return false;
-        }
-    }
-    if (login[0].length < 3 || login[0].length > 16) {
-        alert('Логин и пароль должен быть не меньше 3-х и не больше 16 символов');
-        return false;
-    }
-    $.ajax({
-        url: 'login?action=newLogin',
-        data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DIALER_RW'},
-        success: function (data) {
-            debugger;
-            if (data.result === 'ok') {
-                eSysuser.list.add(data.sysuserRec);
-                $('#pan1 .login:first').val('');
-                $('#pan1 .password:first').val('');
-                $('#pan1 .login:last').val('');
-                $('#pan1 .password:last').val('');
-                $('#pan1 .fio').val('');
-                $('#pan1 .desc').val('');
-                users.load_table1();
-            }
-        },
-        error: function () {
-            alert('Ошибка создания нового пользователя');
-        }
-    });
-};
-
-//Удаление учётной записи логин-пароль пользователя на сервере
-users.login_delete = () => {
-    var rowId = $('#table1').jqGrid('getGridParam', 'selrow');
-    var id = $('#table1').jqGrid('getCell', rowId, 'id');
-    let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
-    if (isDelete == true) {
-        $.ajax({
-            url: 'login?action=deleteLogin',
-            data: {'userID': id},
-            success: function (data) {
-                if (data.result == 'false') {
-                    alert(data.mes);
-                } else {
-                    users.load_table1($("#table1"));
-                }
-            },
-            error: function () {
-                alert('Ошибка удаления пользователя');
-            }
-        });
-    }
-};
-
-//Создание учётной записи пользователя на сервере
-users.token_create = (login) => {
-    plugin = document.getElementById("cryptoPlugin");
-    if (!plugin.valid) {
-        alert('Не установлен плагин для работы с USB-токеном');
-        return;
-    }
-    var result = plugin.rtwIsTokenPresentAndOK();
-    if (result < 0) {
-        alert(err[result]);
-        return;
-    }
-    result = plugin.rtwGenKeyPair(login);
-    if (result < 0) {
-        alert(err[result]);
-    } else {
-        var role = null;
-        var uch = null;
-        var element = document.getElementById('combo').value;
-        for (let index = 0; index < regionList.length; ++index) {
-            var record = regionList[index].name
-            if (element == record) {
-
-                uch = regionList[index].uch
-                if (regionList[index].id == 599999) {
-                    role = 'DIALER_RW';
-                } else {
-                    role = 'DIALER_RW';
-                }
-            }
-        }
-        $.ajax({
-            url: 'login?action=newToken',
-            data: {'login': login, 'openkey': result, 'role': role, 'uch': uch},
-            success: function (data) {
-                alert('Логин пользователя создан!');
-            },
-            error: function () {
-                alert('Ошибка регистрации токена на сервере');
-            }
-        });
-    }
 };
 
 //Отправим учётку, получим случайное сообщение
