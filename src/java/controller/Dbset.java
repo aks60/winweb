@@ -384,7 +384,7 @@ public class Dbset {
     }
 
     public static String sysuserList(HttpServletRequest request, HttpServletResponse response) {
-        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.id);
+        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "where role = 'DEALER_RW' or role = 'DEALER_RO'", "order by", eSysuser.id);
         return gson.toJson(qSysuser);
     }
 

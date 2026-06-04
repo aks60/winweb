@@ -16,8 +16,8 @@
             $('button').button();           
             document.getElementById('u01').addEventListener('click', () => users.onpage('1'));
             document.getElementById('u02').addEventListener('click', () => users.onpage('2'));
-            document.getElementById('u03').addEventListener('click', () => users.onpage('3'));
-            document.getElementById('u04').addEventListener('click', () => users.onpage('4'));
+            document.getElementById('u03').addEventListener('click', () => users.onpage('4'));
+            document.getElementById('u04').addEventListener('click', () => users.onpage('3'));
             document.getElementById('u05').addEventListener('click', () => users.logim_create());
             document.getElementById('u06').addEventListener('click', () => users.token_check());
             document.getElementById('u07').addEventListener('click', () => users.token_refresh());
@@ -47,7 +47,7 @@
                             <table height="180" width="440">
                                 <tr>
                                     <td>Логин администратора:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='sysdba' type='text' size='16'></td>
+                                    <td><input id="u14" class="login" placeholder='Введите логин' value='sysdba' type='text' size='16'></td>
                                 </tr> 
                                 <tr>
                                     <td>Пароль администратора:</td>
@@ -55,7 +55,7 @@
                                 </tr>                            
                                 <tr>
                                     <td>Логин пользователя:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='dealer' type="text" size='16' style="width: 160px;"/></td>
+                                    <td><input id="u15" class="login" placeholder='Введите логин' value='dealer' type="text" size='16' style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>Пароль пользователя:</td>
@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <td>ФИО:</td>
-                                    <td><input class="fio" placeholder='Введите ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input id="u11" class="fio" placeholder='Введите ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
                                     <td>Описание:</td>
@@ -82,7 +82,7 @@
                             <table height="140" width="440">
                                 <tr>
                                     <td>Логин администратора:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='' type='text' size='16'></td>
+                                    <td><input id="u16" class="login" placeholder='Введите логин' value='' type='text' size='16'></td>
                                 </tr> 
                                 <tr>
                                     <td>Пароль администратора:</td>
@@ -90,11 +90,11 @@
                                 </tr>                            
                                 <tr>
                                     <td>Логин пользователя:</td>
-                                    <td><input class="login" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
+                                    <td><input id="u17" class="login" placeholder='Введите логин' value='rono0' type="text" style="width: 160px;"/></td>
                                 </tr> 
                                 <tr>
                                     <td>ФИО:</td>
-                                    <td><input class="fio" placeholder='Введите ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input id="u12" class="fio" placeholder='Введите ФИО' value='' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                              
                                 <tr>
                                     <td>Описание:</td>
@@ -134,11 +134,11 @@
                             <table height="80">
                                 <tr>
                                     <td>ФИО пользователя:</td>
-                                    <td><input class="fio" value='' type="text" size='64' style="width: 260px;"/></td>
+                                    <td><input id="u13" class="fio" value='' type="text" size='64' style="width: 260px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>Логин пользователя:</td>
-                                    <td><input class="login" value='' type="text" size='16' style="width: 160px;"/></td>
+                                    <td><input id="u18" class="login" value='' type="text" size='16' style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td></td>
