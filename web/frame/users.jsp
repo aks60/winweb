@@ -55,7 +55,7 @@
                                 </tr>                            
                                 <tr>
                                     <td>Логин пользователя:</td>
-                                    <td><input id="u15" class="login" placeholder='Введите логин' value='dealer' type="text" size='16' style="width: 160px;"/></td>
+                                    <td><input id="u15" class="login" placeholder='Введите логин' value='DEALER' type="text" size='16' style="width: 160px;"/></td>
                                 </tr>
                                 <tr>
                                     <td>Пароль пользователя:</td>
@@ -63,11 +63,11 @@
                                 </tr>
                                 <tr>
                                     <td>ФИО:</td>
-                                    <td><input id="u11" class="fio" placeholder='Введите ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input id="u11" class="fio" placeholder='Введите ФИО' value='Дилер Г.Д' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
                                     <td>Описание:</td>
-                                    <td><input class="desc" placeholder='Описание ФИО' value='asd' type="text" size='64' style="width: 260px;"/></select> </td>
+                                    <td><input class="desc" placeholder='Описание ФИО' value='Мастер' type="text" size='64' style="width: 260px;"/></select> </td>
                                 </tr>                            
                                 <tr>
                                     <td></td><td><button id="u05" type="button" style="width: 164px;">Зарегистрировать</button></td>
