@@ -52,7 +52,7 @@
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p24').val($('#p23').val());"><br>        
                 <jst id="p25" type='txt' label='Дата в производство' width='120' width2="80"></jst>
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p25').val($('#p24').val());"><br>        
-                <jst id="p26" type='btn' label='Контрагент' width='120' width2="220" fk="-3" click="$('#dialog-jsp').load('frame/dialog/dealer.jsp');"></jst><br>
+                <jst id="p26" type='btn' label='Заказчик' width='120' width2="220" fk="-3" click="$('#dialog-jsp').load('frame/dialog/dealer.jsp');"></jst><br>
             </div>
             <div id="dialog-card2" card_width="416" card_height="230" style="display: none;">                
                 <jst id="p31" type='txt' label='Количество' width='80' width2="40"></jst><br>

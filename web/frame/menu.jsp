@@ -19,6 +19,13 @@
             }
         }
 
+        function load_partner(name) {
+            state.nameJsp = name;
+            if ($('#body-jsp title').text() !== 'PARTNER') {
+                $('#body-jsp').load('frame/partner.jsp');
+            }
+        }
+        
         function load_product(name) {
             state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PRODUCT') {
@@ -38,12 +45,15 @@
             document.getElementById('m11').addEventListener('click', () => project.insert_table1());
             document.getElementById('m21').addEventListener('click', () => project.update_table1());
             document.getElementById('m31').addEventListener('click', () => project.delete_table1());
-
             document.getElementById('m41').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
             document.getElementById('m51').addEventListener('click', () => project.update_table3());
             document.getElementById('m61').addEventListener('click', () => project.delete_table3());
             document.getElementById('m71').addEventListener('click', () => project.update_table2());
             document.getElementById('m81').addEventListener('click', () => project.calculate_project());
+
+            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
+            document.getElementById('m16').addEventListener('click', () => product.save_update_script());
+            document.getElementById('m26').addEventListener('click', () => product.revert_update_script());
 
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
             document.getElementById('m12').addEventListener('click', () => product.save_update_script());
@@ -97,6 +107,20 @@
             <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">
+                    <li><a id='m06'>Контрагенты</a>
+                        <div class="subs">
+                            <div>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li><a id="m16">Добавить</a></li>
+                                            <li><a id="m26">Изменить</a></li>  
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                      
+                    </li>                    
                     <li><a id='m01'>Заказы</a>
                         <div class="subs">
                             <div>
@@ -172,7 +196,7 @@
                                         <ul>
                                             <li><a id="m15">Сайт разработчика</a></li>
                                             <li><a id="m25">О программе</a></li>
-                                            <li><a id="m35">TEST</a></li>
+                                            <li><a id="m35">Project.test()</a></li>
                                         </ul>
                                     </li>
                                 </ul>

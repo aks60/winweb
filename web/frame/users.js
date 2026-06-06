@@ -121,16 +121,14 @@ users.logim_create = () => {
 };
 
 //Удаление учётной записи логин-пароль пользователя на сервере
-users.login_delete = () => {
-    debugger;
+users.login_delete = () => {   
     let isDelete = confirm("Вы действительно хотите удалить текущую запись?");
     if (isDelete == true) {
         $.ajax({
             url: 'login?action=deleteLogin',
             data: {'userID': users.userRow.ID},
             success: function (data) {
-                
-                if (data.result === "true") {
+                if (data.result === true) {
                     for (let i = 0; i < eSysuser.list.length; i++) {
                         if (eSysuser.list[i][eSysuser.id] === Number(users.userRow.ID)) {
                             eSysuser.list.splice(i, 1);

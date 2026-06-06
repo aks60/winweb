@@ -86,11 +86,11 @@
                 <div id="east" style="position: absolute; height: 100%; width: 194px; right: -200px;">
                     <div style="margin-left: 20px">
                         <p> E-mail:
-                        <p style="color: dodgerblue"> x-xxx@xxxx.ru</p>
+                        <p style="color: dodgerblue"> gonved60@gmail.com</p>
                         <p> Телефон:
-                        <p style="color: dodgerblue">+7 (XXX) XXX-XX-XX<br>+7 (XXX) XXX-XX-XX</p>
+                        <p style="color: dodgerblue">+7 (903) 124-78-33<br>+7 (000) 000-00-00</p>
                         <p class="copyright"><img src="lib-img/logotype.png" height="30px" width="30px" style="padding-left: 34%;">
-                            <br> <br> © ИП Аксёнов С. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021
+                            <br> <br> © ИП Аксёнов С. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2026
                     </div>
                 </div>            
             </div>

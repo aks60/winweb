@@ -1,6 +1,7 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {product} from './product.js';
 import {login} from './login.js';
+
 export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
 
 project.test = function () {
@@ -94,11 +95,11 @@ project.init_table = function () {
 
 //Загрузка лроектов в таблицу
 project.load_table1 = function () {
-
     $(project.table1).jqGrid('clearGridData', true);
-    eProject.list.sort((a, b) => b[eProject.id] - a[eProject.id]);
-    for (let i = 0; i < eProject.list.length; i++) {
-        let tr = eProject.list[i];
+    let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
+    projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
+    for (let i = 0; i < projectList.length; i++) {
+        let tr = projectList[i];
         $(project.table1).jqGrid('addRowData', i + 1, {
             ID: tr[eProject.id],
             num_ord: tr[eProject.num_ord],
