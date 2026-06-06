@@ -19,17 +19,11 @@ partner.init_table = function () {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Заказчик', 'User', 'prjpart2_id'],
+        colNames: ['id', 'Заказчик', 'Организация'],
         colModel: [
             {name: 'ID', hidden: true},
-            {name: 'num_ord', width: 80, sorttype: "text"},
-            {name: 'num_acc', width: 80, sorttype: "text"},
-            {name: 'date4', width: 80, sorttype: "date"},
-            {name: 'date5', width: 80, sorttype: "date"},
-            {name: 'date6', width: 80, sorttype: "date"},
-            {name: 'partner', width: 220, sorttype: "text"},
-            {name: 'login', width: 120, sorttype: "text"},
-            {name: 'prjpart2_id', hidden: true}
+            {name: 'partner', width: 200, sorttype: "text"},
+            {name: 'flag2', width: 60, sorttype: "int"}
         ],
         onSelectRow: function (rowid, status, e) {
 //            let projectRow = $(project.table1).jqGrid('getRowData', rowid);
@@ -46,24 +40,18 @@ partner.init_table = function () {
 
 //Загрузка лроектов в таблицу
 partner.load_table1 = function () {
-//    $(project.table1).jqGrid('clearGridData', true);
-//    let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
-//    projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
-//    for (let i = 0; i < projectList.length; i++) {
-//        let tr = projectList[i];
-//        $(project.table1).jqGrid('addRowData', i + 1, {
-//            ID: tr[eProject.id],
-//            num_ord: tr[eProject.num_ord],
-//            num_acc: tr[eProject.num_acc],
-//            date4: tr[eProject.date4],
-//            date5: tr[eProject.date5],
-//            date6: tr[eProject.date6],
-//            partner: findef(tr[eProject.prjpart2_id], ePrjpart.id, ePrjpart)[ePrjpart.partner],
-//            login: tr[eProject.login],
-//            prjpart2_id: tr[eProject.prjpart2_id]
-//        });
-//    }
-//    $(project.table1).jqGrid("setSelection", project.table1rowID);
+    $(partner.table1).jqGrid('clearGridData', true);
+    let partnerList = ePrjpart.list.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.login] === 'заказчик');
+    partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);
+    for (let i = 0; i < partnerList.length; i++) {
+        let tr = partnerList[i];
+        $(partner.table1).jqGrid('addRowData', i + 1, {
+            ID: tr[ePrjpart.id],
+            partner: tr[ePrjpart.partner],
+            flag2: tr[ePrjpart.flag2]
+        });
+    }
+    $(partner.table1).jqGrid("setSelection", partner.table1rowID);
 };
 
 
