@@ -106,7 +106,7 @@ project.load_table1 = function () {
             date4: tr[eProject.date4],
             date5: tr[eProject.date5],
             date6: tr[eProject.date6],
-            partner: findef(tr[eProject.prjpart2_id], eDealer.id, eDealer)[eDealer.partner],
+            partner: findef(tr[eProject.prjpart2_id], ePrjpart.id, ePrjpart)[ePrjpart.partner],
             login: tr[eProject.login],
             prjpart2_id: tr[eProject.prjpart2_id]
         });
@@ -184,8 +184,6 @@ project.insert_table1 = function () {
                 $("#p26").val('');
                 $("#p26").attr("fk", '-3');
 
-                let o1 = $(taq).attr('card_width');
-
                 //Открытие диалога insert
                 $(taq).dialog({
                     title: "Карточка ввода нового заказа",
@@ -200,7 +198,7 @@ project.insert_table1 = function () {
                             projectRec[eProject.id] = datkey.id;
                             projectRec[eProject.num_ord] = $("#p21").val();
                             projectRec[eProject.num_acc] = $("#p22").val();
-                            projectRec[eProject.login] = login.data.user_fio;
+                            projectRec[eProject.login] = login.data.user_name;
                             projectRec[eProject.date4] = $("#p23").val();
                             projectRec[eProject.date5] = $("#p24").val();
                             projectRec[eProject.date6] = $("#p25").val();
@@ -285,7 +283,7 @@ project.update_table1 = function () {
                                 date4: projectRec[eProject.date4],
                                 date5: projectRec[eProject.date5],
                                 date6: projectRec[eProject.date6],
-                                partner: findef(projectRec[eProject.prjpart2_id], eDealer.id, eDealer)[eDealer.partner],
+                                partner: findef(projectRec[eProject.prjpart2_id], ePrjpart.id, ePrjpart)[ePrjpart.partner],
                                 login: projectRec[eProject.login]
                             });
                         } else

@@ -26,7 +26,7 @@
         <script type="module" src="./domain/eArtdet.js"></script>
         <script type="module" src="./domain/eArtikl.js"></script>
         <script type="module" src="./domain/eColor.js"></script>
-        <script type="module" src="./domain/eDealer.js"></script>
+        <script type="module" src="./domain/ePrjpart.js"></script>
         <script type="module" src="./domain/eElement.js"></script>
         <script type="module" src="./domain/eFurniture.js"></script>
         <script type="module" src="./domain/eFurnside1.js"></script>
@@ -51,7 +51,7 @@
 
         <script type="text/javascript">
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, eDealer, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, 
+            var eArtdet, eArtikl, eColor, ePrjpart, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, 
                     eGroups, eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, eSyspar1, 
                     eSysprod, eSysprof,  eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
 
@@ -89,7 +89,7 @@
                     let i = 0;
                     eSystree.list = p[i++], eSysprod.list = p[i++], eColor.list = p[i++], eArtikl.list = p[i++], eArtdet.list = p[i++], eFurniture.list = p[i++],
                             eFurnside1.list = p[i++], eFurndet.list = p[i++], eFurnpar2.list = p[i++], ePrjprod.list = p[i++], eSysfurn.list = p[i++], eSysprof.list = p[i++],
-                            eSyspar1.list = p[i++], eParams.list = p[i++], eGroups.list = p[i++], eProject.list = p[i++], eDealer.list = p[i++],
+                            eSyspar1.list = p[i++], eParams.list = p[i++], eGroups.list = p[i++], eProject.list = p[i++], ePrjpart.list = p[i++],
                             eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++], eSysuser.list = p[i++];
 
                     login.init_login();

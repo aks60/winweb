@@ -61,13 +61,13 @@
             }
 
             function load_table() {
-                for (let i = 0; i < eDealer.list.length; i++) {
-                    let dealerRec = eDealer.list[i];
-                    if (login.login === dealerRec[eDealer.login]) {
+                for (let i = 0; i < ePrjpart.list.length; i++) {
+                    let dealerRec = ePrjpart.list[i];
+                    if (login.login === dealerRec[ePrjpart.login]) {
                         $(tabDealer).jqGrid('addRowData', i + 1, {
-                            ID: dealerRec[eDealer.id],
-                            partner: dealerRec[eDealer.partner],
-                            login: dealerRec[eDealer.login]});
+                            ID: dealerRec[ePrjpart.id],
+                            partner: dealerRec[ePrjpart.partner],
+                            login: dealerRec[ePrjpart.login]});
                     }
                 }
                 $(tabDealer).jqGrid("setSelection", 1);
