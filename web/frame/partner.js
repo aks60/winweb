@@ -40,8 +40,9 @@ partner.init_table = function () {
 
 //Загрузка лроектов в таблицу
 partner.load_table1 = function () {
+    debugger;
     $(partner.table1).jqGrid('clearGridData', true);
-    let partnerList = ePrjpart.list.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.login] === 'заказчик');
+    let partnerList = ePrjpart.list; //.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
     partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);
     for (let i = 0; i < partnerList.length; i++) {
         let tr = partnerList[i];
@@ -51,7 +52,7 @@ partner.load_table1 = function () {
             flag2: tr[ePrjpart.flag2]
         });
     }
-    $(partner.table1).jqGrid("setSelection", partner.table1rowID);
+    //$(partner.table1).jqGrid("setSelection", partner.table1rowID);
 };
 
 
