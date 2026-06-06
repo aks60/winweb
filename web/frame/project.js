@@ -27,7 +27,7 @@ project.init_table = function () {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Контрагент', 'User', 'prjpart2_id'],
+        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Заказчик', 'User', 'prjpart2_id'],
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'num_ord', width: 80, sorttype: "text"},

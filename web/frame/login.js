@@ -54,6 +54,7 @@ login.user_connect = function () {
         success: function (data) {
             login.data = data;
             login.init_login();
+            login.login = att[0];
         },
         error: function () {
             dialogMes('Сообщение', 'Ошибка авторизации пользователя');

@@ -6,6 +6,7 @@
         <title>DEALER</title>
 
         <script type="module">
+            import {login} from './frame/login.js';
 
             let tabDealer = document.getElementById('tab-dealer');
 
@@ -13,7 +14,7 @@
                 $(tabDealer).jqGrid('setGridWidth', $("#dialog-jsp #pan-dealer").width());
                 $(tabDealer).jqGrid('setGridHeight', $("#dialog-jsp #pan-dealer").height() - 24);
             }
-            
+
             init_dialog();
             init_table();
             load_table();
@@ -62,10 +63,12 @@
             function load_table() {
                 for (let i = 0; i < eDealer.list.length; i++) {
                     let dealerRec = eDealer.list[i];
-                    $(tabDealer).jqGrid('addRowData', i + 1, {
-                        ID: dealerRec[eDealer.id],
-                        partner: dealerRec[eDealer.partner],
-                        login: dealerRec[eDealer.login]});
+                    if (login.login === dealerRec[eDealer.login]) {
+                        $(tabDealer).jqGrid('addRowData', i + 1, {
+                            ID: dealerRec[eDealer.id],
+                            partner: dealerRec[eDealer.partner],
+                            login: dealerRec[eDealer.login]});
+                    }
                 }
                 $(tabDealer).jqGrid("setSelection", 1);
             }

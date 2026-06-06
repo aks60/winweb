@@ -167,12 +167,18 @@ public class Dbset {
             String param = request.getParameter("param");
             Record record = gson.fromJson(param, Record.class);
             record.set(eProject.id, Connect.genId(eProject.up));
+            if ("".equals(record.getStr(eProject.date4))) {
+                record.set(eProject.date4, null);
+            }
+            if ("".equals(record.getStr(eProject.date5))) {
+                record.set(eProject.date5, null);
+            }
+            if ("".equals(record.getStr(eProject.date6))) {
+                record.set(eProject.date6, null);
+            }
             new Query(eProject.values()).insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(eProject.id)));
-//                UGui.insertRecordCur(eProgect.up, (record) -> {
-//                    Record artiklRec = qArtikl.get(index);
-//                    record.setNo(eArtdet.artikl_id, artiklRec.get(eArtikl.id));
-//                });
+
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
@@ -351,7 +357,6 @@ public class Dbset {
 //        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
 //        return gson.toJson(qSysuser);
 //    }
-
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart2_id = b.id and b.category = 'дилер' order by a.id desc");
         for (Record rec : qProject) {
@@ -363,7 +368,7 @@ public class Dbset {
     }
 
     public static String dealerList(HttpServletRequest request, HttpServletResponse response) {
-        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'дилер'", "order by", ePrjpart.login);
+        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'заказчик'", "order by", ePrjpart.login);
         return gson.toJson(qPrjpart);
     }
 
