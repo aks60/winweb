@@ -55,7 +55,7 @@
                         <jst id="p27" type='txt' label='БИК' width='80' width2="440"></jst><br>
                         <jst id="p28" type='txt' label='К/С' width='80' width2="440"></jst><br>
                         <jst id="p28" type='txt' label='КПП' width='80' width2="440"></jst><br>
-                        <jst id="p28" type='txt' label='ОГРН' width='80' width2="440"></jst><br>
+                        <jst id="p29" type='txt' label='ОГРН' width='80' width2="440"></jst><br>
                     </div>
                 </div>
             </div>
