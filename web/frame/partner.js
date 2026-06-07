@@ -5,9 +5,9 @@ export let partner = {};
 
 //Масштабирование
 partner.resize = function () {
-//    $("#context").css("height", window.innerHeight - 48);
-//    $(partner.table1).jqGrid('setGridWidth', $("#centr").width());
-//    $(partner.table1).jqGrid('setGridHeight', $("#centr").height() - 28);
+    $("#context").css("height", window.innerHeight - 48);
+    $(partner.table1).jqGrid('setGridWidth', $("#centr").width());
+    $(partner.table1).jqGrid('setGridHeight', $("#centr").height() - 34);
 };
 
 //Инициализация таблиц
@@ -22,8 +22,8 @@ partner.init_table = function () {
         colNames: ['id', 'Заказчик', 'Организация'],
         colModel: [
             {name: 'ID', hidden: true},
-            {name: 'partner', width: 200, sorttype: "text"},
-            {name: 'flag2', width: 60}
+            {name: 'partner', width: 400, sorttype: "text"},
+            {name: 'flag2', width: 20}
         ],
         onSelectRow: function (rowid, status, e) {
 //            let projectRow = $(project.table1).jqGrid('getRowData', rowid);
@@ -33,7 +33,7 @@ partner.init_table = function () {
 //            project.load_table3();   //загрузка таблицы 3         
         },
         gridComplete: function () {
-//            project.resize();
+            partner.resize();
         }
     });
 };
