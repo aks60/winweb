@@ -23,7 +23,7 @@ partner.init_table = function () {
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'partner', width: 200, sorttype: "text"},
-            {name: 'flag2', width: 60, sorttype: "int"}
+            {name: 'flag2', width: 60}
         ],
         onSelectRow: function (rowid, status, e) {
 //            let projectRow = $(project.table1).jqGrid('getRowData', rowid);
@@ -40,7 +40,7 @@ partner.init_table = function () {
 
 //Загрузка лроектов в таблицу
 partner.load_table1 = function () {
-    debugger;
+    //debugger;
     $(partner.table1).jqGrid('clearGridData', true);
     let partnerList = ePrjpart.list; //.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
     partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);

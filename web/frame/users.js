@@ -102,7 +102,7 @@ users.logim_create = () => {
         url: 'login?action=newLogin',
         data: {'username': att[0], 'password': att[1], 'username2': att[2], 'password2': att[3], 'fio': att[4], 'desc': att[5], 'role': 'DEALER_RW'},
         success: function (data) {
-            debugger;
+            //debugger;
             if (data.result === 'ok') {
                 eSysuser.list.push(data.sysuserRec);
                 $('#pan1 .login:first').val('');

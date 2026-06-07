@@ -3,19 +3,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="module" src="frame/partner.js"></script> 
         <title>PARTNER</title>
     </head>
         <script type="module">
             import {partner} from './frame/partner.js';
 
-            $(window).unbind('resize').bind('resize', partner.resize);
             partner.table1 = document.getElementById('table1');
-            //deployTaq(['#dialog-card1', '#dialog-card2', '#dialog-card3', '#east2']);
 
             partner.init_table();
             partner.load_table1();
+            $(window).unbind('resize').bind('resize', partner.resize).trigger('resize');
 
-            prepareTool('partner');
+            //prepareTool('partner');
         </script>    
     <body>
         <div id = "context">     

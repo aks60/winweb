@@ -5,7 +5,7 @@ import {login} from './login.js';
 export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
 
 project.test = function () {
-    debugger;
+    //debugger;
     project.projectRec[eProject.date4] = new Date().toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric'});
 };
 
@@ -482,7 +482,7 @@ project.calculate_project = function () {
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 if (data.result === 'ok') {
-                    debugger;
+                    //debugger;
                     let project2Rec = data.projectRec;
                     project.projectRec[eProject.square] = project2Rec[eProject.square];
                     project.projectRec[eProject.weight] = project2Rec[eProject.weight];
