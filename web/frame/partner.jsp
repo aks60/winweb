@@ -6,15 +6,6 @@
         <script type="module" src="frame/partner.js"></script> 
         <title>PARTNER</title>
         <style>
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Растягивает контейнер на весь экран */
-}
-
-.content {
-    flex-grow: 1; /* Заставляет этот блок занимать всё свободное место */
-}
         </style>        
         <script type="module">
             import {partner} from './frame/partner.js';
@@ -22,29 +13,49 @@
             partner.table1 = document.getElementById('table1');
             $(window).unbind('resize').bind('resize', partner.resize);
             partner.init_table();
-            partner.load_table1();          
-            //prepareTool('partner');
-            //$(partner.table1).jqGrid({gridComplete: function () { partner.resize();}});
-            partner.resize();
+            partner.load_table1();
+            deployTaq(['#east']); 
         </script>         
     </head>   
     <body>
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="250" style="display: none;">                
-             </div>
+            </div>
             <div id="dialog-card2" card_width="416" card_height="230" style="display: none;">                
             </div>
             <div id="dialog-card3" card_width="260" card_height="180" style="display: none;">                
             </div>
-            <div id="midl" style="position: relative; margin-right: 600px; height: 100%"> 
+            <div id="midl" style="position: relative; margin-right: 550px; height: 100%"> 
 
                 <div id="centr" style="height: 100%; width: 100%; margin-top: 0px;">
                     <table id="table1"  class="ui-jqgrid-btable"></table> 
                 </div>
-                <div id="east" style="position: absolute; width: 594px; height: 100%; top: 0; right: -600px;  border: 1px groove #ccc;">
-                    <div id="east2" style="height: 180px; background: #efeffb">
+                <div id="east" style="position: absolute; width: 544px; height: 100%; top: 0; right: -550px;  border: 1px groove #ccc;">
+                    <div id="east1" style="height: 200px; background: #efeffb">
+                        <jst id="p11" type='txt' label='Заказчик' width='120' width2="400"></jst><br>
+                        <jst id="p12" type='txt' label='Телефон' width='120' width2="400"></jst><br>
+                        <jst id="p13" type='txt' label='E-mail' width='120' width2="400"></jst><br>
+                        <jst id="p14" type='txt' label='Адрес 1го уровня' width='120' width2="400"></jst><br>
+                        <jst id="p15" type='txt' label='Адрес 2го уровня' width='120' width2="400"></jst><br>
+                        <jst id="p16" type='txt' label='Примечание' width='120' width2="400"></jst><br>
                     </div>
-                    <div id="east3" style="background: #efeffb;">                    
+                    <div id="east2" style="height: 200px; background: #efeffb">
+                        <jst id="p17" type='txt' label='Заказчик' width='120' width2="400"></jst><br>
+                        <jst id="p18" type='txt' label='Контакт. лицо' width='120' width2="400"></jst><br>
+                        <jst id="p19" type='txt' label='Телефон' width='120' width2="400"></jst><br>
+                        <jst id="p20" type='txt' label='E-mail' width='120' width2="400"></jst><br>
+                        <jst id="p21" type='txt' label='Адрес 1го уровня' width='120' width2="400"></jst><br>
+                        <jst id="p22" type='txt' label='Адрес 2го уровня' width='120' width2="400"></jst><br>
+                        <jst id="p23" type='txt' label='Примечание' width='120' width2="400"></jst><br>
+                    </div>
+                    <div id="east3" style="height: calc(100% - 410px); background: #efeffb;"> 
+                        <jst id="p24" type='txt' label='Банк' width='80' width2="440"></jst><br>
+                        <jst id="p25" type='txt' label='ИНН' width='80' width2="440"></jst><br>
+                        <jst id="p26" type='txt' label='Р/С' width='80' width2="440"></jst><br>
+                        <jst id="p27" type='txt' label='БИК' width='80' width2="440"></jst><br>
+                        <jst id="p28" type='txt' label='К/С' width='80' width2="440"></jst><br>
+                        <jst id="p28" type='txt' label='КПП' width='80' width2="440"></jst><br>
+                        <jst id="p28" type='txt' label='ОГРН' width='80' width2="440"></jst><br>
                     </div>
                 </div>
             </div>

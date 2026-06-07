@@ -23,7 +23,7 @@ partner.init_table = function () {
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'partner', width: 400, sorttype: "text"},
-            {name: 'flag2', width: 20}
+            {name: 'flag2', width: 40}
         ],
         onSelectRow: function (rowid, status, e) {
 //            let projectRow = $(project.table1).jqGrid('getRowData', rowid);
