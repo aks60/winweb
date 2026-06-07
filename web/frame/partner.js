@@ -5,9 +5,9 @@ export let partner = {};
 
 //Масштабирование
 partner.resize = function () {
-    $("#context").css("height", window.innerHeight - 48);
-    $(partner.table1).jqGrid('setGridWidth', $("#centr").width());
-    $(partner.table1).jqGrid('setGridHeight', $("#centr").height() - 28);
+//    $("#context").css("height", window.innerHeight - 48);
+//    $(partner.table1).jqGrid('setGridWidth', $("#centr").width());
+//    $(partner.table1).jqGrid('setGridHeight', $("#centr").height() - 28);
 };
 
 //Инициализация таблиц
@@ -44,7 +44,7 @@ partner.load_table1 = function () {
     $(partner.table1).jqGrid('clearGridData', true);
     let partnerList = ePrjpart.list; //.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
     partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);
-    for (let i = 0; i < partnerList.length; i++) {
+    for (let i = 0; i < 60; i++) {
         let tr = partnerList[i];
         $(partner.table1).jqGrid('addRowData', i + 1, {
             ID: tr[ePrjpart.id],
