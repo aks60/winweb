@@ -1,20 +1,16 @@
 package controller;
 
-import static builder.script.GsonScript.filePath;
-import common.eProp;
 import dataset.Connect;
+import domain.ePrjpart;
 import domain.eProject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.json.simple.JSONObject;
 
 @WebServlet(name = "DbsetCont", urlPatterns = {"/dbset"})
@@ -104,6 +100,9 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("insertPrjprod")) {
                     JSONObject output = Dbset.insertPrjprod(request, response);
                     out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("genidPrjpart")) {
+                    out.write(JSONObject.toJSONString(new JSONObject(Map.of("result", "ok", "id", Connect.genId(ePrjpart.up)))));
 
                 } else if (action.equalsIgnoreCase("genidProject")) {
                     out.write(JSONObject.toJSONString(new JSONObject(Map.of("result", "ok", "id", Connect.genId(eProject.up)))));

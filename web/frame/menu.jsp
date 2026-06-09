@@ -7,22 +7,24 @@
 
     </head>
     <script type="module">
+        import {partner} from './frame/partner.js';
         import {project} from './frame/project.js';
         import {product} from './frame/product.js';
         import {state} from './frame/report.js';
         import {kits} from './frame/kits.js';
 
-        function load_project(name) {
-            state.nameJsp = name;
-            if ($('#body-jsp title').text() !== 'PROJECT') {
-                $('#body-jsp').load('frame/project.jsp');
-            }
-        }
 
         function load_partner(name) {
             state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PARTNER') {
                 $('#body-jsp').load('frame/partner.jsp');
+            }
+        }
+        
+        function load_project(name) {
+            state.nameJsp = name;
+            if ($('#body-jsp title').text() !== 'PROJECT') {
+                $('#body-jsp').load('frame/project.jsp');
             }
         }
         
@@ -41,6 +43,8 @@
         }
 
         function init_menu() {
+            document.getElementById('m16').addEventListener('click', () =>partner.insert_table1());
+            
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project.insert_table1());
             document.getElementById('m21').addEventListener('click', () => project.update_table1());
