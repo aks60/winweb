@@ -19,11 +19,11 @@ partner.init_table = function () {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Заказчик', 'Организация'],
+        colNames: ['id', 'Заказчик', 'Орг-ия'],
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'partner', width: 400, sorttype: "text"},
-            {name: 'flag2', width: 40}
+            {name: 'flag2', width: 24}
         ],
         onSelectRow: function (rowid, status, e) {
             let prjpartRow = $(partner.table1).jqGrid('getRowData', rowid);
@@ -66,7 +66,7 @@ partner.select_table1 = function () {
     $("#p13").val(rec[ePrjpart.addr_emai]); //E-mail
     $("#p14").val(rec[ePrjpart.addr_leve1]); //Адрес 1го уровня
     $("#p15").val(rec[ePrjpart.addr_leve2]); //Адрес 2го уровня
-    $("#p16").val(rec[ePrjpart.note]); //Примечание      
+//    $("#p16").val(rec[ePrjpart.note]); //Примечание      
 
     $("#p17").val(rec[ePrjpart.partner]); //Заказчик
     $("#p18").val(rec[ePrjpart.org_contact]); //Контакт. лицо
@@ -74,7 +74,7 @@ partner.select_table1 = function () {
     $("#p20").val(rec[ePrjpart.org_email]); //E-mail
     $("#p21").val(rec[ePrjpart.org_leve1]); //Адрес 1го уровня
     $("#p22").val(rec[ePrjpart.org_leve2]); //Адрес 2го уровня
-    $("#p23").val(rec[ePrjpart.note]); //Примечание
+//    $("#p23").val(rec[ePrjpart.note]); //Примечание
 
     $("#p24").val(rec[ePrjpart.bank_name]); //Банк
     $("#p25").val(rec[ePrjpart.bank_inn]); //ИНН'
@@ -82,7 +82,8 @@ partner.select_table1 = function () {
     $("#p27").val(rec[ePrjpart.bank_bik]); //БИК'
     $("#p28").val(rec[ePrjpart.bank_ks]); //К/С'
     $("#p29").val(rec[ePrjpart.bank_kpp]); //КПП'
-    $("#p30").val(rec[ePrjpart.bank_ogrn]); //ОГРН    
+    $("#p30").val(rec[ePrjpart.bank_ogrn]); //ОГРН 
+    $("#p16").val(rec[ePrjpart.note]); //Примечание 
 };
 
 partner.btn_to_tabs = function (btnTaq) {
@@ -105,7 +106,7 @@ partner.insert_table1 = function () {
         success: (datkey) => {
             if (datkey.result === 'ok') {
                 const fields = Array.from({ length: 30 - 11 + 1 }, (_, i) => 11 + i);
-                fields.forEach(it => $('#r' + it).val('777'));
+                fields.forEach(it => $('#r' + it).val('null'));
 
                 //Открытие диалога insert
                 $(taq).dialog({
@@ -116,19 +117,22 @@ partner.insert_table1 = function () {
                     resizable: false,
                     buttons: {
                         "Применить": function () {
+                            debugger;
                             let prjpartRec = ePrjpart.vrec;
                             prjpartRec[0] = 'SEL';
                             prjpartRec[ePrjpart.id] = datkey.id;
+                            prjpartRec[ePrjpart.flag2] = $("#dialog-card1").tabs("option", "active");                            
+                            prjpartRec[ePrjpart.login] = login.login; 
                             prjpartRec[ePrjpart.partner] = $('#r11').val(); 
+                            
                             prjpartRec[ePrjpart.addr_phon] = $('#r12').val(); 
                             prjpartRec[ePrjpart.addr_emai] = $('#r13').val(); 
                             prjpartRec[ePrjpart.addr_leve1] = $('#r14').val(); 
                             prjpartRec[ePrjpart.addr_leve2] = $('#r15').val(); 
                             prjpartRec[ePrjpart.note] = $('#r16').val();
                             
-                            prjpartRec[ePrjpart.partner] = $('#r17').val();
                             prjpartRec[ePrjpart.org_contact] = $('#r18').val(); 
-                            prjpartRec[ePrjpart.org_phone] = $('#r18').val(); 
+                            prjpartRec[ePrjpart.org_phone] = $('#r19').val(); 
                             prjpartRec[ePrjpart.org_email] = $('#r20').val(); 
                             prjpartRec[ePrjpart.org_leve1] = $('#r21').val(); 
                             prjpartRec[ePrjpart.org_leve2] = $('#r22').val(); 
