@@ -106,6 +106,10 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("genidProject")) {
                     out.write(JSONObject.toJSONString(new JSONObject(Map.of("result", "ok", "id", Connect.genId(eProject.up)))));
+                
+                } else if (action.equalsIgnoreCase("insertPrjpart")) {
+                    JSONObject output = Dbset.insertPrjpart(request, response);
+                    out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("insertProject")) {
                     JSONObject output = Dbset.insertProject(request, response);
@@ -148,7 +152,6 @@ public class DbsetCont extends HttpServlet {
 
 //                } else if (action.equalsIgnoreCase("userList")) {
 //                    out.write(Dbset.userList(request, response));
-
                 } else if (action.equalsIgnoreCase("stvFields")) {
                     JSONObject output = Dbset.stvFields(request, response);
                     out.write(JSONObject.toJSONString(output));
@@ -181,10 +184,10 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("smetaProject")) {
                     JSONObject output = Dbset.smetaProject(request, response);
                     out.write(JSONObject.toJSONString(output));
-                    
+
                 } else if (action.equalsIgnoreCase("checkProject")) {
                     JSONObject output = Dbset.checkProject(request, response);
-                    out.write(JSONObject.toJSONString(output));                    
+                    out.write(JSONObject.toJSONString(output));
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

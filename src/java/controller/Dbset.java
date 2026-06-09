@@ -162,11 +162,24 @@ public class Dbset {
         }
     }
 
+    public static JSONObject insertPrjpart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String param = request.getParameter("param");
+            Record record = gson.fromJson(param, Record.class);
+            //record.set(ePrjpart.id, Connect.genId(ePrjpart.up));
+            new Query(ePrjpart.values()).insert2(record);
+            return new JSONObject(App.asMap("result", "ok", "id", record.getInt(eProject.id)));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
+
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
             Record record = gson.fromJson(param, Record.class);
-            record.set(eProject.id, Connect.genId(eProject.up));
+            //record.set(eProject.id, Connect.genId(eProject.up));
             if ("".equals(record.getStr(eProject.date4))) {
                 record.set(eProject.date4, null);
             }

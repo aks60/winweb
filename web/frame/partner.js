@@ -69,7 +69,7 @@ partner.select_table1 = function () {
     $("#p16").val(rec[ePrjpart.note]); //Примечание      
 
     $("#p17").val(rec[ePrjpart.partner]); //Заказчик
-    $("#p18").val(rec[ePrjpart.org_conta]); //Контакт. лицо
+    $("#p18").val(rec[ePrjpart.org_contact]); //Контакт. лицо
     $("#p19").val(rec[ePrjpart.org_phone]); //Телефон
     $("#p20").val(rec[ePrjpart.org_email]); //E-mail
     $("#p21").val(rec[ePrjpart.org_leve1]); //Адрес 1го уровня
@@ -104,10 +104,12 @@ partner.insert_table1 = function () {
         data: {param: JSON.stringify({})},
         success: (datkey) => {
             if (datkey.result === 'ok') {
+                const fields = Array.from({ length: 30 - 11 + 1 }, (_, i) => 11 + i);
+                fields.forEach(it => $('#r' + it).val('777'));
 
                 //Открытие диалога insert
                 $(taq).dialog({
-                    title: "Карточка ввода нового дилера",
+                    title: "Карточка ввода нового заказчика",
                     width: $(taq).attr('card_width'),
                     height: $(taq).attr('card_height'),
                     modal: true,
@@ -116,13 +118,32 @@ partner.insert_table1 = function () {
                         "Применить": function () {
                             let prjpartRec = ePrjpart.vrec;
                             prjpartRec[0] = 'SEL';
+                            prjpartRec[ePrjpart.id] = datkey.id;
+                            prjpartRec[ePrjpart.partner] = $('#r11').val(); 
+                            prjpartRec[ePrjpart.addr_phon] = $('#r12').val(); 
+                            prjpartRec[ePrjpart.addr_emai] = $('#r13').val(); 
+                            prjpartRec[ePrjpart.addr_leve1] = $('#r14').val(); 
+                            prjpartRec[ePrjpart.addr_leve2] = $('#r15').val(); 
+                            prjpartRec[ePrjpart.note] = $('#r16').val();
+                            
+                            prjpartRec[ePrjpart.partner] = $('#r17').val();
+                            prjpartRec[ePrjpart.org_contact] = $('#r18').val(); 
+                            prjpartRec[ePrjpart.org_phone] = $('#r18').val(); 
+                            prjpartRec[ePrjpart.org_email] = $('#r20').val(); 
+                            prjpartRec[ePrjpart.org_leve1] = $('#r21').val(); 
+                            prjpartRec[ePrjpart.org_leve2] = $('#r22').val(); 
+                            prjpartRec[ePrjpart.note] = $('#r23').val();
+                            
+                            prjpartRec[ePrjpart.bank_name] = $('#r24').val(); 
+                            prjpartRec[ePrjpart.bank_inn] = $('#r25').val(); 
+                            prjpartRec[ePrjpart.bank_rs] = $('#r26').val(); 
+                            prjpartRec[ePrjpart.bank_bik] = $('#r27').val(); 
+                            prjpartRec[ePrjpart.bank_ks] = $('#r28').val(); 
+                            prjpartRec[ePrjpart.bank_kpp] = $('#r29').val(); 
+                            prjpartRec[ePrjpart.bank_ogrn] = $('#r30').val(); 
 
-                            if ($("#p26").attr("fk") === '-3') {
-                                dialogMes('Сообщение', "<p>Контрагент не установлен");
-                                return;
-                            }
                             $.ajax({//запишем заказ в серверную базу данных
-                                url: 'dbset?action=insertPartner',
+                                url: 'dbset?action=insertPrjpart',
                                 data: {param: JSON.stringify(prjpartRec)},
                                 success: (data) => {
                                     if (data.result === 'ok') {
@@ -149,4 +170,12 @@ partner.insert_table1 = function () {
             dialogMes('Сообщение', "<p>Ошибка при генерации ключа на сервере");
         }
     });
+};
+
+partner.update_table1 = function () {
+    
+};
+
+partner.delete_table1 = function () {
+    
 };

@@ -43,7 +43,11 @@
         }
 
         function init_menu() {
-            document.getElementById('m16').addEventListener('click', () =>partner.insert_table1());
+
+            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
+            document.getElementById('m16').addEventListener('click', () => partner.insert_table1());
+            document.getElementById('m26').addEventListener('click', () => partner.update_table1());
+            document.getElementById('m36').addEventListener('click', () => partner.delete_table1());
             
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project.insert_table1());
@@ -54,10 +58,6 @@
             document.getElementById('m61').addEventListener('click', () => project.delete_table3());
             document.getElementById('m71').addEventListener('click', () => project.update_table2());
             document.getElementById('m81').addEventListener('click', () => project.calculate_project());
-
-            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
-            document.getElementById('m16').addEventListener('click', () => product.save_update_script());
-            document.getElementById('m26').addEventListener('click', () => product.revert_update_script());
 
             document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
             document.getElementById('m12').addEventListener('click', () => product.save_update_script());
@@ -111,7 +111,7 @@
             <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">
-                    <li><a id='m06'>Контрагенты</a>
+                    <li><a id='m06'>Заказчики</a>
                         <div class="subs">
                             <div>
                                 <ul>
@@ -119,6 +119,7 @@
                                         <ul>
                                             <li><a id="m16">Добавить</a></li>
                                             <li><a id="m26">Изменить</a></li>  
+                                            <li><a id="m36">Удалить</a></li>  
                                         </ul>
                                     </li>
                                 </ul>

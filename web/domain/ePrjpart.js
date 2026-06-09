@@ -15,7 +15,7 @@ ePrjpart = {
     addr_phon: 10, //Телефон
     addr_emai: 11, //E-mail
 
-    org_conta: 12, //Контактное лицо
+    org_contact: 12, //Контактное лицо
     org_leve1: 13, //Адрес 1го уровня
     org_leve2: 14, //Адрес 2го уровня
     org_phone: 15, //Телефон
