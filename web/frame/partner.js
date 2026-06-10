@@ -87,7 +87,7 @@ partner.insert_table1 = function () {
         success: (datkey) => {
             if (datkey.result === 'ok') {
                 const fields = Array.from({length: 30 - 11 + 1}, (_, i) => 11 + i);
-                fields.forEach(it => $('#k' + it).val('null'));
+                fields.forEach(it => $('#k' + it).val(''));
 
                 //Открытие диалога insert
                 $(taq).dialog({
@@ -177,9 +177,54 @@ partner.update_table1 = function () {
     });
 };
 
+//Удаление строки таблицы
+partner.delete_table1 = function () {
+    let prjpartRow = partner.prjpartRow;
+    if (prjpartRow !== null) {
+        $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
+    </span> Вы действительно хотите удалить текущий заказ?");
+        $("#dialog-mes").dialog({
+            title: "Подтверждение",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Да": function () {
+                    $.ajax({
+                        url: 'dbset?action=deletePrjpart',
+                        data: {param: JSON.stringify({id: prjpartRow.ID})},
+                        success: (data) => {
+                            if (data.result === 'ok') {
+                                $(partner.table1).jqGrid('delRowData', $(partner.table1).jqGrid('getGridParam', "selrow"));
+                                for (let i = 0; i < ePrjpart.list.length; ++i) {
+                                    if (Number(prjpartRow.ID) === ePrjpart.list[i][ePrjpart.id]) {
+                                        ePrjpart.list.splice(i, 1);
+                                    }
+                                }
+                                $(partner.table1).jqGrid("setSelection", 1);
+                                //partner.select_table1();
+                            } else
+                                dialogMes('Сообщение', "<p>" + data.result);
+                        },
+                        error: () => {
+                            dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Нет: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+};
+
 partner.txt_to_rec = function (prjpartRec, pre) {
     prjpartRec[ePrjpart.flag2] = $("#dialog-card1").tabs("option", "active");
     prjpartRec[ePrjpart.login] = login.login;
+    prjpartRec[ePrjpart.category] = 'заказчик';
     prjpartRec[ePrjpart.partner] = $(pre + 11).val();
 
     prjpartRec[ePrjpart.addr_phon] = $(pre + 12).val();

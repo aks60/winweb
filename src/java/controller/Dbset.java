@@ -328,6 +328,21 @@ public class Dbset {
         }
     }
 
+    public static JSONObject deletePrjpart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String param = request.getParameter("param");
+            JSONObject obj = (JSONObject) JSONValue.parse(param);
+            Query qPrjpart = new Query(ePrjpart.values());
+            Record record = ePrjpart.up.newRecord("DEL");
+            record.set(ePrjpart.id, obj.get("id"));
+            qPrjpart.delete2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }
+
     public static JSONObject deleteProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
