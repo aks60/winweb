@@ -174,6 +174,47 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
+    
+
+    public static JSONObject updatePrjpart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String param = request.getParameter("param");
+            JSONArray prjpartRec = (JSONArray) JSONValue.parse(param);
+            int id = Integer.parseInt(prjpartRec.get(ePrjpart.id.ordinal()).toString());
+            Record record = ePrjpart.find(id);
+            record.set(ePrjpart.up, "UPD");
+            record.set(ePrjpart.partner, format3(prjpartRec, ePrjpart.partner));
+            record.set(ePrjpart.login, format3(prjpartRec, ePrjpart.login));           
+            record.set(ePrjpart.flag2, format3(prjpartRec, ePrjpart.flag2));
+            record.set(ePrjpart.note, format3(prjpartRec, ePrjpart.note));
+            
+            record.set(ePrjpart.addr_phone, format3(prjpartRec, ePrjpart.addr_phone));
+            record.set(ePrjpart.addr_email, format3(prjpartRec, ePrjpart.addr_email));
+            record.set(ePrjpart.addr_leve1, format3(prjpartRec, ePrjpart.addr_leve1));
+            record.set(ePrjpart.addr_leve2, format3(prjpartRec, ePrjpart.addr_leve2));
+            
+            record.set(ePrjpart.org_contact, format3(prjpartRec, ePrjpart.org_contact));
+            record.set(ePrjpart.org_phone, format3(prjpartRec, ePrjpart.org_phone));
+            record.set(ePrjpart.org_email, format3(prjpartRec, ePrjpart.org_email));
+            record.set(ePrjpart.org_leve1, format3(prjpartRec, ePrjpart.org_leve1));
+            record.set(ePrjpart.org_leve2, format3(prjpartRec, ePrjpart.org_leve2));
+            
+            record.set(ePrjpart.bank_name, format3(prjpartRec, ePrjpart.bank_name));
+            record.set(ePrjpart.bank_inn, format3(prjpartRec, ePrjpart.bank_inn));
+            record.set(ePrjpart.bank_rs, format3(prjpartRec, ePrjpart.bank_rs));
+            record.set(ePrjpart.bank_bik, format3(prjpartRec, ePrjpart.bank_bik));
+            record.set(ePrjpart.bank_ks, format3(prjpartRec, ePrjpart.bank_ks));
+            record.set(ePrjpart.bank_kpp, format3(prjpartRec, ePrjpart.bank_kpp));
+            record.set(ePrjpart.bank_ogrn, format3(prjpartRec, ePrjpart.bank_ogrn));
+
+            Query qPrjpart = new Query(ePrjpart.values());
+            qPrjpart.update2(record);
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (SQLException e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
+    }    
 
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -196,7 +237,7 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-
+    
     public static JSONObject updateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
