@@ -42,9 +42,9 @@ partner.init_table = function () {
 //Загрузка лроектов в таблицу
 partner.load_table1 = function () {
     $(partner.table1).jqGrid('clearGridData', true);
-    let partnerList = ePrjpart.list; //.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
+    let partnerList = ePrjpart.list.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
     partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < partnerList.length; i++) {
         let tr = partnerList[i];
         $(partner.table1).jqGrid('addRowData', i + 1, {
             ID: tr[ePrjpart.id],
