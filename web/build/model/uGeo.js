@@ -213,7 +213,7 @@ UGeo.bufferGeometry = (geoShell, list, amend, opt) => {
         let hmDist = new Map();
         //Смещения сегментов
         for (let el of list) {
-            const rec = (el.artiklRec === null) ? eArtikl.vrec : el.artiklRec;
+            const rec = (el.artiklRec === null) ? eArtikl.vrec() : el.artiklRec;
             if (opt === 0) {
                 hmDist.set(el.id, rec[eArtikl.height] - rec[eArtikl.size_centr] + amend);
             } else if (opt === 1) {

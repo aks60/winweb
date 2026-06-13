@@ -194,7 +194,7 @@ project.insert_table1 = function () {
                     resizable: false,
                     buttons: {
                         "Применить": function () {
-                            let projectRec = eProject.vrec;
+                            let projectRec = eProject.vrec();
                             projectRec[0] = 'SEL';
                             projectRec[eProject.id] = datkey.id;
                             projectRec[eProject.num_ord] = $("#p21").val();

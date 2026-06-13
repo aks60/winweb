@@ -109,7 +109,7 @@
                 try {
                         let prjkitList = new Array();
                         for (let kitdetRec of kitdetList) { 
-                            let prjkitRec = [...ePrjkit.vrec];
+                            let prjkitRec = [...ePrjkit.vrec()];
                             prjkitRec[ePrjkit.artikl_id] = kitdetRec[eKitdet.color1_id];
                             prjkitRec[ePrjkit.color2_id] = kitdetRec[eKitdet.color2_id];
                             prjkitRec[ePrjkit.color1_id] = kitdetRec[eKitdet.color3_id];

@@ -118,7 +118,7 @@
             }
 
             function set_value_gson() {  
-                let sysfurnRec = eSysfurn.list.seek(eSysfurn.vrec, rec => rec[eSysfurn.furniture_id] === Number(furnitureRow.ID));
+                let sysfurnRec = eSysfurn.list.seek(eSysfurn.vrec(), rec => rec[eSysfurn.furniture_id] === Number(furnitureRow.ID));
                 if (paramTaq === 'n43') {
                     UJson.updateJsonParam(com5t.gson, ['param', PKjson.sysfurnID], sysfurnRec[eSysfurn.id]);
                 }

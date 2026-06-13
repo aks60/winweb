@@ -220,7 +220,7 @@ product.tree_to_html = function () {
             //Стеклопакет
         } else if (com5t.type === Type.GLASS) {
             $("#tabs-5").show();
-            let color1Rec = eColor.list.seek(eColor.vrec, rec => rec[eColor.id] === com5t.colorID1);
+            let color1Rec = eColor.list.seek(eColor.vrec(), rec => rec[eColor.id] === com5t.colorID1);
             loadingTab({
                 n51: check_mark(com5t.artiklRec[eArtikl.code], '#n51 + input', PKjson.sysprofID),
                 n52: com5t.artiklRec[eArtikl.name],

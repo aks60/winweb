@@ -21,7 +21,7 @@ eSystree = {
     find(nuni) {
         try {
             nuni = Number(nuni);
-            return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
+            return this.list.seek(this.vrec(), rec => nuni === rec[this.id]);
 
         } catch (e) {
             console.error(e.message);

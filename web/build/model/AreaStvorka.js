@@ -16,14 +16,14 @@ import Centroid from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Ce
 export class AreaStvorka extends AreaSimple {
 
     spcRec = null; //спецификация москитки
-    sysfurnRec = eSysfurn.vrec; //фурнитура
+    sysfurnRec = eSysfurn.vrec(); //фурнитура
     //[0]-вручную, то что отображается в интерфейсе
     //[1]-подбор по параметрам, то что отображается на рисунке и идет в спецификацию    
-    handRec = [eArtikl.vrec, eArtikl.vrec]; //ручка 0-вручную. 1-авторасчёт
-    loopRec = [eArtikl.vrec, eArtikl.vrec]; //подвес(петли) 0-вручную. 1-авторасчёт
-    lockRec = [eArtikl.vrec, eArtikl.vrec]; //замок 0-вручную. 1-авторасчёт
-    mosqRec = eArtikl.vrec; //москитка
-    elementRec = eElement.vrec; //состав москидки 
+    handRec = [eArtikl.vrec(), eArtikl.vrec()]; //ручка 0-вручную. 1-авторасчёт
+    loopRec = [eArtikl.vrec(), eArtikl.vrec()]; //подвес(петли) 0-вручную. 1-авторасчёт
+    lockRec = [eArtikl.vrec(), eArtikl.vrec()]; //замок 0-вручную. 1-авторасчёт
+    mosqRec = eArtikl.vrec(); //москитка
+    elementRec = eElement.vrec(); //состав москидки 
 
     lineOpenHor = null; //линии горизонт. открывания
     lineOpenVer = null; //линии вертик. открывания
@@ -90,9 +90,9 @@ export class AreaStvorka extends AreaSimple {
      */
     initArtikle() {
         try {
-            this.handRec = [eArtikl.vrec, eArtikl.vrec];
-            this.loopRec = [eArtikl.vrec, eArtikl.vrec];
-            this.lockRec = [eArtikl.vrec, eArtikl.vrec];
+            this.handRec = [eArtikl.vrec(), eArtikl.vrec()];
+            this.loopRec = [eArtikl.vrec(), eArtikl.vrec()];
+            this.lockRec = [eArtikl.vrec(), eArtikl.vrec()];
             this.typeOpen = TypeOpen1.EMPTY;
             this.lineOpenHor = null;
             this.lineOpenVer = null;

@@ -21,11 +21,11 @@ eArtdet = {
     },
     find(ID) {
         if (ID === -3) {
-            return this.vrec;
+            return this.vrec();
         }
         let record = this.list.find(rec => rec[this.artikl_id] === ID);
         if (record === undefined) {
-            return this.vrec;
+            return this.vrec();
         }
         return record;
     }

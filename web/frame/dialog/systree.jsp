@@ -68,7 +68,7 @@
                         "Выбрать": function () {
                             let sysprodRec = eSysprod.list.find(rec => sysprodID == rec[eSysprod.id]);
                             if (sysprodRec != undefined) {
-                                let prjprodRec = ePrjprod.vrec;
+                                let prjprodRec = ePrjprod.vrec();
                                 prjprodRec[ePrjprod.up] = 'SEL';                                
                                 prjprodRec[ePrjprod.num] = 1;
                                 prjprodRec[ePrjprod.name] = sysprodRec[eSysprod.name];

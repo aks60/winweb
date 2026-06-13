@@ -13,7 +13,7 @@ eSysprof = {
         return virtualRec(7, {0: 'SEL', 1: -3, 2: 0, 3: 0, 4: UseSide.ANY[1], 5: -3, 6: -3});
     },
     vrecCust: (useTypeID, useSideID) => {
-        const virt = [...this.vrec];
+        const virt = [...this.vrec()];
         virt[this.id] = -3;
         virt[this.use_type] = useTypeID;
         virt[this.use_side] = useSideID;
@@ -40,7 +40,7 @@ eSysprof = {
                 }
             }
             if (mapPrio.size === 0) {
-                return this.vrec;
+                return this.vrec();
             }
             return mapPrio.get(minLevel);
         } catch (e) {
@@ -51,7 +51,7 @@ eSysprof = {
     find3(ID) {
         try {
             ID = Number(ID);
-            return this.list.seek(this.vrec, rec => rec[this.id] === ID);
+            return this.list.seek(this.vrec(), rec => rec[this.id] === ID);
         } catch (e) {
             console.error(e.message);
         }

@@ -19,7 +19,7 @@ eColor = {
     find(ID) {
         try {
             ID = Number(ID);
-            return this.list.seek(this.vrec, el => el[1] === ID);
+            return this.list.seek(this.vrec(), el => el[1] === ID);
         } catch (e) {
             console.error(e.message);
         }
@@ -28,12 +28,12 @@ eColor = {
         try {
             colorFK = Number(colorFK);
             if (colorFK === -3) {
-                return this.vrec;
+                return this.vrec();
             }
             if (colorFK < 0) {
-                return this.list.seek(this.vrec, rec => rec[this.groups_id] === colorFK * -1);
+                return this.list.seek(this.vrec(), rec => rec[this.groups_id] === colorFK * -1);
             } else {
-                return this.list.seek(this.vrec, rec => rec[this.id] === colorFK);
+                return this.list.seek(this.vrec(), rec => rec[this.id] === colorFK);
             }
         } catch (e) {
             console.error(e.message);

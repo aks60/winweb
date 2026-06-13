@@ -43,9 +43,9 @@ eArtikl = {
         try {
             artiklID = Number(artiklID);
             if (artiklID === -3) {
-                return this.vrec;
+                return this.vrec();
             }
-            let artiklRec = this.list.seek(this.vrec, rec => artiklID === rec[this.id]);
+            let artiklRec = this.list.seek(this.vrec(), rec => artiklID === rec[this.id]);
 
             if (analog === true && artiklRec[this.analog_id] !== null) {
                 const analogID = artiklRec[this.analog_id];
@@ -62,7 +62,7 @@ eArtikl = {
             if ("0x0x0x0" === code) {
                 return this.vrec();
             }
-            let artiklRec = this.list.seek(this.vrec, rec => code === rec[this.code]);
+            let artiklRec = this.list.seek(this.vrec(), rec => code === rec[this.code]);
             return artiklRec;
 
         } catch (e) {

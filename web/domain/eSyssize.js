@@ -13,7 +13,7 @@ eSyssize = {
     },
     find(artiklRec) {
         let id = Number(artiklRec[eArtikl.syssize_id]);
-        return this.list.seek(this.vrec, rec => id === rec[this.id]);
+        return this.list.seek(this.vrec(), rec => id === rec[this.id]);
     }
 };
 

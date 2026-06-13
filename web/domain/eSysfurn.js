@@ -16,11 +16,11 @@ eSysfurn = {
 
     find2(ID) {
         ID = Number(ID);
-        return this.list.seek(this.vrec, rec => rec[this.id] === ID);
+        return this.list.seek(this.vrec(), rec => rec[this.id] === ID);
     },
 
     find3(NUNI) {
         NUNI = Number(NUNI);
-        return this.list.seek(this.vrec, rec => rec[this.systree_id] === NUNI);
+        return this.list.seek(this.vrec(), rec => rec[this.systree_id] === NUNI);
     }
 };

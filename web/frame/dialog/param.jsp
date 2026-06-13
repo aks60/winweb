@@ -97,7 +97,7 @@
 
                     //Удалим параметр из  "ioknaParam": [-8228, -90345]
                     for (let i = 0; i < winc.gson.param.ioknaParam.length; ++i) {
-                        let paramsRec = eParams.list.seek(eParams.vrec, rec => rec[eParams.id] === Number(winc.gson.param.ioknaParam[i]));
+                        let paramsRec = eParams.list.seek(eParams.vrec(), rec => rec[eParams.id] === Number(winc.gson.param.ioknaParam[i]));
 
                         //let o1 = product.syspar1Row.groupsID;
                         //let o2 = paramsRec[eParams.groups_id];

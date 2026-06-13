@@ -16,6 +16,6 @@ eParams = {
     },
     find(ID) {
         ID = Number(ID);
-        return this.list.seek(eParams.vrec, rec => ID === rec.id);
+        return this.list.seek(eParams.vrec(), rec => ID === rec.id);
     }
 };

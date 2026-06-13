@@ -200,7 +200,7 @@
 
                     } else if ($('#body-jsp title').text() === 'KITS') {
 
-                        let prjkitRec = ePrjkit.vrec;
+                        let prjkitRec = ePrjkit.vrec();
                         prjkitRec[0] = 'INS';
                         prjkitRec[ePrjkit.numb] = 1;
                         prjkitRec[ePrjkit.artikl_id] = Number(artiklRow.ID);

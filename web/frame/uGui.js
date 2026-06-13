@@ -356,7 +356,7 @@ function findef(key, index, domain) {
         if (record !== undefined) {
             return record;
         }
-        return domain.vrec;
+        return domain.vrec();
 
     } catch (e) {
         console.error(e.message);

@@ -3,15 +3,7 @@ import {login} from './login.js';
 
 export let partner = {};
 
-partner.test = function () {
-    debugger;
-    let prjpartRec = ePrjpart.vrec();
-    prjpartRec[0] = 'SEL1';
-    ePrjpart.list.push(prjpartRec);
-    prjpartRec = ePrjpart.vrec();
-    prjpartRec[0] = 'SEL2';
-    ePrjpart.list.push(prjpartRec);
-    let o2 = 0;            
+partner.test = function () {          
 };
 
 //Масштабирование
@@ -54,7 +46,6 @@ partner.init_table = function () {
 partner.load_table1 = function () {
     $(partner.table1).jqGrid('clearGridData', true);
     let partnerList = ePrjpart.list.filter(rec => rec[ePrjpart.login] === login.login && rec[ePrjpart.category] === 'заказчик');
-    debugger;
     partnerList.sort((a, b) => b[ePrjpart.id] - a[ePrjpart.id]);
     for (let i = 0; i < partnerList.length; i++) {
         let tr = partnerList[i];
@@ -112,8 +103,7 @@ partner.insert_table1 = function () {
                     resizable: false,
                     buttons: {
                         "Применить": function () {
-                            debugger;
-                            let prjpartRec = ePrjpart.vrec;
+                            let prjpartRec = ePrjpart.vrec();
                             prjpartRec[0] = 'SEL';
                             prjpartRec[ePrjpart.id] = datkey.id;
 
@@ -124,8 +114,7 @@ partner.insert_table1 = function () {
                                 data: {param: JSON.stringify(prjpartRec)},
                                 success: (data) => {
                                     if (data.result === 'ok') {
-                                        debugger;
-                                        let o1 = ePrjpart.list.push(prjpartRec);
+                                        ePrjpart.list.push(prjpartRec);
                                         partner.load_table1($(partner.table1));
                                     } else
                                         dialogMes('Сообщение', "<p>" + data.result);

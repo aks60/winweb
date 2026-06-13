@@ -20,7 +20,7 @@ export class AreaArch extends AreaSimple {
     }
 
     setLocation() {
-        let artiklRec = (this.frames[0].artiklRecAn === null) ? eArtikl.vrec : this.frames[0].artiklRecAn;
+        let artiklRec = (this.frames[0].artiklRecAn === null) ? eArtikl.vrec() : this.frames[0].artiklRecAn;
         let listShell = new Array();
         let arcA = null, arcB = null;
         try {
