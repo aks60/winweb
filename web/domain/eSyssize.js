@@ -8,7 +8,9 @@ eSyssize = {
     naxl: 4, //Нахлест створки
     falz: 5, //T- Глубина до фальца, полка
     zax: 6, //Заход импоста
-    vrec: virtualRec(7),
+    vrec() {
+        return virtualRec(7);
+    },
     find(artiklRec) {
         let id = Number(artiklRec[eArtikl.syssize_id]);
         return this.list.seek(this.vrec, rec => id === rec[this.id]);

@@ -11,9 +11,11 @@ eParams = {
     kits: 8, //Парметры комплектов
     label: 9, //Надпись на эскизе
     groups_id: 10, //Название параметра
-    vrec: virtualRec(11, {1: -3, 2: '', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3}),
+    vrec() {
+        return virtualRec(11, {1: -3, 2: '', 3: -3, 4: -3, 5: -3, 6: -3, 7: -3, 10: -3});
+    },
     find(ID) {
         ID = Number(ID);
-      return this.list.seek(eParams.vrec, rec => ID === rec.id);
+        return this.list.seek(eParams.vrec, rec => ID === rec.id);
     }
 };

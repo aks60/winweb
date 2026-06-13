@@ -8,7 +8,9 @@ eFurndet = {
     furniture_id1: 5, //Фурнитура
     furniture_id2: 6, //Набор
     furndet_id: 7, //Ссылка на родителя
-    vrec: virtualRec(8)
+    vrec() {
+        return virtualRec(8);
+    }
 };
 
 

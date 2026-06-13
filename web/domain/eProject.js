@@ -26,5 +26,7 @@ eProject = {
     currenc_id: 23, //Валюта
     prjpart1_id: 24, //Продавец
     prjpart2_id: 25, //Контрагент
-    vrec: virtualRec(26)
+    vrec() {
+        return virtualRec(26);
+    }
 };

@@ -15,11 +15,13 @@ eSystree = {
     types: 12, //Тип конструкции
     note: 13, //Примечание
     parent_id: 14, //Родитель
-    vrec: virtualRec(15),
+    vrec() {
+        return  virtualRec(15);
+    },
     find(nuni) {
         try {
             nuni = Number(nuni);
-           return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
+            return this.list.seek(this.vrec, rec => nuni === rec[this.id]);
 
         } catch (e) {
             console.error(e.message);

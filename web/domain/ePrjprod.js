@@ -7,5 +7,7 @@ ePrjprod = {
     script: 4, //Скрипт построения окна
     project_id: 5, //Заказ
     systree_id: 6, //Система
-    vrec: virtualRec(7)
+    vrec() {
+        return virtualRec(7);
+    }
 };

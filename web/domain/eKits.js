@@ -4,4 +4,7 @@ eKits = {
     id: 1, //Идентификатор
     name: 2, //Название комплекта
     groups_id: 3, //Категории
+    vrec() {
+        return virtualRec(4);
+    }
 };

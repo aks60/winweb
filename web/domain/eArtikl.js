@@ -36,7 +36,9 @@ eArtikl = {
     currenc1_id: 33, //Основная валюта
     currenc2_id: 34, //Неосновная валюта
     analog_id: 35, //Аналог профиля
-    vrec: virtualRec(36, {1: -3, 2: '@', 5: 'virtual', 9: 20, 11: 0, 14: 64, 15: 4, 32: -3, 35: -3}),
+    vrec() {
+        return virtualRec(36, {1: -3, 2: '@', 5: 'virtual', 9: 20, 11: 0, 14: 64, 15: 4, 32: -3, 35: -3});
+    },
     find(artiklID, analog) {
         try {
             artiklID = Number(artiklID);
@@ -50,7 +52,7 @@ eArtikl = {
                 artiklRec = this.list.find(rec => analogID === rec[this.id]);
             }
             return artiklRec;
-            
+
         } catch (e) {
             console.error(e.message);
         }
@@ -62,9 +64,9 @@ eArtikl = {
             }
             let artiklRec = this.list.seek(this.vrec, rec => code === rec[this.code]);
             return artiklRec;
-            
+
         } catch (e) {
             console.error(e.message);
         }
-    },   
+    },
 };

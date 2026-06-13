@@ -14,5 +14,7 @@ ePrjkit = {
     artikl_id: 11, //Артикул
     prjprod_id: 12, //Изделие
     project_id: 13, //Проект
-    vrec: virtualRec(14)
+    vrec() {
+        return virtualRec(14);
+    }
 };

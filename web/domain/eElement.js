@@ -13,7 +13,9 @@ eElement = {
     groups1_id: 9, //Серия
     groups2_id: 10, //Категории
     groups3_id: 11, //Группы составов
-    vrec: virtualRec(12)
+    vrec() {
+       return virtualRec(12);
+    }
 };
 
 

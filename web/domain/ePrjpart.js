@@ -36,6 +36,8 @@ ePrjpart = {
     disc3: 28, //Скидка на уплотнение
     disc5: 29, //Скидка на заполнение
     disc6: 30, //Скидки по умолчанию
-    vrec: virtualRec(30)
+    vrec() {
+        return virtualRec(31);
+    }
 };
 

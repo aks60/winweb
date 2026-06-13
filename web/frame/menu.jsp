@@ -73,7 +73,7 @@
             document.getElementById('m24').addEventListener('click', () => state.load_smeta('Смета2'));
             document.getElementById('m34').addEventListener('click', () => state.load_check('Счёт2'));
             
-            document.getElementById('m35').addEventListener('click', () => project.test());
+            document.getElementById('m35').addEventListener('click', () => partner.test());
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
 
@@ -201,7 +201,7 @@
                                         <ul>
                                             <li><a id="m15">Сайт разработчика</a></li>
                                             <li><a id="m25">О программе</a></li>
-                                            <li><a id="m35">Project.test()</a></li>
+                                            <li><a id="m35">TEST()</a></li>
                                         </ul>
                                     </li>
                                 </ul>

@@ -437,7 +437,7 @@ public class Dbset {
     }
 
     public static String dealerList(HttpServletRequest request, HttpServletResponse response) {
-        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'заказчик'", "order by", ePrjpart.login);
+        Query qPrjpart = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.category, "= 'заказчик'", "and login='DEALER'", "order by", ePrjpart.login);
         return gson.toJson(qPrjpart);
     }
 

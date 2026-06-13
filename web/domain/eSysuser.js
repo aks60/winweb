@@ -9,6 +9,8 @@ eSysuser = {
     email: 6, //Почта
     desc: 7, //Описание
     openkey: 8, //Открытый ключ
-    sysuser_id : 9,
-    vrec: virtualRec(10)
+    sysuser_id: 9,
+    vrec() {
+        return virtualRec(10);
+    }
 };
