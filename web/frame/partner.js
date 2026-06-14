@@ -3,7 +3,8 @@ import {login} from './login.js';
 
 export let partner = {};
 
-partner.test = function () {          
+partner.test = function () { 
+    $().value(777);
 };
 
 //Масштабирование

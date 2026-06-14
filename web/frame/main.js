@@ -29,6 +29,10 @@ import WKTWriter from '../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWriter.j
 
 export function localizeFactory() {
 
+    $.fn.value = function (v) {
+        console.log(v);
+    };
+
     Array.prototype.seek = function (def, callback) {
 
         let val = this.find(callback);
@@ -40,7 +44,7 @@ export function localizeFactory() {
 
     (function ($) {
         $.fn.sign = function (val, def) {
-            
+
             if (arguments.length === 1) {
                 let v = this.val();
                 if (v === null || v === '') {
@@ -48,7 +52,7 @@ export function localizeFactory() {
                 } else {
                     return this.val();
                 }
-                
+
             } else {
                 if (val === null || val === '') {
                     this.val(def);

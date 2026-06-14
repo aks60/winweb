@@ -45,7 +45,7 @@
 
                 $(tabDealer).jqGrid({
                     datatype: "local",
-                    colNames: ['id', 'Контрагент', 'Дилер'],
+                    colNames: ['id', 'Заказчик', 'User'],
                     colModel: [
                         {name: 'ID', hidden: true},
                         {name: 'partner', width: 300, sorttype: "text"},

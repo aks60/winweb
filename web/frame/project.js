@@ -5,7 +5,6 @@ import {login} from './login.js';
 export let project = {mapWinc: new Map(), prjprodRec: null, table1rowID: 1, table3rowID: 1};
 
 project.test = function () {
-    //debugger;
     project.projectRec[eProject.date4] = new Date().toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric'});
 };
 
@@ -95,6 +94,7 @@ project.init_table = function () {
 
 //Загрузка лроектов в таблицу
 project.load_table1 = function () {
+    
     $(project.table1).jqGrid('clearGridData', true);
     let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
     projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
@@ -118,10 +118,14 @@ project.load_table1 = function () {
 //Загрузка конструкций в таблицу
 project.load_table2 = function () {
 
+    if (project.projectRec === undefined)
+        return;
     const rubf = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'});
     $(project.table2).jqGrid('clearGridData', true);
-    $('#p33').val(Math.round(project.projectRec[eProject.square] / 1000000 * 100) / 100); //площадь
-    $('#p34').val(Math.round(project.projectRec[eProject.weight] * 100) / 100); //вес 
+    let square = Math.round(project.projectRec[eProject.square] / 1000000 * 100) / 100;
+    let weight = Math.round(project.projectRec[eProject.weight] * 100) / 100;
+    $('#p33').val(square); //площадь
+    $('#p34').val(weight); //вес 
 
     let disc_all = project.projectRec[eProject.disc_all];
     let cost1_win = project.projectRec[eProject.cost1_win];
@@ -170,8 +174,8 @@ project.load_table3 = function () {
 project.insert_table1 = function () {
 
     let taq = document.getElementById('dialog-card1');
-    let projectRow = getSelectedRow($(project.table1));
-    let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
+//    let projectRow = getSelectedRow($(project.table1));
+//    let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidProject',
         data: {param: JSON.stringify({})},
@@ -482,7 +486,7 @@ project.calculate_project = function () {
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 if (data.result === 'ok') {
-                    //debugger;
+                    
                     let project2Rec = data.projectRec;
                     project.projectRec[eProject.square] = project2Rec[eProject.square];
                     project.projectRec[eProject.weight] = project2Rec[eProject.weight];
@@ -491,9 +495,9 @@ project.calculate_project = function () {
                     project.projectRec[eProject.cost1_kit] = project2Rec[eProject.cost1_kit];
                     project.projectRec[eProject.cost2_kit] = project2Rec[eProject.cost2_kit];
                     project.projectRec[eProject.date5] = formatDate2(new Date());
-                    
+
                     project.load_table2();
-                    
+
 //                    $.ajax({
 //                        url: 'dbset?action=updateProject',
 //                        data: {param: JSON.stringify(project.projectRec)},
