@@ -482,7 +482,7 @@ project.calculate_project = function () {
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 if (data.result === 'ok') {
-                    
+                    debugger;
                     let project2Rec = data.projectRec;
                     project.projectRec[eProject.square] = project2Rec[eProject.square];
                     project.projectRec[eProject.weight] = project2Rec[eProject.weight];
@@ -490,26 +490,9 @@ project.calculate_project = function () {
                     project.projectRec[eProject.cost2_win] = project2Rec[eProject.cost2_win];
                     project.projectRec[eProject.cost1_kit] = project2Rec[eProject.cost1_kit];
                     project.projectRec[eProject.cost2_kit] = project2Rec[eProject.cost2_kit];
-                    project.projectRec[eProject.date5] = formatDate2(new Date());
+                    project.projectRec[eProject.date5] = project2Rec[eProject.date5]; //formatDate2(new Date());
 
                     project.load_table2();
-
-//                    $.ajax({
-//                        url: 'dbset?action=updateProject',
-//                        data: {param: JSON.stringify(project.projectRec)},
-//                        success: (data) => {
-//                            if (data.result === 'ok') {
-//                                let rowid = $(project.table1).jqGrid('getGridParam', "selrow");
-//                                $(project.table1).jqGrid('setRowData', rowid, {
-//                                    date5: project.projectRec[eProject.date5]
-//                                });
-//                            } else
-//                                dialogMes('Сообщение', "<p>" + data.result);
-//                        },
-//                        error: () => {
-//                            dialogMes('Сообщение', "<p>Ошибка при сохранении даты калькуляции на сервере");
-//                        }
-//                    });
 
                 } else
                     dialogMes('Сообщение', "<p>" + data.result);
