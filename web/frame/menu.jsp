@@ -20,14 +20,14 @@
                 $('#body-jsp').load('frame/partner.jsp');
             }
         }
-        
+
         function load_project(name) {
             state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PROJECT') {
                 $('#body-jsp').load('frame/project.jsp');
             }
         }
-        
+
         function load_product(name) {
             state.nameJsp = name;
             if ($('#body-jsp title').text() !== 'PRODUCT') {
@@ -44,11 +44,6 @@
 
         function init_menu() {
 
-            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
-            document.getElementById('m16').addEventListener('click', () => partner.insert_table1());
-            document.getElementById('m26').addEventListener('click', () => partner.update_table1());
-            document.getElementById('m36').addEventListener('click', () => partner.delete_table1());
-            
             document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
             document.getElementById('m11').addEventListener('click', () => project.insert_table1());
             document.getElementById('m21').addEventListener('click', () => project.update_table1());
@@ -69,10 +64,15 @@
             document.getElementById('m33').addEventListener('click', () => kits.update_table());
             document.getElementById('m43').addEventListener('click', () => kits.delete_table());
 
+            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
+            document.getElementById('m16').addEventListener('click', () => partner.insert_table1());
+            document.getElementById('m26').addEventListener('click', () => partner.update_table1());
+            document.getElementById('m36').addEventListener('click', () => partner.delete_table1());
+
             document.getElementById('m14').addEventListener('click', () => state.load_tarif('TARIF'));
             document.getElementById('m24').addEventListener('click', () => state.load_smeta('Смета2'));
             document.getElementById('m34').addEventListener('click', () => state.load_check('Счёт2'));
-            
+
             document.getElementById('m35').addEventListener('click', () => partner.test());
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
@@ -110,22 +110,7 @@
         <div class="menu">
             <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
-                <ul id="nav2">
-                    <li><a id='m06'>Заказчики</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m16">Добавить</a></li>
-                                            <li><a id="m26">Изменить</a></li>  
-                                            <li><a id="m36">Удалить</a></li>  
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                      
-                    </li>                    
+                <ul id="nav2">                   
                     <li><a id='m01'>Заказы</a>
                         <div class="subs">
                             <div>
@@ -178,6 +163,21 @@
                             </div>
                         </div>                     
                     </li>
+                    <li><a id='m06'>Контрагенты</a>
+                        <div class="subs">
+                            <div>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li><a id="m16">Добавить</a></li>
+                                            <li><a id="m26">Изменить</a></li>  
+                                            <li><a id="m36">Удалить</a></li>  
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                      
+                    </li>                     
                     <li><a id="m04">Отчеты</a>
                         <div class="subs">
                             <div>

@@ -99,17 +99,17 @@ project.load_table1 = function () {
     let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
     projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
     for (let i = 0; i < projectList.length; i++) {
-        let tr = projectList[i];
+        let projectRec = projectList[i];
         $(project.table1).jqGrid('addRowData', i + 1, {
-            ID: tr[eProject.id],
-            num_ord: tr[eProject.num_ord],
-            num_acc: tr[eProject.num_acc],
-            date4: tr[eProject.date4],
-            date5: tr[eProject.date5],
-            date6: tr[eProject.date6],
-            partner: findef(tr[eProject.prjpart2_id], ePrjpart.id, ePrjpart)[ePrjpart.partner],
-            login: tr[eProject.login],
-            prjpart2_id: tr[eProject.prjpart2_id]
+            ID: projectRec[eProject.id],
+            num_ord: projectRec[eProject.num_ord],
+            num_acc: projectRec[eProject.num_acc],
+            date4: projectRec[eProject.date4],
+            date5: projectRec[eProject.date5],
+            date6: projectRec[eProject.date6],
+            partner: findef(projectRec[eProject.prjpart2_id], ePrjpart.id, ePrjpart)[ePrjpart.partner],
+            login: projectRec[eProject.login],
+            prjpart2_id: projectRec[eProject.prjpart2_id]
         });
     }
     $(project.table1).jqGrid("setSelection", project.table1rowID);
@@ -174,8 +174,6 @@ project.load_table3 = function () {
 project.insert_table1 = function () {
 
     let taq = document.getElementById('dialog-card1');
-//    let projectRow = getSelectedRow($(project.table1));
-//    let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
     $.ajax({//генерации ключа на сервере
         url: 'dbset?action=genidProject',
         data: {param: JSON.stringify({})},
@@ -203,11 +201,10 @@ project.insert_table1 = function () {
                             projectRec[eProject.id] = datkey.id;
                             projectRec[eProject.num_ord] = $("#p21").val();
                             projectRec[eProject.num_acc] = $("#p22").val();
-                            projectRec[eProject.login] = login.data.user_name;
+                            projectRec[eProject.login] = login.login;
                             projectRec[eProject.date4] = $("#p23").val();
                             projectRec[eProject.date5] = $("#p24").val();
                             projectRec[eProject.date6] = $("#p25").val();
-                            projectRec[eProject.owner] = login.data.user_name;
                             projectRec[eProject.prjpart2_id] = $("#p26").attr("fk");
                             if ($("#p26").attr("fk") === '-3') {
                                 dialogMes('Сообщение', "<p>Контрагент не установлен");
@@ -268,11 +265,10 @@ project.update_table1 = function () {
                 projectRec[0] = 'UPD';
                 projectRec[eProject.num_ord] = $("#p21").val();
                 projectRec[eProject.num_acc] = $("#p22").val();
-                projectRec[eProject.login] = login.data.user_fio;
+                projectRec[eProject.login] = login.login;
                 projectRec[eProject.date4] = $("#p23").val();
                 projectRec[eProject.date5] = $("#p24").val();
                 projectRec[eProject.date6] = $("#p25").val();
-                projectRec[eProject.owner] = login.data.user_name;
                 projectRec[eProject.prjpart2_id] = $("#p26").attr("fk");
                 $.ajax({
                     url: 'dbset?action=updateProject',

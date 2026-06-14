@@ -4,7 +4,7 @@ eProject = {
     id: 1, //Идентификатор
     num_ord: 2, //Номер заказа
     num_acc: 3, //Номер счета
-    login: 4, //Менеджер
+    login: 4, //User
     square: 5, //Площадь изделий
     weight: 6, //Вес изделий
     type_calc: 7, //Тип расчтета
@@ -22,11 +22,10 @@ eProject = {
     date4: 19, //Дата регистрации заказа
     date5: 20, //Дата расчета заказа
     date6: 21, //Дата отпр. в производство
-    owner: 22, //User
-    currenc_id: 23, //Валюта
-    prjpart1_id: 24, //Продавец
-    prjpart2_id: 25, //Контрагент
+    currenc_id: 22, //Валюта
+    prjpart1_id: 23, //Продавец
+    prjpart2_id: 24, //Заказчик
     vrec() {
-        return virtualRec(26);
+        return virtualRec(25);
     }
 };
