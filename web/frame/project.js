@@ -27,7 +27,7 @@ project.init_table = function () {
         rownumWidth: 20,
         autowidth: true,
         height: "auto",
-        colNames: ['id', 'Номер заказа', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Заказчик', 'User', 'prjpart2_id'],
+        colNames: ['id', 'Номер проекта', 'Номер счёта', 'Дата регистрации', 'Дата расчёта', 'Дата в производство', 'Заказчик', 'User', 'prjpart2_id'],
         colModel: [
             {name: 'ID', hidden: true},
             {name: 'num_ord', width: 80, sorttype: "text"},
@@ -141,7 +141,7 @@ project.load_table2 = function () {
         disc: project.projectRec[eProject.disc_kit], //скидка комплектации
         cost1: rubf.format(cost1_kit), //стоимость комплектации без скидки
         cost2: rubf.format(cost2_kit)}); //стоимость комплектации со скидкой
-    $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за заказ',
+    $(project.table2).jqGrid('addRowData', 3, {ID: 3, name: 'Итого за проект',
         disc: project.projectRec[eProject.disc_all], //скидка общая
         cost1: rubf.format(cost1_win + cost1_kit), //итого стоимость без скидки
         cost2: rubf.format((cost2_win + cost2_kit) - (cost2_win + cost2_kit) * disc_all / 100)}); //итого стоимость со скидкой
@@ -189,7 +189,7 @@ project.insert_table1 = function () {
 
                 //Открытие диалога insert
                 $(taq).dialog({
-                    title: "Карточка ввода нового заказа",
+                    title: "Карточка ввода нового проекта",
                     width: $(taq).attr('card_width'),
                     height: $(taq).attr('card_height'),
                     modal: true,
@@ -210,7 +210,7 @@ project.insert_table1 = function () {
                                 dialogMes('Сообщение', "<p>Контрагент не установлен");
                                 return;
                             }
-                            $.ajax({//запишем заказ в серверную базу данных
+                            $.ajax({//запишем проект в серверную базу данных
                                 url: 'dbset?action=insertProject',
                                 data: {param: JSON.stringify(projectRec)},
                                 success: (data) => {
@@ -254,7 +254,7 @@ project.update_table1 = function () {
     $("#p26").val(projectRow.partner);
     $("#p26").attr("fk", projectRow.prjpart2_id);
     dialogCard.dialog({//открытие диалога insert
-        title: "Карточка редактирования заказа",
+        title: "Карточка редактирования проекта",
         width: dialogCard.attr('card_width'),
         height: dialogCard.attr('card_height'),
         modal: true,
@@ -308,7 +308,7 @@ project.delete_table1 = function () {
     let projectRow = getSelectedRow($(project.table1));
     if (projectRow !== null) {
         $("#dialog-mes").html("<p><span class='ui-icon ui-icon-alert'>\n\
-    </span> Вы действительно хотите удалить текущий заказ?");
+    </span> Вы действительно хотите удалить текущий проект?");
         $("#dialog-mes").dialog({
             title: "Подтверждение",
             resizable: false,
@@ -332,7 +332,7 @@ project.delete_table1 = function () {
                                 dialogMes('Сообщение', "<p>" + data.result);
                         },
                         error: () => {
-                            dialogMes('Сообщение', "<p>Ошибка при удалении заказа на сервере");
+                            dialogMes('Сообщение', "<p>Ошибка при удалении проекта на сервере");
                         }
                     });
                     $(this).dialog("close");
@@ -499,7 +499,7 @@ project.calculate_project = function () {
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
+                dialogMes('Сообщение', "<p>Ошибка при калькуляции проекта на сервере");
             }
         });
     } catch (e) {
