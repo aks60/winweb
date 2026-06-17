@@ -158,8 +158,6 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("prjkitList")) {
                     out.write(Dbset.prjkitList(request, response));
 
-//                } else if (action.equalsIgnoreCase("userList")) {
-//                    out.write(Dbset.userList(request, response));
                 } else if (action.equalsIgnoreCase("stvFields")) {
                     JSONObject output = Dbset.stvFields(request, response);
                     out.write(JSONObject.toJSONString(output));

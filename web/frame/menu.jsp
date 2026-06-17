@@ -111,22 +111,22 @@
             <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
             <span>
                 <ul id="nav2">                   
-                    <li><a id='m01'>Заказы</a>
+                    <li><a id='m01'>Проекты</a>
                         <div class="subs">
                             <div>
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a id='m11'>Добавить заказ</a></li>
-                                            <li><a id='m21'>Изменить заказ</a></li>   
-                                            <li><a id='m31'>Удалить заказ</a></li>    
+                                            <li><a id='m11'>Добавить проект</a></li>
+                                            <li><a id='m21'>Изменить проект</a></li>   
+                                            <li><a id='m31'>Удалить проект</a></li>    
                                             <li><a class="separator"></a></li>
                                             <li><a id='m41'>Добавить констр.</a></li>
                                             <li><a id='m51'>Изменить констр.</a></li>
                                             <li><a id='m61'>Удалить констр.</a></li>
                                             <li><a class="separator"></a></li>
                                             <li><a id='m71'>Установить скидки</a></li>
-                                            <li><a id='m81'>Калькуляция заказа</a></li>
+                                            <li><a id='m81'>Калькуляция проекта</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -163,7 +163,7 @@
                             </div>
                         </div>                     
                     </li>
-                    <li><a id='m06'>Контрагенты</a>
+                    <li><a id='m06'>Заказчики</a>
                         <div class="subs">
                             <div>
                                 <ul>

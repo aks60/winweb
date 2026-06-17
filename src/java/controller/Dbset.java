@@ -425,12 +425,10 @@ public class Dbset {
         return null;
     }
 
-//    public static String userList(HttpServletRequest request, HttpServletResponse response) {
-//        Query qSysuser = new Query(eSysuser.values()).select(eSysuser.up, "order by", eSysuser.login);
-//        return gson.toJson(qSysuser);
-//    }
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
-        Query qProject = new Query(eProject.values()).select("select a.* from project a, prjpart b where a.prjpart2_id = b.id and b.category = 'заказчик' order by a.id desc");
+        Query qProject = new Query(eProject.values()).select("select a.* from project a "
+                + "left join prjpart b on a.prjpart2_id = b.id where b.category = 'заказчик' "
+                + "or b.category is null order by a.id desc");
         for (Record rec : qProject) {
             rec.setNo(eProject.date4, format2(rec.get(eProject.date4)));
             rec.setNo(eProject.date5, format2(rec.get(eProject.date5)));
@@ -484,7 +482,7 @@ public class Dbset {
         try {
             String projectID = request.getParameter("projectID");
             Record projectRec = eProject.find(Integer.valueOf(projectID));
-            Dbset.calculate(projectRec, true);
+            TTariffic.calculate(projectRec, true);
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
             projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));
             projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));
@@ -527,47 +525,47 @@ public class Dbset {
         }
     }
     
-    public static void calculate(Record projectRec, boolean norm_otx) {
-        try {
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-            double square = 0, weight = 0,
-                    cost1_win = 0, //без скидки менеджера
-                    cost2_win = 0; //со скидкой менеджера
-
-            //Цикл по конструкциям
-            for (Record prjprodRec : prjprodList) {
-
-                String script = prjprodRec.getStr(ePrjprod.script);
-                Wincalc win = new Wincalc(script);
-                
-                //Конструктив 
-                win.specific(norm_otx, true);  
-
-                double numProd = prjprodRec.getDbl(ePrjprod.num);
-                square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-                weight += numProd * win.weight; //вес изделий
-
-                cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
-                cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
-            }
-            //Комплектация
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
-            double discAll = projectRec.getDbl(eProject.disc_all, 0);
-            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true); //комплекты               
-
-            //Сохраним новые кальк.данные в проекте
-            projectRec.set(eProject.weight, weight);  //вес изделий
-            projectRec.set(eProject.square, square);  //площадь изделий 
-            projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
-            projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
-            projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
-            projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
-
-            projectRec.set(eProject.date5, new GregorianCalendar().getTime());
-            new Query(eProject.values()).update2(projectRec);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.calculate() " + e);
-        }
-    }    
+//    public static void calculate(Record projectRec, boolean norm_otx) {
+//        try {
+//            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+//            double square = 0, weight = 0,
+//                    cost1_win = 0, //без скидки менеджера
+//                    cost2_win = 0; //со скидкой менеджера
+//
+//            //Цикл по конструкциям
+//            for (Record prjprodRec : prjprodList) {
+//
+//                String script = prjprodRec.getStr(ePrjprod.script);
+//                Wincalc win = new Wincalc(script);
+//                
+//                //Конструктив 
+//                win.specific(norm_otx, true);  
+//
+//                double numProd = prjprodRec.getDbl(ePrjprod.num);
+//                square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
+//                weight += numProd * win.weight; //вес изделий
+//
+//                cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
+//                cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
+//            }
+//            //Комплектация
+//            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+//            double discAll = projectRec.getDbl(eProject.disc_all, 0);
+//            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true); //комплекты               
+//
+//            //Сохраним новые кальк.данные в проекте
+//            projectRec.set(eProject.weight, weight);  //вес изделий
+//            projectRec.set(eProject.square, square);  //площадь изделий 
+//            projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
+//            projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
+//            projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
+//            projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
+//
+//            projectRec.set(eProject.date5, new GregorianCalendar().getTime());
+//            new Query(eProject.values()).update2(projectRec);
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Wincalc.calculate() " + e);
+//        }
+//    }    
 }

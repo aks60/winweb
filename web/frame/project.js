@@ -94,7 +94,7 @@ project.init_table = function () {
 
 //Загрузка лроектов в таблицу
 project.load_table1 = function () {
-    
+    debugger;
     $(project.table1).jqGrid('clearGridData', true);
     let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
     projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
