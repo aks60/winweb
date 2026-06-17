@@ -94,7 +94,6 @@ project.init_table = function () {
 
 //Загрузка лроектов в таблицу
 project.load_table1 = function () {
-    debugger;
     $(project.table1).jqGrid('clearGridData', true);
     let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
     projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
@@ -482,7 +481,6 @@ project.calculate_project = function () {
             data: {'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 if (data.result === 'ok') {
-                    debugger;
                     let project2Rec = data.projectRec;
                     project.projectRec[eProject.square] = project2Rec[eProject.square];
                     project.projectRec[eProject.weight] = project2Rec[eProject.weight];

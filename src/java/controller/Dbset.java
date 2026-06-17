@@ -523,49 +523,5 @@ public class Dbset {
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }
-    
-//    public static void calculate(Record projectRec, boolean norm_otx) {
-//        try {
-//            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
-//            double square = 0, weight = 0,
-//                    cost1_win = 0, //без скидки менеджера
-//                    cost2_win = 0; //со скидкой менеджера
-//
-//            //Цикл по конструкциям
-//            for (Record prjprodRec : prjprodList) {
-//
-//                String script = prjprodRec.getStr(ePrjprod.script);
-//                Wincalc win = new Wincalc(script);
-//                
-//                //Конструктив 
-//                win.specific(norm_otx, true);  
-//
-//                double numProd = prjprodRec.getDbl(ePrjprod.num);
-//                square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-//                weight += numProd * win.weight; //вес изделий
-//
-//                cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
-//                cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
-//            }
-//            //Комплектация
-//            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
-//            double discAll = projectRec.getDbl(eProject.disc_all, 0);
-//            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true); //комплекты               
-//
-//            //Сохраним новые кальк.данные в проекте
-//            projectRec.set(eProject.weight, weight);  //вес изделий
-//            projectRec.set(eProject.square, square);  //площадь изделий 
-//            projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
-//            projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
-//            projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
-//            projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
-//
-//            projectRec.set(eProject.date5, new GregorianCalendar().getTime());
-//            new Query(eProject.values()).update2(projectRec);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Wincalc.calculate() " + e);
-//        }
-//    }    
+    }   
 }

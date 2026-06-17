@@ -44,7 +44,7 @@
     <body>        
         <div id = "context">     
             <div id="dialog-card1" card_width="416" card_height="250" style="display: none;">                
-                <jst id="p21" type='txt' label='Номер заказа' width='120' width2="120"></jst><br>
+                <jst id="p21" type='txt' label='Номер проекта' width='120' width2="120"></jst><br>
                 <jst id="p22" type='txt' label='Номер счёта' width='120' width2="120"></jst>
                 <input class='field' type='button' style='height: 18px;' value='<>' onclick="$('#p22').val($('#p21').val());"><br>
                 <jst id="p23" type='txt' label='Дата регистрации' width='120' width2="80"></jst><br>        
@@ -70,8 +70,8 @@
                 </div>
                 <div id="east" style="position: absolute; width: 394px; height: 100%; top: 0; right: -400px;  border: 1px groove #ccc;">
                     <div id="east2" style="height: 180px; background: #efeffb">
-                        <jst id="p33" type='txt' label='Площадь заказа' width='120' width2="60"></jst><br>
-                        <jst id="p34" type='txt' label='Вес заказа' width='120' width2="60"></jst><br><br>                        
+                        <jst id="p33" type='txt' label='Площадь конструкций' width='120' width2="60"></jst><br>
+                        <jst id="p34" type='txt' label='Вес конструкций' width='120' width2="60"></jst><br><br>                        
                         <table id="table2"  class="ui-jqgrid-btable"></table>
                     </div>
                     <div id="east3" style="background: #efeffb;">
