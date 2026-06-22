@@ -482,7 +482,9 @@ public class Dbset {
         try {
             String projectID = request.getParameter("projectID");
             Record projectRec = eProject.find(Integer.valueOf(projectID));
+            System.out.println("AKSENOV-1");
             TTariffic.calculate(projectRec, true);
+            System.out.println("AKSENOV-2");
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
             projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));
             projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));
