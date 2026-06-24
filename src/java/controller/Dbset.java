@@ -177,7 +177,6 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-    
 
     public static JSONObject updatePrjpart(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -187,21 +186,21 @@ public class Dbset {
             Record record = ePrjpart.find(id);
             record.set(ePrjpart.up, "UPD");
             record.set(ePrjpart.partner, format3(prjpartRec, ePrjpart.partner));
-            record.set(ePrjpart.login, format3(prjpartRec, ePrjpart.login));           
+            record.set(ePrjpart.login, format3(prjpartRec, ePrjpart.login));
             record.set(ePrjpart.flag2, format3(prjpartRec, ePrjpart.flag2));
             record.set(ePrjpart.note, format3(prjpartRec, ePrjpart.note));
-            
+
             record.set(ePrjpart.addr_phone, format3(prjpartRec, ePrjpart.addr_phone));
             record.set(ePrjpart.addr_email, format3(prjpartRec, ePrjpart.addr_email));
             record.set(ePrjpart.addr_leve1, format3(prjpartRec, ePrjpart.addr_leve1));
             record.set(ePrjpart.addr_leve2, format3(prjpartRec, ePrjpart.addr_leve2));
-            
+
             record.set(ePrjpart.org_contact, format3(prjpartRec, ePrjpart.org_contact));
             record.set(ePrjpart.org_phone, format3(prjpartRec, ePrjpart.org_phone));
             record.set(ePrjpart.org_email, format3(prjpartRec, ePrjpart.org_email));
             record.set(ePrjpart.org_leve1, format3(prjpartRec, ePrjpart.org_leve1));
             record.set(ePrjpart.org_leve2, format3(prjpartRec, ePrjpart.org_leve2));
-            
+
             record.set(ePrjpart.bank_name, format3(prjpartRec, ePrjpart.bank_name));
             record.set(ePrjpart.bank_inn, format3(prjpartRec, ePrjpart.bank_inn));
             record.set(ePrjpart.bank_rs, format3(prjpartRec, ePrjpart.bank_rs));
@@ -217,7 +216,7 @@ public class Dbset {
         } catch (SQLException e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }    
+    }
 
     public static JSONObject insertProject(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -240,7 +239,7 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-    
+
     public static JSONObject updateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String param = request.getParameter("param");
@@ -323,6 +322,10 @@ public class Dbset {
             String param = request.getParameter("param");
             Record record = gson.fromJson(param, Record.class);
             record.set(ePrjprod.id, Connect.genId(ePrjprod.up));
+            Record prjprodRec = ePrjprod.data().stream().filter(rec -> record.getInt(ePrjprod.id) == rec.getInt(ePrjprod.id)).findFirst().orElse(null);
+            if (prjprodRec != null) {
+                ePrjprod.data().add(record);
+            }
             new Query(ePrjprod.values()).insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
 
@@ -339,6 +342,12 @@ public class Dbset {
             Record record = ePrjpart.up.newRecord("DEL");
             record.set(ePrjpart.id, obj.get("id"));
             qPrjpart.delete2(record);
+            for (int i = 0; i < ePrjprod.data().size(); ++i) {
+                Record record2 = ePrjprod.data().get(i);
+                if (record2.getInt(ePrjprod.id) == record.getInt(ePrjprod.id)) {
+                    ePrjprod.data().remove(i);
+                }
+            }
             return new JSONObject(App.asMap("result", "ok"));
 
         } catch (SQLException e) {
@@ -525,5 +534,5 @@ public class Dbset {
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }   
+    }
 }
