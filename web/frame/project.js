@@ -241,7 +241,7 @@ project.insert_table1 = function () {
 
 //Редактирования строки таблицы
 project.update_table1 = function () {
-
+//debugger;
     let dialogCard = $('#dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
@@ -372,7 +372,6 @@ project.update_table2 = function () {
 
                         if (data.result === 'ok') {
                             project.load_table2();
-                            project.calculate_project();
                         } else
                             dialogMes('Сообщение', "<p>" + data.result);
                     },

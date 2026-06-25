@@ -150,7 +150,7 @@ public class Dbset {
             String param = request.getParameter("param");
             JSONArray arr = (JSONArray) JSONValue.parse(param);
             int id = Integer.parseInt(arr.get(ePrjprod.id.ordinal()).toString());
-            Record record = ePrjprod.find(id);
+            Record record = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", id).get(0);
             record.set(ePrjprod.up, "UPD");
             record.set(ePrjprod.script, format3(arr, ePrjprod.script));
             Query qPrjprod = new Query(ePrjprod.values());
@@ -180,7 +180,7 @@ public class Dbset {
             String param = request.getParameter("param");
             JSONArray prjpartRec = (JSONArray) JSONValue.parse(param);
             int id = Integer.parseInt(prjpartRec.get(ePrjpart.id.ordinal()).toString());
-            Record record = ePrjpart.find(id);
+            Record record = new Query(ePrjpart.values()).select(ePrjpart.up, "where", ePrjpart.id, "=", id).get(0);
             record.set(ePrjpart.up, "UPD");
             record.set(ePrjpart.partner, format3(prjpartRec, ePrjpart.partner));
             record.set(ePrjpart.login, format3(prjpartRec, ePrjpart.login));
@@ -242,7 +242,7 @@ public class Dbset {
             String param = request.getParameter("param");
             JSONArray projectRec = (JSONArray) JSONValue.parse(param);
             int id = Integer.parseInt(projectRec.get(eProject.id.ordinal()).toString());
-            Record record = eProject.find(id);
+            Record record = new Query(eProject.values()).select(eProject.up, "where", eProject.id, "=", id).get(0);
             record.set(eProject.up, "UPD");
             record.set(eProject.disc_win, format3(projectRec, eProject.disc_win));
             record.set(eProject.disc_kit, format3(projectRec, eProject.disc_kit));
@@ -268,8 +268,8 @@ public class Dbset {
         try {
             String param = request.getParameter("param");
             JSONArray arr = (JSONArray) JSONValue.parse(param);
-            int id = Integer.valueOf(arr.get(ePrjprod.id.ordinal()).toString());
-            Record record = ePrjprod.find(id);
+            int id = Integer.parseInt(arr.get(ePrjprod.id.ordinal()).toString());
+            Record record = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", id).get(0);
             record.set(ePrjprod.up, "UPD");
             record.set(ePrjprod.num, format3(arr, ePrjprod.num));
             record.set(ePrjprod.name, format3(arr, ePrjprod.name));
@@ -465,6 +465,7 @@ public class Dbset {
 
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
 
+        Query.listOpenTable.forEach(q -> q.clear());
         ArrayList httpList = new ArrayList();
         Wincalc winc = new Wincalc();
         String script = request.getParameter("param");
@@ -477,7 +478,9 @@ public class Dbset {
     public static JSONObject calculateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String projectID = request.getParameter("projectID");
-            Record projectRec = eProject.find(Integer.valueOf(projectID));           
+            int id = Integer.parseInt(projectID);
+            Record projectRec = new Query(eProject.values()).select(eProject.up, "where", eProject.id, "=", id).get(0);    
+            Query.listOpenTable.forEach(q -> q.clear());
             TTariffic.calculate(projectRec, true);
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
             projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));
@@ -493,7 +496,7 @@ public class Dbset {
         try {
             String projectSt = request.getParameter("projectID");
             Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
+            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
             new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
             String path = eProp.genl.getProp();
             Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
@@ -509,7 +512,7 @@ public class Dbset {
         try {
             String projectSt = request.getParameter("projectID");
             Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
+            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
             new RCheck().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
             String path = eProp.genl.getProp();
             Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
@@ -520,5 +523,5 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-       
+
 }
