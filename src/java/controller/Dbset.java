@@ -1,8 +1,6 @@
 package controller;
 
-import builder.Kitcalc;
 import builder.Wincalc;
-import builder.making.TRecord;
 import builder.making.TTariffic;
 import com.google.gson.Gson;
 import common.eProp;
@@ -43,7 +41,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -322,10 +319,6 @@ public class Dbset {
             String param = request.getParameter("param");
             Record record = gson.fromJson(param, Record.class);
             record.set(ePrjprod.id, Connect.genId(ePrjprod.up));
-            Record prjprodRec = ePrjprod.data().stream().filter(rec -> record.getInt(ePrjprod.id) == rec.getInt(ePrjprod.id)).findFirst().orElse(null);
-            if (prjprodRec != null) {
-                ePrjprod.data().add(record);
-            }
             new Query(ePrjprod.values()).insert2(record);
             return new JSONObject(App.asMap("result", "ok", "id", record.getInt(ePrjprod.id)));
 
@@ -342,12 +335,6 @@ public class Dbset {
             Record record = ePrjpart.up.newRecord("DEL");
             record.set(ePrjpart.id, obj.get("id"));
             qPrjpart.delete2(record);
-            for (int i = 0; i < ePrjprod.data().size(); ++i) {
-                Record record2 = ePrjprod.data().get(i);
-                if (record2.getInt(ePrjprod.id) == record.getInt(ePrjprod.id)) {
-                    ePrjprod.data().remove(i);
-                }
-            }
             return new JSONObject(App.asMap("result", "ok"));
 
         } catch (SQLException e) {
@@ -490,10 +477,8 @@ public class Dbset {
     public static JSONObject calculateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String projectID = request.getParameter("projectID");
-            Record projectRec = eProject.find(Integer.valueOf(projectID));
-            System.out.println("AKSENOV-1");
+            Record projectRec = eProject.find(Integer.valueOf(projectID));           
             TTariffic.calculate(projectRec, true);
-            System.out.println("AKSENOV-2");
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
             projectRec.setNo(eProject.date5, format2(projectRec.get(eProject.date5)));
             projectRec.setNo(eProject.date6, format2(projectRec.get(eProject.date6)));
@@ -535,4 +520,5 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
+       
 }
