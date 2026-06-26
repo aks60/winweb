@@ -1,10 +1,11 @@
 import {Wincalc} from '../build/Wincalc.js';
 import {login} from './login.js';
+import {state} from './report.js';
 
 export let partner = {};
 
 partner.test = function () { 
-    $().value(777);
+    state.download_html('<h1>Привет, мир!</h1>', 'page.docx');
 };
 
 //Масштабирование

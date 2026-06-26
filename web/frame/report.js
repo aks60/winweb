@@ -2,7 +2,7 @@ import {project} from './project.js';
 //import {nameObj} from './menu.jsp';
 //import {nameJsp} from './menu.jsp';
 
-export let state = {nameJsp : 'PROJECT'};
+export let state = {nameJsp: 'PROJECT'};
 
 state.load_tarif = function (name) {
     progress(0);
@@ -57,5 +57,24 @@ state.load_check = function (name) {
     } catch (e) {
         console.error(e.message);
     }
+};
+
+//Пример использования: downloadHTML('<h1>Привет, мир!</h1>', 'page.html');
+state.download_html = function (htmlContent, filename) {
+    // Создаем Blob с типом text/html
+    const blob = new Blob([htmlContent], {type: 'text/html'});
+
+    // Создаем временную ссылку
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename; // Имя файла для сохранения
+
+    // Добавляем в DOM (требуется для Firefox), кликаем и удаляем
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Освобождаем память
+    URL.revokeObjectURL(link.href);
 };
 
