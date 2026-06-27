@@ -73,7 +73,7 @@
             document.getElementById('m24').addEventListener('click', () => state.load_smeta('Смета2'));
             document.getElementById('m34').addEventListener('click', () => state.load_check('Счёт2'));
 
-            document.getElementById('m35').addEventListener('click', () => partner.test());
+            document.getElementById('m35').addEventListener('click', () => state.test());
 
             $("#nav2 > li > a").click(function (e) { // binding onclick
 
