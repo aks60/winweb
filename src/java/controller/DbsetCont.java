@@ -106,7 +106,7 @@ public class DbsetCont extends HttpServlet {
 
                 } else if (action.equalsIgnoreCase("genidProject")) {
                     out.write(JSONObject.toJSONString(new JSONObject(Map.of("result", "ok", "id", Connect.genId(eProject.up)))));
-                
+
                 } else if (action.equalsIgnoreCase("insertPrjpart")) {
                     JSONObject output = Dbset.insertPrjpart(request, response);
                     out.write(JSONObject.toJSONString(output));
@@ -194,6 +194,9 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("checkProject")) {
                     JSONObject output = Dbset.checkProject(request, response);
                     out.write(JSONObject.toJSONString(output));
+
+                } else if (action.equalsIgnoreCase("reportProject")) {
+                    Dbset.reportProject();
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);

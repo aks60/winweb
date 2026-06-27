@@ -47,6 +47,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import report.RCheck;
 import report.RSmeta;
+import report.sup.ExecuteCmd;
 
 public class Dbset {
 
@@ -524,4 +525,9 @@ public class Dbset {
         }
     }
 
+    public static void reportProject() {
+        //ExecuteCmd.startHtml("report.html");
+        ExecuteCmd.startWord("report.html");
+        //ExecuteCmd.startExcel("report.html");
+    }
 }

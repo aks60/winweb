@@ -5,9 +5,7 @@ import {project} from './project.js';
 export let state = {nameJsp: 'PROJECT'};
 
 state.test = function () {
-    debugger;
-    let html_code = document.getElementById('body-jsp').innerHTML;
-    state.download_html(html_code, 'page.html');
+    $.ajax({url: 'dbset?action=reportProject'});
 };
 
 state.load_tarif = function (name) {
@@ -89,9 +87,9 @@ state.download_html = function (htmlContent, filename) {
 state.save_current_page = function () {
     // Получаем весь HTML-код страницы
     const htmlContent = document.documentElement.outerHTML;
-    
+
     // Скачиваем его
-    const blob = new Blob([htmlContent], { type: "text/html" });
+    const blob = new Blob([htmlContent], {type: "text/html"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "page_save.html";
