@@ -5,6 +5,9 @@ import {project} from './project.js';
 export let state = {nameJsp: 'PROJECT'};
 
 state.test = function () {
+};
+
+state.report = function () {
     if ($('#body-jsp title').text() === 'TARIF') {
         $.ajax({url: 'dbset?action=reportProject', data: {'title': 'TARIF'}});
     } else if ($('#body-jsp title').text() === 'Смета2') {
