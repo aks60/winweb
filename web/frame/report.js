@@ -5,7 +5,13 @@ import {project} from './project.js';
 export let state = {nameJsp: 'PROJECT'};
 
 state.test = function () {
-    $.ajax({url: 'dbset?action=reportProject'});
+    if ($('#body-jsp title').text() === 'TARIF') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'TARIF'}});
+    } else if ($('#body-jsp title').text() === 'Смета2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'Смета2'}});
+    } else if ($('#body-jsp title').text() === 'Счёт2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'Счёт2'}});
+    }
 };
 
 state.load_tarif = function (name) {

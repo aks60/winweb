@@ -47,6 +47,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import report.RCheck;
 import report.RSmeta;
+import report.RSpecific;
 import report.sup.ExecuteCmd;
 
 public class Dbset {
@@ -464,23 +465,11 @@ public class Dbset {
         return gson.toJson(qSysuser);
     }
 
-    public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
-
-        Query.listOpenTable.forEach(q -> q.clear());
-        ArrayList httpList = new ArrayList();
-        Wincalc winc = new Wincalc();
-        String script = request.getParameter("param");
-        winc.build(script);
-        winc.specific(true, true);
-        winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
-        return gson.toJson(httpList);
-    }
-
     public static JSONObject calculateProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String projectID = request.getParameter("projectID");
             int id = Integer.parseInt(projectID);
-            Record projectRec = new Query(eProject.values()).select(eProject.up, "where", eProject.id, "=", id).get(0);    
+            Record projectRec = new Query(eProject.values()).select(eProject.up, "where", eProject.id, "=", id).get(0);
             Query.listOpenTable.forEach(q -> q.clear());
             TTariffic.calculate(projectRec, true);
             projectRec.setNo(eProject.date4, format2(projectRec.get(eProject.date4)));
@@ -491,6 +480,19 @@ public class Dbset {
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
+    }
+
+    public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
+
+        //new RSpecific().parseDoc(prjprodList);
+        Query.listOpenTable.forEach(q -> q.clear());
+        ArrayList httpList = new ArrayList();
+        Wincalc winc = new Wincalc();
+        String script = request.getParameter("param");
+        winc.build(script);
+        winc.specific(true, true);
+        winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
+        return gson.toJson(httpList);
     }
 
     public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
@@ -525,9 +527,18 @@ public class Dbset {
         }
     }
 
-    public static void reportProject() {
-        //ExecuteCmd.startHtml("report.html");
-        ExecuteCmd.startWord("report.html");
-        //ExecuteCmd.startExcel("report.html");
+    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
+        String title = request.getParameter("title");
+        if ("TARIF".equals(title)) {
+            int prjprodID = 11;
+            List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+            Query.listOpenTable.forEach(q -> q.clear());
+            new RSpecific().parseDoc(prjprodList);
+            ExecuteCmd.startWord("report.html");
+        } else {
+            //ExecuteCmd.startHtml("report.html");
+            ExecuteCmd.startWord("report.html");
+            //ExecuteCmd.startExcel("report.html");
+        }
     }
 }

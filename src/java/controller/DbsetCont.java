@@ -196,7 +196,7 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("reportProject")) {
-                    Dbset.reportProject();
+                    Dbset.reportProject(request, response);
                 }
             } catch (Exception e) {
                 System.err.println("request - " + action + "   " + e);
