@@ -7,20 +7,44 @@ export let state = {nameJsp: 'PROJECT'};
 state.test = function () {
 };
 
-state.report = function () {
-    if ($('#body-jsp title').text() === 'TARIF') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'TARIF'}});
-    } else if ($('#body-jsp title').text() === 'Смета2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'Смета2'}});
-    } else if ($('#body-jsp title').text() === 'Счёт2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': 'Счёт2'}});
+state.report = function (title) {
+    
+    if (title === 'Tarif') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]}});
+    } 
+    else if (title === 'Smeta2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]}});
+    } 
+    else if (title === 'Check2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]}});
     }
 };
 
+// <editor-fold defaultstate="collapsed" desc="XLAM"> 
+/*
 state.load_tarif = function (name) {
-    progress(0);
-    state.nameJsp = name;
-    $('#body-jsp').load('frame/tarific.jsp');
+
+    try {
+        progress(0);
+        state.nameJsp = name;
+        $.ajax({
+            url: 'dbset?action=specifikProject',
+            data: {'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+
+                if (data.result === 'ok') {
+                    $('#body-jsp').html(data.report);
+                    progress(1);
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX Error: " + textStatus, errorThrown);
+                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+            }
+        });
+    } catch (e) {
+        console.error(e.message);
+    }
 };
 
 state.load_smeta = function (name) {
@@ -104,25 +128,5 @@ state.save_current_page = function () {
     link.download = "page_save.html";
     link.click();
 };
-
-//async state.save_native_picker = function (htmlContent) {
-//    try {
-//        // Запрашиваем доступ к файловой системе
-//        const handle = await window.showSaveFilePicker({
-//            suggestedName: 'index.html',
-//            types: [{
-//                description: 'HTML документы',
-//                accept: { 'text/html': ['.html'] },
-//            }],
-//        });
-//        
-//        // Создаем поток для записи
-//        const writable = await handle.createWritable();
-//        await writable.write(htmlContent);
-//        await writable.close();
-//        
-//        console.log('Файл успешно сохранен!');
-//    } catch (err) {
-//        console.error('Пользователь отменил сохранение или произошла ошибка:', err);
-//    }
-//};
+ */
+// </editor-fold> 

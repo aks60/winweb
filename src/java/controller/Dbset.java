@@ -1,9 +1,7 @@
 package controller;
 
-import builder.Wincalc;
 import builder.making.TTariffic;
 import com.google.gson.Gson;
-import common.eProp;
 import dataset.Connect;
 import dataset.Field;
 import dataset.Query;
@@ -37,9 +35,6 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -405,24 +400,6 @@ public class Dbset {
         return gson.toJson(qPrjkit);
     }
 
-    public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
-//        HashMap<Integer, HashMap> hm = new HashMap();
-//        String prjprodID = request.getParameter("prjprodID");
-//        Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
-//        String script = qPrjprod.getAs(0, ePrjprod.script);
-//        Wincalc winc = new Wincalc(script);
-//        new TFurniture(winc, true);
-//        LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listArea, Type.STVORKA);
-//        for (AreaStvorka areaStv : stvList) {
-//            hm.put((int) areaStv.id(), App.asMap(
-//                    "handleRec", areaStv.handleRec, "handleColor", areaStv.handleColor,
-//                    "loopRec", areaStv.loopRec, "loopColor", areaStv.loopColor,
-//                    "lockRec", areaStv.lockRec, "lockColor", areaStv.lockColor));
-//        }
-//        return new JSONObject(App.asMap("stvFields", hm));
-        return null;
-    }
-
     public static String projectList(HttpServletRequest request, HttpServletResponse response) {
         Query qProject = new Query(eProject.values()).select("select a.* from project a "
                 + "left join prjpart b on a.prjpart2_id = b.id where b.category = 'заказчик' "
@@ -480,8 +457,53 @@ public class Dbset {
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }
+    }    
+    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
+        
+        String title = request.getParameter("title");
+        Query.listOpenTable.forEach(q -> q.clear());
+        
+        if ("Tarif".equals(title)) {
+            int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
+            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+            new RSpecific().parseDoc(prjprodList);
+            ExecuteCmd.startWord("report.html");
 
+        } else if ("Smeta2".equals(title)) {
+            int projectID = Integer.parseInt(request.getParameter("projectID"));
+            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+            new RSmeta().parseDoc2(prjprodList);
+            ExecuteCmd.startWord("report.html");
+
+        } else if ("Check2".equals(title)) {
+            int projectID = Integer.parseInt(request.getParameter("projectID"));
+            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+            new RCheck().parseDoc2(prjprodList);
+            ExecuteCmd.startWord("report.html");
+        }
+    }
+}
+
+// <editor-fold defaultstate="collapsed" desc="XLAM"> 
+/*
+    public static JSONObject stvFields(HttpServletRequest request, HttpServletResponse response) {
+        HashMap<Integer, HashMap> hm = new HashMap();
+        String prjprodID = request.getParameter("prjprodID");
+        Query qPrjprod = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+        String script = qPrjprod.getAs(0, ePrjprod.script);
+        Wincalc winc = new Wincalc(script);
+        new TFurniture(winc, true);
+        LinkedList<AreaStvorka> stvList = UCom.listSortObj(winc.listArea, Type.STVORKA);
+        for (AreaStvorka areaStv : stvList) {
+            hm.put((int) areaStv.id(), App.asMap(
+                    "handleRec", areaStv.handleRec, "handleColor", areaStv.handleColor,
+                    "loopRec", areaStv.loopRec, "loopColor", areaStv.loopColor,
+                    "lockRec", areaStv.lockRec, "lockColor", areaStv.lockColor));
+        }
+        return new JSONObject(App.asMap("stvFields", hm));
+        return null;
+    }
+    
     public static String tarificList(HttpServletRequest request, HttpServletResponse response) {
 
         //new RSpecific().parseDoc(prjprodList);
@@ -526,19 +548,6 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
+     */
+    // </editor-fold>    
 
-    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
-        String title = request.getParameter("title");
-        if ("TARIF".equals(title)) {
-            int prjprodID = 11;
-            List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
-            Query.listOpenTable.forEach(q -> q.clear());
-            new RSpecific().parseDoc(prjprodList);
-            ExecuteCmd.startWord("report.html");
-        } else {
-            //ExecuteCmd.startHtml("report.html");
-            ExecuteCmd.startWord("report.html");
-            //ExecuteCmd.startExcel("report.html");
-        }
-    }
-}

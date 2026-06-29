@@ -69,10 +69,9 @@
             document.getElementById('m26').addEventListener('click', () => partner.update_table1());
             document.getElementById('m36').addEventListener('click', () => partner.delete_table1());
 
-            document.getElementById('m14').addEventListener('click', () => state.load_tarif('TARIF'));
-            document.getElementById('m24').addEventListener('click', () => state.load_smeta('Смета2'));
-            document.getElementById('m34').addEventListener('click', () => state.load_check('Счёт2'));
-            document.getElementById('m44').addEventListener('click', () => state.report());
+            document.getElementById('m14').addEventListener('click', () => state.report('Tarif'));
+            document.getElementById('m24').addEventListener('click', () => state.report('Smeta2'));
+            document.getElementById('m34').addEventListener('click', () => state.report('Check2'));
 
             document.getElementById('m35').addEventListener('click', () => state.test());
 
@@ -187,9 +186,7 @@
                                         <ul>
                                             <li><a id="m14" onClick="">Тарификация</a></li>
                                             <li><a id="m24" onClick="">Смета подробная</a></li>
-                                            <li><a id="m34" onClick="">Счёт-фактура</a></li>
-                                            <li><a class="separator"></a></li>
-                                            <li><a id='m44'>Печать</a></li>                                            
+                                            <li><a id="m34" onClick="">Счёт-фактура</a></li>                                         
                                         </ul>
                                     </li>
                                 </ul>

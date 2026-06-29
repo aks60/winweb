@@ -158,10 +158,6 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("prjkitList")) {
                     out.write(Dbset.prjkitList(request, response));
 
-                } else if (action.equalsIgnoreCase("stvFields")) {
-                    JSONObject output = Dbset.stvFields(request, response);
-                    out.write(JSONObject.toJSONString(output));
-
                 } else if (action.equalsIgnoreCase("dealerList")) {
                     out.write(Dbset.dealerList(request, response));
 
@@ -180,22 +176,14 @@ public class DbsetCont extends HttpServlet {
                 } else if (action.equalsIgnoreCase("sysuserList")) {
                     out.write(Dbset.sysuserList(request, response));
 
-                } else if (action.equalsIgnoreCase("tarificList")) {
-                    out.write(Dbset.tarificList(request, response));
-
                 } else if (action.equalsIgnoreCase("calculateProject")) {
                     JSONObject output = Dbset.calculateProject(request, response);
                     out.write(JSONObject.toJSONString(output));
-
-                } else if (action.equalsIgnoreCase("smetaProject")) {
-                    JSONObject output = Dbset.smetaProject(request, response);
-                    out.write(JSONObject.toJSONString(output));
-
-                } else if (action.equalsIgnoreCase("checkProject")) {
-                    JSONObject output = Dbset.checkProject(request, response);
-                    out.write(JSONObject.toJSONString(output));
-
+                    
                 } else if (action.equalsIgnoreCase("reportProject")) {
+                    Dbset.reportProject(request, response);
+
+                } else if (action.equalsIgnoreCase("testProject")) {
                     Dbset.reportProject(request, response);
                 }
             } catch (Exception e) {
