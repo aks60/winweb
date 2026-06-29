@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/winweb">
+<Context 
+    cachingAllowed="false" 
+    antiResourceLocking="false" 
+    antiJARLocking="true" 
+    path="/winweb">
     <Resource        
         name="jdbc/winweb"
         auth="Container"
