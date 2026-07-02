@@ -8,125 +8,133 @@ state.test = function () {
 };
 
 state.report = function (title) {
-    
+    progress(0);
     if (title === 'Tarif') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]}});
-    } 
-    else if (title === 'Smeta2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]}});
-    } 
-    else if (title === 'Check2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]}});
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Smeta2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Check2') {
+        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
     }
 };
 
 // <editor-fold defaultstate="collapsed" desc="XLAM"> 
 /*
-state.load_tarif = function (name) {
-
-    try {
-        progress(0);
-        state.nameJsp = name;
-        $.ajax({
-            url: 'dbset?action=specifikProject',
-            data: {'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-
-                if (data.result === 'ok') {
-                    $('#body-jsp').html(data.report);
-                    progress(1);
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-            }
-        });
-    } catch (e) {
-        console.error(e.message);
-    }
-};
-
-state.load_smeta = function (name) {
-
-    try {
-        progress(0);
-        state.nameJsp = name;
-        $.ajax({
-            url: 'dbset?action=smetaProject',
-            data: {'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-
-                if (data.result === 'ok') {
-                    $('#body-jsp').html(data.report);
-                    progress(1);
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-            }
-        });
-    } catch (e) {
-        console.error(e.message);
-    }
-};
-
-state.load_check = function (name) {
-    try {
-        progress(0);
-        state.nameJsp = name;
-        $.ajax({
-            url: 'dbset?action=checkProject',
-            data: {'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-
-                if (data.result === 'ok') {
-                    $('#body-jsp').html(data.report);
-                    progress(1);
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-            }
-        });
-    } catch (e) {
-        console.error(e.message);
-    }
-};
-
-// Генерация и скачивание из строки 
-//пример: downloadHTML('<h1>Привет, мир!</h1>', 'page.html');
-state.download_html = function (htmlContent, filename) {
-    // Создаем Blob с типом text/html
-    const blob = new Blob([htmlContent], {type: 'text/html'});
-
-    // Создаем временную ссылку
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = filename; // Имя файла для сохранения
-
-    // Добавляем в DOM (требуется для Firefox), кликаем и удаляем
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Освобождаем память
-    URL.revokeObjectURL(link.href);
-};
-
-//Сохранение текущей страницы (или её части)
-state.save_current_page = function () {
-    // Получаем весь HTML-код страницы
-    const htmlContent = document.documentElement.outerHTML;
-
-    // Скачиваем его
-    const blob = new Blob([htmlContent], {type: "text/html"});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "page_save.html";
-    link.click();
-};
+ state.load_tarif = function (name) {
+ 
+ try {
+ progress(0);
+ state.nameJsp = name;
+ $.ajax({
+ url: 'dbset?action=specifikProject',
+ data: {'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ 
+ if (data.result === 'ok') {
+ $('#body-jsp').html(data.report);
+ progress(1);
+ }
+ },
+ error: (jqXHR, textStatus, errorThrown) => {
+ console.error("AJAX Error: " + textStatus, errorThrown);
+ dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+ }
+ });
+ } catch (e) {
+ console.error(e.message);
+ }
+ };
+ 
+ state.load_smeta = function (name) {
+ 
+ try {
+ progress(0);
+ state.nameJsp = name;
+ $.ajax({
+ url: 'dbset?action=smetaProject',
+ data: {'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ 
+ if (data.result === 'ok') {
+ $('#body-jsp').html(data.report);
+ progress(1);
+ }
+ },
+ error: (jqXHR, textStatus, errorThrown) => {
+ console.error("AJAX Error: " + textStatus, errorThrown);
+ dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+ }
+ });
+ } catch (e) {
+ console.error(e.message);
+ }
+ };
+ 
+ state.load_check = function (name) {
+ try {
+ progress(0);
+ state.nameJsp = name;
+ $.ajax({
+ url: 'dbset?action=checkProject',
+ data: {'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ 
+ if (data.result === 'ok') {
+ $('#body-jsp').html(data.report);
+ progress(1);
+ }
+ },
+ error: (jqXHR, textStatus, errorThrown) => {
+ console.error("AJAX Error: " + textStatus, errorThrown);
+ dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+ }
+ });
+ } catch (e) {
+ console.error(e.message);
+ }
+ };
+ 
+ // Генерация и скачивание из строки 
+ //пример: downloadHTML('<h1>Привет, мир!</h1>', 'page.html');
+ state.download_html = function (htmlContent, filename) {
+ // Создаем Blob с типом text/html
+ const blob = new Blob([htmlContent], {type: 'text/html'});
+ 
+ // Создаем временную ссылку
+ const link = document.createElement('a');
+ link.href = URL.createObjectURL(blob);
+ link.download = filename; // Имя файла для сохранения
+ 
+ // Добавляем в DOM (требуется для Firefox), кликаем и удаляем
+ document.body.appendChild(link);
+ link.click();
+ document.body.removeChild(link);
+ 
+ // Освобождаем память
+ URL.revokeObjectURL(link.href);
+ };
+ 
+ //Сохранение текущей страницы (или её части)
+ state.save_current_page = function () {
+ // Получаем весь HTML-код страницы
+ const htmlContent = document.documentElement.outerHTML;
+ 
+ // Скачиваем его
+ const blob = new Blob([htmlContent], {type: "text/html"});
+ const link = document.createElement("a");
+ link.href = URL.createObjectURL(blob);
+ link.download = "page_save.html";
+ link.click();
+ };
  */
 // </editor-fold> 

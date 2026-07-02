@@ -475,6 +475,7 @@ project.delete_table3 = function () {
 
 project.calculate_project = function () {
     try {
+        progress(0);
         $.ajax({
             url: 'dbset?action=calculateProject',
             data: {'projectID': project.projectRec[eProject.id]},
@@ -491,8 +492,10 @@ project.calculate_project = function () {
 
                     project.load_table2();
 
-                } else
+                } else {
                     dialogMes('Сообщение', "<p>" + data.result);
+                }
+                progress(1);
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error("AJAX Error: " + textStatus, errorThrown);

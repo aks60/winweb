@@ -457,12 +457,13 @@ public class Dbset {
         } catch (Exception e) {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
-    }    
-    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
-        
+    }
+
+    public static JSONObject reportProject(HttpServletRequest request, HttpServletResponse response) {
+
         String title = request.getParameter("title");
         Query.listOpenTable.forEach(q -> q.clear());
-        
+
         if ("Tarif".equals(title)) {
             int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
             List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
@@ -481,6 +482,7 @@ public class Dbset {
             new RCheck().parseDoc2(prjprodList);
             ExecuteCmd.startWord("report.html");
         }
+        return new JSONObject(App.asMap("result", "ok"));
     }
 }
 
@@ -548,6 +550,6 @@ public class Dbset {
             return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
-     */
-    // </editor-fold>    
+ */
+// </editor-fold>    
 
