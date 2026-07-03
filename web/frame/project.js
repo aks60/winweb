@@ -96,7 +96,7 @@ project.init_table = function () {
 project.load_table1 = function () {
     $(project.table1).jqGrid('clearGridData', true);
     let projectList = eProject.list.filter(rec => rec[eProject.login] === login.login);
-    projectList.sort((a, b) => b[eProject.id] - a[eProject.id]);
+    projectList.sort((a, b) => a[eProject.id] - b[eProject.id]);
     for (let i = 0; i < projectList.length; i++) {
         let projectRec = projectList[i];
         $(project.table1).jqGrid('addRowData', i + 1, {

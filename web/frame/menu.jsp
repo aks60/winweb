@@ -195,11 +195,19 @@
                     </li>
                     <li><a>Сервис</a>
                         <div class="subs">
-                            <div>
+                            <div>                             
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a id="m15">Сайт разработчика</a></li>
+                                            <li><a id="m15">Сайт разработчика</a>                           
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li><a id="m35">AKS-2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                            </li>
                                             <li><a id="m25">О программе</a></li>
                                             <li><a id="m35">TEST()</a></li>
                                         </ul>
