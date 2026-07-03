@@ -93,7 +93,7 @@
                             eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++], eSysuser.list = p[i++];
 
                     login.init_login();
-                    //login.user_connect();
+                    login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);

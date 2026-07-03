@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     </head>
+
     <script type="module">
         import {partner} from './frame/partner.js';
         import {project} from './frame/project.js';
@@ -199,16 +200,8 @@
                                 <ul>
                                     <li>
                                         <ul>
-                                            <li><a id="m15">Сайт разработчика</a>                           
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m35">AKS-2</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                            </li>
-                                            <li><a id="m25">О программе</a></li>
+                                            <li><a id="m15">Сайт разработчика</a></li>
+                                            <li><a id="m25">О программе</a></li>                                           
                                             <li><a id="m35">TEST()</a></li>
                                         </ul>
                                     </li>
