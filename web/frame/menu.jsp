@@ -186,6 +186,7 @@
                                     <li>
                                         <ul>
                                             <li><a id="m14" onClick="">Тарификация</a></li>
+                                            <li><a class="separator"></a></li>
                                             <li><a id="m24" onClick="">Смета подробная</a></li>
                                             <li><a id="m34" onClick="">Счёт-фактура</a></li>                                         
                                         </ul>
