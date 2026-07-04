@@ -1,339 +1,139 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>https://doka.guide/recipes/dropdown-menu/</title>
+        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jquery-ui-1.13/redmond/jquery-ui.css"> 
+        <script type="text/javascript" src="lib-js/jquery-3.6.0/jquery-3.6.0.min.js"></script> 
+        <script type="text/javascript" src="lib-js/jquery-ui-1.13/jquery-ui.min.js"></script> 
+
         <style>
-            ul, li {
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: sans-serif;
+            }
+
+            /* Уровень 1: Горизонтальное отображение */
+            .main-nav > ul {
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                text-align: start;
-            }
-
-            button:focus-visible,
-            a:focus-visible {
-                outline: 2px solid;
-                outline-offset: -3px;
-            }
-
-            .header {
                 display: flex;
-                align-items: center;
-                background-color: #00ffcc;
-                /*background-color: #C56FFF;*/
-                padding: 0 50px;
+                background-color: #333;
             }
 
-            .menu {
-                display: flex;
-                min-width: max-content;
-                background: #00ffcc;
-                /*background: #C56FFF;*/
-                /*color: #000000;*/
-            }
-
-            .menu-submenu {
-                /*background: #FFFFFF;*/
-                background: #00FFCC; /*фон подменю*/
-            }
-
-            .menu__btn,
-            .menu__link {
-                display: flex;
-                width: 100%;
-                gap: .5em;
-                align-items: center;
-                padding: .1rem .5rem; /*высота меню*/
-                /*padding: .75rem 1.5rem;*/
-                font-size: 1.125rem;
-                font-weight: 300;
-                font-family: inherit;
-                color: #000000;
-                cursor: pointer;
-                border: none;
-                background: transparent;
-                transition: background-color 0.2s linear;
-            }
-
-            .menu__link:hover,
-            .menu__btn:hover,
-            .menu__btn[aria-expanded="true"] {
-                background-color: #FFFFFF;
-            }
-
-            .menu-submenu .menu__link:hover,
-            .menu-submenu .menu__btn:hover,
-            .menu-submenu .menu__btn[aria-expanded="true"] {
-                background-color: #C56FFF;
-            }
-
-            .menu-submenu .menu__link:focus-visible,
-            .menu-submenu .menu__btn:focus-visible {
-                outline-width: 2px;
-                outline-offset: -3px;
-                outline-style: solid;
-                outline-color: #000000;
-            }
-
-            .menu__btn-icon {
-                color: inherit;
-                transition: transform .1s linear;
-            }
-
-            .menu-submenu .menu__btn-icon {
-                transform: rotate(-90deg);
-            }
-
-            .menu__btn[aria-expanded="true"] .menu__btn-icon {
-                transform: rotate(180deg);
-            }
-
-            .menu-submenu .menu__btn[aria-expanded="true"] .menu__btn-icon {
-                transform: rotate(90deg);
-            }
-
-            .menu__item {
+            .main-nav > ul > li {
                 position: relative;
             }
 
-            .menu__link {
+            .main-nav a {
+                display: block;
+                padding: 15px 20px;
+                color: #fff;
                 text-decoration: none;
             }
 
-            a[aria-current="page"] {
-                font-weight: 500;
-                color: #000000;
+            .main-nav a:hover {
+                background-color: #555;
             }
 
-            /* Вложенное меню */
-            .menu .menu {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding-inline-start: 3rem;
-            }
-
-            /* Первый уровень вложенности */
-            .enhanced .menu .menu {
-                position: absolute;
-                top: 110%;
-                left: 0;
-                padding-inline-start: 0;
-            }
-
-            /* Второй уровень вложенности */
-            .enhanced .menu .menu .menu {
-                top: 0;
-                left: 104%;
-            }
-
-            .menu[hidden] {
+            /* Скрытие 2-го и 3-го уровней по умолчанию */
+            .menu-level-2, .menu-level-3 {
                 display: none;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                position: absolute;
+                background-color: #444;
+                min-width: 200px;
+                z-index: 10;
+            }
+
+            /* Уровень 2: Позиционирование под Уровнем 1 */
+            .menu-level-1 > li > .menu-level-2 {
+                top: 100%;
+                left: 0;
+            }
+
+            /* Уровень 3: Выезжает справа от Уровня 2 */
+            .menu-level-2 > li {
+                position: relative;
+            }
+
+            .menu-level-2 > li > .menu-level-3 {
+                top: 0;
+                left: 100%;
+            }
+
+            /* Добавляем класс для отображения активного (открытого) меню */
+            .menu-level-2.active,
+            .menu-level-3.active {
+                display: block;
             }
         </style>
     </head>
     <body>
-        <header class="header">
-            <nav
-                class="site-nav"
-                aria-label="Сайт"
-                >
-                <ul class="menu">
-                    <li class="menu__item" data-has-children>
-                        <button
-                            class="menu__btn"
-                            aria-expanded="false"
-                            aria-controls="doka-submenu"
-                            >
-                            Дока
-                        </button>
+        <nav class="main-nav">
+            <ul class="menu-level-1">
+                <li>
+                    <a href="#">Пункт 1</a>
+                    <ul class="menu-level-2">
+                        <li>
+                            <a href="#">Подпункт 1.1</a>
+                            <ul class="menu-level-3">
+                                <li><a href="#">Элемент 1.1.1</a></li>
+                                <li><a href="#">Элемент 1.1.2</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Подпункт 1.2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Пункт 2</a>
+                    <ul class="menu-level-2">
+                        <li><a href="#">Подпункт 2.1</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <script>
+            $(document).ready(function () {
+                // Клик по ссылкам, у которых есть следующий уровень меню
+                $('.main-nav a').on('click', function (e) {
+                    var $this = $(this);
+                    var $parentLi = $this.parent();
+                    var $submenu = $this.next('ul');
 
-                        <!-- Первый уровень вложенности -->
-                        <ul class="menu menu-submenu" id="doka-submenu">
-                            <li class="menu__item">
-                                <a
-                                    href="#"
-                                    class="menu__link"
-                                    aria-current="page"
-                                    >
-                                    Рецепты
-                                </a>
-                            <li>
+                    // Если подменю существует
+                    if ($submenu.length > 0) {
+                        e.preventDefault(); // Отменяем переход по ссылке
 
-                            <li class="menu__item" data-has-children>
-                                <button
-                                    class="menu__btn"
-                                    aria-expanded="false"
-                                    aria-controls="html-submenu"
-                                    >
-                                    HTML
-                                </button>
+                        // Если кликнули по уже открытому меню — закрываем его
+                        if ($submenu.hasClass('active')) {
+                            $submenu.removeClass('active');
+                            $submenu.find('ul').removeClass('active'); // Закрываем вложенные (3 уровень)
+                        } else {
+                            // Закрываем другие открытые подменю на этом же уровне
+                            $parentLi.siblings().find('ul').removeClass('active');
+                            $parentLi.siblings().children('ul').removeClass('active');
 
-                                <!-- Второй уровень вложенности -->
-                                <ul class="menu menu-submenu" id="html-submenu">
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Основы
-                                        </a>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Форматирование
-                                        </a>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Семантика
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="menu__item" data-has-children>
-                                <button
-                                    class="menu__btn"
-                                    aria-expanded="false"
-                                    aria-controls="css-submenu"
-                                    >
-                                    CSS
-                                </button>
-
-                                <!-- Второй уровень вложенности -->
-                                <ul class="menu menu-submenu" id="css-submenu">
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Основы
-                                        </a>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Селекторы
-                                        </a>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="#" class="menu__link">
-                                            Псевдоклассы
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu__item">
-                                <a href="#" class="menu__link">
-                                    JavaScript
-                                </a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="#" class="menu__link">
-                                    Доступность
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="menu__item">
-                        <a href="#" class="menu__link">
-                            Новости
-                        </a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#" class="menu__link">
-                            .........Блог.........
-                        </a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#" class="menu__link">
-                            Архив
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <script type="text/javascript">
-            const nav = document.querySelector('.site-nav');
-            nav.classList.add('enhanced');
-
-            const submenus = nav.querySelectorAll(
-                    '.menu__item[data-has-children]'
-                    );
-            const dropdowns = nav.querySelectorAll(
-                    '.menu__item[data-has-children] > .menu'
-                    );
-
-            const icon = `<svg width="24px" height="24px" viewBox="0 0 24 24" aria-hidden="true" class="menu__btn-icon">
-                <path fill="currentColor" d="M5.64645 8.64645c.19526-.19527.51184-.19527.7071 
-                0L12 14.2929l5.6464-5.64645c.1953-.19527.5119-.19527.7072 0 .1952.19526.1952.51184 0 .7071L12 15.7071 
-                5.64645 9.35355c-.19527-.19526-.19527-.51184 0-.7071Z"></path></svg>`;
-
-            // Находим подменю, заменяем в нём span на кнопку
-            submenus.forEach((item) => {
-                const dropdown = item.querySelector(':scope > .menu');
-                dropdown.setAttribute('hidden', '');
-
-                const button = item.querySelector(':scope > .menu__btn')
-
-                // Добавляем иконку к кнопке, чтобы визуально было
-                // понятно открыто меню или нет
-                button.innerHTML += icon;
-
-                button.addEventListener('click', function (e) {
-                    toggleDropdown(button, dropdown);
-                });
-
-                // Обрабатываем нажатие на Esc
-                dropdown.addEventListener('keydown', (e) => {
-                    e.stopImmediatePropagation();
-
-                    if (e.keyCode === 27 && focusIsInside(dropdown)) {
-                        toggleDropdown(button, dropdown);
-                        button.focus();
-                    }
-                }, false)
-            })
-
-            function toggleDropdown(button, dropdown) {
-                if (button.getAttribute('aria-expanded') === 'true') {
-                    button.setAttribute('aria-expanded', 'false');
-                    dropdown.setAttribute('hidden', '');
-                } else {
-                    button.setAttribute('aria-expanded', 'true');
-                    dropdown.removeAttribute('hidden');
-                }
-            }
-
-            function focusIsInside(element) {
-                return element.contains(document.activeElement);
-            }
-
-            function collapseDropdownsWhenTabbingOutsideNav(e) {
-                if (e.keyCode === 9 && !focusIsInside(nav)) {
-                    dropdowns.forEach(function (dropdown) {
-                        dropdown.setAttribute('hidden', '');
-                        const btn = dropdown.parentNode.querySelector('button')
-                        btn.setAttribute('aria-expanded', 'false');
-                    })
-                }
-            }
-
-            function collapseDropdownsWhenClickingOutsideNav(e) {
-                const target = e.target;
-
-                dropdowns.forEach(function (dropdown) {
-                    if (!dropdown.parentNode.contains(target)) {
-                        dropdown.setAttribute('hidden', '');
-                        const btn = dropdown.parentNode.querySelector('button');
-                        btn.setAttribute('aria-expanded', 'false');
+                            // Открываем нужное подменю
+                            $submenu.addClass('active');
+                        }
                     }
                 });
-            }
 
-            // Закрываем навигацию, если протапались за её пределы
-            document.addEventListener('keyup', collapseDropdownsWhenTabbingOutsideNav);
-
-            // Закрываем навигацию, если кликнули вне навигации
-            window.addEventListener('click', collapseDropdownsWhenClickingOutsideNav);
-
-        </script>        
+                // Закрываем меню при клике в пустом месте на странице
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('.main-nav').length) {
+                        $('.main-nav ul ul').removeClass('active');
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
