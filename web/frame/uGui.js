@@ -251,72 +251,72 @@ function dialogMes(title, mes) {
 function progress(v) {
     if (v === 0) {
         $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
-        $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 300});
+        $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 320});
     } else if (v === 1)
         $('#dialog-mes').dialog("close");
 }
 
 //Диалог окна прогрес сохранения
 //TODO доработать прогресс
-function progress2() {
+//function progress2() {
+//
+//    $("#dialog-mes").html("run " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
+//    $("#dialog-mes").dialog({modal: true});
+//    this.pgbar = $("#progressbar");
+//    this.pglab = $(".progress-label");
+//
+//    this.pgbar.progressbar({
+//        value: false,
+//        change: function () {
+//            $("this.pglab").text(this.pgbar.progressbar("value") + "%");
+//        },
+//        complete: function () {
+//            $("this.pglab").text("Complete!");
+//        }
+//    });
+//
+//    this.progressloop = function () {
+//        let val = this.pgbar.progressbar("value") || 0;
+//        this.pgbar.progressbar("value", val + 1);
+//
+//        if (val < 99) {
+//            setTimeout(foo_catch, 2000);
+//        } else {
+//            $('#dialog-mes').dialog('close');
+//        }
+//    };
+//    this.progressloop();
+//}
 
-    $("#dialog-mes").html("run " + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
-    $("#dialog-mes").dialog({modal: true});
-    this.pgbar = $("#progressbar");
-    this.pglab = $(".progress-label");
+//function foo_catch() {
+//    alert('xxx');
+//}
 
-    this.pgbar.progressbar({
-        value: false,
-        change: function () {
-            $("this.pglab").text(this.pgbar.progressbar("value") + "%");
-        },
-        complete: function () {
-            $("this.pglab").text("Complete!");
-        }
-    });
-
-    this.progressloop = function () {
-        let val = this.pgbar.progressbar("value") || 0;
-        this.pgbar.progressbar("value", val + 1);
-
-        if (val < 99) {
-            setTimeout(foo_catch, 2000);
-        } else {
-            $('#dialog-mes').dialog('close');
-        }
-    };
-    this.progressloop();
-}
-
-function foo_catch() {
-    alert('xxx');
-}
-
-//Прогресс бар
-function progress3(mes) {
-    $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
-    $("#dialog-mes").dialog({modal: true});
-    $(function () {
-        let pgbar = $("#progressbar"), pglab = $(".progress-label");
-
-        pgbar.progressbar({
-            value: false,
-            change: function () {
-                pglab.text(pgbar.progressbar("value") + "%");
-            }
-        });
-        function progress() {
-            let val = pgbar.progressbar("value") || 0;
-            pgbar.progressbar("value", val + .1);
-
-            if (val < 99) {
-                setTimeout(progress, 0);
-            }
-        }
-        progress();
-    });
-    setTimeout("$('#dialog-mes').dialog('close');", 4600);
-}
+////Прогресс бар
+//function progress3(mes) {
+//    $("#dialog-mes").html(mes + " <div id='progressbar'><div class='progress-label'> Выполнение...</div></div>");
+//    $("#dialog-mes").dialog({modal: true});
+//    $(function () {
+//        let pgbar = $("#progressbar"), pglab = $(".progress-label");
+//
+//        pgbar.progressbar({
+//            value: false,
+//            change: function () {
+//                pglab.text(pgbar.progressbar("value") + "%");
+//            }
+//        });
+//        function progress() {
+//            let val = pgbar.progressbar("value") || 0;
+//            pgbar.progressbar("value", val + .1);
+//
+//            if (val < 99) {
+//                setTimeout(progress, 0);
+//            }
+//        }
+//        progress();
+//    });
+//    setTimeout("$('#dialog-mes').dialog('close');", 4600);
+//}
 
 //1;79-10;0-10 => [1,1,79,10,0,10]
 function  parserInt(txt) {
