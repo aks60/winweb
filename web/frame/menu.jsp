@@ -75,30 +75,45 @@
             document.getElementById('m34').addEventListener('click', () => state.report('Check2'));
 
             document.getElementById('m35').addEventListener('click', () => state.test());
+            $('.main-nav a').on('click', function (e) {
+                var $this = $(this);
+                var $parentLi = $this.parent();
+                var $submenu = $this.next('ul');
 
-            $("#nav2 > li > a").click(function (e) { // binding onclick
+                // Если подменю существует
+                if ($submenu.length > 0) {
+                    e.preventDefault(); // Отменяем переход по ссылке
 
-                if ($(this).parent().hasClass('selected')) {
-                    $("#nav2 .selected div div").slideUp(100); // hiding popups
-                    $("#nav2 .selected").removeClass("selected");
-                } else {
-                    $("#nav2 .selected div div").slideUp(100); // hiding popups
-                    $("#nav2 .selected").removeClass("selected");
+                    // Если кликнули по уже открытому меню — закрываем его
+                    if ($submenu.hasClass('active')) {
+                        $submenu.slideUp(100); // hiding popups
+                        $submenu.removeClass('active');
+                        $submenu.find('ul').removeClass('active'); // Закрываем вложенные (3 уровень)
+                    } else {
+                        // Закрываем другие открытые подменю на этом же уровне
+                        $submenu.slideUp(100); // hiding popups
+                        $parentLi.siblings().find('ul').removeClass('active');
+                        $parentLi.siblings().children('ul').removeClass('active');
 
-                    if ($(this).next(".subs").length) {
-
-                        if ($('#body-jsp title').text() === state.nameJsp) {
-                            $(this).parent().addClass("selected"); // display popup
-                            $(this).next(".subs").children().slideDown(200);
+                        // Открываем нужное подменю
+                        if ($submenu.length) {
+                            if ($('#body-jsp title').text() === state.nameJsp) {
+                                $submenu.addClass("active"); // display popup
+                                $submenu.children().slideDown(200);
+                            }
                         }
+                        e.stopPropagation();
                     }
+                } else {
+                    $('.main-nav ul ul').removeClass('active');
                 }
-                e.stopPropagation();
             });
 
-            $("body").click(function () { // binding onclick to body
-                $("#nav2 .selected div div").slideUp(100); // hiding popups
-                $("#nav2 .selected").removeClass("selected");
+            // Закрываем меню при клике в пустом месте на странице
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.main-nav').length) {
+                    $('.main-nav ul ul').removeClass('active');
+                }
             });
         }
 
@@ -108,110 +123,76 @@
     </script> 
 
     <body>
-        <div class="menu">
-            <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
-            <span>
-                <ul id="nav2">                   
-                    <li><a id='m01'>Проекты</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id='m11'>Добавить проект</a></li>
-                                            <li><a id='m21'>Изменить проект</a></li>   
-                                            <li><a id='m31'>Удалить проект</a></li>    
-                                            <li><a class="separator"></a></li>
-                                            <li><a id='m41'>Добавить констр.</a></li>
-                                            <li><a id='m51'>Изменить констр.</a></li>
-                                            <li><a id='m61'>Удалить констр.</a></li>
-                                            <li><a class="separator"></a></li>
-                                            <li><a id='m71'>Установить скидки</a></li>
-                                            <li><a id='m81'>Рассчитать проект</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                          
-                    </li>
-                    <li><a id='m02'>Изделия</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m12">Сохранить констр.</a></li>
-                                            <li><a id="m22">Отменить измен.</a></li>  
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                      
-                    </li>
-                    <li><a id="m03">Комплекты</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m13">Добавить комплект</a></li>
-                                            <li><a id="m23">Добавить артикул</a></li>  
-                                            <li><a id="m33">Изменить артикул</a></li>  
-                                            <li><a id="m43">Удалить артикул</a></li>  
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                     
-                    </li>
-                    <li><a id='m06'>Заказчики</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m16">Добавить</a></li>
-                                            <li><a id="m26">Изменить</a></li>  
-                                            <li><a id="m36">Удалить</a></li>  
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                      
-                    </li>                     
-                    <li><a id="m04">Отчеты</a>
-                        <div class="subs">
-                            <div>
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m14" onClick="">Тарификация</a></li>
-                                            <li><a class="separator"></a></li>
-                                            <li><a id="m24" onClick="">Смета подробная</a></li>
-                                            <li><a id="m34" onClick="">Счёт-фактура</a></li>                                         
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>                                
-                    </li>
-                    <li><a>Сервис</a>
-                        <div class="subs">
-                            <div>                             
-                                <ul>
-                                    <li>
-                                        <ul>
-                                            <li><a id="m15">Сайт разработчика</a></li>
-                                            <li><a id="m25">О программе</a></li>                                           
-                                            <li><a id="m35">TEST()</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>  
-                    </li> 
-                </ul>
-            </span>
-        </div>
+        <nav class="main-nav">
+            <ul class="menu-level-1">
+                <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
+                <li>
+                    <a id='m01' href="#">Проекты</a>
+                    <ul class="menu-level-2">
+                        <li><a id='m11'>Добавить проект</a></li>
+                        <li><a id='m21'>Изменить проект</a></li>   
+                        <li><a id='m31'>Удалить проект</a></li>    
+                        <li><a class="separator"></a></li>
+                        <li><a id='m41'>Добавить констр.</a></li>
+                        <li><a id='m51'>Изменить констр.</a></li>
+                        <li><a id='m61'>Удалить констр.</a></li>
+                        <li><a class="separator"></a></li>
+                        <li><a id='m71'>Установить скидки</a></li>
+                        <li><a id='m81'>Рассчитать проект</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a id='m02'>Изделия</a>
+                    <ul class="menu-level-2">
+                        <li><a id="m12">Сохранить констр.</a></li>
+                        <li><a id="m22">Отменить измен.</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="m03">Комплекты</a>
+                    <ul class="menu-level-2">
+                        <li><a id="m13">Добавить комплект</a></li>
+                        <li><a id="m23">Добавить артикул</a></li>  
+                        <li><a id="m33">Изменить артикул</a></li>  
+                        <li><a id="m43">Удалить артикул</a></li>
+                    </ul>
+                </li> 
+                <li>
+                    <a id='m06'>Заказчики</a>
+                    <ul class="menu-level-2">
+                        <li><a id="m16">Добавить</a></li>
+                        <li><a id="m26">Изменить</a></li>  
+                        <li><a id="m36">Удалить</a></li>  
+                    </ul>
+                </li>                
+                <li>
+                    <a id="m04">Отчеты</a>
+                    <ul class="menu-level-2">
+
+                        <li>
+                            <a>Изделие</a>
+                            <ul class="menu-level-3">
+                                <li><a id="m14" onClick="">Тарификация</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Проект</a>
+                            <ul class="menu-level-3">
+                                <li><a id="m24" onClick="">Смета подробная</a></li>
+                                <li><a id="m34" onClick="">Счёт-фактура</a></li> 
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                <li><a>Сервис</a>
+                    <ul class="menu-level-2">
+                        <li><a id="m15">Сайт разработчика</a></li>
+                        <li><a id="m25">О программе</a></li>                                           
+                        <li><a id="m35">TEST()</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </body>
 </html>
