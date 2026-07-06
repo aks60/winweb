@@ -42,6 +42,10 @@
                 $('#body-jsp').load('frame/kits.jsp');
             }
         }
+//        
+//        function load_report(name) {
+//            state.nameJsp = name;
+//        }
 
         function init_menu() {
 
@@ -70,6 +74,7 @@
             document.getElementById('m32').addEventListener('click', () => partner.update_table1());
             document.getElementById('m33').addEventListener('click', () => partner.delete_table1());
 
+//            document.getElementById('m40').addEventListener('click', () => load_report('REPORT'));
             document.getElementById('m41').addEventListener('click', () => state.reportWin('Tarif'));
             document.getElementById('m42').addEventListener('click', () => state.reportWin('Material1'));
             document.getElementById('m43').addEventListener('click', () => state.reportWin('Target1'));           
@@ -81,42 +86,44 @@
             document.getElementById('m49').addEventListener('click', () => state.reportPrj('Check2'));
             document.getElementById('m49.').addEventListener('click', () => state.reportPrj('Offer'));
 
-            document.getElementById('m35').addEventListener('click', () => state.test());
+            document.getElementById('m53').addEventListener('click', () => state.test());
+            
             $('.main-nav a').on('click', function (e) {
                 var $this = $(this);
                 var $parentLi = $this.parent();
                 var $submenu = $this.next('ul');
-
-                // Если подменю существует
+                //var mmm = $("#m40");
+                //var nnn = (JSON.stringify($this) === JSON.stringify(mmm));
+debugger;
+                //Если подменю существует
                 if ($submenu.length > 0) {
-                    e.preventDefault(); // Отменяем переход по ссылке
+                    e.preventDefault(); //отменяем переход по ссылке
 
-                    // Если кликнули по уже открытому меню — закрываем его
+                    //Если кликнули по уже открытому меню — закрываем его
                     if ($submenu.hasClass('active')) {
-                        $submenu.slideUp(100); // hiding popups
                         $submenu.removeClass('active');
-                        $submenu.find('ul').removeClass('active'); // Закрываем вложенные (3 уровень)
+                        $submenu.find('ul').removeClass('active'); //закрываем вложенные (3 уровень)
                     } else {
-                        // Закрываем другие открытые подменю на этом же уровне
-                        $submenu.slideUp(100); // hiding popups
+                        //Закрываем другие открытые подменю на этом же уровне
                         $parentLi.siblings().find('ul').removeClass('active');
                         $parentLi.siblings().children('ul').removeClass('active');
 
-                        // Открываем нужное подменю
+                        //Открываем нужное подменю
                         if ($submenu.length) {
-                            if ($('#body-jsp title').text() === state.nameJsp) {
+                            if ($('#body-jsp title').text() === state.nameJsp 
+                                    || JSON.stringify($this) === JSON.stringify($("#m40"))) {
                                 $submenu.addClass("active"); // display popup
-                                $submenu.children().slideDown(200);
+                                
                             }
                         }
-                        e.stopPropagation();
+                        e.stopPropagation(); //предотвращает всплытие события вверх по дереву DOM
                     }
                 } else {
                     $('.main-nav ul ul').removeClass('active');
                 }
             });
 
-            // Закрываем меню при клике в пустом месте на странице
+            //Закрываем меню при клике в пустом месте на странице
             $(document).on('click', function (e) {
                 if (!$(e.target).closest('.main-nav').length) {
                     $('.main-nav ul ul').removeClass('active');
@@ -202,11 +209,11 @@
                     </ul>
                 </li>
                 <li>
-                <li><a>Сервис</a>
+                <li><a id="m50">Сервис</a>
                     <ul class="menu-level-2">
-                        <li><a id="m15">Сайт разработчика</a></li>
-                        <li><a id="m25">О программе</a></li>                                           
-                        <li><a id="m35">TEST()</a></li>
+                        <li><a id="m51">Сайт разработчика</a></li>
+                        <li><a id="m52">О программе</a></li>                                           
+                        <li><a id="m53">TEST()</a></li>
                     </ul>
                 </li>
             </ul>

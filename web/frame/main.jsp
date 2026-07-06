@@ -48,12 +48,18 @@
         <script type="module" src="./domain/eSystree.js"></script>
         <script type="module" src="./domain/eSysuser.js"></script>        
         <script type="module" src="./domain/eTarif.js"></script>        
-
+        <style>
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+            }
+        </style>
         <script type="text/javascript">
             //Поля таблиц
-            var eArtdet, eArtikl, eColor, ePrjpart, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1, 
-                    eGroups, eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, eSyspar1, 
-                    eSysprod, eSysprof,  eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
+            var eArtdet, eArtikl, eColor, ePrjpart, eKits, eFurndet, eFurnpar2, eFurniture, eFurnside1,
+                    eGroups, eKitdet, eParams, eParmap, ePrjkit, ePrjprod, eProject, eSysfurn, eSyspar1,
+                    eSysprod, eSysprof, eSyssize, eSystree, eSysuser, eElement, eTarif, PRINT;
 
             //Глобальные настройки и параметры 
             jQuery.extend(jQuery.jgrid.defaults, {rowNum: 60});
@@ -62,13 +68,13 @@
         </script>         
     </head>
     <body>
-        <div id="menu-main"></div>
+        <div id="menu-main" class="no-print"></div>
         <div id="body-jsp"></div>  
         <div id="dialog-jsp"></div> 
         <div id="dialog-mes" title="Сообщение"></div>
         <div id="dialog-list" style="display: none;"><table id="dtable" class="ui-jqgrid-btable"></table></div>
         <div id="progressbar"></div>
-        
+
         <script type="module">
             import {localizeFactory, Test1} from './frame/main.js';
             import {login} from './frame/login.js';
@@ -83,7 +89,7 @@
                     $.post("dbset?action=prjprodList"), $.post("dbset?action=sysfurnList"), $.post("dbset?action=sysprofList"),
                     $.post("dbset?action=syspar1List"), $.post("dbset?action=paramsList"), $.post("dbset?action=groupList"),
                     $.post("dbset?action=projectList"), $.post("dbset?action=dealerList"), $.post("dbset?action=kitsList"),
-                    $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"), $.post("dbset?action=syssizeList"), 
+                    $.post("dbset?action=kitdetList"), $.post("dbset?action=prjkitList"), $.post("dbset?action=syssizeList"),
                     $.post("dbset?action=sysuserList")
                 ]).then(p => {
                     let i = 0;

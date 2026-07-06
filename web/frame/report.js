@@ -11,87 +11,144 @@ state.reportWin = function (title) {
     progress(0);
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+        dataType: 'html',
         success: (data) => {
+            $('#body-jsp').html(data);
+            //$('#body-jsp title').val('REPORT');
             progress(1);
-        }});
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            console.error("AJAX Error: " + textStatus, errorThrown);
+            dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+        }
+    });
 };
 
 state.reportPrj = function (title) {
     progress(0);
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+        dataType: 'html',
         success: (data) => {
+            $('#body-jsp').html(data);
+            //$('#body-jsp title').val('REPORT');
             progress(1);
-        }});
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            console.error("AJAX Error: " + textStatus, errorThrown);
+            dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+        }
+    });
+};
+
+state.smeta = function (projectID) {
+    try {
+        $.ajax({
+            url: 'dbset?action=smetaProject',
+            data: {'projectID': project.projectRec[eProject.id]},
+            dataType: 'html',
+            success: (data) => {
+                debugger;
+                $('#body-jsp').html(data);
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX Error: " + textStatus, errorThrown);
+                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+            }
+        });
+    } catch (e) {
+        console.error(e.message);
+    }
+};
+
+state.schet_faktura = function (projectID) {
+    try {
+        $.ajax({
+            url: 'dbset?action=smetaProject',
+            data: {'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                if (data.result === 'ok') {
+
+                } else
+                    dialogMes('Сообщение', "<p>" + data.result);
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX Error: " + textStatus, errorThrown);
+                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
+            }
+        });
+    } catch (e) {
+        console.error(e.message);
+    }
 };
 
 // <editor-fold defaultstate="collapsed" desc="XLAM"> 
 /*
-
-state.report = function (title) {
-    progress(0);
-    if (title === 'Tarif') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Material1') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Target1') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Material2') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Target2') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Smeta1') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Smeta1') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Check1') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Check2') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    } else if (title === 'Offer') {
-        $.ajax({url: 'dbset?action=reportProject',
-            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                progress(1);
-            }});
-    }
-}; 
+ 
+ state.report = function (title) {
+ progress(0);
+ if (title === 'Tarif') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Material1') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Target1') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Material2') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Target2') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Smeta1') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Smeta1') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Check1') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Check2') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ } else if (title === 'Offer') {
+ $.ajax({url: 'dbset?action=reportProject',
+ data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+ success: (data) => {
+ progress(1);
+ }});
+ }
+ }; 
  state.load_tarif = function (name) {
  
  try {

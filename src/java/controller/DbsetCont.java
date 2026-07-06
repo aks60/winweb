@@ -1,10 +1,14 @@
 package controller;
 
+import common.eProp;
 import dataset.Connect;
 import domain.ePrjpart;
 import domain.eProject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -181,8 +185,18 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
                     
                 } else if (action.equalsIgnoreCase("reportProject")) {
-                    JSONObject output = Dbset.reportProject(request, response);
-                    out.write(JSONObject.toJSONString(output));
+                    Dbset.reportProject(request, response);
+                    String path = eProp.genl.getProp();
+                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
+                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
+                    response.getWriter().print(html);
+                    
+                } else if (action.equalsIgnoreCase("smetaProject")) {
+                    Dbset.smetaProject(request, response);
+                    String path = eProp.genl.getProp();
+                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
+                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
+                    response.getWriter().print(html);
 
                 } else if (action.equalsIgnoreCase("testProject")) {
                     Dbset.reportProject(request, response);

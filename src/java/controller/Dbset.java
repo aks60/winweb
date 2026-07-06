@@ -459,37 +459,50 @@ public class Dbset {
         }
     }
 
-    public static JSONObject reportProject(HttpServletRequest request, HttpServletResponse response) {
+    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String title = request.getParameter("title");
+            Query.listOpenTable.forEach(q -> q.clear());
 
-        String title = request.getParameter("title");
-        Query.listOpenTable.forEach(q -> q.clear());
+            //Отчёты конструкций
+            if (request.getParameter("prjprodID") != null) {
 
-        //Отчёты конструкций
-        if (request.getParameter("prjprodID") != null) {
+                int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
+                if ("Tarif".equals(title)) {
+                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+                    new RSpecific().parseDoc(prjprodList);
+                }
 
-            int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
-            if ("Tarif".equals(title)) {
-                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
-                new RSpecific().parseDoc(prjprodList);
+                //Отчёты проекта
+            } else if (request.getParameter("projectID") != null) {
+
+                int projectID = Integer.parseInt(request.getParameter("projectID"));
+                if ("Smeta2".equals(title)) {
+                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                    new RSmeta().parseDoc2(prjprodList);
+
+                } else if ("Check2".equals(title)) {
+                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                    new RCheck().parseDoc2(prjprodList);
+                }
+
             }
-            ExecuteCmd.startWord("report.html");
-
-            //Отчёты проекта
-        } else if (request.getParameter("projectID") != null) {
-
-            int projectID = Integer.parseInt(request.getParameter("projectID"));
-            if ("Smeta2".equals(title)) {
-                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-                new RSmeta().parseDoc2(prjprodList);
-
-            } else if ("Check2".equals(title)) {
-                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-                new RCheck().parseDoc2(prjprodList);
-            }
-            ExecuteCmd.startWord("report.html");
-
+        } catch (Exception e) {
+            System.err.println("Error:Dbset.reportProject()");
         }
-        return new JSONObject(App.asMap("result", "ok"));
+    }
+
+    public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String projectSt = request.getParameter("projectID");
+            Integer projectID = Integer.valueOf(projectSt);
+            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
+            new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
+            return new JSONObject(App.asMap("result", "ok"));
+
+        } catch (Exception e) {
+            return new JSONObject(App.asMap("result", "Ошибка: " + e));
+        }
     }
 }
 
