@@ -45,34 +45,41 @@
 
         function init_menu() {
 
-            document.getElementById('m01').addEventListener('click', () => load_project('PROJECT'));
-            document.getElementById('m11').addEventListener('click', () => project.insert_table1());
-            document.getElementById('m21').addEventListener('click', () => project.update_table1());
-            document.getElementById('m31').addEventListener('click', () => project.delete_table1());
-            document.getElementById('m41').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
-            document.getElementById('m51').addEventListener('click', () => project.update_table3());
-            document.getElementById('m61').addEventListener('click', () => project.delete_table3());
-            document.getElementById('m71').addEventListener('click', () => project.update_table2());
-            document.getElementById('m81').addEventListener('click', () => project.calculate_project());
+            document.getElementById('m00').addEventListener('click', () => load_project('PROJECT'));
+            document.getElementById('m02').addEventListener('click', () => project.insert_table1());
+            document.getElementById('m03').addEventListener('click', () => project.update_table1());
+            document.getElementById('m04').addEventListener('click', () => project.delete_table1());
+            document.getElementById('m05').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/systree.jsp'));
+            document.getElementById('m06').addEventListener('click', () => project.update_table3());
+            document.getElementById('m07').addEventListener('click', () => project.delete_table3());
+            document.getElementById('m08').addEventListener('click', () => project.update_table2());
+            document.getElementById('m09').addEventListener('click', () => project.calculate_project());
 
-            document.getElementById('m02').addEventListener('click', () => load_product('PRODUCT'));
+            document.getElementById('m10').addEventListener('click', () => load_product('PRODUCT'));
             document.getElementById('m12').addEventListener('click', () => product.save_update_script());
-            document.getElementById('m22').addEventListener('click', () => product.revert_update_script());
+            document.getElementById('m13').addEventListener('click', () => product.revert_update_script());
 
-            document.getElementById('m03').addEventListener('click', () => load_kits('KITS'));
-            document.getElementById('m13').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
+            document.getElementById('m20').addEventListener('click', () => load_kits('KITS'));
+            document.getElementById('m21').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
             document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
-            document.getElementById('m33').addEventListener('click', () => kits.update_table());
-            document.getElementById('m43').addEventListener('click', () => kits.delete_table());
+            document.getElementById('m24').addEventListener('click', () => kits.update_table());
+            document.getElementById('m25').addEventListener('click', () => kits.delete_table());
 
-            document.getElementById('m06').addEventListener('click', () => load_partner('PARTNER'));
-            document.getElementById('m16').addEventListener('click', () => partner.insert_table1());
-            document.getElementById('m26').addEventListener('click', () => partner.update_table1());
-            document.getElementById('m36').addEventListener('click', () => partner.delete_table1());
+            document.getElementById('m30').addEventListener('click', () => load_partner('PARTNER'));
+            document.getElementById('m31').addEventListener('click', () => partner.insert_table1());
+            document.getElementById('m32').addEventListener('click', () => partner.update_table1());
+            document.getElementById('m33').addEventListener('click', () => partner.delete_table1());
 
-            document.getElementById('m14').addEventListener('click', () => state.report('Tarif'));
-            document.getElementById('m24').addEventListener('click', () => state.report('Smeta2'));
-            document.getElementById('m34').addEventListener('click', () => state.report('Check2'));
+            document.getElementById('m41').addEventListener('click', () => state.reportWin('Tarif'));
+            document.getElementById('m42').addEventListener('click', () => state.reportWin('Material1'));
+            document.getElementById('m43').addEventListener('click', () => state.reportWin('Target1'));           
+            document.getElementById('m44').addEventListener('click', () => state.reportPrj('Material2'));
+            document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target2'));            
+            document.getElementById('m46').addEventListener('click', () => state.reportPrj('Smeta1'));
+            document.getElementById('m47').addEventListener('click', () => state.reportPrj('Smeta2'));
+            document.getElementById('m48').addEventListener('click', () => state.reportPrj('Check1'));
+            document.getElementById('m49').addEventListener('click', () => state.reportPrj('Check2'));
+            document.getElementById('m49.').addEventListener('click', () => state.reportPrj('Offer'));
 
             document.getElementById('m35').addEventListener('click', () => state.test());
             $('.main-nav a').on('click', function (e) {
@@ -127,59 +134,69 @@
             <ul class="menu-level-1">
                 <img src='lib-img/logotype2.png' height="20px" width="20px" style="float: left; margin: 4px 4px">
                 <li>
-                    <a id='m01' href="#">Проекты</a>
+                    <a id='m00' href="#">Проекты</a>
                     <ul class="menu-level-2">
-                        <li><a id='m11'>Добавить проект</a></li>
-                        <li><a id='m21'>Изменить проект</a></li>   
-                        <li><a id='m31'>Удалить проект</a></li>    
+                        <li><a id='m02'>Добавить проект</a></li>
+                        <li><a id='m03'>Изменить проект</a></li>   
+                        <li><a id='m04'>Удалить проект</a></li>    
                         <li><a class="separator"></a></li>
-                        <li><a id='m41'>Добавить констр.</a></li>
-                        <li><a id='m51'>Изменить констр.</a></li>
-                        <li><a id='m61'>Удалить констр.</a></li>
+                        <li><a id='m05'>Добавить констр.</a></li>
+                        <li><a id='m06'>Изменить констр.</a></li>
+                        <li><a id='m07'>Удалить констр.</a></li>
                         <li><a class="separator"></a></li>
-                        <li><a id='m71'>Установить скидки</a></li>
-                        <li><a id='m81'>Рассчитать проект</a></li>
+                        <li><a id='m08'>Установить скидки</a></li>
+                        <li><a id='m09'>Рассчитать проект</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a id='m02'>Изделия</a>
+                    <a id='m10'>Изделия</a>
                     <ul class="menu-level-2">
                         <li><a id="m12">Сохранить констр.</a></li>
-                        <li><a id="m22">Отменить измен.</a></li>
+                        <li><a id="m13">Отменить измен.</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a id="m03">Комплекты</a>
+                    <a id="m20">Комплекты</a>
                     <ul class="menu-level-2">
-                        <li><a id="m13">Добавить комплект</a></li>
+                        <li><a id="m21">Добавить комплект</a></li>
                         <li><a id="m23">Добавить артикул</a></li>  
-                        <li><a id="m33">Изменить артикул</a></li>  
-                        <li><a id="m43">Удалить артикул</a></li>
+                        <li><a id="m24">Изменить артикул</a></li>  
+                        <li><a id="m25">Удалить артикул</a></li>
                     </ul>
                 </li> 
                 <li>
-                    <a id='m06'>Заказчики</a>
+                    <a id='m30'>Заказчики</a>
                     <ul class="menu-level-2">
-                        <li><a id="m16">Добавить</a></li>
-                        <li><a id="m26">Изменить</a></li>  
-                        <li><a id="m36">Удалить</a></li>  
+                        <li><a id="m31">Добавить</a></li>
+                        <li><a id="m32">Изменить</a></li>  
+                        <li><a id="m33">Удалить</a></li>  
                     </ul>
                 </li>                
                 <li>
-                    <a id="m04">Отчеты</a>
+                    <a id="m40">Отчеты</a>
                     <ul class="menu-level-2">
 
                         <li>
                             <a>Изделие</a>
                             <ul class="menu-level-3">
-                                <li><a id="m14" onClick="">Тарификация</a></li>
+                                <li><a id="m41">Тарификация</a></li>
+                                <li><a id="m42">Расход материалов</a></li>
+                                <li><a id="m43">Задание в цех</a></li>
                             </ul>
                         </li>
                         <li>
                             <a>Проект</a>
                             <ul class="menu-level-3">
-                                <li><a id="m24" onClick="">Смета подробная</a></li>
-                                <li><a id="m34" onClick="">Счёт-фактура</a></li> 
+                                <li><a id="m44">Расход материалов</a></li>
+                                <li><a id="m45">Задание в цех</a></li>
+                                <li><a class="separator"></a></li>
+                                <li><a id="m46">Смета</a></li>
+                                <li><a id="m47">Смета подробная</a></li>
+                                <li><a class="separator"></a></li>
+                                <li><a id="m48">Счёт</a></li> 
+                                <li><a id="m49">Счёт-фактура</a></li> 
+                                <li><a class="separator"></a></li>
+                                <li><a id="m49.">Ком.предложение</a></li> 
                             </ul>
                         </li>
                     </ul>

@@ -464,23 +464,30 @@ public class Dbset {
         String title = request.getParameter("title");
         Query.listOpenTable.forEach(q -> q.clear());
 
-        if ("Tarif".equals(title)) {
+        //Отчёты конструкций
+        if (request.getParameter("prjprodID") != null) {
+
             int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
-            new RSpecific().parseDoc(prjprodList);
+            if ("Tarif".equals(title)) {
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+                new RSpecific().parseDoc(prjprodList);
+            }
             ExecuteCmd.startWord("report.html");
 
-        } else if ("Smeta2".equals(title)) {
+            //Отчёты проекта
+        } else if (request.getParameter("projectID") != null) {
+
             int projectID = Integer.parseInt(request.getParameter("projectID"));
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RSmeta().parseDoc2(prjprodList);
+            if ("Smeta2".equals(title)) {
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                new RSmeta().parseDoc2(prjprodList);
+
+            } else if ("Check2".equals(title)) {
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                new RCheck().parseDoc2(prjprodList);
+            }
             ExecuteCmd.startWord("report.html");
 
-        } else if ("Check2".equals(title)) {
-            int projectID = Integer.parseInt(request.getParameter("projectID"));
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RCheck().parseDoc2(prjprodList);
-            ExecuteCmd.startWord("report.html");
         }
         return new JSONObject(App.asMap("result", "ok"));
     }

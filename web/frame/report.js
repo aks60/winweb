@@ -7,6 +7,27 @@ export let state = {nameJsp: 'PROJECT'};
 state.test = function () {
 };
 
+state.reportWin = function (title) {
+    progress(0);
+    $.ajax({url: 'dbset?action=reportProject',
+        data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+        success: (data) => {
+            progress(1);
+        }});
+};
+
+state.reportPrj = function (title) {
+    progress(0);
+    $.ajax({url: 'dbset?action=reportProject',
+        data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+        success: (data) => {
+            progress(1);
+        }});
+};
+
+// <editor-fold defaultstate="collapsed" desc="XLAM"> 
+/*
+
 state.report = function (title) {
     progress(0);
     if (title === 'Tarif') {
@@ -15,21 +36,62 @@ state.report = function (title) {
             success: (data) => {
                 progress(1);
             }});
-    } else if (title === 'Smeta2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+    } else if (title === 'Material1') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Target1') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Material2') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Target2') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Smeta1') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Smeta1') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Check1') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 progress(1);
             }});
     } else if (title === 'Check2') {
-        $.ajax({url: 'dbset?action=reportProject', data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+            success: (data) => {
+                progress(1);
+            }});
+    } else if (title === 'Offer') {
+        $.ajax({url: 'dbset?action=reportProject',
+            data: {'title': title, 'projectID': project.projectRec[eProject.id]},
             success: (data) => {
                 progress(1);
             }});
     }
-};
-
-// <editor-fold defaultstate="collapsed" desc="XLAM"> 
-/*
+}; 
  state.load_tarif = function (name) {
  
  try {
