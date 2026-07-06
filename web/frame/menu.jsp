@@ -42,10 +42,6 @@
                 $('#body-jsp').load('frame/kits.jsp');
             }
         }
-//        
-//        function load_report(name) {
-//            state.nameJsp = name;
-//        }
 
         function init_menu() {
 
@@ -74,7 +70,6 @@
             document.getElementById('m32').addEventListener('click', () => partner.update_table1());
             document.getElementById('m33').addEventListener('click', () => partner.delete_table1());
 
-//            document.getElementById('m40').addEventListener('click', () => load_report('REPORT'));
             document.getElementById('m41').addEventListener('click', () => state.reportWin('Tarif'));
             document.getElementById('m42').addEventListener('click', () => state.reportWin('Material1'));
             document.getElementById('m43').addEventListener('click', () => state.reportWin('Target1'));           
@@ -92,9 +87,7 @@
                 var $this = $(this);
                 var $parentLi = $this.parent();
                 var $submenu = $this.next('ul');
-                //var mmm = $("#m40");
-                //var nnn = (JSON.stringify($this) === JSON.stringify(mmm));
-debugger;
+
                 //Если подменю существует
                 if ($submenu.length > 0) {
                     e.preventDefault(); //отменяем переход по ссылке
