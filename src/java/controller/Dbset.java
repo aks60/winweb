@@ -549,38 +549,6 @@ public class Dbset {
         winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
         return gson.toJson(httpList);
     }
-
-    public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String projectSt = request.getParameter("projectID");
-            Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            String path = eProp.genl.getProp();
-            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-            return new JSONObject(App.asMap("result", "ok", "report", html));
-
-        } catch (Exception e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }
-    }
-
-    public static JSONObject checkProject(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String projectSt = request.getParameter("projectID");
-            Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RCheck().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            String path = eProp.genl.getProp();
-            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-            return new JSONObject(App.asMap("result", "ok", "report", html));
-
-        } catch (Exception e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }
-    }
  */
 // </editor-fold>    
 
