@@ -14,7 +14,6 @@ state.reportWin = function (title) {
         dataType: 'html',
         success: (data) => {
             $('#body-jsp').html(data);
-            //$('#body-jsp title').val('REPORT');
             progress(1);
         },
         error: (jqXHR, textStatus, errorThrown) => {
@@ -31,7 +30,6 @@ state.reportPrj = function (title) {
         dataType: 'html',
         success: (data) => {
             $('#body-jsp').html(data);
-            //$('#body-jsp title').val('REPORT');
             progress(1);
         },
         error: (jqXHR, textStatus, errorThrown) => {
@@ -41,46 +39,46 @@ state.reportPrj = function (title) {
     });
 };
 
-state.smeta = function (projectID) {
-    try {
-        $.ajax({
-            url: 'dbset?action=smetaProject',
-            data: {'projectID': project.projectRec[eProject.id]},
-            dataType: 'html',
-            success: (data) => {
-                debugger;
-                $('#body-jsp').html(data);
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-            }
-        });
-    } catch (e) {
-        console.error(e.message);
-    }
-};
-
-state.schet_faktura = function (projectID) {
-    try {
-        $.ajax({
-            url: 'dbset?action=smetaProject',
-            data: {'projectID': project.projectRec[eProject.id]},
-            success: (data) => {
-                if (data.result === 'ok') {
-
-                } else
-                    dialogMes('Сообщение', "<p>" + data.result);
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error("AJAX Error: " + textStatus, errorThrown);
-                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
-            }
-        });
-    } catch (e) {
-        console.error(e.message);
-    }
-};
+//state.smeta = function (projectID) {
+//    try {
+//        $.ajax({
+//            url: 'dbset?action=smetaProject',
+//            data: {'projectID': project.projectRec[eProject.id]},
+//            dataType: 'html',
+//            success: (data) => {
+//                debugger;
+//                $('#body-jsp').html(data);
+//            },
+//            error: (jqXHR, textStatus, errorThrown) => {
+//                console.error("AJAX Error: " + textStatus, errorThrown);
+//                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+//            }
+//        });
+//    } catch (e) {
+//        console.error(e.message);
+//    }
+//};
+//
+//state.schet_faktura = function (projectID) {
+//    try {
+//        $.ajax({
+//            url: 'dbset?action=smetaProject',
+//            data: {'projectID': project.projectRec[eProject.id]},
+//            success: (data) => {
+//                if (data.result === 'ok') {
+//
+//                } else
+//                    dialogMes('Сообщение', "<p>" + data.result);
+//            },
+//            error: (jqXHR, textStatus, errorThrown) => {
+//                console.error("AJAX Error: " + textStatus, errorThrown);
+//                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
+//            }
+//        });
+//    } catch (e) {
+//        console.error(e.message);
+//    }
+//};
 
 // <editor-fold defaultstate="collapsed" desc="XLAM"> 
 /*
