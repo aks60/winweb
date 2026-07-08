@@ -71,10 +71,10 @@
             document.getElementById('m33').addEventListener('click', () => partner.delete_table1());
 
             document.getElementById('m41').addEventListener('click', () => state.reportWin('Tarif'));
-            document.getElementById('m42').addEventListener('click', () => state.reportWin('Material1'));
-            document.getElementById('m43').addEventListener('click', () => state.reportWin('Target1'));           
-            document.getElementById('m44').addEventListener('click', () => state.reportPrj('Material2'));
-            document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target2'));            
+            document.getElementById('m42').addEventListener('click', () => state.reportWin('Material'));
+            document.getElementById('m43').addEventListener('click', () => state.reportWin('Target'));           
+            document.getElementById('m44').addEventListener('click', () => state.reportPrj('Material'));
+            document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target'));            
             document.getElementById('m46').addEventListener('click', () => state.reportPrj('Smeta1'));
             document.getElementById('m47').addEventListener('click', () => state.reportPrj('Smeta2'));
             document.getElementById('m48').addEventListener('click', () => state.reportPrj('Check1'));

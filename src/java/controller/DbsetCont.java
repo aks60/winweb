@@ -190,13 +190,6 @@ public class DbsetCont extends HttpServlet {
                     Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
                     String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
                     response.getWriter().print(html);
-                    
-                } else if (action.equalsIgnoreCase("smetaProject")) {
-                    Dbset.smetaProject(request, response);
-                    String path = eProp.genl.getProp();
-                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-                    response.getWriter().print(html);
 
                 } else if (action.equalsIgnoreCase("testProject")) {
                     Dbset.reportProject(request, response);

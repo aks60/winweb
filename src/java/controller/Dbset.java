@@ -41,9 +41,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import report.RCheck;
+import report.RMaterial;
+import report.ROffer;
 import report.RSmeta;
 import report.RSpecific;
-import report.sup.ExecuteCmd;
+import report.RTarget;
 
 public class Dbset {
 
@@ -468,40 +470,49 @@ public class Dbset {
             if (request.getParameter("prjprodID") != null) {
 
                 int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
-                if ("Tarif".equals(title)) {
-                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+                
+                if ("Tarif".equals(title)) {                    
                     new RSpecific().parseDoc(prjprodList);
+                    
+                } else if ("Material".equals(title)) {
+                    new RMaterial().parseDoc1(prjprodList);
+                    
+                } else if ("Target".equals(title)) {
+                    new RTarget().parseDoc(prjprodList);
                 }
 
                 //Отчёты проекта
             } else if (request.getParameter("projectID") != null) {
 
                 int projectID = Integer.parseInt(request.getParameter("projectID"));
-                if ("Smeta2".equals(title)) {
-                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+                
+                if ("Material".equals(title)) {
+                    new RMaterial().parseDoc1(prjprodList);
+                    
+                } else if ("Target".equals(title)) {
+                    new RTarget().parseDoc(prjprodList);
+                    
+                } else if ("Smeta1".equals(title)) {
+                    new RSmeta().parseDoc1(prjprodList);
+                    
+                } else if ("Smeta2".equals(title)) {
                     new RSmeta().parseDoc2(prjprodList);
 
+                } else if ("Check1".equals(title)) {
+                    new RCheck().parseDoc1(prjprodList);
+
                 } else if ("Check2".equals(title)) {
-                    List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
                     new RCheck().parseDoc2(prjprodList);
+
+                } else if ("Offer".equals(title)) {
+                    new ROffer().parseDoc(prjprodList);
                 }
 
             }
         } catch (Exception e) {
             System.err.println("Error:Dbset.reportProject()");
-        }
-    }
-
-    public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String projectSt = request.getParameter("projectID");
-            Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = ePrjprod.filter(projectID);
-            new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            return new JSONObject(App.asMap("result", "ok"));
-
-        } catch (Exception e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
         }
     }
 }
@@ -537,38 +548,6 @@ public class Dbset {
         winc.specific(true, true);
         winc.listSpec.forEach(rec -> httpList.add(rec.httpRecord()));
         return gson.toJson(httpList);
-    }
-
-    public static JSONObject smetaProject(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String projectSt = request.getParameter("projectID");
-            Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RSmeta().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            String path = eProp.genl.getProp();
-            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-            return new JSONObject(App.asMap("result", "ok", "report", html));
-
-        } catch (Exception e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }
-    }
-
-    public static JSONObject checkProject(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String projectSt = request.getParameter("projectID");
-            Integer projectID = Integer.valueOf(projectSt);
-            List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-            new RCheck().parseDoc2(prjprodList); //заполним шаблон и сохраним на диске
-            String path = eProp.genl.getProp();
-            Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-            String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-            return new JSONObject(App.asMap("result", "ok", "report", html));
-
-        } catch (Exception e) {
-            return new JSONObject(App.asMap("result", "Ошибка: " + e));
-        }
     }
  */
 // </editor-fold>    
