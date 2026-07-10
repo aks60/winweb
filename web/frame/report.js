@@ -39,46 +39,31 @@ state.reportPrj = function (title) {
     });
 };
 
-//state.smeta = function (projectID) {
-//    try {
-//        $.ajax({
-//            url: 'dbset?action=smetaProject',
-//            data: {'projectID': project.projectRec[eProject.id]},
-//            dataType: 'html',
-//            success: (data) => {
-//                debugger;
-//                $('#body-jsp').html(data);
-//            },
-//            error: (jqXHR, textStatus, errorThrown) => {
-//                console.error("AJAX Error: " + textStatus, errorThrown);
-//                dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-//            }
-//        });
-//    } catch (e) {
-//        console.error(e.message);
-//    }
-//};
-//
-//state.schet_faktura = function (projectID) {
-//    try {
-//        $.ajax({
-//            url: 'dbset?action=smetaProject',
-//            data: {'projectID': project.projectRec[eProject.id]},
-//            success: (data) => {
-//                if (data.result === 'ok') {
-//
-//                } else
-//                    dialogMes('Сообщение', "<p>" + data.result);
-//            },
-//            error: (jqXHR, textStatus, errorThrown) => {
-//                console.error("AJAX Error: " + textStatus, errorThrown);
-//                dialogMes('Сообщение', "<p>Ошибка при калькуляции заказа на сервере");
-//            }
-//        });
-//    } catch (e) {
-//        console.error(e.message);
-//    }
-//};
+state.reportPrj2 = function (title) {
+    progress(0);
+    $.ajax({url: 'dbset?action=reportProject2',
+        data: {'title': title, 'projectID': project.projectRec[eProject.id]},
+        success: (data) => {
+            
+            $('#body-jsp').html(data.html);
+            
+            const byteCharacters = atob(data.byteImg);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
+            document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
+
+            progress(1);
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            console.error("AJAX Error: " + textStatus, errorThrown);
+            dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
+        }
+    });
+};
 
 // <editor-fold defaultstate="collapsed" desc="XLAM"> 
 /*

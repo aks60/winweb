@@ -190,6 +190,10 @@ public class DbsetCont extends HttpServlet {
                     Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
                     String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
                     response.getWriter().print(html);
+                    
+                } else if (action.equalsIgnoreCase("reportProject2")) {
+                    JSONObject output = Dbset.reportProject2(request, response);
+                    out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("testProject")) {
                     Dbset.reportProject(request, response);

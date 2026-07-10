@@ -1,5 +1,6 @@
 package controller;
 
+import builder.Wincalc;
 import builder.making.TTariffic;
 import com.google.gson.Gson;
 import dataset.Connect;
@@ -35,6 +36,8 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,9 +46,11 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.jsoup.nodes.Document;
 import report.RCheck;
 import report.RMaterial;
 import report.ROffer;
@@ -467,7 +472,7 @@ public class Dbset {
         }
     }
 
-    public static void reportProject(HttpServletRequest request, HttpServletResponse response) {
+    public static JSONObject reportProject(HttpServletRequest request, HttpServletResponse response) {
         try {
             String title = request.getParameter("title");
             Query.listOpenTable.forEach(q -> q.clear());
@@ -504,10 +509,12 @@ public class Dbset {
                     new RSmeta().parseDoc1(prjprodList);
 
                 } else if ("Smeta2".equals(title)) {
-                  RSmeta report = new RSmeta();
-                  report.parseDoc2(prjprodList);
+                    RSmeta report = new RSmeta();
+                    report.parseDoc2(prjprodList);
+                    Document doc = report.doc;
+                    List<Wincalc> wincList = report.wincList;
+                    return new JSONObject(App.asMap("result", "ok", "doc", doc.html(), "iList", wincList));
 
-                  
                 } else if ("Check1".equals(title)) {
                     new RCheck().parseDoc1(prjprodList);
 
@@ -517,10 +524,81 @@ public class Dbset {
                 } else if ("Offer".equals(title)) {
                     new ROffer().parseDoc(prjprodList);
                 }
-
             }
         } catch (Exception e) {
             System.err.println("Error:Dbset.reportProject()");
+        }
+        return new JSONObject();
+    }
+
+    public static JSONObject reportProject2(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String title = request.getParameter("title");
+            Query.listOpenTable.forEach(q -> q.clear());
+
+            //Отчёты конструкций
+            if (request.getParameter("prjprodID") != null) {
+
+                int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
+
+                if ("Tarif".equals(title)) {
+                    new RSpecific().parseDoc(prjprodList);
+
+                } else if ("Material".equals(title)) {
+                    new RMaterial().parseDoc1(prjprodList);
+
+                } else if ("Target".equals(title)) {
+                    new RTarget().parseDoc(prjprodList);
+                }
+
+                //Отчёты проекта
+            } else if (request.getParameter("projectID") != null) {
+
+                int projectID = Integer.parseInt(request.getParameter("projectID"));
+                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
+
+                if ("Material".equals(title)) {
+                    new RMaterial().parseDoc1(prjprodList);
+
+                } else if ("Target".equals(title)) {
+                    new RTarget().parseDoc(prjprodList);
+
+                } else if ("Smeta1".equals(title)) {
+                    new RSmeta().parseDoc1(prjprodList);
+
+                } else if ("Smeta2".equals(title)) {
+                    RSmeta report = new RSmeta();
+                    report.parseDoc2(prjprodList);
+                    Document doc = report.doc;
+                    List<Wincalc> wincList = report.wincList;
+                    BufferedImage bufferImg = wincList.get(0).bufferImg;
+                    byte[] byteImg = toByteArray(bufferImg, "gif");
+                    String base64Img = Base64.getEncoder().encodeToString(byteImg);
+                    
+                    return new JSONObject(App.asMap("result", "ok", "html", doc.html(), "byteImg", base64Img));
+
+                } else if ("Check1".equals(title)) {
+                    new RCheck().parseDoc1(prjprodList);
+
+                } else if ("Check2".equals(title)) {
+                    new RCheck().parseDoc2(prjprodList);
+
+                } else if ("Offer".equals(title)) {
+                    new ROffer().parseDoc(prjprodList);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error:Dbset.reportProject()");
+        }
+        return new JSONObject();
+    }
+
+    public static byte[] toByteArray(BufferedImage image, String formatName) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            // formatName can be "png", "jpg", "jpeg", or "gif"
+            ImageIO.write(image, formatName, baos);
+            return baos.toByteArray();
         }
     }
 
