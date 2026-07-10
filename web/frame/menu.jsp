@@ -94,8 +94,8 @@
 
                         //Открываем нужное подменю
                         if ($submenu.length) {
-                            if ($('#body-jsp title').text() === state.nameJsp
-                                    || $this[0].id === 'm40' || $this[0].id === 'm40a' || $this[0].id === 'm40b') {
+                            if ($('#body-jsp title').text() === state.nameJsp || $this[0].id === 'm40'
+                                    || $this[0].id === 'm40a' || $this[0].id === 'm40b') {
                                 $submenu.addClass("active"); // display popup 
                             }
                         }
