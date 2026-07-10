@@ -13,6 +13,7 @@ state.reportWin = function (title) {
         data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
         dataType: 'html',
         success: (data) => {
+            
             $('#body-jsp').html(data.html);
             
             var images = data.img;

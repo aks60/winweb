@@ -561,19 +561,9 @@ public class Dbset {
 
     public static byte[] toByteArray(BufferedImage image, String formatName) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            // formatName can be "png", "jpg", "jpeg", or "gif"
-            ImageIO.write(image, formatName, baos);
+            ImageIO.write(image, formatName, baos); //formatName can be "png", "jpg", "jpeg", or "gif"
             return baos.toByteArray();
         }
-    }
-
-    public static Map<String, String> getImageBase64() throws IOException {
-        byte[] imageBytes = Files.readAllBytes(new File("image.png").toPath());
-        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("image", base64Image);
-        return response;
     }
 }
 
