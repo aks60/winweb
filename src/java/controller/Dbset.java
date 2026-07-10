@@ -35,8 +35,14 @@ import domain.eElement;
 import domain.eFurnpar2;
 import domain.eFurnside1;
 import domain.eSyssize;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -471,13 +477,13 @@ public class Dbset {
 
                 int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
                 List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
-                
-                if ("Tarif".equals(title)) {                    
+
+                if ("Tarif".equals(title)) {
                     new RSpecific().parseDoc(prjprodList);
-                    
+
                 } else if ("Material".equals(title)) {
                     new RMaterial().parseDoc1(prjprodList);
-                    
+
                 } else if ("Target".equals(title)) {
                     new RTarget().parseDoc(prjprodList);
                 }
@@ -487,19 +493,20 @@ public class Dbset {
 
                 int projectID = Integer.parseInt(request.getParameter("projectID"));
                 List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-                
+
                 if ("Material".equals(title)) {
                     new RMaterial().parseDoc1(prjprodList);
-                    
+
                 } else if ("Target".equals(title)) {
                     new RTarget().parseDoc(prjprodList);
-                    
+
                 } else if ("Smeta1".equals(title)) {
                     new RSmeta().parseDoc1(prjprodList);
-                    
-                } else if ("Smeta2".equals(title)) {
-                    new RSmeta().parseDoc2(prjprodList);
 
+                } else if ("Smeta2".equals(title)) {
+                  RSmeta report = new RSmeta();
+                  report.parseDoc2(prjprodList);
+                  
                 } else if ("Check1".equals(title)) {
                     new RCheck().parseDoc1(prjprodList);
 
@@ -514,6 +521,15 @@ public class Dbset {
         } catch (Exception e) {
             System.err.println("Error:Dbset.reportProject()");
         }
+    }
+
+    public static Map<String, String> getImageBase64() throws IOException {
+        byte[] imageBytes = Files.readAllBytes(new File("image.png").toPath());
+        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("image", base64Image);
+        return response;
     }
 }
 
