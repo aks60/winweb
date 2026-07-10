@@ -1,6 +1,4 @@
 import {project} from './project.js';
-//import {nameObj} from './menu.jsp';
-//import {nameJsp} from './menu.jsp';
 
 export let state = {nameJsp: 'PROJECT'};
 
