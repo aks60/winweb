@@ -13,12 +13,11 @@ state.reportWin = function (title) {
         data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
         dataType: 'html',
         success: (data) => {
-            
+
             $('#body-jsp').html(data.html);
-            
-            var images = data.img;
-            if (images !== undefined) {
-                for (var i = 0; i < images.length; i++) {
+
+            if (data.img !== undefined) {
+                for (var i = 0; i < data.img.length; i++) {
                     const byteCharacters = atob(data.img[i]);
                     const byteNumbers = new Array(byteCharacters.length);
                     for (let i = 0; i < byteCharacters.length; i++) {
@@ -28,7 +27,7 @@ state.reportWin = function (title) {
                     let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
                     document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
                 }
-            }            
+            }
             progress(1);
         },
         error: (jqXHR, textStatus, errorThrown) => {
@@ -46,9 +45,8 @@ state.reportPrj = function (title) {
 
             $('#body-jsp').html(data.html);
 
-            var images = data.img;
-            if (images !== undefined) {
-                for (var i = 0; i < images.length; i++) {
+            if (data.img !== undefined) {
+                for (var i = 0; i < data.img.length; i++) {
                     const byteCharacters = atob(data.img[i]);
                     const byteNumbers = new Array(byteCharacters.length);
                     for (let i = 0; i < byteCharacters.length; i++) {
