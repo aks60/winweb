@@ -68,7 +68,7 @@
         </script>         
     </head>
     <body>
-        <div id="menu-main" class="menu-class" class="no-print"></div>
+        <div id="menu-main" class="no-print"></div>
         <div id="body-jsp"></div>  
         <div id="dialog-jsp"></div> 
         <div id="dialog-mes" title="Сообщение"></div>
