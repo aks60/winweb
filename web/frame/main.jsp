@@ -50,7 +50,7 @@
         <script type="module" src="./domain/eTarif.js"></script>        
         <style>
             @media print {
-                .no-print {
+                #menu-main {
                     display: none !important;
                 }
             }
@@ -68,7 +68,7 @@
         </script>         
     </head>
     <body>
-        <div id="menu-main" class="no-print"></div>
+        <div id="menu-main"></div>
         <div id="body-jsp"></div>  
         <div id="dialog-jsp"></div> 
         <div id="dialog-mes" title="Сообщение"></div>

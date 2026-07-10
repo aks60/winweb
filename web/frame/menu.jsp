@@ -67,7 +67,7 @@
             document.getElementById('m44').addEventListener('click', () => state.reportPrj('Material'));
             document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target'));
             document.getElementById('m46').addEventListener('click', () => state.reportPrj('Smeta1'));
-            document.getElementById('m47').addEventListener('click', () => state.reportPrj2('Smeta2'));
+            document.getElementById('m47').addEventListener('click', () => state.reportPrj('Smeta2'));
             document.getElementById('m48').addEventListener('click', () => state.reportPrj('Check1'));
             document.getElementById('m49').addEventListener('click', () => state.reportPrj('Check2'));
             document.getElementById('m49.').addEventListener('click', () => state.reportPrj('Offer'));

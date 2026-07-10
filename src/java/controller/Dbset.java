@@ -484,13 +484,19 @@ public class Dbset {
                 List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
 
                 if ("Tarif".equals(title)) {
-                    new RSpecific().parseDoc(prjprodList);
+                    RSpecific report = new RSpecific();
+                    report.parseDoc(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Material".equals(title)) {
-                    new RMaterial().parseDoc1(prjprodList);
+                    RMaterial report = new RMaterial();
+                    report.parseDoc1(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Target".equals(title)) {
-                    new RTarget().parseDoc(prjprodList);
+                    RTarget report = new RTarget();
+                    report.parseDoc(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
                 }
 
                 //Отчёты проекта
@@ -500,29 +506,39 @@ public class Dbset {
                 List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
 
                 if ("Material".equals(title)) {
-                    new RMaterial().parseDoc1(prjprodList);
+                    RMaterial report = new RMaterial();
+                    report.parseDoc1(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Target".equals(title)) {
-                    new RTarget().parseDoc(prjprodList);
+                    RTarget report = new RTarget();
+                    report.parseDoc(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Smeta1".equals(title)) {
-                    new RSmeta().parseDoc1(prjprodList);
+                    RSmeta report = new RSmeta();
+                    report.parseDoc1(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html(), "img", imageBase64List(report.wincList)));
 
                 } else if ("Smeta2".equals(title)) {
                     RSmeta report = new RSmeta();
                     report.parseDoc2(prjprodList);
-                    Document doc = report.doc;
-                    List<Wincalc> wincList = report.wincList;
-                    return new JSONObject(App.asMap("result", "ok", "doc", doc.html(), "iList", wincList));
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html(), "img", imageBase64List(report.wincList)));
 
                 } else if ("Check1".equals(title)) {
-                    new RCheck().parseDoc1(prjprodList);
+                    RCheck report = new RCheck();
+                    report.parseDoc1(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Check2".equals(title)) {
-                    new RCheck().parseDoc2(prjprodList);
+                    RCheck report = new RCheck();
+                    report.parseDoc2(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
 
                 } else if ("Offer".equals(title)) {
-                    new ROffer().parseDoc(prjprodList);
+                    ROffer report = new ROffer();
+                    report.parseDoc(prjprodList);
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
                 }
             }
         } catch (Exception e) {
@@ -531,67 +547,16 @@ public class Dbset {
         return new JSONObject();
     }
 
-    public static JSONObject reportProject2(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String title = request.getParameter("title");
-            Query.listOpenTable.forEach(q -> q.clear());
-
-            //Отчёты конструкций
-            if (request.getParameter("prjprodID") != null) {
-
-                int prjprodID = Integer.parseInt(request.getParameter("prjprodID"));
-                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.id, "=", prjprodID);
-
-                if ("Tarif".equals(title)) {
-                    new RSpecific().parseDoc(prjprodList);
-
-                } else if ("Material".equals(title)) {
-                    new RMaterial().parseDoc1(prjprodList);
-
-                } else if ("Target".equals(title)) {
-                    new RTarget().parseDoc(prjprodList);
-                }
-
-                //Отчёты проекта
-            } else if (request.getParameter("projectID") != null) {
-
-                int projectID = Integer.parseInt(request.getParameter("projectID"));
-                List<dataset.Record> prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectID);
-
-                if ("Material".equals(title)) {
-                    new RMaterial().parseDoc1(prjprodList);
-
-                } else if ("Target".equals(title)) {
-                    new RTarget().parseDoc(prjprodList);
-
-                } else if ("Smeta1".equals(title)) {
-                    new RSmeta().parseDoc1(prjprodList);
-
-                } else if ("Smeta2".equals(title)) {
-                    RSmeta report = new RSmeta();
-                    report.parseDoc2(prjprodList);
-                    Document doc = report.doc;
-                    List<Wincalc> wincList = report.wincList;
-                    BufferedImage bufferImg = wincList.get(0).bufferImg;
-                    byte[] byteImg = toByteArray(bufferImg, "gif");
-                    String base64Img = Base64.getEncoder().encodeToString(byteImg);
-                    
-                    return new JSONObject(App.asMap("result", "ok", "html", doc.html(), "byteImg", base64Img));
-
-                } else if ("Check1".equals(title)) {
-                    new RCheck().parseDoc1(prjprodList);
-
-                } else if ("Check2".equals(title)) {
-                    new RCheck().parseDoc2(prjprodList);
-
-                } else if ("Offer".equals(title)) {
-                    new ROffer().parseDoc(prjprodList);
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Error:Dbset.reportProject()");
+    public static List<String> imageBase64List(List<Wincalc> wincList) throws Exception {
+        List<String> list = new ArrayList();
+        for (int i = 0; i < wincList.size(); i++) {
+            Wincalc winc = wincList.get(i);
+            BufferedImage bufferImg = winc.bufferImg;
+            byte[] byteImg = toByteArray(bufferImg, "gif");
+            String base64Img = Base64.getEncoder().encodeToString(byteImg);
+            list.add(base64Img);
         }
-        return new JSONObject();
+        return list;
     }
 
     public static byte[] toByteArray(BufferedImage image, String formatName) throws IOException {

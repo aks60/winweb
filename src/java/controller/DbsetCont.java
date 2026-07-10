@@ -185,14 +185,7 @@ public class DbsetCont extends HttpServlet {
                     out.write(JSONObject.toJSONString(output));
                     
                 } else if (action.equalsIgnoreCase("reportProject")) {
-                    Dbset.reportProject(request, response);
-                    String path = eProp.genl.getProp();
-                    Path filePath = Path.of(path + "\\report.html"); //путь к вашему файлу
-                    String html = new String(Files.readAllBytes(filePath), Charset.forName("windows-1251"));
-                    response.getWriter().print(html);
-                    
-                } else if (action.equalsIgnoreCase("reportProject2")) {
-                    JSONObject output = Dbset.reportProject2(request, response);
+                    JSONObject output = Dbset.reportProject(request, response);
                     out.write(JSONObject.toJSONString(output));
 
                 } else if (action.equalsIgnoreCase("testProject")) {

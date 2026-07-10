@@ -13,7 +13,21 @@ state.reportWin = function (title) {
         data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
         dataType: 'html',
         success: (data) => {
-            $('#body-jsp').html(data);
+            $('#body-jsp').html(data.html);
+            
+            var images = data.img;
+            if (images !== undefined) {
+                for (var i = 0; i < images.length; i++) {
+                    const byteCharacters = atob(data.img[i]);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
+                    document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
+                }
+            }            
             progress(1);
         },
         error: (jqXHR, textStatus, errorThrown) => {
@@ -27,35 +41,23 @@ state.reportPrj = function (title) {
     progress(0);
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-        dataType: 'html',
         success: (data) => {
-            $('#body-jsp').html(data);
-            progress(1);
-        },
-        error: (jqXHR, textStatus, errorThrown) => {
-            console.error("AJAX Error: " + textStatus, errorThrown);
-            dialogMes('Сообщение', "<p>Ошибка при построении отчёта на сервере");
-        }
-    });
-};
 
-state.reportPrj2 = function (title) {
-    progress(0);
-    $.ajax({url: 'dbset?action=reportProject2',
-        data: {'title': title, 'projectID': project.projectRec[eProject.id]},
-        success: (data) => {
-            
             $('#body-jsp').html(data.html);
-            
-            const byteCharacters = atob(data.byteImg);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
-            document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
 
+            var images = data.img;
+            if (images !== undefined) {
+                for (var i = 0; i < images.length; i++) {
+                    const byteCharacters = atob(data.img[i]);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
+                    document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
+                }
+            }
             progress(1);
         },
         error: (jqXHR, textStatus, errorThrown) => {
