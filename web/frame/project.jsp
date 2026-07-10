@@ -31,7 +31,6 @@
             $('#p25').datepicker();
 
             function test1() {
-                progress('open');
             }
             function test2() {
                 resize();

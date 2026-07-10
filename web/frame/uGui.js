@@ -251,7 +251,7 @@ function dialogMes(title, mes) {
 function progress(v) {
     if (v === 0) {
         $('#dialog-mes').html("<label for='file'>Пожалуйста, подождите...:\n\</label> <progress id='file' max='100'> 32% </progress>");
-        $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 320});
+        $('#dialog-mes').dialog({title: "Загрузка данных", modal: true, resizable: false, height: 64, width: 330});
     } else if (v === 1)
         $('#dialog-mes').dialog("close");
 }

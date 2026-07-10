@@ -14,38 +14,14 @@
         import {state} from './frame/report.js';
         import {kits} from './frame/kits.js';
 
-
-        function load_partner(name) {
-            state.nameJsp = name;
-            if ($('#body-jsp title').text() !== 'PARTNER') {
-                $('#body-jsp').load('frame/partner.jsp');
-            }
-        }
-
-        function load_project(name) {
-            state.nameJsp = name;
-            if ($('#body-jsp title').text() !== 'PROJECT') {
-                $('#body-jsp').load('frame/project.jsp');
-            }
-        }
-
-        function load_product(name) {
-            state.nameJsp = name;
-            if ($('#body-jsp title').text() !== 'PRODUCT') {
-                $('#body-jsp').load('frame/product.jsp');
-            }
-        }
-
-        function load_kits(name) {
-            state.nameJsp = name;
-            if ($('#body-jsp title').text() !== 'KITS') {
-                $('#body-jsp').load('frame/kits.jsp');
-            }
-        }
-
         function init_menu() {
 
-            document.getElementById('m00').addEventListener('click', () => load_project('PROJECT'));
+            document.getElementById('m00').addEventListener('click', (e) => {
+                state.nameJsp = 'PROJECT';
+                if ($('#body-jsp title').text() !== 'PROJECT') {
+                    $('#body-jsp').load('frame/project.jsp');
+                }
+            });
             document.getElementById('m02').addEventListener('click', () => project.insert_table1());
             document.getElementById('m03').addEventListener('click', () => project.update_table1());
             document.getElementById('m04').addEventListener('click', () => project.delete_table1());
@@ -55,26 +31,41 @@
             document.getElementById('m08').addEventListener('click', () => project.update_table2());
             document.getElementById('m09').addEventListener('click', () => project.calculate_project());
 
-            document.getElementById('m10').addEventListener('click', () => load_product('PRODUCT'));
+            document.getElementById('m10').addEventListener('click', () => {
+                state.nameJsp = 'PRODUCT';
+                if ($('#body-jsp title').text() !== 'PRODUCT') {
+                    $('#body-jsp').load('frame/product.jsp');
+                }
+            });
             document.getElementById('m12').addEventListener('click', () => product.save_update_script());
             document.getElementById('m13').addEventListener('click', () => product.revert_update_script());
 
-            document.getElementById('m20').addEventListener('click', () => load_kits('KITS'));
+            document.getElementById('m20').addEventListener('click', () => {
+                state.nameJsp = 'KITS';
+                if ($('#body-jsp title').text() !== 'KITS') {
+                    $('#body-jsp').load('frame/kits.jsp');
+                }
+            });
             document.getElementById('m21').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/kitcard.jsp'));
             document.getElementById('m23').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/artikl.jsp'));
             document.getElementById('m24').addEventListener('click', () => kits.update_table());
             document.getElementById('m25').addEventListener('click', () => kits.delete_table());
 
-            document.getElementById('m30').addEventListener('click', () => load_partner('PARTNER'));
+            document.getElementById('m30').addEventListener('click', () => {
+                state.nameJsp = 'PARTNER';
+                if ($('#body-jsp title').text() !== 'PARTNER') {
+                    $('#body-jsp').load('frame/partner.jsp');
+                }
+            });
             document.getElementById('m31').addEventListener('click', () => partner.insert_table1());
             document.getElementById('m32').addEventListener('click', () => partner.update_table1());
             document.getElementById('m33').addEventListener('click', () => partner.delete_table1());
 
             document.getElementById('m41').addEventListener('click', () => state.reportWin('Tarif'));
             document.getElementById('m42').addEventListener('click', () => state.reportWin('Material'));
-            document.getElementById('m43').addEventListener('click', () => state.reportWin('Target'));           
+            document.getElementById('m43').addEventListener('click', () => state.reportWin('Target'));
             document.getElementById('m44').addEventListener('click', () => state.reportPrj('Material'));
-            document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target'));            
+            document.getElementById('m45').addEventListener('click', () => state.reportPrj('Target'));
             document.getElementById('m46').addEventListener('click', () => state.reportPrj('Smeta1'));
             document.getElementById('m47').addEventListener('click', () => state.reportPrj('Smeta2'));
             document.getElementById('m48').addEventListener('click', () => state.reportPrj('Check1'));
@@ -82,7 +73,7 @@
             document.getElementById('m49.').addEventListener('click', () => state.reportPrj('Offer'));
 
             document.getElementById('m53').addEventListener('click', () => state.test());
-            
+
             $('.main-nav a').on('click', function (e) {
                 var $this = $(this);
                 var $parentLi = $this.parent();
@@ -103,10 +94,9 @@
 
                         //Открываем нужное подменю
                         if ($submenu.length) {
-                            if ($('#body-jsp title').text() === state.nameJsp 
-                                    || JSON.stringify($this) === JSON.stringify($("#m40"))) {
-                                $submenu.addClass("active"); // display popup
-                                
+                            if ($('#body-jsp title').text() === state.nameJsp
+                                    || $this[0].id === 'm40' || $this[0].id === 'm40a' || $this[0].id === 'm40b') {
+                                $submenu.addClass("active"); // display popup 
                             }
                         }
                         e.stopPropagation(); //предотвращает всплытие события вверх по дереву DOM
@@ -177,7 +167,7 @@
                     <ul class="menu-level-2">
 
                         <li>
-                            <a>Изделие</a>
+                            <a id="m40a">Изделие</a>
                             <ul class="menu-level-3">
                                 <li><a id="m41">Тарификация</a></li>
                                 <li><a id="m42">Расход материалов</a></li>
@@ -185,7 +175,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a>Проект</a>
+                            <a id="m40b">Проект</a>
                             <ul class="menu-level-3">
                                 <li><a id="m44">Расход материалов</a></li>
                                 <li><a id="m45">Задание в цех</a></li>
