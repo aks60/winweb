@@ -496,7 +496,7 @@ public class Dbset {
                 } else if ("Target".equals(title)) {
                     RTarget report = new RTarget();
                     report.parseDoc(prjprodList);
-                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html(), "img", imageBase64List(report.wincList)));
                 }
 
                 //Отчёты проекта
@@ -513,7 +513,7 @@ public class Dbset {
                 } else if ("Target".equals(title)) {
                     RTarget report = new RTarget();
                     report.parseDoc(prjprodList);
-                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html(), "img", imageBase64List(report.wincList)));
 
                 } else if ("Smeta1".equals(title)) {
                     RSmeta report = new RSmeta();
@@ -538,7 +538,7 @@ public class Dbset {
                 } else if ("Offer".equals(title)) {
                     ROffer report = new ROffer();
                     report.parseDoc(prjprodList);
-                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html()));
+                    return new JSONObject(App.asMap("result", "ok", "html", report.doc.html(), "img", imageBase64List(report.wincList)));
                 }
             }
         } catch (Exception e) {

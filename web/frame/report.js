@@ -9,9 +9,7 @@ state.reportWin = function (title) {
     progress(0);
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'prjprodID': project.prjprodRec[ePrjprod.id]},
-        dataType: 'html',
         success: (data) => {
-
             $('#body-jsp').html(data.html);
 
             if (data.img !== undefined) {
@@ -40,7 +38,7 @@ state.reportPrj = function (title) {
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'projectID': project.projectRec[eProject.id]},
         success: (data) => {
-
+            debugger;
             $('#body-jsp').html(data.html);
 
             if (data.img !== undefined) {
@@ -52,7 +50,7 @@ state.reportPrj = function (title) {
                     }
                     const byteArray = new Uint8Array(byteNumbers);
                     let base64String = btoa(String.fromCharCode(...new Uint8Array(byteArray)));
-                    document.getElementById('img1').src = `data:image/gif;base64,${base64String}`;
+                    document.getElementById('img' + (i + 1)).src = `data:image/gif;base64,${base64String}`;
                 }
             }
             progress(1);
