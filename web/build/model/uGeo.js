@@ -140,7 +140,7 @@ UGeo.splitPolygon = (geom, segm) => {
         }
         //PRINT(Polygon.new(cooL), 'Split-' + cooL.length + 'L-');
         //PRINT(Polygon.new(cooR), 'Split-' + cooR.length + 'R-');
-        return [Polygon.new(cooL), Polygon.new(cooR)];
+        return [Polygon.new(cooL), Polygon.new(cooR), LineString.new(crosTwo)];
 
     } catch (e) {
         console.error(e.message);

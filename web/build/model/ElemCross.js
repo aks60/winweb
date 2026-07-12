@@ -64,6 +64,15 @@ export class ElemCross extends ElemSimple {
             this.owner.childs[0].area = geoSplit[0];
             this.owner.childs[2].area = geoSplit[1];
 
+            //Если изменились координаты импоста
+            let lineImp = geoSplit[2];
+            if((segmImp.toString() === lineImp.toString()) === false) {
+                this.x1 = lineImp.getCoordinateN(0).x;
+                this.y1 = lineImp.getCoordinateN(0).y;
+                this.x2 = lineImp.getCoordinateN(1).x;
+                this.y2 = lineImp.getCoordinateN(1).y;                
+            }
+            
             //Левый и правый сегмент вдоль импоста
             const delta = this.artiklRec[eArtikl.height] - this.artiklRec[eArtikl.size_centr]; //ширина
             const offsetSegment = [UGeo.offsetSegm(segmImp, +delta), UGeo.offsetSegm(segmImp, -delta)];
