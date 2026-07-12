@@ -192,10 +192,10 @@
                     </ul>
                 </li>
                 <li>
-                <li><a id="m50">Сервис</a>
+                <li><a id="m50">О программе</a>
                     <ul class="menu-level-2">
-                        <li><a id="m51">Сайт разработчика</a></li>
-                        <li><a id="m52">О программе</a></li>                                           
+                        <li><a id="m51">Сайт разработки</a></li>
+                        <li><a id="m52">TEST()</a></li>                                           
                         <li><a id="m53">TEST()</a></li>
                     </ul>
                 </li>
