@@ -518,7 +518,7 @@ UGeo.insidePoly = (poly, x, y) => {
 
 //Перемещение gson (точек на канве)
 UGeo.moveGson = (gson, dx, dy, scale) => {
-    
+  debugger;  
     if (gson.childs !== null) {
         let dX = (dx === 0) ? 0 : dx / scale;
         let dY = (dy === 0) ? 0 : dy / scale;
@@ -549,7 +549,7 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
 
 //Перемещение точек на канве (изменение размера окна)
 UGeo.movePoint = (el, x, y) => {
-    if (x > 0 || y > 0) {
+    if (x > 0 && y > 0) {
         if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
             if (el.passMask[0] === 0) {
                 el.y1 = y;
