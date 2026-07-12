@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SA-OKNA</title>
 
-        <link rel="icon" href="data:,">
+<!--        <link rel="icon" href="data:,">-->
+        <link rel="icon" href="lib-img/favicon.png" sizes="any">
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jquery-ui-1.13/redmond/jquery-ui.css">                                                                                                       
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jstree-3.3.12/themes/default/style.min.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="lib-css/jqgrid-5.8.10/ui.jqgrid.css">        
@@ -99,7 +100,7 @@
                             eKits.list = p[i++], eKitdet.list = p[i++], ePrjkit.list = p[i++], eSyssize.list = p[i++], eSysuser.list = p[i++];
 
                     login.init_login();
-                    login.user_connect();
+                    //login.user_connect();
 
                 }).catch(e => {
                     dialogMes('Ошибка', 'Ошибка загрузки базы данных. ' + e.message);
