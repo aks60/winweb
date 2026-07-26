@@ -67,7 +67,7 @@
 .menu-level-3.active {
     display: block;
 }
-.separator {
+.main-nav .separator {
     height: 1px;
     background-color: #aaa;
     margin: 1px 0;
