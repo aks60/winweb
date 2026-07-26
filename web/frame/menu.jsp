@@ -191,7 +191,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
                 <li><a id="m50">О программе</a>
                     <ul class="menu-level-2">
                         <li><a id="m51">Сайт разработки</a></li>
