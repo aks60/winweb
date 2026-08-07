@@ -549,7 +549,7 @@ UGeo.moveGson = (gson, dx, dy, scale) => {
 
 //Перемещение точек на канве (изменение размера окна)
 UGeo.movePoint = (el, x, y) => {
-    if (x > 0 && y > 0) {
+    if (x > 0 || y > 0) {
         if ([Layout.BOT, Layout.HOR].includes(el.layout)) {
             if (el.passMask[0] === 0) {
                 el.y1 = y;

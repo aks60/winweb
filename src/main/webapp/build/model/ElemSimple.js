@@ -73,7 +73,7 @@ export class ElemSimple extends Com5t {
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            //UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
                         this.winc.resize();
                         clearTimeout(this.timerID); //остановка
@@ -167,8 +167,8 @@ export class ElemSimple extends Com5t {
                             }
                         }
                         if (X < 0 || Y < 0) {
-                            this.passMask[1] = 1;
-                            //UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                            //this.passMask[1] = 1;
+                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
                         this.winc.resize();
                     }
