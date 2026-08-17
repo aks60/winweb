@@ -259,14 +259,7 @@ export class Wincalc {
         try {
             this.ctx.save();
             this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
-
-            if (this.cnv.width < 100 && this.cnv.height < 100) {
-                this.scale = (this.cnv.width / this.width < this.cnv.height / this.height)
-                        ? this.cnv.width / this.width : this.cnv.height / this.height;
-            } else {
-                this.scale = ((this.cnv.width - this.dXY) / this.width < (this.cnv.height - this.dXY) / this.height)
-                        ? (this.scaleZoom * this.cnv.width - this.dXY) / this.width : (this.scaleZoom * this.cnv.height - this.dXY) / this.height;
-            }
+            this.scale = UGeo.scale(this);    
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
 

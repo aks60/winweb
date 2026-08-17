@@ -1,8 +1,6 @@
 import {Com5t} from './Com5t.js'
 import {Type, Layout} from '../../enums/enums.js';
 import Intersection from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Intersection.js'
-//import InteriorPoint from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/InteriorPoint.js'
-//import PointLocator from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocator.js'
 import PointLocation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/PointLocation.js'
 import CGAlgorithmsDD from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/CGAlgorithmsDD.js'
 import Angle from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Angle.js'
@@ -16,10 +14,18 @@ import WKTWriter from '../../lib-js/jsts-2.11.2/org/locationtech/jts/io/WKTWrite
 import Orientation from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Orientation.js';
 import Distance from '../../lib-js/jsts-2.11.2/org/locationtech/jts/algorithm/Distance.js';
 import UnionOp from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionOp.js'
-//import CascadedPolygonUnion from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/CascadedPolygonUnion.js';
-//import UnionInteracting from '../../lib-js/jsts-2.11.2/org/locationtech/jts/operation/union/UnionInteracting.js';
 
 export let UGeo = {};
+
+UGeo.scale = (winc) => {
+    if (winc.cnv.width < 100 && winc.cnv.height < 100) {
+        return (winc.cnv.width / winc.width < winc.cnv.height / winc.height)
+                ? winc.cnv.width / winc.width : winc.cnv.height / winc.height;
+    } else {
+        return ((winc.cnv.width - winc.dXY) / winc.width < (winc.cnv.height - winc.dXY) / winc.height)
+                ? (winc.scaleZoom * winc.cnv.width - winc.dXY) / winc.width : (winc.scaleZoom * winc.cnv.height - winc.dXY) / winc.height;
+    }
+};
 
 //Угол неориентированный к горизонту. Угол нормируется в диапазоне [0, 2PI].
 UGeo.anglHor = (x1, y1, x2, y2) => {
@@ -190,7 +196,7 @@ UGeo.crossGeoOfLine = (poly, line) => {
         let out = new Array();
         const coo = poly.getCoordinates();
         for (let i = 1; i < coo.length; i++) {
-            
+
             const cros = UGeo.intersectionLS(line.p0, line.p1, coo[i], coo[i - 1]);
             if (cros !== null) {
                 out.push(cros);
@@ -286,7 +292,7 @@ UGeo.bufferRectangl = (geoShell, hmDist) => {
             //Перебор левого и правого сегмента от точки пересечения 
             let j = (i === 0) ? listShell.length - 1 : i - 1;
             const id1 = listShell[j].z;
-            segmRighShell.setCoordinates(listShell[j], listShell[i]);          
+            segmRighShell.setCoordinates(listShell[j], listShell[i]);
             segmRighInner = UGeo.offsetSegm(segmRighShell, -hmDist.get(id1));
             segmRighInner.p0.z = segmRighShell.p0.z;
             segmRighInner.p1.z = segmRighShell.p1.z;
@@ -361,10 +367,10 @@ UGeo.bufferCurve = (geoShell, dist) => {
         }
         listInner.reverse();
         listInner.push(...listShell);
-        listInner[0] = listInner[listInner.length - 1];               
+        listInner[0] = listInner[listInner.length - 1];
         let result = Com5t.gf.createPolygon([...listInner]);
-        return result; 
-        
+        return result;
+
     } catch (e) {
         console.error(e.message);
     }
@@ -383,12 +389,12 @@ UGeo.bufferPolygon = (geoShell, hmDist) => {
             const id1 = listShell[j].z;
             segmRighShell.setCoordinates(listShell[j], listShell[i]);
             segmRighInner = UGeo.offsetSegm(segmRighShell, -hmDist.get(id1));
-            
+
             let k = (i === listShell.length - 1) ? 0 : i + 1;
             const id2 = listShell[i].z;
             segmLeftShell.setCoordinates(listShell[i], listShell[k]);
             segmLeftInner = UGeo.offsetSegm(segmLeftShell, -hmDist.get(id2));
-            
+
             //Точка пересечения сегментов
             let cross = CGAlgorithmsDD.intersection(segmLeftInner.p0, segmLeftInner.p1, segmRighInner.p0, segmRighInner.p1);
             if (cross !== null) {
@@ -518,7 +524,7 @@ UGeo.insidePoly = (poly, x, y) => {
 
 //Перемещение gson (точек на канве)
 UGeo.moveGson = (gson, dx, dy, scale) => {
-  debugger;  
+    debugger;
     if (gson.childs !== null) {
         let dX = (dx === 0) ? 0 : dx / scale;
         let dY = (dy === 0) ? 0 : dy / scale;
@@ -578,9 +584,9 @@ UGeo.movePoint = (el, x, y) => {
     }
 };
 
-UGeo.segmentOffset = (segShell, dxy) =>  {
-        let segInner = segShell.offset(dxy);
-        segInner.p0.z = segShell.p0.z;
-        segInner.p1.z = segShell.p1.z;
-        return segInner;
-    }
+UGeo.segmentOffset = (segShell, dxy) => {
+    let segInner = segShell.offset(dxy);
+    segInner.p0.z = segShell.p0.z;
+    segInner.p1.z = segShell.p1.z;
+    return segInner;
+}
