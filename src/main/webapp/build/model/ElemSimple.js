@@ -21,6 +21,7 @@ export class ElemSimple extends Com5t {
     addListenerEvents() {
         if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
             try {
+                //ПЕРЕМЕСТИЛИ клавой
                 this.winc.cnv.addEventListener("keydown", (evt) => {
 
                     if (this.area !== null && this.passMask[1] > 0) {
@@ -81,9 +82,12 @@ export class ElemSimple extends Com5t {
                     }
                 });
 
+                //НАЖАЛИ мышку
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-
+                //if (winc.listElem.stream().anyMatch(e -> e.passMask[1] > 0 && e != this)) {
+                //    return; //исключение более двух ареа одновременно изменять координаты
+                //}
                         let scale = this.winc.scale;
                         let X = (evt.offsetX - Com5t.TRANS) / scale;
                         let Y = (evt.offsetY - Com5t.TRANS) / scale;
@@ -120,12 +124,14 @@ export class ElemSimple extends Com5t {
                     }
                 });
 
+                //ОТПУСТИЛИ мышку
                 this.winc.cnv.addEventListener("mouseup", (evt) => {
                     if (this.passMask[1] > 1) {
                         this.passMask[1] = 1;
                     }
                 });
 
+                //ПЕРЕМЕСТИЛИ мышкой
                 this.winc.cnv.addEventListener("mousemove", (evt) => {
                     //Фильтр движухи откл. когда passMask[1] > 1
                     if (this.passMask[1] > 1 && this.area !== null) {
