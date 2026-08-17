@@ -21,73 +21,12 @@ export class ElemSimple extends Com5t {
     addListenerEvents() {
         if (this.winc.cnv.width > 100 && this.winc.cnv.height > 100) {
             try {
-                //ПЕРЕМЕСТИЛИ клавой
-                this.winc.cnv.addEventListener("keydown", (evt) => {
-
-                    if (this.area !== null && this.passMask[1] > 0) {
-
-                        let key = evt.key;
-                        let scale = this.winc.scale;
-                        let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
-                        //При нажатой клавише this.timerID всегда > 0
-                        let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
-
-                        let X = 0, Y = 0, dX = 0, dY = 0;
-                        if (key === 'ArrowUp') {
-                            dY = -dxy;
-                        } else if (key === 'ArrowDown') {
-                            dY = dxy;
-                        } else if (key === 'ArrowLeft') {
-                            dX = -dxy;
-                        } else if (key === 'ArrowRight') {
-                            dX = dxy;
-                        }
-                        //Кликнул начало вектора
-                        if (this.passMask[0] === 0) {
-                            X = dX / scale + this.x1;
-                            Y = dY / scale + this.y1;
-                            UGeo.movePoint(this, X, Y);
-
-                            //Кликнул конец вектора
-                        } else if (this.passMask[0] === 1) {
-                            X = dX / scale + this.x2;
-                            Y = dY / scale + this.y2;
-                            UGeo.movePoint(this, X, Y);
-
-                            //Кликнул по середине вектора 
-                        } else if (this.passMask[0] === 2) {
-
-                            if (this.h !== undefined) {
-                                this.h = this.h - dY / scale;
-                            } else {
-                                X = dX / scale + this.x2;
-                                Y = dY / scale + this.y2;
-
-                                if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
-                                    this.y1 = Y;
-                                    this.y2 = Y;
-                                }
-                                if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
-                                    this.x1 = X;
-                                    this.x2 = X;
-                                }
-                            }
-                        }
-                        if (X < 0 || Y < 0) {
-                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
-                        }
-                        this.winc.resize();
-                        clearTimeout(this.timerID); //остановка
-                        this.timerID = setTimeout(null, 10); //запуск
-                    }
-                });
-
                 //НАЖАЛИ мышку
                 this.winc.cnv.addEventListener("mousedown", (evt) => {
                     if (this.area !== null) {
-                //if (winc.listElem.stream().anyMatch(e -> e.passMask[1] > 0 && e != this)) {
-                //    return; //исключение более двух ареа одновременно изменять координаты
-                //}
+                        if (this.winc.listElem.find(el => el.passMask[1] > 0 && el !== this)) {
+                            return; //исключение более двух ареа одновременно изменять координаты
+                        }
                         let scale = this.winc.scale;
                         let X = (evt.offsetX - Com5t.TRANS) / scale;
                         let Y = (evt.offsetY - Com5t.TRANS) / scale;
@@ -177,6 +116,67 @@ export class ElemSimple extends Com5t {
                             UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
                         }
                         this.winc.resize();
+                    }
+                });
+
+                //ПЕРЕМЕСТИЛИ клавой
+                this.winc.cnv.addEventListener("keydown", (evt) => {
+
+                    if (this.area !== null && this.passMask[1] > 0) {
+
+                        let key = evt.key;
+                        let scale = this.winc.scale;
+                        let segm = LineSegment.new([this.x1, this.y1], [this.x2, this.y2]);
+                        //При нажатой клавише this.timerID всегда > 0
+                        let dxy = (this.timerID > 0) ? 0.04 : 0.1 * scale;
+
+                        let X = 0, Y = 0, dX = 0, dY = 0;
+                        if (key === 'ArrowUp') {
+                            dY = -dxy;
+                        } else if (key === 'ArrowDown') {
+                            dY = dxy;
+                        } else if (key === 'ArrowLeft') {
+                            dX = -dxy;
+                        } else if (key === 'ArrowRight') {
+                            dX = dxy;
+                        }
+                        //Кликнул начало вектора
+                        if (this.passMask[0] === 0) {
+                            X = dX / scale + this.x1;
+                            Y = dY / scale + this.y1;
+                            UGeo.movePoint(this, X, Y);
+
+                            //Кликнул конец вектора
+                        } else if (this.passMask[0] === 1) {
+                            X = dX / scale + this.x2;
+                            Y = dY / scale + this.y2;
+                            UGeo.movePoint(this, X, Y);
+
+                            //Кликнул по середине вектора 
+                        } else if (this.passMask[0] === 2) {
+
+                            if (this.h !== undefined) {
+                                this.h = this.h - dY / scale;
+                            } else {
+                                X = dX / scale + this.x2;
+                                Y = dY / scale + this.y2;
+
+                                if (Y > 0 && [Layout.BOT, Layout.TOP, Layout.HOR].includes(this.layout)) {
+                                    this.y1 = Y;
+                                    this.y2 = Y;
+                                }
+                                if (X > 0 && [Layout.LEF, Layout.RIG, Layout.VER].includes(this.layout)) {
+                                    this.x1 = X;
+                                    this.x2 = X;
+                                }
+                            }
+                        }
+                        if (X < 0 || Y < 0) {
+                            UGeo.moveGson(this.winc.gson, Math.abs(dX), Math.abs(dY), scale);
+                        }
+                        this.winc.resize();
+                        clearTimeout(this.timerID); //остановка
+                        this.timerID = setTimeout(null, 10); //запуск
                     }
                 });
 
