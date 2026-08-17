@@ -38,7 +38,6 @@ state.reportPrj = function (title) {
     $.ajax({url: 'dbset?action=reportProject',
         data: {'title': title, 'projectID': project.projectRec[eProject.id]},
         success: (data) => {
-            debugger;
             $('#body-jsp').html(data.html);
 
             if (data.img !== undefined) {

@@ -315,6 +315,7 @@ product.zoomScale = function (btn) {
     } else if (btn === "btnMinus") {
         product.winCalc.scaleZoom = product.winCalc.scaleZoom - .1;
     }
+    product.winCalc.scale = UGeo.scale(product.winCalc); 
     product.winCalc.resize();
 };
 

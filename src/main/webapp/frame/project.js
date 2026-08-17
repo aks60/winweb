@@ -241,7 +241,6 @@ project.insert_table1 = function () {
 
 //Редактирования строки таблицы
 project.update_table1 = function () {
-//debugger;
     let dialogCard = $('#dialog-card1');
     let projectRow = getSelectedRow($(project.table1));
     let projectRec = eProject.list.find(rec => Number(projectRow.ID) === rec[eProject.id]);
