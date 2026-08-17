@@ -102,6 +102,8 @@ export class Wincalc {
 
             this.location(); //кальк. коорд. элементов конструкции    
 
+            this.scale = UGeo.scale(this); 
+            
             this.draw(); //прорисовка конструкции
 
             return this;
@@ -258,8 +260,7 @@ export class Wincalc {
     draw() {
         try {
             this.ctx.save();
-            this.ctx.translate(Com5t.TRANS, Com5t.TRANS);
-            //this.scale = UGeo.scale(this);    
+            this.ctx.translate(Com5t.TRANS, Com5t.TRANS);               
             this.ctx.scale(this.scale, this.scale);
             this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
 
