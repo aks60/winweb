@@ -138,5 +138,6 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>webgeo</finalName>
     </build>
 </project>

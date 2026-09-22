@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--url="jdbc:firebirdsql://31.172.66.46:3050//opt/database/fbase/00/bimax.fdb?charSet=Cp1251"-->
+<!--url="jdbc:firebirdsql://localhost:3050/C:\\Okna\\fbase\\bimax.fdb?encoding=win1251"-->
 <Context 
     cachingAllowed="false" 
     antiResourceLocking="false" 
