@@ -69,10 +69,9 @@
             document.getElementById('m46').addEventListener('click', () => state.reportPrj('Smeta1'));
             document.getElementById('m47').addEventListener('click', () => state.reportPrj('Smeta2'));
             document.getElementById('m48').addEventListener('click', () => state.reportPrj('Check1'));
-            document.getElementById('m49').addEventListener('click', () => state.reportPrj('Check2'));
-            document.getElementById('m49.').addEventListener('click', () => state.reportPrj('Offer'));
+            document.getElementById('m49').addEventListener('click', () => state.reportPrj('Check2'));           
 
-            document.getElementById('m53').addEventListener('click', () => state.test());
+            document.getElementById('m52').addEventListener('click', () => $('#dialog-jsp').load('frame/dialog/about.jsp'));
 
             $('.main-nav a').on('click', function (e) {
                 var $this = $(this);
@@ -193,9 +192,8 @@
                 </li>
                 <li><a id="m50">О программе</a>
                     <ul class="menu-level-2">
-                        <li><a id="m51">Сайт разработки</a></li>
-                        <li><a id="m52">TEST()</a></li>                                           
-                        <li><a id="m53">TEST()</a></li>
+                        <li><a id="m51"  onClick="window.open('http://sa-okna.ru/winaks/', '_blank');">Сайт разработки</a></li>
+                        <li><a id="m52">О программе</a></li>                                           
                     </ul>
                 </li>
             </ul>
